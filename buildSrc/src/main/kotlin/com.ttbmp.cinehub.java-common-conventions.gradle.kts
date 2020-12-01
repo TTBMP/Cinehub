@@ -7,6 +7,7 @@ import org.sonarqube.gradle.SonarQubeExtension
 plugins {
     // Apply the java Plugin to add support for Java.
     java
+    org.sonarqube
 }
 
 repositories {
@@ -26,5 +27,3 @@ tasks.test {
     // Use junit platform for unit tests.
     useJUnitPlatform()
 }
-
-apply(plugin = "org.sonarqube")
