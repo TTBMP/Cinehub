@@ -7,7 +7,6 @@ import org.sonarqube.gradle.SonarQubeExtension
 plugins {
     // Apply the java Plugin to add support for Java.
     java
-    org.sonarqube
 }
 
 repositories {
@@ -29,10 +28,3 @@ tasks.test {
 }
 
 apply(plugin = "org.sonarqube")
-
-sonarqube {
-    properties {
-        property("sonar.sourceEncoding", "UTF-8")
-        property("sonar.projectKey", "Green-Organization_Cinehub")
-    }
-}
