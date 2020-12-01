@@ -33,6 +33,6 @@ apply(plugin = "org.sonarqube")
 sonarqube {
     properties {
         property("sonar.sourceEncoding", "UTF-8")
-        property("sonar.projectKey", "TTBMP_Cinehub")
+        property("sonar.projectKey", "Green-Organization_Cinehub")
     }
 }
