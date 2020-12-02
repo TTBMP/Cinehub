@@ -5,22 +5,13 @@
 plugins {
     // Support convention plugins written in Kotlin. Convention plugins are build scripts in 'src/main' that automatically become available as plugins in the main build.
     `kotlin-dsl`
-    id("org.sonarqube") version "3.0"
 }
 
 repositories {
     // Use the plugin portal to apply community plugins in convention plugins.
-    mavenCentral()
     gradlePluginPortal()
 }
 
 dependencies {
-    implementation("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.0")
-}
-
-sonarqube {
-    properties {
-        property("sonar.sourceEncoding", "UTF-8")
-        property("sonar.projectKey", "TTBMP_Cinehub")
-    }
+    implementation("org.sonarsource.scanner.gradle", "sonarqube-gradle-plugin", "3.0")
 }
