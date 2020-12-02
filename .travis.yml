@@ -12,7 +12,7 @@ before_install:
 
 script:
   - "./gradlew build"
-  - "./gradlew sonarqube"
+  - "./gradlew sonarqube --debug"
 
 env:
   global:
