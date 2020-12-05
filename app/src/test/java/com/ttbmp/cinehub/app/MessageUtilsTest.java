@@ -9,6 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MessageUtilsTest {
     @Test public void testGetMessage() {
-        assertEquals("Hello world!", MessageUtils.getMessage());
+        String message = "Hello, JavaFX " +
+                System.getProperty("javafx.version") +
+                "\nRunning on Java " +
+                System.getProperty("java.version") +
+                ".";
+        assertEquals(message, MessageUtils.getMessage());
     }
 }
