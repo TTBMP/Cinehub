@@ -5,7 +5,6 @@
 plugins {
     // Apply the java Plugin to add support for Java.
     java
-    org.sonarqube
 }
 
 repositories {
@@ -24,11 +23,4 @@ dependencies {
 tasks.test {
     // Use junit platform for unit tests.
     useJUnitPlatform()
-}
-
-sonarqube {
-    properties {
-        property("sonar.sourceEncoding", "UTF-8")
-        property("sonar.projectKey", "TTBMP_Cinehub")
-    }
 }
