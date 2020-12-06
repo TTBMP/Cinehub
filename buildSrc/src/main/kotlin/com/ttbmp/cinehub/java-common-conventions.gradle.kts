@@ -13,6 +13,8 @@ repositories {
 }
 
 dependencies {
+    implementation("javax", "javaee-api", "8.0.1")
+    
     // Use JUnit Jupiter API for testing.
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
 
