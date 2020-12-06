@@ -2,6 +2,7 @@ package com.ttbmp.cinehub
 
 plugins {
     java
+    jacoco
 }
 
 repositories {
@@ -15,6 +16,18 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter","junit-jupiter-engine")
 }
 
+jacoco {
+    toolVersion = "0.8.6"
+}
+
 tasks.test {
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.isEnabled = true
+    }
 }
