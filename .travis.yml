@@ -14,5 +14,6 @@ before_install:
   - chmod +x gradlew
 
 script:
+  - "google-chrome-stable --headless --disable-gpu --remote-debugging-port=4444 http://localhost &"
   - "./gradlew build"
   - "./gradlew sonarqube"
