@@ -18,17 +18,17 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MainPageTest {
+class MainPageTest {
     private WebDriver driver;
     private MainPage mainPage;
 
     @BeforeAll
-    public static void setupClass() {
+    static void setupClass() {
         WebDriverManager.chromedriver().setup();
     }
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -38,12 +38,12 @@ public class MainPageTest {
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         driver.quit();
     }
 
     @Test
-    public void search() {
+    void search() {
         mainPage.searchButton.click();
 
         WebElement searchField = driver.findElement(By.id("header-search"));
@@ -57,7 +57,7 @@ public class MainPageTest {
     }
 
     @Test
-    public void toolsMenu() {
+    void toolsMenu() {
         new Actions(driver)
                 .moveToElement(mainPage.toolsMenu)
                 .perform();
@@ -67,7 +67,7 @@ public class MainPageTest {
     }
 
     @Test
-    public void navigationToAllTools() {
+    void navigationToAllTools() {
         mainPage.seeAllToolsButton.click();
 
         WebElement productsList = driver.findElement(By.className("products-list"));

@@ -4,6 +4,7 @@ jdk:
   - openjdk11
 
 addons:
+  chrome: stable
   sonarcloud:
     organization: ttbmp
     token:
