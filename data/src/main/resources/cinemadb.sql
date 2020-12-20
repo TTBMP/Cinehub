@@ -355,245 +355,152 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Biglietto`
     ENGINE = InnoDB;
 
 SHOW WARNINGS;
-USE `cinemadb`;
 
 -- -----------------------------------------------------
--- procedure filmAttivi
--- -----------------------------------------------------
-
-USE `cinemadb`;
-DROP procedure IF EXISTS `cinemadb`.`filmAttivi`;
-SHOW WARNINGS;
-
-DELIMITER $$
-USE `cinemadb`$$
-CREATE PROCEDURE `filmAttivi`()
-BEGIN
-    select * from `cinemadb`.film where attivo = True;
-END$$
-
-DELIMITER ;
-SHOW WARNINGS;
-
--- -----------------------------------------------------
--- procedure login
+-- Insert mock data
 -- -----------------------------------------------------
 
 USE `cinemadb`;
-DROP procedure IF EXISTS `cinemadb`.`login`;
-SHOW WARNINGS;
-
-DELIMITER $$
-USE `cinemadb`$$
-CREATE PROCEDURE `login`(IN emailParam VARCHAR(255), IN passwordParam VARCHAR(255))
-BEGIN
-    select *
-    from `cinemadb`.`utente`
-    where email = emailParam
-      and password = passwordParam;
-END$$
-
-DELIMITER ;
-SHOW WARNINGS;
-
--- -----------------------------------------------------
--- procedure rimborso
--- -----------------------------------------------------
-
-USE `cinemadb`;
-DROP procedure IF EXISTS `cinemadb`.`rimborso`;
-SHOW WARNINGS;
-
-DELIMITER $$
-USE `cinemadb`$$
-CREATE PROCEDURE `rimborso`(IN idBigliettoParam INT)
-BEGIN
-    update `cinemadb`.`biglietto`
-    set stato = "rimborsato"
-    where id = idBigliettoParam;
-END$$
-
-DELIMITER ;
-SHOW WARNINGS;
-
--- -----------------------------------------------------
--- procedure trovaPostiLiberi
--- -----------------------------------------------------
-
-USE `cinemadb`;
-DROP procedure IF EXISTS `cinemadb`.`trovaPostiLiberi`;
-SHOW WARNINGS;
-
-DELIMITER $$
-USE `cinemadb`$$
-CREATE PROCEDURE `trovaPostiLiberi`(IN idProiezioneParam INT)
-BEGIN
-    select *
-    from `cinemadb`.`Posto`,
-         `cinemadb`.`Sala`,
-         `cinemadb`.`Proiezione`
-    where `Proiezione`.`id` = idProiezioneParam
-      and `Sala`.`id` = Proiezione.idSala
-      and `Posto`.`idSala` = Sala.id
-      and `Posto`.`id` not in (
-        select `Posto`.`id`
-        from `cinemadb`.`Biglietto`,
-             `cinemadb`.`Posto`
-        where `Biglietto`.`idProiezione` = idProiezioneParam
-          and `Posto`.`id` = `Biglietto`.`idPosto`
-          and `Biglietto`.`stato` = "rimborsato"
-    );
-END$$
-
-DELIMITER ;
-SHOW WARNINGS;
-
--- -----------------------------------------------------
--- procedure trovaProiezioni
--- -----------------------------------------------------
-
-USE `cinemadb`;
-DROP procedure IF EXISTS `cinemadb`.`trovaProiezioni`;
-SHOW WARNINGS;
-
-DELIMITER $$
-USE `cinemadb`$$
-CREATE PROCEDURE `trovaProiezioni`(IN idFilmParam INT)
-BEGIN
-    select *
-    from `cinemadb`.`Proiezione`
-    where Proiezione.idFilm = idFilmParam
-      and Proiezione.inizio > now();
-END$$
-
-DELIMITER ;
-SHOW WARNINGS;
-
--- -----------------------------------------------------
--- procedure popola
--- -----------------------------------------------------
-
-USE `cinemadb`;
-DROP procedure IF EXISTS `cinemadb`.`popola`;
-SHOW WARNINGS;
-
-DELIMITER $$
-USE `cinemadb`$$
-CREATE PROCEDURE `popola`()
-BEGIN
-    /* Utente */
-    INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
-    VALUES ('fab', 'bur', 'f@b.c', 'pippo', 'amministratore');
-    INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
-    VALUES ('ivan', 'pal', 'i@p.c', 'pippo', 'proiezionista');
-    INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
-    VALUES ('max', 'max', 'm@m.c', 'pippo', 'maschera');
-    INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
-    VALUES ('cli', 'ent', 'c@e.c', 'pippo', 'cliente');
+/* Utente */
+INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
+VALUES ('fab', 'bur', 'f@b.c', 'pippo', 'amministratore');
+INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
+VALUES ('ivan', 'pal', 'i@p.c', 'pippo', 'proiezionista');
+INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
+VALUES ('max', 'max', 'm@m.c', 'pippo', 'maschera');
+INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
+VALUES ('cli', 'ent', 'c@e.c', 'pippo', 'cliente');
 /* Cinema */
-    INSERT INTO `cinemadb`.`cinema` (`nome`, `indirizzo`, `telefono`)
-    VALUES ('multisala', 'via le mani dal naso', '00000');
-    INSERT INTO `cinemadb`.`cinema` (`nome`, `indirizzo`, `telefono`) VALUES ('monosala', 'via etrusca', '00001');
-    INSERT INTO `cinemadb`.`cinema` (`nome`, `indirizzo`, `telefono`) VALUES ('microsala', 'via dante', '00002');
-    INSERT INTO `cinemadb`.`cinema` (`nome`, `indirizzo`, `telefono`) VALUES ('supersala', 'via roma', '00003');
-    INSERT INTO `cinemadb`.`cinema` (`nome`, `indirizzo`, `telefono`) VALUES ('megasala', 'via milano', '00004');
+INSERT INTO `cinemadb`.`cinema` (`nome`, `indirizzo`, `telefono`)
+VALUES ('multisala', 'via le mani dal naso', '00000');
+INSERT INTO `cinemadb`.`cinema` (`nome`, `indirizzo`, `telefono`)
+VALUES ('monosala', 'via etrusca', '00001');
+INSERT INTO `cinemadb`.`cinema` (`nome`, `indirizzo`, `telefono`)
+VALUES ('microsala', 'via dante', '00002');
+INSERT INTO `cinemadb`.`cinema` (`nome`, `indirizzo`, `telefono`)
+VALUES ('supersala', 'via roma', '00003');
+INSERT INTO `cinemadb`.`cinema` (`nome`, `indirizzo`, `telefono`)
+VALUES ('megasala', 'via milano', '00004');
 /* Sala */
-    INSERT INTO `cinemadb`.`sala` (`idCinema`) VALUES ('1');
-    INSERT INTO `cinemadb`.`sala` (`idCinema`) VALUES ('1');
-    INSERT INTO `cinemadb`.`sala` (`idCinema`) VALUES ('2');
-    INSERT INTO `cinemadb`.`sala` (`idCinema`) VALUES ('1');
-    INSERT INTO `cinemadb`.`sala` (`idCinema`) VALUES ('2');
-    INSERT INTO `cinemadb`.`sala` (`idCinema`) VALUES ('2');
+INSERT INTO `cinemadb`.`sala` (`idCinema`)
+VALUES ('1');
+INSERT INTO `cinemadb`.`sala` (`idCinema`)
+VALUES ('1');
+INSERT INTO `cinemadb`.`sala` (`idCinema`)
+VALUES ('2');
+INSERT INTO `cinemadb`.`sala` (`idCinema`)
+VALUES ('1');
+INSERT INTO `cinemadb`.`sala` (`idCinema`)
+VALUES ('2');
+INSERT INTO `cinemadb`.`sala` (`idCinema`)
+VALUES ('2');
 /* Dipendente */
-    INSERT INTO `cinemadb`.`dipendente` (`idUtente`, `idCinema`, `oreSettimanali`) VALUES ('1', '2', '36');
-    INSERT INTO `cinemadb`.`dipendente` (`idUtente`, `idCinema`, `oreSettimanali`) VALUES ('2', '1', '30');
+INSERT INTO `cinemadb`.`dipendente` (`idUtente`, `idCinema`, `oreSettimanali`)
+VALUES ('1', '2', '36');
+INSERT INTO `cinemadb`.`dipendente` (`idUtente`, `idCinema`, `oreSettimanali`)
+VALUES ('2', '1', '30');
 /* Posto */
-    INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`) VALUES ('1', 'A', '1');
-    INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`) VALUES ('2', 'A', '1');
-    INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`) VALUES ('3', 'A', '1');
-    INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`) VALUES ('1', 'B', '3');
-    INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`) VALUES ('2', 'B', '3');
-    INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`) VALUES ('3', 'B', '3');
-    INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`) VALUES ('1', 'A', '3');
-    INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`) VALUES ('2', 'A', '3');
-    INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`) VALUES ('3', 'A', '3');
-    INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`) VALUES ('1', 'B', '1');
-    INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`) VALUES ('2', 'B', '1');
-    INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`) VALUES ('3', 'B', '1');
+INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`)
+VALUES ('1', 'A', '1');
+INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`)
+VALUES ('2', 'A', '1');
+INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`)
+VALUES ('3', 'A', '1');
+INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`)
+VALUES ('1', 'B', '3');
+INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`)
+VALUES ('2', 'B', '3');
+INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`)
+VALUES ('3', 'B', '3');
+INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`)
+VALUES ('1', 'A', '3');
+INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`)
+VALUES ('2', 'A', '3');
+INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`)
+VALUES ('3', 'A', '3');
+INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`)
+VALUES ('1', 'B', '1');
+INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`)
+VALUES ('2', 'B', '1');
+INSERT INTO `cinemadb`.`posto` (`Numero`, `Fila`, `idSala`)
+VALUES ('3', 'B', '1');
 /* Richiesta ferie */
-    INSERT INTO `cinemadb`.`richiestaferie` (`richiedenteId`, `Stato`, `inizio`, `fine`)
-    VALUES ('1', 'approvata', '2020-12-15 00:00:00', '2020-12-30 13:00:00');
-    INSERT INTO `cinemadb`.`richiestaferie` (`richiedenteId`, `Stato`, `inizio`, `fine`)
-    VALUES ('2', 'respinta', '2020-12-16 10:00:00', '2021-01-15 20:00:00');
-    INSERT INTO `cinemadb`.`richiestaferie` (`richiedenteId`, `Stato`, `inizio`, `fine`)
-    VALUES ('1', 'attesa', '2020-11-15 00:00:00', '2020-12-15 20:00:00');
+INSERT INTO `cinemadb`.`richiestaferie` (`richiedenteId`, `Stato`, `inizio`, `fine`)
+VALUES ('1', 'approvata', '2020-12-15 00:00:00', '2020-12-30 13:00:00');
+INSERT INTO `cinemadb`.`richiestaferie` (`richiedenteId`, `Stato`, `inizio`, `fine`)
+VALUES ('2', 'respinta', '2020-12-16 10:00:00', '2021-01-15 20:00:00');
+INSERT INTO `cinemadb`.`richiestaferie` (`richiedenteId`, `Stato`, `inizio`, `fine`)
+VALUES ('1', 'attesa', '2020-11-15 00:00:00', '2020-12-15 20:00:00');
 /* Turno */
-    INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `idDipendente`)
-    VALUES ('2020-12-15 12:00:00', '2020-12-15 18:00:00', '1');
-    INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `idDipendente`)
-    VALUES ('2020-12-16 08:00:00', '2020-12-16 12:00:00', '1');
-    INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `idDipendente`)
-    VALUES ('2020-11-15 18:00:00', '2022-12-16 00:00:00', '2');
-    INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `idDipendente`)
-    VALUES ('2020-12-17 10:00:00', '2020-12-18 00:00:00', '2');
+INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `idDipendente`)
+VALUES ('2020-12-15 12:00:00', '2020-12-15 18:00:00', '1');
+INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `idDipendente`)
+VALUES ('2020-12-16 08:00:00', '2020-12-16 12:00:00', '1');
+INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `idDipendente`)
+VALUES ('2020-11-15 18:00:00', '2022-12-16 00:00:00', '2');
+INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `idDipendente`)
+VALUES ('2020-12-17 10:00:00', '2020-12-18 00:00:00', '2');
 /* Richiesta cambio */
-    INSERT INTO `cinemadb`.`richiestacambio` (`Stato`, `idTurnoAttuale`, `idTurnoRichiesto`, `Tipo`)
-    VALUES ('approvata', '1', '3', 'cambio');
-    INSERT INTO `cinemadb`.`richiestacambio` (`Stato`, `idTurnoAttuale`, `idTurnoRichiesto`, `Tipo`)
-    VALUES ('respinta', '2', '4', 'scambio');
-    INSERT INTO `cinemadb`.`richiestacambio` (`Stato`, `idTurnoAttuale`, `idTurnoRichiesto`, `Tipo`)
-    VALUES ('attesa', '3', '2', 'scambio');
-    INSERT INTO `cinemadb`.`richiestacambio` (`Stato`, `idTurnoAttuale`, `idTurnoRichiesto`, `Tipo`)
-    VALUES ('attesa', '3', '2', 'cambio');
-    /* Proiezionista */
-    INSERT INTO `cinemadb`.`proiezionista` (`idDipendente`) VALUES ('2');
+INSERT INTO `cinemadb`.`richiestacambio` (`Stato`, `idTurnoAttuale`, `idTurnoRichiesto`, `Tipo`)
+VALUES ('approvata', '1', '3', 'cambio');
+INSERT INTO `cinemadb`.`richiestacambio` (`Stato`, `idTurnoAttuale`, `idTurnoRichiesto`, `Tipo`)
+VALUES ('respinta', '2', '4', 'scambio');
+INSERT INTO `cinemadb`.`richiestacambio` (`Stato`, `idTurnoAttuale`, `idTurnoRichiesto`, `Tipo`)
+VALUES ('attesa', '3', '2', 'scambio');
+INSERT INTO `cinemadb`.`richiestacambio` (`Stato`, `idTurnoAttuale`, `idTurnoRichiesto`, `Tipo`)
+VALUES ('attesa', '3', '2', 'cambio');
+/* Proiezionista */
+INSERT INTO `cinemadb`.`proiezionista` (`idDipendente`)
+VALUES ('2');
 /* Film */
-    INSERT INTO `cinemadb`.`film` (`id`, `durata`, `attivo`) VALUES ('1', '01:30:00', True);
-    INSERT INTO `cinemadb`.`film` (`id`, `durata`, `attivo`) VALUES ('2', '01:00:00', True);
-    INSERT INTO `cinemadb`.`film` (`id`, `durata`, `attivo`) VALUES ('3', '00:30:00', True);
-    INSERT INTO `cinemadb`.`film` (`id`, `durata`, `attivo`) VALUES ('4', '02:00:00', False);
+INSERT INTO `cinemadb`.`film` (`id`, `durata`, `attivo`)
+VALUES ('1', '01:30:00', True);
+INSERT INTO `cinemadb`.`film` (`id`, `durata`, `attivo`)
+VALUES ('2', '01:00:00', True);
+INSERT INTO `cinemadb`.`film` (`id`, `durata`, `attivo`)
+VALUES ('3', '00:30:00', True);
+INSERT INTO `cinemadb`.`film` (`id`, `durata`, `attivo`)
+VALUES ('4', '02:00:00', False);
 /* Proiezione */
-    INSERT INTO `cinemadb`.`proiezione` (`idSala`, `idProiezionista`, `idFilm`, `inizio`)
-    VALUES ('1', '2', '1', '2020-11-20 22:00:00');
-    INSERT INTO `cinemadb`.`proiezione` (`idSala`, `idProiezionista`, `idFilm`, `inizio`)
-    VALUES ('3', '2', '1', '2020-12-16 18:00:00');
-    INSERT INTO `cinemadb`.`proiezione` (`idSala`, `idProiezionista`, `idFilm`, `inizio`)
-    VALUES ('1', '2', '3', '2020-11-16 00:00:00');
-    INSERT INTO `cinemadb`.`proiezione` (`idSala`, `idProiezionista`, `idFilm`, `inizio`)
-    VALUES ('2', '2', '1', '2021-11-20 22:00:00');
+INSERT INTO `cinemadb`.`proiezione` (`idSala`, `idProiezionista`, `idFilm`, `inizio`)
+VALUES ('1', '2', '1', '2020-11-20 22:00:00');
+INSERT INTO `cinemadb`.`proiezione` (`idSala`, `idProiezionista`, `idFilm`, `inizio`)
+VALUES ('3', '2', '1', '2020-12-16 18:00:00');
+INSERT INTO `cinemadb`.`proiezione` (`idSala`, `idProiezionista`, `idFilm`, `inizio`)
+VALUES ('1', '2', '3', '2020-11-16 00:00:00');
+INSERT INTO `cinemadb`.`proiezione` (`idSala`, `idProiezionista`, `idFilm`, `inizio`)
+VALUES ('2', '2', '1', '2021-11-20 22:00:00');
 /* Biglietto */
-    INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
-    VALUES ('1', '1', '4', '6.5', 'utilizzato');
-    INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
-    VALUES ('4', '2', '4', '6', 'rimborsato');
-    INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
-    VALUES ('3', '3', '3', '12', 'utilizzato');
-    INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
-    VALUES ('2', '4', '2', '2', 'attivo');
-    INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
-    VALUES ('5', '1', '2', '5', 'attivo');
-    INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
-    VALUES ('6', '2', '1', '9', 'utilizzato');
-    INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
-    VALUES ('9', '3', '1', '8', 'rimborsato');
-    INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
-    VALUES ('4', '2', '4', '6', 'rimborsato');
-    INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
-    VALUES ('4', '2', '4', '6', 'attivo');
-    INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
-    VALUES ('4', '2', '4', '6', 'utilizzato');
-    INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
-    VALUES ('10', '4', '2', '7', 'attivo');
+INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+VALUES ('1', '1', '4', '6.5', 'utilizzato');
+INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+VALUES ('4', '2', '4', '6', 'rimborsato');
+INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+VALUES ('3', '3', '3', '12', 'utilizzato');
+INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+VALUES ('2', '4', '2', '2', 'attivo');
+INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+VALUES ('5', '1', '2', '5', 'attivo');
+INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+VALUES ('6', '2', '1', '9', 'utilizzato');
+INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+VALUES ('9', '3', '1', '8', 'rimborsato');
+INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+VALUES ('4', '2', '4', '6', 'rimborsato');
+INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+VALUES ('4', '2', '4', '6', 'attivo');
+INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+VALUES ('4', '2', '4', '6', 'utilizzato');
+INSERT INTO `cinemadb`.`biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+VALUES ('10', '4', '2', '7', 'attivo');
 /* Carta di credito */
-    INSERT INTO `cinemadb`.`cartadicredito` (`idUtente`, `numero`, `dataScadenza`, `cvv`)
-    VALUES ('2', '000000001', '2020-10-01', '123');
-    INSERT INTO `cinemadb`.`cartadicredito` (`idUtente`, `numero`, `dataScadenza`, `cvv`)
-    VALUES ('3', '000000002', '2020-11-09', '456');
-    INSERT INTO `cinemadb`.`cartadicredito` (`idUtente`, `numero`, `dataScadenza`, `cvv`)
-    VALUES ('4', '000000003', '2020-09-08', '223');
-END$$
+INSERT INTO `cinemadb`.`cartadicredito` (`idUtente`, `numero`, `dataScadenza`, `cvv`)
+VALUES ('2', '000000001', '2020-10-01', '123');
+INSERT INTO `cinemadb`.`cartadicredito` (`idUtente`, `numero`, `dataScadenza`, `cvv`)
+VALUES ('3', '000000002', '2020-11-09', '456');
+INSERT INTO `cinemadb`.`cartadicredito` (`idUtente`, `numero`, `dataScadenza`, `cvv`)
+VALUES ('4', '000000003', '2020-09-08', '223');
 
-DELIMITER ;
 SHOW WARNINGS;
 
 SET SQL_MODE = @OLD_SQL_MODE;
