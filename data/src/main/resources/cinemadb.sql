@@ -483,13 +483,13 @@ USE `cinemadb`$$
 CREATE PROCEDURE `popola`()
 BEGIN
     /* Utente */
-    INSERT INTO `cinemadb`.`utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
+    INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
     VALUES ('fab', 'bur', 'f@b.c', 'pippo', 'amministratore');
-    INSERT INTO `cinemadb`.`utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
+    INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
     VALUES ('ivan', 'pal', 'i@p.c', 'pippo', 'proiezionista');
-    INSERT INTO `cinemadb`.`utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
+    INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
     VALUES ('max', 'max', 'm@m.c', 'pippo', 'maschera');
-    INSERT INTO `cinemadb`.`utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
+    INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
     VALUES ('cli', 'ent', 'c@e.c', 'pippo', 'cliente');
 /* Cinema */
     INSERT INTO `cinemadb`.`Cinema` (`nome`, `indirizzo`, `telefono`)
