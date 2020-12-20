@@ -388,7 +388,7 @@ USE `cinemadb`$$
 CREATE PROCEDURE `login`(IN emailParam VARCHAR(255), IN passwordParam VARCHAR(255))
 BEGIN
     select *
-    from `cinemadb`.utente
+    from `cinemadb`.`utente`
     where email = emailParam
       and password = passwordParam;
 END$$
@@ -438,11 +438,11 @@ BEGIN
       and `Posto`.`id` not in (
         select `Posto`.`id`
         from `cinemadb`.`Biglietto`,
-            `cinemadb`.`Posto`
-       where `Biglietto`.`idProiezione` = idProiezioneParam
-         and `Posto`.`id` = `Biglietto`.`idPosto`
-         and `Biglietto`.`stato` = "rimborsato"
-   );
+             `cinemadb`.`Posto`
+        where `Biglietto`.`idProiezione` = idProiezioneParam
+          and `Posto`.`id` = `Biglietto`.`idPosto`
+          and `Biglietto`.`stato` = "rimborsato"
+    );
 END$$
 
 DELIMITER ;
@@ -482,13 +482,13 @@ USE `cinemadb`$$
 CREATE PROCEDURE `popola`()
 BEGIN
     /* Utente */
-    INSERT INTO `cinemadb`.`utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
+    INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
     VALUES ('fab', 'bur', 'f@b.c', 'pippo', 'amministratore');
-    INSERT INTO `cinemadb`.`utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
+    INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
     VALUES ('ivan', 'pal', 'i@p.c', 'pippo', 'proiezionista');
-    INSERT INTO `cinemadb`.`utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
+    INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
     VALUES ('max', 'max', 'm@m.c', 'pippo', 'maschera');
-    INSERT INTO `cinemadb`.`utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
+    INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
     VALUES ('cli', 'ent', 'c@e.c', 'pippo', 'cliente');
 /* Cinema */
     INSERT INTO `cinemadb`.`cinema` (`nome`, `indirizzo`, `telefono`)
@@ -603,4 +603,4 @@ SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 -- Call populate procedure
 -- -----------------------------------------------------
-call `cinemadb`.`popola`();
+# call `cinemadb`.`popola`();
