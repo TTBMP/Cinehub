@@ -2,32 +2,30 @@
 
 SET @OLD_UNIQUE_CHECKS = @@UNIQUE_CHECKS, UNIQUE_CHECKS = 0;
 SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0;
-SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE =
+        'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- ----------------------------------------------------
 -- Create User
 -- -----------------------------------------------------
 CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';
-GRANT ALL PRIVILEGES ON * . * TO 'admin'@'localhost';
+GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost';
 FLUSH PRIVILEGES;
+-- MySQL Workbench Forward Engineering
+
 -- -----------------------------------------------------
 -- Schema cinemadb
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `cinemadb`;
 
 -- -----------------------------------------------------
 -- Schema cinemadb
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `cinemadb` DEFAULT CHARACTER SET utf8;
-SHOW WARNINGS;
 USE `cinemadb`;
 
 -- -----------------------------------------------------
 -- Table `cinemadb`.`Cinema`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Cinema`;
-
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `cinemadb`.`Cinema`
 (
     `id`        INT         NOT NULL AUTO_INCREMENT,
@@ -38,14 +36,10 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Cinema`
 )
     ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `cinemadb`.`Sala`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Sala`;
-
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `cinemadb`.`Sala`
 (
     `id`            INT NOT NULL AUTO_INCREMENT,
@@ -61,14 +55,10 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Sala`
 )
     ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `cinemadb`.`Posto`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Posto`;
-
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `cinemadb`.`Posto`
 (
     `id`     INT        NOT NULL AUTO_INCREMENT,
@@ -85,14 +75,10 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Posto`
 )
     ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `cinemadb`.`Film`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Film`;
-
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `cinemadb`.`Film`
 (
     `id`     INT        NOT NULL AUTO_INCREMENT,
@@ -102,14 +88,10 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Film`
 )
     ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `cinemadb`.`Utente`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Utente`;
-
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `cinemadb`.`Utente`
 (
     `id`       INT                                                             NOT NULL AUTO_INCREMENT,
@@ -121,14 +103,10 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Utente`
     PRIMARY KEY (`id`)
 );
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `cinemadb`.`Dipendente`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Dipendente`;
-
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `cinemadb`.`Dipendente`
 (
     `idUtente`       INT NOT NULL AUTO_INCREMENT,
@@ -150,14 +128,10 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Dipendente`
 )
     ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `cinemadb`.`Proiezionista`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Proiezionista`;
-
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `cinemadb`.`Proiezionista`
 (
     `idDipendente` INT NOT NULL AUTO_INCREMENT,
@@ -170,14 +144,10 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Proiezionista`
 )
     ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `cinemadb`.`Proiezione`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Proiezione`;
-
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `cinemadb`.`Proiezione`
 (
     `id`              INT      NOT NULL AUTO_INCREMENT,
@@ -209,14 +179,10 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Proiezione`
 )
     ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `cinemadb`.`Turno`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Turno`;
-
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `cinemadb`.`Turno`
 (
     `id`           INT      NOT NULL AUTO_INCREMENT,
@@ -233,14 +199,10 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Turno`
 )
     ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `cinemadb`.`Biglietto`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Biglietto`;
-
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `cinemadb`.`Biglietto`
 (
     `id`           INT                                         NOT NULL AUTO_INCREMENT,
@@ -271,14 +233,10 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Biglietto`
 )
     ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `cinemadb`.`CartaDiCredito`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`CartaDiCredito`;
-
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `cinemadb`.`CartaDiCredito`
 (
     `id`           INT  NOT NULL AUTO_INCREMENT,
@@ -294,14 +252,10 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`CartaDiCredito`
 )
     ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `cinemadb`.`RichiestaCambio`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`RichiestaCambio`;
-
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `cinemadb`.`RichiestaCambio`
 (
     `id`             INT                                      NOT NULL AUTO_INCREMENT,
@@ -325,14 +279,10 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`RichiestaCambio`
 )
     ENGINE = InnoDB;
 
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `cinemadb`.`RichiestaFerie`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`RichiestaFerie`;
-
-SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `cinemadb`.`RichiestaFerie`
 (
     `id`          INT                                      NOT NULL AUTO_INCREMENT,
@@ -350,16 +300,11 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`RichiestaFerie`
 )
     ENGINE = InnoDB;
 
-SHOW WARNINGS;
 USE `cinemadb`;
 
 -- -----------------------------------------------------
 -- procedure popola
 -- -----------------------------------------------------
-
-USE `cinemadb`;
-DROP procedure IF EXISTS `cinemadb`.`popola`;
-SHOW WARNINGS;
 
 DELIMITER $$
 USE `cinemadb`$$
@@ -476,15 +421,10 @@ BEGIN
 END$$
 
 DELIMITER ;
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- procedure login
 -- -----------------------------------------------------
-
-USE `cinemadb`;
-DROP procedure IF EXISTS `cinemadb`.`login`;
-SHOW WARNINGS;
 
 DELIMITER $$
 USE `cinemadb`$$
@@ -497,15 +437,10 @@ BEGIN
 END$$
 
 DELIMITER ;
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- procedure rimborso
 -- -----------------------------------------------------
-
-USE `cinemadb`;
-DROP procedure IF EXISTS `cinemadb`.`rimborso`;
-SHOW WARNINGS;
 
 DELIMITER $$
 USE `cinemadb`$$
@@ -517,15 +452,10 @@ BEGIN
 END$$
 
 DELIMITER ;
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- procedure filmAttivi
 -- -----------------------------------------------------
-
-USE `cinemadb`;
-DROP procedure IF EXISTS `cinemadb`.`filmAttivi`;
-SHOW WARNINGS;
 
 DELIMITER $$
 USE `cinemadb`$$
@@ -535,15 +465,10 @@ BEGIN
 END$$
 
 DELIMITER ;
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- procedure trovaProiezioni
 -- -----------------------------------------------------
-
-USE `cinemadb`;
-DROP procedure IF EXISTS `cinemadb`.`trovaProiezioni`;
-SHOW WARNINGS;
 
 DELIMITER $$
 USE `cinemadb`$$
@@ -556,15 +481,10 @@ BEGIN
 END$$
 
 DELIMITER ;
-SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- procedure trovaPostiLiberi
 -- -----------------------------------------------------
-
-USE `cinemadb`;
-DROP procedure IF EXISTS `cinemadb`.`trovaPostiLiberi`;
-SHOW WARNINGS;
 
 DELIMITER $$
 USE `cinemadb`$$
@@ -588,90 +508,16 @@ BEGIN
 END$$
 
 DELIMITER ;
-SHOW WARNINGS;
-SET SQL_MODE = '';
-GRANT USAGE ON *.* TO amministratore;
-DROP USER amministratore;
-SET SQL_MODE =
-        'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-SHOW WARNINGS;
-CREATE USER 'amministratore' IDENTIFIED BY 'amministratore';
-
-SHOW WARNINGS;
-SET SQL_MODE = '';
-GRANT USAGE ON *.* TO cliente;
-DROP USER cliente;
-SET SQL_MODE =
-        'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-SHOW WARNINGS;
-CREATE USER 'cliente' IDENTIFIED BY 'cliente';
-
 GRANT SELECT ON TABLE `cinemadb`.`Cinema` TO 'cliente';
 GRANT SELECT ON TABLE `cinemadb`.`Sala` TO 'cliente';
 GRANT SELECT ON TABLE `cinemadb`.`Posto` TO 'cliente';
 GRANT SELECT ON TABLE `cinemadb`.`Proiezione` TO 'cliente';
 GRANT SELECT ON TABLE `cinemadb`.`Film` TO 'cliente';
-SHOW WARNINGS;
-SET SQL_MODE = '';
-GRANT USAGE ON *.* TO visitatore;
-DROP USER visitatore;
-SET SQL_MODE =
-        'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-SHOW WARNINGS;
-CREATE USER 'visitatore' IDENTIFIED BY 'Visitatore';
-
-SHOW WARNINGS;
-SET SQL_MODE = '';
-GRANT USAGE ON *.* TO maschera;
-DROP USER maschera;
-SET SQL_MODE =
-        'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-SHOW WARNINGS;
-CREATE USER 'maschera' IDENTIFIED BY 'maschera';
-
 GRANT ALL ON TABLE `cinemadb`.`Biglietto` TO 'maschera';
-SHOW WARNINGS;
-SET SQL_MODE = '';
-GRANT USAGE ON *.* TO proiezionista;
-DROP USER proiezionista;
-SET SQL_MODE =
-        'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-SHOW WARNINGS;
-CREATE USER 'proiezionista' IDENTIFIED BY 'Proiezionista';
-
-SHOW WARNINGS;
 
 SET SQL_MODE = @OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
-
--- -----------------------------------------------------
--- Data for table `cinemadb`.`Cinema`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `cinemadb`;
-INSERT INTO `cinemadb`.`Cinema` (`id`, `nome`, `indirizzo`, `telefono`)
-VALUES (1, NULL, NULL, NULL);
-INSERT INTO `cinemadb`.`Cinema` (`id`, `nome`, `indirizzo`, `telefono`)
-VALUES (2, NULL, NULL, NULL);
-INSERT INTO `cinemadb`.`Cinema` (`id`, `nome`, `indirizzo`, `telefono`)
-VALUES (3, NULL, NULL, NULL);
-INSERT INTO `cinemadb`.`Cinema` (`id`, `nome`, `indirizzo`, `telefono`)
-VALUES (4, NULL, NULL, NULL);
-INSERT INTO `cinemadb`.`Cinema` (`id`, `nome`, `indirizzo`, `telefono`)
-VALUES (5, NULL, NULL, NULL);
-INSERT INTO `cinemadb`.`Cinema` (`id`, `nome`, `indirizzo`, `telefono`)
-VALUES (6, NULL, NULL, NULL);
-INSERT INTO `cinemadb`.`Cinema` (`id`, `nome`, `indirizzo`, `telefono`)
-VALUES (7, NULL, NULL, NULL);
-INSERT INTO `cinemadb`.`Cinema` (`id`, `nome`, `indirizzo`, `telefono`)
-VALUES (8, NULL, NULL, NULL);
-INSERT INTO `cinemadb`.`Cinema` (`id`, `nome`, `indirizzo`, `telefono`)
-VALUES (9, NULL, NULL, NULL);
-INSERT INTO `cinemadb`.`Cinema` (`id`, `nome`, `indirizzo`, `telefono`)
-VALUES (10, NULL, NULL, NULL);
-
-COMMIT;
 
 -- -----------------------------------------------------
 -- Call populate procedure
