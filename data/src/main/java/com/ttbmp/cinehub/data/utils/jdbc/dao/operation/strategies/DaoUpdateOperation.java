@@ -83,27 +83,36 @@ public class DaoUpdateOperation extends DaoOperation {
 
     private String getQueryTemplate() throws DaoMethodException {
         String dtoTableName = dtoType.getAnnotation(Entity.class).tableName();
-        return switch (updateStrategy) {
-            case OnConflictStrategy.ABORT -> String.format(
-                    "UPDATE %s SET %s = ? WHERE %s = ?",
-                    dtoTableName,
-                    String.join(" = ?, ", dtoColumnNameList),
-                    String.join(" = ?, ", dtoPrimaryKeyColumnNameList)
-            );
-            case OnConflictStrategy.IGNORE -> String.format(
-                    "UPDATE IGNORE %s SET %s = ? WHERE %s = ?",
-                    dtoTableName,
-                    String.join(" = ?, ", dtoColumnNameList),
-                    String.join(" = ?, ", dtoPrimaryKeyColumnNameList)
-            );
-            case OnConflictStrategy.REPLACE -> String.format(
-                    "REPLACE INTO %s (%s) VALUES (%s)",
-                    dtoTableName,
-                    String.join(", ", dtoColumnNameList),
-                    String.join(", ", Collections.nCopies(dtoColumnNameList.size(), "?"))
-            );
-            default -> throw new DaoMethodException();
-        };
+        String query;
+        switch (updateStrategy) {
+            case OnConflictStrategy.ABORT:
+                query = String.format(
+                        "UPDATE %s SET %s = ? WHERE %s = ?",
+                        dtoTableName,
+                        String.join(" = ?, ", dtoColumnNameList),
+                        String.join(" = ?, ", dtoPrimaryKeyColumnNameList)
+                );
+                break;
+            case OnConflictStrategy.IGNORE:
+                query = String.format(
+                        "UPDATE IGNORE %s SET %s = ? WHERE %s = ?",
+                        dtoTableName,
+                        String.join(" = ?, ", dtoColumnNameList),
+                        String.join(" = ?, ", dtoPrimaryKeyColumnNameList)
+                );
+                break;
+            case OnConflictStrategy.REPLACE:
+                query = String.format(
+                        "REPLACE INTO %s (%s) VALUES (%s)",
+                        dtoTableName,
+                        String.join(", ", dtoColumnNameList),
+                        String.join(", ", Collections.nCopies(dtoColumnNameList.size(), "?"))
+                );
+                break;
+            default:
+                throw new DaoMethodException();
+        }
+        return query;
     }
 
 }

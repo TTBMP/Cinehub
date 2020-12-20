@@ -22,6 +22,7 @@ before_install:
   - sudo mysql_upgrade
   - mysql --version
   - mysql -u root --password="" < data/src/main/resources/cinemadb.sql
+  - mysql -e call cinemadb.popola();
   - chmod +x gradlew
 
 script:

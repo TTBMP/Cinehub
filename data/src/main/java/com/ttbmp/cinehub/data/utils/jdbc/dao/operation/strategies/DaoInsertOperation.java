@@ -68,14 +68,23 @@ public class DaoInsertOperation extends DaoOperation {
     private String getQueryTemplate() throws DaoMethodException {
         String dtoTableName = dtoType.getAnnotation(Entity.class).tableName();
         int insertStrategy = method.getAnnotation(Insert.class).onConflict();
+        String expression;
+        switch (insertStrategy) {
+            case OnConflictStrategy.REPLACE:
+                expression = "REPLACE INTO ";
+                break;
+            case OnConflictStrategy.ABORT:
+                expression = "INSERT INTO ";
+                break;
+            case OnConflictStrategy.IGNORE:
+                expression = "INSERT IGNORE INTO ";
+                break;
+            default:
+                throw new DaoMethodException();
+        }
         return String.format(
                 "%s%s (%s) VALUES (%s)",
-                switch (insertStrategy) {
-                    case OnConflictStrategy.REPLACE -> "REPLACE INTO ";
-                    case OnConflictStrategy.ABORT -> "INSERT INTO ";
-                    case OnConflictStrategy.IGNORE -> "INSERT IGNORE INTO ";
-                    default -> throw new DaoMethodException();
-                },
+                expression,
                 dtoTableName,
                 String.join(", ", dtoColumnNameList),
                 String.join(", ", Collections.nCopies(dtoColumnNameList.size(), "?"))
