@@ -5,8 +5,8 @@ plugins {
 dependencies {
     api(project(":core"))
 
-    runtimeOnly("mysql","mysql-connector-java", "8.0.22")
+    runtimeOnly("mysql", "mysql-connector-java", "8.0.22")
 
-    testImplementation("org.junit.jupiter","junit-jupiter-api","5.6.2")
-    testRuntimeOnly("org.junit.jupiter","junit-jupiter-engine")
+    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.6.2")
+    testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine")
 }
