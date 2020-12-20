@@ -19,7 +19,7 @@ DROP SCHEMA IF EXISTS `cinemadb`;
 -- -----------------------------------------------------
 -- Schema cinemadb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `cinemadb` DEFAULT CHARACTER SET utf8;
+CREATE SCHEMA IF NOT EXISTS `cinemadb` DEFAULT CHARACTER SET UTF8MB4;
 SHOW WARNINGS;
 USE `cinemadb`;
 
@@ -227,7 +227,7 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Film`
 (
     `id`     INT         NOT NULL,
     `durata` VARCHAR(45) NOT NULL,
-    `attivo` TINYINT(1)  NOT NULL,
+    `attivo` TINYINT     NOT NULL,
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB;
@@ -369,7 +369,7 @@ DELIMITER $$
 USE `cinemadb`$$
 CREATE PROCEDURE `filmAttivi`()
 BEGIN
-    select * from cinemadb.film where attivo = True;
+    select * from `cinemadb`.film where attivo = True;
 END$$
 
 DELIMITER ;
@@ -388,7 +388,7 @@ USE `cinemadb`$$
 CREATE PROCEDURE `login`(IN emailParam VARCHAR(255), IN passwordParam VARCHAR(255))
 BEGIN
     select *
-    from cinemadb.utente
+    from `cinemadb`.utente
     where email = emailParam
       and password = passwordParam;
 END$$
@@ -408,7 +408,7 @@ DELIMITER $$
 USE `cinemadb`$$
 CREATE PROCEDURE `rimborso`(IN idBigliettoParam INT)
 BEGIN
-    update cinemadb.biglietto
+    update `cinemadb`.`biglietto`
     set stato = "rimborsato"
     where id = idBigliettoParam;
 END$$
@@ -429,20 +429,20 @@ USE `cinemadb`$$
 CREATE PROCEDURE `trovaPostiLiberi`(IN idProiezioneParam INT)
 BEGIN
     select *
-    from cinemadb.Posto,
-         cinemadb.Sala,
-         cinemadb.Proiezione
-    where Proiezione.id = idProiezioneParam
-      and Sala.id = Proiezione.idSala
-      and Posto.idSala = Sala.id
-      and Posto.id not in (
-        select Posto.id
-        from cinemadb.Biglietto,
-             cinemadb.Posto
-        where Biglietto.idProiezione = idProiezioneParam
-          and Posto.id = Biglietto.idPosto
-          and Biglietto.stato = "rimborsato"
-    );
+    from `cinemadb`.`Posto`,
+         `cinemadb`.`Sala`,
+         `cinemadb`.`Proiezione`
+    where `Proiezione`.`id` = idProiezioneParam
+      and `Sala`.`id` = Proiezione.idSala
+      and `Posto`.`idSala` = Sala.id
+      and `Posto`.`id` not in (
+        select `Posto`.`id`
+        from `cinemadb`.`Biglietto`,
+            `cinemadb`.`Posto`
+       where `Biglietto`.`idProiezione` = idProiezioneParam
+         and `Posto`.`id` = `Biglietto`.`idPosto`
+         and `Biglietto`.`stato` = "rimborsato"
+   );
 END$$
 
 DELIMITER ;
@@ -461,7 +461,7 @@ USE `cinemadb`$$
 CREATE PROCEDURE `trovaProiezioni`(IN idFilmParam INT)
 BEGIN
     select *
-    from cinemadb.Proiezione
+    from `cinemadb`.`Proiezione`
     where Proiezione.idFilm = idFilmParam
       and Proiezione.inizio > now();
 END$$
@@ -603,4 +603,4 @@ SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 -- Call populate procedure
 -- -----------------------------------------------------
-call cinemadb.popola();
+call `cinemadb`.`popola`();
