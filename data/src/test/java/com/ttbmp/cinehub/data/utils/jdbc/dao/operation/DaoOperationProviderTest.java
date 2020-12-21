@@ -20,7 +20,7 @@ class DaoOperationProviderTest {
 
     @Test
     void getDaoOperation_ReturnsValidOperation_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, NoSuchMethodException, DataSourceMethodException, DaoMethodException {
-        CinemaDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).CinemaDao();
+        CinemaDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
         assertDoesNotThrow(dao::getAllCinema);
     }
 

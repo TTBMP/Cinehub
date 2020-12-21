@@ -6,7 +6,7 @@ import com.ttbmp.cinehub.data.utils.jdbc.annotation.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = "cinema")
+@Entity(tableName = "Cinema")
 public class CinemaDto implements Serializable {
 
     @PrimaryKey(autoGenerate = true)

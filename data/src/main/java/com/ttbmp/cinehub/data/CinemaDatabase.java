@@ -17,6 +17,6 @@ import com.ttbmp.cinehub.data.utils.jdbc.exception.DataSourceMethodException;
 )
 public interface CinemaDatabase extends JdbcDataSource {
 
-    CinemaDao CinemaDao() throws DataSourceMethodException;
+    CinemaDao getCinemaDao() throws DataSourceMethodException;
 
 }
