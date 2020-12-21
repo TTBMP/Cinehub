@@ -1,4 +1,3 @@
-
 -- ----------------------------------------------------
 -- Create admin user
 -- -----------------------------------------------------
@@ -21,17 +20,17 @@ DROP SCHEMA IF EXISTS `cinemadb`;
 -- -----------------------------------------------------
 -- Schema cinemadb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `cinemadb` DEFAULT CHARACTER SET UTF8MB4;
+CREATE SCHEMA IF NOT EXISTS `cinemadb` DEFAULT CHARACTER SET utf8mb4;
 SHOW WARNINGS;
 USE `cinemadb`;
 
 -- -----------------------------------------------------
--- Table `cinemadb`.`Utente`
+-- Table `cinemadb`.`utente`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Utente`;
+DROP TABLE IF EXISTS `cinemadb`.`utente`;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `cinemadb`.`Utente`
+CREATE TABLE IF NOT EXISTS `cinemadb`.`utente`
 (
     `id`       INT                                                             NOT NULL AUTO_INCREMENT,
     `nome`     VARCHAR(45)                                                     NOT NULL,
@@ -46,12 +45,12 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Utente`
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `cinemadb`.`Cinema`
+-- Table `cinemadb`.`cinema`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Cinema`;
+DROP TABLE IF EXISTS `cinemadb`.`cinema`;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `cinemadb`.`Cinema`
+CREATE TABLE IF NOT EXISTS `cinemadb`.`cinema`
 (
     `id`        INT         NOT NULL AUTO_INCREMENT,
     `nome`      VARCHAR(45) NOT NULL,
@@ -64,27 +63,27 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Cinema`
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `cinemadb`.`Dipendente`
+-- Table `cinemadb`.`dipendente`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Dipendente`;
+DROP TABLE IF EXISTS `cinemadb`.`dipendente`;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `cinemadb`.`Dipendente`
+CREATE TABLE IF NOT EXISTS `cinemadb`.`dipendente`
 (
-    `idUtente`       INT NOT NULL,
-    `idCinema`       INT NOT NULL,
-    `oreSettimanali` INT NULL,
-    PRIMARY KEY (`idUtente`),
-    INDEX `fk_Dipendente_Utente1_idx` (`idUtente` ASC) VISIBLE,
-    INDEX `fk_Dipendente_Cinema1_idx` (`idCinema` ASC) VISIBLE,
+    `id_utente`       INT NOT NULL,
+    `id_cinema`       INT NOT NULL,
+    `ore_settimanali` INT NULL,
+    PRIMARY KEY (`id_utente`),
+    INDEX `fk_Dipendente_Utente1_idx` (`id_utente` ASC) VISIBLE,
+    INDEX `fk_Dipendente_Cinema1_idx` (`id_cinema` ASC) VISIBLE,
     CONSTRAINT `fk_Dipendente_Utente1`
-        FOREIGN KEY (`idUtente`)
-            REFERENCES `cinemadb`.`Utente` (`id`)
+        FOREIGN KEY (`id_utente`)
+            REFERENCES `cinemadb`.`utente` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
     CONSTRAINT `fk_Dipendente_Cinema1`
-        FOREIGN KEY (`idCinema`)
-            REFERENCES `cinemadb`.`Cinema` (`id`)
+        FOREIGN KEY (`id_cinema`)
+            REFERENCES `cinemadb`.`cinema` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 )
@@ -93,22 +92,22 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Dipendente`
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `cinemadb`.`Turno`
+-- Table `cinemadb`.`turno`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Turno`;
+DROP TABLE IF EXISTS `cinemadb`.`turno`;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `cinemadb`.`Turno`
+CREATE TABLE IF NOT EXISTS `cinemadb`.`turno`
 (
-    `id`           INT      NOT NULL AUTO_INCREMENT,
-    `inizio`       DATETIME NOT NULL,
-    `fine`         DATETIME NOT NULL,
-    `idDipendente` INT      NOT NULL,
+    `id`            INT      NOT NULL AUTO_INCREMENT,
+    `inizio`        DATETIME NOT NULL,
+    `fine`          DATETIME NOT NULL,
+    `id_dipendente` INT      NOT NULL,
     PRIMARY KEY (`id`),
-    INDEX `fk_Turno_Dipendente1_idx` (`idDipendente` ASC) VISIBLE,
+    INDEX `fk_Turno_Dipendente1_idx` (`id_dipendente` ASC) VISIBLE,
     CONSTRAINT `fk_Turno_Dipendente1`
-        FOREIGN KEY (`idDipendente`)
-            REFERENCES `cinemadb`.`Dipendente` (`idUtente`)
+        FOREIGN KEY (`id_dipendente`)
+            REFERENCES `cinemadb`.`dipendente` (`id_utente`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 )
@@ -117,29 +116,29 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Turno`
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `cinemadb`.`RichiestaCambio`
+-- Table `cinemadb`.`richiesta_cambio`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`RichiestaCambio`;
+DROP TABLE IF EXISTS `cinemadb`.`richiesta_cambio`;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `cinemadb`.`RichiestaCambio`
+CREATE TABLE IF NOT EXISTS `cinemadb`.`richiesta_cambio`
 (
-    `id`               INT                                      NOT NULL AUTO_INCREMENT,
-    `stato`            ENUM ('approvata', 'respinta', 'attesa') NOT NULL,
-    `tipo`             ENUM ('cambio', 'scambio')               NOT NULL,
-    `idTurnoAttuale`   INT                                      NOT NULL,
-    `idTurnoRichiesto` INT                                      NOT NULL,
+    `id`                 INT                                      NOT NULL AUTO_INCREMENT,
+    `stato`              ENUM ('approvata', 'respinta', 'attesa') NOT NULL,
+    `tipo`               ENUM ('cambio', 'scambio')               NOT NULL,
+    `id_turno_attuale`   INT                                      NOT NULL,
+    `id_turno_richiesto` INT                                      NOT NULL,
     PRIMARY KEY (`id`),
-    INDEX `fk_RichiestaCambio_Turno_idx` (`idTurnoAttuale` ASC) VISIBLE,
-    INDEX `fk_RichiestaCambio_Turno1_idx` (`idTurnoRichiesto` ASC) VISIBLE,
+    INDEX `fk_RichiestaCambio_Turno_idx` (`id_turno_attuale` ASC) VISIBLE,
+    INDEX `fk_RichiestaCambio_Turno1_idx` (`id_turno_richiesto` ASC) VISIBLE,
     CONSTRAINT `fk_RichiestaCambio_Turno`
-        FOREIGN KEY (`idTurnoAttuale`)
-            REFERENCES `cinemadb`.`Turno` (`id`)
+        FOREIGN KEY (`id_turno_attuale`)
+            REFERENCES `cinemadb`.`turno` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
     CONSTRAINT `fk_RichiestaCambio_Turno1`
-        FOREIGN KEY (`idTurnoRichiesto`)
-            REFERENCES `cinemadb`.`Turno` (`id`)
+        FOREIGN KEY (`id_turno_richiesto`)
+            REFERENCES `cinemadb`.`turno` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 )
@@ -148,23 +147,23 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`RichiestaCambio`
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `cinemadb`.`RichiestaFerie`
+-- Table `cinemadb`.`richiesta_ferie`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`RichiestaFerie`;
+DROP TABLE IF EXISTS `cinemadb`.`richiesta_ferie`;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `cinemadb`.`RichiestaFerie`
+CREATE TABLE IF NOT EXISTS `cinemadb`.`richiesta_ferie`
 (
-    `id`            INT                                      NOT NULL AUTO_INCREMENT,
-    `richiedenteId` INT                                      NOT NULL,
-    `stato`         ENUM ('approvata', 'respinta', 'attesa') NOT NULL,
-    `inizio`        DATETIME                                 NOT NULL,
-    `fine`          DATETIME                                 NOT NULL,
+    `id`             INT                                      NOT NULL AUTO_INCREMENT,
+    `id_richiedente` INT                                      NOT NULL,
+    `stato`          ENUM ('approvata', 'respinta', 'attesa') NOT NULL,
+    `inizio`         DATETIME                                 NOT NULL,
+    `fine`           DATETIME                                 NOT NULL,
     PRIMARY KEY (`id`),
-    INDEX `fk_RichiestaFerie_Dipendente1_idx` (`richiedenteId` ASC) VISIBLE,
+    INDEX `fk_RichiestaFerie_Dipendente1_idx` (`id_richiedente` ASC) VISIBLE,
     CONSTRAINT `fk_RichiestaFerie_Dipendente1`
-        FOREIGN KEY (`richiedenteId`)
-            REFERENCES `cinemadb`.`Dipendente` (`idUtente`)
+        FOREIGN KEY (`id_richiedente`)
+            REFERENCES `cinemadb`.`dipendente` (`id_utente`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 )
@@ -173,20 +172,20 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`RichiestaFerie`
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `cinemadb`.`Proiezionista`
+-- Table `cinemadb`.`proiezionista`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Proiezionista`;
+DROP TABLE IF EXISTS `cinemadb`.`proiezionista`;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `cinemadb`.`Proiezionista`
+CREATE TABLE IF NOT EXISTS `cinemadb`.`proiezionista`
 (
-    `idDIpendente` INT NOT NULL,
-    PRIMARY KEY (`idDIpendente`),
-    INDEX `fk_Proiezionista_Dipendente1_idx` (`idDIpendente` ASC) VISIBLE,
-    UNIQUE INDEX `idDIpendente_UNIQUE` (`idDIpendente` ASC) VISIBLE,
+    `id_dipendente` INT NOT NULL,
+    PRIMARY KEY (`id_dipendente`),
+    INDEX `fk_Proiezionista_Dipendente1_idx` (`id_dipendente` ASC) VISIBLE,
+    UNIQUE INDEX `idDIpendente_UNIQUE` (`id_dipendente` ASC) VISIBLE,
     CONSTRAINT `fk_Proiezionista_Dipendente1`
-        FOREIGN KEY (`idDIpendente`)
-            REFERENCES `cinemadb`.`Dipendente` (`idUtente`)
+        FOREIGN KEY (`id_dipendente`)
+            REFERENCES `cinemadb`.`dipendente` (`id_utente`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 )
@@ -195,23 +194,23 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Proiezionista`
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `cinemadb`.`CartaDiCredito`
+-- Table `cinemadb`.`carta_di_credito`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`CartaDiCredito`;
+DROP TABLE IF EXISTS `cinemadb`.`carta_di_credito`;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `cinemadb`.`CartaDiCredito`
+CREATE TABLE IF NOT EXISTS `cinemadb`.`carta_di_credito`
 (
-    `id`           INT         NOT NULL AUTO_INCREMENT,
-    `idUtente`     INT         NOT NULL,
-    `numero`       VARCHAR(45) NOT NULL,
-    `dataScadenza` VARCHAR(45) NOT NULL,
-    `cvv`          INT         NOT NULL,
+    `id`            INT         NOT NULL AUTO_INCREMENT,
+    `id_utente`     INT         NOT NULL,
+    `numero`        VARCHAR(45) NOT NULL,
+    `data_scadenza` VARCHAR(45) NOT NULL,
+    `cvv`           INT         NOT NULL,
     PRIMARY KEY (`id`),
-    INDEX `fk_CartaDiCredito_Utente1_idx` (`idUtente` ASC) VISIBLE,
+    INDEX `fk_CartaDiCredito_Utente1_idx` (`id_utente` ASC) VISIBLE,
     CONSTRAINT `fk_CartaDiCredito_Utente1`
-        FOREIGN KEY (`idUtente`)
-            REFERENCES `cinemadb`.`Utente` (`id`)
+        FOREIGN KEY (`id_utente`)
+            REFERENCES `cinemadb`.`utente` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 )
@@ -220,12 +219,12 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`CartaDiCredito`
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `cinemadb`.`Film`
+-- Table `cinemadb`.`film`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Film`;
+DROP TABLE IF EXISTS `cinemadb`.`film`;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `cinemadb`.`Film`
+CREATE TABLE IF NOT EXISTS `cinemadb`.`film`
 (
     `id`     INT         NOT NULL,
     `durata` VARCHAR(45) NOT NULL,
@@ -237,20 +236,20 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Film`
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `cinemadb`.`Sala`
+-- Table `cinemadb`.`sala`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Sala`;
+DROP TABLE IF EXISTS `cinemadb`.`sala`;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `cinemadb`.`Sala`
+CREATE TABLE IF NOT EXISTS `cinemadb`.`sala`
 (
-    `id`       INT NOT NULL AUTO_INCREMENT,
-    `idCinema` INT NOT NULL,
+    `id`        INT NOT NULL AUTO_INCREMENT,
+    `id_cinema` INT NOT NULL,
     PRIMARY KEY (`id`),
-    INDEX `fk_Sala_Cinema1_idx` (`idCinema` ASC) VISIBLE,
+    INDEX `fk_Sala_Cinema1_idx` (`id_cinema` ASC) VISIBLE,
     CONSTRAINT `fk_Sala_Cinema1`
-        FOREIGN KEY (`idCinema`)
-            REFERENCES `cinemadb`.`Cinema` (`id`)
+        FOREIGN KEY (`id_cinema`)
+            REFERENCES `cinemadb`.`cinema` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 )
@@ -259,36 +258,36 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Sala`
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `cinemadb`.`Proiezione`
+-- Table `cinemadb`.`proiezione`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Proiezione`;
+DROP TABLE IF EXISTS `cinemadb`.`proiezione`;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `cinemadb`.`Proiezione`
+CREATE TABLE IF NOT EXISTS `cinemadb`.`proiezione`
 (
-    `id`              INT      NOT NULL AUTO_INCREMENT,
-    `idSala`          INT      NOT NULL,
-    `idProiezionista` INT      NOT NULL,
-    `idFilm`          INT      NOT NULL,
-    `inizio`          DATETIME NOT NULL,
-    `incassoTotale`   DOUBLE   NULL,
+    `id`               INT      NOT NULL AUTO_INCREMENT,
+    `id_sala`          INT      NOT NULL,
+    `id_proiezionista` INT      NOT NULL,
+    `id_film`          INT      NOT NULL,
+    `inizio`           DATETIME NOT NULL,
+    `incasso_totale`   DOUBLE   NULL,
     PRIMARY KEY (`id`),
-    INDEX `fk_Proiezione_Film1_idx` (`idFilm` ASC) VISIBLE,
-    INDEX `fk_Proiezione_Sala1_idx` (`idSala` ASC) VISIBLE,
-    INDEX `fk_Proiezione_Proiezionista1_idx` (`idProiezionista` ASC) VISIBLE,
+    INDEX `fk_Proiezione_Film1_idx` (`id_film` ASC) VISIBLE,
+    INDEX `fk_Proiezione_Sala1_idx` (`id_sala` ASC) VISIBLE,
+    INDEX `fk_Proiezione_Proiezionista1_idx` (`id_proiezionista` ASC) VISIBLE,
     CONSTRAINT `fk_Proiezione_Film1`
-        FOREIGN KEY (`idFilm`)
-            REFERENCES `cinemadb`.`Film` (`id`)
+        FOREIGN KEY (`id_film`)
+            REFERENCES `cinemadb`.`film` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
     CONSTRAINT `fk_Proiezione_Sala1`
-        FOREIGN KEY (`idSala`)
-            REFERENCES `cinemadb`.`Sala` (`id`)
+        FOREIGN KEY (`id_sala`)
+            REFERENCES `cinemadb`.`sala` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
     CONSTRAINT `fk_Proiezione_Proiezionista1`
-        FOREIGN KEY (`idProiezionista`)
-            REFERENCES `cinemadb`.`Proiezionista` (`idDIpendente`)
+        FOREIGN KEY (`id_proiezionista`)
+            REFERENCES `cinemadb`.`proiezionista` (`id_dipendente`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 )
@@ -297,22 +296,22 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Proiezione`
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `cinemadb`.`Posto`
+-- Table `cinemadb`.`posto`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Posto`;
+DROP TABLE IF EXISTS `cinemadb`.`posto`;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `cinemadb`.`Posto`
+CREATE TABLE IF NOT EXISTS `cinemadb`.`posto`
 (
-    `id`     INT         NOT NULL AUTO_INCREMENT,
-    `fila`   VARCHAR(45) NOT NULL,
-    `numero` INT         NOT NULL,
-    `idSala` INT         NOT NULL,
+    `id`      INT         NOT NULL AUTO_INCREMENT,
+    `fila`    VARCHAR(45) NOT NULL,
+    `numero`  INT         NOT NULL,
+    `id_sala` INT         NOT NULL,
     PRIMARY KEY (`id`),
-    INDEX `fk_Posto_Sala1_idx` (`idSala` ASC) VISIBLE,
+    INDEX `fk_Posto_Sala1_idx` (`id_sala` ASC) VISIBLE,
     CONSTRAINT `fk_Posto_Sala1`
-        FOREIGN KEY (`idSala`)
-            REFERENCES `cinemadb`.`Sala` (`id`)
+        FOREIGN KEY (`id_sala`)
+            REFERENCES `cinemadb`.`sala` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 )
@@ -321,36 +320,36 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`Posto`
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `cinemadb`.`Biglietto`
+-- Table `cinemadb`.`biglietto`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cinemadb`.`Biglietto`;
+DROP TABLE IF EXISTS `cinemadb`.`biglietto`;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `cinemadb`.`Biglietto`
+CREATE TABLE IF NOT EXISTS `cinemadb`.`biglietto`
 (
-    `id`           INT                                         NOT NULL AUTO_INCREMENT,
-    `idPosto`      INT                                         NOT NULL,
-    `idProiezione` INT                                         NOT NULL,
-    `idUser`       INT                                         NOT NULL,
-    `prezzo`       DOUBLE                                      NOT NULL,
-    `stato`        ENUM ('attivo', 'rimborsato', 'utilizzato') NOT NULL,
+    `id`            INT                                         NOT NULL AUTO_INCREMENT,
+    `id_posto`      INT                                         NOT NULL,
+    `id_proiezione` INT                                         NOT NULL,
+    `id_utente`     INT                                         NOT NULL,
+    `prezzo`        DOUBLE                                      NOT NULL,
+    `stato`         ENUM ('attivo', 'rimborsato', 'utilizzato') NOT NULL,
     PRIMARY KEY (`id`),
-    INDEX `fk_Biglietto_Utente1_idx` (`idUser` ASC) VISIBLE,
-    INDEX `fk_Biglietto_Posto1_idx` (`idPosto` ASC) VISIBLE,
-    INDEX `fk_Biglietto_Proiezione1_idx` (`idProiezione` ASC) VISIBLE,
+    INDEX `fk_Biglietto_Utente1_idx` (`id_utente` ASC) VISIBLE,
+    INDEX `fk_Biglietto_Posto1_idx` (`id_posto` ASC) VISIBLE,
+    INDEX `fk_Biglietto_Proiezione1_idx` (`id_proiezione` ASC) VISIBLE,
     CONSTRAINT `fk_Biglietto_Utente1`
-        FOREIGN KEY (`idUser`)
-            REFERENCES `cinemadb`.`Utente` (`id`)
+        FOREIGN KEY (`id_utente`)
+            REFERENCES `cinemadb`.`utente` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
     CONSTRAINT `fk_Biglietto_Posto1`
-        FOREIGN KEY (`idPosto`)
-            REFERENCES `cinemadb`.`Posto` (`id`)
+        FOREIGN KEY (`id_posto`)
+            REFERENCES `cinemadb`.`posto` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
     CONSTRAINT `fk_Biglietto_Proiezione1`
-        FOREIGN KEY (`idProiezione`)
-            REFERENCES `cinemadb`.`Proiezione` (`id`)
+        FOREIGN KEY (`id_proiezione`)
+            REFERENCES `cinemadb`.`proiezione` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 )
@@ -360,16 +359,16 @@ SHOW WARNINGS;
 USE `cinemadb`;
 
 -- -----------------------------------------------------
--- procedure filmAttivi
+-- procedure film_attivi
 -- -----------------------------------------------------
 
 USE `cinemadb`;
-DROP procedure IF EXISTS `cinemadb`.`filmAttivi`;
+DROP procedure IF EXISTS `cinemadb`.`film_attivi`;
 SHOW WARNINGS;
 
 DELIMITER $$
 USE `cinemadb`$$
-CREATE PROCEDURE `filmAttivi`()
+CREATE PROCEDURE `film_attivi`()
 BEGIN
     select * from cinemadb.film where attivo = True;
 END$$
@@ -419,31 +418,31 @@ DELIMITER ;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- procedure trovaPostiLiberi
+-- procedure trova_posti_liberi
 -- -----------------------------------------------------
 
 USE `cinemadb`;
-DROP procedure IF EXISTS `cinemadb`.`trovaPostiLiberi`;
+DROP procedure IF EXISTS `cinemadb`.`trova_posti_liberi`;
 SHOW WARNINGS;
 
 DELIMITER $$
 USE `cinemadb`$$
-CREATE PROCEDURE `trovaPostiLiberi`(IN idProiezioneParam INT)
+CREATE PROCEDURE `trova_posti_liberi`(IN idProiezioneParam INT)
 BEGIN
     select *
-    from cinemadb.Posto,
-         cinemadb.Sala,
-         cinemadb.Proiezione
-    where Proiezione.id = idProiezioneParam
-      and Sala.id = Proiezione.idSala
-      and Posto.idSala = Sala.id
-      and Posto.id not in (
-        select Posto.id
-        from cinemadb.Biglietto,
-             cinemadb.Posto
-        where Biglietto.idProiezione = idProiezioneParam
-          and Posto.id = Biglietto.idPosto
-          and Biglietto.stato = "rimborsato"
+    from cinemadb.posto,
+         cinemadb.sala,
+         cinemadb.proiezione
+    where proiezione.id = idProiezioneParam
+      and sala.id = proiezione.id_sala
+      and posto.id_sala = sala.id
+      and posto.id not in (
+        select posto.id
+        from cinemadb.biglietto,
+             cinemadb.posto
+        where biglietto.id_proiezione = idProiezioneParam
+          and posto.id = biglietto.id_posto
+          and biglietto.stato = "rimborsato"
     );
 END$$
 
@@ -451,21 +450,21 @@ DELIMITER ;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- procedure trovaProiezioni
+-- procedure trova_proiezioni
 -- -----------------------------------------------------
 
 USE `cinemadb`;
-DROP procedure IF EXISTS `cinemadb`.`trovaProiezioni`;
+DROP procedure IF EXISTS `cinemadb`.`trova_proiezioni`;
 SHOW WARNINGS;
 
 DELIMITER $$
 USE `cinemadb`$$
-CREATE PROCEDURE `trovaProiezioni`(IN idFilmParam INT)
+CREATE PROCEDURE `trova_proiezioni`(IN idFilmParam INT)
 BEGIN
     select *
-    from cinemadb.Proiezione
-    where Proiezione.idFilm = idFilmParam
-      and Proiezione.inizio > now();
+    from cinemadb.proiezione
+    where proiezione.id_film = idFilmParam
+      and proiezione.inizio > now();
 END$$
 
 DELIMITER ;
@@ -484,115 +483,115 @@ USE `cinemadb`$$
 CREATE PROCEDURE `popola`()
 BEGIN
     /* Utente */
-    INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
+    INSERT INTO `cinemadb`.`utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
     VALUES ('fab', 'bur', 'f@b.c', 'pippo', 'amministratore');
-    INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
+    INSERT INTO `cinemadb`.`utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
     VALUES ('ivan', 'pal', 'i@p.c', 'pippo', 'proiezionista');
-    INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
+    INSERT INTO `cinemadb`.`utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
     VALUES ('max', 'max', 'm@m.c', 'pippo', 'maschera');
-    INSERT INTO `cinemadb`.`Utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
+    INSERT INTO `cinemadb`.`utente` (`nome`, `cognome`, `email`, `password`, `ruolo`)
     VALUES ('cli', 'ent', 'c@e.c', 'pippo', 'cliente');
 /* Cinema */
-    INSERT INTO `cinemadb`.`Cinema` (`nome`, `indirizzo`, `telefono`)
+    INSERT INTO `cinemadb`.`cinema` (`nome`, `indirizzo`, `telefono`)
     VALUES ('multisala', 'via le mani dal naso', '00000');
-    INSERT INTO `cinemadb`.`Cinema` (`nome`, `indirizzo`, `telefono`) VALUES ('monosala', 'via etrusca', '00001');
-    INSERT INTO `cinemadb`.`Cinema` (`nome`, `indirizzo`, `telefono`) VALUES ('microsala', 'via dante', '00002');
-    INSERT INTO `cinemadb`.`Cinema` (`nome`, `indirizzo`, `telefono`) VALUES ('supersala', 'via roma', '00003');
-    INSERT INTO `cinemadb`.`Cinema` (`nome`, `indirizzo`, `telefono`) VALUES ('megasala', 'via milano', '00004');
+    INSERT INTO `cinemadb`.`cinema` (`nome`, `indirizzo`, `telefono`) VALUES ('monosala', 'via etrusca', '00001');
+    INSERT INTO `cinemadb`.`cinema` (`nome`, `indirizzo`, `telefono`) VALUES ('microsala', 'via dante', '00002');
+    INSERT INTO `cinemadb`.`cinema` (`nome`, `indirizzo`, `telefono`) VALUES ('supersala', 'via roma', '00003');
+    INSERT INTO `cinemadb`.`cinema` (`nome`, `indirizzo`, `telefono`) VALUES ('megasala', 'via milano', '00004');
 /* Sala */
-    INSERT INTO `cinemadb`.`Sala` (`idCinema`) VALUES ('1');
-    INSERT INTO `cinemadb`.`Sala` (`idCinema`) VALUES ('1');
-    INSERT INTO `cinemadb`.`Sala` (`idCinema`) VALUES ('2');
-    INSERT INTO `cinemadb`.`Sala` (`idCinema`) VALUES ('1');
-    INSERT INTO `cinemadb`.`Sala` (`idCinema`) VALUES ('2');
-    INSERT INTO `cinemadb`.`Sala` (`idCinema`) VALUES ('2');
+    INSERT INTO `cinemadb`.`sala` (`id_cinema`) VALUES ('1');
+    INSERT INTO `cinemadb`.`sala` (`id_cinema`) VALUES ('1');
+    INSERT INTO `cinemadb`.`sala` (`id_cinema`) VALUES ('2');
+    INSERT INTO `cinemadb`.`sala` (`id_cinema`) VALUES ('1');
+    INSERT INTO `cinemadb`.`sala` (`id_cinema`) VALUES ('2');
+    INSERT INTO `cinemadb`.`sala` (`id_cinema`) VALUES ('2');
 /* Dipendente */
-    INSERT INTO `cinemadb`.`Dipendente` (`idUtente`, `idCinema`, `oreSettimanali`) VALUES ('1', '2', '36');
-    INSERT INTO `cinemadb`.`Dipendente` (`idUtente`, `idCinema`, `oreSettimanali`) VALUES ('2', '1', '30');
+    INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`, `ore_settimanali`) VALUES ('1', '2', '36');
+    INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`, `ore_settimanali`) VALUES ('2', '1', '30');
 /* Posto */
-    INSERT INTO `cinemadb`.`Posto` (`Numero`, `Fila`, `idSala`) VALUES ('1', 'A', '1');
-    INSERT INTO `cinemadb`.`Posto` (`Numero`, `Fila`, `idSala`) VALUES ('2', 'A', '1');
-    INSERT INTO `cinemadb`.`Posto` (`Numero`, `Fila`, `idSala`) VALUES ('3', 'A', '1');
-    INSERT INTO `cinemadb`.`Posto` (`Numero`, `Fila`, `idSala`) VALUES ('1', 'B', '3');
-    INSERT INTO `cinemadb`.`Posto` (`Numero`, `Fila`, `idSala`) VALUES ('2', 'B', '3');
-    INSERT INTO `cinemadb`.`Posto` (`Numero`, `Fila`, `idSala`) VALUES ('3', 'B', '3');
-    INSERT INTO `cinemadb`.`Posto` (`Numero`, `Fila`, `idSala`) VALUES ('1', 'A', '3');
-    INSERT INTO `cinemadb`.`Posto` (`Numero`, `Fila`, `idSala`) VALUES ('2', 'A', '3');
-    INSERT INTO `cinemadb`.`Posto` (`Numero`, `Fila`, `idSala`) VALUES ('3', 'A', '3');
-    INSERT INTO `cinemadb`.`Posto` (`Numero`, `Fila`, `idSala`) VALUES ('1', 'B', '1');
-    INSERT INTO `cinemadb`.`Posto` (`Numero`, `Fila`, `idSala`) VALUES ('2', 'B', '1');
-    INSERT INTO `cinemadb`.`Posto` (`Numero`, `Fila`, `idSala`) VALUES ('3', 'B', '1');
+    INSERT INTO `cinemadb`.`posto` (`numero`, `fila`, `id_sala`) VALUES ('1', 'A', '1');
+    INSERT INTO `cinemadb`.`posto` (`numero`, `fila`, `id_sala`) VALUES ('2', 'A', '1');
+    INSERT INTO `cinemadb`.`posto` (`numero`, `fila`, `id_sala`) VALUES ('3', 'A', '1');
+    INSERT INTO `cinemadb`.`posto` (`numero`, `fila`, `id_sala`) VALUES ('1', 'B', '3');
+    INSERT INTO `cinemadb`.`posto` (`numero`, `fila`, `id_sala`) VALUES ('2', 'B', '3');
+    INSERT INTO `cinemadb`.`posto` (`numero`, `fila`, `id_sala`) VALUES ('3', 'B', '3');
+    INSERT INTO `cinemadb`.`posto` (`numero`, `fila`, `id_sala`) VALUES ('1', 'A', '3');
+    INSERT INTO `cinemadb`.`posto` (`numero`, `fila`, `id_sala`) VALUES ('2', 'A', '3');
+    INSERT INTO `cinemadb`.`posto` (`numero`, `fila`, `id_sala`) VALUES ('3', 'A', '3');
+    INSERT INTO `cinemadb`.`posto` (`numero`, `fila`, `id_sala`) VALUES ('1', 'B', '1');
+    INSERT INTO `cinemadb`.`posto` (`numero`, `fila`, `id_sala`) VALUES ('2', 'B', '1');
+    INSERT INTO `cinemadb`.`posto` (`numero`, `fila`, `id_sala`) VALUES ('3', 'B', '1');
 /* Richiesta ferie */
-    INSERT INTO `cinemadb`.`RichiestaFerie` (`richiedenteId`, `Stato`, `inizio`, `fine`)
+    INSERT INTO `cinemadb`.`richiesta_ferie` (`id_richiedente`, `stato`, `inizio`, `fine`)
     VALUES ('1', 'approvata', '2020-12-15 00:00:00', '2020-12-30 13:00:00');
-    INSERT INTO `cinemadb`.`RichiestaFerie` (`richiedenteId`, `Stato`, `inizio`, `fine`)
+    INSERT INTO `cinemadb`.`richiesta_ferie` (`id_richiedente`, `stato`, `inizio`, `fine`)
     VALUES ('2', 'respinta', '2020-12-16 10:00:00', '2021-01-15 20:00:00');
-    INSERT INTO `cinemadb`.`RichiestaFerie` (`richiedenteId`, `Stato`, `inizio`, `fine`)
+    INSERT INTO `cinemadb`.`richiesta_ferie` (`id_richiedente`, `stato`, `inizio`, `fine`)
     VALUES ('1', 'attesa', '2020-11-15 00:00:00', '2020-12-15 20:00:00');
 /* Turno */
-    INSERT INTO `cinemadb`.`Turno` (`inizio`, `fine`, `idDipendente`)
+    INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `id_dipendente`)
     VALUES ('2020-12-15 12:00:00', '2020-12-15 18:00:00', '1');
-    INSERT INTO `cinemadb`.`Turno` (`inizio`, `fine`, `idDipendente`)
+    INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `id_dipendente`)
     VALUES ('2020-12-16 08:00:00', '2020-12-16 12:00:00', '1');
-    INSERT INTO `cinemadb`.`Turno` (`inizio`, `fine`, `idDipendente`)
+    INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `id_dipendente`)
     VALUES ('2020-11-15 18:00:00', '2022-12-16 00:00:00', '2');
-    INSERT INTO `cinemadb`.`Turno` (`inizio`, `fine`, `idDipendente`)
+    INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `id_dipendente`)
     VALUES ('2020-12-17 10:00:00', '2020-12-18 00:00:00', '2');
 /* Richiesta cambio */
-    INSERT INTO `cinemadb`.`RichiestaCambio` (`Stato`, `idTurnoAttuale`, `idTurnoRichiesto`, `Tipo`)
+    INSERT INTO `cinemadb`.`richiesta_cambio` (`stato`, `id_turno_attuale`, `id_turno_richiesto`, `tipo`)
     VALUES ('approvata', '1', '3', 'cambio');
-    INSERT INTO `cinemadb`.`RichiestaCambio` (`Stato`, `idTurnoAttuale`, `idTurnoRichiesto`, `Tipo`)
+    INSERT INTO `cinemadb`.`richiesta_cambio` (`stato`, `id_turno_attuale`, `id_turno_richiesto`, `tipo`)
     VALUES ('respinta', '2', '4', 'scambio');
-    INSERT INTO `cinemadb`.`RichiestaCambio` (`Stato`, `idTurnoAttuale`, `idTurnoRichiesto`, `Tipo`)
+    INSERT INTO `cinemadb`.`richiesta_cambio` (`stato`, `id_turno_attuale`, `id_turno_richiesto`, `tipo`)
     VALUES ('attesa', '3', '2', 'scambio');
-    INSERT INTO `cinemadb`.`RichiestaCambio` (`Stato`, `idTurnoAttuale`, `idTurnoRichiesto`, `Tipo`)
+    INSERT INTO `cinemadb`.`richiesta_cambio` (`stato`, `id_turno_attuale`, `id_turno_richiesto`, `tipo`)
     VALUES ('attesa', '3', '2', 'cambio');
     /* Proiezionista */
-    INSERT INTO `cinemadb`.`Proiezionista` (`idDipendente`) VALUES ('2');
+    INSERT INTO `cinemadb`.`proiezionista` (`id_dipendente`) VALUES ('2');
 /* Film */
-    INSERT INTO `cinemadb`.`Film` (`id`, `durata`, `attivo`) VALUES ('1', '01:30:00', True);
-    INSERT INTO `cinemadb`.`Film` (`id`, `durata`, `attivo`) VALUES ('2', '01:00:00', True);
-    INSERT INTO `cinemadb`.`Film` (`id`, `durata`, `attivo`) VALUES ('3', '00:30:00', True);
-    INSERT INTO `cinemadb`.`Film` (`id`, `durata`, `attivo`) VALUES ('4', '02:00:00', False);
+    INSERT INTO `cinemadb`.`film` (`id`, `durata`, `attivo`) VALUES ('1', '01:30:00', True);
+    INSERT INTO `cinemadb`.`film` (`id`, `durata`, `attivo`) VALUES ('2', '01:00:00', True);
+    INSERT INTO `cinemadb`.`film` (`id`, `durata`, `attivo`) VALUES ('3', '00:30:00', True);
+    INSERT INTO `cinemadb`.`film` (`id`, `durata`, `attivo`) VALUES ('4', '02:00:00', False);
 /* Proiezione */
-    INSERT INTO `cinemadb`.`Proiezione` (`idSala`, `idProiezionista`, `idFilm`, `inizio`)
+    INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_proiezionista`, `id_film`, `inizio`)
     VALUES ('1', '2', '1', '2020-11-20 22:00:00');
-    INSERT INTO `cinemadb`.`Proiezione` (`idSala`, `idProiezionista`, `idFilm`, `inizio`)
+    INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_proiezionista`, `id_film`, `inizio`)
     VALUES ('3', '2', '1', '2020-12-16 18:00:00');
-    INSERT INTO `cinemadb`.`Proiezione` (`idSala`, `idProiezionista`, `idFilm`, `inizio`)
+    INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_proiezionista`, `id_film`, `inizio`)
     VALUES ('1', '2', '3', '2020-11-16 00:00:00');
-    INSERT INTO `cinemadb`.`Proiezione` (`idSala`, `idProiezionista`, `idFilm`, `inizio`)
+    INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_proiezionista`, `id_film`, `inizio`)
     VALUES ('2', '2', '1', '2021-11-20 22:00:00');
 /* Biglietto */
-    INSERT INTO `cinemadb`.`Biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+    INSERT INTO `cinemadb`.`biglietto` (`id_posto`, `id_proiezione`, `id_utente`, `prezzo`, `stato`)
     VALUES ('1', '1', '4', '6.5', 'utilizzato');
-    INSERT INTO `cinemadb`.`Biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+    INSERT INTO `cinemadb`.`biglietto` (`id_posto`, `id_proiezione`, `id_utente`, `prezzo`, `stato`)
     VALUES ('4', '2', '4', '6', 'rimborsato');
-    INSERT INTO `cinemadb`.`Biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+    INSERT INTO `cinemadb`.`biglietto` (`id_posto`, `id_proiezione`, `id_utente`, `prezzo`, `stato`)
     VALUES ('3', '3', '3', '12', 'utilizzato');
-    INSERT INTO `cinemadb`.`Biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+    INSERT INTO `cinemadb`.`biglietto` (`id_posto`, `id_proiezione`, `id_utente`, `prezzo`, `stato`)
     VALUES ('2', '4', '2', '2', 'attivo');
-    INSERT INTO `cinemadb`.`Biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+    INSERT INTO `cinemadb`.`biglietto` (`id_posto`, `id_proiezione`, `id_utente`, `prezzo`, `stato`)
     VALUES ('5', '1', '2', '5', 'attivo');
-    INSERT INTO `cinemadb`.`Biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+    INSERT INTO `cinemadb`.`biglietto` (`id_posto`, `id_proiezione`, `id_utente`, `prezzo`, `stato`)
     VALUES ('6', '2', '1', '9', 'utilizzato');
-    INSERT INTO `cinemadb`.`Biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+    INSERT INTO `cinemadb`.`biglietto` (`id_posto`, `id_proiezione`, `id_utente`, `prezzo`, `stato`)
     VALUES ('9', '3', '1', '8', 'rimborsato');
-    INSERT INTO `cinemadb`.`Biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+    INSERT INTO `cinemadb`.`biglietto` (`id_posto`, `id_proiezione`, `id_utente`, `prezzo`, `stato`)
     VALUES ('4', '2', '4', '6', 'rimborsato');
-    INSERT INTO `cinemadb`.`Biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+    INSERT INTO `cinemadb`.`biglietto` (`id_posto`, `id_proiezione`, `id_utente`, `prezzo`, `stato`)
     VALUES ('4', '2', '4', '6', 'attivo');
-    INSERT INTO `cinemadb`.`Biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+    INSERT INTO `cinemadb`.`biglietto` (`id_posto`, `id_proiezione`, `id_utente`, `prezzo`, `stato`)
     VALUES ('4', '2', '4', '6', 'utilizzato');
-    INSERT INTO `cinemadb`.`Biglietto` (`idPosto`, `idProiezione`, `idUser`, `prezzo`, `stato`)
+    INSERT INTO `cinemadb`.`biglietto` (`id_posto`, `id_proiezione`, `id_utente`, `prezzo`, `stato`)
     VALUES ('10', '4', '2', '7', 'attivo');
 /* Carta di credito */
-    INSERT INTO `cinemadb`.`CartaDiCredito` (`idUtente`, `numero`, `dataScadenza`, `cvv`)
-    VALUES ('2', '000000001', '2020-10-01', '123');
-    INSERT INTO `cinemadb`.`CartaDiCredito` (`idUtente`, `numero`, `dataScadenza`, `cvv`)
-    VALUES ('3', '000000002', '2020-11-09', '456');
-    INSERT INTO `cinemadb`.`CartaDiCredito` (`idUtente`, `numero`, `dataScadenza`, `cvv`)
-    VALUES ('4', '000000003', '2020-09-08', '223');
+    INSERT INTO `cinemadb`.`carta_di_credito` (`id_utente`, `numero`, `data_scadenza`, `cvv`)
+    VALUES ('2', '1', '2020-10-01', '123');
+    INSERT INTO `cinemadb`.`carta_di_credito` (`id_utente`, `numero`, `data_scadenza`, `cvv`)
+    VALUES ('3', '2', '2020-11-09', '456');
+    INSERT INTO `cinemadb`.`carta_di_credito` (`id_utente`, `numero`, `data_scadenza`, `cvv`)
+    VALUES ('4', '3', '2020-09-08', '223');
 END$$
 
 DELIMITER ;
