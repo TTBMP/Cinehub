@@ -3,6 +3,9 @@ language: java
 jdk:
   - openjdk11
 
+git:
+  depth: false
+
 addons:
   chrome: stable
   sonarcloud:
