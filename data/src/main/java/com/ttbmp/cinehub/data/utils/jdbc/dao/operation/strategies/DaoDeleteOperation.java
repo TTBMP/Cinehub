@@ -33,7 +33,7 @@ public class DaoDeleteOperation extends DaoOperation {
                 .map(f -> f.getAnnotation(ColumnInfo.class).name())
                 .collect(Collectors.toList());
         queryTemplate = String.format(
-                "DELETE FROM %s WHERE (%s = ?);",
+                "DELETE FROM %s WHERE (%s = ?)",
                 dtoType.getAnnotation(Entity.class).tableName(),
                 String.join(" = ?, ", dtoPrimaryKeyColumnNameList)
         );

@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 class DaoDeleteOperationTest {
 
     @Test
-    void execute_DDeleteDto_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, DaoMethodException {
+    void execute_DeleteDto_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, DaoMethodException {
         CinemaDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).CinemaDao();
         CinemaDto dto = new CinemaDto(1, "pippo", "pluto", "paperino");
         dao.insert(dto);
