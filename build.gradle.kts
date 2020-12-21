@@ -15,7 +15,7 @@ sonarqube {
     properties {
         property("sonar.sourceEncoding", "UTF-8")
         property("sonar.projectKey", "TTBMP_Cinehub")
-        property("sonar.include", "src/main/**")
+        property("sonar.include", "src/main/resources")
         property("sonar.verbose", "true")
     }
 }
