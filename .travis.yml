@@ -14,22 +14,10 @@ services:
   - mysql
 
 before_install:
-  - wget http://repo.mysql.com/mysql-apt-config_0.8.15-1_all.deb
-  - sudo dpkg -i mysql-apt-config_0.8.15-1_all.deb
-  - sudo apt-get update -q
-  - sudo apt-get install -q -y --allow-unauthenticated -o Dpkg::Options::=--force-confnew mysql-server
-  - sudo systemctl restart mysql
-  - sudo mysql_upgrade
-  - mysql --version
-  - mysql -e "CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';"
-  - mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost';"
-  - mysql -e "FLUSH PRIVILEGES;"
-  - mysql -u root --password="" < data/src/main/resources/cinemadb.sql
-  - mysql -e 'call popola();' cinemadb
+  - sudo ./setup_database.sh
   - chmod +x gradlew
 
 script:
   - "./gradlew :webapp:run &"
   - "xvfb-run --server-args=\"-screen 0 1024x768x24\" ./gradlew build"
-  - "cat /home/travis/build/TTBMP/Cinehub/data/build/reports/tests/test/classes/com.ttbmp.cinehub.data.utils.jdbc.dao.operation.strategies.DaoDeleteOperationTest.html"
   - "./gradlew sonarqube"
