@@ -27,5 +27,6 @@ before_install:
 
 script:
   - "./gradlew :webapp:run &"
-  - "xvfb-run --server-args=\"-screen 0 1024x768x24\" ./gradlew build --stacktrace"
+  - "xvfb-run --server-args=\"-screen 0 1024x768x24\" ./gradlew build"
+  - "cat /home/travis/build/TTBMP/Cinehub/data/build/reports/tests/test/index.html"
   - "./gradlew sonarqube"
