@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 
 import static com.ttbmp.cinehub.data.utils.jdbc.datasource.JdbcDataSourceProvider.getDataSource;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class JdbcDataSourceProviderTest {
 
@@ -22,7 +21,7 @@ class JdbcDataSourceProviderTest {
 
     @Test
     void getDataSource_ImplementsMultiton_ReturnSameInstance() throws DataSourceClassException, SQLException, ClassNotFoundException {
-        assert (getDataSource(dataSourceClass) == getDataSource(dataSourceClass));
+        assertSame(getDataSource(dataSourceClass), getDataSource(dataSourceClass));
     }
 
     @Test

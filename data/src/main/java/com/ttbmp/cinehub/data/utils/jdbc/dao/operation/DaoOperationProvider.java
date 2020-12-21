@@ -23,8 +23,8 @@ import java.util.stream.Collectors;
 
 public class DaoOperationProvider {
 
-    private final Map<Method, DaoOperation> OPERATION_INSTANCE_MAP = new HashMap<>();
-    private final List<Class<?>> REQUIRED_TYPE_LIST = Arrays.asList(
+    private final Map<Method, DaoOperation> operationInstanceMap = new HashMap<>();
+    private final List<Class<?>> requiredTypeList = Arrays.asList(
             Query.class,
             Insert.class,
             Update.class,
@@ -34,8 +34,8 @@ public class DaoOperationProvider {
     public DaoOperation getDaoOperation(@NotNull Method method, @NotNull Connection connection,
                                         List<Class<?>> dataSourceEntityList) throws DaoMethodException, NoSuchMethodException {
 
-        OPERATION_INSTANCE_MAP.putIfAbsent(method, createDaoOperation(method, connection, dataSourceEntityList));
-        return OPERATION_INSTANCE_MAP.get(method);
+        operationInstanceMap.putIfAbsent(method, createDaoOperation(method, connection, dataSourceEntityList));
+        return operationInstanceMap.get(method);
     }
 
 
@@ -58,7 +58,7 @@ public class DaoOperationProvider {
     private Class<?> getDaoOperationType(Annotation[] annotations) throws DaoMethodException {
         List<Class<?>> filteredAnnotationTypeList = Arrays.stream(annotations)
                 .map(Annotation::annotationType)
-                .filter(REQUIRED_TYPE_LIST::contains)
+                .filter(requiredTypeList::contains)
                 .collect(Collectors.toList());
         if (filteredAnnotationTypeList.size() != 1) {
             throw new DaoMethodException();
