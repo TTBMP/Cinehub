@@ -38,7 +38,6 @@ public class DaoOperationProvider {
         return operationInstanceMap.get(method);
     }
 
-
     private DaoOperation createDaoOperation(@NotNull Method method, @NotNull Connection connection,
                                             List<Class<?>> dataSourceEntityList) throws DaoMethodException, NoSuchMethodException {
         Type type = getDaoOperationType(method.getAnnotations());
