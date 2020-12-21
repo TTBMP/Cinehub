@@ -14,8 +14,9 @@ services:
   - mysql
 
 before_install:
-  - sudo ./setup_database.sh
   - chmod +x gradlew
+  - chmod +x setup_database.sh
+  - sudo ./setup_database.sh
 
 script:
   - "./gradlew :webapp:run &"
