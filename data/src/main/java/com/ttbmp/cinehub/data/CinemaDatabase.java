@@ -4,6 +4,9 @@ import com.ttbmp.cinehub.data.utils.jdbc.annotation.Database;
 import com.ttbmp.cinehub.data.utils.jdbc.datasource.JdbcDataSource;
 import com.ttbmp.cinehub.data.utils.jdbc.exception.DataSourceMethodException;
 
+/**
+ * @author Fabio Buracchi
+ */
 @Database(
         version = 1,
         url = "mysql://localhost:3306/cinemadb",

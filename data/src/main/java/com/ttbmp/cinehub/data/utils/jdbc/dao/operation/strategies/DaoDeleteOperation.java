@@ -17,6 +17,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class DaoDeleteOperation extends DaoOperation {
 
     private final List<String> dtoPrimaryKeyColumnNameList;

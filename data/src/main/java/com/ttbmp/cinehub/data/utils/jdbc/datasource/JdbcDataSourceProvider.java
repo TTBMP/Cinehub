@@ -9,6 +9,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class JdbcDataSourceProvider {
 
     private static final Map<Class<? extends JdbcDataSource>, Object> DATA_SOURCE_INSTANCE_MAP = new HashMap<>();

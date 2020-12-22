@@ -8,6 +8,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * @author Fabio Buracchi
+ */
 public abstract class DaoOperation {
 
     protected final Method method;

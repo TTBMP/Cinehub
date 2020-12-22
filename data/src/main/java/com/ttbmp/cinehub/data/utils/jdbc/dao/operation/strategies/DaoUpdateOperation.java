@@ -16,6 +16,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class DaoUpdateOperation extends DaoOperation {
 
     private final int updateStrategy;

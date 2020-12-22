@@ -10,6 +10,9 @@ import java.sql.ResultSet;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class DaoOperationHelper {
 
     private DaoOperationHelper() {

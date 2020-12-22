@@ -16,6 +16,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class DaoInsertOperation extends DaoOperation {
 
     private final List<String> dtoColumnNameList;

@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class DaoOperationProvider {
 
     private final Map<Method, DaoOperation> operationInstanceMap = new HashMap<>();

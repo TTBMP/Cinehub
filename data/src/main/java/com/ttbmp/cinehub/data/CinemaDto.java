@@ -6,6 +6,9 @@ import com.ttbmp.cinehub.data.utils.jdbc.annotation.PrimaryKey;
 
 import java.io.Serializable;
 
+/**
+ * @author Fabio Buracchi
+ */
 @Entity(tableName = "cinema")
 public class CinemaDto implements Serializable {
 

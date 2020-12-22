@@ -6,6 +6,9 @@ import com.ttbmp.cinehub.data.utils.jdbc.exception.DaoMethodException;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/**
+ * @author Fabio Buracchi
+ */
 @Dao
 public interface CinemaDao {
 

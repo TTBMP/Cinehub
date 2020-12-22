@@ -18,6 +18,9 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class DaoQueryOperation extends DaoOperation {
 
     private final List<String> queryTemplateParameterNameList;
