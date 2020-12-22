@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 import static com.ttbmp.cinehub.data.utils.jdbc.datasource.JdbcDataSourceProvider.getDataSource;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/**
+ * @author Fabio Buracchi
+ */
 class JdbcDataSourceInvocationHandlerTest {
 
     @Test

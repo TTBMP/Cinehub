@@ -16,6 +16,9 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/**
+ * @author Fabio Buracchi
+ */
 class DaoOperationProviderTest {
 
     @Test

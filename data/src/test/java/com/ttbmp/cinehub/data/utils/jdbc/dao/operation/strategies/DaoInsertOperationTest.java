@@ -14,6 +14,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+/**
+ * @author Fabio Buracchi
+ */
 class DaoInsertOperationTest {
 
     @Test

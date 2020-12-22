@@ -9,6 +9,9 @@ import java.sql.SQLException;
 import static com.ttbmp.cinehub.data.utils.jdbc.datasource.JdbcDataSourceProvider.getDataSource;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Fabio Buracchi
+ */
 class JdbcDataSourceProviderTest {
 
     Class<? extends JdbcDataSource> dataSourceClass = CinemaDatabase.class;
