@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" spacing="16.0" xmlns="http://javafx.com/javafx/11.0.1"
+      fx:controller="com.ttbmp.cinehub.app.ui.viewpersonalschedule.detail.ShiftDetailController">
+    <padding>
+        <Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/>
+    </padding>
+    <VBox>
+        <HBox spacing="4.0">
+            <Label fx:id="dateLabel" style="-fx-font-size: 16; -fx-font-weight: bold;" text="date">
+                <HBox.margin>
+                    <Insets right="8.0"/>
+                </HBox.margin>
+            </Label>
+            <Label fx:id="startLabel" style="-fx-font-size: 16; -fx-font-weight: bold;" text="start"/>
+            <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="-"/>
+            <Label fx:id="endLabel" style="-fx-font-size: 16; -fx-font-weight: bold;" text="end"/>
+        </HBox>
+        <Label fx:id="locationLabel" text="location"/>
+    </VBox>
+    <Separator prefWidth="200.0"/>
+    <VBox prefHeight="200.0" prefWidth="100.0">
+        <Label text="LOCATION"/>
+        <Label layoutX="10.0" layoutY="160.0" text="location detail"/>
+        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true"/>
+        <Label layoutX="10.0" layoutY="177.0" text="location detail 2"/>
+    </VBox>
+    <Separator prefWidth="200.0"/>
+    <HBox spacing="16.0">
+        <Button fx:id="requestSwapButton" mnemonicParsing="false" text="REQUEST SWAP SHIFT"/>
+        <Button fx:id="requestChangeButton" mnemonicParsing="false" text="REQUEST CHANGE SHIFT"/>
+        <Button fx:id="changeButton" mnemonicParsing="false" text="CHANGE SHIFT"/>
+    </HBox>
+</VBox>

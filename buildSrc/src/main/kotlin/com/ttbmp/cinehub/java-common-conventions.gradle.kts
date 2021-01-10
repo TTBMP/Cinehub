@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    implementation("javax", "javaee-api", "8.0.1")
+
 }
 
 jacoco {

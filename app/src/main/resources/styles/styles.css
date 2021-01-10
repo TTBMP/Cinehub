@@ -1,0 +1,13 @@
+.form-title {
+    -fx-font-weight: bold;
+    -fx-font-size: 16;
+}
+
+.calendar-day-pane {
+    -fx-border-color: lightgrey;
+    -fx-font-weight: bold;
+}
+
+.calendar-item-pane {
+    -fx-border-color: lightgrey;
+}
