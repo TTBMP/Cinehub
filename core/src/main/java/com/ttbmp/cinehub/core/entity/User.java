@@ -1,5 +1,8 @@
 package com.ttbmp.cinehub.core.entity;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class User {
 
     private String name;
