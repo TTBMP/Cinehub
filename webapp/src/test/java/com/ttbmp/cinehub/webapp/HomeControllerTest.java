@@ -18,9 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 class HomeControllerTest {
 
-    private WebDriver driver;
-
     public WebElement welcomeMessage;
+    private WebDriver driver;
 
     @BeforeAll
     static void setupClass() {

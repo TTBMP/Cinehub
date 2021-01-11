@@ -6,9 +6,10 @@ plugins {
 dependencies {
     implementation(project(":core"))
     implementation(project(":data"))
+    implementation(project(":services:authentication"))
 
-    testImplementation("org.junit.jupiter","junit-jupiter-api","5.6.2")
-    testRuntimeOnly("org.junit.jupiter","junit-jupiter-engine")
+    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.6.2")
+    testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine")
 }
 
 javafx {

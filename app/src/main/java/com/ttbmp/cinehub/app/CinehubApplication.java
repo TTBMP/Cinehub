@@ -1,12 +1,14 @@
 package com.ttbmp.cinehub.app;
 
+import com.ttbmp.cinehub.app.di.AppContainer;
+import com.ttbmp.cinehub.app.ui.viewpersonalschedule.PersonalScheduleView;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class CinehubApplication extends Application {
+
+    public static final AppContainer APP_CONTAINER = new AppContainer();
 
     public static void main(String[] args) {
         launch(args);
@@ -14,13 +16,11 @@ public class CinehubApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("scene.fxml"));
-
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-
+        Scene scene = new Scene(new PersonalScheduleView().getRoot());
+        scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());
         primaryStage.setTitle("Cinehub");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
 }
