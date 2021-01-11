@@ -23,6 +23,7 @@ public class CalendarTableCell extends TableCell<Map<DayOfWeek, CalendarDay>, Ca
         } catch (IOException e) {
             e.printStackTrace();
         }
+        prefHeightProperty().bind(tableColumn.widthProperty());
         Objects.requireNonNull(cell);
         setGraphic(cell.getRoot());
     }

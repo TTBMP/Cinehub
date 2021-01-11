@@ -62,6 +62,7 @@ public class PersonalScheduleController {
         calendarTableView.getFocusModel().getFocusedCell();
         calendarTableView.setItems(viewModel.getShiftWeekList());
         calendarTableView.setSelectionModel(null);
+        calendarTableView.minHeightProperty().bind(calendarTableView.widthProperty());
         for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
             TableColumn<Map<DayOfWeek, CalendarDay>, CalendarDay> dayTableColumn;
             dayTableColumn = (TableColumn<Map<DayOfWeek, CalendarDay>, CalendarDay>)
@@ -70,6 +71,7 @@ public class PersonalScheduleController {
             dayTableColumn.setCellFactory(CalendarTableCell::new);
             dayTableColumn.setReorderable(false);
             dayTableColumn.setResizable(false);
+            dayTableColumn.prefWidthProperty().bind(calendarTableView.widthProperty().divide(7));
         }
         onLoad();
     }

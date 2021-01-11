@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <ScrollPane xmlns:fx="http://javafx.com/fxml/1" fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308"
-            maxWidth="1.7976931348623157E308" prefHeight="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+            maxWidth="1.7976931348623157E308" prefHeight="700.0" xmlns="http://javafx.com/javafx/11.0.1"
             fx:controller="com.ttbmp.cinehub.app.ui.viewpersonalschedule.PersonalScheduleController">
     <padding>
         <Insets left="16.0" right="16.0" top="16.0"/>
@@ -27,7 +27,7 @@
                 </DatePicker>
             </HBox>
         </HBox>
-        <TableView fx:id="calendarTableView" minHeight="916.0" minWidth="1000.0" VBox.vgrow="ALWAYS">
+        <TableView fx:id="calendarTableView" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn maxWidth="1.7976931348623157E308" minWidth="140.0" prefWidth="-1.0" resizable="false"
                              sortable="false" text="Monday"/>
