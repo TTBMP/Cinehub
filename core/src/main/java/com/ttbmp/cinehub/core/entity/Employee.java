@@ -1,5 +1,8 @@
 package com.ttbmp.cinehub.core.entity;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class Employee extends User {
 
     private Cinema cinema;

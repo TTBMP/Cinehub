@@ -2,6 +2,9 @@ package com.ttbmp.cinehub.core.entity.session;
 
 import com.ttbmp.cinehub.core.entity.User;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class Session {
 
     private User user;
