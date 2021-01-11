@@ -1,2 +1,9 @@
 rootProject.name = "Cinehub"
-include("app", "webapp", "core", "data")
+include(
+    "core",
+    "app:client:desktop",
+    "app:client:web",
+    "data:local",
+    "data:remote",
+    "service:authentication"
+)
