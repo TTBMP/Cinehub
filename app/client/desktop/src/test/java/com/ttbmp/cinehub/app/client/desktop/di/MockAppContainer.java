@@ -9,8 +9,8 @@ public class MockAppContainer extends AppContainer {
 
     @Override
     protected void addDependenciesFactories() {
-        factoryMap.put(ShiftRepository.class, MockShiftRepository::new);
-        factoryMap.put(AuthenticationService.class, MockAuthenticationService::new);
+        dependencyFactoryMap.put(ShiftRepository.class, MockShiftRepository::new);
+        dependencyFactoryMap.put(AuthenticationService.class, MockAuthenticationService::new);
     }
 
 }

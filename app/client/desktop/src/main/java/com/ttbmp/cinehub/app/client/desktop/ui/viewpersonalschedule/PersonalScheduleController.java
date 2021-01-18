@@ -1,38 +1,32 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule;
 
-import com.ttbmp.cinehub.app.client.desktop.CinehubApplication;
-import com.ttbmp.cinehub.app.client.desktop.di.ViewPersonalScheduleContainer;
+import com.ttbmp.cinehub.app.client.desktop.ui.appbar.AppBarController;
 import com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.calendar.CalendarDay;
 import com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.calendar.CalendarTableCell;
+import com.ttbmp.cinehub.app.client.desktop.utilities.ui.Controller;
+import com.ttbmp.cinehub.core.usecase.ViewPersonalScheduleUseCase;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
+import javafx.scene.layout.VBox;
 
-import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 /**
  * @author Fabio Buracchi
  */
-public class PersonalScheduleController {
-
-    private final ViewPersonalScheduleContainer container = CinehubApplication.APP_CONTAINER.getContainer(
-            ViewPersonalScheduleContainer.class
-    );
-
-    private final ViewPersonalScheduleViewModel viewModel = container.getViewModel();
+public class PersonalScheduleController extends Controller {
 
     @FXML
-    private ResourceBundle resources;
+    private VBox appBar;
 
     @FXML
-    private URL location;
+    private AppBarController appBarController;
 
     @FXML
     private Button todayButton;
@@ -49,12 +43,16 @@ public class PersonalScheduleController {
     @FXML
     private TableView<Map<DayOfWeek, CalendarDay>> calendarTableView;
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    @FXML
-    void initialize() {
-        assertProperInjection();
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    @Override
+    public void onLoad() {
+        appBarController.load(activity, navController);
+        ViewPersonalScheduleViewModel viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
         datePicker.valueProperty().bindBidirectional(viewModel.dateProperty());
-        datePicker.setOnAction(a -> container.getUseCase().getShiftList(viewModel.getCalendarPageFirstDate(), viewModel.getCalendarPageLastDate()));
+        datePicker.setOnAction(a -> activity.getUseCase(ViewPersonalScheduleUseCase.class).getShiftList(
+                viewModel.getCalendarPageFirstDate(),
+                viewModel.getCalendarPageLastDate())
+        );
         todayButton.setOnAction(a -> datePicker.setValue(LocalDate.now()));
         previousButton.setOnAction(a -> datePicker.setValue(datePicker.getValue().minusMonths(1)));
         nextButton.setOnAction(a -> datePicker.setValue(datePicker.getValue().plusMonths(1)));
@@ -68,23 +66,17 @@ public class PersonalScheduleController {
             dayTableColumn = (TableColumn<Map<DayOfWeek, CalendarDay>, CalendarDay>)
                     calendarTableView.getColumns().get(dayOfWeek.getValue() - 1);
             dayTableColumn.setCellValueFactory(new MapValueFactory(dayOfWeek));
-            dayTableColumn.setCellFactory(CalendarTableCell::new);
+            dayTableColumn.setCellFactory(tableColumn -> new CalendarTableCell(tableColumn, activity, navController));
             dayTableColumn.setReorderable(false);
             dayTableColumn.setResizable(false);
-            dayTableColumn.prefWidthProperty().bind(calendarTableView.widthProperty().divide(7));
+            dayTableColumn.prefWidthProperty().bind(calendarTableView.widthProperty().divide(
+                    calendarTableView.getColumns().size())
+            );
         }
-        onLoad();
-    }
-
-    private void onLoad() {
-        container.getUseCase().getShiftList(viewModel.getCalendarPageFirstDate(), viewModel.getCalendarPageLastDate());
-    }
-
-    private void assertProperInjection() {
-        assert previousButton != null : "fx:id=\"previousButton\" was not injected: check your FXML file 'personal_schedule.fxml'.";
-        assert nextButton != null : "fx:id=\"nextButton\" was not injected: check your FXML file 'personal_schedule.fxml'.";
-        assert datePicker != null : "fx:id=\"datePicker\" was not injected: check your FXML file 'personal_schedule.fxml'.";
-        assert calendarTableView != null : "fx:id=\"calendarTableView\" was not injected: check your FXML file 'personal_schedule.fxml'.";
+        activity.getUseCase(ViewPersonalScheduleUseCase.class).getShiftList(
+                viewModel.getCalendarPageFirstDate(),
+                viewModel.getCalendarPageLastDate()
+        );
     }
 
 }

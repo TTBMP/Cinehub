@@ -1,36 +1,23 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.calendar;
 
-import com.ttbmp.cinehub.app.client.desktop.CinehubApplication;
-import com.ttbmp.cinehub.app.client.desktop.di.ViewPersonalScheduleContainer;
 import com.ttbmp.cinehub.app.client.desktop.dto.ShiftDto;
 import com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.ViewPersonalScheduleViewModel;
 import com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.detail.ShiftDetailView;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ObjectBindings;
-import com.ttbmp.cinehub.app.client.desktop.utilities.Utilities;
+import com.ttbmp.cinehub.app.client.desktop.utilities.ui.Activity;
+import com.ttbmp.cinehub.app.client.desktop.utilities.ui.Controller;
+import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavController;
+import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavDestination;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * @author Fabio Buracchi
  */
-public class CalendarShiftItemController {
-
-    private final ViewPersonalScheduleContainer container = CinehubApplication.APP_CONTAINER.getContainer(
-            ViewPersonalScheduleContainer.class
-    );
-
-    private final ViewPersonalScheduleViewModel viewModel = container.getViewModel();
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
+public class CalendarShiftItemController extends Controller {
 
     @FXML
     private VBox itemVBox;
@@ -44,16 +31,15 @@ public class CalendarShiftItemController {
     @FXML
     private Label locationLabel;
 
-    @FXML
-    void initialize() {
-        assertProperInjection();
-    }
+    private ShiftDto shiftDto;
 
-    public void bind(ShiftDto shiftDto) {
+    @Override
+    public void onLoad() {
+        ViewPersonalScheduleViewModel viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
         itemVBox.setOnMouseClicked(event -> {
             viewModel.selectedShiftProperty().setValue(shiftDto);
             try {
-                Utilities.createPopup(new ShiftDetailView(), "Detail", Utilities.getStage(itemVBox));
+                navController.openInDialog(new NavDestination(new ShiftDetailView()), "Detail");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -63,10 +49,9 @@ public class CalendarShiftItemController {
         locationLabel.setText("via Roma");
     }
 
-    private void assertProperInjection() {
-        assert itemVBox != null : "fx:id=\"itemVBox\" was not injected: check your FXML file 'calendar_shift_item.fxml'.";
-        assert startLabel != null : "fx:id=\"startLabel\" was not injected: check your FXML file 'calendar_shift_item.fxml'.";
-        assert endLabel != null : "fx:id=\"endLabel\" was not injected: check your FXML file 'calendar_shift_item.fxml'.";
-        assert locationLabel != null : "fx:id=\"locationLabel\" was not injected: check your FXML file 'calendar_shift_item.fxml'.";
+    public void load(Activity activity, NavController navController, ShiftDto shiftDto) {
+        this.shiftDto = shiftDto;
+        load(activity, navController);
     }
+
 }
