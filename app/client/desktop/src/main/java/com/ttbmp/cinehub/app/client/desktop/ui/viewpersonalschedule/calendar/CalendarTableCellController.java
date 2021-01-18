@@ -2,26 +2,19 @@ package com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.calendar;
 
 import com.ttbmp.cinehub.app.client.desktop.dto.ShiftDto;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ObjectBindings;
+import com.ttbmp.cinehub.app.client.desktop.utilities.ui.Controller;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 /**
  * @author Fabio Buracchi
  */
-public class CalendarTableCellController {
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
+public class CalendarTableCellController extends Controller {
 
     @FXML
     private VBox shiftVBox;
@@ -31,11 +24,6 @@ public class CalendarTableCellController {
 
     @FXML
     private Label dayNumberLabel;
-
-    @FXML
-    void initialize() {
-        assertProperInjection();
-    }
 
     public void bind(CalendarDay calendarDay) {
         dayNumberLabel.textProperty().bind(ObjectBindings.map(calendarDay.dateProperty(), date -> Integer.toString(date.getDayOfMonth())));
@@ -50,19 +38,21 @@ public class CalendarTableCellController {
             CalendarShiftItemView itemView = null;
             try {
                 itemView = new CalendarShiftItemView();
+                itemView.load();
             } catch (IOException e) {
                 e.printStackTrace();
             }
             Objects.requireNonNull(itemView);
             shiftVBox.getChildren().add(itemView.getRoot());
+            itemView.getController().setNavController(navController);
+            itemView.getController().setActivity(activity);
             itemView.getController().bind(shiftDto);
         }
     }
 
-    private void assertProperInjection() {
-        assert shiftVBox != null : "fx:id=\"shiftVBox\" was not injected: check your FXML file 'calendar_table_cell.fxml'.";
-        assert coworkerNumberLabel != null : "fx:id=\"coworkerNumberLabel\" was not injected: check your FXML file 'calendar_table_cell.fxml'.";
-        assert dayNumberLabel != null : "fx:id=\"dayNumberLabel\" was not injected: check your FXML file 'calendar_table_cell.fxml'.";
+    @Override
+    public void onLoad() {
+
     }
 
 }

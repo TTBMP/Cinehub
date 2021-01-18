@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * @author Fabio Buracchi
  */
-public class ViewPersonalScheduleUseCase {
+public class ViewPersonalScheduleUseCase implements UseCase {
 
     private final ViewPersonalSchedulePresenter presenter;
     private final ShiftRepository shiftRepository;

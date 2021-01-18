@@ -1,13 +1,13 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.calendar;
 
-import com.ttbmp.cinehub.app.client.desktop.utilities.View;
+import com.ttbmp.cinehub.app.client.desktop.utilities.ui.FxmlView;
 
 import java.io.IOException;
 
 /**
  * @author Fabio Buracchi
  */
-public class CalendarTableCellView extends View {
+public class CalendarTableCellView extends FxmlView {
 
     public CalendarTableCellView() throws IOException {
         super("calendar_table_cell.fxml");

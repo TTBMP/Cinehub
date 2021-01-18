@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.calendar;
 
+import com.ttbmp.cinehub.app.client.desktop.utilities.ui.Activity;
+import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavController;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 
@@ -15,16 +17,18 @@ public class CalendarTableCell extends TableCell<Map<DayOfWeek, CalendarDay>, Ca
 
     private CalendarTableCellView cell;
 
-    @SuppressWarnings("unused")
-    public CalendarTableCell(TableColumn<Map<DayOfWeek, CalendarDay>, CalendarDay> tableColumn) {
+    public CalendarTableCell(TableColumn<Map<DayOfWeek, CalendarDay>, CalendarDay> tableColumn, Activity activity, NavController navController) {
         super();
+        prefHeightProperty().bind(tableColumn.widthProperty());
         try {
             cell = new CalendarTableCellView();
+            cell.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        prefHeightProperty().bind(tableColumn.widthProperty());
         Objects.requireNonNull(cell);
+        cell.getController().setActivity(activity);
+        cell.getController().setNavController(navController);
         setGraphic(cell.getRoot());
     }
 

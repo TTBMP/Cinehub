@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+      fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.appbar.AppBarController">
+    <Label text="CineHub"/>
+    <TabPane fx:id="tabPane" nodeOrientation="RIGHT_TO_LEFT" tabClosingPolicy="UNAVAILABLE">
+        <Tab fx:id="tab1" closable="false" text="View Personal Schedule"/>
+    </TabPane>
+</VBox>
