@@ -16,8 +16,8 @@ import java.util.Objects;
 public class CalendarTableCell extends TableCell<Map<DayOfWeek, CalendarDay>, CalendarDay> {
 
     private CalendarTableCellView cell;
-    private Activity activity;
-    private NavController navController;
+    private final Activity activity;
+    private final NavController navController;
 
     public CalendarTableCell(TableColumn<Map<DayOfWeek, CalendarDay>, CalendarDay> tableColumn, Activity activity, NavController navController) {
         super();

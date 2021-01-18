@@ -16,14 +16,16 @@ import java.util.Map;
 public class AppBarController extends Controller {
 
     private final Map<Class<? extends Activity>, Tab> activityTabMap = new HashMap<>();
+
     @FXML
     private TabPane tabPane;
+
     @FXML
-    private Tab tab1;
+    private Tab viewPersonalScheduleTab;
 
     @Override
     public void onLoad() {
-        activityTabMap.put(ViewPersonalScheduleActivity.class, tab1);
+        loadActivityTabMap();
         for (Map.Entry<Class<? extends Activity>, Tab> entry : activityTabMap.entrySet()) {
             if (activity.getClass().equals(entry.getKey())) {
                 tabPane.getSelectionModel().select(entry.getValue());
@@ -38,6 +40,10 @@ public class AppBarController extends Controller {
                 }
             });
         }
+    }
+
+    private void loadActivityTabMap() {
+        activityTabMap.put(ViewPersonalScheduleActivity.class, viewPersonalScheduleTab);
     }
 
 }

@@ -8,6 +8,6 @@
       fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.appbar.AppBarController">
     <Label text="CineHub"/>
     <TabPane fx:id="tabPane" nodeOrientation="RIGHT_TO_LEFT" tabClosingPolicy="UNAVAILABLE">
-        <Tab fx:id="tab1" closable="false" text="View Personal Schedule"/>
+        <Tab fx:id="viewPersonalScheduleTab" closable="false" text="View Personal Schedule"/>
     </TabPane>
 </VBox>
