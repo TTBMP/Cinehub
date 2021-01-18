@@ -4,7 +4,6 @@ import com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.ViewPersonal
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.Controller;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavActivityDestination;
-import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -39,12 +38,6 @@ public class AppBarController extends Controller {
                 }
             });
         }
-    }
-
-    public void initialize(Activity activity, NavController navController) {
-        this.activity = activity;
-        this.navController = navController;
-        onLoad();
     }
 
 }

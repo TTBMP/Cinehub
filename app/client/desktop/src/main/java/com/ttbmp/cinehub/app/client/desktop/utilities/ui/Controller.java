@@ -8,19 +8,17 @@ public abstract class Controller {
     protected Activity activity;
     protected NavController navController;
 
-    public void setActivity(Activity activity) {
+    public void load(Activity activity, NavController navController) {
         this.activity = activity;
+        this.navController = navController;
+        onLoad();
     }
 
-    public void setNavController(NavController navController) {
-        this.navController = navController;
-    }
+    public abstract void onLoad();
 
     @FXML
     private void initialize() {
 
     }
-
-    public abstract void onLoad();
 
 }

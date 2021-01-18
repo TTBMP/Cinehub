@@ -28,9 +28,7 @@ public class NavDestination {
         if (!loaded) {
             view.load();
             Controller controller = view.getController();
-            controller.setActivity(activity);
-            controller.setNavController(navController);
-            controller.onLoad();
+            controller.load(activity, navController);
             scene = new Scene(view.getRoot());
             scene.getStylesheets().add(CinehubApplication.class.getResource("/styles/styles.css").toExternalForm());
             loaded = true;

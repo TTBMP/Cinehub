@@ -2,7 +2,9 @@ package com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.calendar;
 
 import com.ttbmp.cinehub.app.client.desktop.dto.ShiftDto;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ObjectBindings;
+import com.ttbmp.cinehub.app.client.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.Controller;
+import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavController;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -25,11 +27,19 @@ public class CalendarTableCellController extends Controller {
     @FXML
     private Label dayNumberLabel;
 
-    public void bind(CalendarDay calendarDay) {
+    private CalendarDay calendarDay;
+
+    @Override
+    public void onLoad() {
         dayNumberLabel.textProperty().bind(ObjectBindings.map(calendarDay.dateProperty(), date -> Integer.toString(date.getDayOfMonth())));
         calendarDay.getDateShiftList().addListener((ListChangeListener<ShiftDto>) c -> updateShiftVBox(calendarDay));
         coworkerNumberLabel.setText("0");
         updateShiftVBox(calendarDay);
+    }
+
+    public void load(Activity activity, NavController navController, CalendarDay calendarDay) {
+        this.calendarDay = calendarDay;
+        load(activity, navController);
     }
 
     private void updateShiftVBox(CalendarDay calendarDay) {
@@ -44,15 +54,8 @@ public class CalendarTableCellController extends Controller {
             }
             Objects.requireNonNull(itemView);
             shiftVBox.getChildren().add(itemView.getRoot());
-            itemView.getController().setNavController(navController);
-            itemView.getController().setActivity(activity);
-            itemView.getController().bind(shiftDto);
+            itemView.getController().load(activity, navController, shiftDto);
         }
-    }
-
-    @Override
-    public void onLoad() {
-
     }
 
 }

@@ -4,7 +4,9 @@ import com.ttbmp.cinehub.app.client.desktop.dto.ShiftDto;
 import com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.ViewPersonalScheduleViewModel;
 import com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.detail.ShiftDetailView;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ObjectBindings;
+import com.ttbmp.cinehub.app.client.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.Controller;
+import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavController;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavDestination;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -29,7 +31,10 @@ public class CalendarShiftItemController extends Controller {
     @FXML
     private Label locationLabel;
 
-    public void bind(ShiftDto shiftDto) {
+    private ShiftDto shiftDto;
+
+    @Override
+    public void onLoad() {
         ViewPersonalScheduleViewModel viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
         itemVBox.setOnMouseClicked(event -> {
             viewModel.selectedShiftProperty().setValue(shiftDto);
@@ -44,9 +49,9 @@ public class CalendarShiftItemController extends Controller {
         locationLabel.setText("via Roma");
     }
 
-    @Override
-    public void onLoad() {
-
+    public void load(Activity activity, NavController navController, ShiftDto shiftDto) {
+        this.shiftDto = shiftDto;
+        load(activity, navController);
     }
 
 }

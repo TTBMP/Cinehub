@@ -16,6 +16,8 @@ import java.util.Objects;
 public class CalendarTableCell extends TableCell<Map<DayOfWeek, CalendarDay>, CalendarDay> {
 
     private CalendarTableCellView cell;
+    private Activity activity;
+    private NavController navController;
 
     public CalendarTableCell(TableColumn<Map<DayOfWeek, CalendarDay>, CalendarDay> tableColumn, Activity activity, NavController navController) {
         super();
@@ -27,8 +29,8 @@ public class CalendarTableCell extends TableCell<Map<DayOfWeek, CalendarDay>, Ca
             e.printStackTrace();
         }
         Objects.requireNonNull(cell);
-        cell.getController().setActivity(activity);
-        cell.getController().setNavController(navController);
+        this.activity = activity;
+        this.navController = navController;
         setGraphic(cell.getRoot());
     }
 
@@ -37,7 +39,7 @@ public class CalendarTableCell extends TableCell<Map<DayOfWeek, CalendarDay>, Ca
         super.updateItem(calendarDay, empty);
         if (!empty) {
             Objects.requireNonNull(calendarDay);
-            cell.getController().bind(calendarDay);
+            cell.getController().load(activity, navController, calendarDay);
         } else {
             setVisible(false);
         }

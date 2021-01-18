@@ -46,7 +46,7 @@ public class PersonalScheduleController extends Controller {
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public void onLoad() {
-        appBarController.initialize(activity, navController);
+        appBarController.load(activity, navController);
         ViewPersonalScheduleViewModel viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
         datePicker.valueProperty().bindBidirectional(viewModel.dateProperty());
         datePicker.setOnAction(a -> activity.getUseCase(ViewPersonalScheduleUseCase.class).getShiftList(
