@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.calendar;
 
+import com.ttbmp.cinehub.app.client.desktop.utilities.ui.Activity;
+import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavController;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 
@@ -14,17 +16,21 @@ import java.util.Objects;
 public class CalendarTableCell extends TableCell<Map<DayOfWeek, CalendarDay>, CalendarDay> {
 
     private CalendarTableCellView cell;
+    private final Activity activity;
+    private final NavController navController;
 
-    @SuppressWarnings("unused")
-    public CalendarTableCell(TableColumn<Map<DayOfWeek, CalendarDay>, CalendarDay> tableColumn) {
+    public CalendarTableCell(TableColumn<Map<DayOfWeek, CalendarDay>, CalendarDay> tableColumn, Activity activity, NavController navController) {
         super();
+        prefHeightProperty().bind(tableColumn.widthProperty());
         try {
             cell = new CalendarTableCellView();
+            cell.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        prefHeightProperty().bind(tableColumn.widthProperty());
         Objects.requireNonNull(cell);
+        this.activity = activity;
+        this.navController = navController;
         setGraphic(cell.getRoot());
     }
 
@@ -33,7 +39,7 @@ public class CalendarTableCell extends TableCell<Map<DayOfWeek, CalendarDay>, Ca
         super.updateItem(calendarDay, empty);
         if (!empty) {
             Objects.requireNonNull(calendarDay);
-            cell.getController().bind(calendarDay);
+            cell.getController().load(activity, navController, calendarDay);
         } else {
             setVisible(false);
         }

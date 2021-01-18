@@ -4,6 +4,7 @@ import com.ttbmp.cinehub.app.client.desktop.dto.ShiftDto;
 import com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.calendar.CalendarDay;
 import com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.calendar.CalendarPage;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ObjectBindings;
+import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewModel;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -18,7 +19,7 @@ import java.util.Map;
 /**
  * @author Fabio Buracchi
  */
-public class ViewPersonalScheduleViewModel {
+public class ViewPersonalScheduleViewModel implements ViewModel {
 
     private final ObjectProperty<LocalDate> date = new SimpleObjectProperty<>(LocalDate.now());
     private final ObservableList<ShiftDto> shiftList = FXCollections.observableArrayList();
