@@ -24,7 +24,7 @@ public class AppBarController extends Controller {
     private Tab viewPersonalScheduleTab;
 
     @Override
-    public void onLoad() {
+    protected void onLoad() {
         loadActivityTabMap();
         for (Map.Entry<Class<? extends Activity>, Tab> entry : activityTabMap.entrySet()) {
             if (activity.getClass().equals(entry.getKey())) {

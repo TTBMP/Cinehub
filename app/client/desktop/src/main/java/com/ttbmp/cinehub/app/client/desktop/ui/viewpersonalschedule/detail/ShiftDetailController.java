@@ -33,7 +33,7 @@ public class ShiftDetailController extends Controller {
     private Button changeButton;
 
     @Override
-    public void onLoad() {
+    protected void onLoad() {
         ViewPersonalScheduleViewModel viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
         dateLabel.textProperty().bind(viewModel.selectedShiftDateProperty());
         startLabel.textProperty().bind(viewModel.selectedShiftStartProperty());
