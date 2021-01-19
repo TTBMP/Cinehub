@@ -30,7 +30,7 @@ public class CalendarTableCellController extends Controller {
     private CalendarDay calendarDay;
 
     @Override
-    public void onLoad() {
+    protected void onLoad() {
         dayNumberLabel.textProperty().bind(ObjectBindings.map(calendarDay.dateProperty(), date -> Integer.toString(date.getDayOfMonth())));
         calendarDay.getDateShiftList().addListener((ListChangeListener<ShiftDto>) c -> updateShiftVBox(calendarDay));
         coworkerNumberLabel.setText("0");

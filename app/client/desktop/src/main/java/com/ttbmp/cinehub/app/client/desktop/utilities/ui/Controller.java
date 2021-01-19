@@ -14,7 +14,7 @@ public abstract class Controller {
         onLoad();
     }
 
-    public abstract void onLoad();
+    protected abstract void onLoad();
 
     @FXML
     private void initialize() {
