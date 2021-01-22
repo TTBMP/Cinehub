@@ -8,6 +8,9 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Objects;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class NavController {
 
     private final Deque<NavDestination> navBackStack = new ArrayDeque<>();

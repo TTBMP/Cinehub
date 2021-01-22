@@ -3,6 +3,9 @@ package com.ttbmp.cinehub.app.client.desktop.utilities.ui.stage;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class DialogStage extends Stage {
 
     public DialogStage(Stage owner, String title) {

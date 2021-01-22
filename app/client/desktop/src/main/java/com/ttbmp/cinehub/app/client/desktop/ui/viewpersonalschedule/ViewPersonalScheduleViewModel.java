@@ -1,10 +1,10 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule;
 
-import com.ttbmp.cinehub.app.client.desktop.dto.ShiftDto;
-import com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.calendar.CalendarDay;
-import com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.calendar.CalendarPage;
+import com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.master.calendar.CalendarDay;
+import com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.master.calendar.CalendarPage;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ObjectBindings;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewModel;
+import com.ttbmp.cinehub.core.dto.ShiftDto;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;

@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1"
-      fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.PersonalScheduleController">
+      fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule.master.PersonalScheduleViewController">
     <fx:include fx:id="appBar" source="app_bar.fxml"/>
     <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308"
                 maxWidth="1.7976931348623157E308" prefHeight="700.0">
