@@ -1,9 +1,12 @@
 package com.ttbmp.cinehub.app.client.desktop.utilities.ui;
 
-import com.ttbmp.cinehub.app.client.desktop.utilities.FactoryMap;
-import com.ttbmp.cinehub.app.client.desktop.utilities.InstanceMap;
 import com.ttbmp.cinehub.core.usecase.UseCase;
+import com.ttbmp.cinehub.core.utilities.FactoryMap;
+import com.ttbmp.cinehub.core.utilities.InstanceMap;
 
+/**
+ * @author Fabio Buracchi
+ */
 public abstract class Activity implements ViewModelStoreOwner, UseCaseProvider {
 
     protected final InstanceMap<ViewModel> viewModelStore = new InstanceMap<>();

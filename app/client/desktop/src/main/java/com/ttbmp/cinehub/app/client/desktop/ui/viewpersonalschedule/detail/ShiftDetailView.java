@@ -11,6 +11,7 @@ public class ShiftDetailView extends FxmlView {
 
     public ShiftDetailView() throws IOException {
         super("shift_detail.fxml");
+        addStylesheet("styles.css");
     }
 
 }

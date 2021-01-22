@@ -5,6 +5,9 @@ import com.ttbmp.cinehub.app.client.desktop.utilities.ui.View;
 
 import java.io.IOException;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class NavActivityDestination extends NavDestination {
 
     public NavActivityDestination(Activity activity) {

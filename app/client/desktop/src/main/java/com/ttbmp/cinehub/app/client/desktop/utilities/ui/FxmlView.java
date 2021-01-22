@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 
+/**
+ * @author Fabio Buracchi
+ */
 public abstract class FxmlView extends View {
 
     private final FXMLLoader loader;
@@ -30,7 +33,7 @@ public abstract class FxmlView extends View {
     }
 
     @Override
-    public Controller getController() {
+    public ViewController getController() {
         return loader.getController();
     }
 }

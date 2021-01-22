@@ -1,30 +1,33 @@
 package com.ttbmp.cinehub.core.utilities.result;
 
-import java.util.Objects;
-
 /**
  * @author Fabio Buracchi
  */
-public class Result<T> {
+public final class Result<T> {
 
-    private T value = null;
-    private Throwable error = null;
+    private final T value;
+    private final Throwable error;
 
-    public Result(T result) {
-        this.value = result;
+    public Result(T value) {
+        this.value = value;
+        this.error = null;
     }
 
     public Result(Throwable error) {
+        this.value = null;
         this.error = error;
     }
 
-    public void addObserver(ResultObserver<? super T> observer) {
-        Objects.requireNonNull(observer);
-        if (error != null || value == null) {
-            observer.onError(error);
-        } else {
-            observer.onSuccess(value);
-        }
+    public T getValue() {
+        return value;
+    }
+
+    public Throwable getError() {
+        return error;
+    }
+
+    public boolean hasError() {
+        return error != null;
     }
 
 }

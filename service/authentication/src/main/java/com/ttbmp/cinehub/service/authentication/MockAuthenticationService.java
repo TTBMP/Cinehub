@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.service.authentication;
 
-import com.ttbmp.cinehub.core.entity.session.Session;
-import com.ttbmp.cinehub.core.services.AuthenticationService;
+import com.ttbmp.cinehub.core.service.authentication.AuthenticationService;
 
 /**
  * @author Fabio Buracchi
@@ -9,8 +8,8 @@ import com.ttbmp.cinehub.core.services.AuthenticationService;
 public class MockAuthenticationService implements AuthenticationService {
 
     @Override
-    public Session getCurrentSession() {
-        return new Session();
+    public Integer sigIn() {
+        return 0;
     }
 
 }

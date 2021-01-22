@@ -1,12 +1,9 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.viewpersonalschedule;
 
-import com.ttbmp.cinehub.app.client.desktop.datamapper.ShiftDataMapper;
-import com.ttbmp.cinehub.core.entity.Shift;
-import com.ttbmp.cinehub.core.presenter.ViewPersonalSchedulePresenter;
+import com.ttbmp.cinehub.core.usecase.viewpersonalschedule.GetShiftListRequest;
+import com.ttbmp.cinehub.core.usecase.viewpersonalschedule.GetShiftListResponse;
+import com.ttbmp.cinehub.core.usecase.viewpersonalschedule.ViewPersonalSchedulePresenter;
 import com.ttbmp.cinehub.core.utilities.result.Result;
-import com.ttbmp.cinehub.core.utilities.result.ResultObserver;
-
-import java.util.List;
 
 /**
  * @author Fabio Buracchi
@@ -20,18 +17,39 @@ public class ViewPersonalScheduleFxPresenter implements ViewPersonalSchedulePres
     }
 
     @Override
-    public void presentShiftList(Result<List<Shift>> result) {
-        result.addObserver(new ResultObserver<>() {
-            @Override
-            public void onSuccess(List<Shift> shiftList) {
-                viewModel.getShiftList().clear();
-                viewModel.getShiftList().addAll(ShiftDataMapper.mapToDtoList(shiftList));
-            }
-
-            @Override
-            public void onError(Throwable error) {
-                error.printStackTrace();
-            }
-        });
+    public void presentGetShiftList(Result<GetShiftListResponse> result) {
+        if (result.hasError()) {
+            result.getError().printStackTrace();
+        }
+        viewModel.getShiftList().setAll(result.getValue().getShiftDtoList());
     }
+
+    @Override
+    public void presentGetShiftListRequestInvalid(GetShiftListRequest request) {
+        if (request.getNotification().getErrorList().contains(GetShiftListRequest.MISSING_START_TIME_ERROR)) {
+            System.out.println(GetShiftListRequest.MISSING_START_TIME_ERROR.getMessage());
+        }
+        if (request.getNotification().getErrorList().contains(GetShiftListRequest.MISSING_END_TIME_ERROR)) {
+            System.out.println(GetShiftListRequest.MISSING_END_TIME_ERROR.getMessage());
+        }
+        if (request.getNotification().getErrorList().contains(GetShiftListRequest.INVALID_TIME_SELECTION_ERROR)) {
+            System.out.println(GetShiftListRequest.INVALID_TIME_SELECTION_ERROR.getMessage());
+        }
+    }
+
+    @Override
+    public void presentAuthenticationError(Throwable error) {
+        System.out.println(error.getMessage());
+    }
+
+    @Override
+    public void presentShiftListError(Throwable error) {
+        System.out.println(error.getMessage());
+    }
+
+    @Override
+    public void presentGetShiftListNullRequest() {
+        System.out.println("Request can't be null");
+    }
+
 }
