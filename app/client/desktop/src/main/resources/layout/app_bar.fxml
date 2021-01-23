@@ -7,5 +7,6 @@
       fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.appbar.AppBarViewController">
     <TabPane fx:id="tabPane" minHeight="30.0" nodeOrientation="RIGHT_TO_LEFT" tabClosingPolicy="UNAVAILABLE">
         <Tab fx:id="viewPersonalScheduleTab" closable="false" text="View Personal Schedule"/>
+        <Tab fx:id="buyTicketTab" text="Buy Ticket" />
     </TabPane>
 </VBox>

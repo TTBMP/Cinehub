@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.buyticket.choosecinema.ChooseCinemaViewController">
+    <children>
+        <fx:include fx:id="appBar" source="app_bar.fxml" />
+        <AnchorPane VBox.vgrow="ALWAYS">
+            <children>
+                <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="336.0" prefWidth="463.0" HBox.hgrow="ALWAYS">
+                     <content>
+                                  <ListView fx:id="cinemaListView" prefHeight="334.0" prefWidth="461.0" />
+                     </content>
+                        </ScrollPane>
+                        <TitledPane collapsible="false" prefHeight="336.0" prefWidth="186.0" text="Seleziona l'orario" HBox.hgrow="ALWAYS">
+                     <content>
+                                  <ScrollPane hbarPolicy="NEVER" prefHeight="120.0" prefWidth="167.0">
+                                      <content>
+                                          <ListView fx:id="timeOfProjectionListView" />
+                                      </content>
+                                  </ScrollPane>
+                     </content>
+                        </TitledPane>
+                    </children>
+                </HBox>
+            </children>
+        </AnchorPane>
+      <HBox VBox.vgrow="ALWAYS">
+         <children>
+            <AnchorPane HBox.hgrow="ALWAYS">
+               <children>
+                        <Button fx:id="confirmCinemaButton" alignment="CENTER_RIGHT" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" text="Continua" textAlignment="RIGHT" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <Button fx:id="cancelButton" mnemonicParsing="false" text="Indietro" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+    </children>
+</VBox>
