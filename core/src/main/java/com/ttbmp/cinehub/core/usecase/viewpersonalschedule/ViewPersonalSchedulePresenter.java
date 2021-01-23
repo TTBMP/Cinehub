@@ -9,7 +9,7 @@ public interface ViewPersonalSchedulePresenter {
 
     void presentGetShiftList(Result<GetShiftListResponse> result);
 
-    void presentGetShiftListRequestInvalid(GetShiftListRequest request);
+    void presentInvalidGetShiftListRequest(GetShiftListRequest request);
 
     void presentAuthenticationError(Throwable error);
 

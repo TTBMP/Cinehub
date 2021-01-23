@@ -5,6 +5,7 @@ import com.ttbmp.cinehub.core.entity.Shift;
 import com.ttbmp.cinehub.core.repository.EmployeeRepository;
 import com.ttbmp.cinehub.core.repository.ShiftRepository;
 import com.ttbmp.cinehub.core.service.authentication.AuthenticationService;
+import com.ttbmp.cinehub.core.usecase.Request;
 import com.ttbmp.cinehub.core.utilities.result.Result;
 
 import java.util.List;
@@ -31,31 +32,29 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
     }
 
     public void getShiftList(GetShiftListRequest request) {
-        if (request == null) {
+        try {
+            Request.validate(request);
+            int userId = authenticationService.sigIn();
+            Result<Employee> employeeResult = employeeRepository.getEmployee(userId);
+            if (employeeResult.hasError()) {
+                presenter.presentAuthenticationError(employeeResult.getError());
+                return;
+            }
+            Result<List<Shift>> shiftListResult = shiftRepository.getAllEmployeeShiftBetweenDate(
+                    employeeResult.getValue(),
+                    request.getStart(),
+                    request.getEnd()
+            );
+            if (shiftListResult.hasError()) {
+                presenter.presentShiftListError(shiftListResult.getError());
+                return;
+            }
+            presenter.presentGetShiftList(new Result<>(new GetShiftListResponse(shiftListResult.getValue())));
+        } catch (Request.NullRequestException e) {
             presenter.presentGetShiftListNullRequest();
-            return;
+        } catch (Request.InvalidRequestException e) {
+            presenter.presentInvalidGetShiftListRequest(request);
         }
-        request.validate();
-        if (request.getNotification().hasError()) {
-            presenter.presentGetShiftListRequestInvalid(request);
-            return;
-        }
-        int userId = authenticationService.sigIn();
-        Result<Employee> employeeResult = employeeRepository.getEmployee(userId);
-        if (employeeResult.hasError()) {
-            presenter.presentAuthenticationError(employeeResult.getError());
-            return;
-        }
-        Result<List<Shift>> shiftListResult = shiftRepository.getAllEmployeeShiftBetweenDate(
-                employeeResult.getValue(),
-                request.getStart(),
-                request.getEnd()
-        );
-        if (shiftListResult.hasError()) {
-            presenter.presentShiftListError(shiftListResult.getError());
-            return;
-        }
-        presenter.presentGetShiftList(new Result<>(new GetShiftListResponse(shiftListResult.getValue())));
     }
 
 }
