@@ -1,21 +1,22 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.manageshift.assign;
 
-
+/**
+ * @author Massimo Mazzetti
+ */
 
 public enum Option {
     EVERY_DAY("ogni giorno"),
     EVERY_WEEK("ogni settimana"),
     EVERY_MONTH("ogni mese");
 
-    private final String option;
+    private final String value;
 
-    Option(String option) {
-        System.out.println(option);
-        this.option = option;
+    Option(String value) {
+        this.value = value;
     }
 
-    public String Option() {
-        return option;
+    public String getValue() {
+        return this.value;
     }
 }
 

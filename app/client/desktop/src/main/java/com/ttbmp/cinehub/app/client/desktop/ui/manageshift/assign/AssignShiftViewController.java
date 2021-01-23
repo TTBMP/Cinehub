@@ -11,8 +11,8 @@ import com.ttbmp.cinehub.core.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.core.dto.EmployeeDto;
 import com.ttbmp.cinehub.core.dto.HallDto;
 import com.ttbmp.cinehub.core.entity.Shift;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetShiftRequest;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
+import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.ShiftRequest;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -23,11 +23,11 @@ import java.net.URL;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
+/**
+ * @author Massimo Mazzetti
+ */
+
 public class AssignShiftViewController extends ViewController {
-
-
-    private ManageEmployeesShiftViewModel viewModel;
-
 
     @FXML
     private ResourceBundle resources;
@@ -74,18 +74,17 @@ public class AssignShiftViewController extends ViewController {
 
     @Override
     protected void onLoad() {
+        ManageEmployeesShiftViewModel viewModel;
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
 
         if (viewModel.getSelectedDayWeek().getEmployee().getRole().equals("maschera")) {
             hallLabel.setVisible(false);
             hallComboBox.setVisible(false);
         } else {
-            activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(CinemaDataMapper.matToEntity( viewModel.getSelectedDayWeek().getEmployee().getCinema()));
+            activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(CinemaDataMapper.matToEntity(viewModel.getSelectedDayWeek().getEmployee().getCinema()));
             hallComboBox.setItems(viewModel.getSalaList());
             viewModel.selectedSalaProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
         }
-
-
 
 
         errorVBox.setVisible(false);
@@ -127,15 +126,14 @@ public class AssignShiftViewController extends ViewController {
                         errorVBox.setVisible(true);
                     }
                 }
-                if(shift!=null && activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new GetShiftRequest(ShiftDataMapper.mapToEntity(ShiftDataMapper.mapToDto(shift)))) ) {
+                if (shift != null && activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new ShiftRequest(ShiftDataMapper.mapToEntity(ShiftDataMapper.mapToDto(shift))))) {
 
                     try {
                         navController.popBackStack();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-                else{
+                } else {
                     errorVBox.setVisible(true);
                 }
 

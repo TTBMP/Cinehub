@@ -5,13 +5,18 @@ import javafx.scene.control.DatePicker;
 
 import java.time.LocalDate;
 
-public class ModifyDateCell extends DateCell{
+/**
+ * @author Massimo Mazzetti
+ */
+
+
+public class ModifyDateCell extends DateCell {
 
     public ModifyDateCell(DatePicker datePicker) {
     }
 
     @Override
-    public void updateItem(LocalDate date, boolean empty){
+    public void updateItem(LocalDate date, boolean empty) {
         super.updateItem(date, empty);
         if (date.isBefore(LocalDate.now().plusDays(1))) {
             setDisable(true);

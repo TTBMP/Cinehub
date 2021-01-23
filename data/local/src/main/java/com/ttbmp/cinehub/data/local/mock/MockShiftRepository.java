@@ -15,21 +15,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author Fabio Buracchi
+ * @author Fabio Buracchi, Massimo Mazzetti
  */
 public class MockShiftRepository implements ShiftRepository {
 
     private final List<Shift> shiftList;
 
     public MockShiftRepository() {
-        Employee employee1 = new Employee("ciao", "bella", "proiezionista", 15, 15, new Cinema("pippo"), 0);
-        Employee employee2 = new Employee("fabio", "buracchi", "maschera", 20, 11, new Cinema("fabio"), 0);
-        Employee employee3 = new Employee("Massimo", "Mazzetti", "proiezionista", 15, 15, new Cinema("fabio"), 0);
-        Employee employee4 = new Employee("Ivan", "Palmieri", "maschera", 20, 11, new Cinema("pippo"), 0);
+        String s = "Comunale";
+        String s1 = "MultiPlex";
+        Employee employee1 = new Employee("ciao", "bella", "proiezionista", 15, 15, new Cinema(s), 0);
+        Employee employee2 = new Employee("fabio", "buracchi", "maschera", 20, 11, new Cinema(s1), 0);
+        Employee employee3 = new Employee("Massimo", "Mazzetti", "proiezionista", 15, 15, new Cinema(s1), 0);
+        Employee employee4 = new Employee("Ivan", "Palmieri", "maschera", 20, 11, new Cinema(s), 0);
 
 
-        Hall hall = new Hall("1", new Cinema("pippo"));
-        Hall hall2 = new Hall("1", new Cinema("fabio"));
+        Hall hall = new Hall("1", new Cinema(s));
+        Hall hall2 = new Hall("1", new Cinema(s1));
         shiftList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 5; j++) {

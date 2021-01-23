@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @author Fabio Buracchi
+ * @author Fabio Buracchi, Massimo Mazzetti
  */
 public class ShiftDataMapper {
 

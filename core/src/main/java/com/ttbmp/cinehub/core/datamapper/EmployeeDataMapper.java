@@ -6,8 +6,12 @@ import com.ttbmp.cinehub.core.utilities.DataMapperHelper;
 
 import java.util.List;
 
+/**
+ * @author Massimo Mazzetti
+ */
+
 public class EmployeeDataMapper {
-    public EmployeeDataMapper() {
+    private EmployeeDataMapper() {
     }
 
     public static EmployeeDto mapToDto(Employee employee) {

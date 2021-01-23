@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
- * @author Fabio Buracchi
+ * @author Fabio Buracchi, Massimo Mazzetti
  */
 public class ShiftDto {
 
@@ -28,6 +28,7 @@ public class ShiftDto {
         this.start = start;
         this.end = end;
     }
+
     public ShiftDto(EmployeeDto employee, LocalDate date, LocalTime start, LocalTime end, HallDto hall) {
         this.employee = employee;
         this.date = date;

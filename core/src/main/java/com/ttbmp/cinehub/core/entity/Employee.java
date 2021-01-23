@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.core.entity;
 
 /**
- * @author Fabio Buracchi
+ * @author Fabio Buracchi, Massimo Mazzetti
  */
 public class Employee extends User {
 
@@ -16,12 +16,12 @@ public class Employee extends User {
         setName("");
     }
 
-    public Employee(String name,String surname, String role, int hourRemain, int minRemain, Cinema cinema, int weeklyWorkingHours) {
+    public Employee(String name, String surname, String role, int hourRemain, int minRemain, Cinema cinema, int weeklyWorkingHours) {
         setName(name);
         setSurname(surname);
         this.role = role;
         this.minRemain = minRemain;
-        this.hourRemain=hourRemain;
+        this.hourRemain = hourRemain;
         this.cinema = cinema;
         this.weeklyWorkingHours = weeklyWorkingHours;
     }
@@ -60,16 +60,20 @@ public class Employee extends User {
 
 
 
+
     @Override
-    public boolean equals(Object obj){
+    public boolean equals(Object obj) {
         Employee other = (Employee) obj;
-        return
-                this.getName().equals(other.getName())
-                        && this.getSurname().equals(other.getSurname())
-                        && this.getRole().equals(other.getRole())
-                        && this.getHourRemain() == other.getHourRemain()
-                        && this.getMinRemain() == other.getMinRemain()
-                        && this.getCinema().equals(other.getCinema())
-                        && this.getWeeklyWorkingHours() == other.getWeeklyWorkingHours();
+        if (obj == null) {
+            return false;
+        }
+        return this.getName().equals(other.getName())
+                && this.getSurname().equals(other.getSurname())
+                && this.getRole().equals(other.getRole())
+                && this.getHourRemain() == other.getHourRemain()
+                && this.getMinRemain() == other.getMinRemain()
+                && this.getCinema().equals(other.getCinema())
+                && this.getWeeklyWorkingHours() == other.getWeeklyWorkingHours();
     }
+
 }

@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * @author Fabio Buracchi
+ * @author Fabio Buracchi, Massimo Mazzetti
  */
 public interface ShiftRepository {
 

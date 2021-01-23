@@ -12,7 +12,7 @@ import com.ttbmp.cinehub.core.dto.EmployeeDto;
 import com.ttbmp.cinehub.core.dto.HallDto;
 import com.ttbmp.cinehub.core.entity.Shift;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetShiftRequest;
+import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.ShiftRequest;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -23,10 +23,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
+/**
+ * @author Massimo Mazzetti
+ */
+
+
 public class ModifyShiftViewController extends ViewController {
 
-
-    private ManageEmployeesShiftViewModel viewModel;
 
     @FXML
     private ResourceBundle resources;
@@ -72,6 +75,7 @@ public class ModifyShiftViewController extends ViewController {
 
     @Override
     protected void onLoad() {
+        ManageEmployeesShiftViewModel viewModel;
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
         errorHBox.setVisible(false);
 
@@ -114,22 +118,21 @@ public class ModifyShiftViewController extends ViewController {
                             start.toString(),
                             end.toString());
                 } else {
-                    if(hallComboBox.getValue() != null) {
+                    if (hallComboBox.getValue() != null) {
                         shift = new Shift(EmployeeDataMapper.matToEntity(employee),
                                 date.toString(),
                                 start.toString(),
                                 end.toString(),
                                 HallDataMapper.matToEntity(hallComboBox.getValue()));
-                    }
-                    else{
-                        shift=null;
+                    } else {
+                        shift = null;
                         hallComboBox.setStyle("-fx-background-color: red;");
                         errorHBox.setVisible(true);
                     }
                 }
 
-                if (shift!=null && activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new GetShiftRequest(shift))) {
-                    activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new GetShiftRequest(ShiftDataMapper.mapToEntity(viewModel.getSelectedShift())));
+                if (shift != null && activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new ShiftRequest(shift))) {
+                    activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(ShiftDataMapper.mapToEntity(viewModel.getSelectedShift())));
 
                     viewModel.setSelectedShift(ShiftDataMapper.mapToDto(shift));
                     try {
@@ -137,8 +140,7 @@ public class ModifyShiftViewController extends ViewController {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-                else{
+                } else {
                     errorHBox.setVisible(true);
                 }
 

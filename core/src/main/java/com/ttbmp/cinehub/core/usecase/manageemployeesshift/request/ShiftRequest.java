@@ -4,13 +4,16 @@ import com.ttbmp.cinehub.core.entity.Shift;
 import com.ttbmp.cinehub.core.usecase.Request;
 import com.ttbmp.cinehub.core.utilities.notification.Notification;
 
+/**
+ * @author Massimo Mazzetti
+ */
 
-public class GetShiftRequest extends Request {
+public class ShiftRequest extends Request {
     public static final Notification.Error MISSING_SHIFT = new Notification.Error("Shift non valido");
 
     private Shift shift;
 
-    public GetShiftRequest(Shift shift) {
+    public ShiftRequest(Shift shift) {
         this.shift = shift;
     }
 
@@ -27,6 +30,5 @@ public class GetShiftRequest extends Request {
         if (shift == null) {
             notification.addError(MISSING_SHIFT);
         }
-
     }
 }

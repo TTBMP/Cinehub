@@ -1,10 +1,14 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.manageshift.modify;
 
 
-
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.FxmlView;
 
 import java.io.IOException;
+
+/**
+ * @author Massimo Mazzetti
+ */
+
 
 public class ModifyShiftView extends FxmlView {
 

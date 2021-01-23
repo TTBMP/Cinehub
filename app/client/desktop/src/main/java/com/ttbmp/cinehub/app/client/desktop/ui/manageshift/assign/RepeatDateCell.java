@@ -8,9 +8,13 @@ import javafx.scene.control.DatePicker;
 
 import java.time.LocalDate;
 
+/**
+ * @author Massimo Mazzetti
+ */
+
 public class RepeatDateCell extends DateCell {
 
-    private ObjectProperty<DayWeek> selectedDate = new SimpleObjectProperty<>();
+    private final ObjectProperty<DayWeek> selectedDate = new SimpleObjectProperty<>();
 
     public RepeatDateCell(DatePicker datePicker, ObjectProperty<DayWeek> selectedDate) {
         super();
@@ -18,7 +22,7 @@ public class RepeatDateCell extends DateCell {
     }
 
     @Override
-    public void updateItem(LocalDate date, boolean empty){
+    public void updateItem(LocalDate date, boolean empty) {
         super.updateItem(date, empty);
         if (date.isBefore(selectedDate.getValue().getDate().plusDays(1))) {
             setDisable(true);

@@ -10,15 +10,20 @@ import com.ttbmp.cinehub.core.entity.Shift;
 import java.time.LocalDate;
 import java.util.List;
 
+
+/**
+ * @author Massimo Mazzetti
+ */
+
 public class GetShiftListResponse {
     private List<ShiftDto> shiftDtoList;
     private LocalDate date;
     private CinemaDto cinema;
 
-    public GetShiftListResponse(List<Shift> shiftList, LocalDate date, Cinema cinema ) {
+    public GetShiftListResponse(List<Shift> shiftList, LocalDate date, Cinema cinema) {
         this.shiftDtoList = ShiftDataMapper.mapToDtoList(shiftList);
-        this.date=date;
-        this.cinema= CinemaDataMapper.mapToDto(cinema);
+        this.date = date;
+        this.cinema = CinemaDataMapper.mapToDto(cinema);
     }
 
     public List<ShiftDto> getShiftDtoList() {

@@ -1,13 +1,12 @@
 package com.ttbmp.cinehub.core.entity;
 
 /**
- * @author Fabio Buracchi
+ * @author Fabio Buracchi, Massimo Mazzetti
  */
 public class Shift {
-
     private Employee employee;
     private String date;
-    private final String start;
+    private String start;
     private String end;
     private Hall hall;
 
@@ -18,12 +17,12 @@ public class Shift {
         this.end = end;
     }
 
-    public Shift(Employee employee, String date, String start, String end , Hall hall) {
+    public Shift(Employee employee, String date, String start, String end, Hall hall) {
         this.employee = employee;
         this.date = date;
         this.start = start;
         this.end = end;
-        this.hall=hall;
+        this.hall = hall;
     }
 
     public Hall getHall() {
@@ -38,6 +37,10 @@ public class Shift {
         return employee;
     }
 
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
     public String getDate() {
         return date;
     }
@@ -50,6 +53,10 @@ public class Shift {
         return start;
     }
 
+    public void setStart(String start) {
+        this.start = start;
+    }
+
     public String getEnd() {
         return end;
     }
@@ -59,12 +66,14 @@ public class Shift {
     }
 
     @Override
-    public boolean equals(Object obj){
+    public boolean equals(Object obj) {
         Shift elem = (Shift) obj;
+        if (obj == null) {
+            return false;
+        }
         return this.getEmployee().equals(elem.getEmployee())
                 && this.getDate().equals(elem.getDate())
                 && this.getStart().equals(elem.getStart())
                 && this.getEnd().equals(elem.getEnd());
     }
-
 }

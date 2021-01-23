@@ -7,8 +7,9 @@ import com.ttbmp.cinehub.core.utilities.DataMapperHelper;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Massimo Mazzetti, Palmieri Ivan
  */
+
 public class CinemaDataMapper {
 
     private CinemaDataMapper() {

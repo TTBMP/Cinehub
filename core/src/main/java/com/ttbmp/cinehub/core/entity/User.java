@@ -21,19 +21,8 @@ public class User {
 
     }
 
-    public User(int userId) {
-        this.id = userId;
-    }
-
-    public User(String name, String email, CreditCard card) {
-        this.name = name;
-        this.email = email;
-        this.setCard(card);
-
-    }
-
-    public List<Ticket> getOwnedTicket() {
-        return ownedTicket;
+    public User(int id) {
+        this.id = id;
     }
 
     public String getSurname() {
@@ -42,10 +31,6 @@ public class User {
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public User(int id) {
-        this.id = id;
     }
 
     public int getId() {

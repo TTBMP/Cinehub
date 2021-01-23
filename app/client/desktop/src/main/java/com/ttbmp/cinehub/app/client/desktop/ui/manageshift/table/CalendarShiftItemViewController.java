@@ -17,32 +17,31 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * @author Massimo Mazzetti
+ */
+
+
 public class CalendarShiftItemViewController extends ViewController {
 
-
-    private ManageEmployeesShiftViewModel viewModel;
-
+    DayWeek dayWeek;
     @FXML
     private ResourceBundle resources;
-
     @FXML
     private URL location;
-
     @FXML
     private VBox shiftVBox;
-
     @FXML
     private Button addButton;
 
-    DayWeek dayWeek;
-
-    public void load(Activity activity, NavController navController, DayWeek dayWeek){
-        this.dayWeek=dayWeek;
+    public void load(Activity activity, NavController navController, DayWeek dayWeek) {
+        this.dayWeek = dayWeek;
         load(activity, navController);
     }
 
     @Override
     protected void onLoad() {
+        ManageEmployeesShiftViewModel viewModel;
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
         for (ShiftDto shift : dayWeek.getShiftList()) {
             ShiftItemView item = null;
@@ -56,7 +55,7 @@ public class CalendarShiftItemViewController extends ViewController {
             item.getController().load(activity, navController, shift);
             shiftVBox.getChildren().add(item.getRoot());
         }
-        if(dayWeek.getDate().isBefore(LocalDate.now().plusDays(1))){
+        if (dayWeek.getDate().isBefore(LocalDate.now().plusDays(1))) {
             addButton.setVisible(false);
         }
         addButton.setOnAction(a -> {

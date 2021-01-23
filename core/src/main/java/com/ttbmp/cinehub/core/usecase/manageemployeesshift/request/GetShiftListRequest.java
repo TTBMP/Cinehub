@@ -1,9 +1,12 @@
 package com.ttbmp.cinehub.core.usecase.manageemployeesshift.request;
 
 import com.ttbmp.cinehub.core.entity.Cinema;
-import com.ttbmp.cinehub.core.utilities.notification.Notification;
 
 import java.time.LocalDate;
+
+/**
+ * @author Massimo Mazzetti
+ */
 
 public class GetShiftListRequest {
 

@@ -12,7 +12,7 @@ import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftP
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.GetCinemaListResponse;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.GetHallListResponse;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.GetShiftListResponse;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.GetShiftResponse;
+import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.ShiftResponse;
 import com.ttbmp.cinehub.core.utilities.result.Result;
 
 import java.time.DayOfWeek;
@@ -22,6 +22,11 @@ import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.*;
 import java.util.stream.Collectors;
+
+/**
+ * @author Massimo Mazzetti
+ */
+
 
 public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPresenter {
 
@@ -52,32 +57,32 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
 
 
     @Override
-    public void presentSaveShift(Result<GetShiftResponse> shift) {
+    public void presentSaveShift(Result<ShiftResponse> shift) {
         Shift savedShift = ShiftDataMapper.mapToEntity(shift.getValue().getShiftDto());
         viewModel.getEmployeeShiftWeekList().setAll(viewModel.getEmployeeShiftWeekList().stream()
                 .peek(e -> {
                     if (EmployeeDataMapper.matToEntity(e.getEmployeeDto()).equals(savedShift.getEmployee())) {
                         switch (LocalDate.parse(savedShift.getDate()).getDayOfWeek()) {
                             case MONDAY:
-                                e.getLun().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
+                                e.getMonday().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
                                 break;
                             case TUESDAY:
-                                e.getMar().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
+                                e.getTuesday().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
                                 break;
                             case WEDNESDAY:
-                                e.getMer().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
+                                e.getWednesday().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
                                 break;
                             case THURSDAY:
-                                e.getGio().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
+                                e.getThursday().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
                                 break;
                             case FRIDAY:
-                                e.getVen().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
+                                e.getFriday().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
                                 break;
                             case SATURDAY:
-                                e.getSab().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
+                                e.getSaturday().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
                                 break;
                             case SUNDAY:
-                                e.getDom().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
+                                e.getSunday().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
                                 break;
                         }
                     }
@@ -88,32 +93,32 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
 
 
     @Override
-    public void presentDeleteShift(Result<GetShiftResponse> shift) {
+    public void presentDeleteShift(Result<ShiftResponse> shift) {
         Shift deleteShift = ShiftDataMapper.mapToEntity(shift.getValue().getShiftDto());
         viewModel.getEmployeeShiftWeekList().setAll(viewModel.getEmployeeShiftWeekList().stream()
                 .peek(e -> {
                     if (EmployeeDataMapper.matToEntity(e.getEmployeeDto()).equals(deleteShift.getEmployee())) {
                         switch (LocalDate.parse(deleteShift.getDate()).getDayOfWeek()) {
                             case MONDAY:
-                                e.getLun().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
+                                e.getMonday().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
                                 break;
                             case TUESDAY:
-                                e.getMar().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
+                                e.getTuesday().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
                                 break;
                             case WEDNESDAY:
-                                e.getMer().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
+                                e.getWednesday().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
                                 break;
                             case THURSDAY:
-                                e.getGio().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
+                                e.getThursday().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
                                 break;
                             case FRIDAY:
-                                e.getVen().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
+                                e.getFriday().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
                                 break;
                             case SATURDAY:
-                                e.getSab().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
+                                e.getSaturday().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
                                 break;
                             case SUNDAY:
-                                e.getDom().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
+                                e.getSunday().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
                                 break;
                         }
                     }

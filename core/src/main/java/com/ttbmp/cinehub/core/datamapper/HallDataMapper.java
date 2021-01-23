@@ -6,6 +6,10 @@ import com.ttbmp.cinehub.core.utilities.DataMapperHelper;
 
 import java.util.List;
 
+/**
+ * @author Massimo Mazzetti
+ */
+
 public class HallDataMapper {
 
     private HallDataMapper() {

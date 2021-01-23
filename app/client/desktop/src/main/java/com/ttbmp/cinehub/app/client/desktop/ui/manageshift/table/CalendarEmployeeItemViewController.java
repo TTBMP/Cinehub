@@ -11,33 +11,32 @@ import javafx.scene.image.ImageView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * @author Massimo Mazzetti
+ */
+
+
 public class CalendarEmployeeItemViewController extends ViewController {
 
+    EmployeeDto employee;
     @FXML
     private ResourceBundle resources;
-
     @FXML
     private URL location;
-
     @FXML
     private ImageView employeeImageView;
-
     @FXML
     private Label nameLabel;
-
     @FXML
     private Label surnameLabel;
-
     @FXML
     private Label hourLabel;
-
     @FXML
     private Label roleLabel;
 
-    EmployeeDto employee;
-    public void load(Activity activity, NavController navController, EmployeeDto employee){
+    public void load(Activity activity, NavController navController, EmployeeDto employee) {
         this.employee = employee;
-        load(activity,navController);
+        load(activity, navController);
     }
 
     @Override

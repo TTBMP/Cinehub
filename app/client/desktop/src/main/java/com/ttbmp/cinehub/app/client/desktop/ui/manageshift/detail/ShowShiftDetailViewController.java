@@ -5,8 +5,8 @@ import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.modify.ModifyShiftVie
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavDestination;
 import com.ttbmp.cinehub.core.datamapper.ShiftDataMapper;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetShiftRequest;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
+import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.ShiftRequest;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,9 +14,12 @@ import javafx.scene.control.Label;
 import java.io.IOException;
 import java.time.LocalDate;
 
-public class ShowShiftDetailViewController extends ViewController {
+/**
+ * @author Massimo Mazzetti
+ */
 
-    private ManageEmployeesShiftViewModel viewModel;
+
+public class ShowShiftDetailViewController extends ViewController {
 
     @FXML
     private Label nameLabel;
@@ -37,9 +40,6 @@ public class ShowShiftDetailViewController extends ViewController {
     private Label hallLabel;
 
     @FXML
-    private Label filmLabel;
-
-    @FXML
     private Label roleLabel;
 
     @FXML
@@ -54,33 +54,20 @@ public class ShowShiftDetailViewController extends ViewController {
     @FXML
     private Button deleteShiftButton;
 
-    @FXML
-    private Button backButton;
-
 
     @Override
     protected void onLoad() {
+        ManageEmployeesShiftViewModel viewModel;
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
         new ManageEmployeesShiftViewModel();
-        if(viewModel.getSelectedShift().getEmployee().getRole().equals("maschera")){
+        if (viewModel.getSelectedShift().getEmployee().getRole().equals("maschera")) {
             hallLabel.setVisible(false);
             hallLbl.setVisible(false);
-        }
-        else{
+        } else {
             cinemaLabel.textProperty().bind(viewModel.selectedShiftProperty().asString());
             hallLabel.textProperty().bind(viewModel.selectedShiftHallProperty());
         }
 
-
-
-
-        backButton.setOnAction(a -> {
-            try {
-                navController.popBackStack();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
         nameLabel.textProperty().bind(viewModel.selectedShiftEmployeeNameProperty());
         surnameLabel.textProperty().bind(viewModel.selectedShiftEmployeeSurnameProperty());
         startLabel.textProperty().bind(viewModel.selectedShiftStartProperty());
@@ -89,13 +76,13 @@ public class ShowShiftDetailViewController extends ViewController {
         roleLabel.textProperty().bind(viewModel.selectedShiftRoleProperty());
         cinemaLabel.textProperty().bind(viewModel.selectedShiftCinemaProperty());
 
-        if(viewModel.getSelectedShift().getDate().isBefore(LocalDate.now().plusDays(1))){
+        if (viewModel.getSelectedShift().getDate().isBefore(LocalDate.now().plusDays(1))) {
             modifyShiftButton.setVisible(false);
             deleteShiftButton.setVisible(false);
         }
 
         deleteShiftButton.setOnAction(a -> {
-            activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new GetShiftRequest(ShiftDataMapper.mapToEntity(viewModel.getSelectedShift())));
+            activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(ShiftDataMapper.mapToEntity(viewModel.getSelectedShift())));
             try {
                 navController.popBackStack();
             } catch (IOException e) {
@@ -113,10 +100,6 @@ public class ShowShiftDetailViewController extends ViewController {
         );
 
     }
-
-
-
-
 
 
 }

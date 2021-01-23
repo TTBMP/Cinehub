@@ -3,21 +3,22 @@ package com.ttbmp.cinehub.core.usecase.manageemployeesshift;
 import com.ttbmp.cinehub.core.entity.Cinema;
 import com.ttbmp.cinehub.core.usecase.UseCase;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetShiftListRequest;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetShiftRequest;
+import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.ShiftRequest;
 
-import java.time.LocalDate;
-
+/**
+ * @author Massimo Mazzetti
+ */
 
 public interface ManageEmployeesShiftUseCase extends UseCase {
-    
+
     void getShiftList(GetShiftListRequest request);
 
-    boolean saveShift(GetShiftRequest shift);
+    boolean saveShift(ShiftRequest shift);
 
-    void deleteShift(GetShiftRequest shift);
+    void deleteShift(ShiftRequest shift);
 
     void getCinemaList();
 
-     void getHallList(Cinema cinema);
+    void getHallList(Cinema cinema);
 
 }

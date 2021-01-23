@@ -9,7 +9,6 @@ import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.core.datamapper.CinemaDataMapper;
 import com.ttbmp.cinehub.core.dto.CinemaDto;
 import com.ttbmp.cinehub.core.dto.EmployeeDto;
-import com.ttbmp.cinehub.core.entity.Cinema;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetShiftListRequest;
 import javafx.beans.InvalidationListener;
@@ -22,6 +21,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
+
+/**
+ * @author Massimo Mazzetti
+ */
+
 
 public class ShowShiftViewController extends ViewController {
     private ManageEmployeesShiftViewModel viewModel;
@@ -101,13 +105,13 @@ public class ShowShiftViewController extends ViewController {
 
     private void populateShiftTable() {
         shiftEmployeeTableColumn.setCellValueFactory(new PropertyValueFactory<>("employeeDto"));
-        mondayTableColumn.setCellValueFactory(new PropertyValueFactory<>("lun"));
-        tuesdayTableColumn.setCellValueFactory(new PropertyValueFactory<>("mar"));
-        wednesdayTableColumn.setCellValueFactory(new PropertyValueFactory<>("mer"));
-        thursdayTableColumn.setCellValueFactory(new PropertyValueFactory<>("gio"));
-        fridayTableColumn.setCellValueFactory(new PropertyValueFactory<>("ven"));
-        saturdayTableColumn.setCellValueFactory(new PropertyValueFactory<>("sab"));
-        sundayTableColumn.setCellValueFactory(new PropertyValueFactory<>("dom"));
+        mondayTableColumn.setCellValueFactory(new PropertyValueFactory<>("monday"));
+        tuesdayTableColumn.setCellValueFactory(new PropertyValueFactory<>("tuesday"));
+        wednesdayTableColumn.setCellValueFactory(new PropertyValueFactory<>("wednesday"));
+        thursdayTableColumn.setCellValueFactory(new PropertyValueFactory<>("thursday"));
+        fridayTableColumn.setCellValueFactory(new PropertyValueFactory<>("friday"));
+        saturdayTableColumn.setCellValueFactory(new PropertyValueFactory<>("saturday"));
+        sundayTableColumn.setCellValueFactory(new PropertyValueFactory<>("sunday"));
         shiftEmployeeTableColumn.setCellFactory(tableColumn -> new EmployeeCalendarTableCell(tableColumn, activity, navController));
         mondayTableColumn.setCellFactory(tableColumn -> new ShiftCalendarTableCell(tableColumn, activity, navController));
         tuesdayTableColumn.setCellFactory(tableColumn -> new ShiftCalendarTableCell(tableColumn, activity, navController));

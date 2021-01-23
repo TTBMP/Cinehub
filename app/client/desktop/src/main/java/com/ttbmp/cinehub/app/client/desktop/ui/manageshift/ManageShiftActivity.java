@@ -10,9 +10,14 @@ import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftU
 
 import java.io.IOException;
 
+/**
+ * @author Massimo Mazzetti
+ */
+
+
 public class ManageShiftActivity extends Activity {
     private final ShiftRepository shiftRepository = CinehubApplication.APP_CONTAINER.getFactory(ShiftRepository.class).get();
-    private final CinemaRepository cinemaRepository=CinehubApplication.APP_CONTAINER.getFactory(CinemaRepository.class).get();
+    private final CinemaRepository cinemaRepository = CinehubApplication.APP_CONTAINER.getFactory(CinemaRepository.class).get();
     private final HallRepository hallRepository = CinehubApplication.APP_CONTAINER.getFactory(HallRepository.class).get();
 
     public ManageShiftActivity() throws IOException {

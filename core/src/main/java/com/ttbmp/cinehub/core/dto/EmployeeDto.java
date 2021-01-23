@@ -1,11 +1,16 @@
 package com.ttbmp.cinehub.core.dto;
 
+/**
+ * @author Massimo Mazzetti
+ */
+
 public class EmployeeDto {
 
     private String name;
     private String surname;
     private String role;
-    private int hourRemain, minRemain;
+    private int hourRemain;
+    private int minRemain;
     private CinemaDto cinema;
 
     public EmployeeDto(String name, String surname, String role, int hourRemain, int minRemain, CinemaDto cinema) {
@@ -14,7 +19,7 @@ public class EmployeeDto {
         this.role = role;
         this.hourRemain = hourRemain;
         this.minRemain = minRemain;
-        this.cinema=cinema;
+        this.cinema = cinema;
     }
 
     public CinemaDto getCinema() {

@@ -1,34 +1,35 @@
 package com.ttbmp.cinehub.core.entity;
 
-import java.util.List;
-
 /**
- * @author Palmieri Ivan
+ * @author Massimo Mazzetti
  */
+
 public class Hall {
+    private String num;
+    private Cinema cinema;
 
-    private Integer id;
-    private List<Seat> seatList;
+    public Hall() {
 
-
-    public Hall(Integer id) {
-        this.id = id;
     }
 
-    public Integer getId() {
-        return id;
+    public Hall(String num, Cinema cinema) {
+        this.num = num;
+        this.cinema = cinema;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Cinema getCinema() {
+        return cinema;
     }
 
-
-    public List<Seat> getSeatList() {
-        return seatList;
+    public void setCinema(Cinema cinema) {
+        this.cinema = cinema;
     }
 
-    public void setSeatList(List<Seat> seatList) {
-        this.seatList = seatList;
+    public String getNum() {
+        return num;
+    }
+
+    public void setNum(String num) {
+        this.num = num;
     }
 }

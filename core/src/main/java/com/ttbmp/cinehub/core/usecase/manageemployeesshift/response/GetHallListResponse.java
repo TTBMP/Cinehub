@@ -6,6 +6,11 @@ import com.ttbmp.cinehub.core.entity.Hall;
 
 import java.util.List;
 
+
+/**
+ * @author Massimo Mazzetti
+ */
+
 public class GetHallListResponse {
     List<HallDto> listHall;
 

@@ -8,9 +8,14 @@ import javafx.util.converter.LocalTimeStringConverter;
 import java.time.LocalTime;
 import java.time.format.FormatStyle;
 
+/**
+ * @author Massimo Mazzetti
+ */
+
+
 public class SpinnerStartValueFactory extends SpinnerValueFactory<LocalTime> {
 
-    private final ObjectProperty<LocalTime> end=new SimpleObjectProperty<>();
+    private final ObjectProperty<LocalTime> end = new SimpleObjectProperty<>();
 
     public SpinnerStartValueFactory(ObjectProperty<LocalTime> start, ObjectProperty<LocalTime> end) {
         setConverter(new LocalTimeStringConverter(FormatStyle.SHORT));
@@ -23,8 +28,8 @@ public class SpinnerStartValueFactory extends SpinnerValueFactory<LocalTime> {
         if (getValue() == null)
             setValue(LocalTime.NOON.minusNanos(0));
         else {
-            LocalTime time = (LocalTime) getValue();
-            if (time.isAfter(LocalTime.MIN))
+            LocalTime time = getValue();
+            if (time.isAfter(LocalTime.MIN.plusMinutes(5)))
                 setValue(time.minusMinutes(5));
         }
     }
@@ -34,13 +39,10 @@ public class SpinnerStartValueFactory extends SpinnerValueFactory<LocalTime> {
         if (getValue() == null)
             setValue(LocalTime.NOON.minusNanos(0));
         else {
-            LocalTime time = (LocalTime) getValue();
+            LocalTime time = getValue();
             if (time.equals(LocalTime.MIN) || time.isAfter(LocalTime.MIN) &&
-                    (end == null ||
-                            time.isBefore(end.getValue().minusMinutes(5))))
+                    (time.isBefore(end.getValue().minusMinutes(5))))
                 setValue(time.plusMinutes(5));
         }
-
-
     }
 }

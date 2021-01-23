@@ -15,10 +15,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * @author Massimo Mazzetti
+ */
+
+
 public class ShiftItemViewController extends ViewController {
-
-
-    private ManageEmployeesShiftViewModel viewModel;
 
     @FXML
     private ResourceBundle resources;
@@ -39,7 +41,8 @@ public class ShiftItemViewController extends ViewController {
 
     @Override
     protected void onLoad() {
-        viewModel= activity.getViewModel(ManageEmployeesShiftViewModel.class);
+        ManageEmployeesShiftViewModel viewModel;
+        viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
         if (shift.getEmployee().getRole().equals("maschera")) {
             shiftHBox.setStyle("-fx-background-color: #FFFF00;");
         }
@@ -50,7 +53,7 @@ public class ShiftItemViewController extends ViewController {
         shiftHBox.setOnMouseClicked(l -> {
             viewModel.selectedShiftProperty().setValue(shift);
             try {
-                navController.openInDialog(new NavDestination(new ShowShiftDetailView()) ,"Vedi Dettaglio Turno");
+                navController.openInDialog(new NavDestination(new ShowShiftDetailView()), "Vedi Dettaglio Turno");
             } catch (IOException e) {
                 e.printStackTrace();
             }

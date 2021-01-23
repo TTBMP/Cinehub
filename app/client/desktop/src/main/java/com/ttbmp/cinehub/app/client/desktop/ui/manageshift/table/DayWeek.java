@@ -6,6 +6,11 @@ import com.ttbmp.cinehub.core.dto.ShiftDto;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * @author Massimo Mazzetti
+ */
+
+
 public class DayWeek {
     private LocalDate date;
     private List<ShiftDto> shiftList;

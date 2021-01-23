@@ -8,14 +8,19 @@ import javafx.scene.control.TableColumn;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * @author Massimo Mazzetti
+ */
+
+
 public class ShiftCalendarTableCell extends TableCell<EmployeeShiftWeek, DayWeek> {
-    private final  Activity activity;
+    private final Activity activity;
     private final NavController navController;
 
     public ShiftCalendarTableCell(TableColumn<EmployeeShiftWeek, DayWeek> tableColumn, Activity activity, NavController navController) {
         super();
-        this.activity=activity;
-        this.navController=navController;
+        this.activity = activity;
+        this.navController = navController;
     }
 
     @Override
@@ -30,7 +35,7 @@ public class ShiftCalendarTableCell extends TableCell<EmployeeShiftWeek, DayWeek
                 e.printStackTrace();
             }
             Objects.requireNonNull(item);
-            item.getController().load(activity, navController,dayWeek);
+            item.getController().load(activity, navController, dayWeek);
             setGraphic(item.getRoot());
         }
     }

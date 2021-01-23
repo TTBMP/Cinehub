@@ -2,19 +2,30 @@ package com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table;
 
 import com.ttbmp.cinehub.core.dto.EmployeeDto;
 
+/**
+ * @author Massimo Mazzetti
+ */
+
+
 public class EmployeeShiftWeek {
-    private DayWeek lun, mar, mer, gio, ven, sab, dom;
+    private DayWeek monday;
+    private DayWeek tuesday;
+    private DayWeek wednesday;
+    private DayWeek thursday;
+    private DayWeek friday;
+    private DayWeek saturday;
+    private DayWeek sunday;
     private EmployeeDto employeeDto;
 
-    public EmployeeShiftWeek(EmployeeDto employeeDto, DayWeek lun, DayWeek mar, DayWeek mer, DayWeek gio, DayWeek ven, DayWeek sab, DayWeek dom) {
+    public EmployeeShiftWeek(EmployeeDto employeeDto, DayWeek monday, DayWeek tuesday, DayWeek wednesday, DayWeek thursday, DayWeek friday, DayWeek saturday, DayWeek sunday) {
         this.employeeDto = employeeDto;
-        this.lun = lun;
-        this.mar = mar;
-        this.mer = mer;
-        this.gio = gio;
-        this.ven = ven;
-        this.sab = sab;
-        this.dom = dom;
+        this.monday = monday;
+        this.tuesday = tuesday;
+        this.wednesday = wednesday;
+        this.thursday = thursday;
+        this.friday = friday;
+        this.saturday = saturday;
+        this.sunday = sunday;
     }
 
     public EmployeeDto getEmployeeDto() {
@@ -25,59 +36,59 @@ public class EmployeeShiftWeek {
         this.employeeDto = employeeDto;
     }
 
-    public DayWeek getLun() {
-        return lun;
+    public DayWeek getMonday() {
+        return monday;
     }
 
-    public void setLun(DayWeek lun) {
-        this.lun = lun;
+    public void setMonday(DayWeek monday) {
+        this.monday = monday;
     }
 
-    public DayWeek getMar() {
-        return mar;
+    public DayWeek getTuesday() {
+        return tuesday;
     }
 
-    public void setMar(DayWeek mar) {
-        this.mar = mar;
+    public void setTuesday(DayWeek tuesday) {
+        this.tuesday = tuesday;
     }
 
-    public DayWeek getMer() {
-        return mer;
+    public DayWeek getWednesday() {
+        return wednesday;
     }
 
-    public void setMer(DayWeek mer) {
-        this.mer = mer;
+    public void setWednesday(DayWeek wednesday) {
+        this.wednesday = wednesday;
     }
 
-    public DayWeek getGio() {
-        return gio;
+    public DayWeek getThursday() {
+        return thursday;
     }
 
-    public void setGio(DayWeek gio) {
-        this.gio = gio;
+    public void setThursday(DayWeek thursday) {
+        this.thursday = thursday;
     }
 
-    public DayWeek getVen() {
-        return ven;
+    public DayWeek getFriday() {
+        return friday;
     }
 
-    public void setVen(DayWeek ven) {
-        this.ven = ven;
+    public void setFriday(DayWeek friday) {
+        this.friday = friday;
     }
 
-    public DayWeek getSab() {
-        return sab;
+    public DayWeek getSaturday() {
+        return saturday;
     }
 
-    public void setSab(DayWeek sab) {
-        this.sab = sab;
+    public void setSaturday(DayWeek saturday) {
+        this.saturday = saturday;
     }
 
-    public DayWeek getDom() {
-        return dom;
+    public DayWeek getSunday() {
+        return sunday;
     }
 
-    public void setDom(DayWeek dom) {
-        this.dom = dom;
+    public void setSunday(DayWeek sunday) {
+        this.sunday = sunday;
     }
 }

@@ -3,10 +3,12 @@ package com.ttbmp.cinehub.core.usecase.manageemployeesshift.response;
 import com.ttbmp.cinehub.core.datamapper.CinemaDataMapper;
 import com.ttbmp.cinehub.core.dto.CinemaDto;
 import com.ttbmp.cinehub.core.entity.Cinema;
-import com.ttbmp.cinehub.core.utilities.result.Result;
-
 
 import java.util.List;
+
+/**
+ * @author Massimo Mazzetti
+ */
 
 public class GetCinemaListResponse {
     private List<CinemaDto> cinemaList;

@@ -1,8 +1,9 @@
 package com.ttbmp.cinehub.core.dto;
 
 /**
- * @author Palmieri Ivan
+ * @author Massimo Mazzetti, Palmieri Ivan
  */
+
 public class CinemaDto {
     private String name;
     private final String address;

@@ -4,10 +4,15 @@ import com.ttbmp.cinehub.core.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.core.dto.ShiftDto;
 import com.ttbmp.cinehub.core.entity.Shift;
 
-public class GetShiftResponse {
+
+/**
+ * @author Massimo Mazzetti
+ */
+
+public class ShiftResponse {
     private ShiftDto shiftDto;
 
-    public GetShiftResponse(Shift shift) {
+    public ShiftResponse(Shift shift) {
         this.shiftDto = ShiftDataMapper.mapToDto(shift);
     }
 

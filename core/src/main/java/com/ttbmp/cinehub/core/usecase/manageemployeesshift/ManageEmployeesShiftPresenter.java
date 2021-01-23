@@ -1,15 +1,15 @@
 package com.ttbmp.cinehub.core.usecase.manageemployeesshift;
 
-import com.ttbmp.cinehub.core.entity.Cinema;
-import com.ttbmp.cinehub.core.entity.Shift;
+
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.GetCinemaListResponse;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.GetHallListResponse;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.GetShiftListResponse;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.GetShiftResponse;
+import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.ShiftResponse;
 import com.ttbmp.cinehub.core.utilities.result.Result;
 
-import java.time.LocalDate;
-import java.util.List;
+/**
+ * @author Massimo Mazzetti
+ */
 
 public interface ManageEmployeesShiftPresenter {
 
@@ -19,8 +19,8 @@ public interface ManageEmployeesShiftPresenter {
 
     void presentHallList(Result<GetHallListResponse> listHall);
 
-    void presentSaveShift(Result<GetShiftResponse> savedShift);
+    void presentSaveShift(Result<ShiftResponse> savedShift);
 
-    void presentDeleteShift(Result<GetShiftResponse> deleteShift);
+    void presentDeleteShift(Result<ShiftResponse> deleteShift);
 
 }

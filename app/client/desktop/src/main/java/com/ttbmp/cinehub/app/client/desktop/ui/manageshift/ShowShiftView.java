@@ -4,6 +4,11 @@ import com.ttbmp.cinehub.app.client.desktop.utilities.ui.FxmlView;
 
 import java.io.IOException;
 
+/**
+ * @author Massimo Mazzetti
+ */
+
+
 public class ShowShiftView extends FxmlView {
 
     protected ShowShiftView() throws IOException {
