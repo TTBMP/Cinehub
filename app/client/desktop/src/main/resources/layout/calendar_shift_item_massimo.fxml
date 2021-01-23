@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.CalendarShiftItemViewController">
+   <children>
+      <VBox fx:id="shiftVBox" minHeight="100.0" minWidth="-Infinity" />
+      <VBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+         <children>
+            <Button fx:id="addButton" alignment="BOTTOM_RIGHT" mnemonicParsing="false" text="+" />
+         </children>
+      </VBox>
+   </children>
+</VBox>

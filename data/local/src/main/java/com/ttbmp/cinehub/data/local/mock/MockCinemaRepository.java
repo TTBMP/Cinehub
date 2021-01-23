@@ -12,10 +12,7 @@ import java.util.List;
  */
 public class MockCinemaRepository implements CinemaRepository {
 
-
     private final List<Cinema> cinemaList = new ArrayList<>();
-
-
 
     @Override
     public List<Cinema> getListCinema(List<Projection> projectionList) {
@@ -40,6 +37,5 @@ public class MockCinemaRepository implements CinemaRepository {
         List<Projection> projectionList = projectionRepository.getProjectionList(movie, date);//I recover the projections of a specific film on a specific date
         return getListCinema(projectionList);
     }
-
 
 }

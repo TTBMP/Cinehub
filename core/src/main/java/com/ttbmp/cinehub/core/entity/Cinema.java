@@ -16,6 +16,10 @@ public class Cinema {
     public Cinema() {
     }
 
+	public Cinema(String name) {
+        this.name = name;
+    }
+
     public Cinema(String name, String address, String city) {
         this.name = name;
         this.address = address;
@@ -51,7 +55,6 @@ public class Cinema {
 
     public void setCity(String city) {
         this.city = city;
-    }
 
     public String getName() {
         return name;
@@ -59,6 +62,12 @@ public class Cinema {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        Cinema other = (Cinema) obj;
+        return this.name == other.name;
     }
 
 }

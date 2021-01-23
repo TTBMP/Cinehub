@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.core.entity;
 
-
 import java.util.List;
 
 /**
@@ -33,5 +32,3 @@ public class Hall {
         this.seatList = seatList;
     }
 }
-
-

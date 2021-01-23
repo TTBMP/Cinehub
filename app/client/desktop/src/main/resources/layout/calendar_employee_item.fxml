@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.CalendarEmployeeItemViewController">
+   <children>
+      <ImageView fx:id="employeeImageView" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+         <HBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </HBox.margin>
+      </ImageView>
+      <VBox>
+         <children>
+            <HBox spacing="4.0">
+               <children>
+                  <Label fx:id="nameLabel" text="Label" />
+                  <Label fx:id="surnameLabel" text="Label" />
+               </children>
+            </HBox>
+            <HBox spacing="4.0">
+               <children>
+                  <Label text="Ore Rimanenti:" />
+                  <Label fx:id="hourLabel" text="Label" />
+               </children>
+            </HBox>
+            <HBox spacing="4.0">
+               <children>
+                  <Label text="Ruolo:" />
+                  <Label fx:id="roleLabel" text="Label" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</HBox>

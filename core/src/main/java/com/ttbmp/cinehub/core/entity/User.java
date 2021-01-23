@@ -10,11 +10,20 @@ import java.util.List;
  */
 public class User {
 
-    private final List<Ticket> ownedTicket = new ArrayList<>();
     private Integer id;
     private String name;
+    private String surname;
     private String email;
     private CreditCard card;
+    private final List<Ticket> ownedTicket = new ArrayList<>();
+
+    public User() {
+
+    }
+
+    public User(int userId) {
+        this.id = userId;
+    }
 
     public User(String name, String email, CreditCard card) {
         this.name = name;
@@ -23,16 +32,20 @@ public class User {
 
     }
 
-    public User(int userId) {
-        this.id = userId;
-    }
-
-    public User() {
-
-    }
-
     public List<Ticket> getOwnedTicket() {
         return ownedTicket;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public User(int id) {
+        this.id = id;
     }
 
     public int getId() {

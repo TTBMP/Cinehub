@@ -29,4 +29,5 @@ public class HallDto {
     public void setSeatList(List<SeatDto> seatList) {
         this.seatList = seatList;
     }
+    
 }

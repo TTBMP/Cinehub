@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.core.datamapper;
 
 import com.ttbmp.cinehub.core.dto.ShiftDto;
-import com.ttbmp.cinehub.core.entity.Employee;
 import com.ttbmp.cinehub.core.entity.Shift;
 import com.ttbmp.cinehub.core.utilities.DataMapperHelper;
 
@@ -21,22 +20,40 @@ public class ShiftDataMapper {
 
     public static ShiftDto mapToDto(Shift shift) {
         Objects.requireNonNull(shift);
-        return new ShiftDto(
-                shift.getEmployee().getName(),
-                LocalDate.parse(shift.getDate()),
-                LocalTime.parse(shift.getStart()),
-                LocalTime.parse(shift.getEnd())
-        );
+        if (shift.getEmployee().getRole().equals("maschera"))
+            return new ShiftDto(
+                    EmployeeDataMapper.mapToDto(shift.getEmployee()),
+                    LocalDate.parse(shift.getDate()),
+                    LocalTime.parse(shift.getStart()),
+                    LocalTime.parse(shift.getEnd())
+            );
+        else
+            return new ShiftDto(
+                    EmployeeDataMapper.mapToDto(shift.getEmployee()),
+                    LocalDate.parse(shift.getDate()),
+                    LocalTime.parse(shift.getStart()),
+                    LocalTime.parse(shift.getEnd()),
+                    HallDataMapper.mapToDto(shift.getHall())
+            );
     }
 
     public static Shift mapToEntity(ShiftDto shiftDto) {
         Objects.requireNonNull(shiftDto);
-        return new Shift(
-                new Employee(),
-                shiftDto.getDate().toString(),
-                shiftDto.getStart().toString(),
-                shiftDto.getEnd().toString()
-        );
+        if (shiftDto.getEmployee().getRole().equals("maschera"))
+            return new Shift(
+                    EmployeeDataMapper.matToEntity(shiftDto.getEmployee()),
+                    shiftDto.getDate().toString(),
+                    shiftDto.getStart().toString(),
+                    shiftDto.getEnd().toString()
+            );
+        else
+            return new Shift(
+                    EmployeeDataMapper.matToEntity(shiftDto.getEmployee()),
+                    shiftDto.getDate().toString(),
+                    shiftDto.getStart().toString(),
+                    shiftDto.getEnd().toString(),
+                    HallDataMapper.matToEntity(shiftDto.getHall())
+            );
     }
 
     public static List<ShiftDto> mapToDtoList(List<Shift> shiftList) {

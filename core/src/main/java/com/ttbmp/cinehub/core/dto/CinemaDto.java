@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.core.dto;
 
-
 /**
  * @author Palmieri Ivan
  */
@@ -30,6 +29,5 @@ public class CinemaDto {
     public String getCity() {
         return city;
     }
-
 
 }

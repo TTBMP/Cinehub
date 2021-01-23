@@ -12,13 +12,18 @@ import java.util.List;
 public class CinemaDataMapper {
 
     private CinemaDataMapper() {
+
     }
 
     public static CinemaDto mapToDto(Cinema cinema) {
         if (cinema == null) {
             return null;
         }
-        return new CinemaDto(cinema.getName(), cinema.getAddress(), cinema.getCity());
+        return new CinemaDto(
+        		cinema.getName(),
+        		cinema.getAddress(),
+        		cinema.getCity()
+        );
     }
 
     public static Cinema mapToEntity(CinemaDto cinemaDto) {
@@ -34,5 +39,8 @@ public class CinemaDataMapper {
         return DataMapperHelper.mapList(cinemaList, CinemaDataMapper::mapToDto);
     }
 
+    public static List<Cinema> mapToEntityList(List<CinemaDto> cinemaListDto) {
+        return DataMapperHelper.mapList(cinemaListDto, CinemaDataMapper::matToEntity);
+    }
 
 }

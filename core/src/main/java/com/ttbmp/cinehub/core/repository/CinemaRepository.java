@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.core.repository;
 
-
 import com.ttbmp.cinehub.core.entity.Cinema;
 import com.ttbmp.cinehub.core.entity.Movie;
 import com.ttbmp.cinehub.core.entity.Projection;
@@ -16,4 +15,7 @@ public interface CinemaRepository {
     List<Cinema> getListCinema(List<Projection> projectionList);
 
     List<Cinema> getListCinema(Movie movie, String date);
+
+    List<Cinema> getAllCinema();
+
 }

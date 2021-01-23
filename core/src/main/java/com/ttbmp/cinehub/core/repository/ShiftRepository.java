@@ -14,4 +14,9 @@ public interface ShiftRepository {
 
     Result<List<Shift>> getAllEmployeeShiftBetweenDate(Employee employee, LocalDate start, LocalDate end);
 
+    Result<List<Shift>> getShiftList();
+
+    Result<Boolean> saveShift(Shift shift);
+
+    Result<Shift> deletedShift(Shift shift);
 }
