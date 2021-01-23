@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.core.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.core.usecase.Request;
-import com.ttbmp.cinehub.core.utilities.notification.Notification;
 
 import java.time.LocalDate;
 
@@ -10,9 +9,9 @@ import java.time.LocalDate;
  */
 public class GetShiftListRequest extends Request {
 
-    public static final Notification.Error MISSING_START_TIME_ERROR = new Notification.Error("Start time value can't be null");
-    public static final Notification.Error MISSING_END_TIME_ERROR = new Notification.Error("End time value can't be null");
-    public static final Notification.Error INVALID_TIME_SELECTION_ERROR = new Notification.Error("Start time value can't be after the end time");
+    public static final Request.Error MISSING_START_TIME_ERROR = new Request.Error("Start time value can't be null");
+    public static final Request.Error MISSING_END_TIME_ERROR = new Request.Error("End time value can't be null");
+    public static final Request.Error INVALID_TIME_SELECTION_ERROR = new Request.Error("Start time value can't be after the end time");
 
     private LocalDate start;
     private LocalDate end;
@@ -39,16 +38,16 @@ public class GetShiftListRequest extends Request {
     }
 
     @Override
-    public void validate() {
+    public void onValidate() {
         if (start == null) {
-            notification.addError(MISSING_START_TIME_ERROR);
+            addError(MISSING_START_TIME_ERROR);
         }
         if (end == null) {
-            notification.addError(MISSING_END_TIME_ERROR);
+            addError(MISSING_END_TIME_ERROR);
         }
         if (start != null && end != null) {
             if (start.isAfter(end)) {
-                notification.addError(INVALID_TIME_SELECTION_ERROR);
+                addError(INVALID_TIME_SELECTION_ERROR);
             }
         }
     }

@@ -25,14 +25,14 @@ public class ViewPersonalScheduleFxPresenter implements ViewPersonalSchedulePres
     }
 
     @Override
-    public void presentGetShiftListRequestInvalid(GetShiftListRequest request) {
-        if (request.getNotification().getErrorList().contains(GetShiftListRequest.MISSING_START_TIME_ERROR)) {
+    public void presentInvalidGetShiftListRequest(GetShiftListRequest request) {
+        if (request.getErrorList().contains(GetShiftListRequest.MISSING_START_TIME_ERROR)) {
             System.out.println(GetShiftListRequest.MISSING_START_TIME_ERROR.getMessage());
         }
-        if (request.getNotification().getErrorList().contains(GetShiftListRequest.MISSING_END_TIME_ERROR)) {
+        if (request.getErrorList().contains(GetShiftListRequest.MISSING_END_TIME_ERROR)) {
             System.out.println(GetShiftListRequest.MISSING_END_TIME_ERROR.getMessage());
         }
-        if (request.getNotification().getErrorList().contains(GetShiftListRequest.INVALID_TIME_SELECTION_ERROR)) {
+        if (request.getErrorList().contains(GetShiftListRequest.INVALID_TIME_SELECTION_ERROR)) {
             System.out.println(GetShiftListRequest.INVALID_TIME_SELECTION_ERROR.getMessage());
         }
     }
