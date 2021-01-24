@@ -8,10 +8,11 @@ import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.payment.PaymentView;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavDestination;
 import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.core.usecase.buyticket.GetNumberOfSeatsRequest;
-import com.ttbmp.cinehub.core.usecase.buyticket.GetTicketBySeatsRequest;
+import com.ttbmp.cinehub.core.usecase.buyticket.request.GetNumberOfSeatsRequest;
+import com.ttbmp.cinehub.core.usecase.buyticket.request.GetTicketBySeatsRequest;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -36,6 +37,9 @@ public class ChooseSeatViewController extends ViewController {
     private Button returnButton;
     @FXML
     private Button buyRandomButton;
+
+    @FXML
+    private Label errorSectionLabel;
     @FXML
     private Button confirmSeatButton;
     @FXML
@@ -89,6 +93,7 @@ public class ChooseSeatViewController extends ViewController {
 
 
     private void bind() {
+        errorSectionLabel.textProperty().bind(viewModel.seatErrorProperty());
         confirmSeatButton.disableProperty().bind(viewModel.getGroup().selectedToggleProperty().isNull());
         seatsTotalText.textProperty().bind(viewModel.totalSeatsProperty());
         seatsFreeText.textProperty().bind(viewModel.freeSeatsProperty());

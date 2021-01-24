@@ -6,7 +6,7 @@ import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavActivityDestination;
 import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.core.usecase.buyticket.SendEmailRequest;
+import com.ttbmp.cinehub.core.usecase.buyticket.request.SendEmailRequest;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -42,6 +42,8 @@ public class ConfirmEmailViewController extends ViewController {
     @FXML
     private Button confirmButton;
     @FXML
+    private Label errorSectionLabel;
+    @FXML
     private Text timeText;
     @FXML
     private Text priceText;
@@ -66,6 +68,7 @@ public class ConfirmEmailViewController extends ViewController {
 
 
     private void bind() {
+        errorSectionLabel.textProperty().bind(viewModel.emailErrorProperty());
         emailText.textProperty().bind(viewModel.emailUserProperty());
         nameText.textProperty().bind(viewModel.nameUserProperty());
         surnameText.textProperty().bind(viewModel.surnameUserProperty());

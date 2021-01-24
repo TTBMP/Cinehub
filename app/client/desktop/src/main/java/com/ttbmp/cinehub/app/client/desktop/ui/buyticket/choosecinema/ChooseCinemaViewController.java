@@ -8,10 +8,11 @@ import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavDestination;
 import com.ttbmp.cinehub.core.dto.CinemaDto;
 import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.core.usecase.buyticket.GetTimeOfProjecitonRequest;
-import com.ttbmp.cinehub.core.usecase.buyticket.SetProjectionRequest;
+import com.ttbmp.cinehub.core.usecase.buyticket.request.GetTimeOfProjecitonRequest;
+import com.ttbmp.cinehub.core.usecase.buyticket.request.SetProjectionRequest;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 
@@ -30,6 +31,9 @@ public class ChooseCinemaViewController extends ViewController {
 
     @FXML
     private AppBarViewController appBarController;
+
+    @FXML
+    private Label errorSectionLabel;
 
     @FXML
     private ListView<CinemaDto> cinemaListView;
@@ -84,6 +88,7 @@ public class ChooseCinemaViewController extends ViewController {
         confirmCinemaButton.disableProperty().bind(viewModel.selectedCinemaProperty().isNull().or(viewModel.selectedTimeProperty().isNull()));
         viewModel.selectedTimeProperty().bind(timeOfProjectionListView.getSelectionModel().selectedItemProperty());
         viewModel.selectedCinemaProperty().bind(cinemaListView.getSelectionModel().selectedItemProperty());
+        errorSectionLabel.textProperty().bind(viewModel.cinemaErrorProperty());
     }
 
 }

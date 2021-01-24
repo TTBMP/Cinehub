@@ -12,8 +12,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,51 +37,27 @@ public class MovieApi implements MovieApiService {
     }
 
     @Override
-    public void retriveAllMovie() {
+    public void retrieveAllMovie() throws IOException {
 
         while (i <= numberOfMovie) {
-            URL url = null;
-            try {
-                url = new URL(urlStart + i + apiKey);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            assert url != null;
-            retriveMovie(url);
+            retrieveMovie(new URL(urlStart + i + apiKey));
         }
 
     }
 
     @Override
-    public void retriveMovieById(Integer id) {
-        URL url = null;
-        try {
-            url = new URL(urlStart + id + apiKey);
-        } catch (MalformedURLException e) {
-            System.err.println("Non esiste un film con quell'id!");
-        }
-        assert url != null;
-        retriveMovie(url);
+    public void retrieveMovieById(Integer id) throws IOException {
+        retrieveMovie(new URL(urlStart + id + apiKey));
 
     }
 
 
     @Override
-    public void retriveMovie(URL url) {
-        HttpURLConnection con = null;
-        try {
-            con = (HttpURLConnection) url.openConnection();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    public void retrieveMovie(URL url) throws IOException {
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
         assert con != null;
         con.setDoOutput(true);
-        try {
-            con.setRequestMethod("GET");
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        }
+        con.setRequestMethod("GET");
         con.setRequestProperty("Content-Type", "application/json");
 
         BufferedReader br = null;
@@ -91,17 +65,13 @@ public class MovieApi implements MovieApiService {
             br = new BufferedReader(new InputStreamReader((con.getInputStream())));
         } catch (IOException e) {
             i++;
-            retriveAllMovie();
+            retrieveAllMovie();
         }
         if (i <= numberOfMovie) {
-            String output = null;
+            String output;
             while (true) {
-                try {
-                    assert br != null;
-                    if ((output = br.readLine()) == null) break;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                assert br != null;
+                if ((output = br.readLine()) == null) break;
                 printSpecificAttribute(output);
                 i++;
             }
@@ -114,10 +84,10 @@ public class MovieApi implements MovieApiService {
         JsonObject jsonObject = new JsonParser().parse(output).getAsJsonObject();
         String title = String.valueOf(jsonObject.get("title")).substring(1,String.valueOf(jsonObject.get("title")).length()-1);
         MovieApiDto element = new MovieApiDto(title);
-        element.setImageUrl(imageUrl + String.valueOf(jsonObject.get("poster_path")).substring(1,String.valueOf(jsonObject.get("poster_path")).length()-1));
-        element.setVote(String.valueOf(jsonObject.get("vote_average")));
-        element.setOverview(String.valueOf(jsonObject.get("overview")));
-        element.setRelases(String.valueOf(jsonObject.get("release_date")));
+        element.setMovieImageUrl(imageUrl + String.valueOf(jsonObject.get("poster_path")).substring(1,String.valueOf(jsonObject.get("poster_path")).length()-1));
+        element.setMovieVote(String.valueOf(jsonObject.get("vote_average")));
+        element.setMovieOverview(String.valueOf(jsonObject.get("overview")));
+        element.setMovieReleases(String.valueOf(jsonObject.get("release_date")));
         listMovie.add(element);
 
     }

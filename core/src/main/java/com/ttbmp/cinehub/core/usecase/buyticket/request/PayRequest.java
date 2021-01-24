@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.core.usecase.buyticket;
+package com.ttbmp.cinehub.core.usecase.buyticket.request;
 
 import com.ttbmp.cinehub.core.dto.ProjectionDto;
 import com.ttbmp.cinehub.core.dto.TicketDto;
@@ -9,16 +9,13 @@ public class PayRequest extends Request {
     public static final Request.Error MISSING_PROJECTION_ERROR = new Request.Error("Projection can't be null");
     public static final Request.Error MISSING_INDEX_ERROR = new Request.Error("Index can't be after the end time");
     private ProjectionDto projection;
-    private Integer index;
+    private final Integer index;
     private TicketDto ticket;
 
     public PayRequest(TicketDto ticket, ProjectionDto projection, Integer index) {
         this.index = index;
         this.projection = projection;
         this.ticket = ticket;
-        //Passo attributi parziali
-        //Passo DTO
-        //dATA MAPPER NEL ContAPpp
     }
 
     public ProjectionDto getProjection() {
@@ -33,9 +30,6 @@ public class PayRequest extends Request {
         return index;
     }
 
-    public void setIndex(Integer index) {
-        this.index = index;
-    }
 
     public TicketDto getTicket() {
         return ticket;

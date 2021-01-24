@@ -5,64 +5,51 @@ package com.ttbmp.cinehub.service.movieinformation.dto;
  * @author Palmieri Ivan
  */
 public class MovieApiDto {
-    private String name;
-    private String vote;
-    private String duration;
-    private String imageUrl;
-    private String overview;
-    private String relases;
+    private final String movieName;
+    private String movieVote;
+    private String movieImageUrl;
+    private String movieOverview;
+    private String movieReleases;
 
-    public MovieApiDto(String name) {
-        this.name = name;
-
+    public MovieApiDto(String movieName) {
+        this.movieName = movieName;
     }
 
-    public String getOverview() {
-        return overview;
+    public String getMovieName() {
+        return movieName;
     }
 
-    public void setOverview(String owerview) {
-        this.overview = owerview;
+
+    public String getMovieVote() {
+        return movieVote;
     }
 
-    public String getRelases() {
-        return relases;
+    public void setMovieVote(String movieVote) {
+        this.movieVote = movieVote;
     }
 
-    public void setRelases(String relases) {
-        this.relases = relases;
+    public String getMovieImageUrl() {
+        return movieImageUrl;
     }
 
-    public String getName() {
-        return name;
+    public void setMovieImageUrl(String movieImageUrl) {
+        this.movieImageUrl = movieImageUrl;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getMovieOverview() {
+        return movieOverview;
     }
 
-    public String getVote() {
-        return vote;
+    public void setMovieOverview(String movieOverview) {
+        this.movieOverview = movieOverview;
     }
 
-    public void setVote(String vote) {
-        this.vote = vote;
+    public String getMovieReleases() {
+        return movieReleases;
     }
 
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setMovieReleases(String movieReleases) {
+        this.movieReleases = movieReleases;
     }
 }
 

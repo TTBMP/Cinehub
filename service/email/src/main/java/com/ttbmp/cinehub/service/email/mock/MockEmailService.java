@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.service.email.mock;
 
 
 import com.ttbmp.cinehub.core.service.email.EmailService;
+import com.ttbmp.cinehub.core.service.email.EmailServiceRequest;
 
 /**
  * @author Palmieri Ivan
@@ -9,7 +10,7 @@ import com.ttbmp.cinehub.core.service.email.EmailService;
 public class MockEmailService implements EmailService {
 
     @Override
-    public void sendMail(String to, String subject, String content) {
+    public void sendMail(EmailServiceRequest emailServiceRequest) {
         //Empty section
     }
 }

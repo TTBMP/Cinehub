@@ -8,10 +8,11 @@ import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavDestination;
 import com.ttbmp.cinehub.core.dto.MovieDto;
 import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.core.usecase.buyticket.GetListCinemaRequest;
+import com.ttbmp.cinehub.core.usecase.buyticket.request.GetListCinemaRequest;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 
@@ -33,6 +34,9 @@ public class ChooseMovieViewController extends ViewController {
     @FXML
     private AppBarViewController appBarController;
 
+
+    @FXML
+    private Label errorSectionLabel;
 
     @FXML
     private ListView<MovieDto> movieListView;
@@ -66,7 +70,7 @@ public class ChooseMovieViewController extends ViewController {
     }
 
     private void bind() {
-
+        errorSectionLabel.textProperty().bind(viewModel.movieErrorProperty());
         confirmMovieButton.disableProperty().bind(viewModel.selectedDateProperty().isNull().or(viewModel.selectedMovieProperty().isNull()));
         viewModel.selectedMovieProperty().bind(movieListView.getSelectionModel().selectedItemProperty());
         dateOfProjectionDatePicker.valueProperty().bindBidirectional(viewModel.selectedDateProperty());

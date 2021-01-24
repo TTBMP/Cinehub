@@ -14,17 +14,17 @@ import java.util.List;
 public class MockMovieApiService implements MovieApiService {
 
     @Override
-    public void retriveAllMovie() {
+    public void retrieveAllMovie() {
         //Empty section
     }
 
     @Override
-    public void retriveMovieById(Integer id) {
+    public void retrieveMovieById(Integer id) {
        //Empty section
     }
 
     @Override
-    public void retriveMovie(URL url) {
+    public void retrieveMovie(URL url) {
         //Empty section
     }
 

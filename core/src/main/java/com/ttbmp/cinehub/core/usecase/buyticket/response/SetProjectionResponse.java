@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.core.usecase.buyticket;
+package com.ttbmp.cinehub.core.usecase.buyticket.response;
 
 import com.ttbmp.cinehub.core.dto.ProjectionDto;
 

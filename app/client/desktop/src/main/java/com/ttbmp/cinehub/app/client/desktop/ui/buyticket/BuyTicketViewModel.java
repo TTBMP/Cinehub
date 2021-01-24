@@ -47,8 +47,36 @@ public class BuyTicketViewModel implements ViewModel {
 
     private final ObjectProperty<LocalDate> fieldExpirationDatePicker = new SimpleObjectProperty<>();
 
+    private final StringProperty emailError = new SimpleStringProperty();
+    private final StringProperty movieError = new SimpleStringProperty();
+    private final StringProperty cinemaError = new SimpleStringProperty();
+    private final StringProperty seatError = new SimpleStringProperty();
+    private final StringProperty paymentError = new SimpleStringProperty();
 
 
+
+
+    public StringProperty emailErrorProperty() {
+        return emailError;
+    }
+
+
+    public StringProperty movieErrorProperty() {
+        return movieError;
+    }
+
+
+    public StringProperty cinemaErrorProperty() {
+        return cinemaError;
+    }
+
+    public StringProperty seatErrorProperty() {
+        return seatError;
+    }
+
+    public StringProperty paymentErrorProperty() {
+        return paymentError;
+    }
 
 
     public BuyTicketViewModel() {
