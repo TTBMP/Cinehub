@@ -10,6 +10,16 @@ public abstract class Request {
 
     private final List<Request.Error> errorList = new ArrayList<>();
 
+    public static void validate(Request request) throws NullRequestException, InvalidRequestException {
+        if (request == null) {
+            throw new NullRequestException();
+        }
+        request.onValidate();
+        if (!request.getErrorList().isEmpty()) {
+            throw new InvalidRequestException();
+        }
+    }
+
     public List<Request.Error> getErrorList() {
         return errorList;
     }
@@ -19,16 +29,6 @@ public abstract class Request {
     }
 
     public abstract void onValidate();
-
-    public static void validate(Request request) throws NullRequestException, InvalidRequestException{
-        if (request == null) {
-            throw new NullRequestException();
-        }
-        request.onValidate();
-        if (!request.getErrorList().isEmpty()) {
-            throw new InvalidRequestException();
-        }
-    }
 
     public static class Error {
 

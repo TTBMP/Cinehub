@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
+            fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.buyticket.payment.PaymentViewController">
+    <TitledPane collapsible="false" text="Completa il pagamento" AnchorPane.bottomAnchor="0.0"
+                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox>
+            <AnchorPane prefHeight="95.0" prefWidth="362.0">
+                <GridPane prefHeight="73.0" prefWidth="285.0" AnchorPane.bottomAnchor="0.0"
+                          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                          AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cognome che troverai sul ticket:"
+                          wrappingWidth="104.0732421875" GridPane.columnIndex="2">
+                        <GridPane.margin>
+                            <Insets left="15.0"/>
+                        </GridPane.margin>
+                    </Text>
+                    <TextField fx:id="surnameTextField" alignment="TOP_LEFT"
+                               promptText="Inserisci cognome" GridPane.columnIndex="3"/>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nome che troverai sul ticket:"
+                          wrappingWidth="88.44873046875">
+                        <GridPane.margin>
+                            <Insets left="10.0"/>
+                        </GridPane.margin>
+                    </Text>
+                    <TextField fx:id="nameTextField" alignment="TOP_LEFT" promptText="Inserisci nome"
+                               GridPane.columnIndex="1">
+                        <GridPane.margin>
+                            <Insets right="15.0"/>
+                        </GridPane.margin>
+                    </TextField>
+                    <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="2"/>
+                </GridPane>
+            </AnchorPane>
+            <AnchorPane prefHeight="95.0" prefWidth="367.0">
+                <GridPane prefHeight="73.0" prefWidth="571.0" AnchorPane.bottomAnchor="0.0"
+                          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                          AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Numero della carta di credito:"
+                          wrappingWidth="98.56298828125">
+                        <GridPane.margin>
+                            <Insets left="10.0"/>
+                        </GridPane.margin>
+                    </Text>
+                    <TextField fx:id="numberOfCreditCardTextField" alignment="TOP_LEFT"
+                               prefHeight="31.0" prefWidth="203.0" promptText="Inserisci carta"
+                               GridPane.columnIndex="1">
+                        <GridPane.margin>
+                            <Insets right="15.0"/>
+                        </GridPane.margin>
+                    </TextField>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                          text="Inserisci l'email dove ti arriverà la fattura:"
+                          wrappingWidth="109.8466796875" GridPane.columnIndex="2">
+                        <GridPane.margin>
+                            <Insets left="15.0"/>
+                        </GridPane.margin>
+                    </Text>
+                    <TextField fx:id="emailTextField" alignment="TOP_LEFT" prefHeight="31.0"
+                               prefWidth="213.0" promptText="Inserisci email" GridPane.columnIndex="3">
+                        <opaqueInsets>
+                            <Insets/>
+                        </opaqueInsets>
+                    </TextField>
+                    <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="2"/>
+                </GridPane>
+            </AnchorPane>
+            <AnchorPane prefHeight="95.0" prefWidth="365.0">
+                <GridPane prefHeight="73.0" prefWidth="285.0" AnchorPane.bottomAnchor="0.0"
+                          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                          AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CVV:">
+                        <GridPane.margin>
+                            <Insets left="10.0"/>
+                        </GridPane.margin>
+                    </Text>
+                    <TextField fx:id="cvvTextField" promptText="Inserisci CVV carta"
+                               GridPane.columnIndex="1">
+                        <GridPane.margin>
+                            <Insets right="15.0"/>
+                        </GridPane.margin>
+                    </TextField>
+                    <DatePicker fx:id="fieldExpirationDatePicker" prefHeight="31.0" prefWidth="153.0"
+                                promptText="Inserisci data" GridPane.columnIndex="3">
+                        <GridPane.margin>
+                            <Insets/>
+                        </GridPane.margin>
+                    </DatePicker>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                          text="Data di scadenza della carta di credito:"
+                          wrappingWidth="104.34521484375" GridPane.columnIndex="2">
+                        <GridPane.margin>
+                            <Insets left="15.0"/>
+                        </GridPane.margin>
+                    </Text>
+                    <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="2"/>
+                </GridPane>
+            </AnchorPane>
+            <AnchorPane prefHeight="73.0" prefWidth="602.0">
+                <GridPane prefHeight="73.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
+                          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                          AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0"
+                                           prefWidth="108.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1550.0" minWidth="9.0"
+                                           prefWidth="403.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1400.0" minWidth="0.0"
+                                           prefWidth="89.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="24.0"
+                                        vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="46.0" minHeight="10.0" prefHeight="46.0"
+                                        vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <Button fx:id="confirmButton" mnemonicParsing="false" text="Paga"
+                            textAlignment="JUSTIFY" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                    <Button fx:id="returnButton" mnemonicParsing="false" text="Indietro"
+                            GridPane.rowIndex="1">
+                        <GridPane.margin>
+                            <Insets left="20.0"/>
+                        </GridPane.margin>
+                    </Button>
+                    <Separator prefWidth="200.0"/>
+                    <Separator prefWidth="200.0" GridPane.columnIndex="1"/>
+                    <Separator prefWidth="200.0" GridPane.columnIndex="2"/>
+                    <Text fx:id="resultPaymentText" strokeType="OUTSIDE" strokeWidth="0.0"
+                          wrappingWidth="392.6708984375" GridPane.columnIndex="1"
+                          GridPane.rowIndex="1"/>
+                </GridPane>
+            </AnchorPane>
+        </VBox>
+    </TitledPane>
+</AnchorPane>

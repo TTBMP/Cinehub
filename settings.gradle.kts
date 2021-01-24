@@ -5,5 +5,8 @@ include(
     "app:client:web",
     "data:local",
     "data:remote",
-    "service:authentication"
+    "service:authentication",
+    "service:payment",
+    "service:movie-information",
+    "service:email"
 )
