@@ -1,46 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
-      fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.buyticket.choosemovie.ChooseMovieViewController">
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.buyticket.choosemovie.ChooseMovieViewController">
     <children>
-        <fx:include fx:id="appBar" source="app_bar.fxml"/>
+        <fx:include fx:id="appBar" source="app_bar.fxml" />
         <VBox prefHeight="246.0" prefWidth="600.0">
             <children>
                 <HBox>
                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Scegli una data!"
-                              wrappingWidth="180.6708984375">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a date!" wrappingWidth="180.6708984375">
                             <HBox.margin>
-                                <Insets left="10.0" top="10.0"/>
+                                <Insets left="10.0" top="10.0" />
                             </HBox.margin>
                         </Text>
-                        <DatePicker fx:id="dateOfProjectionDatePicker" prefHeight="31.0" prefWidth="175.0"
-                                    promptText="Data proiezine" showWeekNumbers="true">
+                        <DatePicker fx:id="dateOfProjectionDatePicker" prefHeight="31.0" prefWidth="175.0" promptText="Projection date" showWeekNumbers="true">
                             <opaqueInsets>
-                                <Insets/>
+                                <Insets />
                             </opaqueInsets>
                             <HBox.margin>
-                                <Insets left="10.0" top="10.0"/>
+                                <Insets left="10.0" top="10.0" />
                             </HBox.margin>
                         </DatePicker>
-                        <AnchorPane/>
-                        <Button fx:id="confirmMovieButton" alignment="TOP_LEFT" mnemonicParsing="false" text="Continua">
+                        <AnchorPane />
+                        <Button fx:id="confirmMovieButton" alignment="TOP_LEFT" mnemonicParsing="false" text="Continue">
                             <HBox.margin>
-                                <Insets left="135.0" top="10.0"/>
+                                <Insets left="135.0" top="10.0" />
                             </HBox.margin>
                         </Button>
                     </children>
                 </HBox>
+            <Label fx:id="errorSectionLabel" prefHeight="21.0" prefWidth="597.0" textAlignment="CENTER" />
             </children>
         </VBox>
-        <ListView fx:id="movieListView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                  prefHeight="485.0" prefWidth="600.0"/>
+        <ListView fx:id="movieListView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="485.0" prefWidth="600.0" />
     </children>
 </VBox>

@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.service.email.emailservice;
 
 
 import com.ttbmp.cinehub.core.service.email.EmailService;
+import com.ttbmp.cinehub.core.service.email.EmailServiceRequest;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -17,10 +18,10 @@ import java.util.Properties;
 public class SendEmailService implements EmailService {
 
     @Override
-    public void sendMail(String to, String subject, String content) {
+    public void sendMail(EmailServiceRequest emailServiceRequest) {
         final String username = "yourUsername@email.com";
         final String password = "password";
-        String fromEmail = "fromemail@yahoo.com";
+        String fromEmail = emailServiceRequest.getEmail();
         String toEmail = "toEmail@example.com";
 
         Properties properties = new Properties();

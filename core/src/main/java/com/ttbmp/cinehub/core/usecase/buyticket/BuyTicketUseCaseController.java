@@ -5,10 +5,15 @@ import com.ttbmp.cinehub.core.entity.*;
 import com.ttbmp.cinehub.core.repository.*;
 import com.ttbmp.cinehub.core.service.authentication.AuthenticationService;
 import com.ttbmp.cinehub.core.service.email.EmailService;
+import com.ttbmp.cinehub.core.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.core.service.movie.MovieApiService;
+import com.ttbmp.cinehub.core.service.payment.request.PayServiceRequest;
 import com.ttbmp.cinehub.core.service.payment.PaymentService;
 import com.ttbmp.cinehub.core.usecase.Request;
+import com.ttbmp.cinehub.core.usecase.buyticket.request.*;
+import com.ttbmp.cinehub.core.usecase.buyticket.response.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +65,7 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
             Request.validate(request);
             //Prender i dati dell'utente dall'id
             User user = new User("Ivan", "palm@5934.cos", new CreditCard("22/24", 354, "4242424242424242", "5496"));
-            emailService.sendMail(user.getEmail(), "Hello Member", "Thanks for joining us.");
+            emailService.sendMail(new EmailServiceRequest(user.getEmail(),"Hello Member"));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentSendEmailNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -73,11 +78,11 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
     public boolean pay(PayRequest request) {
         try {
             Request.validate(request);
-            User user = new User("Ivan", "palm@5934.cos", new CreditCard("22/24", 354, "4242424242424242", "5496"));
+            User user = new User("Ivan", "palm@59345.cos", new CreditCard("22/24", 354, "4242424242424242", "5496"));
             Ticket ticket = TicketDataMapper.mapToEntity(request.getTicket());
             Projection projection = ProjectionDataMapper.mapToEntity(request.getProjection());
             Integer index = request.getIndex();
-            if (paymentService.pay(user, ticket)) {
+            if (paymentService.pay(new PayServiceRequest(UserDataMapper.mapToDto(user) , TicketDataMapper.mapToDto(ticket)))) {
                 ticket.setState(true);
                 projection.addTicket(ticket);
                 projection.getHall().getSeatList().get(index).setState(false);
@@ -97,7 +102,12 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
 
     @Override
     public void getListMovie() {
-        List<Movie> movieList = movieRepository.getAllMovieByApi(movieApiService);
+        List<Movie> movieList = null;
+        try {
+            movieList = movieRepository.getAllMovieByApi(movieApiService);
+        } catch (IOException e) {
+            buyTicketPresenter.presentGetListMovie();
+        }
         buyTicketPresenter.presentMovieApiList(new GetListMovieResponse(MovieDataMapper.mapToDtoList(movieList)));
     }
 

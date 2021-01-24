@@ -17,12 +17,11 @@ public class MovieApiDataMapper {
 
         List<Movie> listMovie = new ArrayList<>();
         for (MovieApiDto movieApiDto : movieList) {
-            Movie movie = new Movie(movieApiDto.getName());
-            movie.setVote(movieApiDto.getVote());
-            movie.setOverview(movieApiDto.getOverview());
-            movie.setRelases(movieApiDto.getRelases());
-            movie.setDuration(movieApiDto.getDuration());
-            movie.setImageUrl(movieApiDto.getImageUrl());
+            Movie movie = new Movie(movieApiDto.getMovieName());
+            movie.setVote(movieApiDto.getMovieVote());
+            movie.setOverview(movieApiDto.getMovieOverview());
+            movie.setRelases(movieApiDto.getMovieReleases());
+            movie.setImageUrl(movieApiDto.getMovieImageUrl());
             listMovie.add(movie);
         }
         return listMovie;

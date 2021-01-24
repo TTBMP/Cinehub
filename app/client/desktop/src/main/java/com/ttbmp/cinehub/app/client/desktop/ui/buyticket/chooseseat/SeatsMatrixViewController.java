@@ -79,9 +79,9 @@ public class SeatsMatrixViewController extends ViewController {
     }
 
     private void updateValue(BuyTicketViewModel viewModel ,int  size, int buy) {
-        viewModel.totalSeatsProperty().setValue("Posti disponibili: " + size);
-        viewModel.buysSeatsProperty().setValue("Posti occupati: " + buy);
-        viewModel.freeSeatsProperty().setValue("Posti liberi: " + (size - buy));
+        viewModel.totalSeatsProperty().setValue("Places available: " + size);
+        viewModel.buysSeatsProperty().setValue("Occupied seats: " + buy);
+        viewModel.freeSeatsProperty().setValue("Free seats: " + (size - buy));
     }
 
 

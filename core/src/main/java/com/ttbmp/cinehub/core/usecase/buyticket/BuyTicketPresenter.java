@@ -1,5 +1,8 @@
 package com.ttbmp.cinehub.core.usecase.buyticket;
 
+import com.ttbmp.cinehub.core.usecase.buyticket.request.*;
+import com.ttbmp.cinehub.core.usecase.buyticket.response.*;
+
 import java.util.List;
 
 /**
@@ -52,4 +55,6 @@ public interface BuyTicketPresenter {
     void presentGetNumberOfSeatsNullRequest();
 
     void presentInvalidGetNumberOfSeats(GetNumberOfSeatsRequest request);
+
+    void presentGetListMovie();
 }

@@ -4,6 +4,7 @@ import com.ttbmp.cinehub.core.entity.Movie;
 import com.ttbmp.cinehub.core.repository.MovieRepository;
 import com.ttbmp.cinehub.core.service.movie.MovieApiService;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,8 +25,8 @@ public class MockMovieRepository implements MovieRepository {
     }
 
     @Override
-    public List<Movie> getAllMovieByApi(MovieApiService movieApiService) {
-        movieApiService.retriveAllMovie();
+    public List<Movie> getAllMovieByApi(MovieApiService movieApiService) throws IOException {
+        movieApiService.retrieveAllMovie();
         return movieApiService.returnListMovie();
     }
 

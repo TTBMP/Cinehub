@@ -1,12 +1,14 @@
 package com.ttbmp.cinehub.service.payment.stripe;
 
+import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
 import com.stripe.model.PaymentIntent;
 import com.stripe.model.PaymentIntentCollection;
 import com.stripe.model.PaymentMethod;
+import com.ttbmp.cinehub.core.dto.TicketDto;
+import com.ttbmp.cinehub.core.dto.UserDto;
 import com.ttbmp.cinehub.core.entity.Payment;
-import com.ttbmp.cinehub.core.entity.Ticket;
-import com.ttbmp.cinehub.core.entity.User;
+import com.ttbmp.cinehub.core.service.payment.request.PayServiceRequest;
 import com.ttbmp.cinehub.core.service.payment.PaymentService;
 
 import java.util.List;
@@ -17,94 +19,141 @@ import java.util.List;
 public class StripeServicePaymentFacade implements PaymentService {
 
     private final ServiceRequestStripe serviceRequestStripe;
-
+    String errorStripe = "";
     public StripeServicePaymentFacade() {
         this.serviceRequestStripe = new ServiceRequestStripe();
     }
 
     @Override
-    public boolean pay(User user, Ticket ticket) {
-        /*Mettere la connessione qui*/
-        Customer customer = serviceRequestStripe.isExistent(user);
+    public boolean pay(PayServiceRequest payServiceRequest){
+        Customer customer = null;
+        try {
+            customer = serviceRequestStripe.isExistent(payServiceRequest.getUserDto());
+        } catch (StripeException e) {
+            e.printStackTrace();
+        }
         if (customer == null) {
-            System.out.println("Errore durante il reperimento del customer");
+            errorStripe = "Error while retrieving the customer";
             return false;
         }
-        PaymentMethod paymentMethod = serviceRequestStripe.retriveCard(customer);
+        PaymentMethod paymentMethod = null;
+        try {
+            paymentMethod = serviceRequestStripe.retrieveCard(customer);
+        } catch (StripeException e) {
+            e.printStackTrace();
+        }
         if (paymentMethod == null) {
-            System.out.println("Errore durante il reperimento della carta");
+            errorStripe = "Error while retrieving paper";
             return false;
         }
-        if (serviceRequestStripe.updateBilance(customer, ticket.getPrice())) {
-            System.out.println("Pagamento effettuato!");
-            if (serviceRequestStripe.setBelance(customer, ticket.getPrice(), paymentMethod)) {
-                System.out.println("Conto aggiornato correttamente!");
+        try {
+            if (serviceRequestStripe.updateBalance(customer, payServiceRequest.getTicketDto().getPrice())) {
+                if (!serviceRequestStripe.setBalance(customer, payServiceRequest.getTicketDto().getPrice(), paymentMethod)) {
+                    errorStripe = "Problem updating your account";
+                }
             } else {
-                System.out.println("Problema nell'aggiornamento del conto!");
+                errorStripe = "Error during payment, or insufficient money";
+                return false;
             }
-        } else {
-            System.out.println("Errore durante il pagamento");
-            return false;
+        } catch (StripeException e) {
+            e.printStackTrace();
         }
+
         return true;
 
     }
 
-    /*Rimborsa una specifica transazione mediante l'id*/
+    /*Refund a specific transaction using the id*/
     @Override
-    public boolean refoundById(User user, String id) {
+    public boolean refoundById(UserDto userDto, String id)  {
 
-        Customer customer = serviceRequestStripe.isExistent(user);
-        PaymentIntent paymentIntent = serviceRequestStripe.getPaymentIntent(id);
+        Customer customer = null;
+        try {
+            customer = serviceRequestStripe.isExistent(userDto);
+        } catch (StripeException e) {
+            e.printStackTrace();
+        }
+        PaymentIntent paymentIntent = null;
+        try {
+            paymentIntent = serviceRequestStripe.getPaymentIntent(id);
+        } catch (StripeException e) {
+            e.printStackTrace();
+        }
         if (customer == null) {
-            System.out.println("Impossibile rimborsare l'utente. Esso non esiste");
+            errorStripe ="Unable to refund user. It doesn't exist";
             return false;
         }
         if (paymentIntent == null) {
-            System.out.println("Errore durante il recupero della transazione");
+            errorStripe ="Error while retrieving the transaction";
             return false;
         }
-        if (serviceRequestStripe.updateBilance(customer, -(paymentIntent.getAmount().intValue() / 100))) {
-            System.out.println("Rimorso effettuato");
-            return true;
+        try {
+            if (serviceRequestStripe.updateBalance(customer, -(paymentIntent.getAmount().intValue() / 100))) {
+                errorStripe ="Refund made";
+                return true;
+            }
+        } catch (StripeException e) {
+            e.printStackTrace();
         }
         return false;
 
 
     }
 
-    /*Rimborsa l'ultimo acquisto*/
+    /*Refund your last purchase*/
     @Override
-    public boolean refoundLastPayment(User user, Ticket ticket) {
-        Customer customer = serviceRequestStripe.isExistent(user);
+    public boolean refoundLastPayment(UserDto userDto, TicketDto ticket)  {
+        Customer customer = null;
+        try {
+            customer = serviceRequestStripe.isExistent(userDto);
+        } catch (StripeException e) {
+            e.printStackTrace();
+        }
         if (customer == null) {
-            System.out.println("Errore nel rimborso dell'utente");
+            errorStripe ="User refund error";
             return false;
         }
-        /*L'utente non deve registrarsi*/
-        PaymentIntentCollection paymentCollection = serviceRequestStripe.retriveListPaymentIntent(customer);
+        /*The user does not have to register*/
+        PaymentIntentCollection paymentCollection = new PaymentIntentCollection();
+        try {
+            paymentCollection = serviceRequestStripe.retrieveListPaymentIntent(customer);
+        } catch (StripeException e) {
+            e.printStackTrace();
+        }
         if (paymentCollection.getData().isEmpty()) {
-            System.out.println("Errore nel reperire le transazioni dell'utente");
+            errorStripe ="Error finding user transactions";
             return false;
         }
-        paymentCollection = serviceRequestStripe.updateListPaymentIntentById(paymentCollection, 0);//id: indica l'elemento di romborso
+        try {
+            paymentCollection = serviceRequestStripe.updateListPaymentIntentById(paymentCollection, 0);//id: indicates the refund item
+        } catch (StripeException e) {
+            e.printStackTrace();
+        }
         if (paymentCollection == null) {
-            System.out.println("Errore aggiornamento stato biglietto");
+            errorStripe ="Ticket status update error";
             return false;
         }
-        if (!serviceRequestStripe.updateBilance(customer, -(paymentCollection.getData().get(0).getAmount().intValue() / 100))) {
-            System.out.println("Problemi con l'aggiornamento del conto");
-            return false;
+        try {
+            if (!serviceRequestStripe.updateBalance(customer, -(paymentCollection.getData().get(0).getAmount().intValue() / 100))) {
+                errorStripe ="Problems updating the account";
+                return false;
+            }
+        } catch (StripeException e) {
+            e.printStackTrace();
         }
-        System.out.println("Rimorso effettuato");
         return true;
 
     }
 
 
     @Override
-    public List<Payment> retriveListOfPayment(User user) {
-        PaymentIntentCollection payment = serviceRequestStripe.retriveListPaymentIntent(user);
+    public List<Payment> retriveListOfPayment(UserDto userDto)  {
+        PaymentIntentCollection payment=null;
+        try {
+            payment = serviceRequestStripe.retrieveListPaymentIntent(userDto);
+        } catch (StripeException e) {
+            e.printStackTrace();
+        }
         return serviceRequestStripe.convertListOfPayment(payment, serviceRequestStripe);
     }
 

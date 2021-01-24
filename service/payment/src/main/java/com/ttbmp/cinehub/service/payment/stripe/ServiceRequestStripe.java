@@ -3,6 +3,7 @@ package com.ttbmp.cinehub.service.payment.stripe;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.*;
+import com.ttbmp.cinehub.core.dto.UserDto;
 import com.ttbmp.cinehub.core.entity.Payment;
 import com.ttbmp.cinehub.core.entity.User;
 
@@ -27,12 +28,11 @@ public class ServiceRequestStripe {
     public static void connection() {
         if (!connected) {
             Stripe.apiKey = "sk_test_51HMsilCjyigVX8MsGwDmh3NZkTOsGj5D5ZQDkhepyBzB6nWCnejZAJskSlxP3WySswONDdN2CIC5aSbdmbIpfS0e00IgegI2Yz";
-            System.out.println("Connessione riuscita!");
             connected = true;
         }
     }
 
-    public Customer register(String email, String number, String name) {
+    public Customer register(String email, String number, String name) throws StripeException {
 
         Map<String, Object> card = new HashMap<>();
         card.put("number", number);
@@ -43,69 +43,45 @@ public class ServiceRequestStripe {
         paramsCard.put("type", "card");
         paramsCard.put("card", card);
         PaymentMethod paymentMethod;
-        try {
-            paymentMethod = PaymentMethod.create(paramsCard);
-        } catch (StripeException e) {
-            System.out.println("Impossible creare il metodo di pagamento");
-            return null;
-        }
+        paymentMethod = PaymentMethod.create(paramsCard);
         Customer customer;
         Map<String, Object> paramsUser = new HashMap<>();
         paramsUser.put("email", email);
         paramsUser.put("name", name);
         paramsUser.put("balance", 5000);
-        try {
-            customer = Customer.create(paramsUser);
-
-        } catch (StripeException e) {
-            System.out.println("Impossible creare l'utente Stripe");
-            return null;
-        }
+        customer = Customer.create(paramsUser);
         Map<String, Object> paramUserCard = new HashMap<>();
         paramUserCard.put(CUSTOMER, customer.getId());
-        try {
-            paymentMethod.attach(paramUserCard);
-        } catch (StripeException e) {
-            System.out.println("Impossible associare la card all'utente Stripe");
-            return null;
-        }
-        System.out.println("Utente creato! ->" + customer.getEmail());
+        paymentMethod.attach(paramUserCard);
         return customer;
 
     }
 
-    public Customer exist(User user) {
-        CustomerCollection customers = retriveListCustomer();
+    public Customer exist(User user) throws StripeException {
+        CustomerCollection customers = retrieveListCustomer();
         if (customers == null) {
             return null;
         }
         for (int i = 0; i < customers.getData().size(); i++) {
             if (customers.getData().get(i).getEmail().compareTo(user.getEmail()) == 0) {
-                //esiste
-                System.out.println("Utente trovato! ->" + customers.getData().get(i).getEmail());
                 return customers.getData().get(i);
             }
         }
-        //Non esiste, in questo caso lo creo
-        System.out.println("Utente non  trovato");
         return null;
 
     }
 
-    /*Data un email recupera il customer se esiste*/
-    public Customer isExistent(User user) {
-        CustomerCollection customers = retriveListCustomer();
+    //Given an email retrieves the customer if it exists
+    public Customer isExistent(UserDto user) throws StripeException {
+        CustomerCollection customers = retrieveListCustomer();
         if (customers == null) {
-            System.out.println("Impossibile reperire la lista dei Customer da Stripe");
             return null;
         }
         for (int i = 0; i < customers.getData().size(); i++) {
             if (customers.getData().get(i).getEmail().compareTo(user.getEmail()) == 0) {
-                System.out.println("Utente trovato! ->" + customers.getData().get(i).getEmail());
                 return customers.getData().get(i);
             }
         }
-        System.out.println("Utente non  trovato");
         return register(user.getEmail(), user.getCard().getNumber(), user.getName());
     }
 
@@ -113,125 +89,79 @@ public class ServiceRequestStripe {
         return serviceRequestStripe.getListOfPayment(paymentIntentCollection);
     }
 
-    /*Ritorna una lista di utenti presenti su Stripe*/
-    public CustomerCollection retriveListCustomer() {
+//Returns a list of users on Stripe
+    public CustomerCollection retrieveListCustomer() throws StripeException {
         Map<String, Object> params = new HashMap<>();
-        CustomerCollection customers;
-        try {
-            customers = Customer.list(params);
-        } catch (StripeException e) {
-            System.out.println("Impossible recuperare la lista degli utenti");
-            return null;
-        }
-        return customers;
+        return Customer.list(params);
     }
 
-    /*Dato un customer ritorna la lista delle sue carte*/
-    public PaymentMethodCollection retrivePaymentMethod(Customer customer) {
+//Given a customer, the list of his cards returns
+    public PaymentMethodCollection retrievePaymentMethod(Customer customer) throws StripeException {
         Map<String, Object> params = new HashMap<>();
         params.put(CUSTOMER, customer.getId());
         params.put("type", "card");
-        PaymentMethodCollection paymentMethods;
-        try {
-            paymentMethods = PaymentMethod.list(params);
-        } catch (StripeException e) {
-            return null;
-        }
-        return paymentMethods;
+        return PaymentMethod.list(params);
     }
 
-    /*Dato un customer recupera la card(0) dell'utente associato*/
-    public PaymentMethod retriveCard(Customer customer) {
-        PaymentMethodCollection paymentMethods = retrivePaymentMethod(customer);
+//Given a customer, it retrieves the (0) card of the associated user
+    public PaymentMethod retrieveCard(Customer customer) throws StripeException {
+        PaymentMethodCollection paymentMethods = retrievePaymentMethod(customer);
         if (paymentMethods == null) {
-            System.out.println("Impossible recuperare le carte associate all'utente");
             return null;
         }
         return paymentMethods.getData().get(0);
 
     }
 
-    /*Funzione per effettuare le transazioni su un customer*/
-    public boolean updateBilance(Customer customer, long price) {
+    //Function to carry out transactions on a customer
+    public boolean updateBalance(Customer customer, long price) throws StripeException {
         if (customer.getBalance() < (price * 100)) {
-            System.out.println("Soldi non sufficenti sul conto");
             return false;
         }
-
         Map<String, Object> params = new HashMap<>();
         params.put("balance", customer.getBalance() - (price * 100));
-
-        try {
-            customer.update(params);
-        } catch (StripeException e) {
-            System.out.println("Impossible aggiornare il conto dell'utente Stripe");
-            return false;
-        }
-        System.out.println("Da: " + (customer.getBalance() / 100) + "€");
+        customer.update(params);
         customer.setBalance(customer.getBalance() - (price * 100));
-        System.out.println("A: " + (customer.getBalance() / 100) + "€");
         return true;
 
     }
 
-    /*Funzione per aggiornare il conto di un customer*/
-    public boolean setBelance(Customer customer, long price, PaymentMethod paymentMethod) {
+//Function to update a customer's account
+    public boolean setBalance(Customer customer, long price, PaymentMethod paymentMethod) throws StripeException {
         Map<String, Object> params = new HashMap<>();
         long s = price * 100;
         params.put(AMOUNT, s);
         params.put("currency", "eur");
         params.put(CUSTOMER, customer.getId());
-        try {
-            PaymentIntent paymentIntent = PaymentIntent.create(params);
-            Map<String, Object> param = new HashMap<>();
-            param.put("payment_method", paymentMethod.getId());
-            paymentIntent.confirm(param);
-
-        } catch (StripeException e) {
-            e.printStackTrace();
-            return false;
-        }
+        PaymentIntent paymentIntent = PaymentIntent.create(params);
+        Map<String, Object> param = new HashMap<>();
+        param.put("payment_method", paymentMethod.getId());
+        paymentIntent.confirm(param);
         return true;
 
     }
 
-    /*Questo meotodo ritorna una lista di tutti i pagamenti effettuati da quel customer*/
-    public PaymentIntentCollection retriveListPaymentIntent(User user) {
-        Customer customer = isExistent(user);
+    //This method returns a list of all payments made by that customer
+    public PaymentIntentCollection retrieveListPaymentIntent(UserDto userDto) throws StripeException {
+        Customer customer = isExistent(userDto);
         Map<String, Object> params = new HashMap<>();
         params.put(CUSTOMER, customer.getId());
-        PaymentIntentCollection paymentIntents = null;
-        try {
-            paymentIntents = PaymentIntent.list(params);
-        } catch (StripeException e) {
-            e.printStackTrace();
-        }
-
-        return paymentIntents;
+        return PaymentIntent.list(params);
 
     }
 
-    public PaymentIntentCollection retriveListPaymentIntent(Customer customer) {
+    public PaymentIntentCollection retrieveListPaymentIntent(Customer customer) throws StripeException {
         Map<String, Object> params = new HashMap<>();
         params.put(CUSTOMER, customer.getId());
-        PaymentIntentCollection paymentIntents = null;
-        try {
-            paymentIntents = PaymentIntent.list(params);
-        } catch (StripeException e) {
-            e.printStackTrace();
-        }
-        return paymentIntents;
+        return PaymentIntent.list(params);
 
     }
 
-    public PaymentIntentCollection updateListPaymentIntentById(PaymentIntentCollection paymentCollection, int id) {
-        System.out.println("Rimborso -> " + id);
-        try {
+    public PaymentIntentCollection updateListPaymentIntentById(PaymentIntentCollection paymentCollection, int id) throws StripeException {
             Map<String, Object> params = new HashMap<>();
             params.put(AMOUNT, paymentCollection.getData().get(id).getAmount());
             params.put("payment_intent", paymentCollection.getData().get(id).getId());
             Refund.create(params);
-
             Map<String, Object> metadata = new HashMap<>();
             metadata.put("order_id", "6735");
             Map<String, Object> para = new HashMap<>();
@@ -240,36 +170,22 @@ public class ServiceRequestStripe {
             paymentCollection.getData().get(id).update(para);
             return paymentCollection;
 
-
-        } catch (StripeException e) {
-            System.out.println("Rimorso gia effettuato");
-            return null;
-        }
     }
 
-    public PaymentIntent getPaymentIntent(String id) {
+    public PaymentIntent getPaymentIntent(String id) throws StripeException {
         PaymentIntent paymentIntent;
-
-        try {
-            paymentIntent = PaymentIntent.retrieve(id);
-            System.out.println("Rimborso -> " + id);
-            Map<String, Object> params = new HashMap<>();
-            params.put(AMOUNT, paymentIntent.getAmount());
-            params.put("payment_intent", paymentIntent.getId());
-            Refund.create(params);
-
-            Map<String, Object> metadata = new HashMap<>();
-            metadata.put("order_id", "6735");
-            Map<String, Object> para = new HashMap<>();
-            para.put("metadata", metadata);
-            para.put("description", "refounded");
-            paymentIntent.update(para);
-            return paymentIntent;
-
-        } catch (StripeException e) {
-            System.out.println("Errore nel reperire l'intent del pagamento");
-            return null;
-        }
+        paymentIntent = PaymentIntent.retrieve(id);
+        Map<String, Object> params = new HashMap<>();
+        params.put(AMOUNT, paymentIntent.getAmount());
+        params.put("payment_intent", paymentIntent.getId());
+        Refund.create(params);
+        Map<String, Object> metadata = new HashMap<>();
+        metadata.put("order_id", "6735");
+        Map<String, Object> para = new HashMap<>();
+        para.put("metadata", metadata);
+        para.put("description", "refounded");
+        paymentIntent.update(para);
+        return paymentIntent;
     }
 
     public List<Payment> getListOfPayment(PaymentIntentCollection paymentIntentCollection) {

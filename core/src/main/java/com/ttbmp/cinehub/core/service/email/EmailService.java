@@ -5,5 +5,5 @@ package com.ttbmp.cinehub.core.service.email;
  */
 public interface EmailService {
 
-    void sendMail(String to, String subject, String content);
+    void sendMail(EmailServiceRequest emailServiceRequest);
 }

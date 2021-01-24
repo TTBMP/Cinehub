@@ -2,6 +2,8 @@ package com.ttbmp.cinehub.app.client.desktop.ui.buyticket;
 
 
 import com.ttbmp.cinehub.core.usecase.buyticket.*;
+import com.ttbmp.cinehub.core.usecase.buyticket.request.*;
+import com.ttbmp.cinehub.core.usecase.buyticket.response.*;
 import javafx.scene.control.RadioButton;
 
 import java.time.LocalDate;
@@ -82,111 +84,114 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentInvalidSendEmail(SendEmailRequest request) {
-        System.out.println(SendEmailRequest.MISSING_RECIPIENT_ERROR.getMessage());
+        viewModel.emailErrorProperty().setValue(SendEmailRequest.MISSING_RECIPIENT_ERROR.getMessage());
     }
 
-    @Override//lanciano messaaggio sulla view, cioè viewModel e poi sulla view
+    @Override
     public void presentSendEmailNullRequest() {
-        System.out.println("La richiesta SendEmail non può essere null");
+        viewModel.emailErrorProperty().setValue("Error with operation SendEmail");
     }
 
     @Override
     public void presentPayNullRequest() {
-        System.out.println("La richiesta Pay non può essere null");
+        viewModel.paymentErrorProperty().setValue("Error with operation Pay");
     }
 
     @Override
     public void presentInvalidPay(PayRequest request) {
         if (request.getErrorList().contains(PayRequest.MISSING_INDEX_ERROR)) {
-            System.out.println(PayRequest.MISSING_INDEX_ERROR.getMessage());
+            viewModel.paymentErrorProperty().setValue(PayRequest.MISSING_INDEX_ERROR.getMessage());
         }
         if (request.getErrorList().contains(PayRequest.MISSING_TICKET_ERROR)) {
-            System.out.println(PayRequest.MISSING_TICKET_ERROR.getMessage());
+            viewModel.paymentErrorProperty().setValue(PayRequest.MISSING_TICKET_ERROR.getMessage());
         }
         if (request.getErrorList().contains(PayRequest.MISSING_PROJECTION_ERROR)) {
-            System.out.println(PayRequest.MISSING_PROJECTION_ERROR.getMessage());
+            viewModel.paymentErrorProperty().setValue(PayRequest.MISSING_PROJECTION_ERROR.getMessage());
         }
+
     }
 
     @Override
     public void presentGetTicketBySeatsNullRequest() {
-        System.out.println("La richiesta GetTicketBySeats non può essere null");
+        viewModel.seatErrorProperty().setValue("Error with operation GetTicketBySeats");
     }
 
     @Override
     public void presentInvalidGetTicketBySeats(GetTicketBySeatsRequest request) {
         if (request.getErrorList().contains(GetTicketBySeatsRequest.MISSING_LIST_SEATS_ERROR)) {
-            System.out.println(GetTicketBySeatsRequest.MISSING_LIST_SEATS_ERROR.getMessage());
+            viewModel.seatErrorProperty().setValue(GetTicketBySeatsRequest.MISSING_LIST_SEATS_ERROR.getMessage());
         }
         if (request.getErrorList().contains(GetTicketBySeatsRequest.MISSING_POSITION_ERROR)) {
-            System.out.println(GetTicketBySeatsRequest.MISSING_POSITION_ERROR.getMessage());
+            viewModel.seatErrorProperty().setValue(GetTicketBySeatsRequest.MISSING_POSITION_ERROR.getMessage());
         }
         if (request.getErrorList().contains(GetTicketBySeatsRequest.MISSING_INDEX_ERROR)) {
-            System.out.println(GetTicketBySeatsRequest.MISSING_INDEX_ERROR.getMessage());
+            viewModel.seatErrorProperty().setValue(GetTicketBySeatsRequest.MISSING_INDEX_ERROR.getMessage());
         }
     }
 
     @Override
     public void presentGetListCinemaNullRequest() {
-        System.out.println("La richiesta GetListCinema non può essere null");
+        viewModel.cinemaErrorProperty().setValue("Error with operation GetListCinema");
     }
 
     @Override
     public void presentInvalidGetListCinema(GetListCinemaRequest request) {
-        System.out.println(GetListCinemaRequest.MISSING_CINEMA_ERROR.getMessage());
+        viewModel.cinemaErrorProperty().setValue(GetListCinemaRequest.MISSING_CINEMA_ERROR.getMessage());
     }
 
     @Override
     public void presentGetTimeOfProjectionNullRequest() {
-        System.out.println("La richiesta GetTimeOfProjection non può essere null");
+        viewModel.cinemaErrorProperty().setValue("Error with operation GetTimeOfProjection");
 
     }
 
     @Override
     public void presentInvalidGetTimeOfProjection(GetTimeOfProjecitonRequest request) {
         if (request.getErrorList().contains(GetTimeOfProjecitonRequest.MISSING_MOVIE_ERROR)) {
-            System.out.println(GetTimeOfProjecitonRequest.MISSING_MOVIE_ERROR.getMessage());
+            viewModel.cinemaErrorProperty().setValue(GetTimeOfProjecitonRequest.MISSING_MOVIE_ERROR.getMessage());
         }
         if (request.getErrorList().contains(GetTimeOfProjecitonRequest.MISSING_CINEMA_ERROR)) {
-            System.out.println(GetTimeOfProjecitonRequest.MISSING_CINEMA_ERROR.getMessage());
+            viewModel.cinemaErrorProperty().setValue(GetTimeOfProjecitonRequest.MISSING_CINEMA_ERROR.getMessage());
         }
     }
 
     @Override
     public void presentSetProjectionNullRequest() {
-        System.out.println("La richiesta SetProjection non può essere null");
+        viewModel.movieErrorProperty().setValue("Error with operation SetProjection");
 
     }
 
     @Override
     public void presentInvalidSetProjection(SetProjectionRequest request) {
         if (request.getErrorList().contains(SetProjectionRequest.MISSING_CINEMA_ERROR)) {
-            System.out.println(SetProjectionRequest.MISSING_CINEMA_ERROR.getMessage());
+            viewModel.cinemaErrorProperty().setValue(SetProjectionRequest.MISSING_CINEMA_ERROR.getMessage());
         }
         if (request.getErrorList().contains(SetProjectionRequest.MISSING_MOVIE_ERROR)) {
-            System.out.println(SetProjectionRequest.MISSING_MOVIE_ERROR.getMessage());
+            viewModel.cinemaErrorProperty().setValue(SetProjectionRequest.MISSING_MOVIE_ERROR.getMessage());
         }
         if (request.getErrorList().contains(SetProjectionRequest.MISSING_TIME_ERROR)) {
-            System.out.println(SetProjectionRequest.MISSING_TIME_ERROR.getMessage());
+            viewModel.cinemaErrorProperty().setValue(SetProjectionRequest.MISSING_TIME_ERROR.getMessage());
         }
     }
 
     @Override
     public void presentGetNumberOfSeatsNullRequest() {
-        System.out.println("La richiesta GetNumberOfSeats non può essere null");
-
+        viewModel.seatErrorProperty().setValue("Error with operation GetNumberOfSeats");
     }
 
     @Override
     public void presentInvalidGetNumberOfSeats(GetNumberOfSeatsRequest request) {
-        System.out.println(GetNumberOfSeatsRequest.MISSING_PROJECTION_ERROR.getMessage());
+        viewModel.seatErrorProperty().setValue(GetNumberOfSeatsRequest.MISSING_PROJECTION_ERROR.getMessage());
+    }
 
+    @Override
+    public void presentGetListMovie() {
+        viewModel.movieErrorProperty().setValue("Unable to recover movies by service");
     }
 
 
     @Override
     public void confirmSeatsSpecific() {
-        //Reperisco la stringa associata al radioButton
         String position = viewModel.getGroup().getSelectedToggle()
                 .toString()
                 .substring(viewModel.getGroup().getSelectedToggle()

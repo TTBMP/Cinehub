@@ -7,11 +7,12 @@ import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.confirmemail.ConfirmEma
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavDestination;
 import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.core.usecase.buyticket.PayRequest;
+import com.ttbmp.cinehub.core.usecase.buyticket.request.PayRequest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
@@ -38,6 +39,8 @@ public class PaymentViewController extends ViewController {
     private TextField emailTextField;
     @FXML
     private TextField cvvTextField;
+    @FXML
+    private Label errorSectionLabel;
 
     @FXML
     private DatePicker fieldExpirationDatePicker;
@@ -69,7 +72,7 @@ public class PaymentViewController extends ViewController {
                                     or(viewModel.txtCvvProperty().isNull().
                                             or(viewModel.numberOfCardUserProperty().isNull().
                                                     or(viewModel.fieldExpirationDatePickerProperty().isNull()))))));
-
+        errorSectionLabel.textProperty().bind(viewModel.paymentErrorProperty());
         emailTextField.textProperty().bindBidirectional(viewModel.emailUserProperty());
         nameTextField.textProperty().bindBidirectional(viewModel.nameUserProperty());
         surnameTextField.textProperty().bindBidirectional(viewModel.surnameUserProperty());
