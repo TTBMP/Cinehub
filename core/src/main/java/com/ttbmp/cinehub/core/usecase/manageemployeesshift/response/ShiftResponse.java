@@ -1,8 +1,7 @@
 package com.ttbmp.cinehub.core.usecase.manageemployeesshift.response;
 
-import com.ttbmp.cinehub.core.datamapper.ShiftDataMapper;
+
 import com.ttbmp.cinehub.core.dto.ShiftDto;
-import com.ttbmp.cinehub.core.entity.Shift;
 
 
 /**
@@ -12,8 +11,8 @@ import com.ttbmp.cinehub.core.entity.Shift;
 public class ShiftResponse {
     private ShiftDto shiftDto;
 
-    public ShiftResponse(Shift shift) {
-        this.shiftDto = ShiftDataMapper.mapToDto(shift);
+    public ShiftResponse(ShiftDto shift) {
+        this.shiftDto = shift;
     }
 
     public ShiftDto getShiftDto() {

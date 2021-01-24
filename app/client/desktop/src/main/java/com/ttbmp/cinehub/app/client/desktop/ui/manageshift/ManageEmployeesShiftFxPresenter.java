@@ -2,11 +2,11 @@ package com.ttbmp.cinehub.app.client.desktop.ui.manageshift;
 
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.DayWeek;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.EmployeeShiftWeek;
-import com.ttbmp.cinehub.core.datamapper.CinemaDataMapper;
 import com.ttbmp.cinehub.core.datamapper.EmployeeDataMapper;
 import com.ttbmp.cinehub.core.datamapper.ShiftDataMapper;
-import com.ttbmp.cinehub.core.entity.Cinema;
-import com.ttbmp.cinehub.core.entity.Employee;
+import com.ttbmp.cinehub.core.dto.CinemaDto;
+import com.ttbmp.cinehub.core.dto.EmployeeDto;
+import com.ttbmp.cinehub.core.dto.ShiftDto;
 import com.ttbmp.cinehub.core.entity.Shift;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.GetCinemaListResponse;
@@ -40,9 +40,9 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     @Override
     public void presentShiftList(Result<GetShiftListResponse> shiftList) {
         viewModel.getEmployeeShiftWeekList().clear();
-        viewModel.getEmployeeShiftWeekList().addAll(getEmployeeShiftWeekList(ShiftDataMapper.mapToEntityList(shiftList.getValue().getShiftDtoList()),
+        viewModel.getEmployeeShiftWeekList().addAll(getEmployeeShiftWeekList(new GetShiftListResponse(shiftList.getValue().getShiftDtoList(),
                 shiftList.getValue().getDate(),
-                CinemaDataMapper.matToEntity(shiftList.getValue().getCinema())));
+                shiftList.getValue().getCinema())));
     }
 
     @Override
@@ -62,29 +62,9 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         viewModel.getEmployeeShiftWeekList().setAll(viewModel.getEmployeeShiftWeekList().stream()
                 .peek(e -> {
                     if (EmployeeDataMapper.matToEntity(e.getEmployeeDto()).equals(savedShift.getEmployee())) {
-                        switch (LocalDate.parse(savedShift.getDate()).getDayOfWeek()) {
-                            case MONDAY:
-                                e.getMonday().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
-                                break;
-                            case TUESDAY:
-                                e.getTuesday().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
-                                break;
-                            case WEDNESDAY:
-                                e.getWednesday().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
-                                break;
-                            case THURSDAY:
-                                e.getThursday().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
-                                break;
-                            case FRIDAY:
-                                e.getFriday().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
-                                break;
-                            case SATURDAY:
-                                e.getSaturday().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
-                                break;
-                            case SUNDAY:
-                                e.getSunday().getShiftList().add(ShiftDataMapper.mapToDto(savedShift));
-                                break;
-                        }
+                        e.getWeekMap().get(LocalDate.parse(savedShift.getDate()).getDayOfWeek())
+                                .getShiftList()
+                                .add(ShiftDataMapper.mapToDto(savedShift));
                     }
                 })
                 .collect(Collectors.toList())
@@ -98,29 +78,9 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         viewModel.getEmployeeShiftWeekList().setAll(viewModel.getEmployeeShiftWeekList().stream()
                 .peek(e -> {
                     if (EmployeeDataMapper.matToEntity(e.getEmployeeDto()).equals(deleteShift.getEmployee())) {
-                        switch (LocalDate.parse(deleteShift.getDate()).getDayOfWeek()) {
-                            case MONDAY:
-                                e.getMonday().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
-                                break;
-                            case TUESDAY:
-                                e.getTuesday().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
-                                break;
-                            case WEDNESDAY:
-                                e.getWednesday().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
-                                break;
-                            case THURSDAY:
-                                e.getThursday().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
-                                break;
-                            case FRIDAY:
-                                e.getFriday().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
-                                break;
-                            case SATURDAY:
-                                e.getSaturday().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
-                                break;
-                            case SUNDAY:
-                                e.getSunday().getShiftList().removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
-                                break;
-                        }
+                        e.getWeekMap().get(LocalDate.parse(deleteShift.getDate()).getDayOfWeek())
+                                .getShiftList()
+                                .removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
                     }
                 })
                 .collect(Collectors.toList())
@@ -128,18 +88,20 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     }
 
 
-    private List<EmployeeShiftWeek> getEmployeeShiftWeekList(List<Shift> shiftList, LocalDate date, Cinema cinema) {
+    private List<EmployeeShiftWeek> getEmployeeShiftWeekList(GetShiftListResponse response) {
         List<EmployeeShiftWeek> result = new ArrayList<>();
+        List<ShiftDto> shiftList = response.getShiftDtoList();
+        CinemaDto cinema = response.getCinema();
         TemporalField temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
-        LocalDate firstDayOfWeek = date.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate firstDayOfWeek = response.getDate().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
 
-        List<Employee> employeeList = shiftList.stream()
-                .map(Shift::getEmployee)
+        List<EmployeeDto> employeeList = shiftList.stream()
+                .map(ShiftDto::getEmployee)
                 .filter(employee -> employee.getCinema().equals(cinema))
                 .distinct()
                 .collect(Collectors.toList());
 
-        List<Employee> tmp = new ArrayList<>();
+        List<EmployeeDto> tmp = new ArrayList<>();
         for (int i = 0, employeeListSize = employeeList.size(); i < employeeListSize; i++) {
             boolean duplicate = false;
             for (int j = 0; j < i; j++) {
@@ -154,8 +116,8 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         }
         employeeList = tmp;
 
-        Map<Employee, List<Shift>> employeeShiftListMap = new HashMap<>();
-        for (Employee employee : employeeList) {
+        Map<EmployeeDto, List<ShiftDto>> employeeShiftListMap = new HashMap<>();
+        for (EmployeeDto employee : employeeList) {
             employeeShiftListMap.put(
                     employee,
                     shiftList.stream()
@@ -163,31 +125,24 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
                             .collect(Collectors.toList())
             );
         }
-        for (Employee employee : employeeList) {
+        for (EmployeeDto employee : employeeList) {
             Map<DayOfWeek, DayWeek> dayMap = new EnumMap<>(DayOfWeek.class);
             for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
                 dayMap.put(
                         dayOfWeek,
                         new DayWeek(
                                 firstDayOfWeek.plusDays((long) dayOfWeek.getValue() - 1),
-                                ShiftDataMapper.mapToDtoList(
-                                        employeeShiftListMap.get(employee).stream()
-                                                .filter(shift -> LocalDate.parse(shift.getDate()).getDayOfWeek() == dayOfWeek)
-                                                .filter(shift -> viewModel.getSelectedWeek().getYear() == LocalDate.parse(shift.getDate()).getYear())
-                                                .filter(shift -> viewModel.getSelectedWeek().get(temporalField) == LocalDate.parse(shift.getDate()).get(temporalField))
-                                                .collect(Collectors.toList())),
-                                EmployeeDataMapper.mapToDto(employee)
+                                employeeShiftListMap.get(employee).stream()
+                                        .filter(shift -> shift.getDate().getDayOfWeek() == dayOfWeek)
+                                        .filter(shift -> viewModel.getSelectedWeek().getYear() == shift.getDate().getYear())
+                                        .filter(shift -> viewModel.getSelectedWeek().get(temporalField) == shift.getDate().get(temporalField))
+                                        .collect(Collectors.toList()),
+                                employee
                         ));
             }
             result.add(new EmployeeShiftWeek(
-                    EmployeeDataMapper.mapToDto(employee),
-                    dayMap.get(DayOfWeek.MONDAY),
-                    dayMap.get(DayOfWeek.TUESDAY),
-                    dayMap.get(DayOfWeek.WEDNESDAY),
-                    dayMap.get(DayOfWeek.THURSDAY),
-                    dayMap.get(DayOfWeek.FRIDAY),
-                    dayMap.get(DayOfWeek.SATURDAY),
-                    dayMap.get(DayOfWeek.SUNDAY)
+                    employee,
+                    dayMap
             ));
         }
         return result;

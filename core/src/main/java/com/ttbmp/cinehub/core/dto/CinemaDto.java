@@ -1,18 +1,18 @@
 package com.ttbmp.cinehub.core.dto;
 
 /**
- * @author Massimo Mazzetti, Palmieri Ivan
+ * @author Massimo Mazzetti
  */
 
 public class CinemaDto {
-    private String name;
-    private final String address;
-    private final String city;
 
-    public CinemaDto(String name, String address, String city) {
+    private String name;
+
+    public CinemaDto() {
+    }
+
+    public CinemaDto(String name) {
         this.name = name;
-        this.address = address;
-        this.city = city;
     }
 
     public String getName() {
@@ -23,12 +23,21 @@ public class CinemaDto {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        CinemaDto other = (CinemaDto) obj;
+        return this.name.equals(other.name);
     }
 
-    public String getCity() {
-        return city;
+    @Override
+    public int hashCode() {
+        /* ... */
+        return 0;
     }
-
 }

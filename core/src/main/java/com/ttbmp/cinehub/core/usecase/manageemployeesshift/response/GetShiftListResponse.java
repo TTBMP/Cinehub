@@ -1,11 +1,7 @@
 package com.ttbmp.cinehub.core.usecase.manageemployeesshift.response;
 
-import com.ttbmp.cinehub.core.datamapper.CinemaDataMapper;
-import com.ttbmp.cinehub.core.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.core.dto.CinemaDto;
 import com.ttbmp.cinehub.core.dto.ShiftDto;
-import com.ttbmp.cinehub.core.entity.Cinema;
-import com.ttbmp.cinehub.core.entity.Shift;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,10 +16,10 @@ public class GetShiftListResponse {
     private LocalDate date;
     private CinemaDto cinema;
 
-    public GetShiftListResponse(List<Shift> shiftList, LocalDate date, Cinema cinema) {
-        this.shiftDtoList = ShiftDataMapper.mapToDtoList(shiftList);
+    public GetShiftListResponse(List<ShiftDto> shiftList, LocalDate date, CinemaDto cinema) {
+        this.shiftDtoList = shiftList;
         this.date = date;
-        this.cinema = CinemaDataMapper.mapToDto(cinema);
+        this.cinema = cinema;
     }
 
     public List<ShiftDto> getShiftDtoList() {

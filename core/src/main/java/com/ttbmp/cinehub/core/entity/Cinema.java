@@ -22,10 +22,19 @@ public class Cinema {
 
     @Override
     public boolean equals(Object obj) {
-        Cinema other = (Cinema) obj;
         if (obj == null) {
             return false;
         }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        Cinema other = (Cinema) obj;
         return this.name.equals(other.name);
+    }
+
+    @Override
+    public int hashCode() {
+        /* ... */
+        return 0;
     }
 }

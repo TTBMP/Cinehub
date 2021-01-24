@@ -70,5 +70,28 @@ public class EmployeeDto {
         this.minRemain = minRemain;
     }
 
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        EmployeeDto other = (EmployeeDto) obj;
+        return this.getName().equals(other.getName())
+                && this.getSurname().equals(other.getSurname())
+                && this.getRole().equals(other.getRole())
+                && this.getHourRemain() == other.getHourRemain()
+                && this.getMinRemain() == other.getMinRemain()
+                && this.getCinema().equals(other.getCinema());
+    }
+
+    @Override
+    public int hashCode() {
+        /* ... */
+        return 0;
+    }
 }
 

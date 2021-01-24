@@ -67,13 +67,23 @@ public class Shift {
 
     @Override
     public boolean equals(Object obj) {
-        Shift elem = (Shift) obj;
         if (obj == null) {
             return false;
         }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        Shift elem = (Shift) obj;
+
         return this.getEmployee().equals(elem.getEmployee())
                 && this.getDate().equals(elem.getDate())
                 && this.getStart().equals(elem.getStart())
                 && this.getEnd().equals(elem.getEnd());
+    }
+
+    @Override
+    public int hashCode() {
+        //***///
+        return 0;
     }
 }

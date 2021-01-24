@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.manageshift;
 
 import com.ttbmp.cinehub.app.client.desktop.ui.appbar.AppBarViewController;
+import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.ComboBoxCinemaValueFactory;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.DayWeek;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.EmployeeCalendarTableCell;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.EmployeeShiftWeek;
@@ -12,14 +13,13 @@ import com.ttbmp.cinehub.core.dto.EmployeeDto;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetShiftListRequest;
 import javafx.beans.InvalidationListener;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 /**
@@ -28,7 +28,7 @@ import java.time.LocalDate;
 
 
 public class ShowShiftViewController extends ViewController {
-    private ManageEmployeesShiftViewModel viewModel;
+    ManageEmployeesShiftViewModel viewModel;
 
     @FXML
     private VBox appBar;
@@ -50,27 +50,15 @@ public class ShowShiftViewController extends ViewController {
     private TableColumn<EmployeeShiftWeek, EmployeeDto> shiftEmployeeTableColumn;
 
     @FXML
-    private TableColumn<EmployeeShiftWeek, DayWeek> mondayTableColumn;
+    private Button previousButton;
 
     @FXML
-    private TableColumn<EmployeeShiftWeek, DayWeek> tuesdayTableColumn;
+    private Button nextButton;
 
     @FXML
-    private TableColumn<EmployeeShiftWeek, DayWeek> wednesdayTableColumn;
+    private Button todayButton;
 
-    @FXML
-    private TableColumn<EmployeeShiftWeek, DayWeek> thursdayTableColumn;
-
-    @FXML
-    private TableColumn<EmployeeShiftWeek, DayWeek> fridayTableColumn;
-
-    @FXML
-    private TableColumn<EmployeeShiftWeek, DayWeek> saturdayTableColumn;
-
-    @FXML
-    private TableColumn<EmployeeShiftWeek, DayWeek> sundayTableColumn;
-
-
+    @SuppressWarnings("unchecked")
     @Override
     protected void onLoad() {
         appBarController.load(activity, navController);
@@ -80,14 +68,19 @@ public class ShowShiftViewController extends ViewController {
         viewModel.selectedCinemaProperty().bind(cinemaComboBox.getSelectionModel().selectedItemProperty());
 
         shiftTableView.setSelectionModel(null);
-        mondayTableColumn.setReorderable(false);
 
+        cinemaComboBox.setButtonCell(new ComboBoxCinemaValueFactory(null));
+        cinemaComboBox.setCellFactory(ComboBoxCinemaValueFactory::new);
 
         periodDatePicker.valueProperty().bindBidirectional(viewModel.selectedWeekProperty());
 
         periodDatePicker.setValue(LocalDate.now());
         cinemaComboBox.setValue(cinemaComboBox.getItems().get(0));
         activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(new GetShiftListRequest(periodDatePicker.getValue(), CinemaDataMapper.matToEntity(cinemaComboBox.getValue())));
+
+        previousButton.setOnAction(a -> periodDatePicker.setValue(periodDatePicker.getValue().minusWeeks(1)));
+        nextButton.setOnAction(a -> periodDatePicker.setValue(periodDatePicker.getValue().plusWeeks(1)));
+        todayButton.setOnAction(a -> periodDatePicker.setValue(LocalDate.now()));
 
         periodDatePicker.setOnAction(a -> {
             if (cinemaComboBox.getValue() != null) {
@@ -99,27 +92,16 @@ public class ShowShiftViewController extends ViewController {
                 activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(new GetShiftListRequest(periodDatePicker.getValue(), CinemaDataMapper.matToEntity(cinemaComboBox.getValue())));
             }
         });
-        populateShiftTable();
-    }
-
-
-    private void populateShiftTable() {
         shiftEmployeeTableColumn.setCellValueFactory(new PropertyValueFactory<>("employeeDto"));
-        mondayTableColumn.setCellValueFactory(new PropertyValueFactory<>("monday"));
-        tuesdayTableColumn.setCellValueFactory(new PropertyValueFactory<>("tuesday"));
-        wednesdayTableColumn.setCellValueFactory(new PropertyValueFactory<>("wednesday"));
-        thursdayTableColumn.setCellValueFactory(new PropertyValueFactory<>("thursday"));
-        fridayTableColumn.setCellValueFactory(new PropertyValueFactory<>("friday"));
-        saturdayTableColumn.setCellValueFactory(new PropertyValueFactory<>("saturday"));
-        sundayTableColumn.setCellValueFactory(new PropertyValueFactory<>("sunday"));
-        shiftEmployeeTableColumn.setCellFactory(tableColumn -> new EmployeeCalendarTableCell(tableColumn, activity, navController));
-        mondayTableColumn.setCellFactory(tableColumn -> new ShiftCalendarTableCell(tableColumn, activity, navController));
-        tuesdayTableColumn.setCellFactory(tableColumn -> new ShiftCalendarTableCell(tableColumn, activity, navController));
-        wednesdayTableColumn.setCellFactory(tableColumn -> new ShiftCalendarTableCell(tableColumn, activity, navController));
-        thursdayTableColumn.setCellFactory(tableColumn -> new ShiftCalendarTableCell(tableColumn, activity, navController));
-        fridayTableColumn.setCellFactory(tableColumn -> new ShiftCalendarTableCell(tableColumn, activity, navController));
-        saturdayTableColumn.setCellFactory(tableColumn -> new ShiftCalendarTableCell(tableColumn, activity, navController));
-        sundayTableColumn.setCellFactory(tableColumn -> new ShiftCalendarTableCell(tableColumn, activity, navController));
+        shiftEmployeeTableColumn.setCellFactory(tableColumn -> new EmployeeCalendarTableCell(activity, navController));
+        shiftEmployeeTableColumn.setSortable(false);
+        for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
+            TableColumn<EmployeeShiftWeek, DayWeek> column = (TableColumn<EmployeeShiftWeek, DayWeek>) shiftTableView.getColumns().get(dayOfWeek.getValue());
+            column.setCellValueFactory(cell -> new SimpleObjectProperty<>(cell.getValue().getDayOfWeek(dayOfWeek)));
+            column.setCellFactory(tableColumn -> new ShiftCalendarTableCell(activity, navController));
+            column.setReorderable(false);
+            column.setSortable(false);
+        }
         shiftTableView.setItems(viewModel.getEmployeeShiftWeekList());
         viewModel.getEmployeeShiftWeekList().addListener((InvalidationListener) l -> shiftTableView.refresh());
     }

@@ -3,7 +3,6 @@ package com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavController;
 import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -17,7 +16,7 @@ public class ShiftCalendarTableCell extends TableCell<EmployeeShiftWeek, DayWeek
     private final Activity activity;
     private final NavController navController;
 
-    public ShiftCalendarTableCell(TableColumn<EmployeeShiftWeek, DayWeek> tableColumn, Activity activity, NavController navController) {
+    public ShiftCalendarTableCell(Activity activity, NavController navController) {
         super();
         this.activity = activity;
         this.navController = navController;

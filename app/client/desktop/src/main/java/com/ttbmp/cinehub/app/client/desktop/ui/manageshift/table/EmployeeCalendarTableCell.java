@@ -5,7 +5,6 @@ import com.ttbmp.cinehub.app.client.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavController;
 import com.ttbmp.cinehub.core.dto.EmployeeDto;
 import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -14,12 +13,11 @@ import java.util.Objects;
  * @author Massimo Mazzetti
  */
 
-
 public class EmployeeCalendarTableCell extends TableCell<EmployeeShiftWeek, EmployeeDto> {
     private final Activity activity;
     private final NavController navController;
 
-    public EmployeeCalendarTableCell(TableColumn<EmployeeShiftWeek, EmployeeDto> employeeShiftWeekStringTableColumn, Activity activity, NavController navController) {
+    public EmployeeCalendarTableCell(Activity activity, NavController navController) {
         super();
         this.activity = activity;
         this.navController = navController;

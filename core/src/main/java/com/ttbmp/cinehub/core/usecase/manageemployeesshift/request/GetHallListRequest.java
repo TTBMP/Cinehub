@@ -10,6 +10,7 @@ import com.ttbmp.cinehub.core.utilities.notification.Notification;
 
 public class GetHallListRequest extends Request {
     public static final Notification.Error MISSING_HALL = new Notification.Error("sala non valida");
+
     private Cinema cinema;
 
     public GetHallListRequest(Cinema cinema) {

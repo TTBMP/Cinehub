@@ -63,10 +63,13 @@ public class Employee extends User {
 
     @Override
     public boolean equals(Object obj) {
-        Employee other = (Employee) obj;
         if (obj == null) {
             return false;
         }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        Employee other = (Employee) obj;
         return this.getName().equals(other.getName())
                 && this.getSurname().equals(other.getSurname())
                 && this.getRole().equals(other.getRole())
@@ -74,6 +77,12 @@ public class Employee extends User {
                 && this.getMinRemain() == other.getMinRemain()
                 && this.getCinema().equals(other.getCinema())
                 && this.getWeeklyWorkingHours() == other.getWeeklyWorkingHours();
+    }
+
+    @Override
+    public int hashCode() {
+        /* ... */
+        return 0;
     }
 
 }
