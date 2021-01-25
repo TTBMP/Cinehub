@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.buyticket;
 
 
-import com.ttbmp.cinehub.core.usecase.buyticket.*;
+import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketPresenter;
 import com.ttbmp.cinehub.core.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.core.usecase.buyticket.response.*;
 import javafx.scene.control.RadioButton;
@@ -68,7 +68,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
             }
         }
         RadioButton radioSelect = (RadioButton) viewModel.getGroup().getToggles().get(i);
-        String position = radioSelect.getText();
+        String position = radioSelect.getText().substring(0, 3);
         viewModel.selectedSeatsProperty().setValue(position);
         viewModel.selectedPositionSeatIntegerProperty().setValue(i);
 
@@ -79,6 +79,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     @Override
     public void setSelectedTicket(GetTicketBySeatsResponse response) {
         viewModel.selectedTicketProperty().setValue(response.getTicketDto());
+        viewModel.selectedSeatPriceProperty().setValue(response.getTicketDto().getPrice().toString());
     }
 
 
@@ -192,17 +193,13 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void confirmSeatsSpecific() {
-        String position = viewModel.getGroup().getSelectedToggle()
-                .toString()
-                .substring(viewModel.getGroup().getSelectedToggle()
-                        .toString().length() - 3, viewModel.getGroup()
-                        .getSelectedToggle()
-                        .toString()
-                        .length() - 1);
+        String position = viewModel.getGroup().getSelectedToggle().toString().substring(
+                viewModel.getGroup().getSelectedToggle().toString().length() - 6,
+                viewModel.getGroup().getSelectedToggle().toString().length() - 4);
         int i = 0;
         int j = 0;
         while (j == 0) {
-            String text = ((RadioButton) viewModel.getGroup().getToggles().get(i)).getText();
+            String text = ((RadioButton) viewModel.getGroup().getToggles().get(i)).getText().substring(0, 2);
             if (text.equals(position)) {
                 j = 1;
             } else {

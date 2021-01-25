@@ -11,7 +11,8 @@ import java.util.List;
  */
 public class MovieApiDataMapper {
 
-    private MovieApiDataMapper(){}
+    private MovieApiDataMapper() {
+    }
 
     public static List<Movie> mapToEntityList(List<MovieApiDto> movieList) {
 

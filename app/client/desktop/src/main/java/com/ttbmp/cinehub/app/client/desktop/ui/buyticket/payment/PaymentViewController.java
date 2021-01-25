@@ -67,11 +67,11 @@ public class PaymentViewController extends ViewController {
     private void bind() {
         confirmButton.disableProperty().bind(
                 viewModel.emailUserProperty().isNull().
-                    or(viewModel.nameUserProperty().isNull().
-                            or(viewModel.surnameUserProperty().isNull().
-                                    or(viewModel.txtCvvProperty().isNull().
-                                            or(viewModel.numberOfCardUserProperty().isNull().
-                                                    or(viewModel.fieldExpirationDatePickerProperty().isNull()))))));
+                        or(viewModel.nameUserProperty().isNull().
+                                or(viewModel.surnameUserProperty().isNull().
+                                        or(viewModel.txtCvvProperty().isNull().
+                                                or(viewModel.numberOfCardUserProperty().isNull().
+                                                        or(viewModel.fieldExpirationDatePickerProperty().isNull()))))));
         errorSectionLabel.textProperty().bind(viewModel.paymentErrorProperty());
         emailTextField.textProperty().bindBidirectional(viewModel.emailUserProperty());
         nameTextField.textProperty().bindBidirectional(viewModel.nameUserProperty());
@@ -92,8 +92,6 @@ public class PaymentViewController extends ViewController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
-            resultPaymentText.setText("Pagamento non riuscito, prova a cambiare i dati");
         }
     }
 

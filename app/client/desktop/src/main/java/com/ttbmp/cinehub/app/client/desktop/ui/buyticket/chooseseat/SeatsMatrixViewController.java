@@ -25,7 +25,7 @@ public class SeatsMatrixViewController extends ViewController {
     protected void onLoad() {
         BuyTicketViewModel viewModel = activity.getViewModel(BuyTicketViewModel.class);
         List<Seat> seatList = SeatDataMapper.mapToEntityList(viewModel.getSeatList());
-        createMatrix(viewModel,seatList);
+        createMatrix(viewModel, seatList);
 
     }
 
@@ -45,8 +45,9 @@ public class SeatsMatrixViewController extends ViewController {
                 } else {
                     radioButton.setPadding(new Insets(5, 5, 5, 5));
                 }
-                radioButton.setText("" + a[j] + i);
+                radioButton.setText("" + a[j] + i + "\n" + seatList.get(count).getPrice() + "\u20ac");
                 radioButton.setToggleGroup(viewModel.getGroup());
+
                 if (seatList.get(count).getState().equals(Boolean.FALSE)) {
                     radioButton.setDisable(true);
                     buy++;
@@ -55,14 +56,14 @@ public class SeatsMatrixViewController extends ViewController {
                 count++;
             }
         }
-        addRestantButton(seatList,viewModel,colums,rest,count,buy,a);
-        updateValue(viewModel,size,buy);
+        addRestantButton(seatList, viewModel, colums, rest, count, buy, a);
+        updateValue(viewModel, size, buy);
     }
 
-    private void addRestantButton(List<Seat> seatList,BuyTicketViewModel viewModel, int colums, int rest, int count, int buy, char[] a) {
+    private void addRestantButton(List<Seat> seatList, BuyTicketViewModel viewModel, int colums, int rest, int count, int buy, char[] a) {
         for (int k = 0; k < rest; k++) {
             RadioButton radioButton = new RadioButton();
-            radioButton.setText("" + a[colums + 1] + k);
+            radioButton.setText("" + a[colums + 1] + k + "\n" + seatList.get(count).getPrice() + "\u20ac");
             radioButton.setToggleGroup(viewModel.getGroup());
             if (k == 0) {
                 radioButton.setPadding(new Insets(5, 5, 5, 40));
@@ -73,12 +74,13 @@ public class SeatsMatrixViewController extends ViewController {
                 radioButton.setDisable(true);
                 buy++;
             }
+
             gridSeats.add(radioButton, k, colums);
             count++;
         }
     }
 
-    private void updateValue(BuyTicketViewModel viewModel ,int  size, int buy) {
+    private void updateValue(BuyTicketViewModel viewModel, int size, int buy) {
         viewModel.totalSeatsProperty().setValue("Places available: " + size);
         viewModel.buysSeatsProperty().setValue("Occupied seats: " + buy);
         viewModel.freeSeatsProperty().setValue("Free seats: " + (size - buy));

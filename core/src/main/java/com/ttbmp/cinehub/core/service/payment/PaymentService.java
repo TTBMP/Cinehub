@@ -15,9 +15,9 @@ public interface PaymentService {
     /*Da integer ad un entity*/
     boolean pay(PayServiceRequest payServiceRequest);
 
-    boolean refoundLastPayment(UserDto user, TicketDto ticket) ;
+    boolean refoundLastPayment(UserDto user, TicketDto ticket);
 
-    boolean refoundById(UserDto user, String id) ;
+    boolean refoundById(UserDto user, String id);
 
     List<Payment> retriveListOfPayment(UserDto user);
 

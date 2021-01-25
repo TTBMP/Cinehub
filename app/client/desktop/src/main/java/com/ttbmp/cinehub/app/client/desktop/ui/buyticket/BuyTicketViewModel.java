@@ -52,31 +52,12 @@ public class BuyTicketViewModel implements ViewModel {
     private final StringProperty cinemaError = new SimpleStringProperty();
     private final StringProperty seatError = new SimpleStringProperty();
     private final StringProperty paymentError = new SimpleStringProperty();
+    private final StringProperty selectedSeatPrice = new SimpleStringProperty();
 
 
-
-
-    public StringProperty emailErrorProperty() {
-        return emailError;
-    }
-
-
-    public StringProperty movieErrorProperty() {
-        return movieError;
-    }
-
-
-    public StringProperty cinemaErrorProperty() {
-        return cinemaError;
-    }
-
-    public StringProperty seatErrorProperty() {
-        return seatError;
-    }
-
-    public StringProperty paymentErrorProperty() {
-        return paymentError;
-    }
+    private final BooleanProperty skipLineOption = new SimpleBooleanProperty();
+    private final BooleanProperty heatedArmchairOption = new SimpleBooleanProperty();
+    private final BooleanProperty foldingArmchairOption = new SimpleBooleanProperty();
 
 
     public BuyTicketViewModel() {
@@ -99,7 +80,41 @@ public class BuyTicketViewModel implements ViewModel {
         selectedDateProperty().setValue(LocalDate.now());
     }
 
+    public BooleanProperty skipLineOptionProperty() {
+        return skipLineOption;
+    }
 
+    public BooleanProperty heatedArmchairOptionProperty() {
+        return heatedArmchairOption;
+    }
+
+    public BooleanProperty foldingArmchairOptionProperty() {
+        return foldingArmchairOption;
+    }
+
+    public StringProperty selectedSeatPriceProperty() {
+        return selectedSeatPrice;
+    }
+
+    public StringProperty emailErrorProperty() {
+        return emailError;
+    }
+
+    public StringProperty movieErrorProperty() {
+        return movieError;
+    }
+
+    public StringProperty cinemaErrorProperty() {
+        return cinemaError;
+    }
+
+    public StringProperty seatErrorProperty() {
+        return seatError;
+    }
+
+    public StringProperty paymentErrorProperty() {
+        return paymentError;
+    }
 
     public ObjectProperty<LocalDate> fieldExpirationDatePickerProperty() {
         return fieldExpirationDatePicker;

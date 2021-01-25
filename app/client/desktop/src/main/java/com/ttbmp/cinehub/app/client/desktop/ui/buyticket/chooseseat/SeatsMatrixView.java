@@ -24,6 +24,7 @@ public class SeatsMatrixView extends View {
 
     @Override
     public void load() throws IOException {
+        //empty
     }
 
     public Parent getRoot() {

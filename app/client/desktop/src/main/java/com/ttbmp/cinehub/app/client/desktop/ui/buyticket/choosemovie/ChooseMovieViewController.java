@@ -52,7 +52,7 @@ public class ChooseMovieViewController extends ViewController {
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
         confirmMovieButton.setOnAction(a -> {
             try {
-                activity.getUseCase(BuyTicketUseCase.class).getListCinema(new GetListCinemaRequest(viewModel.selectedMovieProperty().getValue()));
+                activity.getUseCase(BuyTicketUseCase.class).getListCinema(new GetListCinemaRequest(viewModel.selectedMovieProperty().getValue(), viewModel.selectedDateProperty().getValue().toString()));
                 navController.navigate(new NavDestination(new ChooseCinemaView()));
 
             } catch (IOException e) {

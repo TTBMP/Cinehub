@@ -13,6 +13,7 @@ public class Seat {
 
     }
 
+
     public Boolean getState() {
         return state;
     }

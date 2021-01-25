@@ -17,8 +17,8 @@ import java.util.Map;
  */
 public class ServiceRequestStripe {
 
-    private static final  String CUSTOMER = "customer";
-    private static final  String AMOUNT = "amount";
+    private static final String CUSTOMER = "customer";
+    private static final String AMOUNT = "amount";
     private static boolean connected = false;
 
     public ServiceRequestStripe() {
@@ -89,13 +89,13 @@ public class ServiceRequestStripe {
         return serviceRequestStripe.getListOfPayment(paymentIntentCollection);
     }
 
-//Returns a list of users on Stripe
+    //Returns a list of users on Stripe
     public CustomerCollection retrieveListCustomer() throws StripeException {
         Map<String, Object> params = new HashMap<>();
         return Customer.list(params);
     }
 
-//Given a customer, the list of his cards returns
+    //Given a customer, the list of his cards returns
     public PaymentMethodCollection retrievePaymentMethod(Customer customer) throws StripeException {
         Map<String, Object> params = new HashMap<>();
         params.put(CUSTOMER, customer.getId());
@@ -103,7 +103,7 @@ public class ServiceRequestStripe {
         return PaymentMethod.list(params);
     }
 
-//Given a customer, it retrieves the (0) card of the associated user
+    //Given a customer, it retrieves the (0) card of the associated user
     public PaymentMethod retrieveCard(Customer customer) throws StripeException {
         PaymentMethodCollection paymentMethods = retrievePaymentMethod(customer);
         if (paymentMethods == null) {
@@ -126,7 +126,7 @@ public class ServiceRequestStripe {
 
     }
 
-//Function to update a customer's account
+    //Function to update a customer's account
     public boolean setBalance(Customer customer, long price, PaymentMethod paymentMethod) throws StripeException {
         Map<String, Object> params = new HashMap<>();
         long s = price * 100;
@@ -158,17 +158,17 @@ public class ServiceRequestStripe {
     }
 
     public PaymentIntentCollection updateListPaymentIntentById(PaymentIntentCollection paymentCollection, int id) throws StripeException {
-            Map<String, Object> params = new HashMap<>();
-            params.put(AMOUNT, paymentCollection.getData().get(id).getAmount());
-            params.put("payment_intent", paymentCollection.getData().get(id).getId());
-            Refund.create(params);
-            Map<String, Object> metadata = new HashMap<>();
-            metadata.put("order_id", "6735");
-            Map<String, Object> para = new HashMap<>();
-            para.put("metadata", metadata);
-            para.put("description", "refounded");
-            paymentCollection.getData().get(id).update(para);
-            return paymentCollection;
+        Map<String, Object> params = new HashMap<>();
+        params.put(AMOUNT, paymentCollection.getData().get(id).getAmount());
+        params.put("payment_intent", paymentCollection.getData().get(id).getId());
+        Refund.create(params);
+        Map<String, Object> metadata = new HashMap<>();
+        metadata.put("order_id", "6735");
+        Map<String, Object> para = new HashMap<>();
+        para.put("metadata", metadata);
+        para.put("description", "refounded");
+        paymentCollection.getData().get(id).update(para);
+        return paymentCollection;
 
     }
 

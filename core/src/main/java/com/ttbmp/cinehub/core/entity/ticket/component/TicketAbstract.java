@@ -1,13 +1,15 @@
-package com.ttbmp.cinehub.core.entity;
+package com.ttbmp.cinehub.core.entity.ticket.component;
 
-public class Ticket {
+public abstract class TicketAbstract {
 
+    private TicketAbstract ticketAbstract;
     private long price;
     private Boolean state;
     private String position;
 
-    public Ticket(long price) {
-        this.price = price;
+
+    public long operation() {
+        return ticketAbstract.operation();
     }
 
     public String getPosition() {
@@ -33,5 +35,4 @@ public class Ticket {
     public void setState(Boolean state) {
         this.state = state;
     }
-
 }

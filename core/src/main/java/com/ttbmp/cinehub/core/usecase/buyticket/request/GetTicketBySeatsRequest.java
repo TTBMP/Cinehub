@@ -15,11 +15,30 @@ public class GetTicketBySeatsRequest extends Request {
     private final List<SeatDto> seats;
     private final String position;
     private final Integer pos;
+    private final Boolean foldingArmchairOption;
+    private final Boolean heatedArmchairOption;
+    private final Boolean skipLineRadioOption;
 
-    public GetTicketBySeatsRequest(List<SeatDto> seats, String position, Integer pos) {
+    public GetTicketBySeatsRequest(List<SeatDto> seats, String position, Integer pos, Boolean foldingArmchairOption, Boolean heatedArmchairOption, Boolean skipLineRadioOption) {
         this.seats = seats;
         this.position = position;
         this.pos = pos;
+        this.foldingArmchairOption = foldingArmchairOption;
+        this.heatedArmchairOption = heatedArmchairOption;
+        this.skipLineRadioOption = skipLineRadioOption;
+    }
+
+
+    public Boolean getFoldingArmchairOption() {
+        return foldingArmchairOption;
+    }
+
+    public Boolean getHeatedArmchairOption() {
+        return heatedArmchairOption;
+    }
+
+    public Boolean getSkipLineRadioOption() {
+        return skipLineRadioOption;
     }
 
     public List<SeatDto> getSeats() {
