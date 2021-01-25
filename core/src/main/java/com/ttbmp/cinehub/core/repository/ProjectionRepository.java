@@ -11,7 +11,7 @@ public interface ProjectionRepository {
 
     List<Projection> getProjectionByHall(Hall hall);
 
-    List<Projection> getProjectionByMovie(Movie movie);
+    List<Projection> getProjectionByMovie(Movie movie, String data);
 
     List<Projection> getAllProjection();
 

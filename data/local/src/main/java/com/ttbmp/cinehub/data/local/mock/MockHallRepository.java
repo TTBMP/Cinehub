@@ -13,17 +13,15 @@ import java.util.List;
  */
 public class MockHallRepository implements HallRepository {
 
-    private final List<Hall> hallList = new ArrayList<>();
-
 
     @Override
     public List<Hall> retriveHallByCinema(Cinema cinema) {
-        return hallList;
+        return new ArrayList<>();
     }
 
     @Override
     public List<Hall> retriveAllHall() {
-        return hallList;
+        return new ArrayList<>();
     }
 
     @Override

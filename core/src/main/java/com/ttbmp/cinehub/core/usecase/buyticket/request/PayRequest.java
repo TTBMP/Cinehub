@@ -8,8 +8,8 @@ public class PayRequest extends Request {
     public static final Request.Error MISSING_TICKET_ERROR = new Request.Error("Ticket can't be null");
     public static final Request.Error MISSING_PROJECTION_ERROR = new Request.Error("Projection can't be null");
     public static final Request.Error MISSING_INDEX_ERROR = new Request.Error("Index can't be after the end time");
-    private ProjectionDto projection;
     private final Integer index;
+    private ProjectionDto projection;
     private TicketDto ticket;
 
     public PayRequest(TicketDto ticket, ProjectionDto projection, Integer index) {

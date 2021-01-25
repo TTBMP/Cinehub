@@ -52,7 +52,6 @@ public class MockCinemaRepository implements CinemaRepository {
     }
 
 
-
     @Override
     public List<Cinema> getCinemaByProjection(List<Projection> projectionList) {
         cinemaList.clear();

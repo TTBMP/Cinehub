@@ -12,9 +12,7 @@ import java.util.List;
 public interface MovieRepository {
 
 
-    List<Movie> getAllMovie();
-
-    List<Movie> getAllMovieByApi(MovieApiService movieApiService) throws IOException;
+    List<Movie> getAllMovie(MovieApiService movieApiService) throws IOException;
 
 
 }

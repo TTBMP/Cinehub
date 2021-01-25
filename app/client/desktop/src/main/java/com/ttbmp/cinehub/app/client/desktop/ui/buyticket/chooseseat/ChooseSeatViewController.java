@@ -13,6 +13,7 @@ import com.ttbmp.cinehub.core.usecase.buyticket.request.GetTicketBySeatsRequest;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -31,6 +32,15 @@ public class ChooseSeatViewController extends ViewController {
 
     @FXML
     private AppBarViewController appBarController;
+
+    @FXML
+    private Text seatPriceText;
+    @FXML
+    private RadioButton foldingArmchairRadioButton;
+    @FXML
+    private RadioButton heatedArmchairRadioButton;
+    @FXML
+    private RadioButton skipLineRadioButton;
 
     private BuyTicketViewModel viewModel;
     @FXML
@@ -98,6 +108,9 @@ public class ChooseSeatViewController extends ViewController {
         seatsTotalText.textProperty().bind(viewModel.totalSeatsProperty());
         seatsFreeText.textProperty().bind(viewModel.freeSeatsProperty());
         seatsBuysText.textProperty().bind(viewModel.buysSeatsProperty());
+        viewModel.foldingArmchairOptionProperty().bind(foldingArmchairRadioButton.selectedProperty());
+        viewModel.heatedArmchairOptionProperty().bind(heatedArmchairRadioButton.selectedProperty());
+        viewModel.skipLineOptionProperty().bind(skipLineRadioButton.selectedProperty());
     }
 
     private void changeLayoutRandom() throws IOException {
@@ -106,7 +119,11 @@ public class ChooseSeatViewController extends ViewController {
                 new GetTicketBySeatsRequest(
                         viewModel.getSeatList(),
                         viewModel.selectedSeatsProperty().getValue(),
-                        viewModel.selectedPositionSeatIntegerProperty().getValue())
+                        viewModel.selectedPositionSeatIntegerProperty().getValue(),
+                        viewModel.foldingArmchairOptionProperty().getValue(),
+                        viewModel.heatedArmchairOptionProperty().getValue(),
+                        viewModel.skipLineOptionProperty().getValue()
+                )
         );
         navController.navigate(new NavDestination(new PaymentView()));
     }
@@ -117,7 +134,11 @@ public class ChooseSeatViewController extends ViewController {
                 new GetTicketBySeatsRequest(
                         viewModel.getSeatList(),
                         viewModel.selectedSeatsProperty().getValue(),
-                        viewModel.selectedPositionSeatIntegerProperty().getValue())
+                        viewModel.selectedPositionSeatIntegerProperty().getValue(),
+                        viewModel.foldingArmchairOptionProperty().getValue(),
+                        viewModel.heatedArmchairOptionProperty().getValue(),
+                        viewModel.skipLineOptionProperty().getValue()
+                )
         );
         navController.navigate(new NavDestination(new PaymentView()));
 

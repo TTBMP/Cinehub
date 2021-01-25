@@ -20,7 +20,7 @@ public class MockMovieApiService implements MovieApiService {
 
     @Override
     public void retrieveMovieById(Integer id) {
-       //Empty section
+        //Empty section
     }
 
     @Override

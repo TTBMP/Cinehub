@@ -36,5 +36,9 @@ public class MovieDataMapper {
         return DataMapperHelper.mapList(movieList, MovieDataMapper::mapToDto);
     }
 
+    public static List<Movie> mapToEntityList(List<MovieDto> movieList) {
+        return DataMapperHelper.mapList(movieList, MovieDataMapper::mapToEntity);
+    }
+
 
 }

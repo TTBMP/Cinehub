@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.core.dto;
 import com.ttbmp.cinehub.core.entity.Cinema;
 import com.ttbmp.cinehub.core.entity.Hall;
 import com.ttbmp.cinehub.core.entity.Movie;
-import com.ttbmp.cinehub.core.entity.Ticket;
+import com.ttbmp.cinehub.core.entity.ticket.component.Ticket;
 
 
 /**
@@ -16,12 +16,22 @@ public class ProjectionDto {
     private Hall hallDto;
     private Movie movieDto;
     private Ticket ticketList;
+    private String date;
 
-    public ProjectionDto(Movie movie, Cinema cinema, Hall hall, String startTime) {
+    public ProjectionDto(Movie movie, Cinema cinema, Hall hall, String startTime, String date) {
         this.movieDto = movie;
         this.cinemaDto = cinema;
         this.hallDto = hall;
         this.startTime = startTime;
+        this.date = date;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getStartTime() {

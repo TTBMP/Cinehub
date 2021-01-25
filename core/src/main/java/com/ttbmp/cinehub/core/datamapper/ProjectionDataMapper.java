@@ -16,7 +16,8 @@ public class ProjectionDataMapper {
                 projection.getMovie(),
                 projection.getCinema(),
                 projection.getHall(),
-                projection.getStartTime()
+                projection.getStartTime(),
+                projection.getDate()
         );
     }
 
@@ -25,7 +26,8 @@ public class ProjectionDataMapper {
                 projectionDto.getMovieDto(),
                 projectionDto.getCinemaDto(),
                 projectionDto.getHallDto(),
-                projectionDto.getStartTime()
+                projectionDto.getStartTime(),
+                projectionDto.getDate()
         );
     }
 }

@@ -82,9 +82,9 @@ public class MovieApi implements MovieApiService {
     @Override
     public void printSpecificAttribute(String output) {
         JsonObject jsonObject = new JsonParser().parse(output).getAsJsonObject();
-        String title = String.valueOf(jsonObject.get("title")).substring(1,String.valueOf(jsonObject.get("title")).length()-1);
+        String title = String.valueOf(jsonObject.get("title")).substring(1, String.valueOf(jsonObject.get("title")).length() - 1);
         MovieApiDto element = new MovieApiDto(title);
-        element.setMovieImageUrl(imageUrl + String.valueOf(jsonObject.get("poster_path")).substring(1,String.valueOf(jsonObject.get("poster_path")).length()-1));
+        element.setMovieImageUrl(imageUrl + String.valueOf(jsonObject.get("poster_path")).substring(1, String.valueOf(jsonObject.get("poster_path")).length() - 1));
         element.setMovieVote(String.valueOf(jsonObject.get("vote_average")));
         element.setMovieOverview(String.valueOf(jsonObject.get("overview")));
         element.setMovieReleases(String.valueOf(jsonObject.get("release_date")));

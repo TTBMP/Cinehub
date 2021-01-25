@@ -20,11 +20,17 @@ public class MockProjectionRepository implements ProjectionRepository {
     }
 
     @Override
-    public List<Projection> getProjectionByMovie(Movie movie) {
+    public List<Projection> getProjectionByMovie(Movie movie, String data) {
         projectionList.clear();
         getAllProjection();
+        List<Projection> listProjectionByDate = new ArrayList<>();
         List<Projection> listProjectionByMovie = new ArrayList<>();
         for (Projection projection : projectionList) {
+            if (projection.getDate().equals(data)) {
+                listProjectionByDate.add(projection);
+            }
+        }
+        for (Projection projection : listProjectionByDate) {
             if (projection.getMovie().getName().equals(movie.getName())) {
                 listProjectionByMovie.add(projection);
             }
@@ -33,32 +39,36 @@ public class MockProjectionRepository implements ProjectionRepository {
     }
 
     @Override
-    public List<Projection> getAllProjection() {
+    public List<Projection> getAllProjection() {//Query al db
         this.projectionList.addAll(Arrays.asList(
                 new Projection(
                         new Movie("The farnvx1"),
                         new Cinema("CinemaDiProva1", "Via delle vie", "Tivoli"),
                         new Hall(1),
-                        "20:20"
+                        "20:20",
+                        "2021-02-12"
                 ),
                 new Projection(
                         new Movie("Metropolis"),
                         new Cinema("CinemaDiProva2", "Via delle donne", "Roma"),
                         new Hall(1),
-                        "20:00"
+                        "20:00",
+                        "2021-02-13"
                 ),
                 new Projection(
                         new Movie("The farnvx3"),
                         new Cinema("CinemaDiProva3", "Via della lazio", "Marcellina"),
                         new Hall(1),
-                        "20:10"
+                        "20:10",
+                        "2021-02-14"
                 )
         ));
         Projection projection = new Projection(
                 new Movie("The Dark"),
                 new Cinema("CinemaDiProva", "Via via", "Nettuno"),
                 new Hall(1),
-                "20:50"
+                "20:00",
+                "2021-02-12"
         );
         projection.getHall().setSeatList(Arrays.asList(
                 new Seat(5L, true),
@@ -71,6 +81,8 @@ public class MockProjectionRepository implements ProjectionRepository {
                 new Seat(8L, true),
                 new Seat(6L, true),
                 new Seat(4L, true),
+                new Seat(5L, true),
+                new Seat(7L, true),
                 new Seat(8L, true),
                 new Seat(6L, true),
                 new Seat(4L, true),
@@ -79,6 +91,8 @@ public class MockProjectionRepository implements ProjectionRepository {
                 new Seat(8L, true),
                 new Seat(6L, true),
                 new Seat(4L, true),
+                new Seat(5L, true),
+                new Seat(7L, true),
                 new Seat(8L, true),
                 new Seat(6L, true),
                 new Seat(4L, true),
@@ -87,6 +101,8 @@ public class MockProjectionRepository implements ProjectionRepository {
                 new Seat(8L, true),
                 new Seat(6L, true),
                 new Seat(4L, true),
+                new Seat(5L, true),
+                new Seat(7L, true),
                 new Seat(8L, true),
                 new Seat(6L, true),
                 new Seat(4L, true),
@@ -95,8 +111,6 @@ public class MockProjectionRepository implements ProjectionRepository {
                 new Seat(8L, true),
                 new Seat(6L, true),
                 new Seat(4L, true),
-                new Seat(8L, true),
-                new Seat(6L, true),
                 new Seat(4L, true)));
         projectionList.add(projection);
         return projectionList;

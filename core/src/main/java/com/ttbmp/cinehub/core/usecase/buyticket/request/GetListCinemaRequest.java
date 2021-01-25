@@ -6,10 +6,23 @@ import com.ttbmp.cinehub.core.usecase.Request;
 public class GetListCinemaRequest extends Request {
     public static final Request.Error MISSING_CINEMA_ERROR = new Request.Error("Cinema can't be null");
     private MovieDto movieDto;
+    private String data;
 
-    public GetListCinemaRequest(MovieDto movieDto) {
+
+    public GetListCinemaRequest(MovieDto movieDto, String data) {
         this.movieDto = movieDto;
+        this.data = data;
     }
+
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
 
     public MovieDto getMovieDto() {
         return movieDto;
@@ -18,6 +31,7 @@ public class GetListCinemaRequest extends Request {
     public void setMovieDto(MovieDto movieDto) {
         this.movieDto = movieDto;
     }
+
 
     @Override
     public void onValidate() {

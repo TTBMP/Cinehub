@@ -1,17 +1,16 @@
 package com.ttbmp.cinehub.core.service.payment.request;
 
-import com.ttbmp.cinehub.core.dto.TicketDto;
 import com.ttbmp.cinehub.core.dto.UserDto;
 import com.ttbmp.cinehub.core.usecase.Request;
 
 public class PayServiceRequest extends Request {
 
     private final UserDto userDto;
-    private final TicketDto ticketDto;
+    private final long ticketPrice;
 
-    public PayServiceRequest(UserDto userDto, TicketDto ticketDto) {
+    public PayServiceRequest(UserDto userDto, long ticketPrice) {
         this.userDto = userDto;
-        this.ticketDto = ticketDto;
+        this.ticketPrice = ticketPrice;
     }
 
     public UserDto getUserDto() {
@@ -19,8 +18,8 @@ public class PayServiceRequest extends Request {
     }
 
 
-    public TicketDto getTicketDto() {
-        return ticketDto;
+    public long getTicketPrice() {
+        return ticketPrice;
     }
 
 

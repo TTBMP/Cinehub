@@ -8,8 +8,8 @@ import com.stripe.model.PaymentMethod;
 import com.ttbmp.cinehub.core.dto.TicketDto;
 import com.ttbmp.cinehub.core.dto.UserDto;
 import com.ttbmp.cinehub.core.entity.Payment;
-import com.ttbmp.cinehub.core.service.payment.request.PayServiceRequest;
 import com.ttbmp.cinehub.core.service.payment.PaymentService;
+import com.ttbmp.cinehub.core.service.payment.request.PayServiceRequest;
 
 import java.util.List;
 
@@ -19,13 +19,15 @@ import java.util.List;
 public class StripeServicePaymentFacade implements PaymentService {
 
     private final ServiceRequestStripe serviceRequestStripe;
+
     String errorStripe = "";
+
     public StripeServicePaymentFacade() {
         this.serviceRequestStripe = new ServiceRequestStripe();
     }
 
     @Override
-    public boolean pay(PayServiceRequest payServiceRequest){
+    public boolean pay(PayServiceRequest payServiceRequest) {
         Customer customer = null;
         try {
             customer = serviceRequestStripe.isExistent(payServiceRequest.getUserDto());
@@ -47,8 +49,8 @@ public class StripeServicePaymentFacade implements PaymentService {
             return false;
         }
         try {
-            if (serviceRequestStripe.updateBalance(customer, payServiceRequest.getTicketDto().getPrice())) {
-                if (!serviceRequestStripe.setBalance(customer, payServiceRequest.getTicketDto().getPrice(), paymentMethod)) {
+            if (serviceRequestStripe.updateBalance(customer, payServiceRequest.getTicketPrice())) {
+                if (!serviceRequestStripe.setBalance(customer, payServiceRequest.getTicketPrice(), paymentMethod)) {
                     errorStripe = "Problem updating your account";
                 }
             } else {
@@ -65,7 +67,7 @@ public class StripeServicePaymentFacade implements PaymentService {
 
     /*Refund a specific transaction using the id*/
     @Override
-    public boolean refoundById(UserDto userDto, String id)  {
+    public boolean refoundById(UserDto userDto, String id) {
 
         Customer customer = null;
         try {
@@ -80,16 +82,16 @@ public class StripeServicePaymentFacade implements PaymentService {
             e.printStackTrace();
         }
         if (customer == null) {
-            errorStripe ="Unable to refund user. It doesn't exist";
+            errorStripe = "Unable to refund user. It doesn't exist";
             return false;
         }
         if (paymentIntent == null) {
-            errorStripe ="Error while retrieving the transaction";
+            errorStripe = "Error while retrieving the transaction";
             return false;
         }
         try {
             if (serviceRequestStripe.updateBalance(customer, -(paymentIntent.getAmount().intValue() / 100))) {
-                errorStripe ="Refund made";
+                errorStripe = "Refund made";
                 return true;
             }
         } catch (StripeException e) {
@@ -102,7 +104,7 @@ public class StripeServicePaymentFacade implements PaymentService {
 
     /*Refund your last purchase*/
     @Override
-    public boolean refoundLastPayment(UserDto userDto, TicketDto ticket)  {
+    public boolean refoundLastPayment(UserDto userDto, TicketDto ticket) {
         Customer customer = null;
         try {
             customer = serviceRequestStripe.isExistent(userDto);
@@ -110,7 +112,7 @@ public class StripeServicePaymentFacade implements PaymentService {
             e.printStackTrace();
         }
         if (customer == null) {
-            errorStripe ="User refund error";
+            errorStripe = "User refund error";
             return false;
         }
         /*The user does not have to register*/
@@ -121,7 +123,7 @@ public class StripeServicePaymentFacade implements PaymentService {
             e.printStackTrace();
         }
         if (paymentCollection.getData().isEmpty()) {
-            errorStripe ="Error finding user transactions";
+            errorStripe = "Error finding user transactions";
             return false;
         }
         try {
@@ -130,12 +132,12 @@ public class StripeServicePaymentFacade implements PaymentService {
             e.printStackTrace();
         }
         if (paymentCollection == null) {
-            errorStripe ="Ticket status update error";
+            errorStripe = "Ticket status update error";
             return false;
         }
         try {
             if (!serviceRequestStripe.updateBalance(customer, -(paymentCollection.getData().get(0).getAmount().intValue() / 100))) {
-                errorStripe ="Problems updating the account";
+                errorStripe = "Problems updating the account";
                 return false;
             }
         } catch (StripeException e) {
@@ -147,8 +149,8 @@ public class StripeServicePaymentFacade implements PaymentService {
 
 
     @Override
-    public List<Payment> retriveListOfPayment(UserDto userDto)  {
-        PaymentIntentCollection payment=null;
+    public List<Payment> retriveListOfPayment(UserDto userDto) {
+        PaymentIntentCollection payment = null;
         try {
             payment = serviceRequestStripe.retrieveListPaymentIntent(userDto);
         } catch (StripeException e) {

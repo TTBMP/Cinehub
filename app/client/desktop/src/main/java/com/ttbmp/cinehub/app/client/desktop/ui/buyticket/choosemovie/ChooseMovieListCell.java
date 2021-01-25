@@ -6,7 +6,6 @@ import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavControlle
 import com.ttbmp.cinehub.core.dto.MovieDto;
 import javafx.scene.control.ListCell;
 
-
 import java.io.IOException;
 import java.util.Objects;
 
