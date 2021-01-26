@@ -3,6 +3,7 @@ package com.ttbmp.cinehub.app.client.desktop.ui.buyticket.choosemovie;
 
 import com.ttbmp.cinehub.app.client.desktop.ui.appbar.AppBarViewController;
 import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.BuyTicketViewModel;
+import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.CustomDateCell;
 import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.choosecinema.ChooseCinemaView;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavDestination;

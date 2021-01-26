@@ -5,7 +5,9 @@ import com.ttbmp.cinehub.core.entity.Hall;
 import com.ttbmp.cinehub.core.entity.Projection;
 
 import java.util.List;
-
+/**
+ * @author Palmieri Ivan
+ */
 public interface HallRepository {
 
     List<Hall> retriveHallByCinema(Cinema cinema);

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
@@ -7,42 +11,49 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
-      fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.buyticket.choosemovie.ChooseMovieViewController">
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.buyticket.choosemovie.ChooseMovieViewController">
     <children>
-        <fx:include fx:id="appBar" source="app_bar.fxml"/>
-        <VBox prefHeight="246.0" prefWidth="600.0">
-            <children>
-                <HBox>
-                    <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a date!"
-                              wrappingWidth="180.6708984375">
-                            <HBox.margin>
-                                <Insets left="10.0" top="10.0"/>
-                            </HBox.margin>
+        <fx:include fx:id="appBar" source="app_bar.fxml" />
+      <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0">
+         <content>
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0">
+               <children>
+                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a date!" wrappingWidth="110.6708984375">
+                           <HBox.margin>
+                              <Insets left="10.0" top="15.0" />
+                           </HBox.margin>
                         </Text>
-                        <DatePicker fx:id="dateOfProjectionDatePicker" prefHeight="31.0" prefWidth="175.0"
-                                    promptText="Projection date" showWeekNumbers="true">
-                            <opaqueInsets>
-                                <Insets/>
-                            </opaqueInsets>
-                            <HBox.margin>
-                                <Insets left="10.0" top="10.0"/>
-                            </HBox.margin>
+                        <DatePicker fx:id="dateOfProjectionDatePicker" promptText="Projection date" showWeekNumbers="true">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <HBox.margin>
+                              <Insets left="10.0" top="10.0" />
+                           </HBox.margin>
                         </DatePicker>
-                        <AnchorPane/>
+                        <AnchorPane />
                         <Button fx:id="confirmMovieButton" alignment="TOP_LEFT" mnemonicParsing="false" text="Continue">
-                            <HBox.margin>
-                                <Insets left="135.0" top="10.0"/>
-                            </HBox.margin>
+                           <HBox.margin>
+                              <Insets left="135.0" top="10.0" />
+                           </HBox.margin>
                         </Button>
-                    </children>
-                </HBox>
-                <Label fx:id="errorSectionLabel" prefHeight="21.0" prefWidth="597.0" textAlignment="CENTER"/>
-            </children>
-        </VBox>
-        <ListView fx:id="movieListView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                  prefHeight="485.0" prefWidth="600.0"/>
+                     </children>
+                  </HBox>
+                  <Label fx:id="errorSectionLabel" textAlignment="CENTER" />
+                  <ListView fx:id="movieListView" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+                     </VBox.margin>
+                  </ListView>
+               </children>
+            </VBox>
+         </content>
+         <padding>
+            <Insets left="16.0" right="16.0" top="16.0" />
+         </padding>
+      </ScrollPane>
     </children>
 </VBox>

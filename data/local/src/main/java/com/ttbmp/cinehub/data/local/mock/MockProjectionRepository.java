@@ -14,10 +14,7 @@ public class MockProjectionRepository implements ProjectionRepository {
 
     private final List<Projection> projectionList = new ArrayList<>();
 
-    @Override
-    public List<Projection> getProjectionByHall(Hall hall) {
-        return projectionList;
-    }
+
 
     @Override
     public List<Projection> getProjectionByMovie(Movie movie, String data) {
@@ -117,7 +114,7 @@ public class MockProjectionRepository implements ProjectionRepository {
     }
 
     @Override
-    public List<String> getTimeOfProjectionByMovieEndCinema(Movie movie, Cinema cinema) {
+    public List<String> getTimeOfProjectionByMovieCinema(Movie movie, Cinema cinema) {
         List<String> timeList = new ArrayList<>();
         projectionList.clear();
         getAllProjection();
@@ -130,7 +127,7 @@ public class MockProjectionRepository implements ProjectionRepository {
     }
 
     @Override
-    public Projection getTimeOfProjectionByMovieEndCinemaEndTime(Movie movie, Cinema cinema, String time) {
+    public Projection getTimeOfProjectionByMovieCinemaTime(Movie movie, Cinema cinema, String time) {
         projectionList.clear();
         getAllProjection();
         for (Projection projection : projectionList) {

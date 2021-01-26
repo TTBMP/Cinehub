@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.core.service.email;
-
+/**
+ * @author Palmieri Ivan
+ */
 public class EmailServiceRequest {
     private String email;
     private String object;

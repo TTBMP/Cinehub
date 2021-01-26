@@ -1,11 +1,14 @@
 package com.ttbmp.cinehub.core.usecase.buyticket.request;
 
 import com.ttbmp.cinehub.core.usecase.Request;
-
+/**
+ * @author Palmieri Ivan
+ */
 public class SendEmailRequest extends Request {
 
 
     public static final Request.Error MISSING_RECIPIENT_ERROR = new Request.Error("Recipient can't be null");
+
     private Integer userId;
 
     public SendEmailRequest(Integer userId) {

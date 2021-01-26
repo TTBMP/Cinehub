@@ -1,10 +1,12 @@
 package com.ttbmp.cinehub.core.usecase.buyticket.response;
 
 import com.ttbmp.cinehub.core.dto.ProjectionDto;
-
+/**
+ * @author Palmieri Ivan
+ */
 public class SetProjectionResponse {
 
-    private ProjectionDto projectionDto;
+    private final ProjectionDto projectionDto;
 
     public SetProjectionResponse(ProjectionDto projectionDto) {
         this.projectionDto = projectionDto;
@@ -14,7 +16,4 @@ public class SetProjectionResponse {
         return projectionDto;
     }
 
-    public void setProjectionDto(ProjectionDto projectionDto) {
-        this.projectionDto = projectionDto;
-    }
 }

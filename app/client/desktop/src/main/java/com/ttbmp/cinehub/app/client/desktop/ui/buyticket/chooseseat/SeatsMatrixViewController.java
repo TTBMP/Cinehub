@@ -10,7 +10,9 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.layout.GridPane;
 
 import java.util.List;
-
+/**
+ * @author Palmieri Ivan
+ */
 public class SeatsMatrixViewController extends ViewController {
     private GridPane gridSeats;
 

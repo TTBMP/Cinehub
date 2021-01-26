@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.app.client.desktop.ui.buyticket.payment;
 
 
 import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.BuyTicketViewModel;
+import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.CustomDateCell;
 import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.chooseseat.ChooseSeatView;
 import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.confirmemail.ConfirmEmailView;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
@@ -14,7 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
+
 
 import java.io.IOException;
 
@@ -44,9 +45,6 @@ public class PaymentViewController extends ViewController {
 
     @FXML
     private DatePicker fieldExpirationDatePicker;
-
-    @FXML
-    private Text resultPaymentText;
 
 
     @Override
@@ -79,6 +77,7 @@ public class PaymentViewController extends ViewController {
         numberOfCreditCardTextField.textProperty().bindBidirectional(viewModel.numberOfCardUserProperty());
         cvvTextField.textProperty().bindBidirectional(viewModel.txtCvvProperty());
         fieldExpirationDatePicker.valueProperty().bindBidirectional(viewModel.fieldExpirationDatePickerProperty());
+        fieldExpirationDatePicker.setDayCellFactory(CustomDateCell::new);
     }
 
 

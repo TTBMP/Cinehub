@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.app.client.desktop.ui.buyticket.choosemovie;
+package com.ttbmp.cinehub.app.client.desktop.ui.buyticket;
 
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;

@@ -63,7 +63,7 @@ public class ConfirmEmailViewController extends ViewController {
         bind();
         testLabel.setText(viewModel.selectedDateProperty().getValue().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)));
         activity.getUseCase(BuyTicketUseCase.class).sendEmail(new SendEmailRequest(0));
-        priceText.setText(String.valueOf(viewModel.selectedTicketPriceProperty().getValue()));
+        priceText.setText((viewModel.selectedTicketPriceProperty().getValue())+"\u20ac");
     }
 
 

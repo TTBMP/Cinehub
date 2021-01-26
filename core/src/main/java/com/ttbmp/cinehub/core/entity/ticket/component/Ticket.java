@@ -1,23 +1,41 @@
 package com.ttbmp.cinehub.core.entity.ticket.component;
+/**
+ * @author Palmieri Ivan
+ */
+public abstract class Ticket {
 
-public class Ticket extends TicketAbstract {
-
+    private Ticket ticket;
     private long price;
+    private Boolean state;
+    private String position;
 
-    @Override
-    public long getPrice(){
-        return this.price;
+
+    public long operation() {
+        return ticket.operation();
     }
 
-    public Ticket(long price) {
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public long getPrice() {
+        return price;
+    }
+
+    public void setPrice(long price) {
         this.price = price;
     }
 
-    @Override
-    public long operation() {
-        return this.price;
+
+    public Boolean getState() {
+        return state;
     }
 
-
-
+    public void setState(Boolean state) {
+        this.state = state;
+    }
 }

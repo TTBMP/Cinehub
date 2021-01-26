@@ -3,11 +3,14 @@ package com.ttbmp.cinehub.core.usecase.buyticket.request;
 import com.ttbmp.cinehub.core.dto.ProjectionDto;
 import com.ttbmp.cinehub.core.dto.TicketDto;
 import com.ttbmp.cinehub.core.usecase.Request;
-
+/**
+ * @author Palmieri Ivan
+ */
 public class PayRequest extends Request {
     public static final Request.Error MISSING_TICKET_ERROR = new Request.Error("Ticket can't be null");
     public static final Request.Error MISSING_PROJECTION_ERROR = new Request.Error("Projection can't be null");
     public static final Request.Error MISSING_INDEX_ERROR = new Request.Error("Index can't be after the end time");
+
     private final Integer index;
     private ProjectionDto projection;
     private TicketDto ticket;
@@ -41,6 +44,15 @@ public class PayRequest extends Request {
 
     @Override
     public void onValidate() {
+        if (index == null) {
+            addError(MISSING_INDEX_ERROR);
+        }
+        if(projection==null){
+            addError(MISSING_PROJECTION_ERROR);
 
+        }
+        if(ticket==null){
+            addError(MISSING_TICKET_ERROR);
+        }
     }
 }
