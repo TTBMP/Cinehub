@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.core.entity;
-
+/**
+ * @author Palmieri Ivan
+ */
 public class Seat {
     //prezzo dentro ticket
     Long price;

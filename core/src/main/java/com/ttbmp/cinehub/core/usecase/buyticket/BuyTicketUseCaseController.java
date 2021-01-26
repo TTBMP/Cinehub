@@ -2,8 +2,8 @@ package com.ttbmp.cinehub.core.usecase.buyticket;
 
 import com.ttbmp.cinehub.core.datamapper.*;
 import com.ttbmp.cinehub.core.entity.*;
+import com.ttbmp.cinehub.core.entity.ticket.component.TicketNormal;
 import com.ttbmp.cinehub.core.entity.ticket.component.Ticket;
-import com.ttbmp.cinehub.core.entity.ticket.component.TicketAbstract;
 import com.ttbmp.cinehub.core.entity.ticket.decorator.TicketFoldingArmchair;
 import com.ttbmp.cinehub.core.entity.ticket.decorator.TicketSkipLine;
 import com.ttbmp.cinehub.core.repository.*;
@@ -68,7 +68,7 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
         try {
             Request.validate(request);
             //Prender i dati dell'utente dall'id
-            User user = new User("Ivan", "palm@5934.cos", new CreditCard("22/24", 354, "4242424242424242", "5496"));
+            User user = new User("Ivan", "palm@5934.cosis", new CreditCard("22/24", 354, "4242424242424242", "5496"));
             emailService.sendMail(new EmailServiceRequest(user.getEmail(), "Hello Member"));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentSendEmailNullRequest();
@@ -82,7 +82,7 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
     public boolean pay(PayRequest request) {
         try {
             Request.validate(request);
-            User user = new User("Ivan", "palm@ciao.cos", new CreditCard("22/24", 354, "4242424242424242", "5496"));
+            User user = new User("Ivan", "palm@ciao.cosis", new CreditCard("22/24", 354, "4242424242424242", "5496"));
             Ticket ticket = TicketDataMapper.mapToEntity(request.getTicket());
             Projection projection = ProjectionDataMapper.mapToEntity(request.getProjection());
             Integer index = request.getIndex();
@@ -93,6 +93,7 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
                 user.addTicket(ticket);
                 return true;
             }
+            buyTicketPresenter.presentErrorByStripe(paymentService.getError());
             return false;
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentPayNullRequest();
@@ -119,30 +120,30 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
     public void getTicketBySeats(GetTicketBySeatsRequest request) {
         try {
             Request.validate(request);
-            List<Seat> seats = SeatDataMapper.mapToEntityList(request.getSeats());
+            List<Seat> seats = SeatDataMapper.mapToEntityList(request.getSeatDtoList());
             Integer pos = request.getPos();
             String position = request.getPosition();
             Seat selectedSeats = seats.get(pos);
 
             /*DECORATOR PATTERN GOF*/
-            TicketAbstract ticketAbstract = new Ticket(selectedSeats.getPrice());
-            ticketAbstract.operation();
+            Ticket ticket = new TicketNormal(selectedSeats.getPrice());
+            ticket.operation();
             if (Boolean.TRUE.equals(request.getHeatedArmchairOption())) {
-                ticketAbstract = new TicketSkipLine(ticketAbstract);
-                ticketAbstract.setPrice(ticketAbstract.operation());
+                ticket = new TicketSkipLine(ticket);
+                ticket.setPrice(ticket.operation());
             }
             if (Boolean.TRUE.equals(request.getFoldingArmchairOption())) {
-                ticketAbstract = new TicketFoldingArmchair(ticketAbstract);
-                ticketAbstract.setPrice(ticketAbstract.operation());
+                ticket = new TicketFoldingArmchair(ticket);
+                ticket.setPrice(ticket.operation());
             }
             if (Boolean.TRUE.equals(request.getSkipLineRadioOption())) {
-                ticketAbstract = new TicketSkipLine(ticketAbstract);
-                ticketAbstract.setPrice(ticketAbstract.operation());
+                ticket = new TicketSkipLine(ticket);
+                ticket.setPrice(ticket.operation());
             }
             /*-----------------------------------------*/
 
-            ticketAbstract.setPosition(position);
-            buyTicketPresenter.setSelectedTicket(new GetTicketBySeatsResponse(TicketDataMapper.mapToDto(ticketAbstract)));
+            ticket.setPosition(position);
+            buyTicketPresenter.setSelectedTicket(new GetTicketBySeatsResponse(TicketDataMapper.mapToDto(ticket)));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetTicketBySeatsNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -180,7 +181,7 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
             Movie movie = MovieDataMapper.mapToEntity(request.getMovieDto());
             List<String> timeList = new ArrayList<>();
             if (cinema != null) {
-                timeList = projectionRepository.getTimeOfProjectionByMovieEndCinema(movie, cinema);
+                timeList = projectionRepository.getTimeOfProjectionByMovieCinema(movie, cinema);
             }
             buyTicketPresenter.presentTimeList(timeList);//Non serve una reponse per una lista di stringhe
         } catch (Request.NullRequestException e) {
@@ -208,7 +209,7 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
             Movie movie = MovieDataMapper.mapToEntity(request.getMovieDto());
             Cinema cinema = CinemaDataMapper.mapToEntity(request.getCinemaDto());
             String time = request.getTime();
-            Projection projection = projectionRepository.getTimeOfProjectionByMovieEndCinemaEndTime(movie, cinema, time);
+            Projection projection = projectionRepository.getTimeOfProjectionByMovieCinemaTime(movie, cinema, time);
             buyTicketPresenter.presentProjection(new SetProjectionResponse(ProjectionDataMapper.mapToDto(projection)));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentSetProjectionNullRequest();

@@ -57,4 +57,6 @@ public interface BuyTicketPresenter {
     void presentInvalidGetNumberOfSeats(GetNumberOfSeatsRequest request);
 
     void presentGetListMovie();
+
+    void presentErrorByStripe(String error);
 }

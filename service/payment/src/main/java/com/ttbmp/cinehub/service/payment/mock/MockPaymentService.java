@@ -32,4 +32,10 @@ public class MockPaymentService implements PaymentService {
     public List<Payment> retriveListOfPayment(UserDto user) {
         return new ArrayList<>();
     }
+
+    @Override
+    public String getError() {
+        return "";
+    }
+
 }

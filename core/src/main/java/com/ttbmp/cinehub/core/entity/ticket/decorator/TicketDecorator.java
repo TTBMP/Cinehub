@@ -1,17 +1,19 @@
 package com.ttbmp.cinehub.core.entity.ticket.decorator;
 
-import com.ttbmp.cinehub.core.entity.ticket.component.TicketAbstract;
+import com.ttbmp.cinehub.core.entity.ticket.component.Ticket;
+/**
+ * @author Palmieri Ivan
+ */
+public class TicketDecorator extends Ticket {
 
-public class TicketDecorator extends TicketAbstract {
+    Ticket ticket;
 
-    TicketAbstract ticketAbstract;
-
-    public TicketDecorator(TicketAbstract ticketAbstract) {
-        this.ticketAbstract = ticketAbstract;
+    public TicketDecorator(Ticket ticket) {
+        this.ticket = ticket;
     }
 
     @Override
     public long operation() {
-        return ticketAbstract.operation();
+        return ticket.operation();
     }
 }

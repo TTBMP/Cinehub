@@ -137,7 +137,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentInvalidGetListCinema(GetListCinemaRequest request) {
-        viewModel.cinemaErrorProperty().setValue(GetListCinemaRequest.MISSING_CINEMA_ERROR.getMessage());
+        viewModel.cinemaErrorProperty().setValue(GetListCinemaRequest.MISSING_MOVIE_ERROR.getMessage());
     }
 
     @Override
@@ -188,6 +188,11 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     @Override
     public void presentGetListMovie() {
         viewModel.movieErrorProperty().setValue("Unable to recover movies by service");
+    }
+
+    @Override
+    public void presentErrorByStripe(String error) {
+        viewModel.paymentErrorProperty().setValue(error);
     }
 
 

@@ -1,6 +1,8 @@
 package com.ttbmp.cinehub.core.entity;
-
-import com.ttbmp.cinehub.core.entity.ticket.component.TicketAbstract;
+/**
+ * @author Palmieri Ivan
+ */
+import com.ttbmp.cinehub.core.entity.ticket.component.Ticket;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ public class Projection {
     private Cinema cinema;
     private Hall hall;
     private Movie movie;
-    private List<TicketAbstract> ticketAbstractList = new ArrayList<>();
+    private List<Ticket> ticketList = new ArrayList<>();
     private String date;
 
     public Projection(Movie movie, Cinema cinema, Hall hall, String startTime, String date) {
@@ -62,15 +64,15 @@ public class Projection {
         this.movie = movie;
     }
 
-    public List<TicketAbstract> getTicketAbstractList() {
-        return ticketAbstractList;
+    public List<Ticket> getTicketAbstractList() {
+        return ticketList;
     }
 
-    public void setTicketAbstractList(List<TicketAbstract> ticketAbstractList) {
-        this.ticketAbstractList = ticketAbstractList;
+    public void setTicketAbstractList(List<Ticket> ticketList) {
+        this.ticketList = ticketList;
     }
 
-    public void addTicket(TicketAbstract ticketAbstract) {
-        this.ticketAbstractList.add(ticketAbstract);
+    public void addTicket(Ticket ticket) {
+        this.ticketList.add(ticket);
     }
 }

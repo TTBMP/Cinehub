@@ -1,7 +1,9 @@
 package com.ttbmp.cinehub.core.usecase.buyticket.response;
 
 import com.ttbmp.cinehub.core.dto.TicketDto;
-
+/**
+ * @author Palmieri Ivan
+ */
 public class GetTicketBySeatsResponse {
 
     TicketDto ticketDto;
@@ -14,7 +16,5 @@ public class GetTicketBySeatsResponse {
         return ticketDto;
     }
 
-    public void setTicketDto(TicketDto ticketDto) {
-        this.ticketDto = ticketDto;
-    }
+
 }

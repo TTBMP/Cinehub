@@ -1,14 +1,16 @@
 package com.ttbmp.cinehub.core.dto;
 
 import com.ttbmp.cinehub.core.entity.CreditCard;
-import com.ttbmp.cinehub.core.entity.ticket.component.Ticket;
+import com.ttbmp.cinehub.core.entity.ticket.component.TicketNormal;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Palmieri Ivan
+ */
 public class UserDto {
 
-    private final List<Ticket> ownedTicket = new ArrayList<>();
+    private final List<TicketNormal> ownedTicketNormal = new ArrayList<>();
     private Integer id;
     private String name;
     private String email;
@@ -29,8 +31,8 @@ public class UserDto {
 
     }
 
-    public List<Ticket> getOwnedTicket() {
-        return ownedTicket;
+    public List<TicketNormal> getOwnedTicket() {
+        return ownedTicketNormal;
     }
 
     public int getId() {
@@ -41,8 +43,8 @@ public class UserDto {
         this.id = id;
     }
 
-    public void addTicket(Ticket ticket) {
-        this.ownedTicket.add(ticket);
+    public void addTicket(TicketNormal ticketNormal) {
+        this.ownedTicketNormal.add(ticketNormal);
     }
 
     public String getName() {

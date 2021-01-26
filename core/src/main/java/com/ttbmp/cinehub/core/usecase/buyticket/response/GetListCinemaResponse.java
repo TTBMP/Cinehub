@@ -3,10 +3,12 @@ package com.ttbmp.cinehub.core.usecase.buyticket.response;
 import com.ttbmp.cinehub.core.dto.CinemaDto;
 
 import java.util.List;
-
+/**
+ * @author Palmieri Ivan
+ */
 public class GetListCinemaResponse {
 
-    private List<CinemaDto> cinemaList;
+    private final List<CinemaDto> cinemaList;
 
     public GetListCinemaResponse(List<CinemaDto> cinemaList) {
         this.cinemaList = cinemaList;
@@ -17,7 +19,4 @@ public class GetListCinemaResponse {
         return cinemaList;
     }
 
-    public void setCinemaList(List<CinemaDto> cinemaList) {
-        this.cinemaList = cinemaList;
-    }
 }

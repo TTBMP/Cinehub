@@ -1,126 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
-            fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.buyticket.chooseseat.ChooseSeatViewController">
-    <children>
 
-        <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                  AnchorPane.topAnchor="0.0">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints maxHeight="195.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="298.0" minHeight="10.0" prefHeight="280.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="276.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES"/>
-            </rowConstraints>
-            <children>
-                <AnchorPane prefHeight="276.0" prefWidth="600.0" GridPane.rowIndex="1">
-                    <children>
-                        <HBox prefHeight="277.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
-                              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <children>
-                                <TitledPane prefHeight="278.0" prefWidth="487.0" text="Buy a specific seat">
-                                    <content>
-                                        <VBox fx:id="seatsContainerVBox" prefHeight="245.0" prefWidth="525.0"/>
-                                    </content>
-                                </TitledPane>
-                                <TitledPane prefHeight="281.0" prefWidth="113.0">
-                                    <content>
-                                        <VBox prefHeight="216.0" prefWidth="90.0">
-                                            <children>
-                                                <RadioButton fx:id="foldingArmchairRadioButton" mnemonicParsing="false"
-                                                             text="Opzione 1" textAlignment="CENTER" textOverrun="CLIP">
-                                                    <VBox.margin>
-                                                        <Insets top="35.0"/>
-                                                    </VBox.margin>
-                                                </RadioButton>
-                                                <RadioButton fx:id="heatedArmchairRadioButton" mnemonicParsing="false"
-                                                             text="Opzione 2">
-                                                    <VBox.margin>
-                                                        <Insets top="35.0"/>
-                                                    </VBox.margin>
-                                                </RadioButton>
-                                                <RadioButton fx:id="skipLineRadioButton" mnemonicParsing="false"
-                                                             text="Opzione 3">
-                                                    <VBox.margin>
-                                                        <Insets top="35.0"/>
-                                                    </VBox.margin>
-                                                </RadioButton>
-                                            </children>
-                                        </VBox>
-                                    </content>
-                                </TitledPane>
-                            </children>
-                        </HBox>
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="99.0" prefWidth="600.0">
-                    <children>
-                        <GridPane prefHeight="77.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
-                                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES"/>
-                                <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES"/>
-                            </rowConstraints>
-                            <children>
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Buy a seat randomly">
-                                    <GridPane.margin>
-                                        <Insets left="15.0"/>
-                                    </GridPane.margin>
-                                </Text>
-                                <Button fx:id="buyRandomButton" mnemonicParsing="false" text="Continue"
-                                        GridPane.columnIndex="1">
-                                    <GridPane.margin>
-                                        <Insets left="30.0"/>
-                                    </GridPane.margin>
-                                </Button>
-                                <Text fx:id="seatsTotalText" strokeType="OUTSIDE" strokeWidth="0.0" text="Total seats:"
-                                      wrappingWidth="199.6708984375" GridPane.rowIndex="1">
-                                    <GridPane.margin>
-                                        <Insets left="15.0"/>
-                                    </GridPane.margin>
-                                </Text>
-                                <Text fx:id="seatsBuysText" strokeType="OUTSIDE" strokeWidth="0.0"
-                                      text="Occupied seats:" textAlignment="CENTER" wrappingWidth="157.6708984375"
-                                      GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                                <Text fx:id="seatsFreeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Free seats:"
-                                      textAlignment="RIGHT" wrappingWidth="128.6708984375" GridPane.columnIndex="2"
-                                      GridPane.rowIndex="1"/>
-                            </children>
-                        </GridPane>
-                    </children>
-                    <GridPane.margin>
-                        <Insets bottom="10.0"/>
-                    </GridPane.margin>
-                </AnchorPane>
-                <HBox prefHeight="54.0" prefWidth="600.0" GridPane.rowIndex="2">
-                    <children>
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.buyticket.chooseseat.ChooseSeatViewController">
+   <children>
+      <ScrollPane hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+         <content>
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+               <children>
+                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                     <children>
+                        <Text fx:id="seatsTotalText" strokeType="OUTSIDE" strokeWidth="0.0" text="Total seats:" wrappingWidth="199.6708984375" />
+                        <Text fx:id="seatsBuysText" strokeType="OUTSIDE" strokeWidth="0.0" text="Occupied seats:" textAlignment="CENTER" wrappingWidth="157.6708984375">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Text>
+                        <Text fx:id="seatsFreeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Free seats:" textAlignment="RIGHT" wrappingWidth="128.6708984375" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                     <children>
+                        <VBox HBox.hgrow="ALWAYS">
+                           <children>
+                              <TitledPane text="Buy a specific seat" VBox.vgrow="ALWAYS">
+                                 <content>
+                                    <VBox fx:id="seatsContainerVBox" />
+                                 </content>
+                              </TitledPane>
+                              <Label alignment="CENTER" prefHeight="21.0" prefWidth="601.0" text="Each additional service increases the cost of the ticket by one euro " textFill="#b54848">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <RadioButton fx:id="foldingArmchairRadioButton" mnemonicParsing="false" prefHeight="22.0" prefWidth="211.0" text="Heated armchair" textAlignment="CENTER" textOverrun="CLIP" />
+                                    <RadioButton fx:id="heatedArmchairRadioButton" mnemonicParsing="false" prefHeight="21.0" prefWidth="223.0" text="Folding armchair" />
+                                    <RadioButton fx:id="skipLineRadioButton" mnemonicParsing="false" prefHeight="21.0" prefWidth="136.0" text="Skip line" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="12.0" right="12.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Buy a seat randomly" wrappingWidth="226.99658203125" />
+                        <Button fx:id="buyRandomButton" mnemonicParsing="false" text="Continue" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="16.0" right="16.0" top="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                     <children>
                         <AnchorPane HBox.hgrow="ALWAYS">
-                            <children>
-                                <Button fx:id="returnButton" mnemonicParsing="false" text="Back"
-                                        AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
-                                        AnchorPane.topAnchor="10.0"/>
-                                <Button fx:id="confirmSeatButton" mnemonicParsing="false" text="Continue"
-                                        AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0"
-                                        AnchorPane.topAnchor="10.0"/>
-                                <Label fx:id="errorSectionLabel" layoutX="145.0" layoutY="15.0" prefHeight="21.0"
-                                       prefWidth="326.0"/>
-                            </children>
+                           <children>
+                              <Button fx:id="returnButton" mnemonicParsing="false" text="Back" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                              <Button fx:id="confirmSeatButton" mnemonicParsing="false" text="Continue" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                              <Label fx:id="errorSectionLabel" layoutX="145.0" layoutY="15.0" prefHeight="21.0" prefWidth="326.0" />
+                           </children>
                         </AnchorPane>
-                    </children>
-                </HBox>
-            </children>
-        </GridPane>
-    </children>
-</AnchorPane>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</VBox>

@@ -3,7 +3,9 @@ package com.ttbmp.cinehub.core.usecase.buyticket.request;
 import com.ttbmp.cinehub.core.dto.CinemaDto;
 import com.ttbmp.cinehub.core.dto.MovieDto;
 import com.ttbmp.cinehub.core.usecase.Request;
-
+/**
+ * @author Palmieri Ivan
+ */
 public class SetProjectionRequest extends Request {
 
     public static final Request.Error MISSING_CINEMA_ERROR = new Request.Error("Cinema can't be null");
@@ -48,6 +50,15 @@ public class SetProjectionRequest extends Request {
 
     @Override
     public void onValidate() {
+        if (movieDto == null) {
+            addError(MISSING_MOVIE_ERROR);
+        }
+        if(cinemaDto==null){
+            addError(MISSING_CINEMA_ERROR);
 
+        }
+        if(time==null){
+            addError(MISSING_TIME_ERROR);
+        }
     }
 }

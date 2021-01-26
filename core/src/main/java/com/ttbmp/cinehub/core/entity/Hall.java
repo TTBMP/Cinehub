@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.core.entity;
-
+/**
+ * @author Palmieri Ivan
+ */
 import java.util.List;
 
 public class Hall {

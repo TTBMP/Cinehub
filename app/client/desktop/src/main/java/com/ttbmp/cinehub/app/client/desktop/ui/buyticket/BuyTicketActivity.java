@@ -12,7 +12,9 @@ import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketUseCaseController;
 
 import java.io.IOException;
-
+/**
+ * @author Palmieri Ivan
+ */
 public class BuyTicketActivity extends Activity {
     private final CinemaRepository cinemaRepository = CinehubApplication.APP_CONTAINER.getFactory(CinemaRepository.class).get();
     private final HallRepository hallRepository = CinehubApplication.APP_CONTAINER.getFactory(HallRepository.class).get();

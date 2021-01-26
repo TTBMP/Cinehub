@@ -20,7 +20,7 @@ public class StripeServicePaymentFacade implements PaymentService {
 
     private final ServiceRequestStripe serviceRequestStripe;
 
-    String errorStripe = "";
+    String errorStripe;
 
     public StripeServicePaymentFacade() {
         this.serviceRequestStripe = new ServiceRequestStripe();
@@ -157,6 +157,11 @@ public class StripeServicePaymentFacade implements PaymentService {
             e.printStackTrace();
         }
         return serviceRequestStripe.convertListOfPayment(payment, serviceRequestStripe);
+    }
+
+    @Override
+    public String getError() {
+        return errorStripe;
     }
 
 

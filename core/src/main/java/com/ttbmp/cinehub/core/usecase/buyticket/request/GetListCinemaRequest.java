@@ -2,9 +2,13 @@ package com.ttbmp.cinehub.core.usecase.buyticket.request;
 
 import com.ttbmp.cinehub.core.dto.MovieDto;
 import com.ttbmp.cinehub.core.usecase.Request;
-
+/**
+ * @author Palmieri Ivan
+ */
 public class GetListCinemaRequest extends Request {
-    public static final Request.Error MISSING_CINEMA_ERROR = new Request.Error("Cinema can't be null");
+    public static final Request.Error MISSING_MOVIE_ERROR = new Request.Error("Cinema can't be null");
+    public static final Request.Error MISSING_DATE_ERROR = new Request.Error("Date can't be null");
+
     private MovieDto movieDto;
     private String data;
 
@@ -35,6 +39,12 @@ public class GetListCinemaRequest extends Request {
 
     @Override
     public void onValidate() {
+        if(movieDto==null){
+            addError(MISSING_MOVIE_ERROR);
+        }
+        if(data==null){
+            addError(MISSING_DATE_ERROR);
+        }
 
     }
 }

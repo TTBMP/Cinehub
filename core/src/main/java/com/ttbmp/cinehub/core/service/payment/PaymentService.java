@@ -1,7 +1,4 @@
 package com.ttbmp.cinehub.core.service.payment;
-/**
- * @author Palmieri Ivan
- */
 
 import com.ttbmp.cinehub.core.dto.TicketDto;
 import com.ttbmp.cinehub.core.dto.UserDto;
@@ -10,6 +7,9 @@ import com.ttbmp.cinehub.core.service.payment.request.PayServiceRequest;
 
 import java.util.List;
 
+/**
+ * @author Palmieri Ivan
+ */
 public interface PaymentService {
 
     /*Da integer ad un entity*/
@@ -20,6 +20,8 @@ public interface PaymentService {
     boolean refoundById(UserDto user, String id);
 
     List<Payment> retriveListOfPayment(UserDto user);
+
+    String getError();
 
 
 }
