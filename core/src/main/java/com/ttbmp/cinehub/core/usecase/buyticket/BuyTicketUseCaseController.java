@@ -82,7 +82,7 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
     public boolean pay(PayRequest request) {
         try {
             Request.validate(request);
-            User user = new User("Ivan", "palm@ciao.cosis", new CreditCard("22/24", 354, "4242424242424242", "5496"));
+            User user = new User("Ivan", "palm@ciao.cosiss", new CreditCard("22/24", 354, "4242424242424242", "5496"));
             Ticket ticket = TicketDataMapper.mapToEntity(request.getTicket());
             Projection projection = ProjectionDataMapper.mapToEntity(request.getProjection());
             Integer index = request.getIndex();
@@ -210,7 +210,11 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
             Cinema cinema = CinemaDataMapper.mapToEntity(request.getCinemaDto());
             String time = request.getTime();
             Projection projection = projectionRepository.getTimeOfProjectionByMovieCinemaTime(movie, cinema, time);
-            buyTicketPresenter.presentProjection(new SetProjectionResponse(ProjectionDataMapper.mapToDto(projection)));
+            buyTicketPresenter.presentProjection(
+                    new SetProjectionResponse(
+                            ProjectionDataMapper.mapToDto(projection)
+                    )
+            );
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentSetProjectionNullRequest();
         } catch (Request.InvalidRequestException e) {
