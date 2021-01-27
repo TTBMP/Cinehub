@@ -2,9 +2,9 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
 
 import com.ttbmp.cinehub.service.payment.stripe.ServiceRequestStripe;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 class ServiceRequestStripeTest {

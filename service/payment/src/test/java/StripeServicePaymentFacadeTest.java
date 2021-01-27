@@ -5,9 +5,8 @@ import com.ttbmp.cinehub.core.service.payment.request.PayServiceRequest;
 import com.ttbmp.cinehub.service.payment.stripe.StripeServicePaymentFacade;
 import org.junit.jupiter.api.Test;
 
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 class StripeServicePaymentFacadeTest {
