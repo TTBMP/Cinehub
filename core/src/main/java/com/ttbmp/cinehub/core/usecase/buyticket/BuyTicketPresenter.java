@@ -50,7 +50,7 @@ public interface BuyTicketPresenter {
 
     void presentSetProjectionNullRequest();
 
-    void presentInvalidSetProjection(SetProjectionRequest request);
+    void presentInvalidSetProjection(SetSelectedProjectionRequest request);
 
     void presentGetNumberOfSeatsNullRequest();
 

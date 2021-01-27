@@ -15,7 +15,6 @@ import java.util.List;
 public class MockSeatRepository implements SeatRepository {
     @Override
     public List<Seat> getListSeat(Cinema cinema, Movie movie, LocalDate date, String time) {
-        /*Fa la query al db e dice dato un film in quel cinema, dammi tutti i Posti*/
         return Collections.emptyList();
     }
 }

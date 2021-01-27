@@ -1,8 +1,6 @@
 package com.ttbmp.cinehub.data.local.mock;
 
-import com.ttbmp.cinehub.core.entity.Cinema;
 import com.ttbmp.cinehub.core.entity.Hall;
-import com.ttbmp.cinehub.core.entity.Projection;
 import com.ttbmp.cinehub.core.repository.HallRepository;
 
 import java.util.ArrayList;
@@ -14,18 +12,17 @@ import java.util.List;
 public class MockHallRepository implements HallRepository {
 
 
-    @Override
-    public List<Hall> retriveHallByCinema(Cinema cinema) {
-        return new ArrayList<>();
-    }
 
     @Override
     public List<Hall> retriveAllHall() {
-        return new ArrayList<>();
+        List<Hall> hallList = new ArrayList<>();
+        hallList.add(new Hall(0));
+        hallList.add(new Hall(1));
+        hallList.add(new Hall(2));
+        hallList.add(new Hall(3));
+        hallList.add(new Hall(4));
+        hallList.add(new Hall(5));
+        return hallList;
     }
 
-    @Override
-    public Hall retriveHallByProjection(Projection projection) {
-        return projection.getHall();
-    }
 }

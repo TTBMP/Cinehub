@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.core.datamapper;
 
 import com.ttbmp.cinehub.core.dto.HallDto;
-
 import com.ttbmp.cinehub.core.entity.Hall;
 
 

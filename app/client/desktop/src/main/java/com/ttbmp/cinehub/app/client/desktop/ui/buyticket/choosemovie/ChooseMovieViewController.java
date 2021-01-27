@@ -51,6 +51,13 @@ public class ChooseMovieViewController extends ViewController {
     protected void onLoad() {
         appBarController.load(activity, navController);
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
+        movieListView.setItems(viewModel.getMovieList());
+        bind();
+        activity.getUseCase(BuyTicketUseCase.class).getListMovie();
+        dateOfProjectionDatePicker.setValue(LocalDate.now());
+        movieListView.setCellFactory(movieList -> new ChooseMovieListCell(activity, navController));
+        dateOfProjectionDatePicker.setOnAction(a -> activity.getUseCase(BuyTicketUseCase.class).getListMovie());
+        dateOfProjectionDatePicker.setDayCellFactory(CustomDateCell::new);
         confirmMovieButton.setOnAction(a -> {
             try {
                 activity.getUseCase(BuyTicketUseCase.class).getListCinema(new GetListCinemaRequest(viewModel.selectedMovieProperty().getValue(), viewModel.selectedDateProperty().getValue().toString()));
@@ -60,13 +67,6 @@ public class ChooseMovieViewController extends ViewController {
                 e.printStackTrace();
             }
         });
-        movieListView.setItems(viewModel.getMovieList());
-        bind();
-        activity.getUseCase(BuyTicketUseCase.class).getListMovie();
-        dateOfProjectionDatePicker.setValue(LocalDate.now());
-        movieListView.setCellFactory(movieList -> new ChooseMovieListCell(activity, navController));
-        dateOfProjectionDatePicker.setOnAction(a -> activity.getUseCase(BuyTicketUseCase.class).getListMovie());
-        dateOfProjectionDatePicker.setDayCellFactory(CustomDateCell::new);
 
     }
 

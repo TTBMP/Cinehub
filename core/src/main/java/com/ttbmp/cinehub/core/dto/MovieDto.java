@@ -65,4 +65,5 @@ public class MovieDto {
     public void setMovieUrl(String movieUrl) {
         this.movieUrl = movieUrl;
     }
+
 }

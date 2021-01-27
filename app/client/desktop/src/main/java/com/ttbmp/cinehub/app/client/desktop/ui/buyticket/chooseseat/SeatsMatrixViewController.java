@@ -34,13 +34,13 @@ public class SeatsMatrixViewController extends ViewController {
     private void createMatrix(BuyTicketViewModel viewModel, List<SeatDto> seatDtoList) {
         int size = SeatDataMapper.mapToEntityList(viewModel.getSeatList()).size();
         int rows = 10;
-        int colums = (size / rows);
+        int columns = (size / rows);
         int rest = size % rows;
         int count = 0;
         int buy = 0;
         char[] a = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'L', 'M'};
         for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < colums; j++) {
+            for (int j = 0; j < columns; j++) {
                 RadioButton radioButton = new RadioButton();
                 if (i == 0) {
                     radioButton.setPadding(new Insets(5, 5, 5, 40));
@@ -58,7 +58,7 @@ public class SeatsMatrixViewController extends ViewController {
                 count++;
             }
         }
-        addOtherButton(seatDtoList, viewModel, colums, rest, count, buy, a);
+        addOtherButton(seatDtoList, viewModel, columns, rest, count, buy, a);
         updateValue(viewModel, size, buy);
     }
 

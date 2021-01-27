@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.core.datamapper;
 
 
 import com.ttbmp.cinehub.core.dto.TicketDto;
-import com.ttbmp.cinehub.core.entity.ticket.component.TicketNormal;
+import com.ttbmp.cinehub.core.entity.ticket.component.TicketAbstract;
 import com.ttbmp.cinehub.core.entity.ticket.component.Ticket;
 
 /**
@@ -13,18 +13,18 @@ public class TicketDataMapper {
     private TicketDataMapper() {
     }
 
-    public static TicketDto mapToDto(Ticket ticket) {
+    public static TicketDto mapToDto(TicketAbstract ticketAbstract) {
 
-        TicketDto ticketDto = new TicketDto(ticket.getPrice());
+        TicketDto ticketDto = new TicketDto(ticketAbstract.getPrice());
 
-        ticketDto.setPosition(ticket.getPosition());
+        ticketDto.setPosition(ticketAbstract.getPosition());
         return ticketDto;
     }
 
-    public static Ticket mapToEntity(TicketDto ticketDto) {
-        Ticket ticket = new TicketNormal(ticketDto.getPrice());
-        ticket.setPosition(ticketDto.getPosition());
-        return ticket;
+    public static TicketAbstract mapToEntity(TicketDto ticketDto) {
+        TicketAbstract ticketAbstract = new Ticket(ticketDto.getPrice());
+        ticketAbstract.setPosition(ticketDto.getPosition());
+        return ticketAbstract;
     }
 
 

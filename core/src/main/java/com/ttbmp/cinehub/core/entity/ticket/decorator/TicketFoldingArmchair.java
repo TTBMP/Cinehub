@@ -1,18 +1,19 @@
 package com.ttbmp.cinehub.core.entity.ticket.decorator;
 
-import com.ttbmp.cinehub.core.entity.ticket.component.Ticket;
+import com.ttbmp.cinehub.core.entity.ticket.component.TicketAbstract;
+
 /**
  * @author Palmieri Ivan
  */
 public class TicketFoldingArmchair extends TicketDecorator {
 
-    public TicketFoldingArmchair(Ticket ticket) {
-        super(ticket);
+    public TicketFoldingArmchair(TicketAbstract ticketAbstract) {
+        super(ticketAbstract);
     }
 
     @Override
-    public long operation() {
-        return this.addPrice(super.operation());
+    public long increasePrice() {
+        return this.addPrice(super.increasePrice());
     }
 
     private long addPrice(long price) {
