@@ -1,10 +1,11 @@
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
-import com.stripe.model.PaymentIntent;
-import com.ttbmp.cinehub.service.payment.stripe.ServiceRequestStripe;
-import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import com.ttbmp.cinehub.service.payment.stripe.ServiceRequestStripe;
+import org.junit.Test;
+
+import static org.junit.Assert.assertNotNull;
+
 
 class ServiceRequestStripeTest {
 

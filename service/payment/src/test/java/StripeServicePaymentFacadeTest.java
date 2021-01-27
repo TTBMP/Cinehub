@@ -1,14 +1,14 @@
-import com.stripe.exception.StripeException;
-import com.stripe.model.Customer;
 import com.ttbmp.cinehub.core.datamapper.UserDataMapper;
 import com.ttbmp.cinehub.core.entity.CreditCard;
 import com.ttbmp.cinehub.core.entity.User;
 import com.ttbmp.cinehub.core.service.payment.request.PayServiceRequest;
-import com.ttbmp.cinehub.service.payment.stripe.ServiceRequestStripe;
 import com.ttbmp.cinehub.service.payment.stripe.StripeServicePaymentFacade;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 
 class StripeServicePaymentFacadeTest {
 
@@ -21,7 +21,7 @@ class StripeServicePaymentFacadeTest {
     }
 
     @Test
-    void pay_returnsFalse_withIncorrectUser()  {
+     void pay_returnsFalse_withIncorrectUser()  {
         StripeServicePaymentFacade stripeServicePaymentFacade = new StripeServicePaymentFacade();
         PayServiceRequest request = new PayServiceRequest(null,5);
         assertFalse(stripeServicePaymentFacade.pay(request));
