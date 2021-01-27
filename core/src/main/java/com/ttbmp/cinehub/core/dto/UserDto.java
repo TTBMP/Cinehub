@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.core.dto;
 
 import com.ttbmp.cinehub.core.entity.CreditCard;
-import com.ttbmp.cinehub.core.entity.ticket.component.TicketNormal;
 
 import java.util.ArrayList;
 import java.util.List;

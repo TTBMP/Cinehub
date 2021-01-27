@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.data.local.mock;
 
-import com.ttbmp.cinehub.core.entity.Movie;
+import com.ttbmp.cinehub.core.dto.MovieDto;
 import com.ttbmp.cinehub.core.repository.MovieRepository;
 import com.ttbmp.cinehub.core.service.movie.MovieApiService;
 
@@ -14,7 +14,7 @@ public class MockMovieRepository implements MovieRepository {
 
 
     @Override
-    public List<Movie> getAllMovie(MovieApiService movieApiService) throws IOException {
+    public List<MovieDto> getAllMovie(MovieApiService movieApiService) throws IOException {
         movieApiService.retrieveAllMovie();
         return movieApiService.returnListMovie();
     }

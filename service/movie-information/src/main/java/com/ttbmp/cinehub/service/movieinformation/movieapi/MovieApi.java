@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.service.movieinformation.movieapi;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.ttbmp.cinehub.core.entity.Movie;
+import com.ttbmp.cinehub.core.dto.MovieDto;
 import com.ttbmp.cinehub.core.service.movie.MovieApiService;
 import com.ttbmp.cinehub.service.movieinformation.datamapper.MovieApiDataMapper;
 import com.ttbmp.cinehub.service.movieinformation.dto.MovieApiDto;
@@ -32,8 +32,8 @@ public class MovieApi implements MovieApiService {
         //Empty section
     }
 
-    public List<Movie> returnListMovie() {
-        return MovieApiDataMapper.mapToEntityList(listMovie);
+    public List<MovieDto> returnListMovie() {
+        return MovieApiDataMapper.mapToDtoList(listMovie);
     }
 
     @Override
@@ -48,7 +48,6 @@ public class MovieApi implements MovieApiService {
     @Override
     public void retrieveMovieById(Integer id) throws IOException {
         retrieveMovie(new URL(urlStart + id + apiKey));
-
     }
 
 

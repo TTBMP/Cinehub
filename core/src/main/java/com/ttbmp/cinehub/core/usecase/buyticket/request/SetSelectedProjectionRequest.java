@@ -3,10 +3,13 @@ package com.ttbmp.cinehub.core.usecase.buyticket.request;
 import com.ttbmp.cinehub.core.dto.CinemaDto;
 import com.ttbmp.cinehub.core.dto.MovieDto;
 import com.ttbmp.cinehub.core.usecase.Request;
+
+import java.time.LocalDate;
+
 /**
  * @author Palmieri Ivan
  */
-public class SetProjectionRequest extends Request {
+public class SetSelectedProjectionRequest extends Request {
 
     public static final Request.Error MISSING_CINEMA_ERROR = new Request.Error("Cinema can't be null");
     public static final Request.Error MISSING_MOVIE_ERROR = new Request.Error("Movie can't be null");
@@ -16,13 +19,22 @@ public class SetProjectionRequest extends Request {
     private MovieDto movieDto;
     private CinemaDto cinemaDto;
     private String time;
+    private String date;
 
-    public SetProjectionRequest(MovieDto movieDto, CinemaDto cinemaDto, String time) {
+    public SetSelectedProjectionRequest(MovieDto movieDto, CinemaDto cinemaDto, String time, LocalDate date) {
         this.movieDto = movieDto;
         this.cinemaDto = cinemaDto;
         this.time = time;
+        this.date = date.toString();
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public MovieDto getMovieDto() {
         return movieDto;

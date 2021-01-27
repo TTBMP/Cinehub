@@ -14,7 +14,7 @@ public interface BuyTicketUseCase extends UseCase {
 
     void getListMovie();
 
-    void getTicketBySeats(GetTicketBySeatsRequest request);
+    void createTicket(GetTicketBySeatsRequest request);
 
     void getListCinema(GetListCinemaRequest request);
 
@@ -24,7 +24,7 @@ public interface BuyTicketUseCase extends UseCase {
 
     void confirmSeatsSpecific();
 
-    void setProjection(SetProjectionRequest request);
+    void getProjection(SetSelectedProjectionRequest request);
 
-    void getNumberOfSeats(GetNumberOfSeatsRequest request);
+    void getListOfSeatsByProjection(GetNumberOfSeatsRequest request);
 }

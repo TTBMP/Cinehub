@@ -7,7 +7,7 @@ import java.util.List;
 public class Hall {
 
     private Integer id;
-    private List<Projection> projectionList;
+
     private List<Seat> seatList;
 
     public Hall(Integer id) {
@@ -22,17 +22,6 @@ public class Hall {
         this.id = id;
     }
 
-    public List<Projection> getProjectionList() {
-        return projectionList;
-    }
-
-    public void setProjectionList(List<Projection> projectionList) {
-        this.projectionList = projectionList;
-    }
-
-    public void addProjection(Projection projection) {
-        this.projectionList.add(projection);
-    }
 
     public List<Seat> getSeatList() {
         return seatList;

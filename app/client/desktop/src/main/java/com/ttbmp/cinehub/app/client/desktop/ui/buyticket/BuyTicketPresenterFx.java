@@ -6,7 +6,6 @@ import com.ttbmp.cinehub.core.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.core.usecase.buyticket.response.*;
 import javafx.scene.control.RadioButton;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -24,30 +23,22 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentMovieApiList(GetListMovieResponse response) {
-        viewModel.getMovieList().clear();
-        if (viewModel.selectedDateProperty().getValue().equals(LocalDate.now())) {
-            viewModel.getMovieList().addAll(response.getMovieList().subList(0, 5));
-        } else {
-            viewModel.getMovieList().addAll(response.getMovieList().subList(5, 10));
-        }
+        viewModel.getMovieList().setAll(response.getMovieList());
     }
 
     @Override
     public void presentCinemaList(GetListCinemaResponse response) {
-        viewModel.getCinemaList().clear();
-        viewModel.getCinemaList().addAll(response.getCinemaList());
+        viewModel.getCinemaList().setAll(response.getCinemaList());
     }
 
     @Override
     public void presentTimeList(List<String> timeOfProjectionList) {
-        viewModel.getTimeOfProjectionList().clear();
-        viewModel.getTimeOfProjectionList().addAll(timeOfProjectionList);
+        viewModel.getTimeOfProjectionList().setAll(timeOfProjectionList);
     }
 
     @Override
     public void presentSeatList(GetNumberOfSeatsResponse response) {
-        viewModel.getSeatList().clear();
-        viewModel.getSeatList().addAll(response.getSeatDtoList());
+        viewModel.getSeatList().setAll(response.getSeatDtoList());
     }
 
     @Override
@@ -163,15 +154,15 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentInvalidSetProjection(SetProjectionRequest request) {
-        if (request.getErrorList().contains(SetProjectionRequest.MISSING_CINEMA_ERROR)) {
-            viewModel.cinemaErrorProperty().setValue(SetProjectionRequest.MISSING_CINEMA_ERROR.getMessage());
+    public void presentInvalidSetProjection(SetSelectedProjectionRequest request) {
+        if (request.getErrorList().contains(SetSelectedProjectionRequest.MISSING_CINEMA_ERROR)) {
+            viewModel.cinemaErrorProperty().setValue(SetSelectedProjectionRequest.MISSING_CINEMA_ERROR.getMessage());
         }
-        if (request.getErrorList().contains(SetProjectionRequest.MISSING_MOVIE_ERROR)) {
-            viewModel.cinemaErrorProperty().setValue(SetProjectionRequest.MISSING_MOVIE_ERROR.getMessage());
+        if (request.getErrorList().contains(SetSelectedProjectionRequest.MISSING_MOVIE_ERROR)) {
+            viewModel.cinemaErrorProperty().setValue(SetSelectedProjectionRequest.MISSING_MOVIE_ERROR.getMessage());
         }
-        if (request.getErrorList().contains(SetProjectionRequest.MISSING_TIME_ERROR)) {
-            viewModel.cinemaErrorProperty().setValue(SetProjectionRequest.MISSING_TIME_ERROR.getMessage());
+        if (request.getErrorList().contains(SetSelectedProjectionRequest.MISSING_TIME_ERROR)) {
+            viewModel.cinemaErrorProperty().setValue(SetSelectedProjectionRequest.MISSING_TIME_ERROR.getMessage());
         }
     }
 
@@ -198,21 +189,21 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void confirmSeatsSpecific() {
-        String position = viewModel.getGroup().getSelectedToggle().toString().substring(
+        String positionName = viewModel.getGroup().getSelectedToggle().toString().substring(
                 viewModel.getGroup().getSelectedToggle().toString().length() - 6,
                 viewModel.getGroup().getSelectedToggle().toString().length() - 4);
-        int i = 0;
+        int numberOfPosition = 0;
         int j = 0;
         while (j == 0) {
-            String text = ((RadioButton) viewModel.getGroup().getToggles().get(i)).getText().substring(0, 2);
-            if (text.equals(position)) {
+            String text = ((RadioButton) viewModel.getGroup().getToggles().get(numberOfPosition)).getText().substring(0, 2);
+            if (text.equals(positionName)) {
                 j = 1;
             } else {
-                i++;
+                numberOfPosition++;
             }
         }
-        viewModel.selectedSeatsProperty().setValue(position);
-        viewModel.selectedPositionSeatIntegerProperty().setValue(i);
+        viewModel.selectedSeatsProperty().setValue(positionName);
+        viewModel.selectedPositionSeatIntegerProperty().setValue(numberOfPosition);
 
 
     }

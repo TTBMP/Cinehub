@@ -16,27 +16,10 @@ public class MockProjectionRepository implements ProjectionRepository {
 
 
 
-    @Override
-    public List<Projection> getProjectionByMovie(Movie movie, String data) {
-        projectionList.clear();
-        getAllProjection();
-        List<Projection> listProjectionByDate = new ArrayList<>();
-        List<Projection> listProjectionByMovie = new ArrayList<>();
-        for (Projection projection : projectionList) {
-            if (projection.getDate().equals(data)) {
-                listProjectionByDate.add(projection);
-            }
-        }
-        for (Projection projection : listProjectionByDate) {
-            if (projection.getMovie().getName().equals(movie.getName())) {
-                listProjectionByMovie.add(projection);
-            }
-        }
-        return listProjectionByMovie;
-    }
 
     @Override
     public List<Projection> getAllProjection() {//Query al db
+        this.projectionList.clear();
         this.projectionList.addAll(Arrays.asList(
                 new Projection(
                         new Movie("The farnvx1"),
@@ -113,30 +96,4 @@ public class MockProjectionRepository implements ProjectionRepository {
         return projectionList;
     }
 
-    @Override
-    public List<String> getTimeOfProjectionByMovieCinema(Movie movie, Cinema cinema) {
-        List<String> timeList = new ArrayList<>();
-        projectionList.clear();
-        getAllProjection();
-        for (Projection projection : projectionList) {
-            if (projection.getCinema().getName().equals(cinema.getName()) && projection.getMovie().getName().equals(movie.getName())) {
-                timeList.add(projection.getStartTime());
-            }
-        }
-        return timeList;
-    }
-
-    @Override
-    public Projection getTimeOfProjectionByMovieCinemaTime(Movie movie, Cinema cinema, String time) {
-        projectionList.clear();
-        getAllProjection();
-        for (Projection projection : projectionList) {
-            if (projection.getCinema().getName().equals(cinema.getName()) &&
-                    projection.getMovie().getName().equals(movie.getName()) &&
-                    projection.getStartTime().equals(time)) {
-                return projection;
-            }
-        }
-        return null;
-    }
 }

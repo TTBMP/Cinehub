@@ -2,16 +2,9 @@ package com.ttbmp.cinehub.service.payment.stripe;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
-import com.stripe.model.PaymentIntent;
-import com.stripe.model.PaymentIntentCollection;
 import com.stripe.model.PaymentMethod;
-import com.ttbmp.cinehub.core.dto.TicketDto;
-import com.ttbmp.cinehub.core.dto.UserDto;
-import com.ttbmp.cinehub.core.entity.Payment;
 import com.ttbmp.cinehub.core.service.payment.PaymentService;
 import com.ttbmp.cinehub.core.service.payment.request.PayServiceRequest;
-
-import java.util.List;
 
 /**
  * @author Palmieri Ivan
@@ -65,7 +58,7 @@ public class StripeServicePaymentFacade implements PaymentService {
 
     }
 
-    /*Refund a specific transaction using the id*/
+    /*Refund a specific transaction using the id
     @Override
     public boolean refoundById(UserDto userDto, String id) {
 
@@ -100,9 +93,9 @@ public class StripeServicePaymentFacade implements PaymentService {
         return false;
 
 
-    }
+    }*/
 
-    /*Refund your last purchase*/
+    /*Refund your last purchase
     @Override
     public boolean refoundLastPayment(UserDto userDto, TicketDto ticket) {
         Customer customer = null;
@@ -115,7 +108,6 @@ public class StripeServicePaymentFacade implements PaymentService {
             errorStripe = "User refund error";
             return false;
         }
-        /*The user does not have to register*/
         PaymentIntentCollection paymentCollection = new PaymentIntentCollection();
         try {
             paymentCollection = serviceRequestStripe.retrieveListPaymentIntent(customer);
@@ -145,10 +137,9 @@ public class StripeServicePaymentFacade implements PaymentService {
         }
         return true;
 
-    }
+    }*/
 
-
-    @Override
+    /* @Override
     public List<Payment> retriveListOfPayment(UserDto userDto) {
         PaymentIntentCollection payment = null;
         try {
@@ -157,7 +148,7 @@ public class StripeServicePaymentFacade implements PaymentService {
             e.printStackTrace();
         }
         return serviceRequestStripe.convertListOfPayment(payment, serviceRequestStripe);
-    }
+    }*/
 
     @Override
     public String getError() {

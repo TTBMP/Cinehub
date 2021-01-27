@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.core.service.movie;
 
-import com.ttbmp.cinehub.core.entity.Movie;
+import com.ttbmp.cinehub.core.dto.MovieDto;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,5 +19,5 @@ public interface MovieApiService {
 
     void printSpecificAttribute(String output);
 
-    List<Movie> returnListMovie();
+    List<MovieDto> returnListMovie();
 }

@@ -1,8 +1,6 @@
 package com.ttbmp.cinehub.core.datamapper;
 
-import com.ttbmp.cinehub.core.dto.MovieDto;
 import com.ttbmp.cinehub.core.dto.ProjectionDto;
-import com.ttbmp.cinehub.core.entity.Movie;
 import com.ttbmp.cinehub.core.entity.Projection;
 import com.ttbmp.cinehub.core.utilities.DataMapperHelper;
 

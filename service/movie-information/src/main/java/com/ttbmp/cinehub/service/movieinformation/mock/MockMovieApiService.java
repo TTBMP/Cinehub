@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.service.movieinformation.mock;
 
 
-import com.ttbmp.cinehub.core.entity.Movie;
+import com.ttbmp.cinehub.core.dto.MovieDto;
 import com.ttbmp.cinehub.core.service.movie.MovieApiService;
 
 import java.net.URL;
@@ -34,7 +34,7 @@ public class MockMovieApiService implements MovieApiService {
     }
 
     @Override
-    public List<Movie> returnListMovie() {
+    public List<MovieDto> returnListMovie() {
         return new ArrayList<>();
     }
 }

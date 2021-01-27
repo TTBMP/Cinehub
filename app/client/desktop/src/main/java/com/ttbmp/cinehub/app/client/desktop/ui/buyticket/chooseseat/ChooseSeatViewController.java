@@ -35,6 +35,7 @@ public class ChooseSeatViewController extends ViewController {
 
     @FXML
     private Text seatPriceText;
+
     @FXML
     private RadioButton foldingArmchairRadioButton;
     @FXML
@@ -64,6 +65,17 @@ public class ChooseSeatViewController extends ViewController {
     @Override
     protected void onLoad() {
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
+        activity.getUseCase(BuyTicketUseCase.class).getListOfSeatsByProjection(new GetNumberOfSeatsRequest(viewModel.selectedProjectionProperty().getValue()));
+        SeatsMatrixView seatsMatrixView;
+        try {
+            seatsMatrixView = new SeatsMatrixView();
+            seatsMatrixView.load();
+            seatsContainerVBox.getChildren().add(seatsMatrixView.getRoot());
+            seatsMatrixView.getController().load(activity, navController);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        bind();
         buyRandomButton.setOnAction(a -> {
 
             try {
@@ -88,22 +100,12 @@ public class ChooseSeatViewController extends ViewController {
                 e.printStackTrace();
             }
         });
-        activity.getUseCase(BuyTicketUseCase.class).getNumberOfSeats(new GetNumberOfSeatsRequest(viewModel.selectedProjectionProperty().getValue()));
-        SeatsMatrixView seatsMatrixView;
-        try {
-            seatsMatrixView = new SeatsMatrixView();
-            seatsMatrixView.load();
-            seatsContainerVBox.getChildren().add(seatsMatrixView.getRoot());
-            seatsMatrixView.getController().load(activity, navController);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        bind();
     }
 
 
     private void bind() {
         errorSectionLabel.textProperty().bind(viewModel.seatErrorProperty());
+
         confirmSeatButton.disableProperty().bind(viewModel.getGroup().selectedToggleProperty().isNull());
         seatsTotalText.textProperty().bind(viewModel.totalSeatsProperty());
         seatsFreeText.textProperty().bind(viewModel.freeSeatsProperty());
@@ -115,7 +117,7 @@ public class ChooseSeatViewController extends ViewController {
 
     private void changeLayoutRandom() throws IOException {
         activity.getUseCase(BuyTicketUseCase.class).confirmSeatsRandom();
-        activity.getUseCase(BuyTicketUseCase.class).getTicketBySeats(
+        activity.getUseCase(BuyTicketUseCase.class).createTicket(
                 new GetTicketBySeatsRequest(
                         viewModel.getSeatList(),
                         viewModel.selectedSeatsProperty().getValue(),
@@ -130,7 +132,7 @@ public class ChooseSeatViewController extends ViewController {
 
     private void changeLayoutSpecific() throws IOException {
         activity.getUseCase(BuyTicketUseCase.class).confirmSeatsSpecific();
-        activity.getUseCase(BuyTicketUseCase.class).getTicketBySeats(
+        activity.getUseCase(BuyTicketUseCase.class).createTicket(
                 new GetTicketBySeatsRequest(
                         viewModel.getSeatList(),
                         viewModel.selectedSeatsProperty().getValue(),

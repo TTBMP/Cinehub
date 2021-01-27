@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.service.movieinformation.datamapper;
 
-import com.ttbmp.cinehub.core.entity.Movie;
+import com.ttbmp.cinehub.core.dto.MovieDto;
 import com.ttbmp.cinehub.service.movieinformation.dto.MovieApiDto;
 
 import java.util.ArrayList;
@@ -14,18 +14,18 @@ public class MovieApiDataMapper {
     private MovieApiDataMapper() {
     }
 
-    public static List<Movie> mapToEntityList(List<MovieApiDto> movieList) {
+    public static List<MovieDto> mapToDtoList(List<MovieApiDto> movieList) {
 
-        List<Movie> listMovie = new ArrayList<>();
+        List<MovieDto> movieDtoList = new ArrayList<>();
         for (MovieApiDto movieApiDto : movieList) {
-            Movie movie = new Movie(movieApiDto.getMovieName());
-            movie.setVote(movieApiDto.getMovieVote());
-            movie.setOverview(movieApiDto.getMovieOverview());
-            movie.setRelases(movieApiDto.getMovieReleases());
-            movie.setImageUrl(movieApiDto.getMovieImageUrl());
-            listMovie.add(movie);
+            MovieDto movieDto = new MovieDto(movieApiDto.getMovieName());
+            movieDto.setVote(movieApiDto.getMovieVote());
+            movieDto.setOverview(movieApiDto.getMovieOverview());
+            movieDto.setReleases(movieApiDto.getMovieReleases());
+            movieDto.setMovieUrl(movieApiDto.getMovieImageUrl());
+            movieDtoList.add(movieDto);
         }
-        return listMovie;
+        return movieDtoList;
 
     }
 }

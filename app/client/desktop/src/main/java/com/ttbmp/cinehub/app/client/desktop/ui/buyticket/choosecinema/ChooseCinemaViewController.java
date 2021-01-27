@@ -9,7 +9,7 @@ import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavDestinati
 import com.ttbmp.cinehub.core.dto.CinemaDto;
 import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.core.usecase.buyticket.request.GetTimeOfProjecitonRequest;
-import com.ttbmp.cinehub.core.usecase.buyticket.request.SetProjectionRequest;
+import com.ttbmp.cinehub.core.usecase.buyticket.request.SetSelectedProjectionRequest;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -49,6 +49,11 @@ public class ChooseCinemaViewController extends ViewController {
     protected void onLoad() {
         appBarController.load(activity, navController);
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
+        cinemaListView.setItems(viewModel.getCinemaList());
+        timeOfProjectionListView.setItems(viewModel.getTimeOfProjectionList());
+        viewModel.getTimeOfProjectionList().clear();
+        bind();
+        cinemaListView.setCellFactory(listCinemaDto -> new ChooseCinemaListCell(activity, navController));//Cell Factory
         cancelButton.setOnAction(a -> {
             try {
                 navController.popBackStack();
@@ -57,38 +62,30 @@ public class ChooseCinemaViewController extends ViewController {
             }
         });
         confirmCinemaButton.setOnAction(a -> {
-            activity.getUseCase(BuyTicketUseCase.class).setProjection(new SetProjectionRequest(
+            activity.getUseCase(BuyTicketUseCase.class).getProjection(new SetSelectedProjectionRequest(
                     viewModel.selectedMovieProperty().getValue(),
                     viewModel.selectedCinemaProperty().getValue(),
-                    viewModel.selectedTimeProperty().getValue()));
+                    viewModel.selectedTimeProperty().getValue(),
+                    viewModel.selectedDateProperty().getValue()));
             try {
                 navController.navigate(new NavDestination(new ChooseSeatView()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
-        cinemaListView.setItems(viewModel.getCinemaList());
-        timeOfProjectionListView.setItems(viewModel.getTimeOfProjectionList());
-        viewModel.getTimeOfProjectionList().clear();
-        bind();
-        onAction();
-        cinemaListView.setCellFactory(listCinemaDto -> new ChooseCinemaListCell(activity, navController));//Cell Factory
     }
 
-
-    private void onAction() {
-        cinemaListView.getSelectionModel().selectedItemProperty().addListener(l ->
-                activity.getUseCase(BuyTicketUseCase.class).getTimeOfProjection(new GetTimeOfProjecitonRequest(
-                        viewModel.selectedMovieProperty().getValue(),
-                        viewModel.selectedCinemaProperty().getValue())));
-
-    }
 
     private void bind() {
         confirmCinemaButton.disableProperty().bind(viewModel.selectedCinemaProperty().isNull().or(viewModel.selectedTimeProperty().isNull()));
         viewModel.selectedTimeProperty().bind(timeOfProjectionListView.getSelectionModel().selectedItemProperty());
         viewModel.selectedCinemaProperty().bind(cinemaListView.getSelectionModel().selectedItemProperty());
         errorSectionLabel.textProperty().bind(viewModel.cinemaErrorProperty());
+        cinemaListView.getSelectionModel().selectedItemProperty().addListener(l ->
+                activity.getUseCase(BuyTicketUseCase.class).getTimeOfProjection(new GetTimeOfProjecitonRequest(
+                        viewModel.selectedMovieProperty().getValue(),
+                        viewModel.selectedCinemaProperty().getValue(),
+                        viewModel.selectedDateProperty().getValue())));
     }
 
 }
