@@ -72,8 +72,8 @@
                   <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                      <children>
                                   <Button fx:id="returnButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="54.0" text="Back" />
-                                  <Text fx:id="resultPaymentText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="179.6708984375" />
-                                  <Label fx:id="errorSectionLabel" prefHeight="21.0" prefWidth="288.0" />
+                                  <Text fx:id="resultPaymentText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="214.6708984375" />
+                                  <Label fx:id="errorSectionLabel" prefHeight="21.0" prefWidth="253.0" textFill="RED" />
                                   <Button fx:id="confirmButton" mnemonicParsing="false" text="Pay" textAlignment="JUSTIFY" />
                      </children>
                      <VBox.margin>

@@ -12,25 +12,17 @@ import com.ttbmp.cinehub.core.entity.ticket.component.TicketNormal;
 public class ProjectionDto {
 
     private String startTime;
-    private Cinema cinemaDto;
-    private Hall hallDto;
-    private Movie movieDto;
+    private CinemaDto cinemaDto;
+    private HallDto hallDto;
+    private MovieDto movieDto;
     private TicketNormal ticketNormalList;
     private String date;
 
-    public ProjectionDto(Movie movie, Cinema cinema, Hall hall, String startTime, String date) {
+    public ProjectionDto(MovieDto movie, CinemaDto cinema, HallDto hall, String startTime, String date) {
         this.movieDto = movie;
         this.cinemaDto = cinema;
         this.hallDto = hall;
         this.startTime = startTime;
-        this.date = date;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
         this.date = date;
     }
 
@@ -42,35 +34,43 @@ public class ProjectionDto {
         this.startTime = startTime;
     }
 
-    public Cinema getCinemaDto() {
+    public CinemaDto getCinemaDto() {
         return cinemaDto;
     }
 
-    public void setCinemaDto(Cinema cinemaDto) {
+    public void setCinemaDto(CinemaDto cinemaDto) {
         this.cinemaDto = cinemaDto;
     }
 
-    public Hall getHallDto() {
+    public HallDto getHallDto() {
         return hallDto;
     }
 
-    public void setHallDto(Hall hallDto) {
+    public void setHallDto(HallDto hallDto) {
         this.hallDto = hallDto;
     }
 
-    public Movie getMovieDto() {
+    public MovieDto getMovieDto() {
         return movieDto;
     }
 
-    public void setMovieDto(Movie movieDto) {
+    public void setMovieDto(MovieDto movieDto) {
         this.movieDto = movieDto;
     }
 
-    public TicketNormal getTicketList() {
+    public TicketNormal getTicketNormalList() {
         return ticketNormalList;
     }
 
-    public void setTicketList(TicketNormal ticketNormalList) {
+    public void setTicketNormalList(TicketNormal ticketNormalList) {
         this.ticketNormalList = ticketNormalList;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

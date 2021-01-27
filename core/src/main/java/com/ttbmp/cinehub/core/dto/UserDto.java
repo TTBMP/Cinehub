@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class UserDto {
 
-    private final List<TicketNormal> ownedTicketNormal = new ArrayList<>();
+    private final List<TicketDto> ownedTicketNormal = new ArrayList<>();
     private Integer id;
     private String name;
     private String email;
@@ -31,8 +31,12 @@ public class UserDto {
 
     }
 
-    public List<TicketNormal> getOwnedTicket() {
+    public List<TicketDto> getOwnedTicketNormal() {
         return ownedTicketNormal;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public int getId() {
@@ -43,9 +47,6 @@ public class UserDto {
         this.id = id;
     }
 
-    public void addTicket(TicketNormal ticketNormal) {
-        this.ownedTicketNormal.add(ticketNormal);
-    }
 
     public String getName() {
         return name;
