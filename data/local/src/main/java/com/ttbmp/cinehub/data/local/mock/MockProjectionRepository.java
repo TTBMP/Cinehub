@@ -91,7 +91,7 @@ public class MockProjectionRepository implements ProjectionRepository {
                 new Seat(8L, true),
                 new Seat(6L, true),
                 new Seat(4L, true),
-                new Seat(4L, true)));
+                new Seat(4L, false)));
         projectionList.add(projection);
         return projectionList;
     }

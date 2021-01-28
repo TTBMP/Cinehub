@@ -10,6 +10,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ToggleGroup;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -25,7 +27,7 @@ public class BuyTicketViewModel implements ViewModel {
     private final StringProperty numberOfCardUser = new SimpleStringProperty();
     private final StringProperty txtCvv = new SimpleStringProperty();
     private final StringProperty freeSeats = new SimpleStringProperty();
-    private final ToggleGroup group = new ToggleGroup();
+
     private final StringProperty totalSeats = new SimpleStringProperty();
     private final StringProperty buysSeats = new SimpleStringProperty();
     private final ObservableList<SeatDto> seatList = FXCollections.observableArrayList();
@@ -60,6 +62,38 @@ public class BuyTicketViewModel implements ViewModel {
     private final BooleanProperty foldingArmchairOption = new SimpleBooleanProperty();
 
 
+
+    private final IntegerProperty numberOfToggle = new SimpleIntegerProperty(0);
+    private final List<BooleanProperty> toggleState = new ArrayList<>(60);
+    private final IntegerProperty positionSelectedToggle = new SimpleIntegerProperty();
+    private final BooleanProperty valueFalseForToggleState = new SimpleBooleanProperty(false);
+    private final BooleanProperty valueTrueForToggleState = new SimpleBooleanProperty(true);
+
+
+    public BooleanProperty valueTrueForToggleStateProperty() {
+        return valueTrueForToggleState;
+    }
+
+
+    public BooleanProperty valueFalseForToggleStateProperty() {
+        return valueFalseForToggleState;
+    }
+
+
+    public IntegerProperty positionSelectedToggleProperty() {
+        return positionSelectedToggle;
+    }
+
+    public List<BooleanProperty> getToggleState() {
+        return toggleState;
+    }
+
+    public IntegerProperty numberOfToggleProperty() {
+        return numberOfToggle;
+    }
+
+
+
     public BuyTicketViewModel() {
         selectedMovieName.bind(ObjectBindings.map(selectedMovie, MovieDto::getName));
         StringProperty selectedCinemaAddress = new SimpleStringProperty();
@@ -78,6 +112,8 @@ public class BuyTicketViewModel implements ViewModel {
         StringProperty selectedMovieReleased = new SimpleStringProperty();
         selectedMovieReleased.bind(ObjectBindings.map(selectedMovie, MovieDto::getReleases));
         selectedDateProperty().setValue(LocalDate.now());
+
+
     }
 
     public BooleanProperty skipLineOptionProperty() {
@@ -132,9 +168,6 @@ public class BuyTicketViewModel implements ViewModel {
         return selectedTicket;
     }
 
-    public ToggleGroup getGroup() {
-        return group;
-    }
 
     public ObjectProperty<String> selectedTimeProperty() {
         return selectedTime;

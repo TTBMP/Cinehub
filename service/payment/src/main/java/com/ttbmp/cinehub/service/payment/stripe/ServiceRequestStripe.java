@@ -3,7 +3,6 @@ package com.ttbmp.cinehub.service.payment.stripe;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.*;
-import com.ttbmp.cinehub.core.dto.UserDto;
 import com.ttbmp.cinehub.core.entity.Payment;
 import com.ttbmp.cinehub.core.entity.User;
 
@@ -72,17 +71,17 @@ public class ServiceRequestStripe {
     }
 
     //Given an email retrieves the customer if it exists
-    public Customer isExistent(UserDto user) throws StripeException {
+    public Customer isExistent(String nome,String numberOfCard, String email) throws StripeException {
         CustomerCollection customers = retrieveListCustomer();
         if (customers == null) {
             return null;
         }
         for (int i = 0; i < customers.getData().size(); i++) {
-            if (customers.getData().get(i).getEmail().compareTo(user.getEmail()) == 0) {
+            if (customers.getData().get(i).getEmail().compareTo(email) == 0) {
                 return customers.getData().get(i);
             }
         }
-        return register(user.getEmail(), user.getCard().getNumber(), user.getName());
+        return register(email, numberOfCard, nome);
     }
 
     public List<Payment> convertListOfPayment(PaymentIntentCollection paymentIntentCollection, ServiceRequestStripe serviceRequestStripe) {
@@ -142,8 +141,8 @@ public class ServiceRequestStripe {
     }
 
     //This method returns a list of all payments made by that customer
-    public PaymentIntentCollection retrieveListPaymentIntent(UserDto userDto) throws StripeException {
-        Customer customer = isExistent(userDto);
+    public PaymentIntentCollection retrieveListPaymentIntent(String nome,String numberOfCard, String email) throws StripeException {
+        Customer customer = isExistent( nome, numberOfCard,  email);
         Map<String, Object> params = new HashMap<>();
         params.put(CUSTOMER, customer.getId());
         return PaymentIntent.list(params);

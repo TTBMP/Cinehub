@@ -5,5 +5,5 @@ package com.ttbmp.cinehub.core.service.email;
  */
 public interface EmailService {
 
-    void sendMail(EmailServiceRequest emailServiceRequest);
+    boolean sendMail(EmailServiceRequest emailServiceRequest);
 }

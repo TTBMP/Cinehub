@@ -18,7 +18,7 @@ import java.util.Properties;
 public class SendEmailService implements EmailService {
 
     @Override
-    public void sendMail(EmailServiceRequest emailServiceRequest) {
+    public boolean sendMail(EmailServiceRequest emailServiceRequest) {
         final String username = "yourUsername@email.com";
         final String password = "password";
         String fromEmail = emailServiceRequest.getEmail();
@@ -59,10 +59,11 @@ public class SendEmailService implements EmailService {
 
             //Attach multipart to message
             msg.setContent(emailContent);
-
             Transport.send(msg);
+            return true;
         } catch (MessagingException | IOException e) {
             e.printStackTrace();
+            return false;
         }
     }
 }

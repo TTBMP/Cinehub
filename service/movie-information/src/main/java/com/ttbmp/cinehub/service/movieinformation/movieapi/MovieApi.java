@@ -20,7 +20,6 @@ import java.util.List;
  * @author Palmieri Ivan
  */
 public class MovieApi implements MovieApiService {
-
     Integer numberOfMovie = 30;
     Integer i = 10;
     List<MovieApiDto> listMovie = new ArrayList<>();

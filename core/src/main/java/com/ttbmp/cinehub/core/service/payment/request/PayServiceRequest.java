@@ -1,37 +1,46 @@
 package com.ttbmp.cinehub.core.service.payment.request;
 
-import com.ttbmp.cinehub.core.dto.UserDto;
 import com.ttbmp.cinehub.core.usecase.Request;
 /**
  * @author Palmieri Ivan
  */
 public class PayServiceRequest extends Request {
 
-    public static final Request.Error MISSING_USER_ERROR = new Request.Error("User can't be null");
+    public static final Request.Error MISSING_USER_DATE_ERROR = new Request.Error("User can't be null");
     public static final Request.Error NEGATIVE_PRICE_ERROR = new Request.Error("TicketPrice can't be < 0");
 
-    private final UserDto userDto;
+    private final String email;
+    private final String nameUser;
+    private final String numberOfCard;
     private final long ticketPrice;
 
-    public PayServiceRequest(UserDto userDto, long ticketPrice) {
-        this.userDto = userDto;
+    public PayServiceRequest(String email, String nameUser, String numberOfCard, long ticketPrice) {
+        this.email = email;
+        this.nameUser = nameUser;
+        this.numberOfCard = numberOfCard;
         this.ticketPrice = ticketPrice;
     }
 
-    public UserDto getUserDto() {
-        return userDto;
+    public String getEmail() {
+        return email;
     }
 
+    public String getNameUser() {
+        return nameUser;
+    }
+
+    public String getNumberOfCard() {
+        return numberOfCard;
+    }
 
     public long getTicketPrice() {
         return ticketPrice;
     }
 
-
     @Override
     public void onValidate() {
-        if(userDto==null){
-            addError(MISSING_USER_ERROR);
+        if(email==null || numberOfCard == null || nameUser ==null){
+            addError(MISSING_USER_DATE_ERROR);
         }
         if(ticketPrice<0){
             addError(NEGATIVE_PRICE_ERROR);
