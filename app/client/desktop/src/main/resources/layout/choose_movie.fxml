@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
+
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.buyticket.choosemovie.ChooseMovieViewController">
     <children>
         <fx:include fx:id="appBar" source="app_bar.fxml" />
@@ -11,6 +17,14 @@
          <content>
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0">
                <children>
+                  <ImageView fx:id="theMovieDbLogoImageView" fitHeight="47.0" fitWidth="565.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                     <image>
+                        <Image url="@drawable/theMovieDbLogo.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </ImageView>
                   <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a date!" wrappingWidth="110.6708984375">
@@ -18,6 +32,21 @@
                               <Insets left="10.0" top="15.0" />
                            </HBox.margin>
                         </Text>
+                        <Button fx:id="previousButton" mnemonicParsing="false" text="&lt;">
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="nextButton" mnemonicParsing="false" text="&gt;">
+                           <HBox.margin>
+                              <Insets right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="todayButton" mnemonicParsing="false" text="TODAY">
+                           <HBox.margin>
+                              <Insets right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
                         <DatePicker fx:id="dateOfProjectionDatePicker" promptText="Projection date" showWeekNumbers="true">
                            <opaqueInsets>
                               <Insets />
@@ -27,19 +56,22 @@
                            </HBox.margin>
                         </DatePicker>
                         <AnchorPane />
-                        <Button fx:id="confirmMovieButton" alignment="TOP_LEFT" mnemonicParsing="false" text="Continue">
-                           <HBox.margin>
-                              <Insets left="135.0" top="10.0" />
-                           </HBox.margin>
-                        </Button>
                      </children>
                   </HBox>
                   <Label fx:id="errorSectionLabel" textAlignment="CENTER" />
                   <ListView fx:id="movieListView" VBox.vgrow="ALWAYS">
                      <VBox.margin>
-                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+                        <Insets bottom="16.0" left="16.0" right="16.0" />
                      </VBox.margin>
                   </ListView>
+                  <HBox alignment="TOP_RIGHT">
+                     <children>
+                        <Button fx:id="confirmMovieButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" text="Continue" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="16.0" right="16.0" />
+                     </VBox.margin>
+                  </HBox>
                </children>
             </VBox>
          </content>

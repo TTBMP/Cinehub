@@ -20,9 +20,8 @@ public interface BuyTicketUseCase extends UseCase {
 
     void getTimeOfProjection(GetTimeOfProjecitonRequest request);
 
-    void confirmSeatsRandom();
 
-    void confirmSeatsSpecific();
+
 
     void getProjection(SetSelectedProjectionRequest request);
 

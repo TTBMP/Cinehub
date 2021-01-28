@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.app.client.desktop.ui.buyticket.chooseseat;
 
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.View;
 import javafx.scene.Parent;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
@@ -15,10 +16,10 @@ public class SeatsMatrixView extends View {
     private final Parent root;
 
 
-    public SeatsMatrixView() throws IOException {
+    public SeatsMatrixView(ToggleGroup toggleGroup) throws IOException {
         super();
         GridPane gridSeats = new GridPane();
-        seatsMatrixController = new SeatsMatrixViewController(gridSeats);
+        seatsMatrixController = new SeatsMatrixViewController(gridSeats,toggleGroup);
         this.root = gridSeats;
     }
 

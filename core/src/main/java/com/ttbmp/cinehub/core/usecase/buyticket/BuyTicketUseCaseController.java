@@ -68,7 +68,7 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
     public void sendEmail(SendEmailRequest request) {
         try {
             Request.validate(request);
-            //Prender i dati dell'utente dall'id
+            //Prendere i dati dell'utente dall'id
             User user = new User("Ivan", "palm@5934.cosis", new CreditCard("22/24", 354, "4242424242424242", "5496"));
             emailService.sendMail(new EmailServiceRequest(user.getEmail(), "Hello Member"));
         } catch (Request.NullRequestException e) {
@@ -83,11 +83,11 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
     public boolean pay(PayRequest request) {
         try {
             Request.validate(request);
-            User user = new User("Ivan", "palm@ciao.cosisss", new CreditCard("22/24", 354, "4242424242424242", "5496"));
+            User user = new User("Ivan", "palm@ciao.cosissst", new CreditCard("22/24", 354, "4242424242424242", "5496"));
             TicketAbstract ticketAbstract = TicketDataMapper.mapToEntity(request.getTicket());
             Projection projection = ProjectionDataMapper.mapToEntity(request.getProjection());
             Integer index = request.getIndex();
-            if (paymentService.pay(new PayServiceRequest(UserDataMapper.mapToDto(user), ticketAbstract.getPrice()))) {
+            if (paymentService.pay(new PayServiceRequest(user.getEmail(),user.getName(),user.getCard().getNumber(), ticketAbstract.getPrice()))) {
                 ticketAbstract.setState(true);
                 projection.addTicket(ticketAbstract);
                 projection.getHall().getSeatList().get(index).setState(false);
@@ -211,15 +211,6 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
 
     }
 
-    @Override
-    public void confirmSeatsRandom() {
-        buyTicketPresenter.confirmSeatsRandom();
-    }
-
-    @Override
-    public void confirmSeatsSpecific() {
-        buyTicketPresenter.confirmSeatsSpecific();
-    }
 
     @Override
     public void getProjection(SetSelectedProjectionRequest request) {

@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.core.datamapper.SeatDataMapper;
 import com.ttbmp.cinehub.core.dto.SeatDto;
 import javafx.geometry.Insets;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 
 import java.util.List;
@@ -14,24 +15,25 @@ import java.util.List;
  * @author Palmieri Ivan
  */
 public class SeatsMatrixViewController extends ViewController {
-    private GridPane gridSeats;
 
-    public SeatsMatrixViewController() {
-    }
+    private final GridPane gridSeats;
+    private final ToggleGroup toggleGroup;
 
-    public SeatsMatrixViewController(GridPane gridSeats) {
+    public SeatsMatrixViewController(GridPane gridSeats, ToggleGroup toggleGroup) {
         this.gridSeats = gridSeats;
+        this.toggleGroup = toggleGroup;
     }
+
 
     @Override
     protected void onLoad() {
         BuyTicketViewModel viewModel = activity.getViewModel(BuyTicketViewModel.class);
         List<SeatDto> seatListDto = viewModel.getSeatList();
-        createMatrix(viewModel, seatListDto);
+        createMatrix(viewModel, seatListDto,toggleGroup);
 
     }
 
-    private void createMatrix(BuyTicketViewModel viewModel, List<SeatDto> seatDtoList) {
+    private void createMatrix(BuyTicketViewModel viewModel, List<SeatDto> seatDtoList, ToggleGroup toggleGroup) {
         int size = SeatDataMapper.mapToEntityList(viewModel.getSeatList()).size();
         int rows = 10;
         int columns = (size / rows);
@@ -48,7 +50,7 @@ public class SeatsMatrixViewController extends ViewController {
                     radioButton.setPadding(new Insets(5, 5, 5, 5));
                 }
                 radioButton.setText("" + a[j] + i + "\n" + seatDtoList.get(count).getPrice() + "\u20ac");
-                radioButton.setToggleGroup(viewModel.getGroup());
+                radioButton.setToggleGroup(toggleGroup);
 
                 if (seatDtoList.get(count).getState().equals(Boolean.FALSE)) {
                     radioButton.setDisable(true);
@@ -66,7 +68,7 @@ public class SeatsMatrixViewController extends ViewController {
         for (int k = 0; k < rest; k++) {
             RadioButton radioButton = new RadioButton();
             radioButton.setText("" + a[colums + 1] + k + "\n" + seatDtoList.get(count).getPrice() + "\u20ac");
-            radioButton.setToggleGroup(viewModel.getGroup());
+            radioButton.setToggleGroup(toggleGroup);
             if (k == 0) {
                 radioButton.setPadding(new Insets(5, 5, 5, 40));
             } else {

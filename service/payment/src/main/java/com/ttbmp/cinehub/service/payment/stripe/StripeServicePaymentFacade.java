@@ -23,7 +23,7 @@ public class StripeServicePaymentFacade implements PaymentService {
     public boolean pay(PayServiceRequest payServiceRequest) {
         Customer customer = null;
         try {
-            customer = serviceRequestStripe.isExistent(payServiceRequest.getUserDto());
+            customer = serviceRequestStripe.isExistent(payServiceRequest.getNameUser(),payServiceRequest.getNumberOfCard(),payServiceRequest.getEmail());
         } catch (StripeException e) {
             e.printStackTrace();
         }

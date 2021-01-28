@@ -4,7 +4,7 @@ package com.ttbmp.cinehub.app.client.desktop.ui.buyticket;
 import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketPresenter;
 import com.ttbmp.cinehub.core.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.core.usecase.buyticket.response.*;
-import javafx.scene.control.RadioButton;
+
 
 import java.util.List;
 
@@ -47,24 +47,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
 
-    @Override
-    public void confirmSeatsRandom() {
-        int i = 0;
-        int j = 0;
-        while (j == 0) {
-            if (((RadioButton) viewModel.getGroup().getToggles().get(i)).isDisabled()) {
-                i++;
-            } else {
-                j = 1;
-            }
-        }
-        RadioButton radioSelect = (RadioButton) viewModel.getGroup().getToggles().get(i);
-        String position = radioSelect.getText().substring(0, 3);
-        viewModel.selectedSeatsProperty().setValue(position);
-        viewModel.selectedPositionSeatIntegerProperty().setValue(i);
 
-
-    }
 
 
     @Override
@@ -187,26 +170,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
 
-    @Override
-    public void confirmSeatsSpecific() {
-        String positionName = viewModel.getGroup().getSelectedToggle().toString().substring(
-                viewModel.getGroup().getSelectedToggle().toString().length() - 6,
-                viewModel.getGroup().getSelectedToggle().toString().length() - 4);
-        int numberOfPosition = 0;
-        int j = 0;
-        while (j == 0) {
-            String text = ((RadioButton) viewModel.getGroup().getToggles().get(numberOfPosition)).getText().substring(0, 2);
-            if (text.equals(positionName)) {
-                j = 1;
-            } else {
-                numberOfPosition++;
-            }
-        }
-        viewModel.selectedSeatsProperty().setValue(positionName);
-        viewModel.selectedPositionSeatIntegerProperty().setValue(numberOfPosition);
 
-
-    }
 
 
 }

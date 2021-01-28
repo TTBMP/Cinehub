@@ -10,7 +10,7 @@ import com.ttbmp.cinehub.core.service.email.EmailServiceRequest;
 public class MockEmailService implements EmailService {
 
     @Override
-    public void sendMail(EmailServiceRequest emailServiceRequest) {
-        //Empty section
+    public boolean sendMail(EmailServiceRequest emailServiceRequest) {
+        return true;
     }
 }

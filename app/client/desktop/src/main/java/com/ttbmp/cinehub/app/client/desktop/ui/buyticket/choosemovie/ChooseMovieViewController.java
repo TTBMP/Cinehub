@@ -15,9 +15,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 
 
@@ -35,10 +38,18 @@ public class ChooseMovieViewController extends ViewController {
     @FXML
     private AppBarViewController appBarController;
 
+    @FXML
+    private ImageView theMovieDbLogoImageView;
+    @FXML
+    private Button todayButton;
 
     @FXML
-    private Label errorSectionLabel;
+    private Button previousButton;
 
+    @FXML
+    private Button nextButton;
+    @FXML
+    private Label errorSectionLabel;
     @FXML
     private ListView<MovieDto> movieListView;
     @FXML
@@ -67,6 +78,9 @@ public class ChooseMovieViewController extends ViewController {
                 e.printStackTrace();
             }
         });
+        todayButton.setOnAction(a -> dateOfProjectionDatePicker.setValue(LocalDate.now()));
+        previousButton.setOnAction(a -> dateOfProjectionDatePicker.setValue(dateOfProjectionDatePicker.getValue().minusDays(1)));
+        nextButton.setOnAction(a -> dateOfProjectionDatePicker.setValue(dateOfProjectionDatePicker.getValue().plusDays(1)));
 
     }
 

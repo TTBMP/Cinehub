@@ -19,9 +19,6 @@ public interface BuyTicketPresenter {
 
     void presentSeatList(GetNumberOfSeatsResponse response);
 
-    void confirmSeatsSpecific();
-
-    void confirmSeatsRandom();
 
     void setSelectedTicket(GetTicketBySeatsResponse response);
 
