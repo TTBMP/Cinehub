@@ -7,8 +7,6 @@ import com.ttbmp.cinehub.core.dto.*;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ToggleGroup;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

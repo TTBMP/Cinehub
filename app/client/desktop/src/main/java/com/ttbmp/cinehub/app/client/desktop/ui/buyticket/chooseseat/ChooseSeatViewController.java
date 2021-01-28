@@ -35,9 +35,6 @@ public class ChooseSeatViewController extends ViewController {
     private AppBarViewController appBarController;
 
     @FXML
-    private Text seatPriceText;
-
-    @FXML
     private RadioButton foldingArmchairRadioButton;
     @FXML
     private RadioButton heatedArmchairRadioButton;
@@ -109,7 +106,6 @@ public class ChooseSeatViewController extends ViewController {
         toggleGroup.getToggles().forEach(toggle->function());
         errorSectionLabel.textProperty().bind(viewModel.seatErrorProperty());
         confirmSeatButton.disableProperty().bind(viewModel.getToggleState().iterator().next());
-        //        confirmSeatButton.disableProperty().bind(viewModel.getGroup().selectedToggleProperty().isNull());
         seatsTotalText.textProperty().bind(viewModel.totalSeatsProperty());
         seatsFreeText.textProperty().bind(viewModel.freeSeatsProperty());
         seatsBuysText.textProperty().bind(viewModel.buysSeatsProperty());
