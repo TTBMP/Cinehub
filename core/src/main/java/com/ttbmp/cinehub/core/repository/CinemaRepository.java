@@ -13,5 +13,4 @@ public interface CinemaRepository {
     List<Cinema> getAllCinemaList();
 
 
-
 }

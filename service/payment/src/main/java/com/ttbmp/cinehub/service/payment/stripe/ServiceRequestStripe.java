@@ -71,7 +71,7 @@ public class ServiceRequestStripe {
     }
 
     //Given an email retrieves the customer if it exists
-    public Customer isExistent(String nome,String numberOfCard, String email) throws StripeException {
+    public Customer isExistent(String nome, String numberOfCard, String email) throws StripeException {
         CustomerCollection customers = retrieveListCustomer();
         if (customers == null) {
             return null;
@@ -141,8 +141,8 @@ public class ServiceRequestStripe {
     }
 
     //This method returns a list of all payments made by that customer
-    public PaymentIntentCollection retrieveListPaymentIntent(String nome,String numberOfCard, String email) throws StripeException {
-        Customer customer = isExistent( nome, numberOfCard,  email);
+    public PaymentIntentCollection retrieveListPaymentIntent(String nome, String numberOfCard, String email) throws StripeException {
+        Customer customer = isExistent(nome, numberOfCard, email);
         Map<String, Object> params = new HashMap<>();
         params.put(CUSTOMER, customer.getId());
         return PaymentIntent.list(params);

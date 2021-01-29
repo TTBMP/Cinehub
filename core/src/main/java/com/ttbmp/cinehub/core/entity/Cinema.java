@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.core.entity;
 
 import java.util.List;
+
 /**
  * @author Palmieri Ivan
  */

@@ -5,7 +5,6 @@ import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketPresenter;
 import com.ttbmp.cinehub.core.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.core.usecase.buyticket.response.*;
 
-
 import java.util.List;
 
 /**
@@ -45,9 +44,6 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     public void presentProjection(SetProjectionResponse response) {
         viewModel.selectedProjectionProperty().setValue(response.getProjectionDto());
     }
-
-
-
 
 
     @Override
@@ -168,9 +164,6 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     public void presentErrorByStripe(String error) {
         viewModel.paymentErrorProperty().setValue(error);
     }
-
-
-
 
 
 }

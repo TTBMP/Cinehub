@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.core.entity.ticket.decorator;
 
 import com.ttbmp.cinehub.core.entity.ticket.component.TicketAbstract;
+
 /**
  * @author Palmieri Ivan
  */

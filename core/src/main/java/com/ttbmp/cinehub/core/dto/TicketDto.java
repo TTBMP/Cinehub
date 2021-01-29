@@ -15,11 +15,6 @@ public class TicketDto {
         this.price = price;
     }
 
-
-    public void setPrice(long price) {
-        this.price = price;
-    }
-
     public Boolean getState() {
         return state;
     }
@@ -28,10 +23,12 @@ public class TicketDto {
         this.state = state;
     }
 
-
-
     public Long getPrice() {
         return price;
+    }
+
+    public void setPrice(long price) {
+        this.price = price;
     }
 
     public void setPrice(Long price) {

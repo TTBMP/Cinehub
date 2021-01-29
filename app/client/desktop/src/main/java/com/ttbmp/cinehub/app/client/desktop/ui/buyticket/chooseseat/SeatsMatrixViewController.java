@@ -11,6 +11,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 
 import java.util.List;
+
 /**
  * @author Palmieri Ivan
  */
@@ -29,7 +30,7 @@ public class SeatsMatrixViewController extends ViewController {
     protected void onLoad() {
         BuyTicketViewModel viewModel = activity.getViewModel(BuyTicketViewModel.class);
         List<SeatDto> seatListDto = viewModel.getSeatList();
-        createMatrix(viewModel, seatListDto,toggleGroup);
+        createMatrix(viewModel, seatListDto, toggleGroup);
 
     }
 
@@ -40,7 +41,7 @@ public class SeatsMatrixViewController extends ViewController {
         int rest = size % rows;
         int count = 0;
         int buy = 0;
-        char[] a = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'L', 'M'};
+        char[] a = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'Z'};
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 RadioButton radioButton = new RadioButton();
@@ -60,7 +61,7 @@ public class SeatsMatrixViewController extends ViewController {
                 count++;
             }
         }
-        addOtherButton(seatDtoList,columns, rest, count, buy, a);
+        addOtherButton(seatDtoList, columns, rest, count, buy, a);
         updateValue(viewModel, size, buy);
     }
 

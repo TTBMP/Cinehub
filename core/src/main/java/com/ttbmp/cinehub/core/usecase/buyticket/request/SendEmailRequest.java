@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.core.usecase.buyticket.request;
 
 import com.ttbmp.cinehub.core.usecase.Request;
+
 /**
  * @author Palmieri Ivan
  */

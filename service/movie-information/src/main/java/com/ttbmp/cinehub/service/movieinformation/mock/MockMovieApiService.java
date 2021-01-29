@@ -14,7 +14,7 @@ import java.util.List;
 public class MockMovieApiService implements MovieApiService {
 
     @Override
-    public void retrieveAllMovie() {
+    public void retriveAllMovie() {
         //Empty section
     }
 

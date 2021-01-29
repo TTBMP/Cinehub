@@ -1,4 +1,5 @@
 package com.ttbmp.cinehub.core.entity.ticket.component;
+
 /**
  * @author Palmieri Ivan
  */
@@ -16,10 +17,9 @@ public class Ticket extends TicketAbstract {
     }
 
     @Override
-    public long getPrice(){
+    public long getPrice() {
         return this.price;
     }
-
 
 
 }

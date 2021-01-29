@@ -3,6 +3,7 @@ package com.ttbmp.cinehub.core.usecase.buyticket.response;
 import com.ttbmp.cinehub.core.dto.CinemaDto;
 
 import java.util.List;
+
 /**
  * @author Palmieri Ivan
  */

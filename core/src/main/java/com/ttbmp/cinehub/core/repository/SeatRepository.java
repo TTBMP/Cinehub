@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.core.entity.Seat;
 
 import java.time.LocalDate;
 import java.util.List;
+
 /**
  * @author Palmieri Ivan
  */
