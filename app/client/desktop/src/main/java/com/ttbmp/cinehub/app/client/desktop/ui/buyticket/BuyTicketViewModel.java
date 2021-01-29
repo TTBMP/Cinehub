@@ -61,11 +61,11 @@ public class BuyTicketViewModel implements ViewModel {
     private final BooleanProperty foldingArmchairOption = new SimpleBooleanProperty();
 
 
-    private final IntegerProperty numberOfToggle = new SimpleIntegerProperty(0);
-    private final List<BooleanProperty> toggleState = new ArrayList<>(60);
-    private final IntegerProperty positionSelectedToggle = new SimpleIntegerProperty();
-    private final BooleanProperty valueFalseForToggleState = new SimpleBooleanProperty(false);
-    private final BooleanProperty valueTrueForToggleState = new SimpleBooleanProperty(true);
+    private final IntegerProperty numberOfSeats = new SimpleIntegerProperty(0);
+    private final List<BooleanProperty> seatsState = new ArrayList<>(60);
+    private final IntegerProperty positionSelectedSeat = new SimpleIntegerProperty();
+    private final BooleanProperty valueFalseForSeatState = new SimpleBooleanProperty(false);
+    private final BooleanProperty valueTrueForSeatState = new SimpleBooleanProperty(true);
 
 
     public BuyTicketViewModel() {
@@ -91,23 +91,23 @@ public class BuyTicketViewModel implements ViewModel {
     }
 
     public BooleanProperty trueBooleanProperty() {
-        return valueTrueForToggleState;
+        return valueTrueForSeatState;
     }
 
     public BooleanProperty falseBooleanProperty() {
-        return valueFalseForToggleState;
+        return valueFalseForSeatState;
     }
 
     public IntegerProperty indexToggleSelected() {
-        return positionSelectedToggle;
+        return positionSelectedSeat;
     }
 
-    public List<BooleanProperty> getToggleState() {
-        return toggleState;
+    public List<BooleanProperty> getSeatsState() {
+        return seatsState;
     }
 
     public IntegerProperty counterForToggle() {
-        return numberOfToggle;
+        return numberOfSeats;
     }
 
     public BooleanProperty skipLineOptionProperty() {
@@ -188,7 +188,6 @@ public class BuyTicketViewModel implements ViewModel {
     }
 
     public ObjectProperty<MovieDto> selectedMovieProperty() {
-
         return selectedMovie;
     }
 

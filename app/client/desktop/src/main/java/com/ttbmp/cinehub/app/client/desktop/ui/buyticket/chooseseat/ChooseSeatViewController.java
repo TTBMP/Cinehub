@@ -11,10 +11,7 @@ import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.core.usecase.buyticket.request.GetNumberOfSeatsRequest;
 import com.ttbmp.cinehub.core.usecase.buyticket.request.GetTicketBySeatsRequest;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -34,11 +31,11 @@ public class ChooseSeatViewController extends ViewController {
     @FXML
     private AppBarViewController appBarController;
     @FXML
-    private RadioButton foldingArmchairRadioButton;
+    private CheckBox foldingArmchairRadioButton;
     @FXML
-    private RadioButton heatedArmchairRadioButton;
+    private CheckBox heatedArmchairRadioButton;
     @FXML
-    private RadioButton skipLineRadioButton;
+    private CheckBox skipLineRadioButton;
     private BuyTicketViewModel viewModel;
     @FXML
     private Button returnButton;
@@ -60,7 +57,8 @@ public class ChooseSeatViewController extends ViewController {
     @Override
     protected void onLoad() {
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
-        activity.getUseCase(BuyTicketUseCase.class).getListOfSeatsByProjection(new GetNumberOfSeatsRequest(viewModel.selectedProjectionProperty().getValue()));
+        activity.getUseCase(BuyTicketUseCase.class).getListOfSeats(new GetNumberOfSeatsRequest(viewModel.selectedProjectionProperty().getValue()));
+        confirmSeatButton.setDisable(true);
         SeatsMatrixView seatsMatrixView;
         try {
             seatsMatrixView = new SeatsMatrixView(toggleGroup);
@@ -71,7 +69,10 @@ public class ChooseSeatViewController extends ViewController {
             e.printStackTrace();
         }
         bind();
-        toggleGroup.getToggles().forEach(toggle -> setAllElementsOfTheToggleToNull());
+        toggleGroup.getToggles().forEach(toggle ->
+                setAllElementsOfTheToggleToNull()
+        );
+        toggleGroup.selectedToggleProperty().addListener(l -> confirmSeatButton.setDisable(false));
         buyRandomButton.setOnAction(a -> {
 
             try {
@@ -144,15 +145,15 @@ public class ChooseSeatViewController extends ViewController {
     }
 
     private void setAllElementsOfTheToggleToNull() {
-        viewModel.getToggleState().add(viewModel.falseBooleanProperty());
+        viewModel.getSeatsState().add(viewModel.falseBooleanProperty());
         viewModel.counterForToggle().setValue(viewModel.counterForToggle().getValue() + 1);
     }
 
     private void findRandomPlace() {
         int j = viewModel.counterForToggle().getValue();
         if (!(((RadioButton) toggleGroup.getToggles().get(j)).isDisabled())) {
-            viewModel.getToggleState().remove(j);
-            viewModel.getToggleState().add(j, viewModel.trueBooleanProperty());
+            viewModel.getSeatsState().remove(j);
+            viewModel.getSeatsState().add(j, viewModel.trueBooleanProperty());
             viewModel.indexToggleSelected().setValue(j);
             viewModel.selectedSeatsProperty().setValue(
                     toggleGroup.getToggles().get(j).toString().substring(
@@ -168,8 +169,8 @@ public class ChooseSeatViewController extends ViewController {
     private void findChosenPlace() {
         int i = viewModel.counterForToggle().getValue();
         if (toggleGroup.getToggles().get(i).isSelected()) {
-            viewModel.getToggleState().remove(i);
-            viewModel.getToggleState().add(i, viewModel.trueBooleanProperty());
+            viewModel.getSeatsState().remove(i);
+            viewModel.getSeatsState().add(i, viewModel.trueBooleanProperty());
             viewModel.indexToggleSelected().setValue(i);
             viewModel.selectedSeatsProperty().setValue(
                     toggleGroup.getToggles().get(i).toString().substring(

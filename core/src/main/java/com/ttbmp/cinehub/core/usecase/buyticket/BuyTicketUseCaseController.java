@@ -267,7 +267,7 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
     }
 
     @Override
-    public void getListOfSeatsByProjection(GetNumberOfSeatsRequest request) {
+    public void getListOfSeats(GetNumberOfSeatsRequest request) {
         try {
             Request.validate(request);
             Projection projection = ProjectionDataMapper.mapToEntity(request.getProjectionDto());

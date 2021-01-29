@@ -9,7 +9,7 @@ public class MockAuthenticationService implements AuthenticationService {
 
     @Override
     public Integer sigIn() {
-        return 0;
+        return 1;
     }
 
 }

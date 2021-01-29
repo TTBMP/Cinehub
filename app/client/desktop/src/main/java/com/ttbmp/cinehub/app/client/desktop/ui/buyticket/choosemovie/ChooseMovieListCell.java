@@ -37,6 +37,8 @@ public class ChooseMovieListCell extends ListCell<MovieDto> {
             Objects.requireNonNull(item);
             item.getController().load(activity, navController, request);
             setGraphic(item.getRoot());
+        } else {
+            setVisible(false);
         }
     }
 }

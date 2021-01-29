@@ -5,7 +5,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="220.0"
+<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+      prefHeight="220.0"
       prefWidth="500.0" xmlns="http://javafx.com/javafx/8"
       fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.buyticket.choosemovie.ChooseMovieItemViewController">
     <children>

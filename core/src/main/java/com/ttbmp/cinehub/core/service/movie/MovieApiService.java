@@ -11,11 +11,11 @@ import java.util.List;
  */
 public interface MovieApiService {
 
-    void retriveAllMovie() throws IOException;
+    void getAllMovie() throws IOException;
 
-    void retrieveMovieById(Integer id) throws IOException;
+    void getMovieById(Integer id) throws IOException;
 
-    void retrieveMovie(URL url) throws IOException;
+    void getMovie(URL url) throws IOException;
 
     void printSpecificAttribute(String output);
 
