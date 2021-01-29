@@ -6,6 +6,7 @@ import com.ttbmp.cinehub.core.entity.Movie;
 
 import java.time.LocalDate;
 import java.util.List;
+
 /**
  * @author Palmieri Ivan
  */

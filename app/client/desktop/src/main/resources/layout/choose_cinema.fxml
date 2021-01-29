@@ -3,43 +3,50 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.buyticket.choosecinema.ChooseCinemaViewController">
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
+      fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.buyticket.choosecinema.ChooseCinemaViewController">
     <children>
-        <fx:include fx:id="appBar" source="app_bar.fxml" />
-      <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0">
-         <content>
-            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0">
-               <children>
-                  <TitledPane animated="false" text="Scegli un orario">
-                     <content>
-                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0">
-                           <children>
-                              <ListView fx:id="timeOfProjectionListView" prefHeight="136.0" prefWidth="542.0" VBox.vgrow="ALWAYS" />
-                           </children>
-                        </VBox>
-                     </content>
-                  </TitledPane>
-                  <ListView fx:id="cinemaListView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                     <VBox.margin>
-                        <Insets bottom="12.0" />
-                     </VBox.margin>
-                  </ListView>
-                    <HBox>
-                        <children>
-                              <Button fx:id="cancelButton" mnemonicParsing="false" text="Back" />
-                              <Label fx:id="errorSectionLabel" prefHeight="21.0" prefWidth="403.0" />
-                              <Button fx:id="confirmCinemaButton" alignment="CENTER_RIGHT" contentDisplay="BOTTOM" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" text="Continue" textOverrun="CLIP" />
-                        </children>
-                     <VBox.margin>
-                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-                     </VBox.margin>
-                    </HBox>
-               </children>
-            </VBox>
-         </content>
-         <padding>
-            <Insets left="16.0" right="16.0" top="16.0" />
-         </padding>
-      </ScrollPane>
+        <fx:include fx:id="appBar" source="app_bar.fxml"/>
+        <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308"
+                    maxWidth="1.7976931348623157E308" prefHeight="700.0">
+            <content>
+                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0">
+                    <children>
+                        <ListView fx:id="cinemaListView" maxHeight="1.7976931348623157E308"
+                                  maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                            <VBox.margin>
+                                <Insets bottom="12.0"/>
+                            </VBox.margin>
+                        </ListView>
+                        <TitledPane animated="false" text="Scegli un orario">
+                            <content>
+                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                      spacing="16.0">
+                                    <children>
+                                        <ListView fx:id="timeOfProjectionListView" prefHeight="136.0" prefWidth="542.0"
+                                                  VBox.vgrow="ALWAYS"/>
+                                    </children>
+                                </VBox>
+                            </content>
+                        </TitledPane>
+                        <HBox>
+                            <children>
+                                <Button fx:id="cancelButton" mnemonicParsing="false" text="Back"/>
+                                <Label fx:id="errorSectionLabel" prefHeight="21.0" prefWidth="403.0"/>
+                                <Button fx:id="confirmCinemaButton" alignment="CENTER_RIGHT" contentDisplay="BOTTOM"
+                                        maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false"
+                                        text="Continue" textOverrun="CLIP"/>
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
+                            </VBox.margin>
+                        </HBox>
+                    </children>
+                </VBox>
+            </content>
+            <padding>
+                <Insets left="16.0" right="16.0" top="16.0"/>
+            </padding>
+        </ScrollPane>
     </children>
 </VBox>

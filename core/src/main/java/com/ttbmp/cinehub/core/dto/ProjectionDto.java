@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.core.dto;
 
-import com.ttbmp.cinehub.core.entity.ticket.component.Ticket;
+
+import java.util.List;
 
 
 /**
@@ -12,7 +13,7 @@ public class ProjectionDto {
     private CinemaDto cinemaDto;
     private HallDto hallDto;
     private MovieDto movieDto;
-    private Ticket ticketBasicList;
+    private List<TicketDto> ticketBasicList;
     private String date;
 
     public ProjectionDto(MovieDto movie, CinemaDto cinema, HallDto hall, String startTime, String date) {
@@ -55,11 +56,11 @@ public class ProjectionDto {
         this.movieDto = movieDto;
     }
 
-    public Ticket getTicketNormalList() {
+    public List<TicketDto> getTicketBasicList() {
         return ticketBasicList;
     }
 
-    public void setTicketNormalList(Ticket ticketBasicList) {
+    public void setTicketBasicList(List<TicketDto> ticketBasicList) {
         this.ticketBasicList = ticketBasicList;
     }
 

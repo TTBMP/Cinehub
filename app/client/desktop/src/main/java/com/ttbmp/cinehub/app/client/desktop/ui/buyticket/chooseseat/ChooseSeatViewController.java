@@ -28,25 +28,22 @@ import java.io.IOException;
 public class ChooseSeatViewController extends ViewController {
 
 
+    ToggleGroup toggleGroup = new ToggleGroup();
     @FXML
     private VBox appBar;
-
     @FXML
     private AppBarViewController appBarController;
-
     @FXML
     private RadioButton foldingArmchairRadioButton;
     @FXML
     private RadioButton heatedArmchairRadioButton;
     @FXML
     private RadioButton skipLineRadioButton;
-
     private BuyTicketViewModel viewModel;
     @FXML
     private Button returnButton;
     @FXML
     private Button buyRandomButton;
-
     @FXML
     private Label errorSectionLabel;
     @FXML
@@ -59,7 +56,6 @@ public class ChooseSeatViewController extends ViewController {
     private Text seatsBuysText;
     @FXML
     private Text seatsTotalText;
-    ToggleGroup toggleGroup = new ToggleGroup();
 
     @Override
     protected void onLoad() {
@@ -75,6 +71,7 @@ public class ChooseSeatViewController extends ViewController {
             e.printStackTrace();
         }
         bind();
+        toggleGroup.getToggles().forEach(toggle -> setAllElementsOfTheToggleToNull());
         buyRandomButton.setOnAction(a -> {
 
             try {
@@ -103,9 +100,7 @@ public class ChooseSeatViewController extends ViewController {
 
 
     private void bind() {
-        toggleGroup.getToggles().forEach(toggle->function());
         errorSectionLabel.textProperty().bind(viewModel.seatErrorProperty());
-        confirmSeatButton.disableProperty().bind(viewModel.getToggleState().iterator().next());
         seatsTotalText.textProperty().bind(viewModel.totalSeatsProperty());
         seatsFreeText.textProperty().bind(viewModel.freeSeatsProperty());
         seatsBuysText.textProperty().bind(viewModel.buysSeatsProperty());
@@ -116,44 +111,29 @@ public class ChooseSeatViewController extends ViewController {
 
 
     private void changeLayoutRandom() throws IOException {
-        viewModel.numberOfToggleProperty().setValue(0);
-        toggleGroup.getToggles().forEach(toggle->function3());
+        viewModel.counterForToggle().setValue(0);
+        toggleGroup.getToggles().forEach(toggle -> findRandomPlace());
         activity.getUseCase(BuyTicketUseCase.class).createTicket(
                 new GetTicketBySeatsRequest(
                         viewModel.getSeatList(),
                         viewModel.selectedSeatsProperty().getValue(),
-                        viewModel.selectedPositionSeatIntegerProperty().getValue(),
+                        viewModel.seatSelectedPosition().getValue(),
                         viewModel.foldingArmchairOptionProperty().getValue(),
                         viewModel.heatedArmchairOptionProperty().getValue(),
                         viewModel.skipLineOptionProperty().getValue()
                 )
         );
         navController.navigate(new NavDestination(new PaymentView()));
-    }
-
-    private void function3() {
-        if(!(((RadioButton) toggleGroup.getToggles().get(viewModel.numberOfToggleProperty().getValue())).isDisabled())){
-            viewModel.getToggleState().remove(viewModel.numberOfToggleProperty().getValue());
-            viewModel.getToggleState().add(viewModel.numberOfToggleProperty().getValue(),viewModel.valueTrueForToggleStateProperty());
-            viewModel.positionSelectedToggleProperty().setValue(viewModel.numberOfToggleProperty().getValue());
-            viewModel.selectedSeatsProperty().setValue(
-                    toggleGroup.getToggles().get(viewModel.numberOfToggleProperty().getValue()).toString().substring(
-                            toggleGroup.getToggles().get(viewModel.numberOfToggleProperty().getValue()).toString().length() - 6,
-                            toggleGroup.getToggles().get(viewModel.numberOfToggleProperty().getValue()).toString().length() - 4));
-            viewModel.selectedPositionSeatIntegerProperty().setValue(viewModel.positionSelectedToggleProperty().getValue());
-        }
-        viewModel.numberOfToggleProperty().setValue(viewModel.numberOfToggleProperty().getValue()+1);
-
     }
 
     private void changeLayoutSpecific() throws IOException {
-        viewModel.numberOfToggleProperty().setValue(0);
-        toggleGroup.getToggles().forEach(toggle->function2());
+        viewModel.counterForToggle().setValue(0);
+        toggleGroup.getToggles().forEach(toggle -> findChosenPlace());
         activity.getUseCase(BuyTicketUseCase.class).createTicket(
                 new GetTicketBySeatsRequest(
                         viewModel.getSeatList(),
                         viewModel.selectedSeatsProperty().getValue(),
-                        viewModel.selectedPositionSeatIntegerProperty().getValue(),
+                        viewModel.seatSelectedPosition().getValue(),
                         viewModel.foldingArmchairOptionProperty().getValue(),
                         viewModel.heatedArmchairOptionProperty().getValue(),
                         viewModel.skipLineOptionProperty().getValue()
@@ -163,25 +143,43 @@ public class ChooseSeatViewController extends ViewController {
 
     }
 
-    private void function() {
-        viewModel.getToggleState().add(viewModel.valueFalseForToggleStateProperty());
-        viewModel.numberOfToggleProperty().setValue(viewModel.numberOfToggleProperty().getValue()+1);
+    private void setAllElementsOfTheToggleToNull() {
+        viewModel.getToggleState().add(viewModel.falseBooleanProperty());
+        viewModel.counterForToggle().setValue(viewModel.counterForToggle().getValue() + 1);
+    }
+
+    private void findRandomPlace() {
+        int j = viewModel.counterForToggle().getValue();
+        if (!(((RadioButton) toggleGroup.getToggles().get(j)).isDisabled())) {
+            viewModel.getToggleState().remove(j);
+            viewModel.getToggleState().add(j, viewModel.trueBooleanProperty());
+            viewModel.indexToggleSelected().setValue(j);
+            viewModel.selectedSeatsProperty().setValue(
+                    toggleGroup.getToggles().get(j).toString().substring(
+                            toggleGroup.getToggles().get(j).toString().length() - 6,
+                            toggleGroup.getToggles().get(j).toString().length() - 4));
+            viewModel.seatSelectedPosition().setValue(viewModel.indexToggleSelected().getValue());
+        }
+        viewModel.counterForToggle().setValue(viewModel.counterForToggle().getValue() + 1);
+
     }
 
 
-    private void function2() {
-        if(toggleGroup.getToggles().get(viewModel.numberOfToggleProperty().getValue()).isSelected()){
-            viewModel.getToggleState().remove(viewModel.numberOfToggleProperty().getValue());
-            viewModel.getToggleState().add(viewModel.numberOfToggleProperty().getValue(),viewModel.valueTrueForToggleStateProperty());
-            viewModel.positionSelectedToggleProperty().setValue(viewModel.numberOfToggleProperty().getValue());
+    private void findChosenPlace() {
+        int i = viewModel.counterForToggle().getValue();
+        if (toggleGroup.getToggles().get(i).isSelected()) {
+            viewModel.getToggleState().remove(i);
+            viewModel.getToggleState().add(i, viewModel.trueBooleanProperty());
+            viewModel.indexToggleSelected().setValue(i);
             viewModel.selectedSeatsProperty().setValue(
-                    toggleGroup.getToggles().get(viewModel.numberOfToggleProperty().getValue()).toString().substring(
-                            toggleGroup.getToggles().get(viewModel.numberOfToggleProperty().getValue()).toString().length() - 6,
-                            toggleGroup.getToggles().get(viewModel.numberOfToggleProperty().getValue()).toString().length() - 4));
-            viewModel.selectedPositionSeatIntegerProperty().setValue(viewModel.positionSelectedToggleProperty().getValue());
+                    toggleGroup.getToggles().get(i).toString().substring(
+                            toggleGroup.getToggles().get(i).toString().length() - 6,
+                            toggleGroup.getToggles().get(i).toString().length() - 4
+                    )
+            );
+            viewModel.seatSelectedPosition().setValue(viewModel.indexToggleSelected().getValue());
         }
-        viewModel.numberOfToggleProperty().setValue(viewModel.numberOfToggleProperty().getValue()+1);
-
+        viewModel.counterForToggle().setValue(viewModel.counterForToggle().getValue() + 1);
 
     }
 }

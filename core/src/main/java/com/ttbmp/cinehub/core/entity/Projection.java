@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.core.entity;
 /**
  * @author Palmieri Ivan
  */
+
 import com.ttbmp.cinehub.core.entity.ticket.component.TicketAbstract;
 
 import java.util.ArrayList;

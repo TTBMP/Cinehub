@@ -83,7 +83,7 @@ public class PaymentViewController extends ViewController {
         if (activity.getUseCase(BuyTicketUseCase.class).pay(new PayRequest(
                 viewModel.selectedTicketProperty().getValue(),
                 viewModel.selectedProjectionProperty().getValue(),
-                viewModel.selectedPositionSeatIntegerProperty().getValue()))) {
+                viewModel.seatSelectedPosition().getValue()))) {
             try {
                 navController.navigate(new NavDestination(new ConfirmEmailView()));
             } catch (IOException e) {

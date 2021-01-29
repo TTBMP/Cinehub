@@ -12,9 +12,8 @@ import java.util.List;
 public class MockHallRepository implements HallRepository {
 
 
-
     @Override
-    public List<Hall> retriveAllHall() {
+    public List<Hall> retrieveAllHall() {
         List<Hall> hallList = new ArrayList<>();
         hallList.add(new Hall(0));
         hallList.add(new Hall(1));

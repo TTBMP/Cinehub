@@ -15,8 +15,6 @@ public class MockCinemaRepository implements CinemaRepository {
     private final List<Cinema> cinemaList = new ArrayList<>();
 
 
-
-
     @Override
     public List<Cinema> getAllCinemaList() {
         cinemaList.clear();

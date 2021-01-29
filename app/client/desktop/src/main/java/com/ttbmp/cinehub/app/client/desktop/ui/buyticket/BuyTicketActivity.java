@@ -12,6 +12,7 @@ import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketUseCaseController;
 
 import java.io.IOException;
+
 /**
  * @author Palmieri Ivan
  */
@@ -26,6 +27,7 @@ public class BuyTicketActivity extends Activity {
     private final EmailService emailService = CinehubApplication.APP_CONTAINER.getFactory(EmailService.class).get();
     private final MovieApiService movieApiService = CinehubApplication.APP_CONTAINER.getFactory(MovieApiService.class).get();
     private final AuthenticationService authenticationService = CinehubApplication.APP_CONTAINER.getFactory(AuthenticationService.class).get();
+    private final UserRepository userRepository = CinehubApplication.APP_CONTAINER.getFactory(UserRepository.class).get();
 
 
     public BuyTicketActivity() throws IOException {
@@ -43,7 +45,8 @@ public class BuyTicketActivity extends Activity {
                         seatRepository,
                         authenticationService,
                         hallRepository,
-                        projectionRepository
+                        projectionRepository,
+                        userRepository
                 ));
     }
 }

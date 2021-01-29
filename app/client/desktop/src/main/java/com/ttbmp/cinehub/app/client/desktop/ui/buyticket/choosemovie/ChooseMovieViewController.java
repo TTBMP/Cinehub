@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+
 import java.io.IOException;
 import java.time.LocalDate;
 
@@ -61,14 +62,21 @@ public class ChooseMovieViewController extends ViewController {
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
         movieListView.setItems(viewModel.getMovieList());
         bind();
-        activity.getUseCase(BuyTicketUseCase.class).getListMovie();
+        activity.getUseCase(BuyTicketUseCase.class).getListMovie(viewModel.selectedDateProperty().getValue().toString());
         dateOfProjectionDatePicker.setValue(LocalDate.now());
         movieListView.setCellFactory(movieList -> new ChooseMovieListCell(activity, navController));
-        dateOfProjectionDatePicker.setOnAction(a -> activity.getUseCase(BuyTicketUseCase.class).getListMovie());
+        dateOfProjectionDatePicker.setOnAction(a ->
+                activity.getUseCase(BuyTicketUseCase.class).getListMovie(
+                        viewModel.selectedDateProperty().getValue().toString()));
         dateOfProjectionDatePicker.setDayCellFactory(CustomDateCell::new);
         confirmMovieButton.setOnAction(a -> {
             try {
-                activity.getUseCase(BuyTicketUseCase.class).getListCinema(new GetListCinemaRequest(viewModel.selectedMovieProperty().getValue(), viewModel.selectedDateProperty().getValue().toString()));
+                activity.getUseCase(BuyTicketUseCase.class).getListCinema(
+                        new GetListCinemaRequest(
+                            viewModel.selectedMovieProperty().getValue(),
+                            viewModel.selectedDateProperty().getValue().toString()
+                    )
+                );
                 navController.navigate(new NavDestination(new ChooseCinemaView()));
 
             } catch (IOException e) {

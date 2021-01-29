@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.core.usecase.buyticket.request;
 
 import com.ttbmp.cinehub.core.dto.ProjectionDto;
 import com.ttbmp.cinehub.core.usecase.Request;
+
 /**
  * @author Palmieri Ivan
  */
@@ -25,7 +26,7 @@ public class GetNumberOfSeatsRequest extends Request {
 
     @Override
     public void onValidate() {
-        if(projectionDto == null){
+        if (projectionDto == null) {
             addError(MISSING_PROJECTION_ERROR);
         }
     }

@@ -6,6 +6,7 @@ import com.ttbmp.cinehub.core.service.movie.MovieApiService;
 
 import java.io.IOException;
 import java.util.List;
+
 /**
  * @author Palmieri Ivan
  */

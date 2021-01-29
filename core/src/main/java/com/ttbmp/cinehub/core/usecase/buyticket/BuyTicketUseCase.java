@@ -12,15 +12,13 @@ public interface BuyTicketUseCase extends UseCase {
 
     boolean pay(PayRequest request);
 
-    void getListMovie();
+    void getListMovie(String value);
 
     void createTicket(GetTicketBySeatsRequest request);
 
     void getListCinema(GetListCinemaRequest request);
 
     void getTimeOfProjection(GetTimeOfProjecitonRequest request);
-
-
 
 
     void getProjection(SetSelectedProjectionRequest request);

@@ -65,11 +65,11 @@ public class SetSelectedProjectionRequest extends Request {
         if (movieDto == null) {
             addError(MISSING_MOVIE_ERROR);
         }
-        if(cinemaDto==null){
+        if (cinemaDto == null) {
             addError(MISSING_CINEMA_ERROR);
 
         }
-        if(time==null){
+        if (time == null) {
             addError(MISSING_TIME_ERROR);
         }
     }

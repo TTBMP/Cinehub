@@ -15,7 +15,7 @@ public class CinemaDataMapper {
     }
 
     public static CinemaDto mapToDto(Cinema cinema) {
-        if(cinema == null){
+        if (cinema == null) {
             return null;
         }
         return new CinemaDto(cinema.getName(), cinema.getAddress(), cinema.getCity());

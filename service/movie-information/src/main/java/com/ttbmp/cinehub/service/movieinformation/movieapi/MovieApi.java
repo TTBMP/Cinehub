@@ -36,7 +36,7 @@ public class MovieApi implements MovieApiService {
     }
 
     @Override
-    public void retrieveAllMovie() throws IOException {
+    public void retriveAllMovie() throws IOException {
 
         while (i <= numberOfMovie) {
             retrieveMovie(new URL(urlStart + i + apiKey));
@@ -63,7 +63,7 @@ public class MovieApi implements MovieApiService {
             br = new BufferedReader(new InputStreamReader((con.getInputStream())));
         } catch (IOException e) {
             i++;
-            retrieveAllMovie();
+            retriveAllMovie();
         }
         if (i <= numberOfMovie) {
             String output;

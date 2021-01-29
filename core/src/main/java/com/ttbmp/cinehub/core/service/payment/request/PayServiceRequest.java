@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.core.service.payment.request;
 
 import com.ttbmp.cinehub.core.usecase.Request;
+
 /**
  * @author Palmieri Ivan
  */
@@ -39,10 +40,10 @@ public class PayServiceRequest extends Request {
 
     @Override
     public void onValidate() {
-        if(email==null || numberOfCard == null || nameUser ==null){
+        if (email == null || numberOfCard == null || nameUser == null) {
             addError(MISSING_USER_DATE_ERROR);
         }
-        if(ticketPrice<0){
+        if (ticketPrice < 0) {
             addError(NEGATIVE_PRICE_ERROR);
         }
     }

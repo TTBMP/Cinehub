@@ -4,6 +4,7 @@ import com.ttbmp.cinehub.core.dto.SeatDto;
 import com.ttbmp.cinehub.core.usecase.Request;
 
 import java.util.List;
+
 /**
  * @author Palmieri Ivan
  */
@@ -65,13 +66,13 @@ public class GetTicketBySeatsRequest extends Request {
 
     @Override
     public void onValidate() {
-        if(seatDtoList ==null){
+        if (seatDtoList == null) {
             addError(MISSING_LIST_SEATS_ERROR);
         }
-        if(position==null){
+        if (position == null) {
             addError(MISSING_POSITION_ERROR);
         }
-        if(pos==null){
+        if (pos == null) {
             addError(MISSING_INDEX_ERROR);
         }
     }

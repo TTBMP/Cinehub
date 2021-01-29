@@ -51,10 +51,10 @@ public class GetTimeOfProjecitonRequest extends Request {
 
     @Override
     public void onValidate() {
-        if(movieDto==null){
+        if (movieDto == null) {
             addError(MISSING_MOVIE_ERROR);
         }
-        if(cinemaDto==null){
+        if (cinemaDto == null) {
             addError(MISSING_CINEMA_ERROR);
         }
 

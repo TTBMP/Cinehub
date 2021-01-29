@@ -3,6 +3,7 @@ package com.ttbmp.cinehub.core.usecase.buyticket.request;
 import com.ttbmp.cinehub.core.dto.ProjectionDto;
 import com.ttbmp.cinehub.core.dto.TicketDto;
 import com.ttbmp.cinehub.core.usecase.Request;
+
 /**
  * @author Palmieri Ivan
  */
@@ -47,11 +48,11 @@ public class PayRequest extends Request {
         if (index == null) {
             addError(MISSING_INDEX_ERROR);
         }
-        if(projection==null){
+        if (projection == null) {
             addError(MISSING_PROJECTION_ERROR);
 
         }
-        if(ticket==null){
+        if (ticket == null) {
             addError(MISSING_TICKET_ERROR);
         }
     }

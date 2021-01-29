@@ -3,6 +3,7 @@ package com.ttbmp.cinehub.app.client.desktop.ui.buyticket.choosecinema;
 
 import com.ttbmp.cinehub.app.client.desktop.ui.appbar.AppBarViewController;
 import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.BuyTicketViewModel;
+import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.choosemovie.ChooseMovieView;
 import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.chooseseat.ChooseSeatView;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavDestination;
@@ -56,7 +57,7 @@ public class ChooseCinemaViewController extends ViewController {
         cinemaListView.setCellFactory(listCinemaDto -> new ChooseCinemaListCell(activity, navController));//Cell Factory
         cancelButton.setOnAction(a -> {
             try {
-                navController.popBackStack();
+                navController.navigate(new NavDestination(new ChooseMovieView()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -78,7 +79,8 @@ public class ChooseCinemaViewController extends ViewController {
 
     private void bind() {
         confirmCinemaButton.disableProperty().bind(viewModel.selectedCinemaProperty().isNull().or(viewModel.selectedTimeProperty().isNull()));
-        viewModel.selectedTimeProperty().bind(timeOfProjectionListView.getSelectionModel().selectedItemProperty());
+        timeOfProjectionListView.getSelectionModel().selectedItemProperty().addListener(l ->
+                viewModel.selectedTimeProperty().setValue(timeOfProjectionListView.getSelectionModel().selectedItemProperty().getValue()));
         viewModel.selectedCinemaProperty().bind(cinemaListView.getSelectionModel().selectedItemProperty());
         errorSectionLabel.textProperty().bind(viewModel.cinemaErrorProperty());
         cinemaListView.getSelectionModel().selectedItemProperty().addListener(l ->

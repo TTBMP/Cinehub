@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface MovieApiService {
 
-    void retrieveAllMovie() throws IOException;
+    void retriveAllMovie() throws IOException;
 
     void retrieveMovieById(Integer id) throws IOException;
 

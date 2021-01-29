@@ -2,8 +2,8 @@ package com.ttbmp.cinehub.core.datamapper;
 
 
 import com.ttbmp.cinehub.core.dto.TicketDto;
-import com.ttbmp.cinehub.core.entity.ticket.component.TicketAbstract;
 import com.ttbmp.cinehub.core.entity.ticket.component.Ticket;
+import com.ttbmp.cinehub.core.entity.ticket.component.TicketAbstract;
 
 /**
  * @author Palmieri Ivan

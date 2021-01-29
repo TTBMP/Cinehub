@@ -1,4 +1,5 @@
 package com.ttbmp.cinehub.core.entity.ticket.component;
+
 /**
  * @author Palmieri Ivan
  */

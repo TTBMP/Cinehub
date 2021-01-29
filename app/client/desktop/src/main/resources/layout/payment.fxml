@@ -4,83 +4,96 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.buyticket.payment.PaymentViewController">
-   <children>
-      <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-         <content>
-            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0">
-               <children>
-                  <Label alignment="CENTER" prefHeight="21.0" prefWidth="602.0" text="Enter your billing information ">
-                     <VBox.margin>
-                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                     <children>
-                                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Surname you will find on the ticketNormal:" wrappingWidth="101.0732421875" />
-                                  <TextField fx:id="surnameTextField" alignment="TOP_LEFT" promptText="Insert surname" />
-                                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name you will find on the ticketNormal:" wrappingWidth="133.44873046875">
-                           <HBox.margin>
-                              <Insets left="16.0" />
-                           </HBox.margin>
-                                  </Text>
-                                  <TextField fx:id="nameTextField" alignment="TOP_LEFT" promptText="Insert name" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                     <children>
-                                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Credit card number:" wrappingWidth="98.56298828125" />
-                                  <TextField fx:id="numberOfCreditCardTextField" alignment="TOP_LEFT" promptText="Insert card" />
-                                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Enter the email where the invoice arrives:" wrappingWidth="134.8466796875">
-                           <HBox.margin>
-                              <Insets left="16.0" />
-                           </HBox.margin>
-                                  </Text>
-                                  <TextField fx:id="emailTextField" alignment="TOP_LEFT" promptText="Insert email">
-                                      <opaqueInsets>
-                                          <Insets />
-                                      </opaqueInsets>
-                                  </TextField>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                     <children>
-                                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CVV:" wrappingWidth="99.171875" />
-                                  <TextField fx:id="cvvTextField" promptText="Insert cvv" />
-                                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Credit card expiration date:" wrappingWidth="129.34521484375">
-                           <HBox.margin>
-                              <Insets left="16.0" />
-                           </HBox.margin>
-                                  </Text>
-                                  <DatePicker fx:id="fieldExpirationDatePicker" prefHeight="31.0" prefWidth="181.0" promptText="Insert date" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                     <children>
-                                  <Button fx:id="returnButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="54.0" text="Back" />
-                                  <Text fx:id="resultPaymentText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="214.6708984375" />
-                                  <Label fx:id="errorSectionLabel" prefHeight="21.0" prefWidth="253.0" textFill="RED" />
-                                  <Button fx:id="confirmButton" mnemonicParsing="false" text="Pay" textAlignment="JUSTIFY" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-                     </VBox.margin>
-                  </HBox>
-               </children>
-            </VBox>
-         </content>
-      </ScrollPane>
-   </children>
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
+      fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.buyticket.payment.PaymentViewController">
+    <children>
+        <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308"
+                    maxWidth="1.7976931348623157E308">
+            <content>
+                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="602.0"
+                               text="Enter your billing information ">
+                            <VBox.margin>
+                                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
+                            </VBox.margin>
+                            <font>
+                                <Font size="20.0"/>
+                            </font>
+                        </Label>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Surname you will find on the ticketNormal:" wrappingWidth="101.0732421875"/>
+                                <TextField fx:id="surnameTextField" alignment="TOP_LEFT" promptText="Insert surname"/>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Name you will find on the ticketNormal:" wrappingWidth="133.44873046875">
+                                    <HBox.margin>
+                                        <Insets left="16.0"/>
+                                    </HBox.margin>
+                                </Text>
+                                <TextField fx:id="nameTextField" alignment="TOP_LEFT" promptText="Insert name"/>
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
+                            </VBox.margin>
+                        </HBox>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Credit card number:"
+                                      wrappingWidth="98.56298828125"/>
+                                <TextField fx:id="numberOfCreditCardTextField" alignment="TOP_LEFT"
+                                           promptText="Insert card"/>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Enter the email where the invoice arrives:" wrappingWidth="134.8466796875">
+                                    <HBox.margin>
+                                        <Insets left="16.0"/>
+                                    </HBox.margin>
+                                </Text>
+                                <TextField fx:id="emailTextField" alignment="TOP_LEFT" promptText="Insert email">
+                                    <opaqueInsets>
+                                        <Insets/>
+                                    </opaqueInsets>
+                                </TextField>
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
+                            </VBox.margin>
+                        </HBox>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CVV:" wrappingWidth="99.171875"/>
+                                <TextField fx:id="cvvTextField" promptText="Insert cvv"/>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Credit card expiration date:"
+                                      wrappingWidth="129.34521484375">
+                                    <HBox.margin>
+                                        <Insets left="16.0"/>
+                                    </HBox.margin>
+                                </Text>
+                                <DatePicker fx:id="fieldExpirationDatePicker" prefHeight="31.0" prefWidth="181.0"
+                                            promptText="Insert date"/>
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
+                            </VBox.margin>
+                        </HBox>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                            <children>
+                                <Button fx:id="returnButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="54.0"
+                                        text="Back"/>
+                                <Text fx:id="resultPaymentText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      wrappingWidth="214.6708984375"/>
+                                <Label fx:id="errorSectionLabel" prefHeight="21.0" prefWidth="253.0" textFill="RED"/>
+                                <Button fx:id="confirmButton" mnemonicParsing="false" text="Pay"
+                                        textAlignment="JUSTIFY"/>
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
+                            </VBox.margin>
+                        </HBox>
+                    </children>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
 </VBox>

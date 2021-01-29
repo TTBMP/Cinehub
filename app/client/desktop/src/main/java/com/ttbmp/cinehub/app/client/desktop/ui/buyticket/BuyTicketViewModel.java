@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.core.dto.*;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,36 +61,11 @@ public class BuyTicketViewModel implements ViewModel {
     private final BooleanProperty foldingArmchairOption = new SimpleBooleanProperty();
 
 
-
     private final IntegerProperty numberOfToggle = new SimpleIntegerProperty(0);
     private final List<BooleanProperty> toggleState = new ArrayList<>(60);
     private final IntegerProperty positionSelectedToggle = new SimpleIntegerProperty();
     private final BooleanProperty valueFalseForToggleState = new SimpleBooleanProperty(false);
     private final BooleanProperty valueTrueForToggleState = new SimpleBooleanProperty(true);
-
-
-    public BooleanProperty valueTrueForToggleStateProperty() {
-        return valueTrueForToggleState;
-    }
-
-
-    public BooleanProperty valueFalseForToggleStateProperty() {
-        return valueFalseForToggleState;
-    }
-
-
-    public IntegerProperty positionSelectedToggleProperty() {
-        return positionSelectedToggle;
-    }
-
-    public List<BooleanProperty> getToggleState() {
-        return toggleState;
-    }
-
-    public IntegerProperty numberOfToggleProperty() {
-        return numberOfToggle;
-    }
-
 
 
     public BuyTicketViewModel() {
@@ -112,6 +88,26 @@ public class BuyTicketViewModel implements ViewModel {
         selectedDateProperty().setValue(LocalDate.now());
 
 
+    }
+
+    public BooleanProperty trueBooleanProperty() {
+        return valueTrueForToggleState;
+    }
+
+    public BooleanProperty falseBooleanProperty() {
+        return valueFalseForToggleState;
+    }
+
+    public IntegerProperty indexToggleSelected() {
+        return positionSelectedToggle;
+    }
+
+    public List<BooleanProperty> getToggleState() {
+        return toggleState;
+    }
+
+    public IntegerProperty counterForToggle() {
+        return numberOfToggle;
     }
 
     public BooleanProperty skipLineOptionProperty() {
@@ -158,7 +154,7 @@ public class BuyTicketViewModel implements ViewModel {
         return selectedProjection;
     }
 
-    public IntegerProperty selectedPositionSeatIntegerProperty() {
+    public IntegerProperty seatSelectedPosition() {
         return selectedPositionSeatInteger;
     }
 
