@@ -22,7 +22,8 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentMovieApiList(GetListMovieResponse response) {
-        viewModel.getMovieList().setAll(response.getMovieList());
+        viewModel.getMovieList().clear();
+        viewModel.getMovieList().addAll(response.getMovieList());
     }
 
     @Override
@@ -121,7 +122,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
         if (request.getErrorList().contains(GetTimeOfProjecitonRequest.MISSING_MOVIE_ERROR)) {
             viewModel.cinemaErrorProperty().setValue(GetTimeOfProjecitonRequest.MISSING_MOVIE_ERROR.getMessage());
         }
-            if (request.getErrorList().contains(GetTimeOfProjecitonRequest.MISSING_DATE_ERROR)) {
+        if (request.getErrorList().contains(GetTimeOfProjecitonRequest.MISSING_DATE_ERROR)) {
             viewModel.cinemaErrorProperty().setValue(GetTimeOfProjecitonRequest.MISSING_DATE_ERROR.getMessage());
         }
     }

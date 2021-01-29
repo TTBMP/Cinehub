@@ -57,7 +57,7 @@ public class ServiceRequestStripe {
     }
 
     public Customer exist(User user) throws StripeException {
-        CustomerCollection customers = retrieveListCustomer();
+        CustomerCollection customers = getListCustomer();
         if (customers == null) {
             return null;
         }
@@ -71,8 +71,8 @@ public class ServiceRequestStripe {
     }
 
     //Given an email retrieves the customer if it exists
-    public Customer isExistent(String nome, String numberOfCard, String email) throws StripeException {
-        CustomerCollection customers = retrieveListCustomer();
+    public Customer getCustomer(String nome, String numberOfCard, String email) throws StripeException {
+        CustomerCollection customers = getListCustomer();
         if (customers == null) {
             return null;
         }
@@ -89,13 +89,13 @@ public class ServiceRequestStripe {
     }
 
     //Returns a list of users on Stripe
-    public CustomerCollection retrieveListCustomer() throws StripeException {
+    public CustomerCollection getListCustomer() throws StripeException {
         Map<String, Object> params = new HashMap<>();
         return Customer.list(params);
     }
 
     //Given a customer, the list of his cards returns
-    public PaymentMethodCollection retrievePaymentMethod(Customer customer) throws StripeException {
+    public PaymentMethodCollection getPaymentMethod(Customer customer) throws StripeException {
         Map<String, Object> params = new HashMap<>();
         params.put(CUSTOMER, customer.getId());
         params.put("type", "card");
@@ -103,8 +103,8 @@ public class ServiceRequestStripe {
     }
 
     //Given a customer, it retrieves the (0) card of the associated user
-    public PaymentMethod retrieveCard(Customer customer) throws StripeException {
-        PaymentMethodCollection paymentMethods = retrievePaymentMethod(customer);
+    public PaymentMethod getCard(Customer customer) throws StripeException {
+        PaymentMethodCollection paymentMethods = getPaymentMethod(customer);
         if (paymentMethods == null) {
             return null;
         }
@@ -142,7 +142,7 @@ public class ServiceRequestStripe {
 
     //This method returns a list of all payments made by that customer
     public PaymentIntentCollection retrieveListPaymentIntent(String nome, String numberOfCard, String email) throws StripeException {
-        Customer customer = isExistent(nome, numberOfCard, email);
+        Customer customer = getCustomer(nome, numberOfCard, email);
         Map<String, Object> params = new HashMap<>();
         params.put(CUSTOMER, customer.getId());
         return PaymentIntent.list(params);

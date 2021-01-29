@@ -3,7 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.*?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
       fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.buyticket.chooseseat.ChooseSeatViewController">
     <children>
@@ -31,48 +31,53 @@
                         </HBox>
                         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                             <children>
-                                <VBox HBox.hgrow="ALWAYS">
+                                <TitledPane text="Buy a specific seat" HBox.hgrow="ALWAYS">
+                                    <content>
+                                        <VBox fx:id="seatsContainerVBox"/>
+                                    </content>
+                                </TitledPane>
+                            </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <VBox>
                                     <children>
-                                        <TitledPane text="Buy a specific seat" VBox.vgrow="ALWAYS">
-                                            <content>
-                                                <VBox fx:id="seatsContainerVBox"/>
-                                            </content>
-                                        </TitledPane>
-                                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="601.0"
+                                        <Label alignment="CENTER"
                                                text="Each additional service increases the cost of the ticketAbstract by one euro "
                                                textFill="#b54848">
                                             <VBox.margin>
-                                                <Insets bottom="10.0" top="10.0"/>
+                                                <Insets bottom="16.0"/>
                                             </VBox.margin>
                                         </Label>
-                                        <HBox prefHeight="100.0" prefWidth="200.0">
+                                        <HBox>
                                             <children>
-                                                <RadioButton fx:id="foldingArmchairRadioButton" mnemonicParsing="false"
-                                                             prefHeight="22.0" prefWidth="211.0" text="Heated armchair"
-                                                             textAlignment="CENTER" textOverrun="CLIP"/>
-                                                <RadioButton fx:id="heatedArmchairRadioButton" mnemonicParsing="false"
-                                                             prefHeight="21.0" prefWidth="223.0"
-                                                             text="Folding armchair"/>
-                                                <RadioButton fx:id="skipLineRadioButton" mnemonicParsing="false"
-                                                             prefHeight="21.0" prefWidth="136.0" text="Skip line"/>
+                                                <CheckBox fx:id="foldingArmchairRadioButton" mnemonicParsing="false"
+                                                          prefHeight="21.0" prefWidth="202.0" text="Heated armchair"/>
+                                                <CheckBox fx:id="heatedArmchairRadioButton" mnemonicParsing="false"
+                                                          prefHeight="21.0" prefWidth="223.0" text="Folding armchair"/>
+                                                <CheckBox fx:id="skipLineRadioButton" mnemonicParsing="false"
+                                                          prefHeight="21.0" prefWidth="89.0" text="Skip line"/>
                                             </children>
-                                            <VBox.margin>
-                                                <Insets left="12.0" right="12.0"/>
-                                            </VBox.margin>
                                         </HBox>
                                     </children>
                                 </VBox>
                             </children>
                         </HBox>
-                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="If you don't have time to waste "
+                              wrappingWidth="518.89404296875">
+                            <font>
+                                <Font size="20.0"/>
+                            </font>
+                            <VBox.margin>
+                                <Insets bottom="16.0"/>
+                            </VBox.margin>
+                        </Text>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
                             <children>
                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Buy a seat randomly"
                                       wrappingWidth="226.99658203125"/>
                                 <Button fx:id="buyRandomButton" mnemonicParsing="false" text="Continue"/>
                             </children>
-                            <VBox.margin>
-                                <Insets bottom="5.0" left="16.0" right="16.0" top="5.0"/>
-                            </VBox.margin>
                         </HBox>
                         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                             <children>
@@ -91,6 +96,9 @@
                             </children>
                         </HBox>
                     </children>
+                    <padding>
+                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
+                    </padding>
                 </VBox>
             </content>
         </ScrollPane>

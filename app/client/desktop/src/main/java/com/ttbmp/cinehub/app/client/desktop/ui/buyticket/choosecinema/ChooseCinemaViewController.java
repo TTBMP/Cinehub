@@ -87,9 +87,9 @@ public class ChooseCinemaViewController extends ViewController {
         cinemaListView.getSelectionModel().selectedItemProperty().addListener(l ->
                 activity.getUseCase(BuyTicketUseCase.class).getTimeOfProjection(
                         new GetTimeOfProjecitonRequest(
-                            viewModel.selectedMovieProperty().getValue(),
-                            viewModel.selectedCinemaProperty().getValue(),
-                            viewModel.selectedDateProperty().getValue()
+                                viewModel.selectedMovieProperty().getValue(),
+                                viewModel.selectedCinemaProperty().getValue(),
+                                viewModel.selectedDateProperty().getValue()
                         )
                 )
         );

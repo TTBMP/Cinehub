@@ -36,22 +36,22 @@ public class MovieApi implements MovieApiService {
     }
 
     @Override
-    public void retriveAllMovie() throws IOException {
+    public void getAllMovie() throws IOException {
 
         while (i <= numberOfMovie) {
-            retrieveMovie(new URL(urlStart + i + apiKey));
+            getMovie(new URL(urlStart + i + apiKey));
         }
 
     }
 
     @Override
-    public void retrieveMovieById(Integer id) throws IOException {
-        retrieveMovie(new URL(urlStart + id + apiKey));
+    public void getMovieById(Integer id) throws IOException {
+        getMovie(new URL(urlStart + id + apiKey));
     }
 
 
     @Override
-    public void retrieveMovie(URL url) throws IOException {
+    public void getMovie(URL url) throws IOException {
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         assert con != null;
         con.setDoOutput(true);
@@ -63,7 +63,7 @@ public class MovieApi implements MovieApiService {
             br = new BufferedReader(new InputStreamReader((con.getInputStream())));
         } catch (IOException e) {
             i++;
-            retriveAllMovie();
+            getAllMovie();
         }
         if (i <= numberOfMovie) {
             String output;

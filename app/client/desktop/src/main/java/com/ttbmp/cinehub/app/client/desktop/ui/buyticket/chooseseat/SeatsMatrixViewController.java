@@ -46,7 +46,7 @@ public class SeatsMatrixViewController extends ViewController {
             for (int j = 0; j < columns; j++) {
                 RadioButton radioButton = new RadioButton();
                 if (i == 0) {
-                    radioButton.setPadding(new Insets(5, 5, 5, 40));
+                    radioButton.setPadding(new Insets(5, 5, 5, 5));
                 } else {
                     radioButton.setPadding(new Insets(5, 5, 5, 5));
                 }
@@ -71,7 +71,7 @@ public class SeatsMatrixViewController extends ViewController {
             radioButton.setText("" + a[columns + 1] + k + "\n" + seatDtoList.get(count).getPrice() + "\u20ac");
             radioButton.setToggleGroup(toggleGroup);
             if (k == 0) {
-                radioButton.setPadding(new Insets(5, 5, 5, 40));
+                radioButton.setPadding(new Insets(5, 5, 5, 5));
             } else {
                 radioButton.setPadding(new Insets(5, 5, 5, 5));
             }

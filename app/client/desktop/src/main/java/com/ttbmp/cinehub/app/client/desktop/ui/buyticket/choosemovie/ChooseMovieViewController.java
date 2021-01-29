@@ -60,22 +60,21 @@ public class ChooseMovieViewController extends ViewController {
     protected void onLoad() {
         appBarController.load(activity, navController);
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
+        movieListView.itemsProperty().addListener(l -> movieListView.refresh());
         movieListView.setItems(viewModel.getMovieList());
         bind();
         activity.getUseCase(BuyTicketUseCase.class).getListMovie(viewModel.selectedDateProperty().getValue().toString());
         dateOfProjectionDatePicker.setValue(LocalDate.now());
         movieListView.setCellFactory(movieList -> new ChooseMovieListCell(activity, navController));
-        dateOfProjectionDatePicker.setOnAction(a ->
-                activity.getUseCase(BuyTicketUseCase.class).getListMovie(
-                        viewModel.selectedDateProperty().getValue().toString()));
+        dateOfProjectionDatePicker.setOnAction(a -> activity.getUseCase(BuyTicketUseCase.class).getListMovie(viewModel.selectedDateProperty().getValue().toString()));
         dateOfProjectionDatePicker.setDayCellFactory(CustomDateCell::new);
         confirmMovieButton.setOnAction(a -> {
             try {
                 activity.getUseCase(BuyTicketUseCase.class).getListCinema(
                         new GetListCinemaRequest(
-                            viewModel.selectedMovieProperty().getValue(),
-                            viewModel.selectedDateProperty().getValue().toString()
-                    )
+                                viewModel.selectedMovieProperty().getValue(),
+                                viewModel.selectedDateProperty().getValue().toString()
+                        )
                 );
                 navController.navigate(new NavDestination(new ChooseCinemaView()));
 
@@ -88,6 +87,7 @@ public class ChooseMovieViewController extends ViewController {
         nextButton.setOnAction(a -> dateOfProjectionDatePicker.setValue(dateOfProjectionDatePicker.getValue().plusDays(1)));
 
     }
+
 
     private void bind() {
         errorSectionLabel.textProperty().bind(viewModel.movieErrorProperty());

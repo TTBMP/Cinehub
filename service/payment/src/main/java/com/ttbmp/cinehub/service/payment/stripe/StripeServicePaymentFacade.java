@@ -23,7 +23,7 @@ public class StripeServicePaymentFacade implements PaymentService {
     public boolean pay(PayServiceRequest payServiceRequest) {
         Customer customer = null;
         try {
-            customer = serviceRequestStripe.isExistent(payServiceRequest.getNameUser(), payServiceRequest.getNumberOfCard(), payServiceRequest.getEmail());
+            customer = serviceRequestStripe.getCustomer(payServiceRequest.getNameUser(), payServiceRequest.getNumberOfCard(), payServiceRequest.getEmail());
         } catch (StripeException e) {
             e.printStackTrace();
         }
@@ -33,7 +33,7 @@ public class StripeServicePaymentFacade implements PaymentService {
         }
         PaymentMethod paymentMethod = null;
         try {
-            paymentMethod = serviceRequestStripe.retrieveCard(customer);
+            paymentMethod = serviceRequestStripe.getCard(customer);
         } catch (StripeException e) {
             e.printStackTrace();
         }
