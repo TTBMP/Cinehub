@@ -121,8 +121,8 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
         if (request.getErrorList().contains(GetTimeOfProjecitonRequest.MISSING_MOVIE_ERROR)) {
             viewModel.cinemaErrorProperty().setValue(GetTimeOfProjecitonRequest.MISSING_MOVIE_ERROR.getMessage());
         }
-        if (request.getErrorList().contains(GetTimeOfProjecitonRequest.MISSING_CINEMA_ERROR)) {
-            viewModel.cinemaErrorProperty().setValue(GetTimeOfProjecitonRequest.MISSING_CINEMA_ERROR.getMessage());
+            if (request.getErrorList().contains(GetTimeOfProjecitonRequest.MISSING_DATE_ERROR)) {
+            viewModel.cinemaErrorProperty().setValue(GetTimeOfProjecitonRequest.MISSING_DATE_ERROR.getMessage());
         }
     }
 

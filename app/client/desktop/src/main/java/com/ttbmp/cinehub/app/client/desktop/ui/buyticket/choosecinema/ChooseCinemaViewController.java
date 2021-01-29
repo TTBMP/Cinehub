@@ -63,6 +63,7 @@ public class ChooseCinemaViewController extends ViewController {
             }
         });
         confirmCinemaButton.setOnAction(a -> {
+            viewModel.cinemaErrorProperty().setValue(null);
             activity.getUseCase(BuyTicketUseCase.class).getProjection(new SetSelectedProjectionRequest(
                     viewModel.selectedMovieProperty().getValue(),
                     viewModel.selectedCinemaProperty().getValue(),
@@ -84,10 +85,14 @@ public class ChooseCinemaViewController extends ViewController {
         viewModel.selectedCinemaProperty().bind(cinemaListView.getSelectionModel().selectedItemProperty());
         errorSectionLabel.textProperty().bind(viewModel.cinemaErrorProperty());
         cinemaListView.getSelectionModel().selectedItemProperty().addListener(l ->
-                activity.getUseCase(BuyTicketUseCase.class).getTimeOfProjection(new GetTimeOfProjecitonRequest(
-                        viewModel.selectedMovieProperty().getValue(),
-                        viewModel.selectedCinemaProperty().getValue(),
-                        viewModel.selectedDateProperty().getValue())));
+                activity.getUseCase(BuyTicketUseCase.class).getTimeOfProjection(
+                        new GetTimeOfProjecitonRequest(
+                            viewModel.selectedMovieProperty().getValue(),
+                            viewModel.selectedCinemaProperty().getValue(),
+                            viewModel.selectedDateProperty().getValue()
+                        )
+                )
+        );
     }
 
 }

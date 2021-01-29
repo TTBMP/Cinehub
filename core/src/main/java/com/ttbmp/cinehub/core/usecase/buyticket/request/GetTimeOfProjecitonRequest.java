@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class GetTimeOfProjecitonRequest extends Request {
 
     public static final Request.Error MISSING_MOVIE_ERROR = new Request.Error("Movie can't be null");
-    public static final Request.Error MISSING_CINEMA_ERROR = new Request.Error("Cinema can't be null");
+    public static final Request.Error MISSING_DATE_ERROR = new Request.Error("Date can't be null");
 
 
     private MovieDto movieDto;
@@ -54,8 +54,8 @@ public class GetTimeOfProjecitonRequest extends Request {
         if (movieDto == null) {
             addError(MISSING_MOVIE_ERROR);
         }
-        if (cinemaDto == null) {
-            addError(MISSING_CINEMA_ERROR);
+        if (localDate == null) {
+            addError(MISSING_DATE_ERROR);
         }
 
     }
