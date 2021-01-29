@@ -10,6 +10,8 @@ public class Shift {
     private String end;
     private Hall hall;
 
+    public Shift(){}
+
     public Shift(Employee employee, String date, String start, String end) {
         this.employee = employee;
         this.date = date;
@@ -22,7 +24,7 @@ public class Shift {
         this.date = date;
         this.start = start;
         this.end = end;
-        this.hall = hall;
+        this.hall=hall;
     }
 
     public Hall getHall() {

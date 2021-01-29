@@ -28,7 +28,7 @@ public abstract class Request {
         errorList.add(error);
     }
 
-    public abstract void onValidate();
+    protected abstract void onValidate();
 
     public static class Error {
 

@@ -5,6 +5,7 @@ import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.HallFactory;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.SpinnerEndValueFactory;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.SpinnerStartValueFactory;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
+import com.ttbmp.cinehub.core.ShiftFactory;
 import com.ttbmp.cinehub.core.datamapper.CinemaDataMapper;
 import com.ttbmp.cinehub.core.datamapper.EmployeeDataMapper;
 import com.ttbmp.cinehub.core.datamapper.HallDataMapper;
@@ -33,6 +34,7 @@ import java.util.ResourceBundle;
 
 public class ModifyShiftViewController extends ViewController {
     private ManageEmployeesShiftViewModel viewModel;
+    private final ShiftFactory shiftFactory = new ShiftFactory();
 
     @FXML
     private ResourceBundle resources;
@@ -149,20 +151,21 @@ public class ModifyShiftViewController extends ViewController {
         LocalDate date = dateDatePicker.getValue();
         LocalTime start = viewModel.getStartSpinnerModifyTime().withNano(0);
         LocalTime end = viewModel.getEndSpinnerModifyTime().withNano(0);
-
         Shift shift;
         if (employee.getRole().equals("maschera")) {
-            shift = new Shift(EmployeeDataMapper.matToEntity(employee),
-                    date.toString(),
-                    start.toString(),
-                    end.toString());
+            shift = shiftFactory.createShiftUsher();
+            shift.setEmployee(EmployeeDataMapper.matToEntity(employee));
+            shift.setDate( date.toString());
+            shift.setStart(start.toString());
+            shift.setEnd(end.toString());
         } else {
             if (hallComboBox.getValue() != null) {
-                shift = new Shift(EmployeeDataMapper.matToEntity(employee),
-                        date.toString(),
-                        start.toString(),
-                        end.toString(),
-                        HallDataMapper.matToEntity(hallComboBox.getValue()));
+                shift = shiftFactory.createShiftProjectionist();
+                shift.setEmployee(EmployeeDataMapper.matToEntity(employee));
+                shift.setDate(date.toString());
+                shift.setStart( start.toString());
+                shift.setEnd(end.toString());
+                shift.setHall( HallDataMapper.matToEntity(hallComboBox.getValue()));
             } else {
                 shift = null;
                 hallComboBox.setStyle("-fx-background-color: red;");

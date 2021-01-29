@@ -6,6 +6,7 @@ import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.HallFactory;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.SpinnerEndValueFactory;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.SpinnerStartValueFactory;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
+import com.ttbmp.cinehub.core.ShiftFactory;
 import com.ttbmp.cinehub.core.datamapper.CinemaDataMapper;
 import com.ttbmp.cinehub.core.datamapper.EmployeeDataMapper;
 import com.ttbmp.cinehub.core.datamapper.HallDataMapper;
@@ -15,6 +16,7 @@ import com.ttbmp.cinehub.core.dto.HallDto;
 import com.ttbmp.cinehub.core.entity.Shift;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetHallListRequest;
+import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.ShiftRepeatRequest;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.ShiftRequest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,6 +26,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
@@ -77,9 +80,11 @@ public class AssignShiftViewController extends ViewController {
     @FXML
     private Label hallLabel;
 
+    private final ShiftFactory shiftFactory = new ShiftFactory();
 
     @Override
     protected void onLoad() {
+
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
 
         if (viewModel.getSelectedDayWeek().getEmployee().getRole().equals("maschera")) {
@@ -91,13 +96,14 @@ public class AssignShiftViewController extends ViewController {
             viewModel.selectedSalaProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
         }
 
-
+        viewModel.setSelectedEndRepeatDay(null);
         hallComboBox.setButtonCell(new HallFactory(null));
         hallComboBox.setCellFactory(HallFactory::new);
 
         errorVBox.setVisible(false);
         optionVBox.visibleProperty().bind(viewModel.repeatVisibilityProperty());
         dateVBox.visibleProperty().bind(viewModel.repeatVisibilityProperty());
+        viewModel.setRepeatVisibility(viewModel.isRepeatVisibility());
         shiftRepeatCheckBox.setOnAction(event -> viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility()));
 
         viewModel.setStartSpinnerTime(LocalTime.NOON);
@@ -116,6 +122,9 @@ public class AssignShiftViewController extends ViewController {
 
         cancelButton.setOnAction(a -> {
             try {
+                if(shiftRepeatCheckBox.isSelected()) {
+                    viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());
+                }
                 navController.popBackStack();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -127,7 +136,11 @@ public class AssignShiftViewController extends ViewController {
         if (viewModel.getStartSpinnerTime() != null && viewModel.getEndSpinnerTime() != null) {
 
             Shift shift = createShift();
-            saveShift(shift);
+            if (optionRepeatComboBox.getValue() == null)
+                saveShift(shift);
+            else {
+                saveRepeatShift();
+            }
 
         } else {
             startSpinner.setPromptText("inserisci valore");
@@ -141,17 +154,19 @@ public class AssignShiftViewController extends ViewController {
         LocalTime end = viewModel.getEndSpinnerTime().withNano(0);
         Shift shift = null;
         if (employee.getRole().equals("maschera")) {
-            shift = new Shift(EmployeeDataMapper.matToEntity(employee),
-                    viewModel.getSelectedDayWeek().getDate().toString(),
-                    start.toString(),
-                    end.toString());
+            shift = shiftFactory.createShiftUsher();
+            shift.setEmployee(EmployeeDataMapper.matToEntity(employee));
+            shift.setDate(viewModel.getSelectedDayWeek().getDate().toString());
+            shift.setStart(start.toString());
+            shift.setEnd(end.toString());
         } else {
             if (hallComboBox.getValue() != null) {
-                shift = new Shift(EmployeeDataMapper.matToEntity(employee),
-                        viewModel.getSelectedDayWeek().getDate().toString(),
-                        start.toString(),
-                        end.toString(),
-                        HallDataMapper.matToEntity(hallComboBox.getValue()));
+                shift = shiftFactory.createShiftProjectionist();
+                shift.setEmployee(EmployeeDataMapper.matToEntity(employee));
+                shift.setDate(viewModel.getSelectedDayWeek().getDate().toString());
+                shift.setStart(start.toString());
+                shift.setEnd(end.toString());
+                shift.setHall(HallDataMapper.matToEntity(hallComboBox.getValue()));
             } else {
                 hallComboBox.setStyle("-fx-background-color: red;");
                 errorVBox.setVisible(true);
@@ -163,6 +178,9 @@ public class AssignShiftViewController extends ViewController {
     public void saveShift(Shift shift) {
         if (shift != null && activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new ShiftRequest(ShiftDataMapper.mapToEntity(ShiftDataMapper.mapToDto(shift))))) {
             try {
+                if(shiftRepeatCheckBox.isSelected()) {
+                    viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());
+                }
                 navController.popBackStack();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -171,6 +189,53 @@ public class AssignShiftViewController extends ViewController {
             errorVBox.setVisible(true);
         }
     }
+
+
+    public void saveRepeatShift() {
+        EmployeeDto employee = viewModel.getSelectedDayWeek().getEmployee();
+        LocalTime start = viewModel.getStartSpinnerTime().withNano(0);
+        LocalTime end = viewModel.getEndSpinnerTime().withNano(0);
+        Shift shift;
+        if (employee.getRole().equals("maschera")) {
+            shift = shiftFactory.createShiftUsher();
+            shift.setEmployee(EmployeeDataMapper.matToEntity(employee));
+            shift.setDate(viewModel.getSelectedDayWeek().getDate().toString());
+            shift.setStart(start.toString());
+            shift.setEnd(end.toString());
+        } else  if(hallComboBox.getValue() != null){
+            shift = shiftFactory.createShiftProjectionist();
+            shift.setEmployee(EmployeeDataMapper.matToEntity(employee));
+            shift.setDate(viewModel.getSelectedDayWeek().getDate().toString());
+            shift.setStart(start.toString());
+            shift.setEnd(end.toString());
+            shift.setHall(HallDataMapper.matToEntity(hallComboBox.getValue()));
+        }
+        else{
+            shift = null;
+            hallComboBox.setStyle("-fx-background-color: red;");
+            errorVBox.setVisible(true);
+        }
+        if (shift != null && repeatDatePicker.getValue() != null) {
+            activity.getUseCase(ManageEmployeesShiftUseCase.class).saveRepeatedShift(new ShiftRepeatRequest(
+                    LocalDate.parse(viewModel.getSelectedDayWeek().getDate().toString()),
+                    repeatDatePicker.getValue(),
+                    optionRepeatComboBox.getValue().toString(),
+                    shift
+            ));
+            try {
+                viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());
+                navController.popBackStack();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            repeatDatePicker.setStyle("-fx-background-color: red;");
+            errorVBox.setVisible(true);
+        }
+
+
+    }
+
 
 }
 

@@ -9,10 +9,7 @@ import com.ttbmp.cinehub.core.dto.EmployeeDto;
 import com.ttbmp.cinehub.core.dto.ShiftDto;
 import com.ttbmp.cinehub.core.entity.Shift;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.GetCinemaListResponse;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.GetHallListResponse;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.GetShiftListResponse;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.ShiftResponse;
+import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.*;
 import com.ttbmp.cinehub.core.utilities.result.Result;
 
 import java.time.DayOfWeek;
@@ -74,6 +71,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
 
     @Override
     public void presentDeleteShift(Result<ShiftResponse> shift) {
+
         Shift deleteShift = ShiftDataMapper.mapToEntity(shift.getValue().getShiftDto());
         viewModel.getEmployeeShiftWeekList().setAll(viewModel.getEmployeeShiftWeekList().stream()
                 .peek(e -> {
@@ -87,6 +85,28 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         );
     }
 
+    @Override
+    public void presentRepeatShift(Result<ShiftRepeatResponse> response) {
+        List<ShiftDto> shiftList = response.getValue().getShiftDto();
+        TemporalField temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
+        for (ShiftDto savedShift : shiftList) {
+            viewModel.getEmployeeShiftWeekList().setAll(viewModel.getEmployeeShiftWeekList().stream()
+                    .peek(employeeShiftWeek -> {
+                        if (employeeShiftWeek.getEmployeeDto().equals(savedShift.getEmployee()) &&
+                                savedShift.getDate().get(temporalField) == viewModel.getSelectedWeek().get(temporalField) &&
+                                savedShift.getDate().getYear() == viewModel.getSelectedWeek().getYear()) {
+                            DayOfWeek dayOfWeek = savedShift.getDate().getDayOfWeek();
+                            employeeShiftWeek
+                                    .getWeekMap()
+                                    .get(dayOfWeek)
+                                    .getShiftList()
+                                    .add(savedShift);
+                        }
+                    })
+                    .collect(Collectors.toList())
+            );
+        }
+    }
 
     private List<EmployeeShiftWeek> getEmployeeShiftWeekList(GetShiftListResponse response) {
         List<EmployeeShiftWeek> result = new ArrayList<>();

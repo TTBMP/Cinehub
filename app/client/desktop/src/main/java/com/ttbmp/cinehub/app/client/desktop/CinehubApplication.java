@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavControlle
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+
 public class CinehubApplication extends Application {
 
     public static final AppContainer APP_CONTAINER = new AppContainer();

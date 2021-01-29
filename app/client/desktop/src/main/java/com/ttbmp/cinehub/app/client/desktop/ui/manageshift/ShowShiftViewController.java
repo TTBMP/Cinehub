@@ -76,7 +76,8 @@ public class ShowShiftViewController extends ViewController {
 
         periodDatePicker.setValue(LocalDate.now());
         cinemaComboBox.setValue(cinemaComboBox.getItems().get(0));
-        activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(new GetShiftListRequest(periodDatePicker.getValue(), CinemaDataMapper.matToEntity(cinemaComboBox.getValue())));
+        activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(new GetShiftListRequest(periodDatePicker.getValue(),
+                CinemaDataMapper.matToEntity(cinemaComboBox.getValue())));
 
         previousButton.setOnAction(a -> periodDatePicker.setValue(periodDatePicker.getValue().minusWeeks(1)));
         nextButton.setOnAction(a -> periodDatePicker.setValue(periodDatePicker.getValue().plusWeeks(1)));
@@ -103,7 +104,7 @@ public class ShowShiftViewController extends ViewController {
             column.setSortable(false);
         }
         shiftTableView.setItems(viewModel.getEmployeeShiftWeekList());
-        viewModel.getEmployeeShiftWeekList().addListener((InvalidationListener) l -> shiftTableView.refresh());
+        viewModel.getEmployeeShiftWeekList().addListener((InvalidationListener) l-> shiftTableView.refresh());
     }
 
 }

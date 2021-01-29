@@ -13,7 +13,6 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.time.LocalDate;
-
 /**
  * @author Massimo Mazzetti
  */
