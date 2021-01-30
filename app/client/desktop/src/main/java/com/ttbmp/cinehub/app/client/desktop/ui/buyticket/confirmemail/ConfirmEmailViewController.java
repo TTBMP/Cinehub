@@ -5,8 +5,6 @@ import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.BuyTicketActivity;
 import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavActivityDestination;
-import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.core.usecase.buyticket.request.SendEmailRequest;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -62,7 +60,6 @@ public class ConfirmEmailViewController extends ViewController {
         });
         bind();
         testLabel.setText(viewModel.selectedDateProperty().getValue().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)));
-        activity.getUseCase(BuyTicketUseCase.class).sendEmail(new SendEmailRequest(0));
         priceText.setText((viewModel.selectedTicketPriceProperty().getValue()) + "\u20ac");
     }
 

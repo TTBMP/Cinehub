@@ -68,19 +68,6 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
 
     }
 
-    @Override
-    public void sendEmail(SendEmailRequest request) {
-        try {
-            Request.validate(request);
-            User user = userRepository.getUser(0).getValue();
-            //Prendere i dati dell'utente dall'id
-            emailService.sendMail(new EmailServiceRequest(user.getEmail(), "Hello Member"));
-        } catch (Request.NullRequestException e) {
-            buyTicketPresenter.presentSendEmailNullRequest();
-        } catch (Request.InvalidRequestException e) {
-            buyTicketPresenter.presentInvalidSendEmail(request);
-        }
-    }
 
 
     @Override
@@ -97,6 +84,7 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
                 projection.addTicket(ticketAbstract);
                 projection.getHall().getSeatList().get(index).setState(false);
                 user.addTicket(ticketAbstract);
+                emailService.sendMail(new EmailServiceRequest(user.getEmail(), "Payment receipt"));
                 return true;
             }
             buyTicketPresenter.presentErrorByStripe(paymentService.getError());
@@ -109,7 +97,6 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
             return false;
         }
     }
-
 
     @Override
     public void getListMovie(String localDate) {
@@ -214,6 +201,7 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
 
     }
 
+    /*To find the times of the screenings given a film, a cinema and a date*/
     @Override
     public void getTimeOfProjection(GetTimeOfProjecitonRequest request) {
         try {
@@ -232,16 +220,15 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
                     }
                 }
             }
-            buyTicketPresenter.presentTimeList(timeList);//Non serve una reponse per una lista di stringhe
+            buyTicketPresenter.presentTimeList(timeList);
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetTimeOfProjectionNullRequest();
         } catch (Request.InvalidRequestException e) {
             buyTicketPresenter.presentInvalidGetTimeOfProjection(request);
         }
-
     }
 
-
+    /*To retrieve a projection given a movie, a cinema, a date and a time*/
     @Override
     public void getProjection(SetSelectedProjectionRequest request) {
         try {
@@ -266,8 +253,9 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
         }
     }
 
+
     @Override
-    public void getListOfSeats(GetNumberOfSeatsRequest request) {
+    public void getListOfSeat(GetNumberOfSeatsRequest request) {
         try {
             Request.validate(request);
             Projection projection = ProjectionDataMapper.mapToEntity(request.getProjectionDto());

@@ -26,38 +26,30 @@ public class MovieApi implements MovieApiService {
     String urlStart = "http://api.themoviedb.org/3/movie/";
     String apiKey = "?api_key=ee1cbb18100612b10051a3a6ab051d6f";
     String imageUrl = "https://image.tmdb.org/t/p/w300";
+    Boolean connection = false;
 
-    public MovieApi() {
-        //Empty section
-    }
 
-    public List<MovieDto> returnListMovie() {
+    @Override
+    public List<MovieDto> getAllMovie() throws IOException {
+        while (i <= numberOfMovie) {
+            connect(new URL(urlStart + i + apiKey));
+        }
         return MovieApiDataMapper.mapToDtoList(listMovie);
     }
 
-    @Override
-    public void getAllMovie() throws IOException {
-
-        while (i <= numberOfMovie) {
-            getMovie(new URL(urlStart + i + apiKey));
-        }
-
-    }
 
     @Override
-    public void getMovieById(Integer id) throws IOException {
-        getMovie(new URL(urlStart + id + apiKey));
-    }
-
-
-    @Override
-    public void getMovie(URL url) throws IOException {
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+    public void connect(URL url) throws IOException {
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();;
         assert con != null;
         con.setDoOutput(true);
         con.setRequestMethod("GET");
         con.setRequestProperty("Content-Type", "application/json");
+        connection = true;
+        setMovie(con);
+    }
 
+    public void setMovie(HttpURLConnection con) throws IOException {
         BufferedReader br = null;
         try {
             br = new BufferedReader(new InputStreamReader((con.getInputStream())));
@@ -70,25 +62,19 @@ public class MovieApi implements MovieApiService {
             while (true) {
                 assert br != null;
                 if ((output = br.readLine()) == null) break;
-                printSpecificAttribute(output);
+                JsonObject jsonObject = new JsonParser().parse(output).getAsJsonObject();
+                String title = String.valueOf(jsonObject.get("title")).substring(1, String.valueOf(jsonObject.get("title")).length() - 1);
+                MovieApiDto element = new MovieApiDto(title);
+                element.setMovieImageUrl(imageUrl + String.valueOf(jsonObject.get("poster_path")).substring(1, String.valueOf(jsonObject.get("poster_path")).length() - 1));
+                element.setMovieVote(String.valueOf(jsonObject.get("vote_average")));
+                element.setMovieOverview(String.valueOf(jsonObject.get("overview")));
+                element.setMovieReleases(String.valueOf(jsonObject.get("release_date")));
+                listMovie.add(element);
                 i++;
             }
         }
-
     }
 
-    @Override
-    public void printSpecificAttribute(String output) {
-        JsonObject jsonObject = new JsonParser().parse(output).getAsJsonObject();
-        String title = String.valueOf(jsonObject.get("title")).substring(1, String.valueOf(jsonObject.get("title")).length() - 1);
-        MovieApiDto element = new MovieApiDto(title);
-        element.setMovieImageUrl(imageUrl + String.valueOf(jsonObject.get("poster_path")).substring(1, String.valueOf(jsonObject.get("poster_path")).length() - 1));
-        element.setMovieVote(String.valueOf(jsonObject.get("vote_average")));
-        element.setMovieOverview(String.valueOf(jsonObject.get("overview")));
-        element.setMovieReleases(String.valueOf(jsonObject.get("release_date")));
-        listMovie.add(element);
-
-    }
 
 }
 

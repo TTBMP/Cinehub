@@ -8,8 +8,6 @@ import com.ttbmp.cinehub.core.usecase.buyticket.request.*;
  */
 public interface BuyTicketUseCase extends UseCase {
 
-    void sendEmail(SendEmailRequest sendEmailRequest);
-
     boolean pay(PayRequest request);
 
     void getListMovie(String value);
@@ -23,5 +21,5 @@ public interface BuyTicketUseCase extends UseCase {
 
     void getProjection(SetSelectedProjectionRequest request);
 
-    void getListOfSeats(GetNumberOfSeatsRequest request);
+    void getListOfSeat(GetNumberOfSeatsRequest request);
 }
