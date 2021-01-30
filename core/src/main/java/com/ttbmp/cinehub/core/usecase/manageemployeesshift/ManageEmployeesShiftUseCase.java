@@ -2,10 +2,7 @@ package com.ttbmp.cinehub.core.usecase.manageemployeesshift;
 
 
 import com.ttbmp.cinehub.core.usecase.UseCase;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetHallListRequest;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetShiftListRequest;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.ShiftRepeatRequest;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.ShiftRequest;
+import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.*;
 
 /**
  * @author Massimo Mazzetti
@@ -24,5 +21,7 @@ public interface ManageEmployeesShiftUseCase extends UseCase {
     void getHallList(GetHallListRequest request);
 
     void saveRepeatedShift(ShiftRepeatRequest request);
+
+    void createShift(CreateShiftRequest request);
 
 }

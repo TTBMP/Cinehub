@@ -108,6 +108,11 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         }
     }
 
+    @Override
+    public void presentCreateShift(Result<CreateShiftResponse> response) {
+        viewModel.setShiftCreated(response.getValue().getShiftDto());
+    }
+
     private List<EmployeeShiftWeek> getEmployeeShiftWeekList(GetShiftListResponse response) {
         List<EmployeeShiftWeek> result = new ArrayList<>();
         List<ShiftDto> shiftList = response.getShiftDtoList();

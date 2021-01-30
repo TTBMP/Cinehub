@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.core.usecase.manageemployeesshift.request;
 
-import com.ttbmp.cinehub.core.entity.Cinema;
+import com.ttbmp.cinehub.core.dto.CinemaDto;
 import com.ttbmp.cinehub.core.usecase.Request;
 
 
@@ -11,17 +11,17 @@ import com.ttbmp.cinehub.core.usecase.Request;
 public class GetHallListRequest extends Request {
     public static final Request.Error MISSING_HALL = new Request.Error("sala non valida");
 
-    private Cinema cinema;
+    private CinemaDto cinema;
 
-    public GetHallListRequest(Cinema cinema) {
+    public GetHallListRequest(CinemaDto cinema) {
         this.cinema = cinema;
     }
 
-    public Cinema getCinema() {
+    public CinemaDto getCinema() {
         return cinema;
     }
 
-    public void setCinema(Cinema cinema) {
+    public void setCinema(CinemaDto cinema) {
         this.cinema = cinema;
     }
 

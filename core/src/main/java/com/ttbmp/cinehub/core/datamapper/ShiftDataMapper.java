@@ -31,8 +31,7 @@ public class ShiftDataMapper {
                     LocalTime.parse(shift.getStart()),
                     LocalTime.parse(shift.getEnd())
             );
-        }
-        else {
+        } else {
             return new ShiftProjectionistDto(
                     EmployeeDataMapper.mapToDto(shift.getEmployee()),
                     LocalDate.parse(shift.getDate()),

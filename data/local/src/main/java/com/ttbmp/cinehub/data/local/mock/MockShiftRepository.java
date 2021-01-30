@@ -106,9 +106,11 @@ public class MockShiftRepository implements ShiftRepository {
             if (elem.getDate().equals(shift.getDate())
                     && (newStart.isBefore(end)
                     && newEnd.isAfter(start))
-                    && shift.getEmployee().equals(elem.getEmployee())) {
+                    && shift.getEmployee().equals(elem.getEmployee())
+                    && (shift.getEmployee().getRole().equals("maschera") || shift.getHall().equals(elem.getHall()))) {
 
                 return new Result<>(false);
+
             }
 
         }

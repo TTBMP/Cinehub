@@ -32,4 +32,24 @@ public class Hall {
     public void setNum(String num) {
         this.num = num;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        Hall elem = (Hall) obj;
+
+        return this.getNum().equals(elem.getNum()) &&
+                this.getCinema().equals(elem.getCinema());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return 0;
+    }
 }

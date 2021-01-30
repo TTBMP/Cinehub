@@ -22,4 +22,6 @@ public interface ManageEmployeesShiftPresenter {
 
     void presentRepeatShift(Result<ShiftRepeatResponse> response);
 
+    void presentCreateShift(Result<CreateShiftResponse> response);
+
 }

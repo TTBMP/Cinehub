@@ -34,7 +34,6 @@ public class Cinema {
 
     @Override
     public int hashCode() {
-        /* ... */
         return 0;
     }
 }

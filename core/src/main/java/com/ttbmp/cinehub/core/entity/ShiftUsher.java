@@ -7,10 +7,12 @@ package com.ttbmp.cinehub.core.entity;
 
 public class ShiftUsher extends Shift {
 
-    public ShiftUsher(){}
+    public ShiftUsher() {
+    }
 
     public ShiftUsher(Employee employee, String date, String start, String end) {
         super(employee, date, start, end);
     }
+
 
 }

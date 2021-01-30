@@ -5,15 +5,10 @@ import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.HallFactory;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.SpinnerEndValueFactory;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.SpinnerStartValueFactory;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
-import com.ttbmp.cinehub.core.ShiftFactory;
-import com.ttbmp.cinehub.core.datamapper.CinemaDataMapper;
-import com.ttbmp.cinehub.core.datamapper.EmployeeDataMapper;
-import com.ttbmp.cinehub.core.datamapper.HallDataMapper;
-import com.ttbmp.cinehub.core.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.core.dto.EmployeeDto;
 import com.ttbmp.cinehub.core.dto.HallDto;
-import com.ttbmp.cinehub.core.entity.Shift;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
+import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.CreateShiftRequest;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetHallListRequest;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.ShiftRequest;
 import javafx.event.ActionEvent;
@@ -34,7 +29,6 @@ import java.util.ResourceBundle;
 
 public class ModifyShiftViewController extends ViewController {
     private ManageEmployeesShiftViewModel viewModel;
-    private final ShiftFactory shiftFactory = new ShiftFactory();
 
     @FXML
     private ResourceBundle resources;
@@ -89,7 +83,7 @@ public class ModifyShiftViewController extends ViewController {
             hallComboBox.setVisible(false);
         } else {
             hallComboBox.getItems().clear();
-            activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(CinemaDataMapper.matToEntity(viewModel.getSelectedShift().getEmployee().getCinema())));
+            activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(viewModel.getSelectedShift().getEmployee().getCinema()));
             hallComboBox.setItems(viewModel.getSalaList());
             viewModel.selectedSalaProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
         }
@@ -124,12 +118,24 @@ public class ModifyShiftViewController extends ViewController {
     private void submitButtonOnAction(ActionEvent action) {
 
         if (viewModel.getStartSpinnerModifyTime() != null && viewModel.getEndSpinnerModifyTime() != null && dateDatePicker.getValue() != null) {
-            Shift shift = createShift();
+            EmployeeDto employee = viewModel.getSelectedShift().getEmployee();
+            LocalDate date = dateDatePicker.getValue();
+            LocalTime start = viewModel.getStartSpinnerModifyTime().withNano(0);
+            LocalTime end = viewModel.getEndSpinnerModifyTime().withNano(0);
+            if (employee.getRole().equals("maschera")) {
+                activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(employee, date, start, end));
+            } else {
+                activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(employee,
+                        date,
+                        start,
+                        end,
+                        hallComboBox.getValue()));
+            }
 
-            if (shift != null && activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new ShiftRequest(shift))) {
-                activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(ShiftDataMapper.mapToEntity(viewModel.getSelectedShift())));
+            if (viewModel.getShiftCreated() != null && activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new ShiftRequest(viewModel.getShiftCreated()))) {
 
-                viewModel.setSelectedShift(ShiftDataMapper.mapToDto(shift));
+                activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(viewModel.getSelectedShift()));
+                viewModel.setSelectedShift(viewModel.getShiftCreated());
                 try {
                     navController.popBackStack();
                 } catch (IOException e) {
@@ -144,35 +150,6 @@ public class ModifyShiftViewController extends ViewController {
             startSpinner.setPromptText("inserisci valore");
             endSpinner.setPromptText("inserisci valore");
         }
-    }
-
-    private Shift createShift() {
-        EmployeeDto employee = viewModel.getSelectedShift().getEmployee();
-        LocalDate date = dateDatePicker.getValue();
-        LocalTime start = viewModel.getStartSpinnerModifyTime().withNano(0);
-        LocalTime end = viewModel.getEndSpinnerModifyTime().withNano(0);
-        Shift shift;
-        if (employee.getRole().equals("maschera")) {
-            shift = shiftFactory.createShiftUsher();
-            shift.setEmployee(EmployeeDataMapper.matToEntity(employee));
-            shift.setDate( date.toString());
-            shift.setStart(start.toString());
-            shift.setEnd(end.toString());
-        } else {
-            if (hallComboBox.getValue() != null) {
-                shift = shiftFactory.createShiftProjectionist();
-                shift.setEmployee(EmployeeDataMapper.matToEntity(employee));
-                shift.setDate(date.toString());
-                shift.setStart( start.toString());
-                shift.setEnd(end.toString());
-                shift.setHall( HallDataMapper.matToEntity(hallComboBox.getValue()));
-            } else {
-                shift = null;
-                hallComboBox.setStyle("-fx-background-color: red;");
-                errorHBox.setVisible(true);
-            }
-        }
-        return shift;
     }
 
 }

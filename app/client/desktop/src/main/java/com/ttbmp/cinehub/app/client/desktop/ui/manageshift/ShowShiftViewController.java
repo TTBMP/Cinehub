@@ -7,7 +7,6 @@ import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.EmployeeCalenda
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.EmployeeShiftWeek;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.ShiftCalendarTableCell;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
-import com.ttbmp.cinehub.core.datamapper.CinemaDataMapper;
 import com.ttbmp.cinehub.core.dto.CinemaDto;
 import com.ttbmp.cinehub.core.dto.EmployeeDto;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
@@ -77,7 +76,7 @@ public class ShowShiftViewController extends ViewController {
         periodDatePicker.setValue(LocalDate.now());
         cinemaComboBox.setValue(cinemaComboBox.getItems().get(0));
         activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(new GetShiftListRequest(periodDatePicker.getValue(),
-                CinemaDataMapper.matToEntity(cinemaComboBox.getValue())));
+                cinemaComboBox.getValue()));
 
         previousButton.setOnAction(a -> periodDatePicker.setValue(periodDatePicker.getValue().minusWeeks(1)));
         nextButton.setOnAction(a -> periodDatePicker.setValue(periodDatePicker.getValue().plusWeeks(1)));
@@ -85,12 +84,12 @@ public class ShowShiftViewController extends ViewController {
 
         periodDatePicker.setOnAction(a -> {
             if (cinemaComboBox.getValue() != null) {
-                activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(new GetShiftListRequest(periodDatePicker.getValue(), CinemaDataMapper.matToEntity(cinemaComboBox.getValue())));
+                activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(new GetShiftListRequest(periodDatePicker.getValue(), cinemaComboBox.getValue()));
             }
         });
         cinemaComboBox.setOnAction(a -> {
             if (periodDatePicker.getValue() != null) {
-                activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(new GetShiftListRequest(periodDatePicker.getValue(), CinemaDataMapper.matToEntity(cinemaComboBox.getValue())));
+                activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(new GetShiftListRequest(periodDatePicker.getValue(), cinemaComboBox.getValue()));
             }
         });
         shiftEmployeeTableColumn.setCellValueFactory(new PropertyValueFactory<>("employeeDto"));
@@ -104,7 +103,7 @@ public class ShowShiftViewController extends ViewController {
             column.setSortable(false);
         }
         shiftTableView.setItems(viewModel.getEmployeeShiftWeekList());
-        viewModel.getEmployeeShiftWeekList().addListener((InvalidationListener) l-> shiftTableView.refresh());
+        viewModel.getEmployeeShiftWeekList().addListener((InvalidationListener) l -> shiftTableView.refresh());
     }
 
 }

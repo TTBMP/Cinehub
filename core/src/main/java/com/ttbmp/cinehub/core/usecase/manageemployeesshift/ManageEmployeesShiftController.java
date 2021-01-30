@@ -1,19 +1,18 @@
 package com.ttbmp.cinehub.core.usecase.manageemployeesshift;
 
+import com.ttbmp.cinehub.core.ShiftFactory;
 import com.ttbmp.cinehub.core.datamapper.CinemaDataMapper;
 import com.ttbmp.cinehub.core.datamapper.EmployeeDataMapper;
 import com.ttbmp.cinehub.core.datamapper.HallDataMapper;
 import com.ttbmp.cinehub.core.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.core.dto.ShiftDto;
+import com.ttbmp.cinehub.core.entity.Employee;
 import com.ttbmp.cinehub.core.entity.Shift;
 import com.ttbmp.cinehub.core.repository.CinemaRepository;
 import com.ttbmp.cinehub.core.repository.HallRepository;
 import com.ttbmp.cinehub.core.repository.ShiftRepository;
 import com.ttbmp.cinehub.core.usecase.Request;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetHallListRequest;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetShiftListRequest;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.ShiftRepeatRequest;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.ShiftRequest;
+import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.*;
 import com.ttbmp.cinehub.core.utilities.result.Result;
 
@@ -42,7 +41,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
 
     @Override
     public void getShiftList(GetShiftListRequest request) {
-        manageEmployeesShiftPresenter.presentShiftList(new Result<>(new GetShiftListResponse(ShiftDataMapper.mapToDtoList(shiftRepository.getShiftList().getValue()), request.getStart(), CinemaDataMapper.mapToDto(request.getCinema()))));
+        manageEmployeesShiftPresenter.presentShiftList(new Result<>(new GetShiftListResponse(ShiftDataMapper.mapToDtoList(shiftRepository.getShiftList().getValue()), request.getStart(), request.getCinema())));
     }
 
     @Override
@@ -54,10 +53,10 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (Request.InvalidRequestException e) {
             e.printStackTrace();
         }
-        Result<Boolean> shiftResult = shiftRepository.saveShift(request.getShift());
+        Result<Boolean> shiftResult = shiftRepository.saveShift(ShiftDataMapper.mapToEntity(request.getShift()));
         boolean result = shiftResult.getValue();
         if (result) {
-            manageEmployeesShiftPresenter.presentSaveShift(new Result<>(new ShiftResponse(ShiftDataMapper.mapToDto(request.getShift()))));
+            manageEmployeesShiftPresenter.presentSaveShift(new Result<>(new ShiftResponse(request.getShift())));
             return true;
         } else {
             return false;
@@ -73,7 +72,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (Request.InvalidRequestException e) {
             e.printStackTrace();
         }
-        Result<Shift> shiftResult = shiftRepository.deletedShift(request.getShift());
+        Result<Shift> shiftResult = shiftRepository.deletedShift(ShiftDataMapper.mapToEntity(request.getShift()));
         manageEmployeesShiftPresenter.presentDeleteShift(new Result<>(new ShiftResponse(ShiftDataMapper.mapToDto(shiftResult.getValue()))));
     }
 
@@ -84,7 +83,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
 
     @Override
     public void getHallList(GetHallListRequest request) {
-        manageEmployeesShiftPresenter.presentHallList(new Result<>(new GetHallListResponse(HallDataMapper.mapToDtoList(hallRepository.getCinemaHallList(request.getCinema())))));
+        manageEmployeesShiftPresenter.presentHallList(new Result<>(new GetHallListResponse(HallDataMapper.mapToDtoList(hallRepository.getCinemaHallList(CinemaDataMapper.matToEntity(request.getCinema()))))));
     }
 
     @Override
@@ -93,7 +92,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         switch (request.getOption()) {
             case "EVERY_DAY":
                 for (LocalDate date = request.getStart(); date.isBefore(request.getEnd().plusDays(1)); date = date.plusDays(1)) {
-                     createShift(request, date, shiftDtoList);
+                    createShift(request, date, shiftDtoList);
                 }
                 manageEmployeesShiftPresenter.presentRepeatShift(new Result<>(new ShiftRepeatResponse(shiftDtoList)));
                 break;
@@ -116,24 +115,56 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
 
     }
 
+    @Override
+    public void createShift(CreateShiftRequest request) {
+        Employee employee = EmployeeDataMapper.matToEntity(request.getEmployee());
+        LocalDate date = request.getDate();
+        LocalTime start = request.getStart();
+        LocalTime end = request.getEnd();
+        ShiftFactory shiftFactory = new ShiftFactory();
+        Shift shift;
+        if (employee.getRole().equals("maschera")) {
+            shift = shiftFactory.createShiftUsher();
+            shift.setEmployee(employee);
+            shift.setDate(date.toString());
+            shift.setStart(start.toString());
+            shift.setEnd(end.toString());
+        } else {
+            if (request.getHall() != null) {
+                shift = shiftFactory.createShiftProjectionist();
+                shift.setEmployee(employee);
+                shift.setDate(date.toString());
+                shift.setStart(start.toString());
+                shift.setEnd(end.toString());
+                shift.setHall(HallDataMapper.matToEntity(request.getHall()));
+            } else {
+                shift = null;
+            }
+        }
+        manageEmployeesShiftPresenter.presentCreateShift(new Result<>(new CreateShiftResponse(ShiftDataMapper.mapToDto(shift))));
+    }
+
+
     public void createShift(ShiftRepeatRequest request, LocalDate date, List<ShiftDto> shiftDtoList) {
         ShiftDto shiftDto;
+
         if (request.getShift().getEmployee().getRole().equals("maschera")) {
-            shiftDto = new ShiftDto(EmployeeDataMapper.mapToDto(request.getShift().getEmployee()),
+            shiftDto = new ShiftDto(request.getShift().getEmployee(),
                     date,
-                    LocalTime.parse(request.getShift().getStart()),
-                    LocalTime.parse(request.getShift().getEnd()));
+                    request.getShift().getStart(),
+                    request.getShift().getEnd());
         } else {
-            shiftDto = new ShiftDto(EmployeeDataMapper.mapToDto(request.getShift().getEmployee()),
+            shiftDto = new ShiftDto(request.getShift().getEmployee(),
                     date,
-                    LocalTime.parse(request.getShift().getStart()),
-                    LocalTime.parse(request.getShift().getEnd()),
-                    HallDataMapper.mapToDto(request.getShift().getHall()));
+                    request.getShift().getStart(),
+                    request.getShift().getEnd(),
+                    request.getShift().getHall());
         }
         Result<Boolean> result = shiftRepository.saveShift(ShiftDataMapper.mapToEntity(shiftDto));
         if (result.getValue().equals(true)) {
             shiftDtoList.add(shiftDto);
         }
     }
+
 
 }

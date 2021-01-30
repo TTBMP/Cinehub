@@ -4,7 +4,6 @@ import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.ManageEmployeesShiftV
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.modify.ModifyShiftView;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavDestination;
-import com.ttbmp.cinehub.core.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.ShiftRequest;
 import javafx.fxml.FXML;
@@ -13,6 +12,7 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.time.LocalDate;
+
 /**
  * @author Massimo Mazzetti
  */
@@ -81,7 +81,7 @@ public class ShowShiftDetailViewController extends ViewController {
         }
 
         deleteShiftButton.setOnAction(a -> {
-            activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(ShiftDataMapper.mapToEntity(viewModel.getSelectedShift())));
+            activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(viewModel.getSelectedShift()));
             try {
                 navController.popBackStack();
             } catch (IOException e) {

@@ -29,7 +29,7 @@ public class SpinnerStartValueFactory extends SpinnerValueFactory<LocalTime> {
             setValue(LocalTime.NOON.minusNanos(0));
         else {
             LocalTime time = getValue();
-            if (time.isAfter(LocalTime.MIN.plusMinutes(5)))
+            if (time.isAfter(LocalTime.MIN))
                 setValue(time.minusMinutes(5));
         }
     }

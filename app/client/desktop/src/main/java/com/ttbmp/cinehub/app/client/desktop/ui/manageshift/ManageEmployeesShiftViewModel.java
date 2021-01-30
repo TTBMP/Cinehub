@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.manageshift;
 
 
+import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.assign.Option;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.DayWeek;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.EmployeeShiftWeek;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ObjectBindings;
@@ -39,7 +40,10 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
     private final ObjectProperty<DayWeek> selectedDayWeek = new SimpleObjectProperty<>();
     private final ObjectProperty<LocalDate> selectedWeek = new SimpleObjectProperty<>();
     private final ObservableList<EmployeeShiftWeek> employeeShiftWeekList = FXCollections.observableArrayList();
+    private final ObjectProperty<Option> selectedOptions = new SimpleObjectProperty<>();
     private final ObservableList<String> options = FXCollections.observableArrayList();
+
+    private final ObjectProperty<ShiftDto> shiftCreated = new SimpleObjectProperty<>();
 
     private final StringProperty selectedShiftEmployeeName = new SimpleStringProperty();
     private final StringProperty selectedShiftEmployeeSurname = new SimpleStringProperty();
@@ -61,12 +65,36 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
         selectedShiftStart.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getStart().toString()));
         selectedShiftEnd.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEnd().toString()));
         selectedShiftRole.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEmployee().getRole()));
-        selectedShiftHall.bind(ObjectBindings.map(selectedShift, shiftDto -> { 
+        selectedShiftHall.bind(ObjectBindings.map(selectedShift, shiftDto -> {
             if (shiftDto.getHall() != null)
                 return shiftDto.getHall().getNum();
             else
                 return null;
         }));
+    }
+
+    public ShiftDto getShiftCreated() {
+        return shiftCreated.get();
+    }
+
+    public void setShiftCreated(ShiftDto shiftCreated) {
+        this.shiftCreated.set(shiftCreated);
+    }
+
+    public ObjectProperty<ShiftDto> shiftCreatedProperty() {
+        return shiftCreated;
+    }
+
+    public Option getSelectedOptions() {
+        return selectedOptions.get();
+    }
+
+    public void setSelectedOptions(Option selectedOptions) {
+        this.selectedOptions.set(selectedOptions);
+    }
+
+    public ObjectProperty<Option> selectedOptionsProperty() {
+        return selectedOptions;
     }
 
     public ObservableList<String> getOptions() {

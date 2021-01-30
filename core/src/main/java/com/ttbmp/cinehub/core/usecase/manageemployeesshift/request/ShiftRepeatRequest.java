@@ -1,19 +1,23 @@
 package com.ttbmp.cinehub.core.usecase.manageemployeesshift.request;
 
-import com.ttbmp.cinehub.core.entity.Shift;
+import com.ttbmp.cinehub.core.dto.ShiftDto;
 import com.ttbmp.cinehub.core.usecase.Request;
 
 import java.time.LocalDate;
 
 
 public class ShiftRepeatRequest extends Request {
+    public static final Request.Error MISSING_SHIFT = new Request.Error("turni non validi");
+    public static final Request.Error MISSING_START = new Request.Error("inizio non valido");
+    public static final Request.Error MISSING_END = new Request.Error("fine non valida");
+    public static final Request.Error MISSING_OPTION = new Request.Error("opzione non valida");
 
     private LocalDate start;
     private LocalDate end;
     private String option;
-    private Shift shift;
+    private ShiftDto shift;
 
-    public ShiftRepeatRequest(LocalDate start, LocalDate end, String option, Shift shift) {
+    public ShiftRepeatRequest(LocalDate start, LocalDate end, String option, ShiftDto shift) {
         this.start = start;
         this.end = end;
         this.option = option;
@@ -44,16 +48,27 @@ public class ShiftRepeatRequest extends Request {
         this.option = option;
     }
 
-    public Shift getShift() {
+    public ShiftDto getShift() {
         return shift;
     }
 
-    public void setShift(Shift shift) {
+    public void setShift(ShiftDto shift) {
         this.shift = shift;
     }
 
     @Override
     public void onValidate() {
-
+        if (shift == null) {
+            addError(MISSING_SHIFT);
+        }
+        if (option == null) {
+            addError(MISSING_OPTION);
+        }
+        if (start == null) {
+            addError(MISSING_START);
+        }
+        if (end == null) {
+            addError(MISSING_END);
+        }
     }
 }
