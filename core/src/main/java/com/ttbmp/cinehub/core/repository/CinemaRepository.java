@@ -1,12 +1,12 @@
 package com.ttbmp.cinehub.core.repository;
-/**
- * @author Palmieri Ivan
- */
+
 
 import com.ttbmp.cinehub.core.entity.Cinema;
 
 import java.util.List;
-
+/**
+ * @author Palmieri Ivan
+ */
 public interface CinemaRepository {
 
 

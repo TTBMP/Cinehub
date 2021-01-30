@@ -3,6 +3,7 @@ package com.ttbmp.cinehub.core.service.movie;
 import com.ttbmp.cinehub.core.dto.MovieDto;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
@@ -11,13 +12,10 @@ import java.util.List;
  */
 public interface MovieApiService {
 
-    void getAllMovie() throws IOException;
+    List<MovieDto> getAllMovie() throws IOException;
 
-    void getMovieById(Integer id) throws IOException;
+    void connect(URL url) throws IOException;
 
-    void getMovie(URL url) throws IOException;
+    void setMovie(HttpURLConnection con) throws  IOException;
 
-    void printSpecificAttribute(String output);
-
-    List<MovieDto> returnListMovie();
 }

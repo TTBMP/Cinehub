@@ -57,7 +57,7 @@ public class ChooseSeatViewController extends ViewController {
     @Override
     protected void onLoad() {
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
-        activity.getUseCase(BuyTicketUseCase.class).getListOfSeats(new GetNumberOfSeatsRequest(viewModel.selectedProjectionProperty().getValue()));
+        activity.getUseCase(BuyTicketUseCase.class).getListOfSeat(new GetNumberOfSeatsRequest(viewModel.selectedProjectionProperty().getValue()));
         confirmSeatButton.setDisable(true);
         SeatsMatrixView seatsMatrixView;
         try {

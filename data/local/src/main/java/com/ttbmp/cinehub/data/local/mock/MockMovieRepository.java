@@ -15,8 +15,8 @@ public class MockMovieRepository implements MovieRepository {
 
     @Override
     public List<MovieDto> getAllMovie(MovieApiService movieApiService) throws IOException {
-        movieApiService.getAllMovie();
-        return movieApiService.returnListMovie();
+        return movieApiService.getAllMovie();
+
     }
 
 
