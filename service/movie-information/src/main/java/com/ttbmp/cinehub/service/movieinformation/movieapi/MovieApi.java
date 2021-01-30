@@ -40,7 +40,7 @@ public class MovieApi implements MovieApiService {
 
     @Override
     public void connect(URL url) throws IOException {
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();;
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
         assert con != null;
         con.setDoOutput(true);
         con.setRequestMethod("GET");
