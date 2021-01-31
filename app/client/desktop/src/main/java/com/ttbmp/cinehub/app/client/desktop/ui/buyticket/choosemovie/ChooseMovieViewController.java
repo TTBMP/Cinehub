@@ -66,25 +66,25 @@ public class ChooseMovieViewController extends ViewController {
         movieListView.setCellFactory(movieList -> new ChooseMovieListCell(activity, navController));
         bind();
         dateOfProjectionDatePicker.setValue(LocalDate.now());
-        dateOfProjectionDatePicker.setDayCellFactory(CustomDateCell::new);
+        dateOfProjectionDatePicker.setDayCellFactory(datePicker -> new CustomDateCell());
         dateOfProjectionDatePicker.setOnAction(l->onDataChange());
         todayButton.setOnAction(a -> dateOfProjectionDatePicker.setValue(LocalDate.now()));
         previousButton.setOnAction(a -> dateOfProjectionDatePicker.setValue(dateOfProjectionDatePicker.getValue().minusDays(1)));
         nextButton.setOnAction(a ->dateOfProjectionDatePicker.setValue(dateOfProjectionDatePicker.getValue().plusDays(1)));
         previousButton.setDisable(true);
         confirmMovieButton.setOnAction(a -> {
-            try {
-                activity.getUseCase(BuyTicketUseCase.class).getListCinema(
-                        new GetListCinemaRequest(
-                                viewModel.selectedMovieProperty().getValue(),
-                                viewModel.selectedDateProperty().getValue().toString()
-                        )
-                );
-                navController.navigate(new NavDestination(new ChooseCinemaView()));
+        activity.getUseCase(BuyTicketUseCase.class).getListCinema(
+                new GetListCinemaRequest(
+                        viewModel.selectedMovieProperty().getValue(),
+                        viewModel.selectedDateProperty().getValue().toString()
+                )
+        );
+        try {
+            navController.navigate(new NavDestination(new ChooseCinemaView()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         });
 
 
@@ -92,8 +92,9 @@ public class ChooseMovieViewController extends ViewController {
     }
 
     private void onDataChange() {
+
         activity.getUseCase(BuyTicketUseCase.class).getListMovie(viewModel.selectedDateProperty().getValue().toString());
-        previousButton.setDisable(dateOfProjectionDatePicker.getValue().equals(LocalDate.now()));
+        previousButton.setDisable(viewModel.selectedDateProperty().getValue().equals(LocalDate.now()));
     }
 
 

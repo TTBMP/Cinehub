@@ -75,7 +75,7 @@ public class PaymentViewController extends ViewController {
         numberOfCreditCardTextField.textProperty().bindBidirectional(viewModel.numberOfCardUserProperty());
         cvvTextField.textProperty().bindBidirectional(viewModel.txtCvvProperty());
         fieldExpirationDatePicker.valueProperty().bindBidirectional(viewModel.fieldExpirationDatePickerProperty());
-        fieldExpirationDatePicker.setDayCellFactory(CustomDateCell::new);
+        fieldExpirationDatePicker.setDayCellFactory(datePicker -> new CustomDateCell());
     }
 
 

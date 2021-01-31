@@ -9,7 +9,7 @@ import java.time.LocalDate;
 /**
  * @author Palmieri Ivan
  */
-public class GetTimeOfProjecitonRequest extends Request {
+public class GetTimeOfProjectionRequest extends Request {
 
     public static final Request.Error MISSING_MOVIE_ERROR = new Request.Error("Movie can't be null");
     public static final Request.Error MISSING_DATE_ERROR = new Request.Error("Date can't be null");
@@ -19,7 +19,7 @@ public class GetTimeOfProjecitonRequest extends Request {
     private CinemaDto cinemaDto;
     private String localDate;
 
-    public GetTimeOfProjecitonRequest(MovieDto movieDto, CinemaDto cinemaDto, LocalDate localDate) {
+    public GetTimeOfProjectionRequest(MovieDto movieDto, CinemaDto cinemaDto, LocalDate localDate) {
         this.movieDto = movieDto;
         this.cinemaDto = cinemaDto;
         this.localDate = localDate.toString();

@@ -3,12 +3,7 @@ package com.ttbmp.cinehub.service.payment.stripe;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.*;
-import com.ttbmp.cinehub.core.entity.Payment;
-import com.ttbmp.cinehub.core.entity.User;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,7 +26,7 @@ public class ServiceRequestStripe {
         }
     }
 
-    public Customer register(String email, String number, String name) throws StripeException {
+    private Customer register(String email, String number, String name) throws StripeException {
 
         Map<String, Object> card = new HashMap<>();
         card.put("number", number);
@@ -56,19 +51,6 @@ public class ServiceRequestStripe {
 
     }
 
-    public Customer exist(User user) throws StripeException {
-        CustomerCollection customers = getListCustomer();
-        if (customers == null) {
-            return null;
-        }
-        for (int i = 0; i < customers.getData().size(); i++) {
-            if (customers.getData().get(i).getEmail().compareTo(user.getEmail()) == 0) {
-                return customers.getData().get(i);
-            }
-        }
-        return null;
-
-    }
 
     //Given an email retrieves the customer if it exists
     public Customer getCustomer(String nome, String numberOfCard, String email) throws StripeException {
@@ -84,9 +66,6 @@ public class ServiceRequestStripe {
         return register(email, numberOfCard, nome);
     }
 
-    public List<Payment> convertListOfPayment(PaymentIntentCollection paymentIntentCollection, ServiceRequestStripe serviceRequestStripe) {
-        return serviceRequestStripe.getListOfPayment(paymentIntentCollection);
-    }
 
     //Returns a list of users on Stripe
     public CustomerCollection getListCustomer() throws StripeException {
@@ -95,7 +74,7 @@ public class ServiceRequestStripe {
     }
 
     //Given a customer, the list of his cards returns
-    public PaymentMethodCollection getPaymentMethod(Customer customer) throws StripeException {
+    private PaymentMethodCollection getPaymentMethod(Customer customer) throws StripeException {
         Map<String, Object> params = new HashMap<>();
         params.put(CUSTOMER, customer.getId());
         params.put("type", "card");
@@ -140,65 +119,6 @@ public class ServiceRequestStripe {
 
     }
 
-    //This method returns a list of all payments made by that customer
-    public PaymentIntentCollection retrieveListPaymentIntent(String nome, String numberOfCard, String email) throws StripeException {
-        Customer customer = getCustomer(nome, numberOfCard, email);
-        Map<String, Object> params = new HashMap<>();
-        params.put(CUSTOMER, customer.getId());
-        return PaymentIntent.list(params);
-
-    }
-
-    public PaymentIntentCollection retrieveListPaymentIntent(Customer customer) throws StripeException {
-        Map<String, Object> params = new HashMap<>();
-        params.put(CUSTOMER, customer.getId());
-        return PaymentIntent.list(params);
-
-    }
-
-    public PaymentIntentCollection updateListPaymentIntentById(PaymentIntentCollection paymentCollection, int id) throws StripeException {
-        Map<String, Object> params = new HashMap<>();
-        params.put(AMOUNT, paymentCollection.getData().get(id).getAmount());
-        params.put("payment_intent", paymentCollection.getData().get(id).getId());
-        Refund.create(params);
-        Map<String, Object> metadata = new HashMap<>();
-        metadata.put("order_id", "6735");
-        Map<String, Object> para = new HashMap<>();
-        para.put("metadata", metadata);
-        para.put("description", "refounded");
-        paymentCollection.getData().get(id).update(para);
-        return paymentCollection;
-
-    }
-
-    public PaymentIntent getPaymentIntent(String id) throws StripeException {
-        PaymentIntent paymentIntent;
-        paymentIntent = PaymentIntent.retrieve(id);
-        Map<String, Object> params = new HashMap<>();
-        params.put(AMOUNT, paymentIntent.getAmount());
-        params.put("payment_intent", paymentIntent.getId());
-        Refund.create(params);
-        Map<String, Object> metadata = new HashMap<>();
-        metadata.put("order_id", "6735");
-        Map<String, Object> para = new HashMap<>();
-        para.put("metadata", metadata);
-        para.put("description", "refounded");
-        paymentIntent.update(para);
-        return paymentIntent;
-    }
-
-    public List<Payment> getListOfPayment(PaymentIntentCollection paymentIntentCollection) {
-        List<Payment> listOfPayment = new ArrayList<>();
-        for (PaymentIntent intent : paymentIntentCollection.getData()) {
-            Payment payment = new Payment(
-                    intent.getId(),
-                    intent.getAmount() / 100,
-                    intent.getDescription()
-            );
-            listOfPayment.add(payment);
-        }
-        return listOfPayment;
-    }
 
 
 }

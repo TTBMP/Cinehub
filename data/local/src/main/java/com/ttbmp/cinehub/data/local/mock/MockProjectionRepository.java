@@ -1,7 +1,11 @@
 package com.ttbmp.cinehub.data.local.mock;
 
+
+import com.ttbmp.cinehub.core.dto.CinemaDto;
+import com.ttbmp.cinehub.core.dto.MovieDto;
 import com.ttbmp.cinehub.core.entity.*;
 import com.ttbmp.cinehub.core.repository.ProjectionRepository;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +24,7 @@ public class MockProjectionRepository implements ProjectionRepository {
 
         Projection projection = new Projection(
                 new Movie("The Dark"),
-                new Cinema("CinemaDiProv", "Via via", "Netting"),
+                new Cinema("Cinema the dark", "Via via", "Netting"),
                 new Hall(1),
                 "20:14",
                 "2021-02-12"
@@ -33,7 +37,7 @@ public class MockProjectionRepository implements ProjectionRepository {
 
         Projection projection1 = new Projection(
                 new Movie("The Dark"),
-                new Cinema("CinemaDiProv", "Via via", "Netting"),
+                new Cinema("Cinema the dark", "Via via", "Netting"),
                 new Hall(4),
                 "18:00",
                 "2021-02-12"
@@ -46,7 +50,7 @@ public class MockProjectionRepository implements ProjectionRepository {
 
         Projection projection2 = new Projection(
                 new Movie("Star Wars"),
-                new Cinema("CinemaDiProv1", "Via delle vie", "Tirol"),
+                new Cinema("Cinema Star", "Via delle vie", "Tirol"),
                 new Hall(1),
                 "20:20",
                 "2021-01-29"
@@ -58,7 +62,7 @@ public class MockProjectionRepository implements ProjectionRepository {
         }
         Projection projection3 = new Projection(
                 new Movie("Finding Nemo"),
-                new Cinema("CinemaDiProv2", "Via dell donne", "Roma"),
+                new Cinema("Cinema Nemo", "Via dell donne", "Roma"),
                 new Hall(5),
                 "20:00",
                 "2021-02-13"
@@ -70,7 +74,7 @@ public class MockProjectionRepository implements ProjectionRepository {
         }
         Projection projection4 = new Projection(
                 new Movie("Star Wars"),
-                new Cinema("CinemaDiProv2", "Via dell donne", "Roma"),
+                new Cinema("Cinema Wars", "Via dell donne", "Roma"),
                 new Hall(3),
                 "20:00",
                 "2021-02-13"
@@ -94,4 +98,16 @@ public class MockProjectionRepository implements ProjectionRepository {
         return projectionList;
     }
 
+    @Override
+    public Projection getASpecificProjection(MovieDto movie, CinemaDto cinema, String date, String time) {
+        for (Projection projection : getAllProjection()) {
+            if (projection.getCinema().getName().equals(cinema.getName()) &&
+                    projection.getMovie().getName().equals(movie.getName()) &&
+                    projection.getStartTime().equals(time) &&
+                    projection.getDate().equals(date)) {
+                return projection;
+            }
+        }
+        return null;
+    }
 }

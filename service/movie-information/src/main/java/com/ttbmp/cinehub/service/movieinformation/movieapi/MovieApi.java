@@ -20,36 +20,33 @@ import java.util.List;
  * @author Palmieri Ivan
  */
 public class MovieApi implements MovieApiService {
-    Integer numberOfMovie = 30;
-    Integer i = 10;
-    List<MovieApiDto> listMovie = new ArrayList<>();
-    String urlStart = "http://api.themoviedb.org/3/movie/";
-    String apiKey = "?api_key=ee1cbb18100612b10051a3a6ab051d6f";
-    String imageUrl = "https://image.tmdb.org/t/p/w300";
-    Boolean connection = false;
+    private Integer numberOfMovie = 30;
+    private Integer i = 10;
+    private final List<MovieApiDto> listMovie = new ArrayList<>();
 
 
     @Override
     public List<MovieDto> getAllMovie() throws IOException {
         while (i <= numberOfMovie) {
+            String urlStart = "http://api.themoviedb.org/3/movie/";
+            String apiKey = "?api_key=ee1cbb18100612b10051a3a6ab051d6f";
             connect(new URL(urlStart + i + apiKey));
         }
         return MovieApiDataMapper.mapToDtoList(listMovie);
     }
 
 
-    @Override
-    public void connect(URL url) throws IOException {
+
+    private void connect(URL url) throws IOException {
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         assert con != null;
         con.setDoOutput(true);
         con.setRequestMethod("GET");
         con.setRequestProperty("Content-Type", "application/json");
-        connection = true;
         setMovie(con);
     }
 
-    public void setMovie(HttpURLConnection con) throws IOException {
+    private void setMovie(HttpURLConnection con) throws IOException {
         BufferedReader br = null;
         try {
             br = new BufferedReader(new InputStreamReader((con.getInputStream())));
@@ -65,6 +62,7 @@ public class MovieApi implements MovieApiService {
                 JsonObject jsonObject = new JsonParser().parse(output).getAsJsonObject();
                 String title = String.valueOf(jsonObject.get("title")).substring(1, String.valueOf(jsonObject.get("title")).length() - 1);
                 MovieApiDto element = new MovieApiDto(title);
+                String imageUrl = "https://image.tmdb.org/t/p/w300";
                 element.setMovieImageUrl(imageUrl + String.valueOf(jsonObject.get("poster_path")).substring(1, String.valueOf(jsonObject.get("poster_path")).length() - 1));
                 element.setMovieVote(String.valueOf(jsonObject.get("vote_average")));
                 element.setMovieOverview(String.valueOf(jsonObject.get("overview")));

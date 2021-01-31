@@ -7,7 +7,7 @@ import com.ttbmp.cinehub.core.dto.TicketDto;
  */
 public class GetTicketBySeatsResponse {
 
-    TicketDto ticketDto;
+    private final TicketDto ticketDto;
 
     public GetTicketBySeatsResponse(TicketDto ticketDto) {
         this.ticketDto = ticketDto;

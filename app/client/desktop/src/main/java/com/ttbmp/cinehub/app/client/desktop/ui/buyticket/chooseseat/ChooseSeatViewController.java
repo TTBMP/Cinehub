@@ -25,7 +25,7 @@ import java.io.IOException;
 public class ChooseSeatViewController extends ViewController {
 
 
-    ToggleGroup toggleGroup = new ToggleGroup();
+    private final ToggleGroup toggleGroup = new ToggleGroup();
     @FXML
     private VBox appBar;
     @FXML
