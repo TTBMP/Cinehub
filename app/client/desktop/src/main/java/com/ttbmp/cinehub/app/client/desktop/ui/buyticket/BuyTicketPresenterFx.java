@@ -55,16 +55,6 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
 
     @Override
-    public void presentInvalidSendEmail(SendEmailRequest request) {
-        viewModel.emailErrorProperty().setValue(SendEmailRequest.MISSING_RECIPIENT_ERROR.getMessage());
-    }
-
-    @Override
-    public void presentSendEmailNullRequest() {
-        viewModel.emailErrorProperty().setValue("Error with operation SendEmail");
-    }
-
-    @Override
     public void presentPayNullRequest() {
         viewModel.paymentErrorProperty().setValue("Error with operation Pay");
     }
@@ -118,12 +108,12 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentInvalidGetTimeOfProjection(GetTimeOfProjecitonRequest request) {
-        if (request.getErrorList().contains(GetTimeOfProjecitonRequest.MISSING_MOVIE_ERROR)) {
-            viewModel.cinemaErrorProperty().setValue(GetTimeOfProjecitonRequest.MISSING_MOVIE_ERROR.getMessage());
+    public void presentInvalidGetTimeOfProjection(GetTimeOfProjectionRequest request) {
+        if (request.getErrorList().contains(GetTimeOfProjectionRequest.MISSING_MOVIE_ERROR)) {
+            viewModel.cinemaErrorProperty().setValue(GetTimeOfProjectionRequest.MISSING_MOVIE_ERROR.getMessage());
         }
-        if (request.getErrorList().contains(GetTimeOfProjecitonRequest.MISSING_DATE_ERROR)) {
-            viewModel.cinemaErrorProperty().setValue(GetTimeOfProjecitonRequest.MISSING_DATE_ERROR.getMessage());
+        if (request.getErrorList().contains(GetTimeOfProjectionRequest.MISSING_DATE_ERROR)) {
+            viewModel.cinemaErrorProperty().setValue(GetTimeOfProjectionRequest.MISSING_DATE_ERROR.getMessage());
         }
     }
 

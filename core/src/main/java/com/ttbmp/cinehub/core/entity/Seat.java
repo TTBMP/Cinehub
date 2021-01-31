@@ -4,9 +4,9 @@ package com.ttbmp.cinehub.core.entity;
  * @author Palmieri Ivan
  */
 public class Seat {
-    //prezzo dentro ticket
-    Long price;
-    Boolean state;
+
+   private Long price;
+   private Boolean state;
 
 
     public Seat(Long price, Boolean state) {

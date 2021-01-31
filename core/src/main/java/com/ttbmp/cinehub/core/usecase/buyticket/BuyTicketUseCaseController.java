@@ -27,18 +27,18 @@ import java.util.List;
  */
 public class BuyTicketUseCaseController implements BuyTicketUseCase {
 
-    PaymentService paymentService;
-    EmailService emailService;
-    MovieApiService movieApiService;
-    BuyTicketPresenter buyTicketPresenter;
-    MovieRepository movieRepository;
-    CinemaRepository cinemaRepository;
-    TimeRepository timeRepository;
-    SeatRepository seatRepository;
-    AuthenticationService authenticationService;
-    HallRepository hallRepository;
-    ProjectionRepository projectionRepository;
-    UserRepository userRepository;
+    private final PaymentService paymentService;
+    private final EmailService emailService;
+    private final MovieApiService movieApiService;
+    private final  BuyTicketPresenter buyTicketPresenter;
+    private final MovieRepository movieRepository;
+    final CinemaRepository cinemaRepository;
+    final TimeRepository timeRepository;
+    final SeatRepository seatRepository;
+    private final AuthenticationService authenticationService;
+    final HallRepository hallRepository;
+    private final   ProjectionRepository projectionRepository;
+    private final  UserRepository userRepository;
 
 
     public BuyTicketUseCaseController(PaymentService paymentService,
@@ -203,21 +203,19 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
 
     /*To find the times of the screenings given a film, a cinema and a date*/
     @Override
-    public void getTimeOfProjection(GetTimeOfProjecitonRequest request) {
+    public void getAvailableTimesOfScreenings(GetTimeOfProjectionRequest request) {
         try {
             Request.validate(request);
             Cinema cinema = CinemaDataMapper.mapToEntity(request.getCinemaDto());
             Movie movie = MovieDataMapper.mapToEntity(request.getMovieDto());
             String date = request.getLocalDate();
             List<String> timeList = new ArrayList<>();
-            if (cinema != null) {
-                List<Projection> projectionList = projectionRepository.getAllProjection();
-                for (Projection projection : projectionList) {
-                    if (projection.getCinema().getName().equals(cinema.getName()) &&
-                            projection.getMovie().getName().equals(movie.getName()) &&
-                            projection.getDate().equals(date)) {
-                        timeList.add(projection.getStartTime());
-                    }
+            List<Projection> projectionList = projectionRepository.getAllProjection();
+            for (Projection projection : projectionList) {
+                if (projection.getCinema().getName().equals(cinema.getName()) &&
+                        projection.getMovie().getName().equals(movie.getName()) &&
+                        projection.getDate().equals(date)) {
+                    timeList.add(projection.getStartTime());
                 }
             }
             buyTicketPresenter.presentTimeList(timeList);
@@ -228,6 +226,8 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
         }
     }
 
+
+
     /*To retrieve a projection given a movie, a cinema, a date and a time*/
     @Override
     public void getProjection(SetSelectedProjectionRequest request) {
@@ -237,15 +237,19 @@ public class BuyTicketUseCaseController implements BuyTicketUseCase {
             Cinema cinema = CinemaDataMapper.mapToEntity(request.getCinemaDto());
             String date = request.getDate();
             String time = request.getTime();
-            List<Projection> projectionList = projectionRepository.getAllProjection();
-            for (Projection projection : projectionList) {
-                if (projection.getCinema().getName().equals(cinema.getName()) &&
-                        projection.getMovie().getName().equals(movie.getName()) &&
-                        projection.getStartTime().equals(time) &&
-                        projection.getDate().equals(date)) {
-                    buyTicketPresenter.presentProjection(new SetProjectionResponse(ProjectionDataMapper.mapToDto(projection)));
-                }
-            }
+            buyTicketPresenter.presentProjection(
+                    new SetProjectionResponse(
+                            ProjectionDataMapper.mapToDto(
+                                    projectionRepository.getASpecificProjection(
+                                            MovieDataMapper.mapToDto(movie),
+                                            CinemaDataMapper.mapToDto( cinema),
+                                            date,
+                                            time
+                                    )
+                            )
+                    )
+            );
+
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentSetProjectionNullRequest();
         } catch (Request.InvalidRequestException e) {

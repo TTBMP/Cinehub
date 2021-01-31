@@ -15,7 +15,7 @@ public class MockPaymentService implements PaymentService {
 
     @Override
     public String getError() {
-        return "";
+        return "error unique";
     }
 
 }

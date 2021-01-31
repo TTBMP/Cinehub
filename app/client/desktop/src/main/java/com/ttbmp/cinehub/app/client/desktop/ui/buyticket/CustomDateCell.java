@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.buyticket;
 
 import javafx.scene.control.DateCell;
-import javafx.scene.control.DatePicker;
+
 
 import java.time.LocalDate;
 
@@ -10,8 +10,6 @@ import java.time.LocalDate;
  */
 public class CustomDateCell extends DateCell {
 
-    public CustomDateCell(DatePicker datePicker) {
-    }
 
     @Override
     public void updateItem(LocalDate date, boolean empty) {

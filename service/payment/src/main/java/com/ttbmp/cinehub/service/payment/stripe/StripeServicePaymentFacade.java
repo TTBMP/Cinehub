@@ -13,7 +13,7 @@ public class StripeServicePaymentFacade implements PaymentService {
 
     private final ServiceRequestStripe serviceRequestStripe;
 
-    String errorStripe;
+    private String errorStripe;
 
     public StripeServicePaymentFacade() {
         this.serviceRequestStripe = new ServiceRequestStripe();

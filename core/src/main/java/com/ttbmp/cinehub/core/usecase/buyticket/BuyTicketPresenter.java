@@ -25,10 +25,6 @@ public interface BuyTicketPresenter {
 
     void presentProjection(SetProjectionResponse reponse);
 
-    void presentInvalidSendEmail(SendEmailRequest request);
-
-    void presentSendEmailNullRequest();
-
     void presentPayNullRequest();
 
     void presentInvalidPay(PayRequest request);
@@ -43,7 +39,7 @@ public interface BuyTicketPresenter {
 
     void presentGetTimeOfProjectionNullRequest();
 
-    void presentInvalidGetTimeOfProjection(GetTimeOfProjecitonRequest request);
+    void presentInvalidGetTimeOfProjection(GetTimeOfProjectionRequest request);
 
     void presentSetProjectionNullRequest();
 
