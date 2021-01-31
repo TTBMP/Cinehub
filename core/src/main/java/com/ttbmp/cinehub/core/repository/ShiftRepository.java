@@ -19,4 +19,5 @@ public interface ShiftRepository {
     Result<Boolean> saveShift(Shift shift);
 
     Result<Shift> deletedShift(Shift shift);
+
 }

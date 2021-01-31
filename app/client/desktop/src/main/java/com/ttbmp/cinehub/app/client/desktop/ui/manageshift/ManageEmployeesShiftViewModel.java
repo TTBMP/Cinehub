@@ -28,8 +28,8 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
 
     private final ObjectProperty<LocalDate> selectedDays = new SimpleObjectProperty<>();
 
-    private final ObservableList<HallDto> salaList = FXCollections.observableArrayList();
-    private final ObjectProperty<HallDto> selectedSala = new SimpleObjectProperty<>();
+    private final ObservableList<HallDto> hallList = FXCollections.observableArrayList();
+    private final ObjectProperty<HallDto> selectedHall = new SimpleObjectProperty<>();
 
     private final BooleanProperty repeatVisibility = new SimpleBooleanProperty();
     private final ObjectProperty<LocalTime> startSpinnerTime = new SimpleObjectProperty<>();
@@ -141,20 +141,20 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
         return selectedDays;
     }
 
-    public ObservableList<HallDto> getSalaList() {
-        return salaList;
+    public ObservableList<HallDto> getHallList() {
+        return hallList;
     }
 
-    public HallDto getSelectedSala() {
-        return selectedSala.get();
+    public HallDto getSelectedHall() {
+        return selectedHall.get();
     }
 
-    public void setSelectedSala(HallDto selectedSala) {
-        this.selectedSala.set(selectedSala);
+    public void setSelectedHall(HallDto selectedHall) {
+        this.selectedHall.set(selectedHall);
     }
 
-    public ObjectProperty<HallDto> selectedSalaProperty() {
-        return selectedSala;
+    public ObjectProperty<HallDto> selectedHallProperty() {
+        return selectedHall;
     }
 
     public boolean isRepeatVisibility() {

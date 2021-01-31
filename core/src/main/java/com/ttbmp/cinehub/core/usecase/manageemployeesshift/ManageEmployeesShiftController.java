@@ -48,9 +48,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
     public boolean saveShift(ShiftRequest request) {
         try {
             Request.validate(request);
-        } catch (Request.NullRequestException e) {
-            e.printStackTrace();
-        } catch (Request.InvalidRequestException e) {
+        } catch (Request.NullRequestException | Request.InvalidRequestException e) {
             e.printStackTrace();
         }
         Result<Boolean> shiftResult = shiftRepository.saveShift(ShiftDataMapper.mapToEntity(request.getShift()));
@@ -67,9 +65,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
     public void deleteShift(ShiftRequest request) {
         try {
             Request.validate(request);
-        } catch (Request.NullRequestException e) {
-            e.printStackTrace();
-        } catch (Request.InvalidRequestException e) {
+        } catch (Request.NullRequestException | Request.InvalidRequestException e) {
             e.printStackTrace();
         }
         Result<Shift> shiftResult = shiftRepository.deletedShift(ShiftDataMapper.mapToEntity(request.getShift()));

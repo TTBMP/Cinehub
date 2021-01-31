@@ -49,7 +49,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
 
     @Override
     public void presentHallList(Result<GetHallListResponse> listHall) {
-        viewModel.getSalaList().setAll(listHall.getValue().getListHall());
+        viewModel.getHallList().setAll(listHall.getValue().getListHall());
     }
 
 

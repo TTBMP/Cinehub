@@ -84,8 +84,8 @@ public class ModifyShiftViewController extends ViewController {
         } else {
             hallComboBox.getItems().clear();
             activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(viewModel.getSelectedShift().getEmployee().getCinema()));
-            hallComboBox.setItems(viewModel.getSalaList());
-            viewModel.selectedSalaProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
+            hallComboBox.setItems(viewModel.getHallList());
+            viewModel.selectedHallProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
         }
         hallComboBox.setButtonCell(new HallFactory(null));
         hallComboBox.setCellFactory(HallFactory::new);
@@ -132,9 +132,8 @@ public class ModifyShiftViewController extends ViewController {
                         hallComboBox.getValue()));
             }
 
+            activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(viewModel.getSelectedShift()));
             if (viewModel.getShiftCreated() != null && activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new ShiftRequest(viewModel.getShiftCreated()))) {
-
-                activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(viewModel.getSelectedShift()));
                 viewModel.setSelectedShift(viewModel.getShiftCreated());
                 try {
                     navController.popBackStack();
@@ -142,6 +141,7 @@ public class ModifyShiftViewController extends ViewController {
                     e.printStackTrace();
                 }
             } else {
+                activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new ShiftRequest(viewModel.getSelectedShift()));
                 errorHBox.setVisible(true);
             }
 

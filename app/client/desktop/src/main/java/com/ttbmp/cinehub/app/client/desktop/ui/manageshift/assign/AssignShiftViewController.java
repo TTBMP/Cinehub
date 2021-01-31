@@ -85,15 +85,15 @@ public class AssignShiftViewController extends ViewController {
             hallComboBox.setVisible(false);
         } else {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(viewModel.getSelectedDayWeek().getEmployee().getCinema()));
-            hallComboBox.setItems(viewModel.getSalaList());
-            viewModel.selectedSalaProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
+            hallComboBox.setItems(viewModel.getHallList());
+            viewModel.selectedHallProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
         }
 
         viewModel.setSelectedEndRepeatDay(null);
         hallComboBox.setButtonCell(new HallFactory(null));
         hallComboBox.setCellFactory(HallFactory::new);
 
-        hallComboBox.valueProperty().bindBidirectional(viewModel.selectedSalaProperty());
+        hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
 
         errorVBox.setVisible(false);
         optionVBox.visibleProperty().bind(viewModel.repeatVisibilityProperty());
@@ -138,12 +138,12 @@ public class AssignShiftViewController extends ViewController {
             if (employee.getRole().equals("maschera")) {
                 activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(employee, date, start, end));
             } else {
-                if (viewModel.getSelectedSala() != null) {
+                if (viewModel.getSelectedHall() != null) {
                     activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(employee,
                             date,
                             start,
                             end,
-                            viewModel.getSelectedSala()));
+                            viewModel.getSelectedHall()));
                 } else {
                     hallComboBox.setStyle("-fx-background-color: red;");
                     errorVBox.setVisible(true);

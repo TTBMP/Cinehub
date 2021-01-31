@@ -1,9 +1,6 @@
 package com.ttbmp.cinehub.data.local.mock;
 
-import com.ttbmp.cinehub.core.entity.Cinema;
-import com.ttbmp.cinehub.core.entity.Employee;
-import com.ttbmp.cinehub.core.entity.Hall;
-import com.ttbmp.cinehub.core.entity.Shift;
+import com.ttbmp.cinehub.core.entity.*;
 import com.ttbmp.cinehub.core.repository.ShiftRepository;
 import com.ttbmp.cinehub.core.utilities.result.Result;
 
@@ -36,27 +33,27 @@ public class MockShiftRepository implements ShiftRepository {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 5; j++) {
                 shiftList.addAll(Arrays.asList(
-                        new Shift(
+                        new ShiftProjectionist(
                                 employee1,
                                 LocalDate.now().plusWeeks(i).plusDays(j).toString(),
                                 LocalTime.now().withSecond(0).withNano(0).toString(),
                                 LocalTime.now().plusHours(2).withSecond(0).withNano(0).toString(),
                                 hall
                         ),
-                        new Shift(
+                        new ShiftUsher(
                                 employee2,
                                 LocalDate.now().minusWeeks(i).plusDays(j).toString(),
                                 LocalTime.now().withSecond(0).withNano(0).toString(),
                                 LocalTime.now().plusHours(2).withSecond(0).withNano(0).toString()
                         ),
-                        new Shift(
+                        new ShiftProjectionist(
                                 employee3,
                                 LocalDate.now().plusWeeks(i).plusDays(j).toString(),
                                 LocalTime.now().withSecond(0).withNano(0).toString(),
                                 LocalTime.now().plusHours(2).withSecond(0).withNano(0).toString(),
                                 hall2
                         ),
-                        new Shift(
+                        new ShiftUsher(
                                 employee4,
                                 LocalDate.now().minusWeeks(i).plusDays(j).toString(),
                                 LocalTime.now().withSecond(0).withNano(0).toString(),
@@ -78,14 +75,10 @@ public class MockShiftRepository implements ShiftRepository {
 
     @Override
     public Result<Shift> deletedShift(Shift shift) {
-        for (Shift elem : shiftList) {
-            if (elem.equals(shift)) {
-                shiftList.remove(elem);
-                break;
-            }
-        }
+        shiftList.removeIf(s -> s.equals(shift));
         return new Result<>(shift);
     }
+
 
     @Override
     public Result<List<Shift>> getShiftList() {
@@ -106,8 +99,7 @@ public class MockShiftRepository implements ShiftRepository {
             if (elem.getDate().equals(shift.getDate())
                     && (newStart.isBefore(end)
                     && newEnd.isAfter(start))
-                    && shift.getEmployee().equals(elem.getEmployee())
-                    && (shift.getEmployee().getRole().equals("maschera") || shift.getHall().equals(elem.getHall()))) {
+                    && shift.getEmployee().equals(elem.getEmployee())) {
 
                 return new Result<>(false);
 

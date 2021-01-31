@@ -45,7 +45,7 @@ public class ShowShiftDetailViewController extends ViewController {
     private Label dateLabel;
 
     @FXML
-    private Label hallLbl;
+    private Label hallLabelText;
 
     @FXML
     private Button modifyShiftButton;
@@ -61,7 +61,7 @@ public class ShowShiftDetailViewController extends ViewController {
         new ManageEmployeesShiftViewModel();
         if (viewModel.getSelectedShift().getEmployee().getRole().equals("maschera")) {
             hallLabel.setVisible(false);
-            hallLbl.setVisible(false);
+            hallLabelText.setVisible(false);
         } else {
             cinemaLabel.textProperty().bind(viewModel.selectedShiftProperty().asString());
             hallLabel.textProperty().bind(viewModel.selectedShiftHallProperty());
