@@ -94,6 +94,7 @@ public class AssignShiftViewController extends ViewController {
         hallComboBox.setCellFactory(HallFactory::new);
         hallComboBox.getSelectionModel().selectFirst();
 
+
         hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
 
         errorVBox.setVisible(false);

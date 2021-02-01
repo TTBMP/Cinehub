@@ -121,7 +121,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         String date = request.getDate().toString();
         String start = request.getStart().toString();
         String end = request.getEnd().toString();
-        Shift shift = employee.createShift(employee, date, start, end, HallDataMapper.matToEntity(request.getHall()));
+        Shift shift = employee.createShift(date, start, end, HallDataMapper.matToEntity(request.getHall()));
         manageEmployeesShiftPresenter.presentCreateShift(new Result<>(new CreateShiftResponse(ShiftDataMapper.mapToDto(shift))));
     }
 

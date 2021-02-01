@@ -25,7 +25,7 @@ public abstract class Employee extends User {
         this.weeklyWorkingHours = weeklyWorkingHours;
     }
 
-    public abstract Shift createShift(Employee employee, String date, String start, String end, Hall hall);
+    public abstract Shift createShift(String date, String start, String end, Hall hall);
 
     public String getRole() {
         return role;

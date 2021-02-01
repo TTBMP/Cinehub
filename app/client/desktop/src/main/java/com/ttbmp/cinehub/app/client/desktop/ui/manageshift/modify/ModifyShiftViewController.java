@@ -117,40 +117,30 @@ public class ModifyShiftViewController extends ViewController {
 
     private void submitButtonOnAction(ActionEvent action) {
 
-        if (viewModel.getStartSpinnerModifyTime() != null && viewModel.getEndSpinnerModifyTime() != null && dateDatePicker.getValue() != null) {
-            EmployeeDto employee = viewModel.getSelectedShift().getEmployee();
-            LocalDate date = dateDatePicker.getValue();
-            LocalTime start = viewModel.getStartSpinnerModifyTime().withNano(0);
-            LocalTime end = viewModel.getEndSpinnerModifyTime().withNano(0);
+        EmployeeDto employee = viewModel.getSelectedShift().getEmployee();
+        LocalDate date = dateDatePicker.getValue();
+        LocalTime start = viewModel.getStartSpinnerModifyTime().withNano(0);
+        LocalTime end = viewModel.getEndSpinnerModifyTime().withNano(0);
 
+        activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(employee,
+                date,
+                start,
+                end,
+                hallComboBox.getValue()));
 
-            activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(employee,
-                    date,
-                    start,
-                    end,
-                    hallComboBox.getValue()));
-
-
-            activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(viewModel.getSelectedShift()));
-            if (viewModel.getShiftCreated() != null && activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new ShiftRequest(viewModel.getShiftCreated()))) {
-                viewModel.setSelectedShift(viewModel.getShiftCreated());
-                try {
-                    navController.popBackStack();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new ShiftRequest(viewModel.getSelectedShift()));
-                errorHBox.setVisible(true);
+        activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(viewModel.getSelectedShift()));
+        if (viewModel.getShiftCreated() != null && activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new ShiftRequest(viewModel.getShiftCreated()))) {
+            viewModel.setSelectedShift(viewModel.getShiftCreated());
+            try {
+                navController.popBackStack();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
         } else {
-            dateDatePicker.setPromptText("seleziona data");
-            startSpinner.setPromptText("inserisci valore");
-            endSpinner.setPromptText("inserisci valore");
+            activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new ShiftRequest(viewModel.getSelectedShift()));
+            errorHBox.setVisible(true);
         }
     }
-
 }
 
 

@@ -9,10 +9,10 @@ public class Projectionist extends Employee {
     }
 
     @Override
-    public Shift createShift(Employee employee, String date, String start, String end, Hall hall) {
+    public Shift createShift(String date, String start, String end, Hall hall) {
         Shift shift;
         ShiftFactory shiftFactory = new ShiftFactory();
-        shift = shiftFactory.createShiftProjectionist(employee, date, start, end, hall);
+        shift = shiftFactory.createShiftProjectionist(this, date, start, end, hall);
         return shift;
     }
 

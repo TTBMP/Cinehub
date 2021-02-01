@@ -9,12 +9,10 @@ public class Usher extends Employee {
     }
 
     @Override
-    public Shift createShift(Employee employee, String date, String start, String end, Hall hall) {
+    public Shift createShift(String date, String start, String end, Hall hall) {
         Shift shift;
         ShiftFactory shiftFactory = new ShiftFactory();
-        shift = shiftFactory.createShiftUsher(employee, date, start, end);
+        shift = shiftFactory.createShiftUsher(this, date, start, end);
         return shift;
     }
-
-
 }
