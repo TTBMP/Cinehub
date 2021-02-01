@@ -10,6 +10,7 @@ import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavDestinati
 import com.ttbmp.cinehub.core.dto.MovieDto;
 import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.core.usecase.buyticket.request.GetListCinemaRequest;
+import com.ttbmp.cinehub.core.usecase.buyticket.request.GetListMovieRequest;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -60,13 +61,13 @@ public class ChooseMovieViewController extends ViewController {
     protected void onLoad() {
         appBarController.load(activity, navController);
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
-        activity.getUseCase(BuyTicketUseCase.class).getListMovie(viewModel.selectedDateProperty().getValue().toString());
+        activity.getUseCase(BuyTicketUseCase.class).getListMovie(new GetListMovieRequest(viewModel.selectedDateProperty().getValue()));
         movieListView.itemsProperty().addListener(l -> movieListView.refresh());
         movieListView.setItems(viewModel.getMovieList());
         movieListView.setCellFactory(movieList -> new ChooseMovieListCell(activity, navController));
         bind();
         dateOfProjectionDatePicker.setValue(LocalDate.now());
-        dateOfProjectionDatePicker.setDayCellFactory(datePicker -> new CustomDateCell());
+        dateOfProjectionDatePicker.setDayCellFactory(CustomDateCell::new);
         dateOfProjectionDatePicker.setOnAction(l->onDataChange());
         todayButton.setOnAction(a -> dateOfProjectionDatePicker.setValue(LocalDate.now()));
         previousButton.setOnAction(a -> dateOfProjectionDatePicker.setValue(dateOfProjectionDatePicker.getValue().minusDays(1)));
@@ -92,8 +93,7 @@ public class ChooseMovieViewController extends ViewController {
     }
 
     private void onDataChange() {
-
-        activity.getUseCase(BuyTicketUseCase.class).getListMovie(viewModel.selectedDateProperty().getValue().toString());
+        activity.getUseCase(BuyTicketUseCase.class).getListMovie(new GetListMovieRequest(viewModel.selectedDateProperty().getValue()));
         previousButton.setDisable(viewModel.selectedDateProperty().getValue().equals(LocalDate.now()));
     }
 

@@ -52,4 +52,6 @@ public interface BuyTicketPresenter {
     void presentGetListMovie();
 
     void presentErrorByStripe(String error);
+
+    void presentProjectionList(ProjectionListResponse projectionTimeList);
 }

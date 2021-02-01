@@ -15,4 +15,8 @@ public interface ProjectionRepository {
     List<Projection> getAllProjection();
 
     Projection getASpecificProjection(MovieDto movie, CinemaDto cinema, String date, String time);
+
+    List<Projection> getProjectionList(CinemaDto mapToDto, MovieDto mapToDto1, String date);
+
+    List<Projection> getProjectionList(String localDate);
 }
