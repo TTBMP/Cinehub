@@ -3,8 +3,10 @@ package com.ttbmp.cinehub.app.client.desktop.ui.buyticket.confirmemail;
 
 import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.BuyTicketActivity;
 import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.BuyTicketViewModel;
+import com.ttbmp.cinehub.app.client.desktop.utilities.ObjectBindings;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavActivityDestination;
+import com.ttbmp.cinehub.core.dto.ProjectionDto;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -73,7 +75,7 @@ public class ConfirmEmailViewController extends ViewController {
         ticketText.textProperty().bind((viewModel.selectedTicketPositionProperty()));
         movieText.textProperty().bind(viewModel.selectedMovieNameProperty());
         cinemaText.textProperty().bind(viewModel.selectedCinemaNameProperty());
-        timeText.textProperty().bind(viewModel.selectedTimeProperty());
+        timeText.textProperty().bind(ObjectBindings.map(viewModel.selectedProjectionProperty(), ProjectionDto::getStartTime));
 
 
     }

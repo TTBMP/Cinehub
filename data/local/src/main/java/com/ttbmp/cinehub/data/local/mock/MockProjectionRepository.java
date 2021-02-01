@@ -110,4 +110,30 @@ public class MockProjectionRepository implements ProjectionRepository {
         }
         return null;
     }
+
+    @Override
+    public List<Projection> getProjectionList(CinemaDto cinema, MovieDto movie, String date) {
+        List<Projection> result = new ArrayList<>();
+        List<Projection> allProjection = getAllProjection();
+        for (Projection projection : allProjection) {
+            if (projection.getCinema().getName().equals(cinema.getName()) &&
+                    projection.getMovie().getName().equals(movie.getName()) &&
+                    projection.getDate().equals(date)) {
+                result.add(projection);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<Projection> getProjectionList(String localDate) {
+        List<Projection> result = new ArrayList<>();
+        List<Projection> allProjection = getAllProjection();
+        for (Projection projection : allProjection) {
+                if (projection.getDate().equals(localDate)) {
+                    result.add(projection);
+                }
+            }
+        return result;
+    }
 }

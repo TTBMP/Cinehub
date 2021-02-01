@@ -11,6 +11,12 @@ public class Hall {
 
     private List<Seat> seatList;
 
+    private List<Projection> projectionList;
+
+    public void setProjectionList(List<Projection> projectionList) {
+        this.projectionList = projectionList;
+    }
+
     public Hall(Integer id) {
         this.id = id;
     }
@@ -30,5 +36,9 @@ public class Hall {
 
     public void setSeatList(List<Seat> seatList) {
         this.seatList = seatList;
+    }
+
+    public List<Projection> getProjectionList() {
+        return projectionList;
     }
 }

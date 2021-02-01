@@ -156,5 +156,12 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
         viewModel.paymentErrorProperty().setValue(error);
     }
 
+    @Override
+    public void presentProjectionList(ProjectionListResponse response) {
+
+      //  viewModel.getProjectionTimeList().setAll(response.getProjectionDtoTime());
+        viewModel.getProjectionOfProjectionTimeList().setAll(response.getProjectionDto());
+    }
+
 
 }

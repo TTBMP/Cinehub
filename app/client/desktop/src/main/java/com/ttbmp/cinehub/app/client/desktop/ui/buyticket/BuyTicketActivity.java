@@ -9,7 +9,7 @@ import com.ttbmp.cinehub.core.service.email.EmailService;
 import com.ttbmp.cinehub.core.service.movie.MovieApiService;
 import com.ttbmp.cinehub.core.service.payment.PaymentService;
 import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketUseCaseController;
+import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketController;
 
 import java.io.IOException;
 
@@ -34,7 +34,7 @@ public class BuyTicketActivity extends Activity {
         super(new ChooseMovieView());
         viewModelStore.put(BuyTicketViewModel.class, new BuyTicketViewModel());
         useCaseFactory.put(BuyTicketUseCase.class,
-                () -> new BuyTicketUseCaseController(
+                () -> new BuyTicketController(
                         paymentService,
                         emailService,
                         new BuyTicketPresenterFx(getViewModel(BuyTicketViewModel.class)),

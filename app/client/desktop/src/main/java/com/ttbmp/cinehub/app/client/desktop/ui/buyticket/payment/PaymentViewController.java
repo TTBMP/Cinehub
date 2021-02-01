@@ -24,8 +24,7 @@ public class PaymentViewController extends ViewController {
     private BuyTicketViewModel viewModel;
     @FXML
     private Button returnButton;
-    @FXML
-    private ProgressIndicator payProgressIndicator;
+
     @FXML
     private TextField numberOfCreditCardTextField;
     @FXML
@@ -75,7 +74,7 @@ public class PaymentViewController extends ViewController {
         numberOfCreditCardTextField.textProperty().bindBidirectional(viewModel.numberOfCardUserProperty());
         cvvTextField.textProperty().bindBidirectional(viewModel.txtCvvProperty());
         fieldExpirationDatePicker.valueProperty().bindBidirectional(viewModel.fieldExpirationDatePickerProperty());
-        fieldExpirationDatePicker.setDayCellFactory(datePicker -> new CustomDateCell());
+        fieldExpirationDatePicker.setDayCellFactory(CustomDateCell::new);
     }
 
 

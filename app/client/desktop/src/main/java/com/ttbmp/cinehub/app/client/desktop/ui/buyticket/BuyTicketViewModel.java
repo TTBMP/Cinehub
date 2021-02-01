@@ -67,6 +67,17 @@ public class BuyTicketViewModel implements ViewModel {
     private final BooleanProperty valueFalseForSeatState = new SimpleBooleanProperty(false);
     private final BooleanProperty valueTrueForSeatState = new SimpleBooleanProperty(true);
 
+    private final ObservableList<String> projectionTimeList = FXCollections.observableArrayList();
+    private final ObservableList<ProjectionDto> projectionOfProjectionTimeList = FXCollections.observableArrayList();
+
+
+    public ObservableList<String> getProjectionTimeList() {
+        return projectionTimeList;
+    }
+
+    public ObservableList<ProjectionDto> getProjectionOfProjectionTimeList() {
+        return projectionOfProjectionTimeList;
+    }
 
     public BuyTicketViewModel() {
         selectedMovieName.bind(ObjectBindings.map(selectedMovie, MovieDto::getName));
