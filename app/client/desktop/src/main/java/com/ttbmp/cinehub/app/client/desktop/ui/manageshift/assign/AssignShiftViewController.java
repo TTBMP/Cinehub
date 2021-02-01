@@ -92,6 +92,7 @@ public class AssignShiftViewController extends ViewController {
         viewModel.setSelectedEndRepeatDay(null);
         hallComboBox.setButtonCell(new HallFactory(null));
         hallComboBox.setCellFactory(HallFactory::new);
+        hallComboBox.getSelectionModel().selectFirst();
 
         hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
 
@@ -130,37 +131,24 @@ public class AssignShiftViewController extends ViewController {
     }
 
     private void confirmButtonOnAction(ActionEvent action) {
-        if (viewModel.getStartSpinnerTime() != null && viewModel.getEndSpinnerTime() != null) {
-            EmployeeDto employee = viewModel.getSelectedDayWeek().getEmployee();
-            LocalDate date = viewModel.getSelectedDayWeek().getDate();
-            LocalTime start = viewModel.getStartSpinnerTime().withNano(0);
-            LocalTime end = viewModel.getEndSpinnerTime().withNano(0);
-            if (employee.getRole().equals("maschera")) {
-                activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(employee, date, start, end));
-            } else {
-                if (viewModel.getSelectedHall() != null) {
-                    activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(employee,
-                            date,
-                            start,
-                            end,
-                            viewModel.getSelectedHall()));
-                } else {
-                    hallComboBox.setStyle("-fx-background-color: red;");
-                    errorVBox.setVisible(true);
-                }
-            }
-            if (optionRepeatComboBox.getValue() == null)
-                saveShift();
-            else {
-                saveRepeatShift();
-            }
+        EmployeeDto employee = viewModel.getSelectedDayWeek().getEmployee();
+        LocalDate date = viewModel.getSelectedDayWeek().getDate();
+        LocalTime start = viewModel.getStartSpinnerTime().withNano(0);
+        LocalTime end = viewModel.getEndSpinnerTime().withNano(0);
 
-        } else {
-            startSpinner.setPromptText("inserisci valore");
-            endSpinner.setPromptText("inserisci valore");
+        activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(employee,
+                date,
+                start,
+                end,
+                viewModel.getSelectedHall()));
+
+        if (optionRepeatComboBox.getValue() == null)
+            saveShift();
+        else {
+            saveRepeatShift();
         }
-    }
 
+    }
 
     public void saveShift() {
         if (viewModel.getShiftCreated() != null &&
@@ -178,7 +166,6 @@ public class AssignShiftViewController extends ViewController {
             errorVBox.setVisible(true);
         }
     }
-
 
     public void saveRepeatShift() {
         if (viewModel.getShiftCreated() != null && repeatDatePicker.getValue() != null) {

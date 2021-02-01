@@ -13,6 +13,7 @@ public class CreateShiftRequest extends Request {
     public static final Request.Error MISSING_DATE = new Request.Error("data non valida");
     public static final Request.Error MISSING_START = new Request.Error("inizio non valido");
     public static final Request.Error MISSING_END = new Request.Error("fine non valida");
+    public static final Request.Error MISSING_HALL = new Request.Error("sala non valida");
 
     EmployeeDto employee;
     LocalDate date;
@@ -88,6 +89,9 @@ public class CreateShiftRequest extends Request {
         }
         if (end == null) {
             addError(MISSING_END);
+        }
+        if (hall == null && employee.getRole().equals("proiezionista")) {
+            addError(MISSING_HALL);
         }
     }
 }

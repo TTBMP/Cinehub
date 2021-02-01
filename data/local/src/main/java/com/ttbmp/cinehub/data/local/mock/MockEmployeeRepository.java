@@ -11,7 +11,8 @@ public class MockEmployeeRepository implements EmployeeRepository {
 
     @Override
     public Result<Employee> getEmployee(int userId) {
-        return new Result<>(new Employee());
+        /* return new Result<>(new Employee());*/
+        return new Result<>(null);
     }
 
 }

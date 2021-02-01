@@ -21,11 +21,10 @@ public class MockShiftRepository implements ShiftRepository {
     public MockShiftRepository() {
         String s = "Comunale";
         String s1 = "MultiPlex";
-        Employee employee1 = new Employee("ciao", "bella", "proiezionista", 15, 15, new Cinema(s), 0);
-        Employee employee2 = new Employee("fabio", "buracchi", "maschera", 20, 11, new Cinema(s1), 0);
-        Employee employee3 = new Employee("Massimo", "Mazzetti", "proiezionista", 15, 15, new Cinema(s1), 0);
-        Employee employee4 = new Employee("Ivan", "Palmieri", "maschera", 20, 11, new Cinema(s), 0);
-
+        Employee employee1 = new Projectionist("ciao", "bella", "proiezionista", new Cinema(s), 0);
+        Employee employee2 = new Usher("fabio", "buracchi", "maschera", new Cinema(s1), 0);
+        Employee employee3 = new Projectionist("Massimo", "Mazzetti", "proiezionista", new Cinema(s1), 0);
+        Employee employee4 = new Usher("Ivan", "Palmieri", "maschera", new Cinema(s), 0);
 
         Hall hall = new Hall("1", new Cinema(s));
         Hall hall2 = new Hall("1", new Cinema(s1));
@@ -62,7 +61,6 @@ public class MockShiftRepository implements ShiftRepository {
                 ));
             }
         }
-
     }
 
     @Override

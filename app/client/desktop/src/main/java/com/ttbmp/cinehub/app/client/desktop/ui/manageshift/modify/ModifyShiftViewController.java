@@ -89,6 +89,7 @@ public class ModifyShiftViewController extends ViewController {
         }
         hallComboBox.setButtonCell(new HallFactory(null));
         hallComboBox.setCellFactory(HallFactory::new);
+        hallComboBox.getSelectionModel().selectFirst();
 
         nameLabel.textProperty().bind(viewModel.selectedShiftEmployeeNameProperty());
         surnameLabel.textProperty().bind(viewModel.selectedShiftEmployeeSurnameProperty());
@@ -100,7 +101,6 @@ public class ModifyShiftViewController extends ViewController {
 
         viewModel.setStartSpinnerModifyTime(LocalTime.parse(viewModel.getSelectedShiftStart()));
         viewModel.setEndSpinnerModifyTime(LocalTime.parse(viewModel.getSelectedShiftEnd()));
-
 
         startSpinner.setValueFactory(new SpinnerStartValueFactory(viewModel.startSpinnerModifyTimeProperty(), viewModel.endSpinnerModifyTimeProperty()));
         endSpinner.setValueFactory(new SpinnerEndValueFactory(viewModel.startSpinnerModifyTimeProperty(), viewModel.endSpinnerModifyTimeProperty()));
@@ -122,15 +122,14 @@ public class ModifyShiftViewController extends ViewController {
             LocalDate date = dateDatePicker.getValue();
             LocalTime start = viewModel.getStartSpinnerModifyTime().withNano(0);
             LocalTime end = viewModel.getEndSpinnerModifyTime().withNano(0);
-            if (employee.getRole().equals("maschera")) {
-                activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(employee, date, start, end));
-            } else {
-                activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(employee,
-                        date,
-                        start,
-                        end,
-                        hallComboBox.getValue()));
-            }
+
+
+            activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(employee,
+                    date,
+                    start,
+                    end,
+                    hallComboBox.getValue()));
+
 
             activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(viewModel.getSelectedShift()));
             if (viewModel.getShiftCreated() != null && activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new ShiftRequest(viewModel.getShiftCreated()))) {

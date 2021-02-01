@@ -9,24 +9,13 @@ public class EmployeeDto {
     private String name;
     private String surname;
     private String role;
-    private int hourRemain;
-    private int minRemain;
+
     private CinemaDto cinema;
 
-    public EmployeeDto(String name, String surname, String role, int hourRemain, int minRemain, CinemaDto cinema) {
+    public EmployeeDto(String name, String surname, String role, CinemaDto cinema) {
         this.name = name;
         this.surname = surname;
         this.role = role;
-        this.hourRemain = hourRemain;
-        this.minRemain = minRemain;
-        this.cinema = cinema;
-    }
-
-    public CinemaDto getCinema() {
-        return cinema;
-    }
-
-    public void setCinema(CinemaDto cinema) {
         this.cinema = cinema;
     }
 
@@ -54,22 +43,13 @@ public class EmployeeDto {
         this.role = role;
     }
 
-    public int getHourRemain() {
-        return hourRemain;
+    public CinemaDto getCinema() {
+        return cinema;
     }
 
-    public void setHourRemain(int hourRemain) {
-        this.hourRemain = hourRemain;
+    public void setCinema(CinemaDto cinema) {
+        this.cinema = cinema;
     }
-
-    public int getMinRemain() {
-        return minRemain;
-    }
-
-    public void setMinRemain(int minRemain) {
-        this.minRemain = minRemain;
-    }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -83,8 +63,6 @@ public class EmployeeDto {
         return this.getName().equals(other.getName())
                 && this.getSurname().equals(other.getSurname())
                 && this.getRole().equals(other.getRole())
-                && this.getHourRemain() == other.getHourRemain()
-                && this.getMinRemain() == other.getMinRemain()
                 && this.getCinema().equals(other.getCinema());
     }
 

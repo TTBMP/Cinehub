@@ -16,15 +16,20 @@ public class HallDataMapper {
     }
 
     public static HallDto mapToDto(Hall hall) {
-        HallDto hallDto = new HallDto(hall.getId());
-        hallDto.setSeatList(SeatDataMapper.mapToDtoList(hall.getSeatList()));
-        return hallDto;
+        return new HallDto(
+                hall.getNum(),
+                CinemaDataMapper.mapToDto(hall.getCinema())
+        );
     }
 
-    public static Hall mapToEntity(HallDto hallDto) {
-        Hall hall = new Hall(hallDto.getId());
-        hall.setSeatList(SeatDataMapper.mapToEntityList(hallDto.getSeatList()));
-        return hall;
+    public static Hall matToEntity(HallDto hallDto) {
+        if (hallDto != null) {
+            return new Hall(
+                    hallDto.getNum(),
+                    CinemaDataMapper.matToEntity(hallDto.getCinema())
+            );
+        }
+        return null;
     }
 
     public static List<HallDto> mapToDtoList(List<Hall> hallList) {
@@ -34,5 +39,4 @@ public class HallDataMapper {
     public static List<Hall> mapToEntityList(List<HallDto> hallListDto) {
         return DataMapperHelper.mapList(hallListDto, HallDataMapper::matToEntity);
     }
-
 }

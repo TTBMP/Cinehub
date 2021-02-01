@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.core.usecase.manageemployeesshift;
 
-import com.ttbmp.cinehub.core.ShiftFactory;
 import com.ttbmp.cinehub.core.datamapper.CinemaDataMapper;
 import com.ttbmp.cinehub.core.datamapper.EmployeeDataMapper;
 import com.ttbmp.cinehub.core.datamapper.HallDataMapper;
@@ -17,7 +16,6 @@ import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.*;
 import com.ttbmp.cinehub.core.utilities.result.Result;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,30 +111,17 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
 
     @Override
     public void createShift(CreateShiftRequest request) {
-        Employee employee = EmployeeDataMapper.matToEntity(request.getEmployee());
-        LocalDate date = request.getDate();
-        LocalTime start = request.getStart();
-        LocalTime end = request.getEnd();
-        ShiftFactory shiftFactory = new ShiftFactory();
-        Shift shift;
-        if (employee.getRole().equals("maschera")) {
-            shift = shiftFactory.createShiftUsher();
-            shift.setEmployee(employee);
-            shift.setDate(date.toString());
-            shift.setStart(start.toString());
-            shift.setEnd(end.toString());
-        } else {
-            if (request.getHall() != null) {
-                shift = shiftFactory.createShiftProjectionist();
-                shift.setEmployee(employee);
-                shift.setDate(date.toString());
-                shift.setStart(start.toString());
-                shift.setEnd(end.toString());
-                shift.setHall(HallDataMapper.matToEntity(request.getHall()));
-            } else {
-                shift = null;
-            }
+
+        try {
+            Request.validate(request);
+        } catch (Request.NullRequestException | Request.InvalidRequestException e) {
+            e.printStackTrace();
         }
+        Employee employee = EmployeeDataMapper.matToEntity(request.getEmployee());
+        String date = request.getDate().toString();
+        String start = request.getStart().toString();
+        String end = request.getEnd().toString();
+        Shift shift = employee.createShift(employee, date, start, end, HallDataMapper.matToEntity(request.getHall()));
         manageEmployeesShiftPresenter.presentCreateShift(new Result<>(new CreateShiftResponse(ShiftDataMapper.mapToDto(shift))));
     }
 

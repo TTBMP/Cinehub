@@ -56,18 +56,21 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     @Override
     public void presentSaveShift(Result<ShiftResponse> shift) {
         Shift savedShift = ShiftDataMapper.mapToEntity(shift.getValue().getShiftDto());
+        TemporalField temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
+
         viewModel.getEmployeeShiftWeekList().setAll(viewModel.getEmployeeShiftWeekList().stream()
                 .peek(e -> {
-                    if (EmployeeDataMapper.matToEntity(e.getEmployeeDto()).equals(savedShift.getEmployee())) {
+                    if (EmployeeDataMapper.matToEntity(e.getEmployeeDto()).equals(savedShift.getEmployee())
+                            &&
+                            LocalDate.parse(savedShift.getDate()).get(temporalField) == viewModel.getSelectedWeek().get(temporalField) &&
+                            LocalDate.parse(savedShift.getDate()).getYear() == viewModel.getSelectedWeek().getYear()) {
                         e.getWeekMap().get(LocalDate.parse(savedShift.getDate()).getDayOfWeek())
                                 .getShiftList()
                                 .add(ShiftDataMapper.mapToDto(savedShift));
                     }
                 })
-                .collect(Collectors.toList())
-        );
+                .collect(Collectors.toList()));
     }
-
 
     @Override
     public void presentDeleteShift(Result<ShiftResponse> shift) {
