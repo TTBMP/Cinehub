@@ -21,7 +21,7 @@ public class MockUserRepository implements UserRepository {
             ),
             new User(
                     "Mattia",
-                    "mahsdj@giggi.coseno",
+                    "mahsdj@giggii.coseno",
                     new CreditCard("22/24", 354, "4242424242424242", "5496")
             )
     );

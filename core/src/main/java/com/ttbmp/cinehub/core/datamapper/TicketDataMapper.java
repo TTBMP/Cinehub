@@ -21,10 +21,10 @@ public class TicketDataMapper {
         return ticketDto;
     }
 
-    public static TicketAbstract mapToEntity(TicketDto ticketDto) {
-        TicketAbstract ticketAbstract = new Ticket(ticketDto.getPrice());
-        ticketAbstract.setPosition(ticketDto.getPosition());
-        return ticketAbstract;
+    public static Ticket mapToEntity(TicketDto ticketDto) {
+        Ticket ticket = new Ticket(ticketDto.getPrice());
+        ticket.setPosition(ticketDto.getPosition());
+        return ticket;
     }
 
 

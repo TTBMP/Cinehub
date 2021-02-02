@@ -1,10 +1,9 @@
 package com.ttbmp.cinehub.core.repository;
 
 
-import com.ttbmp.cinehub.core.dto.MovieDto;
-import com.ttbmp.cinehub.core.service.movie.MovieApiService;
+import com.ttbmp.cinehub.core.entity.Movie;
+import com.ttbmp.cinehub.core.entity.Projection;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -13,7 +12,6 @@ import java.util.List;
 public interface MovieRepository {
 
 
-    List<MovieDto> getAllMovie(MovieApiService movieApiService) throws IOException;
 
-
+    List<Movie> getMovieList(List<Projection> projectionList, List<Movie> movieList);
 }

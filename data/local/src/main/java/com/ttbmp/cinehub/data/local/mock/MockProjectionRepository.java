@@ -16,10 +16,13 @@ import java.util.List;
 public class MockProjectionRepository implements ProjectionRepository {
 
     private final List<Projection> projectionList = new ArrayList<>();
+    private final List<Projection> projectionListByDate = new ArrayList<>();
+    private final List<Projection> projectionListByDateAndMovie = new ArrayList<>();
+    private final List<Projection> projectionListByDateAndMovieAndCinema = new ArrayList<>();
 
 
     @Override
-    public List<Projection> getAllProjection() {//Query al db
+    public List<Projection> getAllProjection() {
         this.projectionList.clear();
 
         Projection projection = new Projection(
@@ -98,42 +101,40 @@ public class MockProjectionRepository implements ProjectionRepository {
         return projectionList;
     }
 
-    @Override
-    public Projection getASpecificProjection(MovieDto movie, CinemaDto cinema, String date, String time) {
-        for (Projection projection : getAllProjection()) {
-            if (projection.getCinema().getName().equals(cinema.getName()) &&
-                    projection.getMovie().getName().equals(movie.getName()) &&
-                    projection.getStartTime().equals(time) &&
-                    projection.getDate().equals(date)) {
-                return projection;
-            }
-        }
-        return null;
-    }
 
     @Override
     public List<Projection> getProjectionList(CinemaDto cinema, MovieDto movie, String date) {
-        List<Projection> result = new ArrayList<>();
-        List<Projection> allProjection = getAllProjection();
-        for (Projection projection : allProjection) {
+        projectionListByDateAndMovieAndCinema.clear();
+        for (Projection projection : projectionListByDateAndMovie) {
             if (projection.getCinema().getName().equals(cinema.getName()) &&
                     projection.getMovie().getName().equals(movie.getName()) &&
                     projection.getDate().equals(date)) {
-                result.add(projection);
+                projectionListByDateAndMovieAndCinema.add(projection);
             }
         }
-        return result;
+        return projectionListByDateAndMovieAndCinema;
     }
 
     @Override
     public List<Projection> getProjectionList(String localDate) {
-        List<Projection> result = new ArrayList<>();
+        projectionListByDate.clear();
         List<Projection> allProjection = getAllProjection();
         for (Projection projection : allProjection) {
                 if (projection.getDate().equals(localDate)) {
-                    result.add(projection);
+                    projectionListByDate.add(projection);
                 }
             }
-        return result;
+        return projectionListByDate;
+    }
+
+    @Override
+    public List<Projection> getProjectionList(Movie movie, String date) {
+        projectionListByDateAndMovie.clear();
+        for (Projection projection : projectionListByDate) {
+            if (projection.getDate().equals(date) && projection.getMovie().getName().equals(movie.getName())) {
+                projectionListByDateAndMovie.add(projection);
+            }
+        }
+        return projectionListByDateAndMovie;
     }
 }
