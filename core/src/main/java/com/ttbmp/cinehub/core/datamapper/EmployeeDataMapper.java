@@ -36,13 +36,11 @@ public class EmployeeDataMapper {
         if (employeeDto instanceof UsherDto) {
             return new Usher(employeeDto.getName(),
                     employeeDto.getSurname(),
-                    CinemaDataMapper.matToEntity(employeeDto.getCinema()),
-                    0);
+                    CinemaDataMapper.matToEntity(employeeDto.getCinema()));
         } else {
             return new Projectionist(employeeDto.getName(),
                     employeeDto.getSurname(),
-                    CinemaDataMapper.matToEntity(employeeDto.getCinema()),
-                    0);
+                    CinemaDataMapper.matToEntity(employeeDto.getCinema()));
         }
 
     }

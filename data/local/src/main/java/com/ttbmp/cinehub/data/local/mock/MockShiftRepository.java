@@ -21,10 +21,10 @@ public class MockShiftRepository implements ShiftRepository {
     public MockShiftRepository() {
         String s = "Comunale";
         String s1 = "MultiPlex";
-        Employee employee1 = new Projectionist("ciao", "bella", new Cinema(s), 0);
-        Employee employee2 = new Usher("fabio", "buracchi",  new Cinema(s1), 0);
-        Employee employee3 = new Projectionist("Massimo", "Mazzetti",  new Cinema(s1), 0);
-        Employee employee4 = new Usher("Ivan", "Palmieri",  new Cinema(s), 0);
+        Employee employee1 = new Projectionist("ciao", "bella", new Cinema(s));
+        Employee employee2 = new Usher("fabio", "buracchi",  new Cinema(s1));
+        Employee employee3 = new Projectionist("Massimo", "Mazzetti",  new Cinema(s1));
+        Employee employee4 = new Usher("Ivan", "Palmieri",  new Cinema(s));
 
         Hall hall = new Hall("1", new Cinema(s));
         Hall hall2 = new Hall("2", new Cinema(s1));

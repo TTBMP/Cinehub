@@ -23,8 +23,6 @@ import java.util.stream.Collectors;
 /**
  * @author Massimo Mazzetti
  */
-
-
 public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPresenter {
 
     private final ManageEmployeesShiftViewModel viewModel;
