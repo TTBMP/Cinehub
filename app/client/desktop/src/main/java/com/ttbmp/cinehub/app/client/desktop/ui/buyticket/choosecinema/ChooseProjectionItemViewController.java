@@ -27,14 +27,15 @@ public class ChooseProjectionItemViewController extends ViewController {
     @Override
     protected void onLoad() {
         Objects.requireNonNull(projectionDto);
-        int freeSeat=0;
-        int buysSeat=0;
-        int totalSeat=projectionDto.getHallDto().getSeatList().size();
-        for(int i=0;i<projectionDto.getHallDto().getSeatList().size();i++){
-            if(Boolean.TRUE.equals(projectionDto.getHallDto().getSeatList().get(i).getState())){
+        int freeSeat = 0;
+        int buysSeat = 0;
+        int totalSeat = projectionDto.getHallDto().getSeatList().size();
+        for (int i = 0; i < projectionDto.getHallDto().getSeatList().size(); i++) {
+            if (Boolean.TRUE.equals(projectionDto.getHallDto().getSeatList().get(i).getState())) {
                 freeSeat++;
+            } else {
+                buysSeat++;
             }
-            else{buysSeat++;}
         }
         freeSeatLabel.setText(String.valueOf(freeSeat));
         buysSeatLabel.setText(String.valueOf(buysSeat));

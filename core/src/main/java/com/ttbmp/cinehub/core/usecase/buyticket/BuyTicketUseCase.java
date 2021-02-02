@@ -18,6 +18,5 @@ public interface BuyTicketUseCase extends UseCase {
 
     void getProjectionList(GetTimeOfProjectionRequest request);
 
-
     void getListOfSeat(GetNumberOfSeatsRequest request);
 }

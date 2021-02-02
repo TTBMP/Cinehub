@@ -39,6 +39,6 @@ public class ProjectionDataMapper {
     }
 
     public static List<Projection> mapToEntityList(List<ProjectionDto> projectionDtoList) {
-        return  DataMapperHelper.mapList(projectionDtoList, ProjectionDataMapper::mapToEntity);
+        return DataMapperHelper.mapList(projectionDtoList, ProjectionDataMapper::mapToEntity);
     }
 }

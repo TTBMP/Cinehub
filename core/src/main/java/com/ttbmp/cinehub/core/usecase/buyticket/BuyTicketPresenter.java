@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.core.usecase.buyticket;
 
+import com.ttbmp.cinehub.core.service.payment.PaymentException;
 import com.ttbmp.cinehub.core.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.core.usecase.buyticket.response.*;
 
@@ -49,9 +50,9 @@ public interface BuyTicketPresenter {
 
     void presentInvalidGetNumberOfSeats(GetNumberOfSeatsRequest request);
 
-    void presentGetListMovie();
+    void presentGetListMovieError();
 
-    void presentErrorByStripe(String error);
+    void presentErrorByStripe(PaymentException error);
 
     void presentProjectionList(ProjectionListResponse projectionTimeList);
 

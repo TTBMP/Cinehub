@@ -11,7 +11,10 @@ import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.core.usecase.buyticket.request.PayRequest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 

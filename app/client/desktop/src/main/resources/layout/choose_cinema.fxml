@@ -1,57 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.*?>
-
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.buyticket.choosecinema.ChooseCinemaViewController">
+<?import javafx.scene.text.Font?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
+      fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.buyticket.choosecinema.ChooseCinemaViewController">
     <children>
-        <fx:include fx:id="appBar" source="app_bar.fxml" />
-        <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0">
+        <fx:include fx:id="appBar" source="app_bar.fxml"/>
+        <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308"
+                    maxWidth="1.7976931348623157E308" prefHeight="700.0">
             <content>
                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0">
                     <children>
-                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Choose a Cinema">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <effect>
-                        <Blend />
-                     </effect>
-                  </Label>
-                        <ListView fx:id="cinemaListView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Choose a Cinema">
+                            <font>
+                                <Font size="20.0"/>
+                            </font>
+                            <effect>
+                                <Blend/>
+                            </effect>
+                        </Label>
+                        <ListView fx:id="cinemaListView" maxHeight="1.7976931348623157E308"
+                                  maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                             <VBox.margin>
-                                <Insets bottom="12.0" />
+                                <Insets bottom="12.0"/>
                             </VBox.margin>
                         </ListView>
                         <TitledPane animated="false" text="Choose a time">
                             <content>
-                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0">
+                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                      spacing="16.0">
                                     <children>
-                                        <ListView fx:id="timeOfProjectionListView" prefHeight="136.0" prefWidth="542.0" VBox.vgrow="ALWAYS" />
+                                        <ListView fx:id="timeOfProjectionListView" prefHeight="136.0" prefWidth="542.0"
+                                                  VBox.vgrow="ALWAYS"/>
                                     </children>
                                 </VBox>
                             </content>
                         </TitledPane>
                         <HBox>
                             <children>
-                                <Button fx:id="cancelButton" mnemonicParsing="false" text="Back" />
-                                <Label fx:id="errorSectionLabel" prefHeight="21.0" prefWidth="403.0" />
-                                <Button fx:id="confirmCinemaButton" alignment="CENTER_RIGHT" contentDisplay="BOTTOM" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" text="Continue" textOverrun="CLIP" />
+                                <Button fx:id="cancelButton" mnemonicParsing="false" text="Back"/>
+                                <Label fx:id="errorSectionLabel" prefHeight="21.0" prefWidth="403.0"/>
+                                <Button fx:id="confirmCinemaButton" alignment="CENTER_RIGHT" contentDisplay="BOTTOM"
+                                        maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false"
+                                        text="Continue" textOverrun="CLIP"/>
                             </children>
                             <VBox.margin>
-                                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+                                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
                             </VBox.margin>
                         </HBox>
                     </children>
                 </VBox>
             </content>
             <padding>
-                <Insets left="16.0" right="16.0" top="16.0" />
+                <Insets left="16.0" right="16.0" top="16.0"/>
             </padding>
         </ScrollPane>
     </children>

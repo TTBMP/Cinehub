@@ -69,15 +69,8 @@ public class BuyTicketViewModel implements ViewModel {
 
     private final ObservableList<String> projectionTimeList = FXCollections.observableArrayList();
     private final ObservableList<ProjectionDto> projectionOfProjectionTimeList = FXCollections.observableArrayList();
+    private final BooleanProperty isConfirmButtonSeatsEnable = new SimpleBooleanProperty(false);
 
-
-    public ObservableList<String> getProjectionTimeList() {
-        return projectionTimeList;
-    }
-
-    public ObservableList<ProjectionDto> getProjectionOfProjectionTimeList() {
-        return projectionOfProjectionTimeList;
-    }
 
     public BuyTicketViewModel() {
         selectedMovieName.bind(ObjectBindings.map(selectedMovie, MovieDto::getName));
@@ -99,6 +92,18 @@ public class BuyTicketViewModel implements ViewModel {
         selectedDateProperty().setValue(LocalDate.now());
 
 
+    }
+
+    public BooleanProperty isConfirmButtonSeatsEnableProperty() {
+        return isConfirmButtonSeatsEnable;
+    }
+
+    public ObservableList<String> getProjectionTimeList() {
+        return projectionTimeList;
+    }
+
+    public ObservableList<ProjectionDto> getProjectionOfProjectionTimeList() {
+        return projectionOfProjectionTimeList;
     }
 
     public BooleanProperty trueBooleanProperty() {

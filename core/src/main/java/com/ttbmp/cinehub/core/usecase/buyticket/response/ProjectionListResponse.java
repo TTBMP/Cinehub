@@ -2,7 +2,6 @@ package com.ttbmp.cinehub.core.usecase.buyticket.response;
 
 import com.ttbmp.cinehub.core.dto.ProjectionDto;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +13,11 @@ public class ProjectionListResponse {
 
     public ProjectionListResponse(List<ProjectionDto> projectionDto) {
         this.projectionDto = projectionDto;
-        for(ProjectionDto projection: projectionDto){
+        for (ProjectionDto projection : projectionDto) {
             addProjectionDtoTime(projection.getStartTime());
         }
 
     }
-
 
 
     public List<ProjectionDto> getProjectionDto() {
@@ -32,8 +30,7 @@ public class ProjectionListResponse {
     }
 
 
-
-    public void addProjectionDtoTime(String projectionTime){
+    public void addProjectionDtoTime(String projectionTime) {
         this.projectionDtoTime.add(projectionTime);
     }
 }

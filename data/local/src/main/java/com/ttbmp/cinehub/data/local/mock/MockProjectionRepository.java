@@ -105,7 +105,7 @@ public class MockProjectionRepository implements ProjectionRepository {
     @Override
     public List<Projection> getProjectionList(CinemaDto cinema, MovieDto movie, String date) {
         projectionListByDateAndMovieAndCinema.clear();
-        for (Projection projection : projectionListByDateAndMovie) {
+        for (Projection projection : getAllProjection()) {
             if (projection.getCinema().getName().equals(cinema.getName()) &&
                     projection.getMovie().getName().equals(movie.getName()) &&
                     projection.getDate().equals(date)) {
@@ -130,7 +130,7 @@ public class MockProjectionRepository implements ProjectionRepository {
     @Override
     public List<Projection> getProjectionList(Movie movie, String date) {
         projectionListByDateAndMovie.clear();
-        for (Projection projection : projectionListByDate) {
+        for (Projection projection : getAllProjection()) {
             if (projection.getDate().equals(date) && projection.getMovie().getName().equals(movie.getName())) {
                 projectionListByDateAndMovie.add(projection);
             }

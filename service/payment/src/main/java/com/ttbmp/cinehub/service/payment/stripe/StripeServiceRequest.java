@@ -9,13 +9,13 @@ import java.util.Map;
 /**
  * @author Palmieri Ivan
  */
-public class ServiceRequestStripe {
+public class StripeServiceRequest {
 
     private static final String CUSTOMER = "customer";
     private static final String AMOUNT = "amount";
     private static boolean connected = false;
 
-    public ServiceRequestStripe() {
+    public StripeServiceRequest() {
         connection();
     }
 
@@ -27,7 +27,6 @@ public class ServiceRequestStripe {
     }
 
     private Customer register(String email, String number, String name) throws StripeException {
-
         Map<String, Object> card = new HashMap<>();
         card.put("number", number);
         card.put("exp_month", 11);

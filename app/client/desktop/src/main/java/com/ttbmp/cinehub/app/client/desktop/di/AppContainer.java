@@ -10,7 +10,7 @@ import com.ttbmp.cinehub.data.local.mock.*;
 import com.ttbmp.cinehub.service.authentication.MockAuthenticationService;
 import com.ttbmp.cinehub.service.email.mock.MockEmailService;
 import com.ttbmp.cinehub.service.movieinformation.movieapi.MovieApi;
-import com.ttbmp.cinehub.service.payment.stripe.StripeServicePaymentFacade;
+import com.ttbmp.cinehub.service.payment.stripe.StripeServicePayment;
 
 import java.util.function.Supplier;
 
@@ -31,9 +31,9 @@ public class AppContainer {
         dependencyFactoryMap.put(EmployeeRepository.class, MockEmployeeRepository::new);
         dependencyFactoryMap.put(AuthenticationService.class, MockAuthenticationService::new);
         dependencyFactoryMap.put(EmailService.class, MockEmailService::new);
-        dependencyFactoryMap.put(PaymentService.class, StripeServicePaymentFacade::new);
+        dependencyFactoryMap.put(PaymentService.class, StripeServicePayment::new);
         dependencyFactoryMap.put(MovieApiService.class, MovieApi::new);
-        dependencyFactoryMap.put(MovieRepository.class, MockMovieRepository::new);
+        dependencyFactoryMap.put(MovieRepository.class, () -> new MockMovieRepository(dependencyFactoryMap.get(MovieApiService.class).get()));
         dependencyFactoryMap.put(CinemaRepository.class, MockCinemaRepository::new);
         dependencyFactoryMap.put(SeatRepository.class, MockSeatRepository::new);
         dependencyFactoryMap.put(TimeRepository.class, MockTimeRepository::new);

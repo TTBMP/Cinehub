@@ -68,26 +68,25 @@ public class ChooseMovieViewController extends ViewController {
         bind();
         dateOfProjectionDatePicker.setValue(LocalDate.now());
         dateOfProjectionDatePicker.setDayCellFactory(CustomDateCell::new);
-        dateOfProjectionDatePicker.setOnAction(l->onDataChange());
+        dateOfProjectionDatePicker.setOnAction(l -> onDataChange());
         todayButton.setOnAction(a -> dateOfProjectionDatePicker.setValue(LocalDate.now()));
         previousButton.setOnAction(a -> dateOfProjectionDatePicker.setValue(dateOfProjectionDatePicker.getValue().minusDays(1)));
-        nextButton.setOnAction(a ->dateOfProjectionDatePicker.setValue(dateOfProjectionDatePicker.getValue().plusDays(1)));
+        nextButton.setOnAction(a -> dateOfProjectionDatePicker.setValue(dateOfProjectionDatePicker.getValue().plusDays(1)));
         previousButton.setDisable(true);
         confirmMovieButton.setOnAction(a -> {
-        activity.getUseCase(BuyTicketUseCase.class).getListCinema(
-                new GetListCinemaRequest(
-                        viewModel.selectedMovieProperty().getValue(),
-                        viewModel.selectedDateProperty().getValue().toString()
-                )
-        );
-        try {
-            navController.navigate(new NavDestination(new ChooseCinemaView()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            activity.getUseCase(BuyTicketUseCase.class).getListCinema(
+                    new GetListCinemaRequest(
+                            viewModel.selectedMovieProperty().getValue(),
+                            viewModel.selectedDateProperty().getValue().toString()
+                    )
+            );
+            try {
+                navController.navigate(new NavDestination(new ChooseCinemaView()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         });
-
 
 
     }
@@ -96,8 +95,6 @@ public class ChooseMovieViewController extends ViewController {
         activity.getUseCase(BuyTicketUseCase.class).getListMovie(new GetListMovieRequest(viewModel.selectedDateProperty().getValue()));
         previousButton.setDisable(viewModel.selectedDateProperty().getValue().equals(LocalDate.now()));
     }
-
-
 
 
     private void bind() {
