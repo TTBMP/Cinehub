@@ -8,8 +8,16 @@ import com.ttbmp.cinehub.core.dto.SeatDto;
 import javafx.geometry.Insets;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -48,11 +56,15 @@ public class SeatsMatrixViewController extends ViewController {
                 radioButton.setPadding(new Insets(5, 5, 5, 5));
                 radioButton.setText("" + a[j] + i + "\n" + seatDtoList.get(count).getPrice() + "\u20ac");
                 radioButton.setToggleGroup(toggleGroup);
-
+                ImageView imageView = new ImageView(new Image("https://image.flaticon.com/icons/png/128/4021/4021020.png"));
+                imageView.setFitWidth(25);
+                imageView.setFitHeight(25);
+                radioButton.setGraphic(imageView);
                 if (seatDtoList.get(count).getState().equals(Boolean.FALSE)) {
                     radioButton.setDisable(true);
                     buy++;
                 }
+
                 gridSeats.add(radioButton, i, j);
                 count++;
             }
@@ -71,6 +83,10 @@ public class SeatsMatrixViewController extends ViewController {
                 radioButton.setDisable(true);
                 buy++;
             }
+            ImageView imageView = new ImageView(new Image("https://image.flaticon.com/icons/png/128/4021/4021020.png"));
+            imageView.setFitWidth(25);
+            imageView.setFitHeight(25);
+            radioButton.setGraphic(imageView);
 
             gridSeats.add(radioButton, k, columns);
             count++;
