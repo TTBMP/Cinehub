@@ -8,15 +8,12 @@ public class Seat {
     private Long price;
     private Boolean state;
 
-
     public Seat(Long price, Boolean state) {
         this.price = price;
         this.state = state;
 
 
     }
-
-
     public Boolean getState() {
         return state;
     }

@@ -20,12 +20,6 @@ public class Employee extends User {
         this.cinema = cinema;
     }
 
-    public int getWeeklyWorkingHours() {
-        return weeklyWorkingHours;
-    }
 
-    public void setWeeklyWorkingHours(int weeklyWorkingHours) {
-        this.weeklyWorkingHours = weeklyWorkingHours;
-    }
 
 }

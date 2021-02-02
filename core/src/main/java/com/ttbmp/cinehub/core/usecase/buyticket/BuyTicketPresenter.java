@@ -16,15 +16,9 @@ public interface BuyTicketPresenter {
 
     void presentCinemaList(GetListCinemaResponse response);
 
-    void presentTimeList(List<String> timeOfProjectionList);
-
     void presentSeatList(GetNumberOfSeatsResponse response);
 
-
     void setSelectedTicket(GetTicketBySeatsResponse response);
-
-
-    void presentProjection(SetProjectionResponse reponse);
 
     void presentPayNullRequest();
 
@@ -41,10 +35,6 @@ public interface BuyTicketPresenter {
     void presentGetTimeOfProjectionNullRequest();
 
     void presentInvalidGetTimeOfProjection(GetTimeOfProjectionRequest request);
-
-    void presentSetProjectionNullRequest();
-
-    void presentInvalidSetProjection(SetSelectedProjectionRequest request);
 
     void presentGetNumberOfSeatsNullRequest();
 

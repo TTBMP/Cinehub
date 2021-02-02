@@ -11,9 +11,9 @@ import java.util.List;
  */
 public class Projection {
 
-    private String startTime;
+    private final String startTime;
     private Cinema cinema;
-    private Hall hall;
+    private final Hall hall;
     private Movie movie;
     private List<Ticket> ticket = new ArrayList<>();
     private String date;
@@ -38,10 +38,6 @@ public class Projection {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
     public Cinema getCinema() {
         return cinema;
     }
@@ -52,10 +48,6 @@ public class Projection {
 
     public Hall getHall() {
         return hall;
-    }
-
-    public void setHall(Hall hall) {
-        this.hall = hall;
     }
 
     public Movie getMovie() {

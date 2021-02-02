@@ -8,10 +8,10 @@ import java.time.LocalTime;
  */
 public class ShiftDto {
 
-    private String employeeName;
+    private final String employeeName;
     private LocalDate date;
-    private LocalTime start;
-    private LocalTime end;
+    private final LocalTime start;
+    private final LocalTime end;
 
     public ShiftDto(String employeeName, LocalDate date, LocalTime start, LocalTime end) {
         this.employeeName = employeeName;
@@ -22,10 +22,6 @@ public class ShiftDto {
 
     public String getEmployeeName() {
         return employeeName;
-    }
-
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
     }
 
     public LocalDate getDate() {
@@ -40,16 +36,8 @@ public class ShiftDto {
         return start;
     }
 
-    public void setStart(LocalTime start) {
-        this.start = start;
-    }
-
     public LocalTime getEnd() {
         return end;
-    }
-
-    public void setEnd(LocalTime end) {
-        this.end = end;
     }
 
 }

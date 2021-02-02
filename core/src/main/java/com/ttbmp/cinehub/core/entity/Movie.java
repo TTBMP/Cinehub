@@ -40,14 +40,6 @@ public class Movie {
         this.imageUrl = imageUrl;
     }
 
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
     public String getOverview() {
         return overview;
     }

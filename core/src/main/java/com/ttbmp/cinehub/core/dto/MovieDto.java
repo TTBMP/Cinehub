@@ -7,7 +7,6 @@ package com.ttbmp.cinehub.core.dto;
 public class MovieDto {
     private String name;
     private String vote;
-    private String duration;
     private String overview;
     private String releases;
     private String movieUrl;
@@ -32,14 +31,6 @@ public class MovieDto {
 
     public void setVote(String vote) {
         this.vote = vote;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
     }
 
     public String getOverview() {

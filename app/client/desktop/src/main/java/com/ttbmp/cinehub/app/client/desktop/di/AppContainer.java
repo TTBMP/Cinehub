@@ -35,9 +35,6 @@ public class AppContainer {
         dependencyFactoryMap.put(MovieApiService.class, MovieApi::new);
         dependencyFactoryMap.put(MovieRepository.class, () -> new MockMovieRepository(dependencyFactoryMap.get(MovieApiService.class).get()));
         dependencyFactoryMap.put(CinemaRepository.class, MockCinemaRepository::new);
-        dependencyFactoryMap.put(SeatRepository.class, MockSeatRepository::new);
-        dependencyFactoryMap.put(TimeRepository.class, MockTimeRepository::new);
-        dependencyFactoryMap.put(HallRepository.class, MockHallRepository::new);
         dependencyFactoryMap.put(ProjectionRepository.class, MockProjectionRepository::new);
 
 

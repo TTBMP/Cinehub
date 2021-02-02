@@ -9,9 +9,9 @@ import java.util.List;
  */
 public class ProjectionDto {
 
-    private String startTime;
+    private final String startTime;
     private CinemaDto cinemaDto;
-    private HallDto hallDto;
+    private final HallDto hallDto;
     private MovieDto movieDto;
     private List<TicketDto> ticketBasicList;
     private String date;
@@ -24,13 +24,18 @@ public class ProjectionDto {
         this.date = date;
     }
 
+    public List<TicketDto> getTicketBasicList() {
+        return ticketBasicList;
+    }
+
+    public void setTicketBasicList(List<TicketDto> ticketBasicList) {
+        this.ticketBasicList = ticketBasicList;
+    }
+
     public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
 
     public CinemaDto getCinemaDto() {
         return cinemaDto;
@@ -44,24 +49,12 @@ public class ProjectionDto {
         return hallDto;
     }
 
-    public void setHallDto(HallDto hallDto) {
-        this.hallDto = hallDto;
-    }
-
     public MovieDto getMovieDto() {
         return movieDto;
     }
 
     public void setMovieDto(MovieDto movieDto) {
         this.movieDto = movieDto;
-    }
-
-    public List<TicketDto> getTicketBasicList() {
-        return ticketBasicList;
-    }
-
-    public void setTicketBasicList(List<TicketDto> ticketBasicList) {
-        this.ticketBasicList = ticketBasicList;
     }
 
     public String getDate() {
