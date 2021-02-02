@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.SpinnerStartV
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.core.dto.EmployeeDto;
 import com.ttbmp.cinehub.core.dto.HallDto;
+import com.ttbmp.cinehub.core.dto.UsherDto;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.CreateShiftRequest;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetHallListRequest;
@@ -78,7 +79,7 @@ public class ModifyShiftViewController extends ViewController {
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
         errorHBox.setVisible(false);
 
-        if (viewModel.getSelectedShift().getEmployee().getRole().equals("maschera")) {
+        if (viewModel.getSelectedShift().getEmployee() instanceof UsherDto) {
             hallLabel.setVisible(false);
             hallComboBox.setVisible(false);
         } else {

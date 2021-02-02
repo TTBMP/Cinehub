@@ -16,47 +16,47 @@ import java.util.stream.Collectors;
  */
 public class MockShiftRepository implements ShiftRepository {
 
-    private final List<Shift> shiftList;
+    private final List<Shift> shiftList = new ArrayList<>();
 
     public MockShiftRepository() {
         String s = "Comunale";
         String s1 = "MultiPlex";
-        Employee employee1 = new Projectionist("ciao", "bella", "proiezionista", new Cinema(s), 0);
-        Employee employee2 = new Usher("fabio", "buracchi", "maschera", new Cinema(s1), 0);
-        Employee employee3 = new Projectionist("Massimo", "Mazzetti", "proiezionista", new Cinema(s1), 0);
-        Employee employee4 = new Usher("Ivan", "Palmieri", "maschera", new Cinema(s), 0);
+        Employee employee1 = new Projectionist("ciao", "bella", new Cinema(s), 0);
+        Employee employee2 = new Usher("fabio", "buracchi",  new Cinema(s1), 0);
+        Employee employee3 = new Projectionist("Massimo", "Mazzetti",  new Cinema(s1), 0);
+        Employee employee4 = new Usher("Ivan", "Palmieri",  new Cinema(s), 0);
 
         Hall hall = new Hall("1", new Cinema(s));
-        Hall hall2 = new Hall("1", new Cinema(s1));
-        shiftList = new ArrayList<>();
+        Hall hall2 = new Hall("2", new Cinema(s1));
+
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 5; j++) {
                 shiftList.addAll(Arrays.asList(
                         new ShiftProjectionist(
                                 employee1,
                                 LocalDate.now().plusWeeks(i).plusDays(j).toString(),
-                                LocalTime.now().withSecond(0).withNano(0).toString(),
-                                LocalTime.now().plusHours(2).withSecond(0).withNano(0).toString(),
+                                LocalTime.now().minusHours(2).withSecond(0).withNano(0).toString(),
+                                LocalTime.now().plusHours(0).withSecond(0).withNano(0).toString(),
                                 hall
                         ),
                         new ShiftUsher(
                                 employee2,
                                 LocalDate.now().minusWeeks(i).plusDays(j).toString(),
-                                LocalTime.now().withSecond(0).withNano(0).toString(),
-                                LocalTime.now().plusHours(2).withSecond(0).withNano(0).toString()
+                                LocalTime.now().minusHours(2).withSecond(0).withNano(0).toString(),
+                                LocalTime.now().plusHours(0).withSecond(0).withNano(0).toString()
                         ),
                         new ShiftProjectionist(
                                 employee3,
                                 LocalDate.now().plusWeeks(i).plusDays(j).toString(),
-                                LocalTime.now().withSecond(0).withNano(0).toString(),
-                                LocalTime.now().plusHours(2).withSecond(0).withNano(0).toString(),
+                                LocalTime.now().minusHours(2).withSecond(0).withNano(0).toString(),
+                                LocalTime.now().plusHours(0).withSecond(0).withNano(0).toString(),
                                 hall2
                         ),
                         new ShiftUsher(
                                 employee4,
                                 LocalDate.now().minusWeeks(i).plusDays(j).toString(),
-                                LocalTime.now().withSecond(0).withNano(0).toString(),
-                                LocalTime.now().plusHours(2).withSecond(0).withNano(0).toString()
+                                LocalTime.now().minusHours(2).withSecond(0).withNano(0).toString(),
+                                LocalTime.now().plusHours(0).withSecond(0).withNano(0).toString()
                         )
                 ));
             }
@@ -77,7 +77,6 @@ public class MockShiftRepository implements ShiftRepository {
         return new Result<>(shift);
     }
 
-
     @Override
     public Result<List<Shift>> getShiftList() {
         return new Result<>(shiftList);
@@ -93,19 +92,14 @@ public class MockShiftRepository implements ShiftRepository {
         for (Shift elem : shiftList) {
             start = LocalTime.parse(elem.getStart());
             end = LocalTime.parse(elem.getEnd());
-
             if (elem.getDate().equals(shift.getDate())
                     && (newStart.isBefore(end)
                     && newEnd.isAfter(start))
                     && shift.getEmployee().equals(elem.getEmployee())) {
-
                 return new Result<>(false);
-
             }
-
         }
         shiftList.add(shift);
         return new Result<>(true);
     }
-
 }

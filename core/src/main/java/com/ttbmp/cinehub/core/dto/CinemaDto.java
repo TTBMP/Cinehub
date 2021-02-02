@@ -34,7 +34,6 @@ public class CinemaDto {
         CinemaDto other = (CinemaDto) obj;
         return this.name.equals(other.name);
     }
-
     @Override
     public int hashCode() {
         /* ... */

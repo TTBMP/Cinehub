@@ -8,14 +8,13 @@ public class EmployeeDto {
 
     private String name;
     private String surname;
-    private String role;
+
 
     private CinemaDto cinema;
 
-    public EmployeeDto(String name, String surname, String role, CinemaDto cinema) {
+    public EmployeeDto(String name, String surname, CinemaDto cinema) {
         this.name = name;
         this.surname = surname;
-        this.role = role;
         this.cinema = cinema;
     }
 
@@ -33,14 +32,6 @@ public class EmployeeDto {
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
     public CinemaDto getCinema() {
@@ -62,7 +53,6 @@ public class EmployeeDto {
         EmployeeDto other = (EmployeeDto) obj;
         return this.getName().equals(other.getName())
                 && this.getSurname().equals(other.getSurname())
-                && this.getRole().equals(other.getRole())
                 && this.getCinema().equals(other.getCinema());
     }
 

@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.core.usecase.manageemployeesshift.request;
 
 import com.ttbmp.cinehub.core.dto.EmployeeDto;
 import com.ttbmp.cinehub.core.dto.HallDto;
+import com.ttbmp.cinehub.core.dto.ProjectionistDto;
 import com.ttbmp.cinehub.core.usecase.Request;
 
 import java.time.LocalDate;
@@ -90,7 +91,7 @@ public class CreateShiftRequest extends Request {
         if (end == null) {
             addError(MISSING_END);
         }
-        if (hall == null && employee.getRole().equals("proiezionista")) {
+        if (hall == null && employee instanceof ProjectionistDto) {
             addError(MISSING_HALL);
         }
     }

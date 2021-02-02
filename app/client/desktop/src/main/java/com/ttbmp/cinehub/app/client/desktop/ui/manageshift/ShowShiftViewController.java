@@ -35,7 +35,6 @@ public class ShowShiftViewController extends ViewController {
     @FXML
     private AppBarViewController appBarController;
 
-
     @FXML
     private ComboBox<CinemaDto> cinemaComboBox;
 
@@ -105,5 +104,4 @@ public class ShowShiftViewController extends ViewController {
         shiftTableView.setItems(viewModel.getEmployeeShiftWeekList());
         viewModel.getEmployeeShiftWeekList().addListener((InvalidationListener) l -> shiftTableView.refresh());
     }
-
 }

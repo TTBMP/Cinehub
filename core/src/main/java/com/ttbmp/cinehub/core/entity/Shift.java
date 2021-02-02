@@ -4,7 +4,7 @@ package com.ttbmp.cinehub.core.entity;
  * @author Fabio Buracchi, Massimo Mazzetti
  */
 public class Shift {
-    private Employee employee;
+     private Employee employee;
     private String date;
     private String start;
     private String end;
@@ -68,4 +68,25 @@ public class Shift {
         this.end = end;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        Shift elem = (Shift) obj;
+
+        return this.getEmployee().equals(elem.getEmployee())
+                && this.getDate().equals(elem.getDate())
+                && this.getStart().equals(elem.getStart())
+                && this.getEnd().equals(elem.getEnd())
+                && this.getHall().equals(elem.getHall());
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }

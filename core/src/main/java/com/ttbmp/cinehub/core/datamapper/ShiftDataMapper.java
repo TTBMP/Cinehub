@@ -3,9 +3,11 @@ package com.ttbmp.cinehub.core.datamapper;
 import com.ttbmp.cinehub.core.dto.ShiftDto;
 import com.ttbmp.cinehub.core.dto.ShiftProjectionistDto;
 import com.ttbmp.cinehub.core.dto.ShiftUsherDto;
+import com.ttbmp.cinehub.core.dto.UsherDto;
 import com.ttbmp.cinehub.core.entity.Shift;
 import com.ttbmp.cinehub.core.entity.ShiftProjectionist;
 import com.ttbmp.cinehub.core.entity.ShiftUsher;
+import com.ttbmp.cinehub.core.entity.Usher;
 import com.ttbmp.cinehub.core.utilities.DataMapperHelper;
 
 import java.time.LocalDate;
@@ -24,7 +26,7 @@ public class ShiftDataMapper {
 
     public static ShiftDto mapToDto(Shift shift) {
         Objects.requireNonNull(shift);
-        if (shift.getEmployee().getRole().equals("maschera")) {
+        if (shift.getEmployee() instanceof Usher) {
             return new ShiftUsherDto(
                     EmployeeDataMapper.mapToDto(shift.getEmployee()),
                     LocalDate.parse(shift.getDate()),
@@ -44,7 +46,7 @@ public class ShiftDataMapper {
 
     public static Shift mapToEntity(ShiftDto shiftDto) {
         Objects.requireNonNull(shiftDto);
-        if (shiftDto.getEmployee().getRole().equals("maschera"))
+        if (shiftDto.getEmployee() instanceof UsherDto)
             return new ShiftUsher(
                     EmployeeDataMapper.matToEntity(shiftDto.getEmployee()),
                     shiftDto.getDate().toString(),

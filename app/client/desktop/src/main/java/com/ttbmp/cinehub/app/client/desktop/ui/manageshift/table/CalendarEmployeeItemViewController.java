@@ -44,7 +44,7 @@ public class CalendarEmployeeItemViewController extends ViewController {
 
         nameLabel.setText(employee.getName());
         surnameLabel.setText(employee.getSurname());
-        roleLabel.setText(employee.getRole());
+        roleLabel.setText(employee.getClass().toString());
     }
 
 

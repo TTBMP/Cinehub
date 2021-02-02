@@ -8,6 +8,7 @@ import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.SpinnerStartV
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.core.dto.EmployeeDto;
 import com.ttbmp.cinehub.core.dto.HallDto;
+import com.ttbmp.cinehub.core.dto.UsherDto;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.CreateShiftRequest;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetHallListRequest;
@@ -32,12 +33,6 @@ import java.util.ResourceBundle;
 public class AssignShiftViewController extends ViewController {
 
     private ManageEmployeesShiftViewModel viewModel;
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private ComboBox<HallDto> hallComboBox;
@@ -80,7 +75,7 @@ public class AssignShiftViewController extends ViewController {
 
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
 
-        if (viewModel.getSelectedDayWeek().getEmployee().getRole().equals("maschera")) {
+        if (viewModel.getSelectedDayWeek().getEmployee() instanceof UsherDto) {
             hallLabel.setVisible(false);
             hallComboBox.setVisible(false);
         } else {

@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavController;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavDestination;
 import com.ttbmp.cinehub.core.dto.ShiftDto;
+import com.ttbmp.cinehub.core.dto.UsherDto;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -43,7 +44,7 @@ public class ShiftItemViewController extends ViewController {
     protected void onLoad() {
         ManageEmployeesShiftViewModel viewModel;
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
-        if (shift.getEmployee().getRole().equals("maschera")) {
+        if (shift.getEmployee() instanceof UsherDto) {
             shiftHBox.setStyle("-fx-background-color: #FFFF00;");
         }
 

@@ -1,6 +1,8 @@
 package com.ttbmp.cinehub.core.datamapper;
 
 import com.ttbmp.cinehub.core.dto.EmployeeDto;
+import com.ttbmp.cinehub.core.dto.ProjectionistDto;
+import com.ttbmp.cinehub.core.dto.UsherDto;
 import com.ttbmp.cinehub.core.entity.Employee;
 import com.ttbmp.cinehub.core.entity.Projectionist;
 import com.ttbmp.cinehub.core.entity.Usher;
@@ -17,24 +19,28 @@ public class EmployeeDataMapper {
     }
 
     public static EmployeeDto mapToDto(Employee employee) {
-        return new EmployeeDto(
-                employee.getName(),
-                employee.getSurname(),
-                employee.getRole(),
-                CinemaDataMapper.mapToDto(employee.getCinema()));
+        if(employee instanceof Usher) {
+            return new UsherDto(
+                    employee.getName(),
+                    employee.getSurname(),
+                    CinemaDataMapper.mapToDto(employee.getCinema()));
+        }else{
+            return new ProjectionistDto(
+                    employee.getName(),
+                    employee.getSurname(),
+                    CinemaDataMapper.mapToDto(employee.getCinema()));
+        }
     }
 
     public static Employee matToEntity(EmployeeDto employeeDto) {
-        if (employeeDto.getRole().equals("maschera")) {
+        if (employeeDto instanceof UsherDto) {
             return new Usher(employeeDto.getName(),
                     employeeDto.getSurname(),
-                    employeeDto.getRole(),
                     CinemaDataMapper.matToEntity(employeeDto.getCinema()),
                     0);
         } else {
             return new Projectionist(employeeDto.getName(),
                     employeeDto.getSurname(),
-                    employeeDto.getRole(),
                     CinemaDataMapper.matToEntity(employeeDto.getCinema()),
                     0);
         }

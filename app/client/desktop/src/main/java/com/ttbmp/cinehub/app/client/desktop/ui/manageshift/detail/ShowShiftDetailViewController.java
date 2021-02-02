@@ -4,6 +4,7 @@ import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.ManageEmployeesShiftV
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.modify.ModifyShiftView;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavDestination;
+import com.ttbmp.cinehub.core.dto.UsherDto;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.ShiftRequest;
 import javafx.fxml.FXML;
@@ -59,7 +60,7 @@ public class ShowShiftDetailViewController extends ViewController {
         ManageEmployeesShiftViewModel viewModel;
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
         new ManageEmployeesShiftViewModel();
-        if (viewModel.getSelectedShift().getEmployee().getRole().equals("maschera")) {
+        if (viewModel.getSelectedShift().getEmployee() instanceof UsherDto) {
             hallLabel.setVisible(false);
             hallLabelText.setVisible(false);
         } else {

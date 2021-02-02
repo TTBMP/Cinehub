@@ -5,6 +5,7 @@ import com.ttbmp.cinehub.core.datamapper.EmployeeDataMapper;
 import com.ttbmp.cinehub.core.datamapper.HallDataMapper;
 import com.ttbmp.cinehub.core.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.core.dto.ShiftDto;
+import com.ttbmp.cinehub.core.dto.UsherDto;
 import com.ttbmp.cinehub.core.entity.Employee;
 import com.ttbmp.cinehub.core.entity.Shift;
 import com.ttbmp.cinehub.core.repository.CinemaRepository;
@@ -126,10 +127,11 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
     }
 
 
+
     public void createShift(ShiftRepeatRequest request, LocalDate date, List<ShiftDto> shiftDtoList) {
         ShiftDto shiftDto;
 
-        if (request.getShift().getEmployee().getRole().equals("maschera")) {
+        if (request.getShift().getEmployee() instanceof UsherDto) {
             shiftDto = new ShiftDto(request.getShift().getEmployee(),
                     date,
                     request.getShift().getStart(),

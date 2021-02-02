@@ -64,7 +64,7 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
         selectedShiftDate.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getDate().toString()));
         selectedShiftStart.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getStart().toString()));
         selectedShiftEnd.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEnd().toString()));
-        selectedShiftRole.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEmployee().getRole()));
+        selectedShiftRole.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEmployee().getClass().getCanonicalName()));
         selectedShiftHall.bind(ObjectBindings.map(selectedShift, shiftDto -> {
             if (shiftDto.getHall() != null)
                 return shiftDto.getHall().getNum();

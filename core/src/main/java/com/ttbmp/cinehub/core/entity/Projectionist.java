@@ -4,8 +4,8 @@ import com.ttbmp.cinehub.core.ShiftFactory;
 
 public class Projectionist extends Employee {
 
-    public Projectionist(String name, String surname, String role, Cinema cinema, int weeklyWorkingHours) {
-        super(name, surname, role, cinema, weeklyWorkingHours);
+    public Projectionist(String name, String surname, Cinema cinema, int weeklyWorkingHours) {
+        super(name, surname, cinema, weeklyWorkingHours);
     }
 
     @Override
@@ -16,5 +16,24 @@ public class Projectionist extends Employee {
         return shift;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        Employee other = (Employee) obj;
+        return this.getName().equals(other.getName())
+                && this.getSurname().equals(other.getSurname())
+                && this.getCinema().equals(other.getCinema())
+                && this.getWeeklyWorkingHours() == other.getWeeklyWorkingHours();
+    }
 
+    @Override
+    public int hashCode() {
+        /* ... */
+        return 0;
+    }
 }

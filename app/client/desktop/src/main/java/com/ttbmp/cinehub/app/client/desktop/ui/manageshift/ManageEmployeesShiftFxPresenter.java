@@ -57,7 +57,6 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     public void presentSaveShift(Result<ShiftResponse> shift) {
         Shift savedShift = ShiftDataMapper.mapToEntity(shift.getValue().getShiftDto());
         TemporalField temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
-
         viewModel.getEmployeeShiftWeekList().setAll(viewModel.getEmployeeShiftWeekList().stream()
                 .peek(e -> {
                     if (EmployeeDataMapper.matToEntity(e.getEmployeeDto()).equals(savedShift.getEmployee())
