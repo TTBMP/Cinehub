@@ -8,7 +8,6 @@ import java.util.List;
 public class HallDto {
 
     private Integer id;
-    private List<ProjectionDto> projectionList;
     private List<SeatDto> seatList;
 
     public HallDto(Integer id) {
@@ -21,14 +20,6 @@ public class HallDto {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public List<ProjectionDto> getProjectionList() {
-        return projectionList;
-    }
-
-    public void setProjectionList(List<ProjectionDto> projectionList) {
-        this.projectionList = projectionList;
     }
 
     public List<SeatDto> getSeatList() {

@@ -32,20 +32,12 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
         viewModel.getCinemaList().setAll(response.getCinemaList());
     }
 
-    @Override
-    public void presentTimeList(List<String> timeOfProjectionList) {
-        viewModel.getTimeOfProjectionList().setAll(timeOfProjectionList);
-    }
 
     @Override
     public void presentSeatList(GetNumberOfSeatsResponse response) {
         viewModel.getSeatList().setAll(response.getSeatDtoList());
     }
 
-    @Override
-    public void presentProjection(SetProjectionResponse response) {
-        viewModel.selectedProjectionProperty().setValue(response.getProjectionDto());
-    }
 
 
     @Override
@@ -118,24 +110,6 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
         }
     }
 
-    @Override
-    public void presentSetProjectionNullRequest() {
-        viewModel.movieErrorProperty().setValue("Error with operation SetProjection");
-
-    }
-
-    @Override
-    public void presentInvalidSetProjection(SetSelectedProjectionRequest request) {
-        if (request.getErrorList().contains(SetSelectedProjectionRequest.MISSING_CINEMA_ERROR)) {
-            viewModel.cinemaErrorProperty().setValue(SetSelectedProjectionRequest.MISSING_CINEMA_ERROR.getMessage());
-        }
-        if (request.getErrorList().contains(SetSelectedProjectionRequest.MISSING_MOVIE_ERROR)) {
-            viewModel.cinemaErrorProperty().setValue(SetSelectedProjectionRequest.MISSING_MOVIE_ERROR.getMessage());
-        }
-        if (request.getErrorList().contains(SetSelectedProjectionRequest.MISSING_TIME_ERROR)) {
-            viewModel.cinemaErrorProperty().setValue(SetSelectedProjectionRequest.MISSING_TIME_ERROR.getMessage());
-        }
-    }
 
     @Override
     public void presentGetNumberOfSeatsNullRequest() {

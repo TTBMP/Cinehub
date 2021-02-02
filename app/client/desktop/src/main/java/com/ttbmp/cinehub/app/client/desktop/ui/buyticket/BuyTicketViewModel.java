@@ -35,7 +35,6 @@ public class BuyTicketViewModel implements ViewModel {
     private final ObservableList<String> timeOfProjectionList = FXCollections.observableArrayList();
     private final ObjectProperty<TicketDto> selectedTicket = new SimpleObjectProperty<>();
     private final ObjectProperty<MovieDto> selectedMovie = new SimpleObjectProperty<>();
-    private final ObjectProperty<String> selectedTime = new SimpleObjectProperty<>();
     private final StringProperty selectedSeats = new SimpleStringProperty();
     private final ObjectProperty<CinemaDto> selectedCinema = new SimpleObjectProperty<>();
     private final ObjectProperty<LocalDate> selectedDate = new SimpleObjectProperty<>();
@@ -67,9 +66,7 @@ public class BuyTicketViewModel implements ViewModel {
     private final BooleanProperty valueFalseForSeatState = new SimpleBooleanProperty(false);
     private final BooleanProperty valueTrueForSeatState = new SimpleBooleanProperty(true);
 
-    private final ObservableList<String> projectionTimeList = FXCollections.observableArrayList();
     private final ObservableList<ProjectionDto> projectionOfProjectionTimeList = FXCollections.observableArrayList();
-    private final BooleanProperty isConfirmButtonSeatsEnable = new SimpleBooleanProperty(false);
 
 
     public BuyTicketViewModel() {
@@ -83,8 +80,6 @@ public class BuyTicketViewModel implements ViewModel {
         selectedTicketPosition.bind(ObjectBindings.map(selectedTicket, TicketDto::getPosition));
         StringProperty selectedMovieRating = new SimpleStringProperty();
         selectedMovieRating.bind(ObjectBindings.map(selectedMovie, MovieDto::getVote));
-        StringProperty selectedMovieDuration = new SimpleStringProperty();
-        selectedMovieDuration.bind(ObjectBindings.map(selectedMovie, MovieDto::getDuration));
         StringProperty selectedMovieOverview = new SimpleStringProperty();
         selectedMovieOverview.bind(ObjectBindings.map(selectedMovie, MovieDto::getOverview));
         StringProperty selectedMovieReleased = new SimpleStringProperty();
@@ -94,13 +89,7 @@ public class BuyTicketViewModel implements ViewModel {
 
     }
 
-    public BooleanProperty isConfirmButtonSeatsEnableProperty() {
-        return isConfirmButtonSeatsEnable;
-    }
 
-    public ObservableList<String> getProjectionTimeList() {
-        return projectionTimeList;
-    }
 
     public ObservableList<ProjectionDto> getProjectionOfProjectionTimeList() {
         return projectionOfProjectionTimeList;
@@ -179,9 +168,6 @@ public class BuyTicketViewModel implements ViewModel {
     }
 
 
-    public ObjectProperty<String> selectedTimeProperty() {
-        return selectedTime;
-    }
 
     public ObjectProperty<LocalDate> selectedDateProperty() {
         return selectedDate;

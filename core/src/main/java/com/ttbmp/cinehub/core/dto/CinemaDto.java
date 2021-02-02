@@ -6,8 +6,8 @@ package com.ttbmp.cinehub.core.dto;
  */
 public class CinemaDto {
     private String name;
-    private String address;
-    private String city;
+    private final String address;
+    private final String city;
 
     public CinemaDto(String name, String address, String city) {
         this.name = name;
@@ -27,16 +27,9 @@ public class CinemaDto {
         return address;
     }
 
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+
 }

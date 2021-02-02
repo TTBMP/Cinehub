@@ -5,9 +5,9 @@ package com.ttbmp.cinehub.core.entity;
  */
 public class Shift {
 
-    private Employee employee;
+    private final Employee employee;
     private String date;
-    private String start;
+    private final String start;
     private String end;
 
     public Shift(Employee employee, String date, String start, String end) {
@@ -21,10 +21,6 @@ public class Shift {
         return employee;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
     public String getDate() {
         return date;
     }
@@ -35,10 +31,6 @@ public class Shift {
 
     public String getStart() {
         return start;
-    }
-
-    public void setStart(String start) {
-        this.start = start;
     }
 
     public String getEnd() {
