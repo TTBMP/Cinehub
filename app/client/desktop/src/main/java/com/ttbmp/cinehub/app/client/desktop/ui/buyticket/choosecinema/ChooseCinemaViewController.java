@@ -62,6 +62,7 @@ public class ChooseCinemaViewController extends ViewController {
         timeOfProjectionListView.setCellFactory(l-> new ChooseProjectionListCell(activity,navController));
         cancelButton.setOnAction(a -> {
             try {
+                timeOfProjectionListView.getItems().clear();
                 navController.navigate(new NavDestination(new ChooseMovieView()));
             } catch (IOException e) {
                 e.printStackTrace();

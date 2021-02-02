@@ -13,6 +13,7 @@ import java.util.List;
 public class MockCinemaRepository implements CinemaRepository {
 
     private final List<Cinema> cinemaList = new ArrayList<>();
+    private final List<Cinema> cinemaListByProjection = new ArrayList<>();
 
 
     @Override
@@ -48,8 +49,9 @@ public class MockCinemaRepository implements CinemaRepository {
         return cinemaList;
     }
 
+
     @Override
-    public List<Cinema> getCinema(Movie movie, String date) {
+    public List<Cinema> getListCinema(Movie movie, String date) {
         List<Cinema> listCinema = getAllCinemaList();
         for(Cinema cinema: listCinema){ /*sono n*/
             for(Hall hall: cinema.getHallList()){ /*sono n*/
@@ -63,6 +65,23 @@ public class MockCinemaRepository implements CinemaRepository {
             }
         }
         return listCinema;
+    }
+
+    @Override
+    public List<Cinema> getListCinema(List<Projection> projectionList) {
+        cinemaListByProjection.clear();
+        for (Projection projection : projectionList) {
+            cinemaListByProjection.add(projection.getCinema());
+        }
+        for (int i = 0; i < cinemaListByProjection.size(); i++) {
+            for (int j = i + 1; j < cinemaListByProjection.size(); j++) {
+                if (cinemaListByProjection.get(i).getName().equals(cinemaListByProjection.get(j).getName())) {
+                    cinemaListByProjection.remove(j);
+                    break;
+                }
+            }
+        }
+        return cinemaListByProjection;
     }
 
 

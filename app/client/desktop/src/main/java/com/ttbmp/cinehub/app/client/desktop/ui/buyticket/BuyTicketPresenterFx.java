@@ -158,9 +158,18 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentProjectionList(ProjectionListResponse response) {
-
-      //  viewModel.getProjectionTimeList().setAll(response.getProjectionDtoTime());
         viewModel.getProjectionOfProjectionTimeList().setAll(response.getProjectionDto());
+    }
+
+    @Override
+    public void presentGetListMovieNullRequest() {
+        viewModel.movieErrorProperty().setValue("Unable to recover movies by service");
+
+    }
+
+    @Override
+    public void presentInvalidGetListMovie(GetListMovieRequest request) {
+        viewModel.movieErrorProperty().setValue(GetListCinemaRequest.MISSING_MOVIE_ERROR.getMessage());
     }
 
 

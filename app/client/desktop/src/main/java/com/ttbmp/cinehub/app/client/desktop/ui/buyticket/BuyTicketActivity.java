@@ -41,10 +41,7 @@ public class BuyTicketActivity extends Activity {
                         movieApiService,
                         movieRepository,
                         cinemaRepository,
-                        timeRepository,
-                        seatRepository,
                         authenticationService,
-                        hallRepository,
                         projectionRepository,
                         userRepository
                 ));
