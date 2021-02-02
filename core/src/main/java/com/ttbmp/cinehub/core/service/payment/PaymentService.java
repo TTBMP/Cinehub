@@ -7,9 +7,8 @@ import com.ttbmp.cinehub.core.service.payment.request.PayServiceRequest;
  */
 public interface PaymentService {
 
-    boolean pay(PayServiceRequest payServiceRequest);
+    void pay(PayServiceRequest payServiceRequest) throws PaymentException;
 
-    String getError();
 
 
 }

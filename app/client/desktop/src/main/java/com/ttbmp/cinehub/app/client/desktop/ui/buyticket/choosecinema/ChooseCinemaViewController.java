@@ -11,7 +11,6 @@ import com.ttbmp.cinehub.core.dto.CinemaDto;
 import com.ttbmp.cinehub.core.dto.ProjectionDto;
 import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.core.usecase.buyticket.request.GetTimeOfProjectionRequest;
-import com.ttbmp.cinehub.core.usecase.buyticket.request.SetSelectedProjectionRequest;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -51,15 +50,16 @@ public class ChooseCinemaViewController extends ViewController {
     protected void onLoad() {
         appBarController.load(activity, navController);
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
+        viewModel.selectedProjectionProperty().setValue(null);
         confirmCinemaButton.disableProperty().bind(viewModel.selectedProjectionProperty().isNull());
         timeOfProjectionListView.getSelectionModel().selectedItemProperty().addListener(l ->
                 onTimeSelected());
-        cinemaListView.getSelectionModel().selectedItemProperty().addListener(l-> onCinemaItemClick());
+        cinemaListView.getSelectionModel().selectedItemProperty().addListener(l -> onCinemaItemClick());
         errorSectionLabel.textProperty().bind(viewModel.cinemaErrorProperty());
         viewModel.selectedCinemaProperty().bind(cinemaListView.getSelectionModel().selectedItemProperty());
         cinemaListView.setItems(viewModel.getCinemaList());
         cinemaListView.setCellFactory(listCinemaDto -> new ChooseCinemaListCell(activity, navController));//Cell Factory
-        timeOfProjectionListView.setCellFactory(l-> new ChooseProjectionListCell(activity,navController));
+        timeOfProjectionListView.setCellFactory(l -> new ChooseProjectionListCell(activity, navController));
         cancelButton.setOnAction(a -> {
             try {
                 timeOfProjectionListView.getItems().clear();
@@ -79,7 +79,7 @@ public class ChooseCinemaViewController extends ViewController {
     }
 
     private void onTimeSelected() {
-        if(timeOfProjectionListView.getSelectionModel().selectedItemProperty().getValue() != null){
+        if (timeOfProjectionListView.getSelectionModel().selectedItemProperty().getValue() != null) {
             viewModel.selectedProjectionProperty().setValue(timeOfProjectionListView.getSelectionModel().selectedItemProperty().getValue());
         }
     }

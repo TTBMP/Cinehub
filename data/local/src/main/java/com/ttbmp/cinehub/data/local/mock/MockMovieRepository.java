@@ -1,9 +1,13 @@
 package com.ttbmp.cinehub.data.local.mock;
 
+import com.ttbmp.cinehub.core.datamapper.MovieDataMapper;
 import com.ttbmp.cinehub.core.entity.Movie;
 import com.ttbmp.cinehub.core.entity.Projection;
 import com.ttbmp.cinehub.core.repository.MovieRepository;
+import com.ttbmp.cinehub.core.repository.ProjectionRepository;
+import com.ttbmp.cinehub.core.service.movie.MovieApiService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +15,13 @@ import java.util.List;
  * @author Palmieri Ivan
  */
 public class MockMovieRepository implements MovieRepository {
+
+     private MovieApiService movieApiService;
+
+    public MockMovieRepository(MovieApiService movieApiService){
+        this.movieApiService = movieApiService;
+    }
+
 
 
     @Override
@@ -32,6 +43,14 @@ public class MockMovieRepository implements MovieRepository {
             }
         }
         return result;
+    }
+
+    @Override
+    public List<Movie> getMovieList(String localDate) throws IOException {
+        ProjectionRepository projectionRepository = new MockProjectionRepository();
+        List<Movie> movieList = MovieDataMapper.mapToEntityList(movieApiService.getAllMovie());
+        List<Projection> projectionList = projectionRepository.getProjectionList(localDate);//I recover the projections on that date
+        return getMovieList(projectionList,movieList);
     }
 
 

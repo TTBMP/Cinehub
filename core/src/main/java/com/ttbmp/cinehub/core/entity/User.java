@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.core.entity;
 
-import com.ttbmp.cinehub.core.entity.ticket.component.TicketAbstract;
+import com.ttbmp.cinehub.core.entity.ticket.component.Ticket;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class User {
 
-    private final List<TicketAbstract> ownedTicketAbstract = new ArrayList<>();
+    private final List<Ticket> ownedTicket = new ArrayList<>();
     private Integer id;
     private String name;
     private String email;
@@ -31,8 +31,8 @@ public class User {
 
     }
 
-    public List<TicketAbstract> getOwnedTicket() {
-        return ownedTicketAbstract;
+    public List<Ticket> getOwnedTicket() {
+        return ownedTicket;
     }
 
     public int getId() {
@@ -43,8 +43,8 @@ public class User {
         this.id = id;
     }
 
-    public void addTicket(TicketAbstract ticketAbstract) {
-        this.ownedTicketAbstract.add(ticketAbstract);
+    public void addTicket(Ticket ticketAbstract) {
+        this.ownedTicket.add(ticketAbstract);
     }
 
     public String getName() {

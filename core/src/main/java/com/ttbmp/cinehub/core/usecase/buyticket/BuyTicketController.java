@@ -7,11 +7,15 @@ import com.ttbmp.cinehub.core.entity.ticket.component.TicketAbstract;
 import com.ttbmp.cinehub.core.entity.ticket.decorator.TicketFoldingArmchair;
 import com.ttbmp.cinehub.core.entity.ticket.decorator.TicketHeatedArmchair;
 import com.ttbmp.cinehub.core.entity.ticket.decorator.TicketSkipLine;
-import com.ttbmp.cinehub.core.repository.*;
+import com.ttbmp.cinehub.core.repository.CinemaRepository;
+import com.ttbmp.cinehub.core.repository.MovieRepository;
+import com.ttbmp.cinehub.core.repository.ProjectionRepository;
+import com.ttbmp.cinehub.core.repository.UserRepository;
 import com.ttbmp.cinehub.core.service.authentication.AuthenticationService;
 import com.ttbmp.cinehub.core.service.email.EmailService;
 import com.ttbmp.cinehub.core.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.core.service.movie.MovieApiService;
+import com.ttbmp.cinehub.core.service.payment.PaymentException;
 import com.ttbmp.cinehub.core.service.payment.PaymentService;
 import com.ttbmp.cinehub.core.service.payment.request.PayServiceRequest;
 import com.ttbmp.cinehub.core.usecase.Request;
@@ -28,19 +32,17 @@ public class BuyTicketController implements BuyTicketUseCase {
 
     private final PaymentService paymentService;
     private final EmailService emailService;
-    private final MovieApiService movieApiService;
-    private final  BuyTicketPresenter buyTicketPresenter;
+    private final BuyTicketPresenter buyTicketPresenter;
     private final MovieRepository movieRepository;
     private final CinemaRepository cinemaRepository;
     private final AuthenticationService authenticationService;
-    private final   ProjectionRepository projectionRepository;
-    private final  UserRepository userRepository;
+    private final ProjectionRepository projectionRepository;
+    private final UserRepository userRepository;
 
 
     public BuyTicketController(PaymentService paymentService,
                                EmailService emailService,
                                BuyTicketPresenter buyTicketPresenter,
-                               MovieApiService movieApiService,
                                MovieRepository movieRepository,
                                CinemaRepository cinemaRepository,
                                AuthenticationService authenticationService,
@@ -49,7 +51,6 @@ public class BuyTicketController implements BuyTicketUseCase {
         this.paymentService = paymentService;
         this.emailService = emailService;
         this.buyTicketPresenter = buyTicketPresenter;
-        this.movieApiService = movieApiService;
         this.movieRepository = movieRepository;
         this.cinemaRepository = cinemaRepository;
         this.authenticationService = authenticationService;
@@ -57,7 +58,6 @@ public class BuyTicketController implements BuyTicketUseCase {
         this.userRepository = userRepository;
 
     }
-
 
 
     @Override
@@ -68,29 +68,29 @@ public class BuyTicketController implements BuyTicketUseCase {
             Ticket ticket = TicketDataMapper.mapToEntity(request.getTicket());
             Projection projection = ProjectionDataMapper.mapToEntity(request.getProjection());
             Integer index = request.getIndex();
-            if (paymentService.pay(new PayServiceRequest(
-                        user.getEmail(),
-                        user.getName(),
-                        user.getCard().getNumber(),
-                        ticket.getPrice()
-            ))) {
-                ticket.setState(true);
-                projection.addTicket(ticket);
-                projection.getHall().getSeatList().get(index).setState(false);
-                user.addTicket(ticket);
-                emailService.sendMail(new EmailServiceRequest(
-                        user.getEmail(),
-                        "Payment receipt"
-                ));
-                return true;
-            }
-            buyTicketPresenter.presentErrorByStripe(paymentService.getError());
-            return false;
+            paymentService.pay(new PayServiceRequest(
+                    user.getEmail(),
+                    user.getName(),
+                    user.getCard().getNumber(),
+                    ticket.getPrice()
+            ));
+            ticket.setState(true);
+            projection.addTicket(ticket);
+            projection.getHall().getSeatList().get(index).setState(false);
+            user.addTicket(ticket);
+            emailService.sendMail(new EmailServiceRequest(
+                    user.getEmail(),
+                    "Payment receipt"
+            ));
+            return true;
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentPayNullRequest();
             return false;
         } catch (Request.InvalidRequestException e) {
             buyTicketPresenter.presentInvalidPay(request);
+            return false;
+        } catch (PaymentException e) {
+            buyTicketPresenter.presentErrorByStripe(e);
             return false;
         }
     }
@@ -100,16 +100,14 @@ public class BuyTicketController implements BuyTicketUseCase {
         try {
             Request.validate(request);
             String localDate = request.getDate().toString();
-            List<Movie> movieApiList = MovieDataMapper.mapToEntityList(movieApiService.getAllMovie());//I recover them movies from the bee service
-            List<Projection> projectionList = projectionRepository.getProjectionList(localDate);//I recover the projections on that date
-            List<Movie> movieList = movieRepository.getMovieList(projectionList,movieApiList);
+            List<Movie> movieList = movieRepository.getMovieList(localDate);//I recover them movies from the bee service
             buyTicketPresenter.presentMovieApiList(new GetListMovieResponse(MovieDataMapper.mapToDtoList(movieList)));
-        } catch (IOException e) {
-            buyTicketPresenter.presentGetListMovie();
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetListMovieNullRequest();
         } catch (Request.InvalidRequestException e) {
             buyTicketPresenter.presentInvalidGetListMovie(request);
+        } catch (IOException e) {
+            buyTicketPresenter.presentGetListMovieError();
         }
     }
 
@@ -118,12 +116,9 @@ public class BuyTicketController implements BuyTicketUseCase {
     public void getListCinema(GetListCinemaRequest request) {
         try {
             Request.validate(request);
-
             Movie movie = MovieDataMapper.mapToEntity(request.getMovieDto());
             String date = request.getData();
-           // List<Cinema> list = cinemaRepository.getCinema(movie,date);
-            List<Projection> projectionList = projectionRepository.getProjectionList(movie,date);//I recover the projections of a specific film on a specific date
-            List<Cinema> cinemaList = cinemaRepository.getListCinema(projectionList);//I recover the cinemas from the projections
+            List<Cinema> cinemaList = cinemaRepository.getListCinema(movie, date);
             buyTicketPresenter.presentCinemaList(new GetListCinemaResponse(CinemaDataMapper.mapToDtoList(cinemaList)));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetListCinemaNullRequest();
@@ -142,6 +137,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             Integer pos = request.getPos();
             String position = request.getPosition();
             Seat selectedSeats = seats.get(pos);
+
             /*DECORATOR PATTERN GOF*/
             TicketAbstract ticketAbstract = new Ticket(selectedSeats.getPrice());
             ticketAbstract.increasePrice();
@@ -158,6 +154,7 @@ public class BuyTicketController implements BuyTicketUseCase {
                 ticketAbstract.setPrice(ticketAbstract.increasePrice());
             }
             /*-----------------------------------------*/
+
             ticketAbstract.setPosition(position);
             buyTicketPresenter.setSelectedTicket(new GetTicketBySeatsResponse(TicketDataMapper.mapToDto(ticketAbstract)));
         } catch (Request.NullRequestException e) {

@@ -5,8 +5,8 @@ package com.ttbmp.cinehub.core.entity;
  */
 public class Seat {
 
-   private Long price;
-   private Boolean state;
+    private Long price;
+    private Boolean state;
 
 
     public Seat(Long price, Boolean state) {

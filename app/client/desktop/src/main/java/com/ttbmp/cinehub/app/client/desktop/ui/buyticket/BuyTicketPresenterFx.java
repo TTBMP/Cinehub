@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.buyticket;
 
 
+import com.ttbmp.cinehub.core.service.payment.PaymentException;
 import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketPresenter;
 import com.ttbmp.cinehub.core.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.core.usecase.buyticket.response.*;
@@ -147,13 +148,13 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentGetListMovie() {
+    public void presentGetListMovieError() {
         viewModel.movieErrorProperty().setValue("Unable to recover movies by service");
     }
 
     @Override
-    public void presentErrorByStripe(String error) {
-        viewModel.paymentErrorProperty().setValue(error);
+    public void presentErrorByStripe(PaymentException error) {
+        viewModel.paymentErrorProperty().setValue(error.getMessage());
     }
 
     @Override
