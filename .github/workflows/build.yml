@@ -28,25 +28,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Verify Mysql connection
+      - name: Setup database
+        run: |
+          mysqladmin -h"127.0.0.1" -P"$PORT" --version
+          mysqladmin -h"127.0.0.1" -P"$PORT" < ./data/local/src/main/resources/cinemadb.sql
+          mysqladmin -h"127.0.0.1" -P"$PORT" -e 'call popola();' cinemadb
         env:
           PORT: ${{ job.services.mysql.ports[3306] }}
-        run: |
-          while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
-          sleep 1
-          done
-          mysql --version
-          mysqladmin --version -h"127.0.0.1" -P"$PORT"
       - name: Setup Java JDK
         uses: actions/setup-java@v1.4.3
         with:
           java-version: 11
-      - name: Grant execute permission for setup_database.sh
-        run: chmod +x setup_database.sh
-      - name: Setup Databse
-        run: sudo ./setup_database.sh
-        env:
-          DB_PORT: ${{ job.services.mysql.ports[3306] }}
       - name: Setup Chrome Driver
         uses: nanasess/setup-chromedriver@v1.0.1
       - name: Grant execute permission for gradlew
