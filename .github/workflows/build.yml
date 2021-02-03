@@ -26,9 +26,10 @@ jobs:
       selenium-hub:
         image: selenium/hub:latest
       chrome:
-        image: selenium/node-chrome-debug:latest
-        volumes:
-          - /dev/shm:/dev/shm
+        image: selenium/node-chrome:latest
+        env:
+          HUB_HOST: selenium-hub
+          HUB_PORT: 4444
 
     steps:
       - uses: actions/checkout@v2
@@ -47,6 +48,6 @@ jobs:
       - name: Build with Gradle
         run: |
           ./gradlew :app:client:web:run &
-          xvfb-run --server-args=\"-screen 0 1024x768x24\" ./gradlew build
+          ./gradlew build
       - name: Sonarqube scan
         run: ./gradlew sonarqube
