@@ -30,9 +30,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup database
         run: |
-          mysqladmin -h"127.0.0.1" -P"$PORT" --version
-          docker exec -i mysql sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"' < ./data/local/src/main/resources/cinemadb.sql
-          mysqladmin -h"127.0.0.1" -P"$PORT" -e 'call popola();' cinemadb
+          mysql -Tv -h mysql -P $PORT --protocol=tcp -u admin -padmin < ./data/local/src/main/resources/cinemadb.sql
         env:
           PORT: ${{ job.services.mysql.ports[3306] }}
       - name: Setup Java JDK
