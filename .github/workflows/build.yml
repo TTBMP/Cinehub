@@ -15,22 +15,28 @@ jobs:
       mysql:
         image: mysql:latest
         ports:
-          - 3306
+          - 3306:3306
         env:
           MYSQL_USER: admin
           MYSQL_PASSWORD: admin
           MYSQL_ROOT_PASSWORD: admin
-        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
 
     steps:
       - uses: actions/checkout@v2
-      - name: Verify MariaDB connection
+      - name: Verify Mysql connection
         env:
           PORT: ${{ job.services.mysql.ports[3306] }}
         run: |
           while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
           sleep 1
           done
+          mysql --version
+          mysqladmin --version
       - name: Setup Java JDK
         uses: actions/setup-java@v1.4.3
         with:
