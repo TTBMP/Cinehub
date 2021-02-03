@@ -11,6 +11,14 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+        ports:
+          - 3306
+
     steps:
       - uses: actions/checkout@v2
       - name: Setup Java JDK
@@ -19,18 +27,13 @@ jobs:
           java-version: 11
       - name: Grant execute permission for setup_database.sh
         run: chmod +x setup_database.sh
-      - name: Setup MySQL
-        uses: mirromutth/mysql-action@v1.1
-        with:
-          host port: 3306
-          container port: 3306
-          character set server: 'utf8mb4'
-          collation server: 'utf8mb4_general_ci'
-          mysql version: '8.0.23'
-          mysql user: 'admin'
-          mysql password: 'admin'
-      - name: Setup database
-        run: ./setup_database.sh
+      - name: Setup Databse
+        run: |
+          mysql --version
+          mysql < ./data/local/src/main/resources/cinemadb.sql
+          mysql -e 'call popola();' cinemadb
+        env:
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
       - name: Setup Chrome Driver
         uses: nanasess/setup-chromedriver@v1.0.1
       - name: Grant execute permission for gradlew
@@ -42,5 +45,7 @@ jobs:
           sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
           ./gradlew :app:client:web:run &
           ./gradlew build
+        env:
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
       - name: Sonarqube scan
         run: ./gradlew sonarqube
