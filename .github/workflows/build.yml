@@ -14,7 +14,7 @@ jobs:
     container: ubuntu
 
     services:
-      mysql:
+      dbtest:
         image: mysql:8.0.23
         env:
           MYSQL_ROOT_PASSWORD: password
@@ -37,8 +37,8 @@ jobs:
         run: |
           apt-get update
           apt-get install -y mysql-client
-          mysql --host mysql -uroot -ppassword < ./data/local/src/main/resources/cinemadb.sql
-          mysql --host mysql -uroot -ppassword -e 'call popola();' cinemadb
+          mysql --host dbtest -uroot -ppassword < ./data/local/src/main/resources/cinemadb.sql
+          mysql --host dbtest -uroot -ppassword -e 'call popola();' cinemadb
       - name: Setup Java JDK
         uses: actions/setup-java@v1.4.3
         with:
