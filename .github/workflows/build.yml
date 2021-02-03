@@ -24,11 +24,11 @@ jobs:
         with:
           host port: 3306
           container port: 3306
-          character set server: utf8mb4
-          collation server: utf8mb4_general_ci
-          mysql version: latest
-          mysql user: admin
-          mysql password: admin
+          character set server: 'utf8mb4'
+          collation server: 'utf8mb4_general_ci'
+          mysql version: '8.0.23'
+          mysql user: 'admin'
+          mysql password: 'admin'
       - name: Setup database
         run: ./setup_database.sh
       - name: Setup Chrome Driver
