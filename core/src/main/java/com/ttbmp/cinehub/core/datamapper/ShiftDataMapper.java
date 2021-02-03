@@ -59,7 +59,7 @@ public class ShiftDataMapper {
                     shiftDto.getDate().toString(),
                     shiftDto.getStart().toString(),
                     shiftDto.getEnd().toString(),
-                    HallDataMapper.matToEntity(shiftDto.getHall())
+                    HallDataMapper.mapToEntity(shiftDto.getHall())
             );
     }
 

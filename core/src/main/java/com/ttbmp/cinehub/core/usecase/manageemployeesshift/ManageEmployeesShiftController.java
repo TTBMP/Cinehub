@@ -78,7 +78,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
 
     @Override
     public void getHallList(GetHallListRequest request) {
-        manageEmployeesShiftPresenter.presentHallList(new Result<>(new GetHallListResponse(HallDataMapper.mapToDtoList(hallRepository.getCinemaHallList(CinemaDataMapper.matToEntity(request.getCinema()))))));
+        manageEmployeesShiftPresenter.presentHallList(new Result<>(new GetHallListResponse(HallDataMapper.mapToDtoList(hallRepository.getCinemaHallList(CinemaDataMapper.mapToEntity(request.getCinema()))))));
     }
 
     @Override
@@ -122,10 +122,9 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         String date = request.getDate().toString();
         String start = request.getStart().toString();
         String end = request.getEnd().toString();
-        Shift shift = employee.createShift(date, start, end, HallDataMapper.matToEntity(request.getHall()));
+        Shift shift = employee.createShift(date, start, end, HallDataMapper.mapToEntity(request.getHall()));
         manageEmployeesShiftPresenter.presentCreateShift(new Result<>(new CreateShiftResponse(ShiftDataMapper.mapToDto(shift))));
     }
-
 
 
     public void createShift(ShiftRepeatRequest request, LocalDate date, List<ShiftDto> shiftDtoList) {

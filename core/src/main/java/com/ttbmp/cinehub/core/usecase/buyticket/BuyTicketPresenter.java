@@ -4,8 +4,6 @@ import com.ttbmp.cinehub.core.service.payment.PaymentException;
 import com.ttbmp.cinehub.core.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.core.usecase.buyticket.response.*;
 
-import java.util.List;
-
 /**
  * @author Palmieri Ivan
  */

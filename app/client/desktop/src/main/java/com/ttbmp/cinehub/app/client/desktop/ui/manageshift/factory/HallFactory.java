@@ -22,7 +22,7 @@ public class HallFactory extends ListCell<HallDto> {
         if (item == null || empty) {
             setGraphic(null);
         } else {
-            setText(item.getNum());
+            setText(item.getId().toString());
         }
     }
 

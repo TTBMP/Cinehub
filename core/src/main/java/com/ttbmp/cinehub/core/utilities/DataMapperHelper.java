@@ -14,9 +14,12 @@ public class DataMapperHelper {
     }
 
     public static <I, O> List<O> mapList(List<I> input, Function<I, O> mapElement) {
-        return input.stream()
-                .map(mapElement)
-                .collect(Collectors.toList());
+        if (input != null) {
+            return input.stream()
+                    .map(mapElement)
+                    .collect(Collectors.toList());
+        }
+        return null;
     }
 
 }

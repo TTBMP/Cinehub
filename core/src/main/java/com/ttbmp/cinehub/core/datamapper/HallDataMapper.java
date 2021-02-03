@@ -7,27 +7,20 @@ import com.ttbmp.cinehub.core.utilities.DataMapperHelper;
 import java.util.List;
 
 /**
- * @author Massimo Mazzetti
+ * @author Massimo Mazzetti, Ivan Palmieri
  */
-
 public class HallDataMapper {
 
     private HallDataMapper() {
     }
 
     public static HallDto mapToDto(Hall hall) {
-        return new HallDto(
-                hall.getNum(),
-                CinemaDataMapper.mapToDto(hall.getCinema())
-        );
+        return new HallDto(hall.getId(), SeatDataMapper.mapToDtoList(hall.getSeatList()));
     }
 
-    public static Hall matToEntity(HallDto hallDto) {
+    public static Hall mapToEntity(HallDto hallDto) {
         if (hallDto != null) {
-            return new Hall(
-                    hallDto.getNum(),
-                    CinemaDataMapper.matToEntity(hallDto.getCinema())
-            );
+            return new Hall(hallDto.getId(), SeatDataMapper.mapToEntityList(hallDto.getSeatList()));
         }
         return null;
     }
@@ -37,6 +30,7 @@ public class HallDataMapper {
     }
 
     public static List<Hall> mapToEntityList(List<HallDto> hallListDto) {
-        return DataMapperHelper.mapList(hallListDto, HallDataMapper::matToEntity);
+        return DataMapperHelper.mapList(hallListDto, HallDataMapper::mapToEntity);
     }
+
 }

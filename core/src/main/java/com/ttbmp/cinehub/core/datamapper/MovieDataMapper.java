@@ -15,16 +15,17 @@ public class MovieDataMapper {
     }
 
     public static MovieDto mapToDto(Movie movie) {
-        MovieDto movieDto = new MovieDto(movie.getName());
-        movieDto.setOverview(movie.getOverview());
+        MovieDto movieDto = new MovieDto(movie.getId(), movie.getName(), movie.getVote(), movie.getOverview(), movie.getOverview(), movie.getImageUrl());
+        /*movieDto.setOverview(movie.getOverview());
         movieDto.setReleases(movie.getRelases());
         movieDto.setVote(movie.getVote());
-        movieDto.setMovieUrl(movie.getImageUrl());
+        movieDto.setMovieUrl(movie.getImageUrl());*/
         return movieDto;
     }
 
     public static Movie mapToEntity(MovieDto movieDto) {
-        Movie movie = new Movie(movieDto.getName());
+        Movie movie = new Movie(movieDto.getId());
+        movie.setName(movieDto.getName());
         movie.setOverview(movieDto.getOverview());
         movie.setRelases(movieDto.getReleases());
         movie.setVote(movieDto.getVote());

@@ -1,37 +1,38 @@
 package com.ttbmp.cinehub.core.entity;
 
+import java.util.List;
+
 /**
- * @author Massimo Mazzetti
+ * @author Palmieri Ivan
  */
-
 public class Hall {
-    private String num;
-    private Cinema cinema;
 
-    public Hall() {
+    private Integer id;
+    private List<Seat> seatList;
 
+
+    public Hall(Integer id, List<Seat> seatList) {
+        this.id = id;
+        this.seatList = seatList;
     }
 
-    public Hall(String num, Cinema cinema) {
-        this.num = num;
-        this.cinema = cinema;
+    public Integer getId() {
+        return id;
     }
 
-    public Cinema getCinema() {
-        return cinema;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setCinema(Cinema cinema) {
-        this.cinema = cinema;
+
+    public List<Seat> getSeatList() {
+        return seatList;
     }
 
-    public String getNum() {
-        return num;
+    public void setSeatList(List<Seat> seatList) {
+        this.seatList = seatList;
     }
 
-    public void setNum(String num) {
-        this.num = num;
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -43,13 +44,13 @@ public class Hall {
         }
         Hall elem = (Hall) obj;
 
-        return this.getNum().equals(elem.getNum()) &&
-                this.getCinema().equals(elem.getCinema());
+        return this.getId().equals(elem.getId())
+                && this.getSeatList().equals(elem.getSeatList());
     }
 
     @Override
     public int hashCode() {
-
         return 0;
     }
+
 }

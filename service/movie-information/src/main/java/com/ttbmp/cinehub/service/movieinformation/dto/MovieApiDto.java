@@ -5,20 +5,28 @@ package com.ttbmp.cinehub.service.movieinformation.dto;
  * @author Palmieri Ivan
  */
 public class MovieApiDto {
-    private final String movieName;
+    private int id;
+    private String movieName;
     private String movieVote;
     private String movieImageUrl;
     private String movieOverview;
     private String movieReleases;
 
-    public MovieApiDto(String movieName) {
-        this.movieName = movieName;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMovieName() {
         return movieName;
     }
 
+    public void setMovieName(String movieName) {
+        this.movieName = movieName;
+    }
 
     public String getMovieVote() {
         return movieVote;

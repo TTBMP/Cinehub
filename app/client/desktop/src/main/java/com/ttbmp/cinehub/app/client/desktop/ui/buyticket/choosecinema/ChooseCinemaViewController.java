@@ -93,6 +93,7 @@ public class ChooseCinemaViewController extends ViewController {
                             viewModel.selectedDateProperty().getValue()
                     )
             );
+
             timeOfProjectionListView.setItems(viewModel.getProjectionOfProjectionTimeList());
         }
     }

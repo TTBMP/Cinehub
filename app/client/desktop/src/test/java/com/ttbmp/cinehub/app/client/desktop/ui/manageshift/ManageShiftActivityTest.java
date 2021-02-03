@@ -1,8 +1,10 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.manageshift;
 
 
-import com.ttbmp.cinehub.core.dto.*;
-
+import com.ttbmp.cinehub.core.dto.CinemaDto;
+import com.ttbmp.cinehub.core.dto.ShiftDto;
+import com.ttbmp.cinehub.core.dto.ShiftUsherDto;
+import com.ttbmp.cinehub.core.dto.UsherDto;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.*;
 import org.junit.jupiter.api.Test;
@@ -11,7 +13,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ManageShiftActivityTest {
 
@@ -21,13 +23,13 @@ class ManageShiftActivityTest {
         ManageEmployeesShiftUseCase useCase = manageShiftActivity.getUseCase(ManageEmployeesShiftUseCase.class);
         ManageEmployeesShiftViewModel viewModel = manageShiftActivity.getViewModel(ManageEmployeesShiftViewModel.class);
 
-        boolean result = useCase.saveShift(new ShiftRequest(new ShiftDto(new UsherDto("fabio", "buracchi",  new CinemaDto("MultiPlex")),
+        boolean result = useCase.saveShift(new ShiftRequest(new ShiftDto(new UsherDto("fabio", "buracchi", new CinemaDto("MultiPlex")),
                 LocalDate.now(),
                 LocalTime.now(),
                 LocalTime.now().plusHours(2)
-                )));
+        )));
         assertEquals(result, false);
-        boolean result2 = useCase.saveShift(new ShiftRequest(new ShiftDto(new UsherDto("fabio", "buracchi",  new CinemaDto("MultiPlex")),
+        boolean result2 = useCase.saveShift(new ShiftRequest(new ShiftDto(new UsherDto("fabio", "buracchi", new CinemaDto("MultiPlex")),
                 LocalDate.now().plusWeeks(1),
                 LocalTime.now(),
                 LocalTime.now().plusHours(2)
@@ -43,15 +45,15 @@ class ManageShiftActivityTest {
         ManageEmployeesShiftViewModel viewModel = manageShiftActivity.getViewModel(ManageEmployeesShiftViewModel.class);
 
         viewModel.setSelectedWeek(LocalDate.now());
-        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(),new CinemaDto("MultiPlex")));
+        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), new CinemaDto("MultiPlex")));
 
-        useCase.deleteShift(new ShiftRequest(new ShiftDto(new UsherDto("fabio", "buracchi",  new CinemaDto("MultiPlex"))
+        useCase.deleteShift(new ShiftRequest(new ShiftDto(new UsherDto("fabio", "buracchi", new CinemaDto("MultiPlex"))
                 , LocalDate.now()
                 , LocalTime.now(),
                 LocalTime.now().plusHours(2))));
         assertEquals(viewModel.getEmployeeShiftWeekList().get(1).getWeekMap().size(), 7);
 
-        useCase.deleteShift(new ShiftRequest(new ShiftDto(new UsherDto("fabio", "buracchi",  new CinemaDto("MultiPlex"))
+        useCase.deleteShift(new ShiftRequest(new ShiftDto(new UsherDto("fabio", "buracchi", new CinemaDto("MultiPlex"))
                 , LocalDate.now().plusDays(1)
                 , LocalTime.now(),
                 LocalTime.now().plusHours(2))));
@@ -67,8 +69,8 @@ class ManageShiftActivityTest {
         ManageEmployeesShiftUseCase useCase = manageShiftActivity.getUseCase(ManageEmployeesShiftUseCase.class);
         ManageEmployeesShiftViewModel viewModel = manageShiftActivity.getViewModel(ManageEmployeesShiftViewModel.class);
 
-        UsherDto usher = new UsherDto("fabio", "buracchi",  new CinemaDto("MultiPlex"));
-        ShiftDto shiftDto = new ShiftDto(usher, LocalDate.now() , LocalTime.now().minusHours(1), LocalTime.now());
+        UsherDto usher = new UsherDto("fabio", "buracchi", new CinemaDto("MultiPlex"));
+        ShiftDto shiftDto = new ShiftDto(usher, LocalDate.now(), LocalTime.now().minusHours(1), LocalTime.now());
 
         useCase.createShift(new CreateShiftRequest(usher, LocalDate.now()
                 , LocalTime.now().minusHours(1),
@@ -96,14 +98,14 @@ class ManageShiftActivityTest {
         ManageEmployeesShiftViewModel viewModel = manageShiftActivity.getViewModel(ManageEmployeesShiftViewModel.class);
 
         viewModel.setSelectedWeek(LocalDate.now());
-        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(),new CinemaDto("MultiPlex")));
+        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), new CinemaDto("MultiPlex")));
 
-        ShiftDto shiftDto = new ShiftUsherDto(new UsherDto("fabio", "buracchi",  new CinemaDto("MultiPlex")),
+        ShiftDto shiftDto = new ShiftUsherDto(new UsherDto("fabio", "buracchi", new CinemaDto("MultiPlex")),
                 LocalDate.now(),
                 LocalTime.now(),
                 LocalTime.now().plusMinutes(5));
 
-        useCase.saveRepeatedShift(new ShiftRepeatRequest(LocalDate.now(), LocalDate.now().plusWeeks(2), "EVERY_DAY" , shiftDto));
+        useCase.saveRepeatedShift(new ShiftRepeatRequest(LocalDate.now(), LocalDate.now().plusWeeks(2), "EVERY_DAY", shiftDto));
         assertEquals(viewModel.getEmployeeShiftWeekList().size(), 2);
 
     }

@@ -14,7 +14,6 @@ import com.ttbmp.cinehub.core.repository.UserRepository;
 import com.ttbmp.cinehub.core.service.authentication.AuthenticationService;
 import com.ttbmp.cinehub.core.service.email.EmailService;
 import com.ttbmp.cinehub.core.service.email.EmailServiceRequest;
-import com.ttbmp.cinehub.core.service.movie.MovieApiService;
 import com.ttbmp.cinehub.core.service.payment.PaymentException;
 import com.ttbmp.cinehub.core.service.payment.PaymentService;
 import com.ttbmp.cinehub.core.service.payment.request.PayServiceRequest;

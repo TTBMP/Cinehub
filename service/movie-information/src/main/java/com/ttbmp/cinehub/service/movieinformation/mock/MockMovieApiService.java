@@ -21,6 +21,10 @@ public class MockMovieApiService implements MovieApiService {
         return new ArrayList<>();
     }
 
+    @Override
+    public MovieDto getMovie(int movieId) throws IOException {
+        return null;
+    }
 
 
 }

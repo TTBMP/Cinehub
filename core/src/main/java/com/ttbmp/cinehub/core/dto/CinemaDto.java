@@ -1,18 +1,35 @@
 package com.ttbmp.cinehub.core.dto;
 
+import java.util.List;
+
 /**
- * @author Massimo Mazzetti
+ * @author Palmieri Ivan
  */
-
 public class CinemaDto {
-
+    private final String address;
+    private final String city;
+    private final List<HallDto> halList;
+    private int id;
     private String name;
 
-    public CinemaDto() {
+    public CinemaDto(int id, String name, String address, String city, List<HallDto> halList) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.city = city;
+        this.halList = halList;
     }
 
-    public CinemaDto(String name) {
-        this.name = name;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<HallDto> getHalList() {
+        return halList;
     }
 
     public String getName() {
@@ -21,6 +38,14 @@ public class CinemaDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getCity() {
+        return city;
     }
 
     @Override
@@ -34,9 +59,11 @@ public class CinemaDto {
         CinemaDto other = (CinemaDto) obj;
         return this.name.equals(other.name);
     }
+
     @Override
     public int hashCode() {
         /* ... */
         return 0;
     }
+
 }

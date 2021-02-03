@@ -76,5 +76,5 @@ public class ShiftDto {
     public void setHall(HallDto hall) {
         this.hall = hall;
     }
-    
+
 }

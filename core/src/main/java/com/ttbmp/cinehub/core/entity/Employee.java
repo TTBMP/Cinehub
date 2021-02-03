@@ -5,7 +5,6 @@ package com.ttbmp.cinehub.core.entity;
  */
 public abstract class Employee extends User {
 
-
     private Cinema cinema;
 
     protected Employee() {
@@ -36,7 +35,6 @@ public abstract class Employee extends User {
         if (this.getClass() != obj.getClass()) {
             return false;
         }
-
         Employee other = (Employee) obj;
         return this.getName().equals(other.getName())
                 && this.getSurname().equals(other.getSurname())

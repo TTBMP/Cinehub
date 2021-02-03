@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.core.dto;
 
-public class UsherDto extends  EmployeeDto{
+public class UsherDto extends EmployeeDto {
     public UsherDto(String name, String surname, CinemaDto cinema) {
         super(name, surname, cinema);
     }

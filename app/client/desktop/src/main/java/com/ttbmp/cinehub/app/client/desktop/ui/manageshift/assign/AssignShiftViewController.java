@@ -21,10 +21,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ResourceBundle;
 
 /**
  * @author Massimo Mazzetti
@@ -79,6 +77,7 @@ public class AssignShiftViewController extends ViewController {
             hallLabel.setVisible(false);
             hallComboBox.setVisible(false);
         } else {
+
             activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(viewModel.getSelectedDayWeek().getEmployee().getCinema()));
             hallComboBox.setItems(viewModel.getHallList());
             viewModel.selectedHallProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());

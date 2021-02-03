@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class MockUserRepository implements UserRepository {
 
-    List<User> userList = Arrays.asList(
+    private static final List<User> userList = Arrays.asList(
             new User(
                     "Ivan",
                     "palm@5934.c",
@@ -25,7 +25,6 @@ public class MockUserRepository implements UserRepository {
                     new CreditCard("22/24", 354, "4242424242424242", "5496")
             )
     );
-
 
     @Override
     public Result<User> getUser(int userId) {

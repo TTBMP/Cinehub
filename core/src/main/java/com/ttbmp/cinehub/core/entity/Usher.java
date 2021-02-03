@@ -15,6 +15,7 @@ public class Usher extends Employee {
         shift = shiftFactory.createShiftUsher(this, date, start, end);
         return shift;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

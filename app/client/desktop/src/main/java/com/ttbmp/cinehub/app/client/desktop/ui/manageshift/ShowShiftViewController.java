@@ -83,11 +83,13 @@ public class ShowShiftViewController extends ViewController {
 
         periodDatePicker.setOnAction(a -> {
             if (cinemaComboBox.getValue() != null) {
+
                 activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(new GetShiftListRequest(periodDatePicker.getValue(), cinemaComboBox.getValue()));
             }
         });
         cinemaComboBox.setOnAction(a -> {
             if (periodDatePicker.getValue() != null) {
+
                 activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(new GetShiftListRequest(periodDatePicker.getValue(), cinemaComboBox.getValue()));
             }
         });

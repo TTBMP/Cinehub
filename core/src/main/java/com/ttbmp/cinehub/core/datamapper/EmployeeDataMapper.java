@@ -19,12 +19,12 @@ public class EmployeeDataMapper {
     }
 
     public static EmployeeDto mapToDto(Employee employee) {
-        if(employee instanceof Usher) {
+        if (employee instanceof Usher) {
             return new UsherDto(
                     employee.getName(),
                     employee.getSurname(),
                     CinemaDataMapper.mapToDto(employee.getCinema()));
-        }else{
+        } else {
             return new ProjectionistDto(
                     employee.getName(),
                     employee.getSurname(),
@@ -36,11 +36,11 @@ public class EmployeeDataMapper {
         if (employeeDto instanceof UsherDto) {
             return new Usher(employeeDto.getName(),
                     employeeDto.getSurname(),
-                    CinemaDataMapper.matToEntity(employeeDto.getCinema()));
+                    CinemaDataMapper.mapToEntity(employeeDto.getCinema()));
         } else {
             return new Projectionist(employeeDto.getName(),
                     employeeDto.getSurname(),
-                    CinemaDataMapper.matToEntity(employeeDto.getCinema()));
+                    CinemaDataMapper.mapToEntity(employeeDto.getCinema()));
         }
 
     }

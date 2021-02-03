@@ -1,36 +1,38 @@
 package com.ttbmp.cinehub.core.dto;
 
-/**
- * @author Massimo Mazzetti
- */
+import java.util.List;
 
+/**
+ * @author Palmieri Ivan
+ */
 public class HallDto {
 
-    private String num;
-    private CinemaDto cinema;
+    private Integer id;
+    private List<SeatDto> seatList;
 
-    public HallDto() {
-
+    public HallDto(Integer id) {
+        this.id = id;
     }
 
-    public HallDto(String num, CinemaDto cinema) {
-        this.num = num;
-        this.cinema = cinema;
+    public HallDto(Integer id, List<SeatDto> seatList) {
+        this.id = id;
+        this.seatList = seatList;
     }
 
-    public CinemaDto getCinema() {
-        return cinema;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCinema(CinemaDto cinema) {
-        this.cinema = cinema;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getNum() {
-        return num;
+    public List<SeatDto> getSeatList() {
+        return seatList;
     }
 
-    public void setNum(String num) {
-        this.num = num;
+    public void setSeatList(List<SeatDto> seatList) {
+        this.seatList = seatList;
     }
+
 }

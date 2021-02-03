@@ -14,6 +14,7 @@ public class Seat {
 
 
     }
+
     public Boolean getState() {
         return state;
     }
@@ -30,4 +31,26 @@ public class Seat {
     public void setPrice(Long price) {
         this.price = price;
     }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        Seat elem = (Seat) obj;
+
+        return this.getState().equals(elem.getState())
+                && this.getPrice().equals(elem.getPrice());
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
+
 }
