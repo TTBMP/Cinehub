@@ -32,6 +32,8 @@ jobs:
           apt-get install -y mysql-client
           mysql --host mysql -uroot -ppassword < ./data/local/src/main/resources/cinemadb.sql
           mysql --host mysql -uroot -ppassword -e 'call popola();' cinemadb
+      - name: Setup Chrome web driver
+        run: sudo apt-get install google-chrome-stable
       - name: Setup Java JDK
         uses: actions/setup-java@v1.4.3
         with:
@@ -41,6 +43,6 @@ jobs:
       - name: Build with Gradle
         run: |
           ./gradlew :app:client:web:run &
-          ./gradlew build
+          xvfb-run --server-args=\"-screen 0 1024x768x24\" ./gradlew build
       - name: Sonarqube scan
         run: ./gradlew sonarqube
