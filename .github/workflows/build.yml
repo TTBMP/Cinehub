@@ -13,7 +13,7 @@ jobs:
 
     services:
       mysql:
-        image: mysql:latest
+        image: mysql:8.0.23
         ports:
           - 3306:3306
         env:
@@ -31,7 +31,7 @@ jobs:
       - name: Setup database
         run: |
           mysqladmin -h"127.0.0.1" -P"$PORT" --version
-          mysqladmin -h"127.0.0.1" -P"$PORT" < ./data/local/src/main/resources/cinemadb.sql
+          docker exec -i mysql sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"' < ./data/local/src/main/resources/cinemadb.sql
           mysqladmin -h"127.0.0.1" -P"$PORT" -e 'call popola();' cinemadb
         env:
           PORT: ${{ job.services.mysql.ports[3306] }}
