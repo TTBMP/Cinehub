@@ -28,12 +28,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Shutdown Ubuntu MySQL (SUDO)
+        run: sudo service mysql stop
       - name: Setup database
         run: |
-          mysql -h mysql -P $PORT --protocol=tcp -u admin -padmin --version
-          mysql -h mysql -P $PORT --protocol=tcp -u admin -padmin < ./data/local/src/main/resources/cinemadb.sql
+          mysql -h $HOST -P $PORT -u $MYSQL_USER -p$MYSQL_ROOT_PASSWORD --version
+          mysql -h $HOST -P $PORT -u $MYSQL_USER -p$MYSQL_ROOT_PASSWORD < ./data/local/src/main/resources/cinemadb.sql
         env:
           PORT: ${{ job.services.mysql.ports[3306] }}
+          HOST: ${{ job.services.mysql.network }}
       - name: Setup Java JDK
         uses: actions/setup-java@v1.4.3
         with:
