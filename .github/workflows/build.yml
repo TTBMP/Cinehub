@@ -18,7 +18,7 @@ jobs:
         with:
           java-version: 11
       - name: Grant execute permission for setup_database.sh
-        run: chmod +x gradlew
+        run: chmod +x setup_database.sh
       - name: Setup database
         run: ./setup_database.sh
       - name: Setup Chrome Driver
