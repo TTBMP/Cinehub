@@ -17,25 +17,10 @@ jobs:
         uses: actions/setup-java@v1.4.3
         with:
           java-version: 11
-      - name: Shutdown Ubuntu MySQL (SUDO)
-        run: sudo service mysql stop
-      - name: Set up MySQL
-        uses: mirromutth/mysql-action@v1.1
-        with:
-          host port: 3306
-          container port: 3306
-          character set server: 'utf8mb4'
-          collation server: 'utf8mb4_general_ci'
-          mysql version: '8.0.23'
-          mysql user: 'admin'
-          mysql password: 'admin'
       - name: Grant execute permission for setup_database.sh
         run: chmod +x setup_database.sh
       - name: Setup Databse
-        run: |
-          mysql --version
-          mysql < ./data/local/src/main/resources/cinemadb.sql
-          mysql -e 'call popola();' cinemadb
+        run: sudo ./setup_database.sh
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
       - name: Setup Chrome Driver
