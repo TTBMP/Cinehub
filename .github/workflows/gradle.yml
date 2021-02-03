@@ -1,0 +1,38 @@
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master, dev ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Java JDK
+        uses: actions/setup-java@v1.4.3
+        with:
+          java-version: 11
+      - name: Setup MySQL
+        uses: mirromutth/mysql-action@v1.1
+      - name: Grant execute permission for setup_database.sh
+        run: chmod +x gradlew
+      - name: Setup database
+        run: ./setup_database.sh
+      - name: Setup Chrome Driver
+        uses: nanasess/setup-chromedriver@v1.0.1
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: |
+          export DISPLAY=:99
+          chromedriver --url-base=/wd/hub &
+          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
+          ./gradlew :app:client:web:run &
+          ./gradlew build
+      - name: Sonarqube scan
+        run: ./gradlew sonarqube
