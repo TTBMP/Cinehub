@@ -17,9 +17,7 @@ jobs:
       mysql:
         image: mysql:8.0.23
         env:
-          MYSQL_USER: admin
-          MYSQL_PASSWORD: admin
-          MYSQL_ROOT_PASSWORD: admin
+          MYSQL_ROOT_PASSWORD: password
         options: >-
           --health-cmd="mysqladmin ping"
           --health-interval=10s
@@ -32,7 +30,7 @@ jobs:
         run: |
           apt-get update
           apt-get install -y mysql-client
-          mysql --host mysql -uadmin -padmin < ./data/local/src/main/resources/cinemadb.sql
+          mysql --host mysql -uroot -ppassword < ./data/local/src/main/resources/cinemadb.sql
       - name: Setup Java JDK
         uses: actions/setup-java@v1.4.3
         with:
