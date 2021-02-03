@@ -11,20 +11,24 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
-        ports:
-          - 3306
-
     steps:
       - uses: actions/checkout@v2
       - name: Setup Java JDK
         uses: actions/setup-java@v1.4.3
         with:
           java-version: 11
+      - name: Shutdown Ubuntu MySQL (SUDO)
+        run: sudo service mysql stop
+      - name: Set up MySQL
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          host port: 3306
+          container port: 3306
+          character set server: 'utf8mb4'
+          collation server: 'utf8mb4_general_ci'
+          mysql version: '8.0.23'
+          mysql user: 'admin'
+          mysql password: 'admin'
       - name: Grant execute permission for setup_database.sh
         run: chmod +x setup_database.sh
       - name: Setup Databse
