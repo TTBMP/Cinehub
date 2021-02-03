@@ -31,7 +31,7 @@ class HomeControllerTest {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("http://selenium-hub:8080/home");
+        driver.get("http://localhost:8080/home");
 
         welcomeMessage = driver.findElement(By.xpath("//p"));
     }

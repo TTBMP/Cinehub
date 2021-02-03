@@ -9,7 +9,7 @@ import com.ttbmp.cinehub.data.local.utils.jdbc.exception.DataSourceMethodExcepti
  */
 @Database(
         version = 1,
-        url = "mysql://dbtest:3306/cinemadb",
+        url = "mysql://localhost:3306/cinemadb",
         user = "root",
         password = "password",
         timezone = "Europe/Rome",
