@@ -29,7 +29,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup database
-        run: mysql --host mysql -uadmin -padmin < ./data/local/src/main/resources/cinemadb.sql
+        run: |
+          apt-get update
+          apt-get install -y mysql-client
+          mysql --host mysql -uadmin -padmin < ./data/local/src/main/resources/cinemadb.sql
       - name: Setup Java JDK
         uses: actions/setup-java@v1.4.3
         with:
