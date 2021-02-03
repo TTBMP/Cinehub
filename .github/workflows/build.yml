@@ -23,6 +23,12 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
+      selenium-hub:
+        image: selenium/hub:latest
+      chrome:
+        image: selenium/node-chrome-debug:latest
+        volumes:
+          - /dev/shm:/dev/shm
 
     steps:
       - uses: actions/checkout@v2
@@ -32,11 +38,6 @@ jobs:
           apt-get install -y mysql-client
           mysql --host mysql -uroot -ppassword < ./data/local/src/main/resources/cinemadb.sql
           mysql --host mysql -uroot -ppassword -e 'call popola();' cinemadb
-      - name: Setup Chrome web driver
-        run: |
-          apt install wget
-          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          apt install ./google-chrome-stable_current_amd64.deb
       - name: Setup Java JDK
         uses: actions/setup-java@v1.4.3
         with:
