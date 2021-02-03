@@ -29,10 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Shutdown Ubuntu MySQL
-        run: |
-          sudo service mysql --version
-          sudo service mysql status
-          sudo service mysql stop
+        run: sudo service mysql stop
       - name: Setup database
         run: |
           mysql -h localhost -P $PORT -u $MYSQL_USER -p$MYSQL_ROOT_PASSWORD --version
