@@ -1,6 +1,6 @@
 # Cinehub
 
-[![Build Status](https://travis-ci.com/TTBMP/Cinehub.svg?branch=master)](https://travis-ci.com/TTBMP/Cinehub)
+![Build](https://github.com/TTBMP/Cinehub/workflows/Build/badge.svg)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=TTBMP_Cinehub&metric=ncloc)](https://sonarcloud.io/dashboard?id=TTBMP_Cinehub)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=TTBMP_Cinehub&metric=code_smells)](https://sonarcloud.io/dashboard?id=TTBMP_Cinehub)
 
