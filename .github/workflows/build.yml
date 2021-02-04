@@ -1,4 +1,4 @@
-name: Java CI with Gradle
+name: Build
 
 on:
   push:
@@ -8,9 +8,8 @@ on:
 
 jobs:
   build:
-
+    name: Build
     runs-on: ubuntu-latest
-
     services:
       mysql:
         image: mysql:8.0.23
@@ -23,9 +22,10 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
-
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Setup database
         run: |
           mysql --host 127.0.0.1 --port 3306 -uroot -ppassword -e "CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';"
@@ -39,9 +39,21 @@ jobs:
           java-version: 11
       - name: Setup Chrome driver
         uses: nanasess/setup-chromedriver@master
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Gradle packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Build with Gradle
+      - name: Build with Gradle and analyze with Sonarqube
         run: |
           ./gradlew assemble
           java -jar ./app/client/web/build/libs/web.jar &
@@ -49,5 +61,7 @@ jobs:
           chromedriver --url-base=/wd/hub &
           sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
           ./gradlew build -x :data:local:test
-      - name: Sonarqube scan
-        run: ./gradlew sonarqube
+          ./gradlew sonarqube
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
