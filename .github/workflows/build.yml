@@ -17,6 +17,8 @@ jobs:
         ports:
           - 3306:3306
         env:
+          MYSQL_USER: admin
+          MYSQL_PASSWORD: admin
           MYSQL_ROOT_PASSWORD: password
         options: >-
           --health-cmd="mysqladmin ping"
@@ -43,7 +45,7 @@ jobs:
           export DISPLAY=:99
           chromedriver --url-base=/wd/hub &
           sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
-          ./gradlew :app:client:web:run &
-          ./gradlew build
+          ./gradlew :app:client:web:run --parallel &
+          ./gradlew build --parallel
       - name: Sonarqube scan
         run: ./gradlew sonarqube

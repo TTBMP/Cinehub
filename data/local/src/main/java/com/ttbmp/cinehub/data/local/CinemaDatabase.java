@@ -10,8 +10,8 @@ import com.ttbmp.cinehub.data.local.utils.jdbc.exception.DataSourceMethodExcepti
 @Database(
         version = 1,
         url = "mysql://localhost:3306/cinemadb",
-        user = "root",
-        password = "password",
+        user = "admin",
+        password = "admin",
         timezone = "Europe/Rome",
         driverClassName = "com.mysql.cj.jdbc.Driver",
         entities = {
