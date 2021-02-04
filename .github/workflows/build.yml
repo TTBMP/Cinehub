@@ -40,13 +40,13 @@ jobs:
       - name: Setup Chrome driver
         uses: nanasess/setup-chromedriver@master
       - name: Cache SonarCloud packages
-        uses: actions/cache@v1
+        uses: actions/cache@v2.1.3
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache Gradle packages
-        uses: actions/cache@v1
+        uses: actions/cache@v2.1.3
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
