@@ -44,8 +44,7 @@ jobs:
       - name: Build with Gradle
         run: |
           ./gradlew assemble
-          chmod +x ./app/client/web/build/scripts/web
-          ./app/client/web/build/scripts/web
+          java -jar ./app/client/web/build/libs/web.jar &
           export DISPLAY=:99
           chromedriver --url-base=/wd/hub &
           sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
