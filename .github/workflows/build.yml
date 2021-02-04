@@ -12,13 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mysql:
-        image: mysql:8.0.23
+        image: mysql:latest
         ports:
           - 3306:3306
         env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: cinemadb
           MYSQL_USER: admin
           MYSQL_PASSWORD: admin
-          MYSQL_ROOT_PASSWORD: password
         options: >-
           --health-cmd="mysqladmin ping"
           --health-interval=10s
@@ -30,11 +31,8 @@ jobs:
           fetch-depth: 0
       - name: Setup database
         run: |
-          mysql --host 127.0.0.1 --port 3306 -uroot -ppassword -e "CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';"
-          mysql --host 127.0.0.1 --port 3306 -uroot -ppassword -e "GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost';"
-          mysql --host 127.0.0.1 --port 3306 -uroot -ppassword -e "FLUSH PRIVILEGES;"
-          mysql --host 127.0.0.1 --port 3306 -uroot -ppassword < ./data/local/src/main/resources/cinemadb.sql
-          mysql --host 127.0.0.1 --port 3306 -uroot -ppassword -e 'call popola();' cinemadb
+          mysql --host 127.0.0.1 --port 3306 -uroot < ./data/local/src/main/resources/cinemadb.sql
+          mysql --host 127.0.0.1 --port 3306 -uroot -e 'call popola();' cinemadb
       - name: Setup Java JDK
         uses: actions/setup-java@v1.4.3
         with:
