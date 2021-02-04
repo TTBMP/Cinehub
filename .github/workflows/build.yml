@@ -16,6 +16,8 @@ jobs:
         ports:
           - 3306:3306
         env:
+          MYSQL_USER: admin
+          MYSQL_PASSWORD: admin
           MYSQL_ROOT_PASSWORD: password
         options: >-
           --health-cmd="mysqladmin ping"
