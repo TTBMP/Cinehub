@@ -57,6 +57,7 @@ jobs:
         run: |
           ./gradlew assemble
           java -jar ./app/client/web/build/libs/web.jar &
+          export DISPLAY=:99
           chromedriver --url-base=/wd/hub &
           ./gradlew build -x :data:local:test
           ./gradlew sonarqube
