@@ -14,6 +14,7 @@ public class CalendarShiftItemView extends FxmlView {
 
     public CalendarShiftItemView() throws IOException {
         super("calendar_shift_item_massimo.fxml");
+        addStylesheet("styles.css");
 
     }
 

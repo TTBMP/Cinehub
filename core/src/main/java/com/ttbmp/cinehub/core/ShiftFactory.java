@@ -1,16 +1,29 @@
 package com.ttbmp.cinehub.core;
 
-import com.ttbmp.cinehub.core.entity.Employee;
-import com.ttbmp.cinehub.core.entity.Hall;
+import com.ttbmp.cinehub.core.entity.Shift;
+import com.ttbmp.cinehub.core.entity.ShiftProjectionist;
+import com.ttbmp.cinehub.core.entity.ShiftUsher;
 
 
 public class ShiftFactory {
 
-    public ConcreteAbstractShiftProjectionist createShiftProjectionist(Employee employee, String date, String start, String end, Hall hall) {
-        return new ConcreteAbstractShiftProjectionist(employee, date, start, end, hall);
+    public Shift createConcreteShift(int type) {
+        switch (type) {
+            case Constant.SHIFT_PROJECTIONIST:
+                return createShiftProjectionist();
+            case Constant.SHIFT_USHER:
+                return createShiftUsher();
+            default:
+                return null;
+            //exception tipo non valido
+        }
     }
 
-    public ConcreteAbstractShiftUsher createShiftUsher(Employee employee, String date, String start, String end) {
-        return new ConcreteAbstractShiftUsher(employee, date, start, end);
+    private Shift createShiftProjectionist() {
+        return new ShiftProjectionist();
+    }
+
+    private Shift createShiftUsher() {
+        return new ShiftUsher();
     }
 }

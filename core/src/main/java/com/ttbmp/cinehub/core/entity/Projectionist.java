@@ -1,6 +1,8 @@
 package com.ttbmp.cinehub.core.entity;
 
+import com.ttbmp.cinehub.core.Constant;
 import com.ttbmp.cinehub.core.ShiftFactory;
+
 
 public class Projectionist extends Employee {
 
@@ -12,7 +14,12 @@ public class Projectionist extends Employee {
     public Shift createShift(String date, String start, String end, Hall hall) {
         Shift shift;
         ShiftFactory shiftFactory = new ShiftFactory();
-        shift = shiftFactory.createShiftProjectionist(this, date, start, end, hall);
+        shift = shiftFactory.createConcreteShift(Constant.SHIFT_PROJECTIONIST);
+        shift.setEmployee(this);
+        shift.setDate(date);
+        shift.setStart(start);
+        shift.setEnd(end);
+        ((ShiftProjectionist) shift).setHall(hall);
         return shift;
     }
 

@@ -5,6 +5,7 @@ import com.ttbmp.cinehub.core.datamapper.EmployeeDataMapper;
 import com.ttbmp.cinehub.core.datamapper.HallDataMapper;
 import com.ttbmp.cinehub.core.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.core.dto.ShiftDto;
+import com.ttbmp.cinehub.core.dto.ShiftProjectionistDto;
 import com.ttbmp.cinehub.core.dto.UsherDto;
 import com.ttbmp.cinehub.core.entity.Employee;
 import com.ttbmp.cinehub.core.entity.Shift;
@@ -136,11 +137,11 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                     request.getShift().getStart(),
                     request.getShift().getEnd());
         } else {
-            shiftDto = new ShiftDto(request.getShift().getEmployee(),
+            shiftDto = new ShiftProjectionistDto(request.getShift().getEmployee(),
                     date,
                     request.getShift().getStart(),
                     request.getShift().getEnd(),
-                    request.getShift().getHall());
+                    ((ShiftProjectionistDto)request.getShift()).getHallDto());
         }
         Result<Boolean> result = shiftRepository.saveShift(ShiftDataMapper.mapToEntity(shiftDto));
         if (result.getValue().equals(true)) {

@@ -13,7 +13,7 @@ public class ShiftDto {
     private LocalDate date;
     private LocalTime start;
     private LocalTime end;
-    private HallDto hall;
+
 
     public ShiftDto(String employeeName, LocalDate date, LocalTime start, LocalTime end) {
         this.employeeName = employeeName;
@@ -29,13 +29,6 @@ public class ShiftDto {
         this.end = end;
     }
 
-    public ShiftDto(EmployeeDto employee, LocalDate date, LocalTime start, LocalTime end, HallDto hall) {
-        this.employee = employee;
-        this.date = date;
-        this.start = start;
-        this.end = end;
-        this.hall = hall;
-    }
 
     public EmployeeDto getEmployee() {
         return employee;
@@ -69,12 +62,6 @@ public class ShiftDto {
         this.end = end;
     }
 
-    public HallDto getHall() {
-        return hall;
-    }
 
-    public void setHall(HallDto hall) {
-        this.hall = hall;
-    }
 
 }

@@ -39,7 +39,7 @@ public class ShiftDataMapper {
                     LocalDate.parse(shift.getDate()),
                     LocalTime.parse(shift.getStart()),
                     LocalTime.parse(shift.getEnd()),
-                    HallDataMapper.mapToDto(shift.getHall())
+                    HallDataMapper.mapToDto(((ShiftProjectionist)shift).getHall())
             );
         }
     }
@@ -59,7 +59,7 @@ public class ShiftDataMapper {
                     shiftDto.getDate().toString(),
                     shiftDto.getStart().toString(),
                     shiftDto.getEnd().toString(),
-                    HallDataMapper.mapToEntity(shiftDto.getHall())
+                    HallDataMapper.mapToEntity(((ShiftProjectionistDto)shiftDto).getHallDto())
             );
     }
 

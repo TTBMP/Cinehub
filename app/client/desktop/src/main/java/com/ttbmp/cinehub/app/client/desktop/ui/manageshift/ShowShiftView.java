@@ -13,5 +13,6 @@ public class ShowShiftView extends FxmlView {
 
     protected ShowShiftView() throws IOException {
         super("show_shift.fxml");
+        addStylesheet("styles.css");
     }
 }

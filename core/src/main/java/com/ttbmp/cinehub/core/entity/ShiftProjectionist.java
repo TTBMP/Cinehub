@@ -16,12 +16,10 @@ public class ShiftProjectionist extends Shift {
         this.hall = hall;
     }
 
-    @Override
     public Hall getHall() {
         return hall;
     }
 
-    @Override
     public void setHall(Hall hall) {
         this.hall = hall;
     }
@@ -34,7 +32,7 @@ public class ShiftProjectionist extends Shift {
         if (this.getClass() != obj.getClass()) {
             return false;
         }
-        Shift elem = (Shift) obj;
+        ShiftProjectionist elem = (ShiftProjectionist) obj;
 
         return this.getEmployee().equals(elem.getEmployee())
                 && this.getDate().equals(elem.getDate())

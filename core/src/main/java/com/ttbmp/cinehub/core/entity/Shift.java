@@ -9,7 +9,6 @@ public abstract class Shift {
     private String date;
     private String start;
     private String end;
-    private Hall hall;
 
     public Shift() {
     }
@@ -21,24 +20,13 @@ public abstract class Shift {
         this.end = end;
     }
 
-    public Shift(Employee employee, String date, String start, String end, Hall hall) {
-        this.employee = employee;
-        this.date = date;
-        this.start = start;
-        this.end = end;
-        this.hall = hall;
-    }
-
-    public Hall getHall() {
-        return hall;
-    }
-
-    public void setHall(Hall hall) {
-        this.hall = hall;
-    }
 
     public Employee getEmployee() {
         return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public String getDate() {
@@ -51,6 +39,10 @@ public abstract class Shift {
 
     public String getStart() {
         return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
     }
 
     public String getEnd() {
@@ -74,8 +66,7 @@ public abstract class Shift {
         return this.getEmployee().equals(elem.getEmployee())
                 && this.getDate().equals(elem.getDate())
                 && this.getStart().equals(elem.getStart())
-                && this.getEnd().equals(elem.getEnd())
-                && this.getHall().equals(elem.getHall());
+                && this.getEnd().equals(elem.getEnd());
     }
 
     @Override

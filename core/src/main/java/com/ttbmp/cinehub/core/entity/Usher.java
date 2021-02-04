@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.core.entity;
 
+import com.ttbmp.cinehub.core.Constant;
 import com.ttbmp.cinehub.core.ShiftFactory;
 
 public class Usher extends Employee {
@@ -12,7 +13,11 @@ public class Usher extends Employee {
     public Shift createShift(String date, String start, String end, Hall hall) {
         Shift shift;
         ShiftFactory shiftFactory = new ShiftFactory();
-        shift = shiftFactory.createShiftUsher(this, date, start, end);
+        shift = shiftFactory.createConcreteShift(Constant.SHIFT_USHER);
+        shift.setEmployee(this);
+        shift.setDate(date);
+        shift.setStart(start);
+        shift.setEnd(end);
         return shift;
     }
 

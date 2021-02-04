@@ -67,7 +67,6 @@ public class ShowShiftDetailViewController extends ViewController {
             cinemaLabel.textProperty().bind(viewModel.selectedShiftProperty().asString());
             hallLabel.textProperty().bind(viewModel.selectedShiftHallProperty());
         }
-
         nameLabel.textProperty().bind(viewModel.selectedShiftEmployeeNameProperty());
         surnameLabel.textProperty().bind(viewModel.selectedShiftEmployeeSurnameProperty());
         startLabel.textProperty().bind(viewModel.selectedShiftStartProperty());

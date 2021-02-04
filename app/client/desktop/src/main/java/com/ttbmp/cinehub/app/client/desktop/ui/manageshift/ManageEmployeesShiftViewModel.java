@@ -6,9 +6,7 @@ import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.DayWeek;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.EmployeeShiftWeek;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ObjectBindings;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewModel;
-import com.ttbmp.cinehub.core.dto.CinemaDto;
-import com.ttbmp.cinehub.core.dto.HallDto;
-import com.ttbmp.cinehub.core.dto.ShiftDto;
+import com.ttbmp.cinehub.core.dto.*;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -66,9 +64,9 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
         selectedShiftEnd.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEnd().toString()));
         selectedShiftRole.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEmployee().getClass().getCanonicalName()));
         selectedShiftHall.bind(ObjectBindings.map(selectedShift, shiftDto -> {
-            if (shiftDto.getHall() != null)
-                return shiftDto.getHall().getId().toString();
-            else
+            if(shiftDto instanceof ShiftProjectionistDto) {
+                return ((ShiftProjectionistDto) shiftDto).getHallDto().getId().toString();
+            }
                 return null;
         }));
     }
