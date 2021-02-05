@@ -11,10 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Massimo Mazzetti, Ivan Palmieri
+ * @author Fabio Buracchi, Massimo Mazzetti, Ivan Palmieri
  */
 public class MockCinemaRepository implements CinemaRepository {
-
 
     private static final List<Cinema> cinemaList = new ArrayList<>();
 
@@ -29,7 +28,7 @@ public class MockCinemaRepository implements CinemaRepository {
         cinemaList.add(new Cinema(
                 1,
                 "MultiPlex",
-                " via garibaldi 1",
+                "via garibaldi 1",
                 "Teramo",
                 new MockHallRepository().getHallList(1)
         ));
@@ -37,26 +36,6 @@ public class MockCinemaRepository implements CinemaRepository {
 
     public Cinema getCinema(int cinemaId) {
         return cinemaList.get(cinemaId);
-    }
-
-    @Override
-    public List<Cinema> getAllCinema() {
-        return cinemaList;
-    }
-
-
-    @Override
-    public List<Cinema> getListCinema(Movie movie, String date) {
-        ProjectionRepository projectionRepository = new MockProjectionRepository();
-        List<Projection> projectionList = projectionRepository.getProjectionList(movie, date);//I recover the projections of a specific film on a specific date
-        List<Cinema> result = new ArrayList<>();
-        for (Projection projection : projectionList) {
-            if (!result.contains(projection.getCinema())) {
-                result.add(projection.getCinema());
-            }
-        }
-        return result;
-
     }
 
     @Override
@@ -71,5 +50,22 @@ public class MockCinemaRepository implements CinemaRepository {
         return null;
     }
 
+    @Override
+    public List<Cinema> getAllCinema() {
+        return cinemaList;
+    }
+
+    @Override
+    public List<Cinema> getListCinema(Movie movie, String date) {
+        ProjectionRepository projectionRepository = new MockProjectionRepository();
+        List<Projection> projectionList = projectionRepository.getProjectionList(movie, date);
+        List<Cinema> result = new ArrayList<>();
+        for (Projection projection : projectionList) {
+            if (!result.contains(projection.getCinema())) {
+                result.add(projection.getCinema());
+            }
+        }
+        return result;
+    }
 
 }

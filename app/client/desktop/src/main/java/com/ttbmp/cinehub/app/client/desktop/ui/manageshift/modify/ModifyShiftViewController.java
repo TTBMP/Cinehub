@@ -1,17 +1,16 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.manageshift.modify;
 
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.ManageEmployeesShiftViewModel;
-import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.HallFactory;
-import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.SpinnerEndValueFactory;
-import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.SpinnerStartValueFactory;
+import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.components.HallFactory;
+import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.components.SpinnerEndValueFactory;
+import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.components.SpinnerStartValueFactory;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
-import com.ttbmp.cinehub.core.dto.EmployeeDto;
 import com.ttbmp.cinehub.core.dto.HallDto;
 import com.ttbmp.cinehub.core.dto.UsherDto;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.CreateShiftRequest;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetHallListRequest;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.ShiftRequest;
+import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.ShiftModifyRequest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -73,17 +72,22 @@ public class ModifyShiftViewController extends ViewController {
     @FXML
     private HBox errorHBox;
 
+    @FXML
+    private Label errorLabel;
+
     @Override
     protected void onLoad() {
 
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
-        errorHBox.setVisible(false);
+
+        viewModel.setErrorAssignVisibility(false);
+        errorHBox.visibleProperty().bind(viewModel.errorAssignVisibilityProperty());
+        errorLabel.textProperty().bind(viewModel.errorProperty());
 
         if (viewModel.getSelectedShift().getEmployee() instanceof UsherDto) {
-            hallLabel.setVisible(false);
-            hallComboBox.setVisible(false);
+            hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
+            hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
         } else {
-            hallComboBox.getItems().clear();
             activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(viewModel.getSelectedShift().getEmployee().getCinema()));
             hallComboBox.setItems(viewModel.getHallList());
             viewModel.selectedHallProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
@@ -91,6 +95,7 @@ public class ModifyShiftViewController extends ViewController {
         hallComboBox.setButtonCell(new HallFactory(null));
         hallComboBox.setCellFactory(HallFactory::new);
         hallComboBox.getSelectionModel().selectFirst();
+        hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
 
         nameLabel.textProperty().bind(viewModel.selectedShiftEmployeeNameProperty());
         surnameLabel.textProperty().bind(viewModel.selectedShiftEmployeeSurnameProperty());
@@ -98,7 +103,8 @@ public class ModifyShiftViewController extends ViewController {
         roleLabel.textProperty().bind(viewModel.selectedShiftRoleProperty());
 
         dateDatePicker.setDayCellFactory(ModifyDateCell::new);
-        dateDatePicker.setValue(LocalDate.parse(viewModel.getSelectedShiftDate()));
+        dateDatePicker.valueProperty().bindBidirectional(viewModel.selectedDaysProperty());
+
 
         viewModel.setStartSpinnerModifyTime(LocalTime.parse(viewModel.getSelectedShiftStart()));
         viewModel.setEndSpinnerModifyTime(LocalTime.parse(viewModel.getSelectedShiftEnd()));
@@ -117,30 +123,29 @@ public class ModifyShiftViewController extends ViewController {
     }
 
     private void submitButtonOnAction(ActionEvent action) {
+        viewModel.setErrorAssignVisibility(false);
+        activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(
+                new CreateShiftRequest(
+                        viewModel.getSelectedShift().getEmployee(),
+                        viewModel.getSelectedDays(),
+                        viewModel.getStartSpinnerModifyTime().withNano(0),
+                        viewModel.getEndSpinnerModifyTime().withNano(0),
+                        viewModel.getSelectedHall()
+                )
+        );
 
-        EmployeeDto employee = viewModel.getSelectedShift().getEmployee();
-        LocalDate date = dateDatePicker.getValue();
-        LocalTime start = viewModel.getStartSpinnerModifyTime().withNano(0);
-        LocalTime end = viewModel.getEndSpinnerModifyTime().withNano(0);
+        activity.getUseCase(ManageEmployeesShiftUseCase.class).modifyShift(new ShiftModifyRequest(viewModel.getSelectedShift(), viewModel.getShiftCreated()));
 
-        activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(employee,
-                date,
-                start,
-                end,
-                hallComboBox.getValue()));
-
-        activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(viewModel.getSelectedShift()));
-        if (viewModel.getShiftCreated() != null && activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new ShiftRequest(viewModel.getShiftCreated()))) {
-            viewModel.setSelectedShift(viewModel.getShiftCreated());
+        if (!viewModel.isErrorAssignVisibility()) {
             try {
+                viewModel.setSelectedShift(viewModel.getShiftCreated());
                 navController.popBackStack();
             } catch (IOException e) {
                 e.printStackTrace();
+
             }
-        } else {
-            activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new ShiftRequest(viewModel.getSelectedShift()));
-            errorHBox.setVisible(true);
         }
+
     }
 }
 

@@ -1,4 +1,6 @@
-package com.ttbmp.cinehub.core.entity;
+package com.ttbmp.cinehub.core.entity.shift;
+
+import com.ttbmp.cinehub.core.entity.Employee;
 
 /**
  * @author Fabio Buracchi, Massimo Mazzetti
@@ -10,16 +12,15 @@ public abstract class Shift {
     private String start;
     private String end;
 
-    public Shift() {
+    protected Shift() {
     }
 
-    public Shift(Employee employee, String date, String start, String end) {
+    protected Shift(Employee employee, String date, String start, String end) {
         this.employee = employee;
         this.date = date;
         this.start = start;
         this.end = end;
     }
-
 
     public Employee getEmployee() {
         return employee;

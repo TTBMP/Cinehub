@@ -40,10 +40,6 @@ public class MockMovieRepository implements MovieRepository {
         return new ArrayList<>(movieMap.values());
     }
 
-    public Movie getMovie(int movieId) {
-        return movieMap.get(movieId);
-    }
-
     @Override
     public List<Movie> getMovieList(String localDate) throws IOException {
         ProjectionRepository projectionRepository = new MockProjectionRepository();

@@ -10,18 +10,20 @@ import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.*;
 
 public interface ManageEmployeesShiftUseCase extends UseCase {
 
-    void getShiftList(GetShiftListRequest request);
-
-    boolean saveShift(ShiftRequest shift);
-
-    void deleteShift(ShiftRequest shift);
-
     void getCinemaList();
 
     void getHallList(GetHallListRequest request);
 
+    void getShiftList(GetShiftListRequest request);
+
     void saveRepeatedShift(ShiftRepeatRequest request);
 
+    void deleteShift(ShiftRequest shift);
+
     void createShift(CreateShiftRequest request);
+
+    void saveShift(ShiftRequest shift);
+
+    void modifyShift(ShiftModifyRequest request);
 
 }

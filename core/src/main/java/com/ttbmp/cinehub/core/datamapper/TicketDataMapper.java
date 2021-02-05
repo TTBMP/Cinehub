@@ -14,9 +14,7 @@ public class TicketDataMapper {
     }
 
     public static TicketDto mapToDto(TicketAbstract ticketAbstract) {
-
         TicketDto ticketDto = new TicketDto(ticketAbstract.getPrice());
-
         ticketDto.setPosition(ticketAbstract.getPosition());
         return ticketDto;
     }

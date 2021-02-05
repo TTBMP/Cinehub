@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.core.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.core.entity.Employee;
-import com.ttbmp.cinehub.core.entity.Shift;
+import com.ttbmp.cinehub.core.entity.shift.Shift;
 import com.ttbmp.cinehub.core.repository.EmployeeRepository;
 import com.ttbmp.cinehub.core.repository.ShiftRepository;
 import com.ttbmp.cinehub.core.service.authentication.AuthenticationService;

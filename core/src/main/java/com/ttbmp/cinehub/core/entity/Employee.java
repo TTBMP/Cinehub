@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.core.entity;
 
+import com.ttbmp.cinehub.core.entity.shift.Shift;
+
 /**
  * @author Fabio Buracchi, Massimo Mazzetti
  */

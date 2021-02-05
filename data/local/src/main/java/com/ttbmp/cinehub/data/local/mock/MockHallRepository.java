@@ -11,7 +11,6 @@ import java.util.List;
 /**
  * @author Massimo Mazzetti
  */
-
 public class MockHallRepository implements HallRepository {
 
     private static final List<Hall> hallList = new ArrayList<>();
@@ -26,10 +25,6 @@ public class MockHallRepository implements HallRepository {
             }
             hallList.add(new Hall(i, seatList));
         }
-    }
-
-    public Hall getHall(int id) {
-        return hallList.get(id);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.manageshift;
 
 import com.ttbmp.cinehub.app.client.desktop.ui.appbar.AppBarViewController;
-import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.ComboBoxCinemaValueFactory;
+import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.components.ComboBoxCinemaValueFactory;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.DayWeek;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.EmployeeCalendarTableCell;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.EmployeeShiftWeek;
@@ -74,25 +74,29 @@ public class ShowShiftViewController extends ViewController {
 
         periodDatePicker.setValue(LocalDate.now());
         cinemaComboBox.setValue(cinemaComboBox.getItems().get(0));
-        activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(new GetShiftListRequest(periodDatePicker.getValue(),
-                cinemaComboBox.getValue()));
+        activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
+                new GetShiftListRequest(
+                        periodDatePicker.getValue(),
+                        cinemaComboBox.getValue()
+                )
+        );
 
         previousButton.setOnAction(a -> periodDatePicker.setValue(periodDatePicker.getValue().minusWeeks(1)));
         nextButton.setOnAction(a -> periodDatePicker.setValue(periodDatePicker.getValue().plusWeeks(1)));
         todayButton.setOnAction(a -> periodDatePicker.setValue(LocalDate.now()));
 
-        periodDatePicker.setOnAction(a -> {
-            if (cinemaComboBox.getValue() != null) {
-
-                activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(new GetShiftListRequest(periodDatePicker.getValue(), cinemaComboBox.getValue()));
-            }
-        });
-        cinemaComboBox.setOnAction(a -> {
-            if (periodDatePicker.getValue() != null) {
-
-                activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(new GetShiftListRequest(periodDatePicker.getValue(), cinemaComboBox.getValue()));
-            }
-        });
+        periodDatePicker.setOnAction(a -> activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
+                new GetShiftListRequest(
+                        periodDatePicker.getValue(),
+                        cinemaComboBox.getValue()
+                )
+        ));
+        cinemaComboBox.setOnAction(a -> activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
+                new GetShiftListRequest(
+                        periodDatePicker.getValue(),
+                        cinemaComboBox.getValue()
+                )
+        ));
         shiftEmployeeTableColumn.setCellValueFactory(new PropertyValueFactory<>("employeeDto"));
         shiftEmployeeTableColumn.setCellFactory(tableColumn -> new EmployeeCalendarTableCell(activity, navController));
         shiftEmployeeTableColumn.setSortable(false);

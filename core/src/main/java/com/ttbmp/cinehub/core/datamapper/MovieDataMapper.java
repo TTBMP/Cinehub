@@ -15,12 +15,15 @@ public class MovieDataMapper {
     }
 
     public static MovieDto mapToDto(Movie movie) {
-        MovieDto movieDto = new MovieDto(movie.getId(), movie.getName(), movie.getVote(), movie.getOverview(), movie.getOverview(), movie.getImageUrl());
-        /*movieDto.setOverview(movie.getOverview());
-        movieDto.setReleases(movie.getRelases());
-        movieDto.setVote(movie.getVote());
-        movieDto.setMovieUrl(movie.getImageUrl());*/
-        return movieDto;
+
+        return new MovieDto(
+                movie.getId(),
+                movie.getName(),
+                movie.getVote(),
+                movie.getOverview(),
+                movie.getRelases(),
+                movie.getImageUrl()
+        );
     }
 
     public static Movie mapToEntity(MovieDto movieDto) {

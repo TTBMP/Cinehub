@@ -32,8 +32,8 @@ public class MockEmployeeRepository implements EmployeeRepository {
                 new MockCinemaRepository().getCinema(1)
         ));
         employeeList.add(new Projectionist(
-                "ciao",
-                "bella",
+                "Mario",
+                "Rossi",
                 new MockCinemaRepository().getCinema(1)
         ));
     }

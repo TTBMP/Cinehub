@@ -89,6 +89,50 @@
           -fx-font-weight:bold;
 }
 
+#nextButton{
+       -fx-text-fill: black;
+          -fx-font-family: "Arial Narrow";
+          -fx-font-weight: bold;
+         -fx-border-color:black;
+         -fx-background-color:null;
+}
+
+#nextButton:hover{
+        -fx-background-color: black;
+          -fx-text-fill:white;
+          -fx-font-weight:bold;
+}
+
+#previousButton{
+       -fx-text-fill: black;
+          -fx-font-family: "Arial Narrow";
+          -fx-font-weight: bold;
+         -fx-border-color:black;
+         -fx-background-color:null;
+}
+
+#previousButton:hover{
+        -fx-background-color: black;
+          -fx-text-fill:white;
+          -fx-font-weight:bold;
+}
+#todayButton{
+       -fx-text-fill: black;
+          -fx-font-family: "Arial Narrow";
+          -fx-font-weight: bold;
+         -fx-border-color:black;
+         -fx-background-color:null;
+}
+
+#todayButton:hover{
+        -fx-background-color: black;
+          -fx-text-fill:white;
+          -fx-font-weight:bold;
+}
+
+
+
+
 
 .table-view .column-header-background {
     -fx-background-color: #4f9d42;

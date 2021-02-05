@@ -4,9 +4,9 @@ import com.ttbmp.cinehub.core.dto.ShiftDto;
 import com.ttbmp.cinehub.core.dto.ShiftProjectionistDto;
 import com.ttbmp.cinehub.core.dto.ShiftUsherDto;
 import com.ttbmp.cinehub.core.dto.UsherDto;
-import com.ttbmp.cinehub.core.entity.Shift;
-import com.ttbmp.cinehub.core.entity.ShiftProjectionist;
-import com.ttbmp.cinehub.core.entity.ShiftUsher;
+import com.ttbmp.cinehub.core.entity.shift.Shift;
+import com.ttbmp.cinehub.core.entity.shift.ProjectionistShift;
+import com.ttbmp.cinehub.core.entity.shift.UsherShift;
 import com.ttbmp.cinehub.core.entity.Usher;
 import com.ttbmp.cinehub.core.utilities.DataMapperHelper;
 
@@ -39,7 +39,7 @@ public class ShiftDataMapper {
                     LocalDate.parse(shift.getDate()),
                     LocalTime.parse(shift.getStart()),
                     LocalTime.parse(shift.getEnd()),
-                    HallDataMapper.mapToDto(((ShiftProjectionist)shift).getHall())
+                    HallDataMapper.mapToDto(((ProjectionistShift)shift).getHall())
             );
         }
     }
@@ -47,14 +47,14 @@ public class ShiftDataMapper {
     public static Shift mapToEntity(ShiftDto shiftDto) {
         Objects.requireNonNull(shiftDto);
         if (shiftDto.getEmployee() instanceof UsherDto)
-            return new ShiftUsher(
+            return new UsherShift(
                     EmployeeDataMapper.matToEntity(shiftDto.getEmployee()),
                     shiftDto.getDate().toString(),
                     shiftDto.getStart().toString(),
                     shiftDto.getEnd().toString()
             );
         else
-            return new ShiftProjectionist(
+            return new ProjectionistShift(
                     EmployeeDataMapper.matToEntity(shiftDto.getEmployee()),
                     shiftDto.getDate().toString(),
                     shiftDto.getStart().toString(),

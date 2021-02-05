@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.core.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.core.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.core.dto.ShiftDto;
-import com.ttbmp.cinehub.core.entity.Shift;
+import com.ttbmp.cinehub.core.entity.shift.Shift;
 
 import java.util.List;
 

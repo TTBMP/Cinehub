@@ -12,4 +12,5 @@ import java.util.List;
 public interface MovieRepository {
 
     List<Movie> getMovieList(String localDate) throws IOException;
+
 }

@@ -39,16 +39,12 @@ public class Cinema {
         this.id = id;
     }
 
-    public void addHall(Hall hall) {
-        this.hallList.add(hall);
+    public String getName() {
+        return name;
     }
 
-    public List<Hall> getHallList() {
-        return hallList;
-    }
-
-    public void setHallList(List<Hall> hallList) {
-        this.hallList = hallList;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {
@@ -67,12 +63,12 @@ public class Cinema {
         this.city = city;
     }
 
-    public String getName() {
-        return name;
+    public List<Hall> getHallList() {
+        return hallList;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setHallList(List<Hall> hallList) {
+        this.hallList = hallList;
     }
 
     @Override

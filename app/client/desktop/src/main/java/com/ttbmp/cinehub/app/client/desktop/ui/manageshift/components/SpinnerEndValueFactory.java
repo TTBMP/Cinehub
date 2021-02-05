@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory;
+package com.ttbmp.cinehub.app.client.desktop.ui.manageshift.components;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

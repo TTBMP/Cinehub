@@ -1,16 +1,18 @@
-package com.ttbmp.cinehub.core.entity;
+package com.ttbmp.cinehub.core.entity.shift;
 
+
+import com.ttbmp.cinehub.core.entity.Employee;
 
 /**
  * @author Massimo Mazzetti
  */
 
-public class ShiftUsher extends Shift {
+public class UsherShift extends Shift {
 
-    public ShiftUsher() {
+    public UsherShift() {
     }
 
-    public ShiftUsher(Employee employee, String date, String start, String end) {
+    public UsherShift(Employee employee, String date, String start, String end) {
         super(employee, date, start, end);
     }
 

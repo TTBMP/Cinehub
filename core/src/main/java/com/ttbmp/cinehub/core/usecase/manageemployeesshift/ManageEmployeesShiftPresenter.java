@@ -1,13 +1,13 @@
 package com.ttbmp.cinehub.core.usecase.manageemployeesshift;
 
 
+import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.*;
 import com.ttbmp.cinehub.core.utilities.result.Result;
 
 /**
  * @author Massimo Mazzetti
  */
-
 public interface ManageEmployeesShiftPresenter {
 
     void presentShiftList(Result<GetShiftListResponse> shiftList);
@@ -16,12 +16,46 @@ public interface ManageEmployeesShiftPresenter {
 
     void presentHallList(Result<GetHallListResponse> listHall);
 
-    void presentSaveShift(Result<ShiftResponse> savedShift);
+    void presentSaveShift();
 
-    void presentDeleteShift(Result<ShiftResponse> deleteShift);
+    void presentDeleteShift();
 
     void presentRepeatShift(Result<ShiftRepeatResponse> response);
 
     void presentCreateShift(Result<CreateShiftResponse> response);
+
+    void presentInvalidSaveShiftListRequest(ShiftRequest request);
+
+    void presentSaveShiftNullRequest();
+
+    void presentSaveShiftError(Throwable error);
+
+    void presentInvalidDeleteShiftListRequest(ShiftRequest request);
+
+    void presentDeleteShiftNullRequest();
+
+    void presentDeleteShiftError(Throwable error);
+
+    void presentInvalidModifyShiftListRequest(ShiftModifyRequest request);
+
+    void presentModifyShiftNullRequest();
+
+    void presentModifyShiftError(Throwable error);
+
+    void presentInvalidCreateShiftListRequest(CreateShiftRequest request);
+
+    void presentCreateShiftNullRequest();
+
+    void presentInvalidRepeatedShiftListRequest(ShiftRepeatRequest request);
+
+    void presentRepeatedShiftNullRequest();
+
+    void presentInvalidGetShiftListRequest(GetShiftListRequest request);
+
+    void presentGetShiftListNullRequest();
+
+    void presentInvalidHallListRequest(GetHallListRequest request);
+
+    void presentHallListNullRequest();
 
 }

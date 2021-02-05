@@ -11,8 +11,6 @@ public class Seat {
     public Seat(Long price, Boolean state) {
         this.price = price;
         this.state = state;
-
-
     }
 
     public Boolean getState() {

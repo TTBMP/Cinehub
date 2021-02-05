@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.manageshift;
 
 
-import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.assign.Option;
+import com.ttbmp.cinehub.core.entity.ShiftRepeatedEnum;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.DayWeek;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.EmployeeShiftWeek;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ObjectBindings;
@@ -29,6 +29,11 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
     private final ObservableList<HallDto> hallList = FXCollections.observableArrayList();
     private final ObjectProperty<HallDto> selectedHall = new SimpleObjectProperty<>();
 
+    private final BooleanProperty errorAssignVisibility = new SimpleBooleanProperty();
+    private final BooleanProperty errorModifyVisibility = new SimpleBooleanProperty();
+    private final StringProperty error = new SimpleStringProperty();
+
+
     private final BooleanProperty repeatVisibility = new SimpleBooleanProperty();
     private final ObjectProperty<LocalTime> startSpinnerTime = new SimpleObjectProperty<>();
     private final ObjectProperty<LocalTime> endSpinnerTime = new SimpleObjectProperty<>();
@@ -38,10 +43,11 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
     private final ObjectProperty<DayWeek> selectedDayWeek = new SimpleObjectProperty<>();
     private final ObjectProperty<LocalDate> selectedWeek = new SimpleObjectProperty<>();
     private final ObservableList<EmployeeShiftWeek> employeeShiftWeekList = FXCollections.observableArrayList();
-    private final ObjectProperty<Option> selectedOptions = new SimpleObjectProperty<>();
+    private final ObjectProperty<ShiftRepeatedEnum> selectedOptions = new SimpleObjectProperty<>();
     private final ObservableList<String> options = FXCollections.observableArrayList();
 
     private final ObjectProperty<ShiftDto> shiftCreated = new SimpleObjectProperty<>();
+    private final BooleanProperty hallVisibility = new SimpleBooleanProperty();
 
     private final StringProperty selectedShiftEmployeeName = new SimpleStringProperty();
     private final StringProperty selectedShiftEmployeeSurname = new SimpleStringProperty();
@@ -71,6 +77,54 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
         }));
     }
 
+    public boolean isHallVisibility() {
+        return hallVisibility.get();
+    }
+
+    public BooleanProperty hallVisibilityProperty() {
+        return hallVisibility;
+    }
+
+    public void setHallVisibility(boolean hallVisibility) {
+        this.hallVisibility.set(hallVisibility);
+    }
+
+    public String getError() {
+        return error.get();
+    }
+
+    public StringProperty errorProperty() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error.set(error);
+    }
+
+    public boolean isErrorAssignVisibility() {
+        return errorAssignVisibility.get();
+    }
+
+    public BooleanProperty errorAssignVisibilityProperty() {
+        return errorAssignVisibility;
+    }
+
+    public void setErrorAssignVisibility(boolean errorAssignVisibility) {
+        this.errorAssignVisibility.set(errorAssignVisibility);
+    }
+
+    public boolean isErrorModifyVisibility() {
+        return errorModifyVisibility.get();
+    }
+
+    public BooleanProperty errorModifyVisibilityProperty() {
+        return errorModifyVisibility;
+    }
+
+    public void setErrorModifyVisibility(boolean errorModifyVisibility) {
+        this.errorModifyVisibility.set(errorModifyVisibility);
+    }
+
     public ShiftDto getShiftCreated() {
         return shiftCreated.get();
     }
@@ -83,15 +137,15 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
         return shiftCreated;
     }
 
-    public Option getSelectedOptions() {
+    public ShiftRepeatedEnum getSelectedOptions() {
         return selectedOptions.get();
     }
 
-    public void setSelectedOptions(Option selectedOptions) {
+    public void setSelectedOptions(ShiftRepeatedEnum selectedOptions) {
         this.selectedOptions.set(selectedOptions);
     }
 
-    public ObjectProperty<Option> selectedOptionsProperty() {
+    public ObjectProperty<ShiftRepeatedEnum> selectedOptionsProperty() {
         return selectedOptions;
     }
 

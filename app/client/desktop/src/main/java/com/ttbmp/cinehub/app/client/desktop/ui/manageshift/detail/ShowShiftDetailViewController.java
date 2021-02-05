@@ -61,10 +61,9 @@ public class ShowShiftDetailViewController extends ViewController {
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
         new ManageEmployeesShiftViewModel();
         if (viewModel.getSelectedShift().getEmployee() instanceof UsherDto) {
-            hallLabel.setVisible(false);
-            hallLabelText.setVisible(false);
+            hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
+            hallLabelText.visibleProperty().bind(viewModel.hallVisibilityProperty());
         } else {
-            cinemaLabel.textProperty().bind(viewModel.selectedShiftProperty().asString());
             hallLabel.textProperty().bind(viewModel.selectedShiftHallProperty());
         }
         nameLabel.textProperty().bind(viewModel.selectedShiftEmployeeNameProperty());
@@ -90,15 +89,12 @@ public class ShowShiftDetailViewController extends ViewController {
         });
 
         modifyShiftButton.setOnAction(a -> {
-                    try {
-                        navController.navigate(new NavDestination(new ModifyShiftView()));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-        );
-
+            try {
+                navController.navigate(new NavDestination(new ModifyShiftView()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
-
 
 }

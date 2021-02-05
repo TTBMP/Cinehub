@@ -42,13 +42,6 @@ public class MockProjectionRepository implements ProjectionRepository {
         }
     }
 
-
-    @Override
-    public List<Projection> getAllProjection() {
-        return projectionList;
-    }
-
-
     @Override
     public List<Projection> getProjectionList(CinemaDto cinema, MovieDto movie, String date) {
         List<Projection> result = new ArrayList<>();

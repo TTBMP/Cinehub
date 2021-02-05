@@ -1,17 +1,20 @@
-package com.ttbmp.cinehub.core.entity;
+package com.ttbmp.cinehub.core.entity.shift;
+
+import com.ttbmp.cinehub.core.entity.Employee;
+import com.ttbmp.cinehub.core.entity.Hall;
 
 /**
  * @author Massimo Mazzetti
  */
 
-public class ShiftProjectionist extends Shift {
+public class ProjectionistShift extends Shift {
 
     private Hall hall;
 
-    public ShiftProjectionist() {
+    public ProjectionistShift() {
     }
 
-    public ShiftProjectionist(Employee employee, String date, String start, String end, Hall hall) {
+    public ProjectionistShift(Employee employee, String date, String start, String end, Hall hall) {
         super(employee, date, start, end);
         this.hall = hall;
     }
@@ -32,7 +35,7 @@ public class ShiftProjectionist extends Shift {
         if (this.getClass() != obj.getClass()) {
             return false;
         }
-        ShiftProjectionist elem = (ShiftProjectionist) obj;
+        ProjectionistShift elem = (ProjectionistShift) obj;
 
         return this.getEmployee().equals(elem.getEmployee())
                 && this.getDate().equals(elem.getDate())

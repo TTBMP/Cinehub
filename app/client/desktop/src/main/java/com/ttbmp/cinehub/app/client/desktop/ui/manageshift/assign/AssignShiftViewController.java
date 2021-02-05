@@ -1,14 +1,14 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.manageshift.assign;
 
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.ManageEmployeesShiftViewModel;
-import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.ComboBoxOptionValueFactory;
-import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.HallFactory;
-import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.SpinnerEndValueFactory;
-import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory.SpinnerStartValueFactory;
+import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.components.ComboBoxOptionValueFactory;
+import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.components.HallFactory;
+import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.components.SpinnerEndValueFactory;
+import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.components.SpinnerStartValueFactory;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
-import com.ttbmp.cinehub.core.dto.EmployeeDto;
 import com.ttbmp.cinehub.core.dto.HallDto;
 import com.ttbmp.cinehub.core.dto.UsherDto;
+import com.ttbmp.cinehub.core.entity.ShiftRepeatedEnum;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.CreateShiftRequest;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetHallListRequest;
@@ -27,7 +27,6 @@ import java.time.LocalTime;
 /**
  * @author Massimo Mazzetti
  */
-
 public class AssignShiftViewController extends ViewController {
 
     private ManageEmployeesShiftViewModel viewModel;
@@ -51,7 +50,7 @@ public class AssignShiftViewController extends ViewController {
     private VBox optionVBox;
 
     @FXML
-    private ComboBox<Option> optionRepeatComboBox;
+    private ComboBox<ShiftRepeatedEnum> optionRepeatComboBox;
 
     @FXML
     private VBox dateVBox;
@@ -68,32 +67,35 @@ public class AssignShiftViewController extends ViewController {
     @FXML
     private Label hallLabel;
 
+    @FXML
+    private Label errorLabel;
+
     @Override
     protected void onLoad() {
 
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
 
         if (viewModel.getSelectedDayWeek().getEmployee() instanceof UsherDto) {
-            hallLabel.setVisible(false);
-            hallComboBox.setVisible(false);
-        } else {
-
-            activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(viewModel.getSelectedDayWeek().getEmployee().getCinema()));
-            hallComboBox.setItems(viewModel.getHallList());
-            viewModel.selectedHallProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
+            hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
+            hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
         }
+        activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(viewModel.getSelectedDayWeek().getEmployee().getCinema()));
+        hallComboBox.setItems(viewModel.getHallList());
+        viewModel.selectedHallProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
 
         viewModel.setSelectedEndRepeatDay(null);
         hallComboBox.setButtonCell(new HallFactory(null));
         hallComboBox.setCellFactory(HallFactory::new);
         hallComboBox.getSelectionModel().selectFirst();
 
-
         hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
 
-        errorVBox.setVisible(false);
+        errorVBox.visibleProperty().bind(viewModel.errorAssignVisibilityProperty());
+
         optionVBox.visibleProperty().bind(viewModel.repeatVisibilityProperty());
         dateVBox.visibleProperty().bind(viewModel.repeatVisibilityProperty());
+        errorLabel.textProperty().bind(viewModel.errorProperty());
+
         viewModel.setRepeatVisibility(viewModel.isRepeatVisibility());
         shiftRepeatCheckBox.setOnAction(event -> viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility()));
 
@@ -106,7 +108,7 @@ public class AssignShiftViewController extends ViewController {
         repeatDatePicker.setDayCellFactory(date -> new RepeatDateCell(viewModel.selectedDayWeekProperty()));
         repeatDatePicker.valueProperty().bindBidirectional(viewModel.selectedEndRepeatDayProperty());
 
-        optionRepeatComboBox.getItems().setAll(Option.values());
+        optionRepeatComboBox.getItems().setAll(ShiftRepeatedEnum.values());
         optionRepeatComboBox.setButtonCell(new ComboBoxOptionValueFactory(null));
         optionRepeatComboBox.setCellFactory(ComboBoxOptionValueFactory::new);
         optionRepeatComboBox.valueProperty().bindBidirectional(viewModel.selectedOptionsProperty());
@@ -126,28 +128,24 @@ public class AssignShiftViewController extends ViewController {
     }
 
     private void confirmButtonOnAction(ActionEvent action) {
-        EmployeeDto employee = viewModel.getSelectedDayWeek().getEmployee();
-        LocalDate date = viewModel.getSelectedDayWeek().getDate();
-        LocalTime start = viewModel.getStartSpinnerTime().withNano(0);
-        LocalTime end = viewModel.getEndSpinnerTime().withNano(0);
 
-        activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(employee,
-                date,
-                start,
-                end,
+        activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(
+                viewModel.getSelectedDayWeek().getEmployee(),
+                viewModel.getSelectedDayWeek().getDate(),
+                viewModel.getStartSpinnerTime().withNano(0),
+                viewModel.getEndSpinnerTime().withNano(0),
                 viewModel.getSelectedHall()));
 
         if (optionRepeatComboBox.getValue() == null)
             saveShift();
         else {
-            saveRepeatShift();
+            saveRepeatedShift();
         }
-
     }
 
     public void saveShift() {
-        if (viewModel.getShiftCreated() != null &&
-                activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new ShiftRequest(viewModel.getShiftCreated()))) {
+        activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new ShiftRequest(viewModel.getShiftCreated()));
+        if (!viewModel.isErrorAssignVisibility()) {
             try {
                 if (shiftRepeatCheckBox.isSelected()) {
                     viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());
@@ -157,19 +155,22 @@ public class AssignShiftViewController extends ViewController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
-            errorVBox.setVisible(true);
         }
+       /*  else {
+            errorVBox.setVisible(true);
+        }*/
     }
 
-    public void saveRepeatShift() {
+    public void saveRepeatedShift() {
         if (viewModel.getShiftCreated() != null && repeatDatePicker.getValue() != null) {
-            activity.getUseCase(ManageEmployeesShiftUseCase.class).saveRepeatedShift(new ShiftRepeatRequest(
-                    LocalDate.parse(viewModel.getSelectedDayWeek().getDate().toString()),
-                    repeatDatePicker.getValue(),
-                    optionRepeatComboBox.getValue().toString(),
-                    viewModel.getShiftCreated()
-            ));
+            activity.getUseCase(ManageEmployeesShiftUseCase.class).saveRepeatedShift(
+                    new ShiftRepeatRequest(
+                            LocalDate.parse(viewModel.getSelectedDayWeek().getDate().toString()),
+                            repeatDatePicker.getValue(),
+                            optionRepeatComboBox.getValue().toString(),
+                            viewModel.getShiftCreated()
+                    )
+            );
             try {
                 viewModel.setSelectedOptions(null);
                 viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());

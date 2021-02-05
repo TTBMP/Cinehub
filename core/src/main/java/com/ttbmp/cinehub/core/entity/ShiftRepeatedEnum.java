@@ -1,17 +1,17 @@
-package com.ttbmp.cinehub.app.client.desktop.ui.manageshift.assign;
+package com.ttbmp.cinehub.core.entity;
 
 /**
  * @author Massimo Mazzetti
  */
 
-public enum Option {
+public enum ShiftRepeatedEnum {
     EVERY_DAY("ogni giorno"),
     EVERY_WEEK("ogni settimana"),
     EVERY_MONTH("ogni mese");
 
     private final String value;
 
-    Option(String value) {
+    ShiftRepeatedEnum(String value) {
         this.value = value;
     }
 

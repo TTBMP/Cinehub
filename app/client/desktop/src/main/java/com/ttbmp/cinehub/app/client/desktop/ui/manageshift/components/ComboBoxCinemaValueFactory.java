@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory;
+package com.ttbmp.cinehub.app.client.desktop.ui.manageshift.components;
 
 import com.ttbmp.cinehub.core.dto.CinemaDto;
 import javafx.scene.control.ListCell;
@@ -9,10 +9,9 @@ import javafx.scene.control.ListView;
  */
 
 public class ComboBoxCinemaValueFactory extends ListCell<CinemaDto> {
-    private ListView<CinemaDto> cinemaDto;
 
-    public ComboBoxCinemaValueFactory(ListView<CinemaDto> cinemaDto) {
-        this.cinemaDto = cinemaDto;
+    public ComboBoxCinemaValueFactory(ListView<CinemaDto> listView) {
+
     }
 
     @Override
@@ -25,11 +24,4 @@ public class ComboBoxCinemaValueFactory extends ListCell<CinemaDto> {
         }
     }
 
-    public ListView<CinemaDto> getCinemaDto() {
-        return cinemaDto;
-    }
-
-    public void setCinemaDto(ListView<CinemaDto> cinemaDto) {
-        this.cinemaDto = cinemaDto;
-    }
 }

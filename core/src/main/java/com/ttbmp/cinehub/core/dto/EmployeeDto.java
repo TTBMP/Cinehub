@@ -8,8 +8,6 @@ public class EmployeeDto {
 
     private String name;
     private String surname;
-
-
     private CinemaDto cinema;
 
     public EmployeeDto(String name, String surname, CinemaDto cinema) {

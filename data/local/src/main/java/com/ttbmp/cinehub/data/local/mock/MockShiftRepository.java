@@ -1,9 +1,10 @@
 package com.ttbmp.cinehub.data.local.mock;
 
+import com.ttbmp.cinehub.core.ShiftSaveException;
 import com.ttbmp.cinehub.core.entity.Employee;
-import com.ttbmp.cinehub.core.entity.Shift;
-import com.ttbmp.cinehub.core.entity.ShiftProjectionist;
-import com.ttbmp.cinehub.core.entity.ShiftUsher;
+import com.ttbmp.cinehub.core.entity.shift.Shift;
+import com.ttbmp.cinehub.core.entity.shift.ProjectionistShift;
+import com.ttbmp.cinehub.core.entity.shift.UsherShift;
 import com.ttbmp.cinehub.core.repository.ShiftRepository;
 import com.ttbmp.cinehub.core.utilities.result.Result;
 
@@ -22,31 +23,30 @@ public class MockShiftRepository implements ShiftRepository {
     private static final List<Shift> shiftList = new ArrayList<>();
 
     static {
-
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 5; j++) {
                 shiftList.addAll(Arrays.asList(
-                        new ShiftProjectionist(
+                        new ProjectionistShift(
                                 new MockEmployeeRepository().getEmployee(1),
                                 LocalDate.now().plusWeeks(i).plusDays(j).toString(),
                                 LocalTime.now().minusHours(2).withSecond(0).withNano(0).toString(),
                                 LocalTime.now().plusHours(0).withSecond(0).withNano(0).toString(),
                                 new MockEmployeeRepository().getEmployee(1).getCinema().getHallList().get(1)
                         ),
-                        new ShiftUsher(
+                        new UsherShift(
                                 new MockEmployeeRepository().getEmployee(0),
                                 LocalDate.now().minusWeeks(i).plusDays(j).toString(),
                                 LocalTime.now().minusHours(2).withSecond(0).withNano(0).toString(),
                                 LocalTime.now().plusHours(0).withSecond(0).withNano(0).toString()
                         ),
-                        new ShiftProjectionist(
+                        new ProjectionistShift(
                                 new MockEmployeeRepository().getEmployee(3),
                                 LocalDate.now().plusWeeks(i).plusDays(j).toString(),
                                 LocalTime.now().minusHours(2).withSecond(0).withNano(0).toString(),
                                 LocalTime.now().plusHours(0).withSecond(0).withNano(0).toString(),
                                 new MockEmployeeRepository().getEmployee(3).getCinema().getHallList().get(0)
                         ),
-                        new ShiftUsher(
+                        new UsherShift(
                                 new MockEmployeeRepository().getEmployee(2),
                                 LocalDate.now().minusWeeks(i).plusDays(j).toString(),
                                 LocalTime.now().minusHours(2).withSecond(0).withNano(0).toString(),
@@ -55,9 +55,7 @@ public class MockShiftRepository implements ShiftRepository {
                 ));
             }
         }
-
     }
-
 
     @Override
     public Result<List<Shift>> getAllEmployeeShiftBetweenDate(Employee employee, LocalDate start, LocalDate end) {
@@ -68,18 +66,19 @@ public class MockShiftRepository implements ShiftRepository {
     }
 
     @Override
-    public Result<Shift> deletedShift(Shift shift) {
-        shiftList.removeIf(s -> s.equals(shift));
-        return new Result<>(shift);
-    }
-
-    @Override
     public Result<List<Shift>> getShiftList() {
         return new Result<>(shiftList);
     }
 
     @Override
-    public Result<Boolean> saveShift(Shift shift) {
+    public void deletedShift(Shift shift) throws ShiftSaveException {
+       if(! shiftList.removeIf(s -> s.equals(shift))){
+           throw new ShiftSaveException("Shift not Exist");
+       }
+    }
+
+    @Override
+    public void saveShift(Shift shift) throws ShiftSaveException {
         LocalTime newStart = LocalTime.parse(shift.getStart());
         LocalTime newEnd = LocalTime.parse(shift.getEnd());
         LocalTime start;
@@ -92,10 +91,36 @@ public class MockShiftRepository implements ShiftRepository {
                     && (newStart.isBefore(end)
                     && newEnd.isAfter(start))
                     && shift.getEmployee().equals(elem.getEmployee())) {
-                return new Result<>(false);
+                throw new ShiftSaveException("Shift Already Exist");
+
             }
         }
         shiftList.add(shift);
-        return new Result<>(true);
+    }
+
+    @Override
+    public void modifyShift(Shift oldShift, Shift newShift) throws ShiftSaveException {
+        LocalTime newStart = LocalTime.parse(newShift.getStart());
+        LocalTime newEnd = LocalTime.parse(newShift.getEnd());
+        LocalTime start;
+        LocalTime end;
+
+        if(oldShift.equals(newShift)){
+            throw new ShiftSaveException("Shift Already Exist");
+        }
+        shiftList.removeIf(s -> s.equals(oldShift));
+        for (Shift elem : shiftList) {
+            start = LocalTime.parse(elem.getStart());
+            end = LocalTime.parse(elem.getEnd());
+            if (elem.getDate().equals(newShift.getDate())
+                    && (newStart.isBefore(end)
+                    && newEnd.isAfter(start))
+                    && newShift.getEmployee().equals(elem.getEmployee())) {
+                shiftList.add(oldShift);
+                throw new ShiftSaveException("Shift Already Exist");
+            }
+        }
+        shiftList.add(newShift);
+
     }
 }

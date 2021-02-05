@@ -20,7 +20,6 @@ public class CinehubApplication extends Application {
     public void start(Stage primaryStage) throws Exception {
         NavController navController = new NavController(primaryStage);
         navController.navigate(new NavActivityDestination(new ManageShiftActivity()));
-
         primaryStage.setTitle("Cinehub");
         primaryStage.show();
     }

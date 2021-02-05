@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.app.client.desktop.ui.manageshift.factory;
+package com.ttbmp.cinehub.app.client.desktop.ui.manageshift.components;
 
 import com.ttbmp.cinehub.core.dto.HallDto;
 import javafx.scene.control.ListCell;
@@ -10,10 +10,10 @@ import javafx.scene.control.ListView;
 
 public class HallFactory extends ListCell<HallDto> {
 
-    private ListView<HallDto> hallDto;
 
-    public HallFactory(ListView<HallDto> hallDto) {
-        this.hallDto = hallDto;
+
+    public HallFactory(ListView<HallDto> listView) {
+
     }
 
     @Override
@@ -26,11 +26,4 @@ public class HallFactory extends ListCell<HallDto> {
         }
     }
 
-    public ListView<HallDto> getHallDto() {
-        return hallDto;
-    }
-
-    public void setHallDto(ListView<HallDto> hallDto) {
-        this.hallDto = hallDto;
-    }
 }
