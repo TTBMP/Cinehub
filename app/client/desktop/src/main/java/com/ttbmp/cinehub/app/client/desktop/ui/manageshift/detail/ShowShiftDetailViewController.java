@@ -18,7 +18,6 @@ import java.time.LocalDate;
  * @author Massimo Mazzetti
  */
 
-
 public class ShowShiftDetailViewController extends ViewController {
 
     @FXML
@@ -53,7 +52,6 @@ public class ShowShiftDetailViewController extends ViewController {
 
     @FXML
     private Button deleteShiftButton;
-
 
     @Override
     protected void onLoad() {

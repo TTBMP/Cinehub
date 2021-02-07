@@ -63,43 +63,46 @@ public class ShowShiftViewController extends ViewController {
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
         activity.getUseCase(ManageEmployeesShiftUseCase.class).getCinemaList();
         cinemaComboBox.setItems(viewModel.getCinemaList());
-        viewModel.selectedCinemaProperty().bind(cinemaComboBox.getSelectionModel().selectedItemProperty());
 
         shiftTableView.setSelectionModel(null);
 
         cinemaComboBox.setButtonCell(new ComboBoxCinemaValueFactory(null));
         cinemaComboBox.setCellFactory(ComboBoxCinemaValueFactory::new);
+        cinemaComboBox.valueProperty().bindBidirectional(viewModel.selectedCinemaProperty());
+        cinemaComboBox.setValue(cinemaComboBox.getItems().get(0));
 
         periodDatePicker.valueProperty().bindBidirectional(viewModel.selectedWeekProperty());
 
         periodDatePicker.setValue(LocalDate.now());
-        cinemaComboBox.setValue(cinemaComboBox.getItems().get(0));
+
+
         activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
                 new GetShiftListRequest(
-                        periodDatePicker.getValue(),
-                        cinemaComboBox.getValue()
+                        viewModel.getSelectedWeek(),
+                        viewModel.getSelectedCinema()
                 )
         );
 
-        previousButton.setOnAction(a -> periodDatePicker.setValue(periodDatePicker.getValue().minusWeeks(1)));
-        nextButton.setOnAction(a -> periodDatePicker.setValue(periodDatePicker.getValue().plusWeeks(1)));
+        previousButton.setOnAction(a -> periodDatePicker.setValue(viewModel.getSelectedWeek().minusWeeks(1)));
+        nextButton.setOnAction(a -> periodDatePicker.setValue(viewModel.getSelectedWeek().plusWeeks(1)));
         todayButton.setOnAction(a -> periodDatePicker.setValue(LocalDate.now()));
 
         periodDatePicker.setOnAction(a -> activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
                 new GetShiftListRequest(
-                        periodDatePicker.getValue(),
-                        cinemaComboBox.getValue()
+                        viewModel.getSelectedWeek(),
+                        viewModel.getSelectedCinema()
                 )
         ));
         cinemaComboBox.setOnAction(a -> activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
                 new GetShiftListRequest(
-                        periodDatePicker.getValue(),
-                        cinemaComboBox.getValue()
+                        viewModel.getSelectedWeek(),
+                        viewModel.getSelectedCinema()
                 )
         ));
         shiftEmployeeTableColumn.setCellValueFactory(new PropertyValueFactory<>("employeeDto"));
         shiftEmployeeTableColumn.setCellFactory(tableColumn -> new EmployeeCalendarTableCell(activity, navController));
         shiftEmployeeTableColumn.setSortable(false);
+        shiftEmployeeTableColumn.setReorderable(false);
         for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
             TableColumn<EmployeeShiftWeek, DayWeek> column = (TableColumn<EmployeeShiftWeek, DayWeek>) shiftTableView.getColumns().get(dayOfWeek.getValue());
             column.setCellValueFactory(cell -> new SimpleObjectProperty<>(cell.getValue().getDayOfWeek(dayOfWeek)));

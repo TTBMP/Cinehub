@@ -4,6 +4,7 @@ import com.ttbmp.cinehub.app.client.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.navigation.NavController;
 import com.ttbmp.cinehub.core.dto.EmployeeDto;
+import com.ttbmp.cinehub.core.dto.ProjectionistDto;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -44,7 +45,11 @@ public class CalendarEmployeeItemViewController extends ViewController {
 
         nameLabel.setText(employee.getName());
         surnameLabel.setText(employee.getSurname());
-        roleLabel.setText(employee.getClass().toString());
+        if (employee instanceof ProjectionistDto) {
+            roleLabel.setText("Projectionist");
+        } else {
+            roleLabel.setText("Usher");
+        }
     }
 
 

@@ -14,5 +14,6 @@ public class ModifyShiftView extends FxmlView {
 
     public ModifyShiftView() throws IOException {
         super("modify_shift.fxml");
+        addStylesheet("styles.css");
     }
 }

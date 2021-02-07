@@ -13,5 +13,6 @@ public class AssignShiftView extends FxmlView {
 
     public AssignShiftView() throws IOException {
         super("assign_shift.fxml");
+        addStylesheet("styles.css");
     }
 }

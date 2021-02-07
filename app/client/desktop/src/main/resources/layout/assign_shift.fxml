@@ -38,22 +38,22 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Label text="Selezona Ora Fine Turno: " GridPane.rowIndex="1" />
-                        <Label fx:id="hallLabel" text="Selezona Sala: " GridPane.rowIndex="2" />
+                        <Label text="Choice End Time:" GridPane.rowIndex="1" />
+                        <Label fx:id="hallLabel" text="Select Hall:" GridPane.rowIndex="2" />
                         <ComboBox fx:id="hallComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="Seleziona Ora Inizio Turno:" />
+                        <Label text="Choice Start Time:" />
                         <Spinner fx:id="endSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Spinner fx:id="startSpinner" GridPane.columnIndex="1" />
-                        <CheckBox fx:id="shiftRepeatCheckBox" mnemonicParsing="false" text="Turno Ripetuto" GridPane.rowIndex="3" />
+                        <CheckBox fx:id="shiftRepeatCheckBox" mnemonicParsing="false" text="Shift Repeat:" GridPane.rowIndex="3" />
                         <VBox fx:id="optionVBox" visible="false" GridPane.rowIndex="4">
                             <children>
-                                <Label text="Ripeti ogni:" />
+                                <Label text="Preference:" />
                                 <ComboBox fx:id="optionRepeatComboBox" prefWidth="150.0" />
                             </children>
                         </VBox>
                         <VBox fx:id="dateVBox" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4">
                             <children>
-                                <Label text="Fino a:" />
+                                <Label text="To:" />
                                 <DatePicker fx:id="repeatDatePicker" showWeekNumbers="true" />
                             </children>
                         </VBox>
@@ -73,7 +73,7 @@
             <children>
                 <HBox alignment="TOP_CENTER">
                     <children>
-                        <Label text="Assegna Turno" textAlignment="CENTER">
+                        <Label text="Assign Shift" textAlignment="CENTER">
                             <font>
                                 <Font size="25.0" />
                             </font>
@@ -90,14 +90,14 @@
         </VBox>
     </top>
     <bottom>
-        <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="cancelButton" cancelButton="true" mnemonicParsing="false" text="Annulla">
+                <Button fx:id="cancelButton" cancelButton="true" mnemonicParsing="false" text="Cancel">
                     <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </HBox.margin>
                 </Button>
-                <Button fx:id="confirmButton" mnemonicParsing="false" text="Conferma">
+                <Button fx:id="confirmButton" mnemonicParsing="false" text="Confirm">
                     <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </HBox.margin>

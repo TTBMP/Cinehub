@@ -18,7 +18,6 @@ import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
@@ -67,7 +66,7 @@ public class ModifyShiftViewController extends ViewController {
     private ComboBox<HallDto> hallComboBox;
 
     @FXML
-    private Button submitButton;
+    private Button confirmButton;
 
     @FXML
     private HBox errorHBox;
@@ -111,7 +110,7 @@ public class ModifyShiftViewController extends ViewController {
 
         startSpinner.setValueFactory(new SpinnerStartValueFactory(viewModel.startSpinnerModifyTimeProperty(), viewModel.endSpinnerModifyTimeProperty()));
         endSpinner.setValueFactory(new SpinnerEndValueFactory(viewModel.startSpinnerModifyTimeProperty(), viewModel.endSpinnerModifyTimeProperty()));
-        submitButton.setOnAction(this::submitButtonOnAction);
+        confirmButton.setOnAction(this::submitButtonOnAction);
 
         cancelButton.setOnAction(a -> {
             try {

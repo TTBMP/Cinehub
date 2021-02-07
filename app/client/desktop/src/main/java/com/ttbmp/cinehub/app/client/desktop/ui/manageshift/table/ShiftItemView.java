@@ -14,6 +14,7 @@ public class ShiftItemView extends FxmlView {
 
     public ShiftItemView() throws IOException {
         super("shift_item.fxml");
+        addStylesheet("styles.css");
 
     }
 

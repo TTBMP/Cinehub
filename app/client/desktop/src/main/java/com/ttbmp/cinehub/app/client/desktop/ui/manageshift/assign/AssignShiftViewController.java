@@ -136,7 +136,7 @@ public class AssignShiftViewController extends ViewController {
                 viewModel.getEndSpinnerTime().withNano(0),
                 viewModel.getSelectedHall()));
 
-        if (optionRepeatComboBox.getValue() == null)
+        if (viewModel.getSelectedOptions() == null)
             saveShift();
         else {
             saveRepeatedShift();
@@ -144,6 +144,7 @@ public class AssignShiftViewController extends ViewController {
     }
 
     public void saveShift() {
+        viewModel.setErrorAssignVisibility(false);
         activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new ShiftRequest(viewModel.getShiftCreated()));
         if (!viewModel.isErrorAssignVisibility()) {
             try {
@@ -156,18 +157,16 @@ public class AssignShiftViewController extends ViewController {
                 e.printStackTrace();
             }
         }
-       /*  else {
-            errorVBox.setVisible(true);
-        }*/
+
     }
 
     public void saveRepeatedShift() {
-        if (viewModel.getShiftCreated() != null && repeatDatePicker.getValue() != null) {
+        if (viewModel.getShiftCreated() != null && viewModel.getSelectedEndRepeatDay() != null) {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).saveRepeatedShift(
                     new ShiftRepeatRequest(
                             LocalDate.parse(viewModel.getSelectedDayWeek().getDate().toString()),
-                            repeatDatePicker.getValue(),
-                            optionRepeatComboBox.getValue().toString(),
+                            viewModel.getSelectedEndRepeatDay(),
+                            viewModel.getSelectedOptions().toString(),
                             viewModel.getShiftCreated()
                     )
             );
