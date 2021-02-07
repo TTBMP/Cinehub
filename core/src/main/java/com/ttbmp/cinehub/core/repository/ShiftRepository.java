@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author Fabio Buracchi, Massimo Mazzetti
  */
-public interface ShiftRepository  {
+public interface ShiftRepository {
 
     Result<List<Shift>> getAllEmployeeShiftBetweenDate(Employee employee, LocalDate start, LocalDate end);
 

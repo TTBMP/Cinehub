@@ -2,8 +2,8 @@ package com.ttbmp.cinehub.data.local.mock;
 
 import com.ttbmp.cinehub.core.ShiftSaveException;
 import com.ttbmp.cinehub.core.entity.Employee;
-import com.ttbmp.cinehub.core.entity.shift.Shift;
 import com.ttbmp.cinehub.core.entity.shift.ProjectionistShift;
+import com.ttbmp.cinehub.core.entity.shift.Shift;
 import com.ttbmp.cinehub.core.entity.shift.UsherShift;
 import com.ttbmp.cinehub.core.repository.ShiftRepository;
 import com.ttbmp.cinehub.core.utilities.result.Result;
@@ -72,9 +72,9 @@ public class MockShiftRepository implements ShiftRepository {
 
     @Override
     public void deletedShift(Shift shift) throws ShiftSaveException {
-       if(! shiftList.removeIf(s -> s.equals(shift))){
-           throw new ShiftSaveException("Shift not Exist");
-       }
+        if (!shiftList.removeIf(s -> s.equals(shift))) {
+            throw new ShiftSaveException("Shift not Exist");
+        }
     }
 
     @Override
@@ -105,7 +105,7 @@ public class MockShiftRepository implements ShiftRepository {
         LocalTime start;
         LocalTime end;
 
-        if(oldShift.equals(newShift)){
+        if (oldShift.equals(newShift)) {
             throw new ShiftSaveException("Shift Already Exist");
         }
         shiftList.removeIf(s -> s.equals(oldShift));

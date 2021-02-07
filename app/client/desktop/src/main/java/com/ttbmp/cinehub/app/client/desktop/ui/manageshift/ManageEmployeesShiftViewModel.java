@@ -1,12 +1,12 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.manageshift;
 
 
-import com.ttbmp.cinehub.core.entity.ShiftRepeatedEnum;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.DayWeek;
 import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.table.EmployeeShiftWeek;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ObjectBindings;
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewModel;
 import com.ttbmp.cinehub.core.dto.*;
+import com.ttbmp.cinehub.core.entity.shift.ShiftRepeatingOption;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,7 +43,7 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
     private final ObjectProperty<DayWeek> selectedDayWeek = new SimpleObjectProperty<>();
     private final ObjectProperty<LocalDate> selectedWeek = new SimpleObjectProperty<>();
     private final ObservableList<EmployeeShiftWeek> employeeShiftWeekList = FXCollections.observableArrayList();
-    private final ObjectProperty<ShiftRepeatedEnum> selectedOptions = new SimpleObjectProperty<>();
+    private final ObjectProperty<ShiftRepeatingOption> selectedOptions = new SimpleObjectProperty<>();
     private final ObservableList<String> options = FXCollections.observableArrayList();
 
     private final ObjectProperty<ShiftDto> shiftCreated = new SimpleObjectProperty<>();
@@ -68,16 +68,17 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
         selectedShiftDate.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getDate().toString()));
         selectedShiftStart.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getStart().toString()));
         selectedShiftEnd.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEnd().toString()));
-        selectedShiftRole.bind(ObjectBindings.map(selectedShift, shiftDto ->{
-            if(shiftDto.getEmployee() instanceof ProjectionistDto){
+        selectedShiftRole.bind(ObjectBindings.map(selectedShift, shiftDto -> {
+            if (shiftDto.getEmployee() instanceof ProjectionistDto) {
                 return "Projectionist";
-            }return "Usher";
+            }
+            return "Usher";
         }));
         selectedShiftHall.bind(ObjectBindings.map(selectedShift, shiftDto -> {
-            if(shiftDto instanceof ShiftProjectionistDto) {
+            if (shiftDto instanceof ShiftProjectionistDto) {
                 return ((ShiftProjectionistDto) shiftDto).getHallDto().getId().toString();
             }
-                return null;
+            return null;
         }));
     }
 
@@ -85,48 +86,48 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
         return hallVisibility.get();
     }
 
-    public BooleanProperty hallVisibilityProperty() {
-        return hallVisibility;
-    }
-
     public void setHallVisibility(boolean hallVisibility) {
         this.hallVisibility.set(hallVisibility);
+    }
+
+    public BooleanProperty hallVisibilityProperty() {
+        return hallVisibility;
     }
 
     public String getError() {
         return error.get();
     }
 
-    public StringProperty errorProperty() {
-        return error;
-    }
-
     public void setError(String error) {
         this.error.set(error);
+    }
+
+    public StringProperty errorProperty() {
+        return error;
     }
 
     public boolean isErrorAssignVisibility() {
         return errorAssignVisibility.get();
     }
 
-    public BooleanProperty errorAssignVisibilityProperty() {
-        return errorAssignVisibility;
-    }
-
     public void setErrorAssignVisibility(boolean errorAssignVisibility) {
         this.errorAssignVisibility.set(errorAssignVisibility);
+    }
+
+    public BooleanProperty errorAssignVisibilityProperty() {
+        return errorAssignVisibility;
     }
 
     public boolean isErrorModifyVisibility() {
         return errorModifyVisibility.get();
     }
 
-    public BooleanProperty errorModifyVisibilityProperty() {
-        return errorModifyVisibility;
-    }
-
     public void setErrorModifyVisibility(boolean errorModifyVisibility) {
         this.errorModifyVisibility.set(errorModifyVisibility);
+    }
+
+    public BooleanProperty errorModifyVisibilityProperty() {
+        return errorModifyVisibility;
     }
 
     public ShiftDto getShiftCreated() {
@@ -141,15 +142,15 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
         return shiftCreated;
     }
 
-    public ShiftRepeatedEnum getSelectedOptions() {
+    public ShiftRepeatingOption getSelectedOptions() {
         return selectedOptions.get();
     }
 
-    public void setSelectedOptions(ShiftRepeatedEnum selectedOptions) {
+    public void setSelectedOptions(ShiftRepeatingOption selectedOptions) {
         this.selectedOptions.set(selectedOptions);
     }
 
-    public ObjectProperty<ShiftRepeatedEnum> selectedOptionsProperty() {
+    public ObjectProperty<ShiftRepeatingOption> selectedOptionsProperty() {
         return selectedOptions;
     }
 

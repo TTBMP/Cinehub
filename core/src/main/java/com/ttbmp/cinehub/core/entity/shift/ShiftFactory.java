@@ -1,23 +1,28 @@
 package com.ttbmp.cinehub.core.entity.shift;
 
 
+import com.ttbmp.cinehub.core.entity.Employee;
+import com.ttbmp.cinehub.core.entity.Hall;
+import com.ttbmp.cinehub.core.entity.Projectionist;
+import com.ttbmp.cinehub.core.entity.Usher;
+
 public class ShiftFactory {
 
-    public Shift createConcreteShift(Class<? extends Shift> shiftClass) {
-        if (ProjectionistShift.class.equals(shiftClass)) {
-            return createShiftProjectionist();
-        } else if (UsherShift.class.equals(shiftClass)) {
-            return createShiftUsher();
+    public Shift createConcreteShift(Employee employee, String date, String start, String end, Hall hall) {
+        if (employee.getClass().equals(Projectionist.class)) {
+            return createShiftProjectionist(employee, date, start, end, hall);
+        } else if (employee.getClass().equals(Usher.class)) {
+            return createShiftUsher(employee, date, start, end);
         }
-        return null;
-        //exception tipo non valido
+        throw new IllegalStateException("Unexpected value: " + employee.getClass());
     }
 
-    private Shift createShiftProjectionist() {
-        return new ProjectionistShift();
+    private Shift createShiftProjectionist(Employee employee, String date, String start, String end, Hall hall) {
+        return new ProjectionistShift(employee, date, start, end, hall);
     }
 
-    private Shift createShiftUsher() {
-        return new UsherShift();
+    private Shift createShiftUsher(Employee employee, String date, String start, String end) {
+        return new UsherShift(employee, date, start, end);
     }
+
 }

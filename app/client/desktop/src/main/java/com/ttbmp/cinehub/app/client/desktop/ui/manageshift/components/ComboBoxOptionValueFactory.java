@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.manageshift.components;
 
-import com.ttbmp.cinehub.core.entity.ShiftRepeatedEnum;
+import com.ttbmp.cinehub.core.entity.shift.ShiftRepeatingOption;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
@@ -8,16 +8,15 @@ import javafx.scene.control.ListView;
  * @author Massimo Mazzetti
  */
 
-public class ComboBoxOptionValueFactory extends ListCell<ShiftRepeatedEnum> {
+public class ComboBoxOptionValueFactory extends ListCell<ShiftRepeatingOption> {
 
 
-
-    public ComboBoxOptionValueFactory(ListView<ShiftRepeatedEnum> optionListView) {
+    public ComboBoxOptionValueFactory(ListView<ShiftRepeatingOption> optionListView) {
 
     }
 
     @Override
-    protected void updateItem(ShiftRepeatedEnum item, boolean empty) {
+    protected void updateItem(ShiftRepeatingOption item, boolean empty) {
         super.updateItem(item, empty);
         if (item == null || empty) {
             setGraphic(null);

@@ -1,9 +1,5 @@
 package com.ttbmp.cinehub.core.entity;
 
-import com.ttbmp.cinehub.core.entity.shift.Shift;
-import com.ttbmp.cinehub.core.entity.shift.ShiftFactory;
-import com.ttbmp.cinehub.core.entity.shift.ProjectionistShift;
-
 
 public class Projectionist extends Employee {
 
@@ -11,18 +7,6 @@ public class Projectionist extends Employee {
         super(name, surname, cinema);
     }
 
-    @Override
-    public Shift createShift(String date, String start, String end, Hall hall) {
-        Shift shift;
-        ShiftFactory shiftFactory = new ShiftFactory();
-        shift = shiftFactory.createConcreteShift(ProjectionistShift.class);
-        shift.setEmployee(this);
-        shift.setDate(date);
-        shift.setStart(start);
-        shift.setEnd(end);
-        ((ProjectionistShift) shift).setHall(hall);
-        return shift;
-    }
 
     @Override
     public boolean equals(Object obj) {

@@ -8,7 +8,7 @@ import com.ttbmp.cinehub.app.client.desktop.ui.manageshift.components.SpinnerSta
 import com.ttbmp.cinehub.app.client.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.core.dto.HallDto;
 import com.ttbmp.cinehub.core.dto.UsherDto;
-import com.ttbmp.cinehub.core.entity.ShiftRepeatedEnum;
+import com.ttbmp.cinehub.core.entity.shift.ShiftRepeatingOption;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.CreateShiftRequest;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetHallListRequest;
@@ -50,7 +50,7 @@ public class AssignShiftViewController extends ViewController {
     private VBox optionVBox;
 
     @FXML
-    private ComboBox<ShiftRepeatedEnum> optionRepeatComboBox;
+    private ComboBox<ShiftRepeatingOption> optionRepeatComboBox;
 
     @FXML
     private VBox dateVBox;
@@ -79,6 +79,7 @@ public class AssignShiftViewController extends ViewController {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
             hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
         }
+        viewModel.setErrorAssignVisibility(false);
         activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(viewModel.getSelectedDayWeek().getEmployee().getCinema()));
         hallComboBox.setItems(viewModel.getHallList());
         viewModel.selectedHallProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
@@ -108,7 +109,7 @@ public class AssignShiftViewController extends ViewController {
         repeatDatePicker.setDayCellFactory(date -> new RepeatDateCell(viewModel.selectedDayWeekProperty()));
         repeatDatePicker.valueProperty().bindBidirectional(viewModel.selectedEndRepeatDayProperty());
 
-        optionRepeatComboBox.getItems().setAll(ShiftRepeatedEnum.values());
+        optionRepeatComboBox.getItems().setAll(ShiftRepeatingOption.values());
         optionRepeatComboBox.setButtonCell(new ComboBoxOptionValueFactory(null));
         optionRepeatComboBox.setCellFactory(ComboBoxOptionValueFactory::new);
         optionRepeatComboBox.valueProperty().bindBidirectional(viewModel.selectedOptionsProperty());
@@ -167,7 +168,8 @@ public class AssignShiftViewController extends ViewController {
                             LocalDate.parse(viewModel.getSelectedDayWeek().getDate().toString()),
                             viewModel.getSelectedEndRepeatDay(),
                             viewModel.getSelectedOptions().toString(),
-                            viewModel.getShiftCreated()
+                            viewModel.getShiftCreated(),
+                            viewModel.getSelectedHall()
                     )
             );
             try {

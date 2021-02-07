@@ -119,7 +119,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     @Override
     public void presentInvalidSaveShiftListRequest(ShiftRequest request) {
         if (request.getErrorList().contains(ShiftRequest.MISSING_SHIFT)) {
-           viewModel.errorProperty().setValue(ShiftRequest.MISSING_SHIFT.getMessage());
+            viewModel.errorProperty().setValue(ShiftRequest.MISSING_SHIFT.getMessage());
         }
     }
 

@@ -1,7 +1,5 @@
 package com.ttbmp.cinehub.core.entity;
 
-import com.ttbmp.cinehub.core.entity.shift.Shift;
-
 /**
  * @author Fabio Buracchi, Massimo Mazzetti
  */
@@ -18,8 +16,6 @@ public abstract class Employee extends User {
         setSurname(surname);
         this.cinema = cinema;
     }
-
-    public abstract Shift createShift(String date, String start, String end, Hall hall);
 
     public Cinema getCinema() {
         return cinema;

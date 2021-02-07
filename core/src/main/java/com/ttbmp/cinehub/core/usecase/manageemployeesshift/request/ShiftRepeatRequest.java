@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.core.usecase.manageemployeesshift.request;
 
+import com.ttbmp.cinehub.core.dto.HallDto;
 import com.ttbmp.cinehub.core.dto.ShiftDto;
 import com.ttbmp.cinehub.core.usecase.Request;
 
@@ -16,12 +17,22 @@ public class ShiftRepeatRequest extends Request {
     private LocalDate end;
     private String option;
     private ShiftDto shift;
+    private HallDto hall;
 
-    public ShiftRepeatRequest(LocalDate start, LocalDate end, String option, ShiftDto shift) {
+    public ShiftRepeatRequest(LocalDate start, LocalDate end, String option, ShiftDto shift, HallDto hall) {
         this.start = start;
         this.end = end;
         this.option = option;
         this.shift = shift;
+        this.hall = hall;
+    }
+
+    public HallDto getHall() {
+        return hall;
+    }
+
+    public void setHall(HallDto hall) {
+        this.hall = hall;
     }
 
     public LocalDate getStart() {

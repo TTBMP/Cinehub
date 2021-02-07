@@ -11,7 +11,6 @@ import javafx.scene.control.ListView;
 public class HallFactory extends ListCell<HallDto> {
 
 
-
     public HallFactory(ListView<HallDto> listView) {
 
     }

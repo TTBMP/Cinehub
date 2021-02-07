@@ -8,7 +8,7 @@ public class ShiftProjectionistDto extends ShiftDto {
 
     public ShiftProjectionistDto(EmployeeDto employee, LocalDate date, LocalTime start, LocalTime end, HallDto hallDto) {
         super(employee, date, start, end);
-        this.hallDto=hallDto;
+        this.hallDto = hallDto;
     }
 
     public HallDto getHallDto() {

@@ -11,9 +11,6 @@ public class ProjectionistShift extends Shift {
 
     private Hall hall;
 
-    public ProjectionistShift() {
-    }
-
     public ProjectionistShift(Employee employee, String date, String start, String end, Hall hall) {
         super(employee, date, start, end);
         this.hall = hall;

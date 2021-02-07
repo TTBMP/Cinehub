@@ -9,9 +9,6 @@ import com.ttbmp.cinehub.core.entity.Employee;
 
 public class UsherShift extends Shift {
 
-    public UsherShift() {
-    }
-
     public UsherShift(Employee employee, String date, String start, String end) {
         super(employee, date, start, end);
     }

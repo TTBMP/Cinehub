@@ -33,10 +33,10 @@ public class ShiftModifyRequest extends Request {
 
     @Override
     protected void onValidate() {
-        if(newShift == null){
+        if (newShift == null) {
             addError(MISSING_NEW_SHIFT);
         }
-        if(oldShift == null){
+        if (oldShift == null) {
             addError(MISSING_OLD_SHIFT);
         }
     }
