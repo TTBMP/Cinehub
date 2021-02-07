@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.service.authentication;
+package com.ttbmp.cinehub.core.service.authentication.mock;
 
 import com.ttbmp.cinehub.core.service.authentication.AuthenticationService;
 

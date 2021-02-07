@@ -19,12 +19,13 @@ import java.util.List;
 /**
  * @author Palmieri Ivan
  */
-public class MovieApi implements MovieApiService {
-    private final List<MovieApiDto> listMovie = new ArrayList<>();
+public class TheMovieDbMovieApiService implements MovieApiService {
+
     private static final String URL_START = "http://api.themoviedb.org/3/movie/";
     private static final String API_KEY = "?api_key=ee1cbb18100612b10051a3a6ab051d6f";
     private static final String IMAGE_URL = "https://image.tmdb.org/t/p/w300";
 
+    private final List<MovieApiDto> listMovie = new ArrayList<>();
 
     @Override
     public List<MovieDto> getAllMovie() throws IOException {

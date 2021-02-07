@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.service.payment.mock;
+package com.ttbmp.cinehub.core.service.payment.mock;
 
 import com.ttbmp.cinehub.core.service.payment.PaymentService;
 import com.ttbmp.cinehub.core.service.payment.request.PayServiceRequest;

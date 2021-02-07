@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.service.email.mock;
+package com.ttbmp.cinehub.core.service.email.mock;
 
 
 import com.ttbmp.cinehub.core.service.email.EmailService;
@@ -11,5 +11,6 @@ public class MockEmailService implements EmailService {
 
     @Override
     public void sendMail(EmailServiceRequest emailServiceRequest) {
+        System.out.println("Email sent");
     }
 }

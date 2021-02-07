@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.data.local.mock;
+package com.ttbmp.cinehub.core.repository.mock;
 
 import com.ttbmp.cinehub.core.ShiftSaveException;
 import com.ttbmp.cinehub.core.entity.Employee;
