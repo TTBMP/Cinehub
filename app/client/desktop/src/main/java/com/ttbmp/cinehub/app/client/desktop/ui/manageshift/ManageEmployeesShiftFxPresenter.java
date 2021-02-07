@@ -59,14 +59,11 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     public void presentSaveShift() {
         Shift savedShift = ShiftDataMapper.mapToEntity(viewModel.getShiftCreated());
         TemporalField temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
-
         List<EmployeeShiftWeek> employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
-
         employeeShiftWeeks.forEach(e -> {
             if (EmployeeDataMapper.matToEntity(e.getEmployeeDto()).equals(savedShift.getEmployee())
-                    &&
-                    LocalDate.parse(savedShift.getDate()).get(temporalField) == viewModel.getSelectedWeek().get(temporalField) &&
-                    LocalDate.parse(savedShift.getDate()).getYear() == viewModel.getSelectedWeek().getYear()) {
+                    && LocalDate.parse(savedShift.getDate()).get(temporalField) == viewModel.getSelectedWeek().get(temporalField)
+                    && LocalDate.parse(savedShift.getDate()).getYear() == viewModel.getSelectedWeek().getYear()) {
                 e.getWeekMap().get(LocalDate.parse(savedShift.getDate()).getDayOfWeek())
                         .getShiftList()
                         .add(ShiftDataMapper.mapToDto(savedShift));
@@ -78,9 +75,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     @Override
     public void presentDeleteShift() {
         Shift deleteShift = ShiftDataMapper.mapToEntity(viewModel.getSelectedShift());
-
         List<EmployeeShiftWeek> employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
-
         employeeShiftWeeks.forEach(e -> {
             if (EmployeeDataMapper.matToEntity(e.getEmployeeDto()).equals(deleteShift.getEmployee())) {
                 e.getWeekMap().get(LocalDate.parse(deleteShift.getDate()).getDayOfWeek())
@@ -88,7 +83,6 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
                         .removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
             }
         });
-
         viewModel.getEmployeeShiftWeekList().setAll(employeeShiftWeeks);
 
     }
