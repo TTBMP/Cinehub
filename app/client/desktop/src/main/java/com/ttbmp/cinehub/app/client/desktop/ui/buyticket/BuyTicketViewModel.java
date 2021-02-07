@@ -90,7 +90,6 @@ public class BuyTicketViewModel implements ViewModel {
     }
 
 
-
     public ObservableList<ProjectionDto> getProjectionOfProjectionTimeList() {
         return projectionOfProjectionTimeList;
     }
@@ -166,7 +165,6 @@ public class BuyTicketViewModel implements ViewModel {
     public ObjectProperty<TicketDto> selectedTicketProperty() {
         return selectedTicket;
     }
-
 
 
     public ObjectProperty<LocalDate> selectedDateProperty() {

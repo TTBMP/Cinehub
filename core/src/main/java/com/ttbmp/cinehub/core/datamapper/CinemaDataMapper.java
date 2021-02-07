@@ -7,7 +7,7 @@ import com.ttbmp.cinehub.core.utilities.DataMapperHelper;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class CinemaDataMapper {
 
@@ -15,18 +15,24 @@ public class CinemaDataMapper {
     }
 
     public static CinemaDto mapToDto(Cinema cinema) {
-        if (cinema == null) {
-            return null;
-        }
-        return new CinemaDto(cinema.getName(), cinema.getAddress(), cinema.getCity());
+
+        return new CinemaDto(
+                cinema.getId(),
+                cinema.getName(),
+                cinema.getAddress(),
+                cinema.getCity(),
+                HallDataMapper.mapToDtoList(cinema.getHallList())
+        );
     }
 
     public static Cinema mapToEntity(CinemaDto cinemaDto) {
-        if (cinemaDto == null) return null;
+
         return new Cinema(
+                cinemaDto.getId(),
                 cinemaDto.getName(),
                 cinemaDto.getAddress(),
-                cinemaDto.getCity()
+                cinemaDto.getCity(),
+                HallDataMapper.mapToEntityList(cinemaDto.getHalList())
         );
     }
 
@@ -34,5 +40,8 @@ public class CinemaDataMapper {
         return DataMapperHelper.mapList(cinemaList, CinemaDataMapper::mapToDto);
     }
 
+    public static List<Cinema> mapToEntityList(List<CinemaDto> cinemaListDto) {
+        return DataMapperHelper.mapList(cinemaListDto, CinemaDataMapper::mapToEntity);
+    }
 
 }

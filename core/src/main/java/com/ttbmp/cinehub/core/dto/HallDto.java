@@ -14,6 +14,11 @@ public class HallDto {
         this.id = id;
     }
 
+    public HallDto(Integer id, List<SeatDto> seatList) {
+        this.id = id;
+        this.seatList = seatList;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -29,4 +34,5 @@ public class HallDto {
     public void setSeatList(List<SeatDto> seatList) {
         this.seatList = seatList;
     }
+
 }

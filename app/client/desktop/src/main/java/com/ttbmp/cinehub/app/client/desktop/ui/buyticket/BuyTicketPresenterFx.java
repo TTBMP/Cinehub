@@ -6,8 +6,6 @@ import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketPresenter;
 import com.ttbmp.cinehub.core.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.core.usecase.buyticket.response.*;
 
-import java.util.List;
-
 /**
  * @author Palmieri Ivan
  */
@@ -37,7 +35,6 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     public void presentSeatList(GetNumberOfSeatsResponse response) {
         viewModel.getSeatList().setAll(response.getSeatDtoList());
     }
-
 
 
     @Override

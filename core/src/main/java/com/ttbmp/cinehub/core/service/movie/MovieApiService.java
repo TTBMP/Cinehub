@@ -12,4 +12,5 @@ public interface MovieApiService {
 
     List<MovieDto> getAllMovie() throws IOException;
 
+    MovieDto getMovie(int movieId) throws IOException;
 }

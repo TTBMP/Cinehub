@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.data.local.mock;
 
-import com.ttbmp.cinehub.core.datamapper.MovieDataMapper;
+import com.ttbmp.cinehub.core.dto.MovieDto;
 import com.ttbmp.cinehub.core.entity.Movie;
 import com.ttbmp.cinehub.core.entity.Projection;
 import com.ttbmp.cinehub.core.repository.MovieRepository;
@@ -9,49 +9,57 @@ import com.ttbmp.cinehub.core.service.movie.MovieApiService;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * @author Palmieri Ivan
+ * @author Fabio Buracchi, Massimo Mazzetti
  */
 public class MockMovieRepository implements MovieRepository {
 
-     private MovieApiService movieApiService;
+    private static final Map<Integer, Movie> movieMap = new HashMap<>();
 
-    public MockMovieRepository(MovieApiService movieApiService){
+    static {
+        movieMap.put(3, new Movie(3));
+        movieMap.put(5, new Movie(5));
+        movieMap.put(6, new Movie(6));
+        movieMap.put(8, new Movie(8));
+        movieMap.put(11, new Movie(11));
+        movieMap.put(15, new Movie(15));
+    }
+
+    private final MovieApiService movieApiService;
+
+
+    public MockMovieRepository(MovieApiService movieApiService) {
         this.movieApiService = movieApiService;
     }
 
-
-
-    @Override
-    public List<Movie> getMovieList(List<Projection> projectionList, List<Movie> movieList) {
-        List<Movie> result = new ArrayList<>();
-        for (Projection projection : projectionList) {
-            for (Movie movie : movieList) {
-                if (projection.getMovie().getName().equals(movie.getName())) {
-                    result.add(movie);
-                }
-            }
-        }
-        for (int i = 0; i < result.size(); i++) {
-            for (int j = i + 1; j < result.size(); j++) {
-                if (result.get(i).getName().equals(result.get(j).getName())) {
-                    result.remove(j);
-                    break;
-                }
-            }
-        }
-        return result;
+    public static List<Movie> getAllMovie() {
+        return new ArrayList<>(movieMap.values());
     }
 
     @Override
     public List<Movie> getMovieList(String localDate) throws IOException {
         ProjectionRepository projectionRepository = new MockProjectionRepository();
-        List<Movie> movieList = MovieDataMapper.mapToEntityList(movieApiService.getAllMovie());
-        List<Projection> projectionList = projectionRepository.getProjectionList(localDate);//I recover the projections on that date
-        return getMovieList(projectionList,movieList);
+        List<Movie> result = new ArrayList<>();
+        List<Projection> projectionList = projectionRepository.getProjectionList(localDate);
+        for (Projection projection : projectionList) {
+            Movie movie = projection.getMovie();
+            if (!result.contains(movie)) {
+                if (movie.getName() == null) {
+                    MovieDto movieDto = movieApiService.getMovie(movie.getId());
+                    movie.setName(movieDto.getName());
+                    movie.setOverview(movieDto.getOverview());
+                    movie.setRelases(movie.getRelases());
+                    movie.setVote(movieDto.getVote());
+                    movie.setImageUrl(movieDto.getMovieUrl());
+                    movie.setDuration(movieDto.getDuration());
+                }
+                result.add(movie);
+            }
+        }
+        return result;
     }
-
-
 }

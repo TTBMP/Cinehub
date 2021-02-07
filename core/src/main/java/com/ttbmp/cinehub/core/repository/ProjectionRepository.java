@@ -12,9 +12,6 @@ import java.util.List;
  */
 public interface ProjectionRepository {
 
-
-    List<Projection> getAllProjection();
-
     List<Projection> getProjectionList(CinemaDto mapToDto, MovieDto mapToDto1, String date);
 
     List<Projection> getProjectionList(String localDate);

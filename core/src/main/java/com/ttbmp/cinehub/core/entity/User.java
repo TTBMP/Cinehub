@@ -6,13 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Fabio Buracchi and Palmieri Ivan
+ * @author Fabio Buracchi, Palmieri Ivan
  */
 public class User {
 
     private final List<Ticket> ownedTicket = new ArrayList<>();
     private Integer id;
     private String name;
+    private String surname;
     private String email;
     private CreditCard card;
 
@@ -33,6 +34,14 @@ public class User {
 
     public List<Ticket> getOwnedTicket() {
         return ownedTicket;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public int getId() {

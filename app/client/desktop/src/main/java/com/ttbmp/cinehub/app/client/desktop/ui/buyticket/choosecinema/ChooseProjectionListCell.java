@@ -32,6 +32,8 @@ public class ChooseProjectionListCell extends ListCell<ProjectionDto> {
             Objects.requireNonNull(item);
             item.getController().load(activity, navController, request);
             setGraphic(item.getRoot());
+        } else {
+            setGraphic(null);
         }
     }
 }

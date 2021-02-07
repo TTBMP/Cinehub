@@ -1,6 +1,9 @@
 package com.ttbmp.cinehub.data.local.mock;
 
-import com.ttbmp.cinehub.core.entity.*;
+import com.ttbmp.cinehub.core.entity.Cinema;
+import com.ttbmp.cinehub.core.entity.Hall;
+import com.ttbmp.cinehub.core.entity.Movie;
+import com.ttbmp.cinehub.core.entity.Projection;
 import com.ttbmp.cinehub.core.repository.CinemaRepository;
 import com.ttbmp.cinehub.core.repository.ProjectionRepository;
 
@@ -8,38 +11,61 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Fabio Buracchi, Massimo Mazzetti, Ivan Palmieri
  */
 public class MockCinemaRepository implements CinemaRepository {
 
+    private static final List<Cinema> cinemaList = new ArrayList<>();
 
-    private final List<Cinema> cinemaList = new ArrayList<>();
+    static {
+        cinemaList.add(new Cinema(
+                0,
+                "Comunale",
+                "via recanati 3",
+                "Recanati",
+                new MockHallRepository().getHallList(0)
+        ));
+        cinemaList.add(new Cinema(
+                1,
+                "MultiPlex",
+                "via garibaldi 1",
+                "Teramo",
+                new MockHallRepository().getHallList(1)
+        ));
+    }
 
-
+    public Cinema getCinema(int cinemaId) {
+        return cinemaList.get(cinemaId);
+    }
 
     @Override
-    public List<Cinema> getListCinema(List<Projection> projectionList) {
-        cinemaList.clear();
-        for (Projection projection : projectionList) {
-            cinemaList.add(projection.getCinema());
-        }
-        for (int i = 0; i < cinemaList.size(); i++) {
-            for (int j = i + 1; j < cinemaList.size(); j++) {
-                if (cinemaList.get(i).getName().equals(cinemaList.get(j).getName())) {
-                    cinemaList.remove(j);
-                    break;
+    public Cinema getCinema(Hall hall) {
+        for (Cinema cinema : cinemaList) {
+            for (Hall hallCinema : cinema.getHallList()) {
+                if (hallCinema.getId().equals(hall.getId())) {
+                    return cinema;
                 }
             }
         }
+        return null;
+    }
+
+    @Override
+    public List<Cinema> getAllCinema() {
         return cinemaList;
     }
 
     @Override
     public List<Cinema> getListCinema(Movie movie, String date) {
         ProjectionRepository projectionRepository = new MockProjectionRepository();
-        List<Projection> projectionList = projectionRepository.getProjectionList(movie, date);//I recover the projections of a specific film on a specific date
-        return getListCinema(projectionList);
+        List<Projection> projectionList = projectionRepository.getProjectionList(movie, date);
+        List<Cinema> result = new ArrayList<>();
+        for (Projection projection : projectionList) {
+            if (!result.contains(projection.getCinema())) {
+                result.add(projection.getCinema());
+            }
+        }
+        return result;
     }
-
 
 }

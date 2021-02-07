@@ -29,6 +29,8 @@ public class AppContainer {
         dependencyFactoryMap.put(ShiftRepository.class, MockShiftRepository::new);
         dependencyFactoryMap.put(UserRepository.class, MockUserRepository::new);
         dependencyFactoryMap.put(EmployeeRepository.class, MockEmployeeRepository::new);
+        dependencyFactoryMap.put(CinemaRepository.class, MockCinemaRepository::new);
+        dependencyFactoryMap.put(HallRepository.class, MockHallRepository::new);
         dependencyFactoryMap.put(AuthenticationService.class, MockAuthenticationService::new);
         dependencyFactoryMap.put(EmailService.class, MockEmailService::new);
         dependencyFactoryMap.put(PaymentService.class, StripeServicePayment::new);

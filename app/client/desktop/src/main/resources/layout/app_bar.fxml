@@ -6,6 +6,7 @@
 <VBox xmlns:fx="http://javafx.com/fxml/1" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
       fx:controller="com.ttbmp.cinehub.app.client.desktop.ui.appbar.AppBarViewController">
     <TabPane fx:id="tabPane" minHeight="30.0" nodeOrientation="RIGHT_TO_LEFT" tabClosingPolicy="UNAVAILABLE">
+        <Tab fx:id="manageShiftTab" closable="false" text="Manage Shift"/>
         <Tab fx:id="viewPersonalScheduleTab" closable="false" text="View Personal Schedule"/>
         <Tab fx:id="buyTicketTab" text="Buy Ticket"/>
     </TabPane>

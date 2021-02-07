@@ -4,7 +4,7 @@ package com.ttbmp.cinehub.core.entity;
  * @author Palmieri Ivan
  */
 public class Movie {
-
+    private int id;
     private String name;
     private String vote;
     private String imageUrl;
@@ -12,8 +12,24 @@ public class Movie {
     private String overview;
     private String relases;
 
-    public Movie(String name) {
-        this.name = name;
+    public Movie(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
     public String getName() {

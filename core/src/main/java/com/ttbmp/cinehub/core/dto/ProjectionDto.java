@@ -10,8 +10,8 @@ import java.util.List;
 public class ProjectionDto {
 
     private final String startTime;
-    private CinemaDto cinemaDto;
     private final HallDto hallDto;
+    private CinemaDto cinemaDto;
     private MovieDto movieDto;
     private List<TicketDto> ticketBasicList;
     private String date;
