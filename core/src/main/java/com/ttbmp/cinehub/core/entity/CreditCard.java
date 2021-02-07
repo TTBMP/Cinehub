@@ -4,8 +4,8 @@ package com.ttbmp.cinehub.core.entity;
  * @author Palmieri Ivan
  */
 public class CreditCard {
-    private String expirationDate;
-    private Integer cvv;
+    private final String expirationDate;
+    private final Integer cvv;
     private String number;
     private String pin;
 

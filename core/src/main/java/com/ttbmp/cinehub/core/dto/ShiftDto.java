@@ -11,7 +11,7 @@ public class ShiftDto {
     private EmployeeDto employee;
     private String employeeName;
     private LocalDate date;
-    private LocalTime start;
+    private final LocalTime start;
     private LocalTime end;
 
 

@@ -12,6 +12,7 @@ import java.util.Objects;
 /**
  * @author Palmieri Ivan
  */
+@SuppressWarnings("java:S110")
 public class ChooseCinemaListCell extends ListCell<CinemaDto> {
     private final Activity activity;
     private final NavController navController;

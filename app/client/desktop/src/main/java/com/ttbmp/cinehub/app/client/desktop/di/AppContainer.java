@@ -11,7 +11,6 @@ import com.ttbmp.cinehub.service.authentication.MockAuthenticationService;
 import com.ttbmp.cinehub.service.email.mock.MockEmailService;
 import com.ttbmp.cinehub.service.movieinformation.movieapi.MovieApi;
 import com.ttbmp.cinehub.service.payment.mock.MockPaymentService;
-import com.ttbmp.cinehub.service.payment.stripe.StripeServicePayment;
 
 import java.util.function.Supplier;
 

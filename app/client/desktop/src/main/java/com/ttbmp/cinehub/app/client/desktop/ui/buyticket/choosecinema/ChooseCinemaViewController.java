@@ -25,7 +25,7 @@ import java.io.IOException;
 public class ChooseCinemaViewController extends ViewController {
 
     private BuyTicketViewModel viewModel;
-    
+
     @FXML
     private VBox appBar;
 

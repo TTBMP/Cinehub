@@ -7,7 +7,7 @@ public class Payment {
 
     private String id;
     private long price;
-    private String status;
+    private final String status;
 
     public Payment(String id, long l, String status) {
         this.id = id;

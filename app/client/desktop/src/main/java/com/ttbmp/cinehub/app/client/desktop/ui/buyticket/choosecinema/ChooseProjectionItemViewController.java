@@ -9,6 +9,9 @@ import javafx.scene.control.Label;
 
 import java.util.Objects;
 
+/**
+ * @author Palmieri Ivan
+ */
 public class ChooseProjectionItemViewController extends ViewController {
 
     private ProjectionDto projectionDto;

@@ -12,6 +12,7 @@ import java.util.Objects;
 /**
  * @author Massimo Mazzetti
  */
+@SuppressWarnings("java:S110")
 public class EmployeeCalendarTableCell extends TableCell<EmployeeShiftWeek, EmployeeDto> {
     private final Activity activity;
     private final NavController navController;

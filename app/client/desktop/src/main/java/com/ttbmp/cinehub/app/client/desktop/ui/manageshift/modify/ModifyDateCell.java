@@ -8,6 +8,7 @@ import java.time.LocalDate;
 /**
  * @author Massimo Mazzetti
  */
+@SuppressWarnings("java:S110")
 public class ModifyDateCell extends DateCell {
 
     public ModifyDateCell(DatePicker datePicker) {

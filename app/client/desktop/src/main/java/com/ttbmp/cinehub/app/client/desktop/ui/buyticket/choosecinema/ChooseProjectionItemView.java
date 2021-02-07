@@ -4,6 +4,9 @@ import com.ttbmp.cinehub.app.client.desktop.utilities.ui.FxmlView;
 
 import java.io.IOException;
 
+/**
+ * @author Palmieri Ivan
+ */
 public class ChooseProjectionItemView extends FxmlView {
 
     public ChooseProjectionItemView() throws IOException {

@@ -8,6 +8,10 @@ import javafx.scene.control.ListCell;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * @author Palmieri Ivan
+ */
+@SuppressWarnings("java:S110")
 public class ChooseProjectionListCell extends ListCell<ProjectionDto> {
     private final Activity activity;
     private final NavController navController;

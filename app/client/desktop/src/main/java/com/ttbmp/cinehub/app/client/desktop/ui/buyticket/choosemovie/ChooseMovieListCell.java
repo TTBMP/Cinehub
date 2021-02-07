@@ -12,6 +12,7 @@ import java.util.Objects;
 /**
  * @author Palmieri Ivan
  */
+@SuppressWarnings("java:S110")
 public class ChooseMovieListCell extends ListCell<MovieDto> {
 
     private final Activity activity;

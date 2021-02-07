@@ -7,6 +7,7 @@ import javafx.scene.control.ListView;
 /**
  * @author Massimo Mazzetti
  */
+@SuppressWarnings("java:S110")
 public class ComboBoxOptionValueFactory extends ListCell<ShiftRepeatingOption> {
 
     public ComboBoxOptionValueFactory(ListView<ShiftRepeatingOption> optionListView) {
