@@ -11,8 +11,6 @@ import java.time.format.FormatStyle;
 /**
  * @author Massimo Mazzetti
  */
-
-
 public class SpinnerStartValueFactory extends SpinnerValueFactory<LocalTime> {
 
     private final ObjectProperty<LocalTime> end = new SimpleObjectProperty<>();
@@ -45,4 +43,5 @@ public class SpinnerStartValueFactory extends SpinnerValueFactory<LocalTime> {
                 setValue(time.plusMinutes(5));
         }
     }
+
 }

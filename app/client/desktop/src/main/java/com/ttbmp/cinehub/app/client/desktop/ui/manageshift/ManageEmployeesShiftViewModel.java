@@ -17,8 +17,6 @@ import java.time.LocalTime;
 /**
  * @author Massimo Mazzetti
  */
-
-
 public class ManageEmployeesShiftViewModel implements ViewModel {
 
     private final ObjectProperty<CinemaDto> selectedCinema = new SimpleObjectProperty<>();

@@ -26,7 +26,6 @@ import java.util.function.UnaryOperator;
 /**
  * @author Massimo Mazzetti
  */
-
 public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCase {
     private final ManageEmployeesShiftPresenter manageEmployeesShiftPresenter;
     private final ShiftRepository shiftRepository;

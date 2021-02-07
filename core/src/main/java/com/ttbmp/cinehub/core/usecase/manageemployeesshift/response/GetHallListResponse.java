@@ -9,8 +9,8 @@ import java.util.List;
 /**
  * @author Massimo Mazzetti
  */
-
 public class GetHallListResponse {
+
     List<HallDto> listHall;
 
     public GetHallListResponse(List<HallDto> listHall) {
@@ -24,4 +24,5 @@ public class GetHallListResponse {
     public void setListHall(List<HallDto> listHall) {
         this.listHall = listHall;
     }
+
 }

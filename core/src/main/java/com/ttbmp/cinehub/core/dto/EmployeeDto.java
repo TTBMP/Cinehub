@@ -3,7 +3,6 @@ package com.ttbmp.cinehub.core.dto;
 /**
  * @author Massimo Mazzetti
  */
-
 public class EmployeeDto {
 
     private String name;
@@ -59,5 +58,6 @@ public class EmployeeDto {
         /* ... */
         return 0;
     }
+
 }
 

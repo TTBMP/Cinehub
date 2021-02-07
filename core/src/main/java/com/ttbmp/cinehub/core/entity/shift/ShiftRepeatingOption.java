@@ -3,7 +3,6 @@ package com.ttbmp.cinehub.core.entity.shift;
 /**
  * @author Massimo Mazzetti
  */
-
 public enum ShiftRepeatingOption {
     EVERY_DAY("Every day"),
     EVERY_WEEK("Every week"),
@@ -18,6 +17,7 @@ public enum ShiftRepeatingOption {
     public String getValue() {
         return this.value;
     }
+
 }
 
 

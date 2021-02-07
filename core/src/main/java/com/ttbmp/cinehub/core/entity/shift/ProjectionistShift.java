@@ -6,7 +6,6 @@ import com.ttbmp.cinehub.core.entity.Hall;
 /**
  * @author Massimo Mazzetti
  */
-
 public class ProjectionistShift extends Shift {
 
     private Hall hall;
@@ -45,4 +44,5 @@ public class ProjectionistShift extends Shift {
     public int hashCode() {
         return 0;
     }
+
 }

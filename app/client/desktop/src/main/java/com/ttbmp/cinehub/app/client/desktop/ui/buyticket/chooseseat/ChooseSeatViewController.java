@@ -20,42 +20,54 @@ import java.io.IOException;
 /**
  * @author Palmieri Ivan
  */
-
-
 public class ChooseSeatViewController extends ViewController {
 
-
     private final ToggleGroup toggleGroup = new ToggleGroup();
+
+    private BuyTicketViewModel viewModel;
+
     @FXML
     private VBox appBar;
+
     @FXML
     private AppBarViewController appBarController;
+
     @FXML
     private CheckBox foldingArmchairRadioButton;
+
     @FXML
     private CheckBox heatedArmchairRadioButton;
+
     @FXML
     private CheckBox skipLineRadioButton;
-    private BuyTicketViewModel viewModel;
+
     @FXML
     private Button returnButton;
+
     @FXML
     private Button buyRandomButton;
+
     @FXML
     private Label errorSectionLabel;
+
     @FXML
     private Button confirmSeatButton;
+
     @FXML
     private Text seatsFreeText;
+
     @FXML
     private VBox seatsContainerVBox;
+
     @FXML
     private Text seatsBuysText;
+
     @FXML
     private Text seatsTotalText;
 
     @Override
     protected void onLoad() {
+        appBarController.load(activity, navController);
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
         activity.getUseCase(BuyTicketUseCase.class).getListOfSeat(new GetNumberOfSeatsRequest(viewModel.selectedProjectionProperty().getValue()));
         confirmSeatButton.setDisable(true);

@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.client.desktop.ui.buyticket.payment;
 
 
+import com.ttbmp.cinehub.app.client.desktop.ui.appbar.AppBarViewController;
 import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.CustomDateCell;
 import com.ttbmp.cinehub.app.client.desktop.ui.buyticket.chooseseat.ChooseSeatView;
@@ -15,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
@@ -23,32 +25,44 @@ import java.io.IOException;
  */
 public class PaymentViewController extends ViewController {
 
-
     private BuyTicketViewModel viewModel;
+
+    @FXML
+    private VBox appBar;
+
+    @FXML
+    private AppBarViewController appBarController;
+
     @FXML
     private Button returnButton;
 
     @FXML
     private TextField numberOfCreditCardTextField;
+
     @FXML
     private Button confirmButton;
+
     @FXML
     private TextField surnameTextField;
+
     @FXML
     private TextField nameTextField;
+
     @FXML
     private TextField emailTextField;
+
     @FXML
     private TextField cvvTextField;
+
     @FXML
     private Label errorSectionLabel;
 
     @FXML
     private DatePicker fieldExpirationDatePicker;
 
-
     @Override
     protected void onLoad() {
+        appBarController.load(activity, navController);
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
         bind();
         confirmButton.setOnAction(this::startPayment);

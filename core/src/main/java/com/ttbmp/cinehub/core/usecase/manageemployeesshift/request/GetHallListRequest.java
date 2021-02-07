@@ -7,8 +7,8 @@ import com.ttbmp.cinehub.core.usecase.Request;
 /**
  * @author Massimo Mazzetti
  */
-
 public class GetHallListRequest extends Request {
+
     public static final Request.Error MISSING_HALL = new Request.Error("sala non valida");
 
     private CinemaDto cinema;
@@ -31,4 +31,5 @@ public class GetHallListRequest extends Request {
             addError(MISSING_HALL);
         }
     }
+
 }

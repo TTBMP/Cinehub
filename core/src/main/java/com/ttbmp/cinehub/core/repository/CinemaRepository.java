@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * @author Massimo Mazzetti, Ivan Palmieri
  */
-
 public interface CinemaRepository {
 
     List<Cinema> getAllCinema();

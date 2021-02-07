@@ -19,8 +19,6 @@ import java.util.ResourceBundle;
 /**
  * @author Massimo Mazzetti
  */
-
-
 public class ShiftItemViewController extends ViewController {
 
     @FXML
@@ -67,6 +65,7 @@ public class ShiftItemViewController extends ViewController {
         this.shift = shiftDto;
         load(activity, controller);
     }
+
 }
 
 

@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * @author Massimo Mazzetti
  */
-
 public class GetShiftListResponse {
     private List<ShiftDto> shiftDtoList;
     private LocalDate date;
@@ -45,4 +44,5 @@ public class GetShiftListResponse {
     public void setCinema(CinemaDto cinema) {
         this.cinema = cinema;
     }
+
 }

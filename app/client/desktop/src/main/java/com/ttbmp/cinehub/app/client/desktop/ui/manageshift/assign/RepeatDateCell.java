@@ -10,7 +10,6 @@ import java.time.LocalDate;
 /**
  * @author Massimo Mazzetti
  */
-
 public class RepeatDateCell extends DateCell {
 
     private final ObjectProperty<DayWeek> selectedDate = new SimpleObjectProperty<>();

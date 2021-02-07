@@ -13,7 +13,6 @@ import java.util.Objects;
 /**
  * @author Palmieri Ivan
  */
-
 public class ChooseCinemaItemViewController extends ViewController {
 
     private CinemaDto cinemaDto;

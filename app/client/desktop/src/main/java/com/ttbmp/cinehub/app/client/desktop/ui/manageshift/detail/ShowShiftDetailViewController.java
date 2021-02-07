@@ -17,7 +17,6 @@ import java.time.LocalDate;
 /**
  * @author Massimo Mazzetti
  */
-
 public class ShowShiftDetailViewController extends ViewController {
 
     @FXML

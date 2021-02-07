@@ -16,7 +16,6 @@ import java.util.List;
 /**
  * @author Palmieri Ivan
  */
-
 public class BuyTicketViewModel implements ViewModel {
 
 

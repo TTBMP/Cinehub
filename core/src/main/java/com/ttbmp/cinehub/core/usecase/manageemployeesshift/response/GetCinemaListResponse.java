@@ -7,7 +7,6 @@ import java.util.List;
 /**
  * @author Massimo Mazzetti
  */
-
 public class GetCinemaListResponse {
     private List<CinemaDto> cinemaList;
 
@@ -22,4 +21,5 @@ public class GetCinemaListResponse {
     public void setCinemaList(List<CinemaDto> cinemaList) {
         this.cinemaList = cinemaList;
     }
+
 }

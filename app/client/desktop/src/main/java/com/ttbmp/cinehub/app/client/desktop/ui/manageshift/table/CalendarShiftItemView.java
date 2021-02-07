@@ -8,8 +8,6 @@ import java.io.IOException;
 /**
  * @author Massimo Mazzetti
  */
-
-
 public class CalendarShiftItemView extends FxmlView {
 
     public CalendarShiftItemView() throws IOException {

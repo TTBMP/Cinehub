@@ -7,7 +7,6 @@ import com.ttbmp.cinehub.core.dto.ShiftDto;
 /**
  * @author Massimo Mazzetti
  */
-
 public class ShiftResponse {
     private ShiftDto shiftDto;
 
@@ -22,4 +21,5 @@ public class ShiftResponse {
     public void setShiftDto(ShiftDto shiftDto) {
         this.shiftDto = shiftDto;
     }
+
 }

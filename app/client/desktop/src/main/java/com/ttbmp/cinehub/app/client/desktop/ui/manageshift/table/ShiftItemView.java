@@ -8,8 +8,6 @@ import java.io.IOException;
 /**
  * @author Massimo Mazzetti
  */
-
-
 public class ShiftItemView extends FxmlView {
 
     public ShiftItemView() throws IOException {
@@ -22,4 +20,5 @@ public class ShiftItemView extends FxmlView {
     public ShiftItemViewController getController() {
         return (ShiftItemViewController) super.getController();
     }
+
 }

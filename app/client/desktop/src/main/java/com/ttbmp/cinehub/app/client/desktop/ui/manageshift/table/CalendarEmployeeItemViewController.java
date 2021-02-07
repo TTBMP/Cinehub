@@ -16,8 +16,6 @@ import java.util.ResourceBundle;
 /**
  * @author Massimo Mazzetti
  */
-
-
 public class CalendarEmployeeItemViewController extends ViewController {
 
     EmployeeDto employee;

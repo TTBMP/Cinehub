@@ -9,8 +9,6 @@ import java.util.List;
 /**
  * @author Massimo Mazzetti
  */
-
-
 public class DayWeek {
     private LocalDate date;
     private List<ShiftDto> shiftList;

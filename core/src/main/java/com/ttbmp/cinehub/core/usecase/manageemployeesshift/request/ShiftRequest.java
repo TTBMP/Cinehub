@@ -6,7 +6,6 @@ import com.ttbmp.cinehub.core.usecase.Request;
 /**
  * @author Massimo Mazzetti
  */
-
 public class ShiftRequest extends Request {
 
     public static final Request.Error MISSING_SHIFT = new Request.Error("Shift non valido");
@@ -31,4 +30,5 @@ public class ShiftRequest extends Request {
             addError(MISSING_SHIFT);
         }
     }
+
 }

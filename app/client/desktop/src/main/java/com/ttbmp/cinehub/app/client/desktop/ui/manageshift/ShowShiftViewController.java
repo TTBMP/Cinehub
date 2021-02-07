@@ -24,8 +24,6 @@ import java.time.LocalDate;
 /**
  * @author Massimo Mazzetti
  */
-
-
 public class ShowShiftViewController extends ViewController {
     ManageEmployeesShiftViewModel viewModel;
 

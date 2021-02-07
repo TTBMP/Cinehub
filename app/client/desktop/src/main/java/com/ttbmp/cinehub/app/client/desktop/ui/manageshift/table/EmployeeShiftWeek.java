@@ -8,7 +8,6 @@ import java.util.Map;
 /**
  * @author Massimo Mazzetti
  */
-
 public class EmployeeShiftWeek {
 
     private EmployeeDto employeeDto;

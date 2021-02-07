@@ -24,8 +24,6 @@ import java.util.ResourceBundle;
 /**
  * @author Massimo Mazzetti
  */
-
-
 public class ModifyShiftViewController extends ViewController {
     private ManageEmployeesShiftViewModel viewModel;
 
@@ -144,8 +142,8 @@ public class ModifyShiftViewController extends ViewController {
 
             }
         }
-
     }
+
 }
 
 

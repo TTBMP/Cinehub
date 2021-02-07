@@ -8,7 +8,6 @@ import java.time.LocalDate;
 /**
  * @author Massimo Mazzetti
  */
-
 public class GetShiftListRequest extends Request {
     public static final Request.Error MISSING_CINEMA = new Request.Error("Cinema non valido");
     public static final Request.Error MISSING_START = new Request.Error("Inizio non valido");
@@ -47,4 +46,5 @@ public class GetShiftListRequest extends Request {
             addError(MISSING_START);
         }
     }
+
 }

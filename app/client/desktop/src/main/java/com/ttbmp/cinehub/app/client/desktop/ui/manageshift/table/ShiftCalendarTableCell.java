@@ -10,8 +10,6 @@ import java.util.Objects;
 /**
  * @author Massimo Mazzetti
  */
-
-
 public class ShiftCalendarTableCell extends TableCell<EmployeeShiftWeek, DayWeek> {
     private final Activity activity;
     private final NavController navController;

@@ -6,7 +6,6 @@ import com.ttbmp.cinehub.core.entity.Employee;
 /**
  * @author Massimo Mazzetti
  */
-
 public class UsherShift extends Shift {
 
     public UsherShift(Employee employee, String date, String start, String end) {
@@ -30,7 +29,6 @@ public class UsherShift extends Shift {
 
     @Override
     public int hashCode() {
-
         return 0;
     }
 

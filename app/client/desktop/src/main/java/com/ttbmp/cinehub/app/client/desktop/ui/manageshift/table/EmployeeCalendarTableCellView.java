@@ -7,8 +7,6 @@ import java.io.IOException;
 /**
  * @author Massimo Mazzetti
  */
-
-
 public class EmployeeCalendarTableCellView extends FxmlView {
 
     public EmployeeCalendarTableCellView() throws IOException {

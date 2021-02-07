@@ -12,7 +12,6 @@ import java.util.Objects;
 /**
  * @author Massimo Mazzetti
  */
-
 public class EmployeeCalendarTableCell extends TableCell<EmployeeShiftWeek, EmployeeDto> {
     private final Activity activity;
     private final NavController navController;
@@ -39,4 +38,5 @@ public class EmployeeCalendarTableCell extends TableCell<EmployeeShiftWeek, Empl
             setGraphic(item.getRoot());
         }
     }
+
 }

@@ -7,7 +7,6 @@ import javafx.scene.control.ListView;
 /**
  * @author Massimo Mazzetti
  */
-
 public class ComboBoxCinemaValueFactory extends ListCell<CinemaDto> {
 
     public ComboBoxCinemaValueFactory(ListView<CinemaDto> listView) {

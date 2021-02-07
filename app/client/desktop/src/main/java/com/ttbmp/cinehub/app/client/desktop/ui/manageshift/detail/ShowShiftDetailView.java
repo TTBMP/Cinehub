@@ -7,7 +7,6 @@ import java.io.IOException;
 /**
  * @author Massimo Mazzetti
  */
-
 public class ShowShiftDetailView extends FxmlView {
 
     public ShowShiftDetailView() throws IOException {

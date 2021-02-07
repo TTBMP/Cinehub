@@ -13,8 +13,8 @@ import java.util.List;
 /**
  * @author Massimo Mazzetti
  */
-
 public class EmployeeDataMapper {
+
     private EmployeeDataMapper() {
     }
 
@@ -52,4 +52,5 @@ public class EmployeeDataMapper {
     public static List<Employee> mapToEntityList(List<EmployeeDto> employeeListDto) {
         return DataMapperHelper.mapList(employeeListDto, EmployeeDataMapper::matToEntity);
     }
+
 }

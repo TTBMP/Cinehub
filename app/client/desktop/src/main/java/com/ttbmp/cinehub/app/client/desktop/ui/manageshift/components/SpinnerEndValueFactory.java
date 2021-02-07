@@ -11,8 +11,6 @@ import java.time.format.FormatStyle;
 /**
  * @author Massimo Mazzetti
  */
-
-
 public class SpinnerEndValueFactory extends SpinnerValueFactory<LocalTime> {
     private final ObjectProperty<LocalTime> start = new SimpleObjectProperty<>();
 
