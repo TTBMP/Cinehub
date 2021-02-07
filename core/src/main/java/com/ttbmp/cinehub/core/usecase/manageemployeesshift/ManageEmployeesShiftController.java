@@ -12,6 +12,8 @@ import com.ttbmp.cinehub.core.entity.shift.ShiftFactory;
 import com.ttbmp.cinehub.core.repository.CinemaRepository;
 import com.ttbmp.cinehub.core.repository.HallRepository;
 import com.ttbmp.cinehub.core.repository.ShiftRepository;
+import com.ttbmp.cinehub.core.service.email.EmailService;
+import com.ttbmp.cinehub.core.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.core.usecase.Request;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.core.usecase.manageemployeesshift.response.*;
@@ -31,12 +33,18 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
     private final ShiftRepository shiftRepository;
     private final CinemaRepository cinemaRepository;
     private final HallRepository hallRepository;
+    private final EmailService emailService;
 
-    public ManageEmployeesShiftController(ManageEmployeesShiftPresenter manageEmployeesShiftPresenter, ShiftRepository shiftRepository, CinemaRepository cinemaRepository, HallRepository hallRepository) {
+    public ManageEmployeesShiftController(ManageEmployeesShiftPresenter manageEmployeesShiftPresenter,
+                                          ShiftRepository shiftRepository,
+                                          CinemaRepository cinemaRepository,
+                                          HallRepository hallRepository,
+                                          EmailService emailService) {
         this.manageEmployeesShiftPresenter = manageEmployeesShiftPresenter;
         this.shiftRepository = shiftRepository;
         this.cinemaRepository = cinemaRepository;
         this.hallRepository = hallRepository;
+        this.emailService = emailService;
     }
 
     @Override
@@ -84,6 +92,10 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             Request.validate(request);
             shiftRepository.saveShift(ShiftDataMapper.mapToEntity(request.getShift()));
             manageEmployeesShiftPresenter.presentSaveShift();
+            emailService.sendMail(new EmailServiceRequest(
+                    EmployeeDataMapper.matToEntity(request.getShift().getEmployee()).getEmail(),
+                    "Shift Assign"
+            ));
         } catch (Request.NullRequestException e) {
             manageEmployeesShiftPresenter.presentSaveShiftNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -100,6 +112,10 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             shiftRepository.modifyShift(ShiftDataMapper.mapToEntity(request.getOldShift()), ShiftDataMapper.mapToEntity(request.getNewShift()));
             manageEmployeesShiftPresenter.presentSaveShift();
             manageEmployeesShiftPresenter.presentDeleteShift();
+            emailService.sendMail(new EmailServiceRequest(
+                    EmployeeDataMapper.matToEntity(request.getNewShift().getEmployee()).getEmail(),
+                    "Shift Modify"
+            ));
         } catch (Request.NullRequestException e) {
             manageEmployeesShiftPresenter.presentModifyShiftNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -116,6 +132,10 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             Request.validate(request);
             shiftRepository.deletedShift(ShiftDataMapper.mapToEntity(request.getShift()));
             manageEmployeesShiftPresenter.presentDeleteShift();
+            emailService.sendMail(new EmailServiceRequest(
+                    EmployeeDataMapper.matToEntity(request.getShift().getEmployee()).getEmail(),
+                    "Shift Delete"
+            ));
         } catch (Request.NullRequestException e) {
             manageEmployeesShiftPresenter.presentDeleteShiftNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -156,6 +176,10 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                 shiftRepository.saveShift(shift);
                 shiftDtoList.add(ShiftDataMapper.mapToDto(shift));
             }
+            emailService.sendMail(new EmailServiceRequest(
+                    EmployeeDataMapper.matToEntity(request.getShift().getEmployee()).getEmail(),
+                    "Shift Modify"
+            ));
             manageEmployeesShiftPresenter.presentRepeatShift(new Result<>(new ShiftRepeatResponse(shiftDtoList)));
         } catch (Request.NullRequestException e) {
             manageEmployeesShiftPresenter.presentRepeatedShiftNullRequest();

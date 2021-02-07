@@ -5,9 +5,9 @@ package com.ttbmp.cinehub.core.entity;
  */
 public class Payment {
 
+    private final String status;
     private String id;
     private long price;
-    private final String status;
 
     public Payment(String id, long l, String status) {
         this.id = id;

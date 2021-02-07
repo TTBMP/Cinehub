@@ -73,7 +73,7 @@ public class MockShiftRepository implements ShiftRepository {
     @Override
     public void deletedShift(Shift shift) throws ShiftSaveException {
         if (!shiftList.removeIf(s -> s.equals(shift))) {
-            throw new ShiftSaveException("Shift not Exist");
+            throw new ShiftSaveException(ShiftSaveException.NOT_EXIST_ERROR);
         }
     }
 
@@ -91,7 +91,7 @@ public class MockShiftRepository implements ShiftRepository {
                     && (newStart.isBefore(end)
                     && newEnd.isAfter(start))
                     && shift.getEmployee().equals(elem.getEmployee())) {
-                throw new ShiftSaveException("Shift Already Exist");
+                throw new ShiftSaveException(ShiftSaveException.ALREADY_EXIST_ERROR);
 
             }
         }
@@ -106,7 +106,7 @@ public class MockShiftRepository implements ShiftRepository {
         LocalTime end;
 
         if (oldShift.equals(newShift)) {
-            throw new ShiftSaveException("Shift Already Exist");
+            throw new ShiftSaveException(ShiftSaveException.ALREADY_EXIST_ERROR);
         }
         shiftList.removeIf(s -> s.equals(oldShift));
         for (Shift elem : shiftList) {
@@ -117,7 +117,7 @@ public class MockShiftRepository implements ShiftRepository {
                     && newEnd.isAfter(start))
                     && newShift.getEmployee().equals(elem.getEmployee())) {
                 shiftList.add(oldShift);
-                throw new ShiftSaveException("Shift Already Exist");
+                throw new ShiftSaveException(ShiftSaveException.ALREADY_EXIST_ERROR);
             }
         }
         shiftList.add(newShift);

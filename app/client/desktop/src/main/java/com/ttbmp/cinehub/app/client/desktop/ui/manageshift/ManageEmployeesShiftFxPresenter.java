@@ -59,56 +59,60 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     public void presentSaveShift() {
         Shift savedShift = ShiftDataMapper.mapToEntity(viewModel.getShiftCreated());
         TemporalField temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
-        viewModel.getEmployeeShiftWeekList().setAll(viewModel.getEmployeeShiftWeekList().stream()
-                .peek(e -> {
-                    if (EmployeeDataMapper.matToEntity(e.getEmployeeDto()).equals(savedShift.getEmployee())
-                            &&
-                            LocalDate.parse(savedShift.getDate()).get(temporalField) == viewModel.getSelectedWeek().get(temporalField) &&
-                            LocalDate.parse(savedShift.getDate()).getYear() == viewModel.getSelectedWeek().getYear()) {
-                        e.getWeekMap().get(LocalDate.parse(savedShift.getDate()).getDayOfWeek())
-                                .getShiftList()
-                                .add(ShiftDataMapper.mapToDto(savedShift));
-                    }
-                })
-                .collect(Collectors.toList()));
+
+        List<EmployeeShiftWeek> employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
+
+        employeeShiftWeeks.forEach(e -> {
+            if (EmployeeDataMapper.matToEntity(e.getEmployeeDto()).equals(savedShift.getEmployee())
+                    &&
+                    LocalDate.parse(savedShift.getDate()).get(temporalField) == viewModel.getSelectedWeek().get(temporalField) &&
+                    LocalDate.parse(savedShift.getDate()).getYear() == viewModel.getSelectedWeek().getYear()) {
+                e.getWeekMap().get(LocalDate.parse(savedShift.getDate()).getDayOfWeek())
+                        .getShiftList()
+                        .add(ShiftDataMapper.mapToDto(savedShift));
+            }
+        });
+        viewModel.getEmployeeShiftWeekList().setAll(employeeShiftWeeks);
     }
 
     @Override
     public void presentDeleteShift() {
         Shift deleteShift = ShiftDataMapper.mapToEntity(viewModel.getSelectedShift());
-        viewModel.getEmployeeShiftWeekList().setAll(viewModel.getEmployeeShiftWeekList().stream()
-                .peek(e -> {
-                    if (EmployeeDataMapper.matToEntity(e.getEmployeeDto()).equals(deleteShift.getEmployee())) {
-                        e.getWeekMap().get(LocalDate.parse(deleteShift.getDate()).getDayOfWeek())
-                                .getShiftList()
-                                .removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
-                    }
-                })
-                .collect(Collectors.toList())
-        );
+
+        List<EmployeeShiftWeek> employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
+
+        employeeShiftWeeks.forEach(e -> {
+            if (EmployeeDataMapper.matToEntity(e.getEmployeeDto()).equals(deleteShift.getEmployee())) {
+                e.getWeekMap().get(LocalDate.parse(deleteShift.getDate()).getDayOfWeek())
+                        .getShiftList()
+                        .removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
+            }
+        });
+
+        viewModel.getEmployeeShiftWeekList().setAll(employeeShiftWeeks);
+
     }
 
     @Override
     public void presentRepeatShift(Result<ShiftRepeatResponse> response) {
         List<ShiftDto> shiftList = response.getValue().getShiftDto();
         TemporalField temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
+        List<EmployeeShiftWeek> employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
         for (ShiftDto savedShift : shiftList) {
-            viewModel.getEmployeeShiftWeekList().setAll(viewModel.getEmployeeShiftWeekList().stream()
-                    .peek(employeeShiftWeek -> {
-                        if (employeeShiftWeek.getEmployeeDto().equals(savedShift.getEmployee()) &&
-                                savedShift.getDate().get(temporalField) == viewModel.getSelectedWeek().get(temporalField) &&
-                                savedShift.getDate().getYear() == viewModel.getSelectedWeek().getYear()) {
-                            DayOfWeek dayOfWeek = savedShift.getDate().getDayOfWeek();
-                            employeeShiftWeek
-                                    .getWeekMap()
-                                    .get(dayOfWeek)
-                                    .getShiftList()
-                                    .add(savedShift);
-                        }
-                    })
-                    .collect(Collectors.toList())
-            );
+            employeeShiftWeeks.forEach(employeeShiftWeek -> {
+                if (employeeShiftWeek.getEmployeeDto().equals(savedShift.getEmployee()) &&
+                        savedShift.getDate().get(temporalField) == viewModel.getSelectedWeek().get(temporalField) &&
+                        savedShift.getDate().getYear() == viewModel.getSelectedWeek().getYear()) {
+                    DayOfWeek dayOfWeek = savedShift.getDate().getDayOfWeek();
+                    employeeShiftWeek
+                            .getWeekMap()
+                            .get(dayOfWeek)
+                            .getShiftList()
+                            .add(savedShift);
+                }
+            });
         }
+        viewModel.getEmployeeShiftWeekList().setAll(employeeShiftWeeks);
     }
 
     @Override
