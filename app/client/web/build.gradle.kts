@@ -6,7 +6,7 @@ plugins {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":data:local"))
+    implementation(project(":service:persistence"))
 
     implementation("org.seleniumhq.selenium", "selenium-java", "3.141.59")
     implementation("io.github.bonigarcia", "webdrivermanager", "4.2.0")

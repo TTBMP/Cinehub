@@ -3,10 +3,9 @@ include(
     "core",
     "app:client:desktop",
     "app:client:web",
-    "data:local",
-    "data:remote",
     "service:authentication",
-    "service:payment",
+    "service:email",
     "service:movie-information",
-    "service:email"
+    "service:payment",
+    "service:persistence"
 )
