@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.ui.manageshift.table;
 
-import com.ttbmp.cinehub.core.dto.EmployeeDto;
+import com.ttbmp.cinehub.domain.dto.EmployeeDto;
 
 import java.time.DayOfWeek;
 import java.util.Map;

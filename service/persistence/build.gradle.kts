@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    api(project(":core"))
+    api(project(":domain"))
 
     implementation("javax", "javaee-api", "8.0.1")
 

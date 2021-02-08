@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.master;
 
-import com.ttbmp.cinehub.core.usecase.viewpersonalschedule.GetShiftListRequest;
-import com.ttbmp.cinehub.core.usecase.viewpersonalschedule.ViewPersonalScheduleUseCase;
+import com.ttbmp.cinehub.domain.usecase.viewpersonalschedule.GetShiftListRequest;
+import com.ttbmp.cinehub.domain.usecase.viewpersonalschedule.ViewPersonalScheduleUseCase;
 import com.ttbmp.cinehub.ui.desktop.ui.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.ViewPersonalScheduleViewModel;
 import com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.master.calendar.CalendarDay;

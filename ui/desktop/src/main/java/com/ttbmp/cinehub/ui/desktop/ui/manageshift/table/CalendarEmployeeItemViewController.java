@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.ui.manageshift.table;
 
-import com.ttbmp.cinehub.core.dto.EmployeeDto;
-import com.ttbmp.cinehub.core.dto.ProjectionistDto;
+import com.ttbmp.cinehub.domain.dto.EmployeeDto;
+import com.ttbmp.cinehub.domain.dto.ProjectionistDto;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavController;

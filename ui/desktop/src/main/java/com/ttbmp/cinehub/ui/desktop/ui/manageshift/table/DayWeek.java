@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.ui.manageshift.table;
 
-import com.ttbmp.cinehub.core.dto.EmployeeDto;
-import com.ttbmp.cinehub.core.dto.ShiftDto;
+import com.ttbmp.cinehub.domain.dto.EmployeeDto;
+import com.ttbmp.cinehub.domain.dto.ShiftDto;
 
 import java.time.LocalDate;
 import java.util.List;

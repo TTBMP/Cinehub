@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.ui.buyticket.confirmemail;
 
 
-import com.ttbmp.cinehub.core.dto.ProjectionDto;
+import com.ttbmp.cinehub.domain.dto.ProjectionDto;
 import com.ttbmp.cinehub.ui.desktop.ui.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.ui.buyticket.BuyTicketActivity;
 import com.ttbmp.cinehub.ui.desktop.ui.buyticket.BuyTicketViewModel;

@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.ui.desktop.ui.buyticket.payment;
 
 
-import com.ttbmp.cinehub.core.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.core.usecase.buyticket.request.PayRequest;
+import com.ttbmp.cinehub.domain.usecase.buyticket.BuyTicketUseCase;
+import com.ttbmp.cinehub.domain.usecase.buyticket.request.PayRequest;
 import com.ttbmp.cinehub.ui.desktop.ui.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.ui.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.desktop.ui.buyticket.CustomDateCell;

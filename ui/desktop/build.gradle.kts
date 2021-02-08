@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":core"))
+    implementation(project(":domain"))
     implementation(project(":service:authentication"))
     implementation(project(":service:email"))
     implementation(project(":service:movie-information"))
@@ -21,5 +21,5 @@ javafx {
 }
 
 application {
-    mainClass.set("com.ttbmp.cinehub.app.client.desktop.CinehubApplication")
+    mainClass.set("com.ttbmp.cinehub.ui.desktop.CinehubApplication")
 }

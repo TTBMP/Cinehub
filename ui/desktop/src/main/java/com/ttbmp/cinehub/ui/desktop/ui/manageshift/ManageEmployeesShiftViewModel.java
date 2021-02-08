@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.ui.desktop.ui.manageshift;
 
 
-import com.ttbmp.cinehub.core.dto.*;
-import com.ttbmp.cinehub.core.entity.shift.ShiftRepeatingOption;
+import com.ttbmp.cinehub.domain.dto.*;
+import com.ttbmp.cinehub.domain.entity.shift.ShiftRepeatingOption;
 import com.ttbmp.cinehub.ui.desktop.ui.manageshift.table.DayWeek;
 import com.ttbmp.cinehub.ui.desktop.ui.manageshift.table.EmployeeShiftWeek;
 import com.ttbmp.cinehub.ui.desktop.utilities.ObjectBindings;

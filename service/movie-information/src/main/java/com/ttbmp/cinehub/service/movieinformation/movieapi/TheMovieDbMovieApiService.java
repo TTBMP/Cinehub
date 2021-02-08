@@ -3,8 +3,8 @@ package com.ttbmp.cinehub.service.movieinformation.movieapi;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.ttbmp.cinehub.core.dto.MovieDto;
-import com.ttbmp.cinehub.core.service.movie.MovieApiService;
+import com.ttbmp.cinehub.domain.dto.MovieDto;
+import com.ttbmp.cinehub.domain.service.movie.MovieApiService;
 import com.ttbmp.cinehub.service.movieinformation.datamapper.MovieApiDataMapper;
 import com.ttbmp.cinehub.service.movieinformation.dto.MovieApiDto;
 

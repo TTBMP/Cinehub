@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule;
 
-import com.ttbmp.cinehub.core.dto.ShiftDto;
+import com.ttbmp.cinehub.domain.dto.ShiftDto;
 import com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.master.calendar.CalendarDay;
 import com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.master.calendar.CalendarPage;
 import com.ttbmp.cinehub.ui.desktop.utilities.ObjectBindings;

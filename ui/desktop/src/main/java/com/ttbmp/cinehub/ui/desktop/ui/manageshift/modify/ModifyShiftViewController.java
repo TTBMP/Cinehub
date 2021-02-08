@@ -1,11 +1,11 @@
 package com.ttbmp.cinehub.ui.desktop.ui.manageshift.modify;
 
-import com.ttbmp.cinehub.core.dto.HallDto;
-import com.ttbmp.cinehub.core.dto.UsherDto;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.CreateShiftRequest;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.GetHallListRequest;
-import com.ttbmp.cinehub.core.usecase.manageemployeesshift.request.ShiftModifyRequest;
+import com.ttbmp.cinehub.domain.dto.HallDto;
+import com.ttbmp.cinehub.domain.dto.UsherDto;
+import com.ttbmp.cinehub.domain.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
+import com.ttbmp.cinehub.domain.usecase.manageemployeesshift.request.CreateShiftRequest;
+import com.ttbmp.cinehub.domain.usecase.manageemployeesshift.request.GetHallListRequest;
+import com.ttbmp.cinehub.domain.usecase.manageemployeesshift.request.ShiftModifyRequest;
 import com.ttbmp.cinehub.ui.desktop.ui.manageshift.ManageEmployeesShiftViewModel;
 import com.ttbmp.cinehub.ui.desktop.ui.manageshift.components.HallFactory;
 import com.ttbmp.cinehub.ui.desktop.ui.manageshift.components.SpinnerEndValueFactory;

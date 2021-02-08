@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.service.email.emailservice;
 
 
-import com.ttbmp.cinehub.core.service.email.EmailService;
-import com.ttbmp.cinehub.core.service.email.EmailServiceRequest;
+import com.ttbmp.cinehub.domain.service.email.EmailService;
+import com.ttbmp.cinehub.domain.service.email.EmailServiceRequest;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
