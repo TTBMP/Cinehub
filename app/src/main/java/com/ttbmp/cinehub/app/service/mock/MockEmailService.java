@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.app.service.email.mock;
+package com.ttbmp.cinehub.app.service.mock;
 
 
 import com.ttbmp.cinehub.app.service.email.EmailService;

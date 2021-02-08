@@ -17,21 +17,25 @@ public class MockEmployeeRepository implements EmployeeRepository {
 
     static {
         employeeList.add(new Usher(
+                0,
                 "Fabio",
                 "Buracchi",
                 new MockCinemaRepository().getCinema(0)
         ));
         employeeList.add(new Projectionist(
+                1,
                 "Massimo",
                 "Mazzetti",
                 new MockCinemaRepository().getCinema(0)
         ));
         employeeList.add(new Usher(
+                2,
                 "Ivan",
                 "Palmieri",
                 new MockCinemaRepository().getCinema(1)
         ));
         employeeList.add(new Projectionist(
+                3,
                 "Mario",
                 "Rossi",
                 new MockCinemaRepository().getCinema(1)

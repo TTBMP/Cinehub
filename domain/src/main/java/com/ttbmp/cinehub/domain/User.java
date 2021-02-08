@@ -11,21 +11,17 @@ import java.util.List;
 public class User {
 
     private final List<Ticket> ownedTicket = new ArrayList<>();
-    private Integer id;
+    private int id;
     private String name;
     private String surname;
     private String email;
     private CreditCard card;
 
-    public User(String name, String email, CreditCard card) {
+    public User(int id, String name, String email, CreditCard card) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.setCard(card);
-
-    }
-
-    public User(int userId) {
-        this.id = userId;
     }
 
     public User() {

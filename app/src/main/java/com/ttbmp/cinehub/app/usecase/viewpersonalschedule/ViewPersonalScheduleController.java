@@ -35,13 +35,9 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
         try {
             Request.validate(request);
             int userId = authenticationService.sigIn();
-            Employee employeeResult = employeeRepository.getEmployee(userId);
-            /*if (employeeResult.hasError()) {
-                presenter.presentAuthenticationError(employeeResult.getError());
-                return;
-            }*/
+            Employee employee = employeeRepository.getEmployee(userId);
             Result<List<Shift>> shiftListResult = shiftRepository.getAllEmployeeShiftBetweenDate(
-                    employeeResult,
+                    employee,
                     request.getStart(),
                     request.getEnd()
             );

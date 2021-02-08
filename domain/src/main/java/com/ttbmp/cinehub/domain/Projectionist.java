@@ -3,8 +3,8 @@ package com.ttbmp.cinehub.domain;
 
 public class Projectionist extends Employee {
 
-    public Projectionist(String name, String surname, Cinema cinema) {
-        super(name, surname, cinema);
+    public Projectionist(int id, String name, String surname, Cinema cinema) {
+        super(id, name, surname, cinema);
     }
 
 

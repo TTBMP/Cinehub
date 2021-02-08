@@ -15,11 +15,13 @@ public class MockUserRepository implements UserRepository {
 
     private static final List<User> userList = Arrays.asList(
             new User(
+                    0,
                     "Ivan",
                     "palm@5934.c",
                     new CreditCard("22/24", 354, "4242424242424242", "5496")
             ),
             new User(
+                    1,
                     "Mattia",
                     "mahsdj@giggii.cosedfsnodix",
                     new CreditCard("22/24", 354, "4242424242424242", "5496")

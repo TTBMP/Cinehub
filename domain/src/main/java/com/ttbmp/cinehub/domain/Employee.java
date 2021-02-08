@@ -11,8 +11,8 @@ public abstract class Employee extends User {
         setName("");
     }
 
-    protected Employee(String name, String surname, Cinema cinema) {
-        setName(name);
+    protected Employee(int id, String name, String surname, Cinema cinema) {
+        super(id, name, null, null);
         setSurname(surname);
         this.cinema = cinema;
     }

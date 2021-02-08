@@ -61,7 +61,8 @@ public class MockShiftRepository implements ShiftRepository {
     public Result<List<Shift>> getAllEmployeeShiftBetweenDate(Employee employee, LocalDate start, LocalDate end) {
         return new Result<>(shiftList.stream()
                 .filter(shift -> LocalDate.parse(shift.getDate()).isAfter(start.minusDays(1))
-                        && LocalDate.parse(shift.getDate()).isBefore(end.plusDays(1)))
+                        && LocalDate.parse(shift.getDate()).isBefore(end.plusDays(1))
+                        && employee.getId() == shift.getEmployee().getId())
                 .collect(Collectors.toList()));
     }
 

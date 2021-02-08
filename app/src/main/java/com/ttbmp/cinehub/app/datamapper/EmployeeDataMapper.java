@@ -21,26 +21,36 @@ public class EmployeeDataMapper {
     public static EmployeeDto mapToDto(Employee employee) {
         if (employee instanceof Usher) {
             return new UsherDto(
+                    employee.getId(),
                     employee.getName(),
                     employee.getSurname(),
-                    CinemaDataMapper.mapToDto(employee.getCinema()));
+                    CinemaDataMapper.mapToDto(employee.getCinema())
+            );
         } else {
             return new ProjectionistDto(
+                    employee.getId(),
                     employee.getName(),
                     employee.getSurname(),
-                    CinemaDataMapper.mapToDto(employee.getCinema()));
+                    CinemaDataMapper.mapToDto(employee.getCinema())
+            );
         }
     }
 
     public static Employee matToEntity(EmployeeDto employeeDto) {
         if (employeeDto instanceof UsherDto) {
-            return new Usher(employeeDto.getName(),
+            return new Usher(
+                    employeeDto.getId(),
+                    employeeDto.getName(),
                     employeeDto.getSurname(),
-                    CinemaDataMapper.mapToEntity(employeeDto.getCinema()));
+                    CinemaDataMapper.mapToEntity(employeeDto.getCinema())
+            );
         } else {
-            return new Projectionist(employeeDto.getName(),
+            return new Projectionist(
+                    employeeDto.getId(),
+                    employeeDto.getName(),
                     employeeDto.getSurname(),
-                    CinemaDataMapper.mapToEntity(employeeDto.getCinema()));
+                    CinemaDataMapper.mapToEntity(employeeDto.getCinema())
+            );
         }
 
     }

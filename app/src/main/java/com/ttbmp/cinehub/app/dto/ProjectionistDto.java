@@ -2,8 +2,8 @@ package com.ttbmp.cinehub.app.dto;
 
 public class ProjectionistDto extends EmployeeDto {
 
-    public ProjectionistDto(String name, String surname, CinemaDto cinema) {
-        super(name, surname, cinema);
+    public ProjectionistDto(int id, String name, String surname, CinemaDto cinema) {
+        super(id, name, surname, cinema);
     }
 
     @Override
