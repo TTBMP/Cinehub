@@ -1,11 +1,12 @@
 rootProject.name = "Cinehub"
 include(
+    "app",
     "core",
-    "app:client:desktop",
-    "app:client:web",
     "service:authentication",
     "service:email",
     "service:movie-information",
     "service:payment",
-    "service:persistence"
+    "service:persistence",
+    "ui:desktop",
+    "ui:web"
 )
