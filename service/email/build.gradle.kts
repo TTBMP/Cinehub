@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    api(project(":domain"))
+    api(project(":app"))
 
     implementation("javax.mail", "javax.mail-api", "1.6.0")
 

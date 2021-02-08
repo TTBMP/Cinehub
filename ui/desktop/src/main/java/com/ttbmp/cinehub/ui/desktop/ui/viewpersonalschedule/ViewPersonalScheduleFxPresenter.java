@@ -1,9 +1,9 @@
 package com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule;
 
-import com.ttbmp.cinehub.domain.usecase.viewpersonalschedule.GetShiftListRequest;
-import com.ttbmp.cinehub.domain.usecase.viewpersonalschedule.GetShiftListResponse;
-import com.ttbmp.cinehub.domain.usecase.viewpersonalschedule.ViewPersonalSchedulePresenter;
-import com.ttbmp.cinehub.domain.utilities.result.Result;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.GetShiftListRequest;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.GetShiftListResponse;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalSchedulePresenter;
+import com.ttbmp.cinehub.app.utilities.result.Result;
 
 /**
  * @author Fabio Buracchi

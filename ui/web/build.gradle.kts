@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":domain"))
+    implementation(project(":app"))
     implementation(project(":service:persistence"))
 
     implementation("org.seleniumhq.selenium", "selenium-java", "3.141.59")

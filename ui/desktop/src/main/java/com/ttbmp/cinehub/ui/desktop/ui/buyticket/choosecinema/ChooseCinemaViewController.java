@@ -1,10 +1,10 @@
 package com.ttbmp.cinehub.ui.desktop.ui.buyticket.choosecinema;
 
 
-import com.ttbmp.cinehub.domain.dto.CinemaDto;
-import com.ttbmp.cinehub.domain.dto.ProjectionDto;
-import com.ttbmp.cinehub.domain.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.domain.usecase.buyticket.request.GetTimeOfProjectionRequest;
+import com.ttbmp.cinehub.app.dto.CinemaDto;
+import com.ttbmp.cinehub.app.dto.ProjectionDto;
+import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.GetTimeOfProjectionRequest;
 import com.ttbmp.cinehub.ui.desktop.ui.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.ui.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.desktop.ui.buyticket.choosemovie.ChooseMovieView;

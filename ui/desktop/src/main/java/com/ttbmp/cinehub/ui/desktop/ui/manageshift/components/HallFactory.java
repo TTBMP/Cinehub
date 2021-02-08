@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.ui.manageshift.components;
 
-import com.ttbmp.cinehub.domain.dto.HallDto;
+import com.ttbmp.cinehub.app.dto.HallDto;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 

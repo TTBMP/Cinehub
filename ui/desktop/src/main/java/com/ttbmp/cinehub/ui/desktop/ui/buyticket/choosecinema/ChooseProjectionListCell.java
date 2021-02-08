@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.ui.buyticket.choosecinema;
 
-import com.ttbmp.cinehub.domain.dto.ProjectionDto;
+import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavController;
 import javafx.scene.control.ListCell;

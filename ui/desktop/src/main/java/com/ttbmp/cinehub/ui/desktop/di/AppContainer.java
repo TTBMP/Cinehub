@@ -1,15 +1,15 @@
 package com.ttbmp.cinehub.ui.desktop.di;
 
-import com.ttbmp.cinehub.domain.di.DependencyContainer;
-import com.ttbmp.cinehub.domain.repository.*;
-import com.ttbmp.cinehub.domain.repository.mock.*;
-import com.ttbmp.cinehub.domain.service.authentication.AuthenticationService;
-import com.ttbmp.cinehub.domain.service.authentication.mock.MockAuthenticationService;
-import com.ttbmp.cinehub.domain.service.email.EmailService;
-import com.ttbmp.cinehub.domain.service.email.mock.MockEmailService;
-import com.ttbmp.cinehub.domain.service.movie.MovieApiService;
-import com.ttbmp.cinehub.domain.service.payment.PaymentService;
-import com.ttbmp.cinehub.domain.service.payment.mock.MockPaymentService;
+import com.ttbmp.cinehub.app.di.DependencyContainer;
+import com.ttbmp.cinehub.app.repository.*;
+import com.ttbmp.cinehub.app.repository.mock.*;
+import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
+import com.ttbmp.cinehub.app.service.authentication.mock.MockAuthenticationService;
+import com.ttbmp.cinehub.app.service.email.EmailService;
+import com.ttbmp.cinehub.app.service.email.mock.MockEmailService;
+import com.ttbmp.cinehub.app.service.movie.MovieApiService;
+import com.ttbmp.cinehub.app.service.payment.PaymentService;
+import com.ttbmp.cinehub.app.service.payment.mock.MockPaymentService;
 import com.ttbmp.cinehub.service.movieinformation.movieapi.TheMovieDbMovieApiService;
 
 /**

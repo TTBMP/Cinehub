@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    api(project(":domain"))
+    api(project(":app"))
 
     implementation("com.stripe", "stripe-java", "20.24.0")
 

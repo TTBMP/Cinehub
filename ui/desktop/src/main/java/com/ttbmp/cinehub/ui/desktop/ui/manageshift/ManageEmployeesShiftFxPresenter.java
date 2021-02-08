@@ -1,15 +1,15 @@
 package com.ttbmp.cinehub.ui.desktop.ui.manageshift;
 
-import com.ttbmp.cinehub.domain.datamapper.EmployeeDataMapper;
-import com.ttbmp.cinehub.domain.datamapper.ShiftDataMapper;
-import com.ttbmp.cinehub.domain.dto.CinemaDto;
-import com.ttbmp.cinehub.domain.dto.EmployeeDto;
-import com.ttbmp.cinehub.domain.dto.ShiftDto;
-import com.ttbmp.cinehub.domain.entity.shift.Shift;
-import com.ttbmp.cinehub.domain.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
-import com.ttbmp.cinehub.domain.usecase.manageemployeesshift.request.*;
-import com.ttbmp.cinehub.domain.usecase.manageemployeesshift.response.*;
-import com.ttbmp.cinehub.domain.utilities.result.Result;
+import com.ttbmp.cinehub.app.datamapper.EmployeeDataMapper;
+import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
+import com.ttbmp.cinehub.app.dto.CinemaDto;
+import com.ttbmp.cinehub.app.dto.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.ShiftDto;
+import com.ttbmp.cinehub.domain.shift.Shift;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
+import com.ttbmp.cinehub.app.utilities.result.Result;
 import com.ttbmp.cinehub.ui.desktop.ui.manageshift.table.DayWeek;
 import com.ttbmp.cinehub.ui.desktop.ui.manageshift.table.EmployeeShiftWeek;
 

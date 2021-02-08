@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.ui.desktop.ui.buyticket.chooseseat;
 
 
-import com.ttbmp.cinehub.domain.datamapper.SeatDataMapper;
-import com.ttbmp.cinehub.domain.dto.SeatDto;
+import com.ttbmp.cinehub.app.datamapper.SeatDataMapper;
+import com.ttbmp.cinehub.app.dto.SeatDto;
 import com.ttbmp.cinehub.ui.desktop.ui.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
 import javafx.geometry.Insets;

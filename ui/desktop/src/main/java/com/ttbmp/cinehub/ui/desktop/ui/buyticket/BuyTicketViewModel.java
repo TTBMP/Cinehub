@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.ui.buyticket;
 
 
-import com.ttbmp.cinehub.domain.dto.*;
+import com.ttbmp.cinehub.app.dto.*;
 import com.ttbmp.cinehub.ui.desktop.utilities.ObjectBindings;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewModel;
 import javafx.beans.property.*;

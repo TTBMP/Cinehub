@@ -1,9 +1,9 @@
 package com.ttbmp.cinehub.ui.desktop.ui.buyticket.chooseseat;
 
 
-import com.ttbmp.cinehub.domain.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.domain.usecase.buyticket.request.GetNumberOfSeatsRequest;
-import com.ttbmp.cinehub.domain.usecase.buyticket.request.GetTicketBySeatsRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.GetNumberOfSeatsRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.GetTicketBySeatsRequest;
 import com.ttbmp.cinehub.ui.desktop.ui.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.ui.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.desktop.ui.buyticket.choosecinema.ChooseCinemaView;

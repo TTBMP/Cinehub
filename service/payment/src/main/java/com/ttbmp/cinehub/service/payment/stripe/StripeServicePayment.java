@@ -3,9 +3,9 @@ package com.ttbmp.cinehub.service.payment.stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
 import com.stripe.model.PaymentMethod;
-import com.ttbmp.cinehub.domain.service.payment.PaymentException;
-import com.ttbmp.cinehub.domain.service.payment.PaymentService;
-import com.ttbmp.cinehub.domain.service.payment.request.PayServiceRequest;
+import com.ttbmp.cinehub.app.service.payment.PaymentException;
+import com.ttbmp.cinehub.app.service.payment.PaymentService;
+import com.ttbmp.cinehub.app.service.payment.request.PayServiceRequest;
 
 /**
  * @author Palmieri Ivan

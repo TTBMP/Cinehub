@@ -1,9 +1,9 @@
 package com.ttbmp.cinehub.ui.desktop.ui.manageshift;
 
-import com.ttbmp.cinehub.domain.dto.CinemaDto;
-import com.ttbmp.cinehub.domain.dto.EmployeeDto;
-import com.ttbmp.cinehub.domain.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
-import com.ttbmp.cinehub.domain.usecase.manageemployeesshift.request.GetShiftListRequest;
+import com.ttbmp.cinehub.app.dto.CinemaDto;
+import com.ttbmp.cinehub.app.dto.EmployeeDto;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetShiftListRequest;
 import com.ttbmp.cinehub.ui.desktop.ui.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.ui.manageshift.components.ComboBoxCinemaValueFactory;
 import com.ttbmp.cinehub.ui.desktop.ui.manageshift.table.DayWeek;

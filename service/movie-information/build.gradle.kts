@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    api(project(":domain"))
+    api(project(":app"))
 
     implementation("com.google.code.gson", "gson", "2.8.5")
 

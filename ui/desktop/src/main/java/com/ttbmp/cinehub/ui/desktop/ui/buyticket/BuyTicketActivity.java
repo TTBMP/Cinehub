@@ -1,14 +1,14 @@
 package com.ttbmp.cinehub.ui.desktop.ui.buyticket;
 
-import com.ttbmp.cinehub.domain.repository.CinemaRepository;
-import com.ttbmp.cinehub.domain.repository.MovieRepository;
-import com.ttbmp.cinehub.domain.repository.ProjectionRepository;
-import com.ttbmp.cinehub.domain.repository.UserRepository;
-import com.ttbmp.cinehub.domain.service.authentication.AuthenticationService;
-import com.ttbmp.cinehub.domain.service.email.EmailService;
-import com.ttbmp.cinehub.domain.service.payment.PaymentService;
-import com.ttbmp.cinehub.domain.usecase.buyticket.BuyTicketController;
-import com.ttbmp.cinehub.domain.usecase.buyticket.BuyTicketUseCase;
+import com.ttbmp.cinehub.app.repository.CinemaRepository;
+import com.ttbmp.cinehub.app.repository.MovieRepository;
+import com.ttbmp.cinehub.app.repository.ProjectionRepository;
+import com.ttbmp.cinehub.app.repository.UserRepository;
+import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
+import com.ttbmp.cinehub.app.service.email.EmailService;
+import com.ttbmp.cinehub.app.service.payment.PaymentService;
+import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketController;
+import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.ui.buyticket.choosemovie.ChooseMovieView;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;

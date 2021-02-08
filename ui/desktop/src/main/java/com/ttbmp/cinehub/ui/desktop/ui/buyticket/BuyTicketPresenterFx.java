@@ -1,10 +1,10 @@
 package com.ttbmp.cinehub.ui.desktop.ui.buyticket;
 
 
-import com.ttbmp.cinehub.domain.service.payment.PaymentException;
-import com.ttbmp.cinehub.domain.usecase.buyticket.BuyTicketPresenter;
-import com.ttbmp.cinehub.domain.usecase.buyticket.request.*;
-import com.ttbmp.cinehub.domain.usecase.buyticket.response.*;
+import com.ttbmp.cinehub.app.service.payment.PaymentException;
+import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketPresenter;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
+import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 
 /**
  * @author Palmieri Ivan
