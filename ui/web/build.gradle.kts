@@ -19,5 +19,5 @@ dependencies {
 }
 
 application {
-    mainClass.set("com.ttbmp.cinehub.app.client.web.CinehubApplication")
+    mainClass.set("com.ttbmp.cinehub.ui.web.CinehubApplication")
 }
