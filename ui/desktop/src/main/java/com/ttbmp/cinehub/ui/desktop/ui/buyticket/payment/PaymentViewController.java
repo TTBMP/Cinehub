@@ -19,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.Timer;
 
 /**
  * @author Palmieri Ivan
@@ -32,6 +33,12 @@ public class PaymentViewController extends ViewController {
 
     @FXML
     private AppBarViewController appBarController;
+
+    @FXML
+    private Label timerCount;
+
+    @FXML
+    private Label timerFinish;
 
     @FXML
     private Button returnButton;
@@ -65,9 +72,16 @@ public class PaymentViewController extends ViewController {
         appBarController.load(activity, navController);
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
         bind();
+        Timer timer = new Timer();
+        timer.schedule(new TimeOut(),0,1000);
+        timerCount.textProperty().bind(TimeOut.durationString);
+        timerFinish.visibleProperty().bind(TimeOut.finished);
         confirmButton.setOnAction(this::startPayment);
         returnButton.setOnAction(a -> {
             try {
+                timer.cancel();
+                timer.purge();
+                TimeOut.format();
                 navController.navigate(new NavDestination(new ChooseSeatView()));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -83,7 +97,8 @@ public class PaymentViewController extends ViewController {
                                 or(viewModel.surnameUserProperty().isNull().
                                         or(viewModel.txtCvvProperty().isNull().
                                                 or(viewModel.numberOfCardUserProperty().isNull().
-                                                        or(viewModel.fieldExpirationDatePickerProperty().isNull()))))));
+                                                        or(viewModel.fieldExpirationDatePickerProperty().isNull().
+                                                                or(TimeOut.finished)))))));
         errorSectionLabel.textProperty().bind(viewModel.paymentErrorProperty());
         emailTextField.textProperty().bindBidirectional(viewModel.emailUserProperty());
         nameTextField.textProperty().bindBidirectional(viewModel.nameUserProperty());

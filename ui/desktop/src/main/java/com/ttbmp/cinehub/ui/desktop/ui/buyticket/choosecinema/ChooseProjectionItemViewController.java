@@ -24,8 +24,12 @@ public class ChooseProjectionItemViewController extends ViewController {
 
     @FXML
     private Label buysSeatLabel;
+
     @FXML
     private Label projectionTimeLabel;
+
+    @FXML
+    private Label hallNameLabel;
 
     @Override
     protected void onLoad() {
@@ -40,6 +44,7 @@ public class ChooseProjectionItemViewController extends ViewController {
                 buysSeat++;
             }
         }
+        hallNameLabel.setText(String.valueOf(projectionDto.getHallDto().getId()));
         freeSeatLabel.setText(String.valueOf(freeSeat));
         buysSeatLabel.setText(String.valueOf(buysSeat));
         projectionCapacityLabel.setText(String.valueOf(totalSeat));

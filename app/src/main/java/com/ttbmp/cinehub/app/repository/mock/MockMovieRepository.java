@@ -52,7 +52,7 @@ public class MockMovieRepository implements MovieRepository {
                     MovieDto movieDto = movieApiService.getMovie(movie.getId());
                     movie.setName(movieDto.getName());
                     movie.setOverview(movieDto.getOverview());
-                    movie.setRelases(movie.getRelases());
+                    movie.setRelases(movieDto.getReleases());
                     movie.setVote(movieDto.getVote());
                     movie.setImageUrl(movieDto.getMovieUrl());
                     movie.setDuration(movieDto.getDuration());
