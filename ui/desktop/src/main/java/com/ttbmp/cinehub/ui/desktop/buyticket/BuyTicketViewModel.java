@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.ui.desktop.buyticket;
 
 
 import com.ttbmp.cinehub.app.dto.*;
+import com.ttbmp.cinehub.app.utilities.observer.Observable;
 import com.ttbmp.cinehub.ui.desktop.utilities.ObjectBindings;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewModel;
 import javafx.beans.property.*;
@@ -49,6 +50,8 @@ public class BuyTicketViewModel implements ViewModel {
     private final StringProperty cinemaError = new SimpleStringProperty();
     private final StringProperty seatError = new SimpleStringProperty();
     private final StringProperty paymentError = new SimpleStringProperty();
+    private final StringProperty autenticationError = new SimpleStringProperty();
+
     private final StringProperty selectedSeatPrice = new SimpleStringProperty();
 
 
@@ -241,4 +244,7 @@ public class BuyTicketViewModel implements ViewModel {
     }
 
 
+    public StringProperty autenticationErrorProperty() {
+        return autenticationError;
+    }
 }
