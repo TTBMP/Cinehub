@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.detail.projectionist.ProjectionistShiftItemViewController">
+    <children>
+        <Label fx:id="timeLabel" text="time" />
+        <Separator orientation="VERTICAL" />
+        <Label fx:id="titleLabel" text="title" />
+        <ImageView fx:id="movieImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+    </children>
+</HBox>

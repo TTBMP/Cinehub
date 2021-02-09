@@ -10,7 +10,7 @@ import java.io.IOException;
 public class ShiftDetailView extends FxmlView {
 
     public ShiftDetailView() throws IOException {
-        super("shift_detail.fxml");
+        super("view_personal_schedule/shift_detail.fxml");
         addStylesheet("styles.css");
     }
 

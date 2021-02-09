@@ -1,19 +1,21 @@
-package com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.detail;
+package com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.detail.projectionist;
 
+import com.ttbmp.cinehub.app.dto.ProjectionDto;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.GetShiftProjectionListRequest;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalScheduleUseCase;
 import com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.ViewPersonalScheduleViewModel;
-import com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.detail.projectionist.ProjectionistShiftDetailView;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavDestination;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 
 import java.io.IOException;
 
 /**
  * @author Fabio Buracchi
  */
-public class ShiftDetailViewController extends ViewController {
+public class ProjectionistShiftDetailViewController extends ViewController {
 
     @FXML
     private Label dateLabel;
@@ -25,42 +27,42 @@ public class ShiftDetailViewController extends ViewController {
     private Label endLabel;
 
     @FXML
-    private Label roleLabel;
-
-    @FXML
     private Label cityLabel;
 
     @FXML
-    private Label addressLabel;
+    private Label roleLabel;
 
     @FXML
-    private Button requestSwapButton;
+    private Label hallLabel;
 
     @FXML
-    private Button requestChangeButton;
+    private ListView<ProjectionDto> projectionListView;
 
     @FXML
-    private Button detailButton;
+    private Button backButton;
 
     @Override
     protected void onLoad() {
         ViewPersonalScheduleViewModel viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
+        projectionListView.itemsProperty().addListener(l -> projectionListView.refresh());
+        projectionListView.setItems(viewModel.getProjectionList());
+        projectionListView.setCellFactory(listView -> new ProjectionistListCell(activity, navController));
         dateLabel.textProperty().bind(viewModel.selectedShiftDateProperty());
         startLabel.textProperty().bind(viewModel.selectedShiftStartProperty());
         endLabel.textProperty().bind(viewModel.selectedShiftEndProperty());
         roleLabel.textProperty().bind(viewModel.selectedShiftEmployeeRoleProperty());
         cityLabel.textProperty().bind(viewModel.selectedShiftCinemaCityProperty());
-        addressLabel.textProperty().bind(viewModel.selectedShiftCinemaAddressProperty());
-        detailButton.setVisible(viewModel.isIsProjectionsDetailButtonVisible());
-        detailButton.setOnAction(a -> {
+        hallLabel.textProperty().bind(viewModel.selectedProjectionistShiftHallProperty());
+        backButton.setOnAction(a -> {
             try {
-                navController.navigate(new NavDestination(new ProjectionistShiftDetailView()));
+                navController.popBackStack();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
-        requestChangeButton.setVisible(false);
-        requestSwapButton.setVisible(false);
+        activity.getUseCase(ViewPersonalScheduleUseCase.class).getShiftProjectionList(
+                new GetShiftProjectionListRequest(viewModel.getSelectedShift())
+        );
     }
 
 }

@@ -7,10 +7,10 @@ import java.io.IOException;
 /**
  * @author Fabio Buracchi
  */
-public class PersonalScheduleView extends FxmlView {
+public class ScheduleView extends FxmlView {
 
-    public PersonalScheduleView() throws IOException {
-        super("personal_schedule.fxml");
+    public ScheduleView() throws IOException {
+        super("view_personal_schedule/schedule.fxml");
         addStylesheet("styles.css");
         addStylesheet("personal_schedule.css");
     }

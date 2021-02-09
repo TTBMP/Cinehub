@@ -10,7 +10,7 @@ import java.io.IOException;
 public class CalendarShiftItemView extends FxmlView {
 
     public CalendarShiftItemView() throws IOException {
-        super("calendar_shift_item.fxml");
+        super("view_personal_schedule/calendar_shift_item.fxml");
         addStylesheet("styles.css");
     }
 

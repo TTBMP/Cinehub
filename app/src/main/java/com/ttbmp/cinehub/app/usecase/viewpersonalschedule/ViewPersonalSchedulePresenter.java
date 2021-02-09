@@ -5,7 +5,7 @@ package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
  */
 public interface ViewPersonalSchedulePresenter {
 
-    void presentGetShiftList(GetShiftListResponse result);
+    void presentGetShiftList(GetShiftListReply result);
 
     void presentInvalidGetShiftListRequest(GetShiftListRequest request);
 
@@ -14,5 +14,7 @@ public interface ViewPersonalSchedulePresenter {
     void presentShiftListError(Throwable error);
 
     void presentGetShiftListNullRequest();
+
+    void presentGetProjectionList(GetShiftProjectionListReply getShiftProjectionListReply);
 
 }

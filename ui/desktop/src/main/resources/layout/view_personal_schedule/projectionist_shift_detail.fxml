@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="420.0" prefWidth="450.0" spacing="16.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.detail.projectionist.ProjectionistShiftDetailViewController">
+    <children>
+        <VBox>
+            <children>
+                <HBox spacing="4.0">
+                    <children>
+                        <Label fx:id="dateLabel" style="-fx-font-size: 16; -fx-font-weight: bold;" text="date">
+                            <HBox.margin>
+                                <Insets right="8.0" />
+                            </HBox.margin>
+                        </Label>
+                        <Label fx:id="startLabel" style="-fx-font-size: 16; -fx-font-weight: bold;" text="start" />
+                        <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="-" />
+                        <Label fx:id="endLabel" style="-fx-font-size: 16; -fx-font-weight: bold;" text="end" />
+                    </children>
+                </HBox>
+                <HBox spacing="4.0">
+                    <children>
+                        <Label fx:id="cityLabel" text="city" />
+                        <Label text="as" />
+                        <Label fx:id="roleLabel" text="role" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+        <Separator />
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
+         <children>
+            <Label text="Hall:" />
+            <Label fx:id="hallLabel" text="hall" />
+         </children>
+      </HBox>
+        <ListView fx:id="projectionListView" />
+        <Separator />
+        <HBox>
+            <children>
+                <Button fx:id="backButton" mnemonicParsing="false" text="BACK" />
+            </children>
+        </HBox>
+    </children>
+    <padding>
+        <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+    </padding>
+</VBox>

@@ -1,6 +1,8 @@
 package com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule;
 
+import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.dto.ShiftDto;
+import com.ttbmp.cinehub.app.dto.ShiftProjectionistDto;
 import com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.master.calendar.CalendarDay;
 import com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.master.calendar.CalendarPage;
 import com.ttbmp.cinehub.ui.desktop.utilities.ObjectBindings;
@@ -35,7 +37,9 @@ public class ViewPersonalScheduleViewModel implements ViewModel {
     private final StringProperty selectedShiftStart = new SimpleStringProperty();
     private final StringProperty selectedShiftEnd = new SimpleStringProperty();
 
+    private final StringProperty selectedProjectionistShiftHall = new SimpleStringProperty();
     private final BooleanProperty isProjectionsDetailButtonVisible = new SimpleBooleanProperty();
+    private final ObservableList<ProjectionDto> projectionList = FXCollections.observableArrayList();
 
     public ViewPersonalScheduleViewModel() {
         calendarPageFirstDate.bind(getCalendarPage().pageFirstDateProperty());
@@ -47,19 +51,20 @@ public class ViewPersonalScheduleViewModel implements ViewModel {
         selectedShiftDate.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getDate().toString()));
         selectedShiftStart.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getStart().toString()));
         selectedShiftEnd.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEnd().toString()));
-        isProjectionsDetailButtonVisible.bind(ObjectBindings.map(selectedShiftEmployeeRole, e -> e.equals("projectionist")));
+        selectedProjectionistShiftHall.bind(ObjectBindings.map(selectedShift, shiftDto -> ((ShiftProjectionistDto) shiftDto).getHallDto().getId().toString()));
+        isProjectionsDetailButtonVisible.bind(ObjectBindings.map(selectedShiftEmployeeRole, e -> e.equals("projectionist")));   // TODO: refactor
     }
 
     public LocalDate getDate() {
         return date.get();
     }
 
-    public void setDate(LocalDate date) {
-        this.date.set(date);
-    }
-
     public ObjectProperty<LocalDate> dateProperty() {
         return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date.set(date);
     }
 
     public ObservableList<ShiftDto> getShiftList() {
@@ -70,36 +75,36 @@ public class ViewPersonalScheduleViewModel implements ViewModel {
         return calendarPage.get();
     }
 
-    public void setCalendarPage(CalendarPage calendarPage) {
-        this.calendarPage.set(calendarPage);
-    }
-
     public ObjectProperty<CalendarPage> calendarPageProperty() {
         return calendarPage;
+    }
+
+    public void setCalendarPage(CalendarPage calendarPage) {
+        this.calendarPage.set(calendarPage);
     }
 
     public LocalDate getCalendarPageFirstDate() {
         return calendarPageFirstDate.get();
     }
 
-    public void setCalendarPageFirstDate(LocalDate calendarPageFirstDate) {
-        this.calendarPageFirstDate.set(calendarPageFirstDate);
-    }
-
     public ObjectProperty<LocalDate> calendarPageFirstDateProperty() {
         return calendarPageFirstDate;
+    }
+
+    public void setCalendarPageFirstDate(LocalDate calendarPageFirstDate) {
+        this.calendarPageFirstDate.set(calendarPageFirstDate);
     }
 
     public LocalDate getCalendarPageLastDate() {
         return calendarPageLastDate.get();
     }
 
-    public void setCalendarPageLastDate(LocalDate calendarPageLastDate) {
-        this.calendarPageLastDate.set(calendarPageLastDate);
-    }
-
     public ObjectProperty<LocalDate> calendarPageLastDateProperty() {
         return calendarPageLastDate;
+    }
+
+    public void setCalendarPageLastDate(LocalDate calendarPageLastDate) {
+        this.calendarPageLastDate.set(calendarPageLastDate);
     }
 
     public ObservableList<Map<DayOfWeek, CalendarDay>> getShiftWeekList() {
@@ -110,108 +115,124 @@ public class ViewPersonalScheduleViewModel implements ViewModel {
         return selectedShift.get();
     }
 
-    public void setSelectedShift(ShiftDto selectedShift) {
-        this.selectedShift.set(selectedShift);
-    }
-
     public ObjectProperty<ShiftDto> selectedShiftProperty() {
         return selectedShift;
+    }
+
+    public void setSelectedShift(ShiftDto selectedShift) {
+        this.selectedShift.set(selectedShift);
     }
 
     public String getSelectedShiftEmployeeName() {
         return selectedShiftEmployeeName.get();
     }
 
-    public void setSelectedShiftEmployeeName(String selectedShiftEmployeeName) {
-        this.selectedShiftEmployeeName.set(selectedShiftEmployeeName);
-    }
-
     public StringProperty selectedShiftEmployeeNameProperty() {
         return selectedShiftEmployeeName;
+    }
+
+    public void setSelectedShiftEmployeeName(String selectedShiftEmployeeName) {
+        this.selectedShiftEmployeeName.set(selectedShiftEmployeeName);
     }
 
     public String getSelectedShiftEmployeeRole() {
         return selectedShiftEmployeeRole.get();
     }
 
-    public void setSelectedShiftEmployeeRole(String selectedShiftEmployeeRole) {
-        this.selectedShiftEmployeeRole.set(selectedShiftEmployeeRole);
-    }
-
     public StringProperty selectedShiftEmployeeRoleProperty() {
         return selectedShiftEmployeeRole;
+    }
+
+    public void setSelectedShiftEmployeeRole(String selectedShiftEmployeeRole) {
+        this.selectedShiftEmployeeRole.set(selectedShiftEmployeeRole);
     }
 
     public String getSelectedShiftCinemaCity() {
         return selectedShiftCinemaCity.get();
     }
 
-    public void setSelectedShiftCinemaCity(String selectedShiftCinemaCity) {
-        this.selectedShiftCinemaCity.set(selectedShiftCinemaCity);
-    }
-
     public StringProperty selectedShiftCinemaCityProperty() {
         return selectedShiftCinemaCity;
+    }
+
+    public void setSelectedShiftCinemaCity(String selectedShiftCinemaCity) {
+        this.selectedShiftCinemaCity.set(selectedShiftCinemaCity);
     }
 
     public String getSelectedShiftCinemaAddress() {
         return selectedShiftCinemaAddress.get();
     }
 
-    public void setSelectedShiftCinemaAddress(String selectedShiftCinemaAddress) {
-        this.selectedShiftCinemaAddress.set(selectedShiftCinemaAddress);
-    }
-
     public StringProperty selectedShiftCinemaAddressProperty() {
         return selectedShiftCinemaAddress;
+    }
+
+    public void setSelectedShiftCinemaAddress(String selectedShiftCinemaAddress) {
+        this.selectedShiftCinemaAddress.set(selectedShiftCinemaAddress);
     }
 
     public String getSelectedShiftDate() {
         return selectedShiftDate.get();
     }
 
-    public void setSelectedShiftDate(String selectedShiftDate) {
-        this.selectedShiftDate.set(selectedShiftDate);
-    }
-
     public StringProperty selectedShiftDateProperty() {
         return selectedShiftDate;
+    }
+
+    public void setSelectedShiftDate(String selectedShiftDate) {
+        this.selectedShiftDate.set(selectedShiftDate);
     }
 
     public String getSelectedShiftStart() {
         return selectedShiftStart.get();
     }
 
-    public void setSelectedShiftStart(String selectedShiftStart) {
-        this.selectedShiftStart.set(selectedShiftStart);
-    }
-
     public StringProperty selectedShiftStartProperty() {
         return selectedShiftStart;
+    }
+
+    public void setSelectedShiftStart(String selectedShiftStart) {
+        this.selectedShiftStart.set(selectedShiftStart);
     }
 
     public String getSelectedShiftEnd() {
         return selectedShiftEnd.get();
     }
 
+    public StringProperty selectedShiftEndProperty() {
+        return selectedShiftEnd;
+    }
+
     public void setSelectedShiftEnd(String selectedShiftEnd) {
         this.selectedShiftEnd.set(selectedShiftEnd);
     }
 
-    public StringProperty selectedShiftEndProperty() {
-        return selectedShiftEnd;
+    public String getSelectedProjectionistShiftHall() {
+        return selectedProjectionistShiftHall.get();
+    }
+
+    public StringProperty selectedProjectionistShiftHallProperty() {
+        return selectedProjectionistShiftHall;
+    }
+
+    public void setSelectedProjectionistShiftHall(String selectedProjectionistShiftHall) {
+        this.selectedProjectionistShiftHall.set(selectedProjectionistShiftHall);
     }
 
     public boolean isIsProjectionsDetailButtonVisible() {
         return isProjectionsDetailButtonVisible.get();
     }
 
+    public BooleanProperty isProjectionsDetailButtonVisibleProperty() {
+        return isProjectionsDetailButtonVisible;
+    }
+
     public void setIsProjectionsDetailButtonVisible(boolean isProjectionsDetailButtonVisible) {
         this.isProjectionsDetailButtonVisible.set(isProjectionsDetailButtonVisible);
     }
 
-    public BooleanProperty isProjectionsDetailButtonVisibleProperty() {
-        return isProjectionsDetailButtonVisible;
+    public ObservableList<ProjectionDto> getProjectionList() {
+        return projectionList;
     }
 
 }

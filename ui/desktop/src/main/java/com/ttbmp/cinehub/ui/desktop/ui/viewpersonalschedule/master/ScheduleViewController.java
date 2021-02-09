@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * @author Fabio Buracchi
  */
-public class PersonalScheduleViewController extends ViewController {
+public class ScheduleViewController extends ViewController {
 
     @FXML
     private VBox appBar;

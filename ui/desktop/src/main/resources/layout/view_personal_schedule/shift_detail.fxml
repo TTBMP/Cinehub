@@ -5,7 +5,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" spacing="16.0" xmlns="http://javafx.com/javafx/11.0.1"
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="420.0" prefWidth="450.0" spacing="16.0"
+      xmlns="http://javafx.com/javafx/11.0.1"
       fx:controller="com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.detail.ShiftDetailViewController">
     <padding>
         <Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/>
@@ -29,17 +30,17 @@
             </children>
         </HBox>
     </VBox>
-    <Separator prefWidth="200.0"/>
+    <Separator/>
     <VBox prefHeight="200.0" prefWidth="100.0">
         <Label text="LOCATION"/>
         <Label fx:id="addressLabel" layoutX="10.0" layoutY="160.0" text="address"/>
         <ImageView fitHeight="200.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../drawable/map.png"/>
+                <Image url="@../../drawable/map.png"/>
             </image>
         </ImageView>
     </VBox>
-    <Separator prefWidth="200.0"/>
+    <Separator/>
     <HBox spacing="16.0">
         <Button fx:id="requestSwapButton" mnemonicParsing="false" text="REQUEST SWAP SHIFT"/>
         <Button fx:id="requestChangeButton" mnemonicParsing="false" text="REQUEST CHANGE SHIFT"/>

@@ -9,11 +9,11 @@ import java.util.List;
 /**
  * @author Fabio Buracchi
  */
-public class GetShiftListResponse {
+public class GetShiftListReply {
 
     private List<ShiftDto> shiftDtoList;
 
-    public GetShiftListResponse(List<Shift> shiftList) {
+    public GetShiftListReply(List<Shift> shiftList) {
         this.shiftDtoList = ShiftDataMapper.mapToDtoList(shiftList);
     }
 
