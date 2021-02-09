@@ -1,16 +1,13 @@
 package com.ttbmp.cinehub.app.usecase.buyticket;
 
 import com.ttbmp.cinehub.app.datamapper.*;
+import com.ttbmp.cinehub.app.repository.*;
 import com.ttbmp.cinehub.domain.*;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import com.ttbmp.cinehub.domain.ticket.component.TicketAbstract;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketFoldingArmchair;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketHeatedArmchair;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketSkipLine;
-import com.ttbmp.cinehub.app.repository.CinemaRepository;
-import com.ttbmp.cinehub.app.repository.MovieRepository;
-import com.ttbmp.cinehub.app.repository.ProjectionRepository;
-import com.ttbmp.cinehub.app.repository.UserRepository;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
 import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
@@ -37,6 +34,7 @@ public class BuyTicketController implements BuyTicketUseCase {
     private final AuthenticationService authenticationService;
     private final ProjectionRepository projectionRepository;
     private final UserRepository userRepository;
+    private final TicketRepository ticketRepository;
 
 
     public BuyTicketController(PaymentService paymentService,
@@ -46,7 +44,9 @@ public class BuyTicketController implements BuyTicketUseCase {
                                CinemaRepository cinemaRepository,
                                AuthenticationService authenticationService,
                                ProjectionRepository projectionRepository,
-                               UserRepository userRepository) {
+                               UserRepository userRepository,
+                               TicketRepository ticketRepository
+    ) {
         this.paymentService = paymentService;
         this.emailService = emailService;
         this.buyTicketPresenter = buyTicketPresenter;
@@ -55,7 +55,7 @@ public class BuyTicketController implements BuyTicketUseCase {
         this.authenticationService = authenticationService;
         this.projectionRepository = projectionRepository;
         this.userRepository = userRepository;
-
+        this.ticketRepository = ticketRepository;
     }
 
 
@@ -73,7 +73,7 @@ public class BuyTicketController implements BuyTicketUseCase {
                     user.getCard().getNumber(),
                     ticket.getPrice()
             ));
-            ticket.setState(true);
+            ticketRepository.saveTicket(ticket);
             projection.addTicket(ticket);
             projection.getHall().getSeatList().get(index).setState(false);
             user.addTicket(ticket);
