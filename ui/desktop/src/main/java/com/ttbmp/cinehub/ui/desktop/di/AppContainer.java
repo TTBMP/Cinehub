@@ -31,6 +31,7 @@ public class AppContainer extends DependencyContainer {
         dependencyFactoryMap.put(MovieRepository.class, () -> new MockMovieRepository(dependencyFactoryMap.get(MovieApiService.class).get()));
         dependencyFactoryMap.put(CinemaRepository.class, MockCinemaRepository::new);
         dependencyFactoryMap.put(ProjectionRepository.class, MockProjectionRepository::new);
+        dependencyFactoryMap.put(TicketRepository.class, MockTicketRepository::new);
     }
 
 }
