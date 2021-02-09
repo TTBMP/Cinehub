@@ -21,7 +21,13 @@ public class ShiftDetailViewController extends ViewController {
     private Label endLabel;
 
     @FXML
-    private Label locationLabel;
+    private Label roleLabel;
+
+    @FXML
+    private Label cityLabel;
+
+    @FXML
+    private Label addressLabel;
 
     @FXML
     private Button requestSwapButton;
@@ -30,7 +36,7 @@ public class ShiftDetailViewController extends ViewController {
     private Button requestChangeButton;
 
     @FXML
-    private Button changeButton;
+    private Button detailButton;
 
     @Override
     protected void onLoad() {
@@ -38,11 +44,12 @@ public class ShiftDetailViewController extends ViewController {
         dateLabel.textProperty().bind(viewModel.selectedShiftDateProperty());
         startLabel.textProperty().bind(viewModel.selectedShiftStartProperty());
         endLabel.textProperty().bind(viewModel.selectedShiftEndProperty());
-        locationLabel.setText("via Roma");
-        changeButton.setVisible(false);
+        roleLabel.textProperty().bind(viewModel.selectedShiftEmployeeRoleProperty());
+        cityLabel.textProperty().bind(viewModel.selectedShiftCinemaCityProperty());
+        addressLabel.textProperty().bind(viewModel.selectedShiftCinemaAddressProperty());
+        detailButton.setVisible(viewModel.isIsProjectionsDetailButtonVisible());
         requestChangeButton.setVisible(false);
         requestSwapButton.setVisible(false);
-        changeButton.setVisible(false);
     }
 
 }

@@ -1,18 +1,18 @@
 package com.ttbmp.cinehub.domain;
 
 /**
- * @author Palmieri Ivan
+ * @author Palmieri Ivan, Fabio Buracchi
  */
 public class CreditCard {
-    private final String expirationDate;
-    private final Integer cvv;
-    private String number;
-    private String pin;
 
-    public CreditCard(String expirationDate, int cvv, String number, String pin) {
-        this.expirationDate = expirationDate;
-        this.cvv = cvv;
+    private String number;
+    private Integer cvv;
+    private String expirationDate;
+
+    public CreditCard(String number, int cvv, String expirationDate) {
         this.number = number;
+        this.cvv = cvv;
+        this.expirationDate = expirationDate;
     }
 
     public String getNumber() {
@@ -23,11 +23,20 @@ public class CreditCard {
         this.number = number;
     }
 
-    public String getPin() {
-        return pin;
+    public Integer getCvv() {
+        return cvv;
     }
 
-    public void setPin(String pin) {
-        this.pin = pin;
+    public void setCvv(Integer cvv) {
+        this.cvv = cvv;
     }
+
+    public String getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
 }

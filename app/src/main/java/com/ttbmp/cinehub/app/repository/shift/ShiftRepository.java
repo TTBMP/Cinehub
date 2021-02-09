@@ -1,9 +1,7 @@
-package com.ttbmp.cinehub.app.repository;
+package com.ttbmp.cinehub.app.repository.shift;
 
-import com.ttbmp.cinehub.app.ShiftSaveException;
 import com.ttbmp.cinehub.domain.Employee;
 import com.ttbmp.cinehub.domain.shift.Shift;
-import com.ttbmp.cinehub.app.utilities.result.Result;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,9 +11,9 @@ import java.util.List;
  */
 public interface ShiftRepository {
 
-    Result<List<Shift>> getAllEmployeeShiftBetweenDate(Employee employee, LocalDate start, LocalDate end);
+    List<Shift> getAllEmployeeShiftBetweenDate(Employee employee, LocalDate start, LocalDate end);
 
-    Result<List<Shift>> getShiftList();
+    List<Shift> getShiftList();
 
     void saveShift(Shift shift) throws ShiftSaveException;
 

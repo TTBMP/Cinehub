@@ -61,7 +61,7 @@ public class CalendarShiftItemViewController extends ViewController {
         addButton.setOnAction(a -> {
             viewModel.setSelectedDayWeek(dayWeek);
             try {
-                navController.openInDialog(new NavDestination(new AssignShiftView()), "Assegna Turno");
+                navController.openInDialog(new NavDestination(new AssignShiftView()), "Assign shift");
             } catch (IOException e) {
                 e.printStackTrace();
             }

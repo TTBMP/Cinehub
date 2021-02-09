@@ -1,8 +1,5 @@
-package com.ttbmp.cinehub.app.service.mock;
+package com.ttbmp.cinehub.app.service.email;
 
-
-import com.ttbmp.cinehub.app.service.email.EmailService;
-import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
 
 /**
  * @author Palmieri Ivan

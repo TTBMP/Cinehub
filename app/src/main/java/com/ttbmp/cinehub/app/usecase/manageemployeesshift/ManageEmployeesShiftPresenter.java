@@ -3,26 +3,25 @@ package com.ttbmp.cinehub.app.usecase.manageemployeesshift;
 
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
-import com.ttbmp.cinehub.app.utilities.result.Result;
 
 /**
  * @author Massimo Mazzetti
  */
 public interface ManageEmployeesShiftPresenter {
 
-    void presentShiftList(Result<GetShiftListResponse> shiftList);
+    void presentShiftList(GetShiftListResponse shiftList);
 
-    void presentCinemaList(Result<GetCinemaListResponse> listCinema);
+    void presentCinemaList(GetCinemaListResponse listCinema);
 
-    void presentHallList(Result<GetHallListResponse> listHall);
+    void presentHallList(GetHallListResponse listHall);
 
     void presentSaveShift();
 
     void presentDeleteShift();
 
-    void presentRepeatShift(Result<ShiftRepeatResponse> response);
+    void presentRepeatShift(ShiftRepeatResponse response);
 
-    void presentCreateShift(Result<CreateShiftResponse> response);
+    void presentCreateShift(CreateShiftResponse response);
 
     void presentInvalidSaveShiftListRequest(ShiftRequest request);
 

@@ -1,6 +1,4 @@
-package com.ttbmp.cinehub.app.service.mock;
-
-import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
+package com.ttbmp.cinehub.app.service.authentication;
 
 /**
  * @author Fabio Buracchi

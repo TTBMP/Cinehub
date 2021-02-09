@@ -4,7 +4,7 @@ include(
     "domain",
     "service:authentication",
     "service:email",
-    "service:movie-information",
+    "service:movie-api",
     "service:payment",
     "service:persistence",
     "ui:desktop",

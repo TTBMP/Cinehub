@@ -5,10 +5,7 @@ import com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.master.calendar.Cale
 import com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.master.calendar.CalendarPage;
 import com.ttbmp.cinehub.ui.desktop.utilities.ObjectBindings;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewModel;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -31,17 +28,26 @@ public class ViewPersonalScheduleViewModel implements ViewModel {
 
     private final ObjectProperty<ShiftDto> selectedShift = new SimpleObjectProperty<>();
     private final StringProperty selectedShiftEmployeeName = new SimpleStringProperty();
+    private final StringProperty selectedShiftEmployeeRole = new SimpleStringProperty();
+    private final StringProperty selectedShiftCinemaCity = new SimpleStringProperty();
+    private final StringProperty selectedShiftCinemaAddress = new SimpleStringProperty();
     private final StringProperty selectedShiftDate = new SimpleStringProperty();
     private final StringProperty selectedShiftStart = new SimpleStringProperty();
     private final StringProperty selectedShiftEnd = new SimpleStringProperty();
 
+    private final BooleanProperty isProjectionsDetailButtonVisible = new SimpleBooleanProperty();
+
     public ViewPersonalScheduleViewModel() {
         calendarPageFirstDate.bind(getCalendarPage().pageFirstDateProperty());
         calendarPageLastDate.bind(getCalendarPage().pageLastDateProperty());
-        selectedShiftEmployeeName.bind(ObjectBindings.map(selectedShift, ShiftDto::getEmployeeName));
+        selectedShiftEmployeeName.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEmployee().getName()));
+        selectedShiftEmployeeRole.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEmployee().toString()));
+        selectedShiftCinemaCity.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEmployee().getCinema().getCity()));
+        selectedShiftCinemaAddress.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEmployee().getCinema().getAddress()));
         selectedShiftDate.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getDate().toString()));
         selectedShiftStart.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getStart().toString()));
         selectedShiftEnd.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEnd().toString()));
+        isProjectionsDetailButtonVisible.bind(ObjectBindings.map(selectedShiftEmployeeRole, e -> e.equals("projectionist")));
     }
 
     public LocalDate getDate() {
@@ -124,6 +130,42 @@ public class ViewPersonalScheduleViewModel implements ViewModel {
         return selectedShiftEmployeeName;
     }
 
+    public String getSelectedShiftEmployeeRole() {
+        return selectedShiftEmployeeRole.get();
+    }
+
+    public void setSelectedShiftEmployeeRole(String selectedShiftEmployeeRole) {
+        this.selectedShiftEmployeeRole.set(selectedShiftEmployeeRole);
+    }
+
+    public StringProperty selectedShiftEmployeeRoleProperty() {
+        return selectedShiftEmployeeRole;
+    }
+
+    public String getSelectedShiftCinemaCity() {
+        return selectedShiftCinemaCity.get();
+    }
+
+    public void setSelectedShiftCinemaCity(String selectedShiftCinemaCity) {
+        this.selectedShiftCinemaCity.set(selectedShiftCinemaCity);
+    }
+
+    public StringProperty selectedShiftCinemaCityProperty() {
+        return selectedShiftCinemaCity;
+    }
+
+    public String getSelectedShiftCinemaAddress() {
+        return selectedShiftCinemaAddress.get();
+    }
+
+    public void setSelectedShiftCinemaAddress(String selectedShiftCinemaAddress) {
+        this.selectedShiftCinemaAddress.set(selectedShiftCinemaAddress);
+    }
+
+    public StringProperty selectedShiftCinemaAddressProperty() {
+        return selectedShiftCinemaAddress;
+    }
+
     public String getSelectedShiftDate() {
         return selectedShiftDate.get();
     }
@@ -158,6 +200,18 @@ public class ViewPersonalScheduleViewModel implements ViewModel {
 
     public StringProperty selectedShiftEndProperty() {
         return selectedShiftEnd;
+    }
+
+    public boolean isIsProjectionsDetailButtonVisible() {
+        return isProjectionsDetailButtonVisible.get();
+    }
+
+    public void setIsProjectionsDetailButtonVisible(boolean isProjectionsDetailButtonVisible) {
+        this.isProjectionsDetailButtonVisible.set(isProjectionsDetailButtonVisible);
+    }
+
+    public BooleanProperty isProjectionsDetailButtonVisibleProperty() {
+        return isProjectionsDetailButtonVisible;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.service.movieinformation.dto;
+package com.ttbmp.cinehub.service.movieapi.dto;
 
 
 /**

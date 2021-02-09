@@ -1,12 +1,12 @@
-package com.ttbmp.cinehub.service.movieinformation.movieapi;
+package com.ttbmp.cinehub.service.movieapi.movieapi;
 
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.ttbmp.cinehub.app.dto.MovieDto;
-import com.ttbmp.cinehub.app.service.movie.MovieApiService;
-import com.ttbmp.cinehub.service.movieinformation.datamapper.MovieApiDataMapper;
-import com.ttbmp.cinehub.service.movieinformation.dto.MovieApiDto;
+import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
+import com.ttbmp.cinehub.service.movieapi.datamapper.MovieApiDataMapper;
+import com.ttbmp.cinehub.service.movieapi.dto.MovieApiDto;
 
 import java.io.BufferedReader;
 import java.io.IOException;

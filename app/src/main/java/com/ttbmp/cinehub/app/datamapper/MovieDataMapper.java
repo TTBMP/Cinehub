@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.app.datamapper;
 
 import com.ttbmp.cinehub.app.dto.MovieDto;
-import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.app.utilities.DataMapperHelper;
+import com.ttbmp.cinehub.domain.Movie;
 
 import java.util.List;
 
@@ -19,9 +19,9 @@ public class MovieDataMapper {
         return new MovieDto(
                 movie.getId(),
                 movie.getName(),
-                movie.getVote(),
+                movie.getRating(),
                 movie.getOverview(),
-                movie.getRelases(),
+                movie.getReleaseDate(),
                 movie.getImageUrl()
         );
     }
@@ -30,8 +30,8 @@ public class MovieDataMapper {
         Movie movie = new Movie(movieDto.getId());
         movie.setName(movieDto.getName());
         movie.setOverview(movieDto.getOverview());
-        movie.setRelases(movieDto.getReleases());
-        movie.setVote(movieDto.getVote());
+        movie.setReleaseDate(movieDto.getReleases());
+        movie.setRating(movieDto.getVote());
         movie.setImageUrl(movieDto.getMovieUrl());
         return movie;
     }

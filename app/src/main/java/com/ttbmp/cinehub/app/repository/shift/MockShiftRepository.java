@@ -1,12 +1,10 @@
-package com.ttbmp.cinehub.app.repository.mock;
+package com.ttbmp.cinehub.app.repository.shift;
 
-import com.ttbmp.cinehub.app.ShiftSaveException;
+import com.ttbmp.cinehub.app.repository.mock.MockEmployeeRepository;
 import com.ttbmp.cinehub.domain.Employee;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 import com.ttbmp.cinehub.domain.shift.Shift;
 import com.ttbmp.cinehub.domain.shift.UsherShift;
-import com.ttbmp.cinehub.app.repository.ShiftRepository;
-import com.ttbmp.cinehub.app.utilities.result.Result;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -58,17 +56,17 @@ public class MockShiftRepository implements ShiftRepository {
     }
 
     @Override
-    public Result<List<Shift>> getAllEmployeeShiftBetweenDate(Employee employee, LocalDate start, LocalDate end) {
-        return new Result<>(shiftList.stream()
+    public List<Shift> getAllEmployeeShiftBetweenDate(Employee employee, LocalDate start, LocalDate end) {
+        return shiftList.stream()
                 .filter(shift -> LocalDate.parse(shift.getDate()).isAfter(start.minusDays(1))
                         && LocalDate.parse(shift.getDate()).isBefore(end.plusDays(1))
                         && employee.getId() == shift.getEmployee().getId())
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Result<List<Shift>> getShiftList() {
-        return new Result<>(shiftList);
+    public List<Shift> getShiftList() {
+        return shiftList;
     }
 
     @Override

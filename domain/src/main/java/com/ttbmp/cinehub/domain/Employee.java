@@ -7,13 +7,13 @@ public abstract class Employee extends User {
 
     private Cinema cinema;
 
-    protected Employee() {
-        setName("");
+    protected Employee(User user, Cinema cinema) {
+        super(user.getId(), user.getName(), user.getSurname(), user.getEmail(), user.getCreditCard());
+        this.cinema = cinema;
     }
 
-    protected Employee(int id, String name, String surname, Cinema cinema) {
-        super(id, name, null, null);
-        setSurname(surname);
+    protected Employee(int id, String name, String surname, String email, CreditCard creditCard, Cinema cinema) {
+        super(id, name, surname, email, creditCard);
         this.cinema = cinema;
     }
 
@@ -27,21 +27,12 @@ public abstract class Employee extends User {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (this.getClass() != obj.getClass()) {
-            return false;
-        }
-        Employee other = (Employee) obj;
-        return this.getName().equals(other.getName())
-                && this.getSurname().equals(other.getSurname())
-                && this.getCinema().equals(other.getCinema());
+        return super.equals(obj);
     }
 
     @Override
     public int hashCode() {
-        return 0;
+        return super.hashCode();
     }
 
 }

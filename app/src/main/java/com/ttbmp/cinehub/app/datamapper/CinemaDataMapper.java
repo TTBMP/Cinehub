@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.app.datamapper;
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.app.utilities.DataMapperHelper;
+import com.ttbmp.cinehub.domain.Cinema;
 
 import java.util.List;
 
@@ -30,8 +30,7 @@ public class CinemaDataMapper {
         return new Cinema(
                 cinemaDto.getId(),
                 cinemaDto.getName(),
-                cinemaDto.getAddress(),
-                cinemaDto.getCity(),
+                cinemaDto.getCity(), cinemaDto.getAddress(),
                 HallDataMapper.mapToEntityList(cinemaDto.getHalList())
         );
     }

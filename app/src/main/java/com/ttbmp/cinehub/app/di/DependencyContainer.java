@@ -2,14 +2,16 @@ package com.ttbmp.cinehub.app.di;
 
 import com.ttbmp.cinehub.app.repository.*;
 import com.ttbmp.cinehub.app.repository.mock.*;
+import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
+import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
-import com.ttbmp.cinehub.app.service.mock.MockAuthenticationService;
+import com.ttbmp.cinehub.app.service.authentication.MockAuthenticationService;
 import com.ttbmp.cinehub.app.service.email.EmailService;
-import com.ttbmp.cinehub.app.service.mock.MockEmailService;
-import com.ttbmp.cinehub.app.service.movie.MovieApiService;
-import com.ttbmp.cinehub.app.service.mock.MockMovieApiService;
+import com.ttbmp.cinehub.app.service.email.MockEmailService;
+import com.ttbmp.cinehub.app.service.movieapi.MockMovieApiService;
+import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
+import com.ttbmp.cinehub.app.service.payment.MockPaymentService;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
-import com.ttbmp.cinehub.app.service.mock.MockPaymentService;
 import com.ttbmp.cinehub.app.utilities.FactoryMap;
 
 import java.util.function.Supplier;

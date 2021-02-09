@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.repository.EmployeeRepository;
-import com.ttbmp.cinehub.app.repository.ShiftRepository;
+import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalScheduleController;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalScheduleUseCase;

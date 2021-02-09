@@ -4,16 +4,15 @@ package com.ttbmp.cinehub.app.dto;
  * @author Palmieri Ivan
  */
 public class SeatDto {
+
     private Long price;
     private Boolean state;
-
 
     public SeatDto(Long price, Boolean state) {
         this.price = price;
         this.state = state;
 
     }
-
 
     public Long getPrice() {
         return price;

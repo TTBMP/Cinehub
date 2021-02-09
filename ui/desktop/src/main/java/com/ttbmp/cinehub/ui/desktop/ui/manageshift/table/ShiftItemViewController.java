@@ -53,7 +53,7 @@ public class ShiftItemViewController extends ViewController {
             viewModel.selectedDaysProperty().setValue(shift.getDate());
             viewModel.selectedShiftProperty().setValue(shift);
             try {
-                navController.openInDialog(new NavDestination(new ShowShiftDetailView()), "Vedi Dettaglio Turno");
+                navController.openInDialog(new NavDestination(new ShowShiftDetailView()), "Shift detail");
             } catch (IOException e) {
                 e.printStackTrace();
             }

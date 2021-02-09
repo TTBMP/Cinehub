@@ -3,10 +3,10 @@ package com.ttbmp.cinehub.app.repository.mock;
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.MovieDto;
+import com.ttbmp.cinehub.app.repository.ProjectionRepository;
 import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
-import com.ttbmp.cinehub.app.repository.ProjectionRepository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

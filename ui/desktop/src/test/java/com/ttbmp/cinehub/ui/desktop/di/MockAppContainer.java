@@ -1,9 +1,9 @@
 package com.ttbmp.cinehub.ui.desktop.di;
 
-import com.ttbmp.cinehub.app.repository.ShiftRepository;
-import com.ttbmp.cinehub.app.repository.mock.MockShiftRepository;
+import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
+import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
-import com.ttbmp.cinehub.app.service.mock.MockAuthenticationService;
+import com.ttbmp.cinehub.app.service.authentication.MockAuthenticationService;
 
 public class MockAppContainer extends AppContainer {
 

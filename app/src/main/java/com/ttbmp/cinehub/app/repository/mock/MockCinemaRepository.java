@@ -1,11 +1,11 @@
 package com.ttbmp.cinehub.app.repository.mock;
 
+import com.ttbmp.cinehub.app.repository.CinemaRepository;
+import com.ttbmp.cinehub.app.repository.ProjectionRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
-import com.ttbmp.cinehub.app.repository.CinemaRepository;
-import com.ttbmp.cinehub.app.repository.ProjectionRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,15 +21,13 @@ public class MockCinemaRepository implements CinemaRepository {
         cinemaList.add(new Cinema(
                 0,
                 "Comunale",
-                "via recanati 3",
-                "Recanati",
+                "Recanati", "via recanati 3",
                 new MockHallRepository().getHallList(0)
         ));
         cinemaList.add(new Cinema(
                 1,
                 "MultiPlex",
-                "via garibaldi 1",
-                "Teramo",
+                "Teramo", "via garibaldi 1",
                 new MockHallRepository().getHallList(1)
         ));
     }
@@ -42,7 +40,7 @@ public class MockCinemaRepository implements CinemaRepository {
     public Cinema getCinema(Hall hall) {
         for (Cinema cinema : cinemaList) {
             for (Hall hallCinema : cinema.getHallList()) {
-                if (hallCinema.getId().equals(hall.getId())) {
+                if (hallCinema.equals(hall)) {
                     return cinema;
                 }
             }

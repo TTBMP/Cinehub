@@ -1,12 +1,6 @@
 package com.ttbmp.cinehub.app.usecase.buyticket;
 
 import com.ttbmp.cinehub.app.datamapper.*;
-import com.ttbmp.cinehub.domain.*;
-import com.ttbmp.cinehub.domain.ticket.component.Ticket;
-import com.ttbmp.cinehub.domain.ticket.component.TicketAbstract;
-import com.ttbmp.cinehub.domain.ticket.decorator.TicketFoldingArmchair;
-import com.ttbmp.cinehub.domain.ticket.decorator.TicketHeatedArmchair;
-import com.ttbmp.cinehub.domain.ticket.decorator.TicketSkipLine;
 import com.ttbmp.cinehub.app.repository.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.MovieRepository;
 import com.ttbmp.cinehub.app.repository.ProjectionRepository;
@@ -20,6 +14,12 @@ import com.ttbmp.cinehub.app.service.payment.request.PayServiceRequest;
 import com.ttbmp.cinehub.app.usecase.Request;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
+import com.ttbmp.cinehub.domain.*;
+import com.ttbmp.cinehub.domain.ticket.component.Ticket;
+import com.ttbmp.cinehub.domain.ticket.component.TicketAbstract;
+import com.ttbmp.cinehub.domain.ticket.decorator.TicketFoldingArmchair;
+import com.ttbmp.cinehub.domain.ticket.decorator.TicketHeatedArmchair;
+import com.ttbmp.cinehub.domain.ticket.decorator.TicketSkipLine;
 
 import java.io.IOException;
 import java.util.List;
@@ -63,20 +63,20 @@ public class BuyTicketController implements BuyTicketUseCase {
     public boolean pay(PayRequest request) {
         try {
             Request.validate(request);
-            User user = userRepository.getUser(authenticationService.sigIn()).getValue();
+            User user = userRepository.getUser(authenticationService.sigIn());
             Ticket ticket = TicketDataMapper.mapToEntity(request.getTicket());
             Projection projection = ProjectionDataMapper.mapToEntity(request.getProjection());
             Integer index = request.getIndex();
             paymentService.pay(new PayServiceRequest(
                     user.getEmail(),
                     user.getName(),
-                    user.getCard().getNumber(),
+                    user.getCreditCard().getNumber(),
                     ticket.getPrice()
             ));
+            ticket.setOwner(user);
             ticket.setState(true);
             projection.addTicket(ticket);
             projection.getHall().getSeatList().get(index).setState(false);
-            user.addTicket(ticket);
             emailService.sendMail(new EmailServiceRequest(
                     user.getEmail(),
                     "Payment receipt"

@@ -6,13 +6,12 @@
 <VBox xmlns:fx="http://javafx.com/fxml/1" minHeight="730.0" minWidth="1156.0" xmlns="http://javafx.com/javafx/11.0.1"
       fx:controller="com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.master.PersonalScheduleViewController">
     <fx:include fx:id="appBar" source="app_bar.fxml"/>
-    <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308"
-                maxWidth="1.7976931348623157E308" prefHeight="700.0">
+    <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
         <padding>
             <Insets left="16.0" right="16.0" top="16.0"/>
         </padding>
-        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0">
-            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+        <VBox spacing="16.0">
+            <HBox>
                 <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <Label text="Schedule"/>
                     <Button fx:id="todayButton" mnemonicParsing="false" text="TODAY">
@@ -46,12 +45,12 @@
                     <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="140.0" prefWidth="-1.0"
                                  resizable="false" sortable="false" text="Sunday"/>
                 </columns>
-                <columnResizePolicy>
-                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
-                </columnResizePolicy>
                 <VBox.margin>
                     <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
                 </VBox.margin>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                </columnResizePolicy>
             </TableView>
         </VBox>
     </ScrollPane>

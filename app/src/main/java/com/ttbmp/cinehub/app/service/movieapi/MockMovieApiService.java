@@ -1,8 +1,7 @@
-package com.ttbmp.cinehub.app.service.mock;
+package com.ttbmp.cinehub.app.service.movieapi;
 
 
 import com.ttbmp.cinehub.app.dto.MovieDto;
-import com.ttbmp.cinehub.app.service.movie.MovieApiService;
 
 import java.io.IOException;
 import java.util.ArrayList;

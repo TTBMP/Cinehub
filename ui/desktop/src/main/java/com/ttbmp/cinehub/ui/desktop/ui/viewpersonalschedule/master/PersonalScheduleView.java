@@ -12,6 +12,7 @@ public class PersonalScheduleView extends FxmlView {
     public PersonalScheduleView() throws IOException {
         super("personal_schedule.fxml");
         addStylesheet("styles.css");
+        addStylesheet("personal_schedule.css");
     }
 
 }

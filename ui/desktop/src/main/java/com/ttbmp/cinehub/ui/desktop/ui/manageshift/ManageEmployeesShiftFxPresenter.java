@@ -5,11 +5,10 @@ import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.ShiftDto;
-import com.ttbmp.cinehub.domain.shift.Shift;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
-import com.ttbmp.cinehub.app.utilities.result.Result;
+import com.ttbmp.cinehub.domain.shift.Shift;
 import com.ttbmp.cinehub.ui.desktop.ui.manageshift.table.DayWeek;
 import com.ttbmp.cinehub.ui.desktop.ui.manageshift.table.EmployeeShiftWeek;
 
@@ -34,24 +33,24 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
 
 
     @Override
-    public void presentShiftList(Result<GetShiftListResponse> shiftList) {
+    public void presentShiftList(GetShiftListResponse shiftList) {
         viewModel.getEmployeeShiftWeekList().setAll(getEmployeeShiftWeekList(
                 new GetShiftListResponse(
-                        shiftList.getValue().getShiftDtoList(),
-                        shiftList.getValue().getDate(),
-                        shiftList.getValue().getCinema()
+                        shiftList.getShiftDtoList(),
+                        shiftList.getDate(),
+                        shiftList.getCinema()
                 )
         ));
     }
 
     @Override
-    public void presentCinemaList(Result<GetCinemaListResponse> listCinema) {
-        viewModel.getCinemaList().setAll(listCinema.getValue().getCinemaList());
+    public void presentCinemaList(GetCinemaListResponse listCinema) {
+        viewModel.getCinemaList().setAll(listCinema.getCinemaList());
     }
 
     @Override
-    public void presentHallList(Result<GetHallListResponse> listHall) {
-        viewModel.getHallList().setAll(listHall.getValue().getListHall());
+    public void presentHallList(GetHallListResponse listHall) {
+        viewModel.getHallList().setAll(listHall.getListHall());
     }
 
 
@@ -88,8 +87,8 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentRepeatShift(Result<ShiftRepeatResponse> response) {
-        List<ShiftDto> shiftList = response.getValue().getShiftDto();
+    public void presentRepeatShift(ShiftRepeatResponse response) {
+        List<ShiftDto> shiftList = response.getShiftDto();
         TemporalField temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
         List<EmployeeShiftWeek> employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
         for (ShiftDto savedShift : shiftList) {
@@ -110,8 +109,8 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentCreateShift(Result<CreateShiftResponse> response) {
-        viewModel.setShiftCreated(response.getValue().getShiftDto());
+    public void presentCreateShift(CreateShiftResponse response) {
+        viewModel.setShiftCreated(response.getShiftDto());
     }
 
     @Override

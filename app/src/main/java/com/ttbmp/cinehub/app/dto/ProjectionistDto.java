@@ -7,22 +7,8 @@ public class ProjectionistDto extends EmployeeDto {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (this.getClass() != obj.getClass()) {
-            return false;
-        }
-        EmployeeDto other = (EmployeeDto) obj;
-        return this.getName().equals(other.getName())
-                && this.getSurname().equals(other.getSurname())
-                && this.getCinema().equals(other.getCinema());
+    public String toString() {
+        return "projectionist";
     }
 
-    @Override
-    public int hashCode() {
-        /* ... */
-        return 0;
-    }
 }

@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.app.service.movie;
+package com.ttbmp.cinehub.app.service.movieapi;
 
 import com.ttbmp.cinehub.app.dto.MovieDto;
 

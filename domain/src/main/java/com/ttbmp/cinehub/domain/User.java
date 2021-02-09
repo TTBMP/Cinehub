@@ -1,43 +1,22 @@
 package com.ttbmp.cinehub.domain;
 
-import com.ttbmp.cinehub.domain.ticket.component.Ticket;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Fabio Buracchi, Palmieri Ivan
  */
 public class User {
 
-    private final List<Ticket> ownedTicket = new ArrayList<>();
     private int id;
     private String name;
     private String surname;
     private String email;
-    private CreditCard card;
+    private CreditCard creditCard;
 
-    public User(int id, String name, String email, CreditCard card) {
+    public User(int id, String name, String surname, String email, CreditCard creditCard) {
         this.id = id;
         this.name = name;
-        this.email = email;
-        this.setCard(card);
-    }
-
-    public User() {
-
-    }
-
-    public List<Ticket> getOwnedTicket() {
-        return ownedTicket;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
         this.surname = surname;
+        this.email = email;
+        this.creditCard = creditCard;
     }
 
     public int getId() {
@@ -48,16 +27,20 @@ public class User {
         this.id = id;
     }
 
-    public void addTicket(Ticket ticketAbstract) {
-        this.ownedTicket.add(ticketAbstract);
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getEmail() {
@@ -68,12 +51,26 @@ public class User {
         this.email = email;
     }
 
-    public CreditCard getCard() {
-        return card;
+    public CreditCard getCreditCard() {
+        return creditCard;
     }
 
-    public void setCard(CreditCard card) {
-        this.card = card;
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        Employee other = (Employee) obj;
+        return id == other.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 
 }

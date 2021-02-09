@@ -7,7 +7,7 @@ dependencies {
     implementation(project(":app"))
     implementation(project(":service:authentication"))
     implementation(project(":service:email"))
-    implementation(project(":service:movie-information"))
+    implementation(project(":service:movie-api"))
     implementation(project(":service:payment"))
     implementation(project(":service:persistence"))
 

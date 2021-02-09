@@ -3,27 +3,25 @@ package com.ttbmp.cinehub.domain;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Palmieri Ivan, Fabio Buracchi
  */
 public class Hall {
 
-    private Integer id;
+    private int id;
     private List<Seat> seatList;
 
-
-    public Hall(Integer id, List<Seat> seatList) {
+    public Hall(int id, List<Seat> seatList) {
         this.id = id;
         this.seatList = seatList;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
-
 
     public List<Seat> getSeatList() {
         return seatList;
@@ -33,24 +31,18 @@ public class Hall {
         this.seatList = seatList;
     }
 
-
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
+        if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        if (this.getClass() != obj.getClass()) {
-            return false;
-        }
-        Hall elem = (Hall) obj;
-
-        return this.getId().equals(elem.getId())
-                && this.getSeatList().equals(elem.getSeatList());
+        Hall other = (Hall) obj;
+        return this.getId() == other.getId();
     }
 
     @Override
     public int hashCode() {
-        return 0;
+        return this.getId();
     }
 
 }

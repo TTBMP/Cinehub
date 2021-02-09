@@ -1,8 +1,8 @@
-package com.ttbmp.cinehub.service.movieinformation.datamapper;
+package com.ttbmp.cinehub.service.movieapi.datamapper;
 
 import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.utilities.DataMapperHelper;
-import com.ttbmp.cinehub.service.movieinformation.dto.MovieApiDto;
+import com.ttbmp.cinehub.service.movieapi.dto.MovieApiDto;
 
 import java.util.List;
 

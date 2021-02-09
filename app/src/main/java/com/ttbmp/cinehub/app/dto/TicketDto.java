@@ -10,7 +10,6 @@ public class TicketDto {
     private Boolean state;
     private String position;
 
-
     public TicketDto(long price) {
         this.price = price;
     }
@@ -42,4 +41,5 @@ public class TicketDto {
     public void setPosition(String position) {
         this.position = position;
     }
+
 }

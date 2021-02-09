@@ -6,27 +6,18 @@ import java.util.List;
  * @author Palmieri Ivan
  */
 public class Cinema {
+
     private int id;
     private String name;
-    private String address;
     private String city;
+    private String address;
     private List<Hall> hallList;
 
-    public Cinema() {
-    }
-
-    public Cinema(int id, String name, String address, String city) {
+    public Cinema(int id, String name, String city, String address, List<Hall> hallList) {
         this.id = id;
         this.name = name;
-        this.address = address;
         this.city = city;
-    }
-
-    public Cinema(int id, String name, String address, String city, List<Hall> hallList) {
-        this.id = id;
-        this.name = name;
         this.address = address;
-        this.city = city;
         this.hallList = hallList;
     }
 
@@ -72,19 +63,16 @@ public class Cinema {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (this.getClass() != obj.getClass()) {
+        if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
         Cinema other = (Cinema) obj;
-        return this.name.equals(other.name);
+        return this.id == other.id;
     }
 
     @Override
     public int hashCode() {
-        return 0;
+        return id;
     }
 
 }

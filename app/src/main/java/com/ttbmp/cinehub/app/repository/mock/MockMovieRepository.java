@@ -1,11 +1,11 @@
 package com.ttbmp.cinehub.app.repository.mock;
 
 import com.ttbmp.cinehub.app.dto.MovieDto;
-import com.ttbmp.cinehub.domain.Movie;
-import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.app.repository.MovieRepository;
 import com.ttbmp.cinehub.app.repository.ProjectionRepository;
-import com.ttbmp.cinehub.app.service.movie.MovieApiService;
+import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
+import com.ttbmp.cinehub.domain.Movie;
+import com.ttbmp.cinehub.domain.Projection;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,8 +52,8 @@ public class MockMovieRepository implements MovieRepository {
                     MovieDto movieDto = movieApiService.getMovie(movie.getId());
                     movie.setName(movieDto.getName());
                     movie.setOverview(movieDto.getOverview());
-                    movie.setRelases(movie.getRelases());
-                    movie.setVote(movieDto.getVote());
+                    movie.setReleaseDate(movie.getReleaseDate());
+                    movie.setRating(movieDto.getVote());
                     movie.setImageUrl(movieDto.getMovieUrl());
                     movie.setDuration(movieDto.getDuration());
                 }

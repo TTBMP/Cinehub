@@ -3,14 +3,15 @@ package com.ttbmp.cinehub.app.dto;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Palmieri Ivan, Fabio Buracchi
  */
 public class CinemaDto {
+
+    private final int id;
+    private final String name;
     private final String address;
     private final String city;
     private final List<HallDto> halList;
-    private int id;
-    private String name;
 
     public CinemaDto(int id, String name, String address, String city, List<HallDto> halList) {
         this.id = id;
@@ -24,20 +25,12 @@ public class CinemaDto {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public List<HallDto> getHalList() {
         return halList;
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getAddress() {
@@ -50,20 +43,16 @@ public class CinemaDto {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (this.getClass() != obj.getClass()) {
+        if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
         CinemaDto other = (CinemaDto) obj;
-        return this.name.equals(other.name);
+        return this.id == other.id;
     }
 
     @Override
     public int hashCode() {
-        /* ... */
-        return 0;
+        return id;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.app;
+package com.ttbmp.cinehub.app.repository.shift;
 
 public class ShiftSaveException extends Exception {
 
