@@ -6,7 +6,6 @@ package com.ttbmp.cinehub.domain.ticket.component;
 public abstract class TicketAbstract {
 
     private long price;
-    private Boolean state;
     private String position;
 
 
