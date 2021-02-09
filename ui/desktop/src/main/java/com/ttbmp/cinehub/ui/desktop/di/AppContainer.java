@@ -12,7 +12,7 @@ import com.ttbmp.cinehub.app.service.email.MockEmailService;
 import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
 import com.ttbmp.cinehub.app.service.payment.MockPaymentService;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
-import com.ttbmp.cinehub.service.movieapi.movieapi.TheMovieDbMovieApiService;
+import com.ttbmp.cinehub.service.movieapi.TheMovieDbMovieApiService;
 
 /**
  * @author Fabio Buracchi
@@ -30,7 +30,7 @@ public class AppContainer extends DependencyContainer {
         dependencyFactoryMap.put(EmailService.class, MockEmailService::new);
         dependencyFactoryMap.put(PaymentService.class, MockPaymentService::new);
         dependencyFactoryMap.put(MovieApiService.class, TheMovieDbMovieApiService::new);
-        dependencyFactoryMap.put(MovieRepository.class, () -> new MockMovieRepository(dependencyFactoryMap.get(MovieApiService.class).get()));
+        dependencyFactoryMap.put(MovieRepository.class, MockMovieRepository::new);
         dependencyFactoryMap.put(CinemaRepository.class, MockCinemaRepository::new);
         dependencyFactoryMap.put(ProjectionRepository.class, MockProjectionRepository::new);
     }

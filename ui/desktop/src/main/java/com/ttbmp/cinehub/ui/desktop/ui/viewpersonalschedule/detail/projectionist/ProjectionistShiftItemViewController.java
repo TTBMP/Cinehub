@@ -29,7 +29,7 @@ public class ProjectionistShiftItemViewController extends ViewController {
     protected void onLoad() {
         timeLabel.setText(projectionDto.getStartTime());
         titleLabel.setText(projectionDto.getMovieDto().getName());
-        //movieImageView.setImage(new Image(projectionDto.getMovieDto().getMovieUrl()));
+        movieImageView.setImage(new Image(projectionDto.getMovieDto().getMovieUrl()));
     }
 
     public void load(Activity activity, NavController navController, ProjectionDto projectionDto) {

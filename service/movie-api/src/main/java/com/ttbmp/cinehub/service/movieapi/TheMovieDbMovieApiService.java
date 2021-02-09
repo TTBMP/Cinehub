@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.service.movieapi.movieapi;
+package com.ttbmp.cinehub.service.movieapi;
 
 
 import com.google.gson.JsonObject;

@@ -37,7 +37,7 @@ public class DependencyContainer {
         dependencyFactoryMap.put(EmailService.class, MockEmailService::new);
         dependencyFactoryMap.put(PaymentService.class, MockPaymentService::new);
         dependencyFactoryMap.put(MovieApiService.class, MockMovieApiService::new);
-        dependencyFactoryMap.put(MovieRepository.class, () -> new MockMovieRepository(dependencyFactoryMap.get(MovieApiService.class).get()));
+        dependencyFactoryMap.put(MovieRepository.class, MockMovieRepository::new);
         dependencyFactoryMap.put(CinemaRepository.class, MockCinemaRepository::new);
         dependencyFactoryMap.put(ProjectionRepository.class, MockProjectionRepository::new);
     }
