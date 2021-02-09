@@ -144,5 +144,11 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
         viewModel.movieErrorProperty().setValue(GetListCinemaRequest.MISSING_MOVIE_ERROR.getMessage());
     }
 
+    @Override
+    public void presentAutenticationError() {
+        viewModel.autenticationErrorProperty().setValue("Problems with accessing the server ");
+
+    }
+
 
 }

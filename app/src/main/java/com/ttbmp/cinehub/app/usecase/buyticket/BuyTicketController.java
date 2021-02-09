@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.usecase.buyticket;
 
 import com.ttbmp.cinehub.app.datamapper.*;
+import com.ttbmp.cinehub.app.service.authentication.LoginException;
 import com.ttbmp.cinehub.domain.*;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import com.ttbmp.cinehub.domain.ticket.component.TicketAbstract;
