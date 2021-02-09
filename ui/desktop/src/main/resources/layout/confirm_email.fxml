@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" minHeight="730.0" minWidth="1156.0" xmlns="http://javafx.com/javafx/11.0.1"
-      fx:controller="com.ttbmp.cinehub.ui.desktop.buyticket.confirmemail.ConfirmEmailViewController">
+
+<VBox minHeight="730.0" minWidth="1156.0" stylesheets="@../styles/stylesIvan.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.ui.desktop.ui.buyticket.confirmemail.ConfirmEmailViewController">
     <children>
-        <fx:include fx:id="appBar" source="app_bar/app_bar.fxml"/>
+        <fx:include fx:id="appBar" source="app_bar.fxml" />
         <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0" VBox.vgrow="ALWAYS">
             <children>
                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                     <children>
                         <Label alignment="CENTER" text="Payment made successfully!">
                             <font>
-                                <Font size="20.0"/>
+                                <Font size="20.0" />
                             </font>
                         </Label>
                     </children>
@@ -25,137 +26,113 @@
                             <content>
                                 <AnchorPane>
                                     <children>
-                                        <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                             <children>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Surname:"/>
-                                                <Text fx:id="surnameText" strokeType="OUTSIDE" strokeWidth="0.0"
-                                                      wrappingWidth="114.0" GridPane.columnIndex="1"/>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:"
-                                                      GridPane.rowIndex="1">
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Surname:" />
+                                                <Text fx:id="surnameText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="114.0" GridPane.columnIndex="1" />
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" GridPane.rowIndex="1">
                                                     <GridPane.margin>
-                                                        <Insets top="5.0"/>
+                                                        <Insets top="5.0" />
                                                     </GridPane.margin>
                                                 </Text>
-                                                <Text fx:id="nameText" strokeType="OUTSIDE" strokeWidth="0.0"
-                                                      wrappingWidth="129.0" GridPane.columnIndex="1"
-                                                      GridPane.rowIndex="1"/>
+                                                <Text fx:id="nameText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="129.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                             </children>
                                         </GridPane>
                                     </children>
                                 </AnchorPane>
                             </content>
                             <HBox.margin>
-                                <Insets right="5.0"/>
+                                <Insets right="5.0" />
                             </HBox.margin>
                         </TitledPane>
                         <TitledPane animated="false" text="Payment details" HBox.hgrow="ALWAYS">
                             <content>
                                 <AnchorPane>
                                     <children>
-                                        <GridPane AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="0.0"
-                                                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <GridPane AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                             <children>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Number of card:"/>
-                                                <Text fx:id="numberCardText" strokeType="OUTSIDE" strokeWidth="0.0"
-                                                      wrappingWidth="112.0" GridPane.columnIndex="1"/>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email:"
-                                                      GridPane.rowIndex="1">
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Number of card:" />
+                                                <Text fx:id="numberCardText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="112.0" GridPane.columnIndex="1" />
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" GridPane.rowIndex="1">
                                                     <GridPane.margin>
-                                                        <Insets top="10.0"/>
+                                                        <Insets top="10.0" />
                                                     </GridPane.margin>
                                                 </Text>
-                                                <Text fx:id="emailText" strokeType="OUTSIDE" strokeWidth="0.0"
-                                                      wrappingWidth="106.0" GridPane.columnIndex="1"
-                                                      GridPane.rowIndex="1"/>
+                                                <Text fx:id="emailText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="106.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                             </children>
                                         </GridPane>
                                     </children>
                                 </AnchorPane>
                             </content>
                             <HBox.margin>
-                                <Insets left="5.0" right="20.0"/>
+                                <Insets left="5.0" right="20.0" />
                             </HBox.margin>
                         </TitledPane>
                     </children>
                 </HBox>
-                <TitledPane animated="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                            text="Purchase details" VBox.vgrow="ALWAYS">
+                <TitledPane animated="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Purchase details" VBox.vgrow="ALWAYS">
                     <VBox.margin>
-                        <Insets right="20.0" top="10.0"/>
+                        <Insets right="20.0" top="10.0" />
                     </VBox.margin>
                     <content>
                         <AnchorPane>
                             <children>
-                                <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ticket:"/>
-                                        <Text fx:id="ticketText" strokeType="OUTSIDE" strokeWidth="0.0"
-                                              wrappingWidth="109.0" GridPane.columnIndex="1"/>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cinema:"
-                                              GridPane.rowIndex="1"/>
-                                        <Text fx:id="cinemaText" strokeType="OUTSIDE" strokeWidth="0.0"
-                                              wrappingWidth="84.0" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Movie:"
-                                              GridPane.rowIndex="2"/>
-                                        <Text fx:id="movieText" strokeType="OUTSIDE" strokeWidth="0.0"
-                                              wrappingWidth="109.0" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date"
-                                              GridPane.columnIndex="2">
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ticket:" />
+                                        <Text fx:id="ticketText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="109.0" GridPane.columnIndex="1" />
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cinema:" GridPane.rowIndex="1" />
+                                        <Text fx:id="cinemaText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="84.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Movie:" GridPane.rowIndex="2" />
+                                        <Text fx:id="movieText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="109.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date" GridPane.columnIndex="2">
                                             <GridPane.margin>
-                                                <Insets left="10.0"/>
+                                                <Insets left="10.0" />
                                             </GridPane.margin>
                                         </Text>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Screening time:"
-                                              GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Screening time:" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                             <GridPane.margin>
-                                                <Insets left="10.0"/>
+                                                <Insets left="10.0" />
                                             </GridPane.margin>
                                         </Text>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Price(€):"
-                                              GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Price(€):" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                             <GridPane.margin>
-                                                <Insets left="10.0"/>
+                                                <Insets left="10.0" />
                                             </GridPane.margin>
                                         </Text>
-                                        <Text fx:id="timeText" strokeType="OUTSIDE" strokeWidth="0.0"
-                                              GridPane.columnIndex="3" GridPane.rowIndex="1"/>
-                                        <Text fx:id="priceText" strokeType="OUTSIDE" strokeWidth="0.0"
-                                              GridPane.columnIndex="3" GridPane.rowIndex="2"/>
-                                        <Label fx:id="testLabel" GridPane.columnIndex="3"/>
-                                        <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="2"/>
-                                        <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="2"
-                                                   GridPane.rowIndex="1"/>
-                                        <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="2"
-                                                   GridPane.rowIndex="2"/>
+                                        <Text fx:id="timeText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                        <Text fx:id="priceText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                        <Label fx:id="testLabel" GridPane.columnIndex="3" />
+                                        <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="2" />
+                                        <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                        <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                     </children>
                                 </GridPane>
                             </children>
@@ -164,13 +141,13 @@
                 </TitledPane>
                 <Label fx:id="errorSectionLabel" alignment="CENTER" prefHeight="21.0" prefWidth="580.0">
                     <VBox.margin>
-                        <Insets top="15.0"/>
+                        <Insets top="15.0" />
                     </VBox.margin>
                 </Label>
-                <Button fx:id="confirmButton" mnemonicParsing="false" text="Back to menu"/>
+                <Button fx:id="confirmButton" mnemonicParsing="false" text="Back to menu" />
             </children>
             <VBox.margin>
-                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
+                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
             </VBox.margin>
         </VBox>
     </children>

@@ -1,78 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-      xmlns="http://javafx.com/javafx/11.0.1"
-      fx:controller="com.ttbmp.cinehub.ui.desktop.buyticket.choosemovie.ChooseMovieItemViewController">
+
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../styles/stylesIvan.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.ui.desktop.ui.buyticket.choosemovie.ChooseMovieItemViewController">
     <children>
         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
             <children>
-                <ImageView fx:id="imageMovieImageView" fitHeight="198.0" fitWidth="163.0" focusTraversable="true"
-                           nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="imageMovieImageView" fitHeight="198.0" fitWidth="163.0" focusTraversable="true" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                     <HBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                     </HBox.margin>
                 </ImageView>
                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                     <children>
                         <Label fx:id="nameMovieLabel" textAlignment="CENTER">
                             <font>
-                                <Font size="20.0"/>
+                                <Font size="20.0" />
                             </font>
                             <VBox.margin>
-                                <Insets top="16.0"/>
+                                <Insets top="16.0" />
                             </VBox.margin>
                         </Label>
                         <HBox>
                             <children>
-                                <Label text="Relased: " textFill="#757272"/>
+                                <Label text="Relased: " textFill="#757272" />
                                 <Label fx:id="releasedMovieLabel" textFill="#979494">
                                     <padding>
-                                        <Insets left="10.0"/>
+                                        <Insets left="10.0" />
                                     </padding>
                                 </Label>
                             </children>
                             <VBox.margin>
-                                <Insets top="10.0"/>
+                                <Insets top="10.0" />
                             </VBox.margin>
                         </HBox>
                         <HBox>
                             <children>
                                 <Label text="Vote:" textFill="#757272">
                                     <HBox.margin>
-                                        <Insets/>
+                                        <Insets />
                                     </HBox.margin>
                                 </Label>
                                 <Label fx:id="voteMovieLabel" textFill="#757272">
                                     <padding>
-                                        <Insets left="10.0"/>
+                                        <Insets left="10.0" />
                                     </padding>
                                 </Label>
                             </children>
                             <VBox.margin>
-                                <Insets top="10.0"/>
+                                <Insets top="10.0" />
                             </VBox.margin>
                         </HBox>
-                        <HBox VBox.vgrow="ALWAYS">
-                            <children>
-                                <Label fx:id="overviewMovieLabel" maxHeight="1.7976931348623157E308"
-                                       maxWidth="1.7976931348623157E308" prefWidth="800.0" wrapText="true">
-                                    <padding>
-                                        <Insets right="15.0"/>
-                                    </padding>
-                                </Label>
-                            </children>
+                        <Label fx:id="overviewMovieLabel" prefHeight="100.0" prefWidth="350.0" wrapText="true">
+                            <padding>
+                                <Insets right="15.0" />
+                            </padding>
                             <VBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                <Insets bottom="15.0" top="5.0" />
                             </VBox.margin>
-                        </HBox>
+                        </Label>
                     </children>
                     <padding>
-                        <Insets left="10.0"/>
+                        <Insets left="10.0" />
                     </padding>
                 </VBox>
             </children>
