@@ -36,4 +36,5 @@ public abstract class FxmlView extends View {
     public ViewController getController() {
         return loader.getController();
     }
+
 }

@@ -1,11 +1,10 @@
 package com.ttbmp.cinehub.app.repository.mock;
 
+import com.ttbmp.cinehub.app.repository.UserRepository;
 import com.ttbmp.cinehub.domain.CreditCard;
 import com.ttbmp.cinehub.domain.User;
-import com.ttbmp.cinehub.app.repository.UserRepository;
-import com.ttbmp.cinehub.app.utilities.result.Result;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,24 +12,42 @@ import java.util.List;
  */
 public class MockUserRepository implements UserRepository {
 
-    private static final List<User> userList = Arrays.asList(
-            new User(
-                    0,
-                    "Ivan",
-                    "palm@5934.c",
-                    new CreditCard("22/24", 354, "4242424242424242", "5496")
-            ),
-            new User(
-                    1,
-                    "Mattia",
-                    "mahsdj@giggii.cosedfsnodix",
-                    new CreditCard("22/24", 354, "4242424242424242", "5496")
-            )
-    );
+    private static final List<User> userList = new ArrayList<>();
+
+    static {
+        userList.add(new User(
+                0,
+                "Fabio",
+                "Buracchi",
+                "fb@cinehub.com",
+                new CreditCard("4242424242424242", 354, "22/24")
+        ));
+        userList.add(new User(
+                1,
+                "Massimo",
+                "Mazzetti",
+                "mm@cinehub.com",
+                new CreditCard("4242424242424242", 354, "22/24")
+        ));
+        userList.add(new User(
+                2,
+                "Ivan",
+                "Palmieri",
+                "ip@cinehub.com",
+                new CreditCard("4242424242424242", 354, "22/24")
+        ));
+        userList.add(new User(
+                3,
+                "Mario",
+                "Rossi",
+                "mr@cinehub.com",
+                new CreditCard("4242424242424242", 354, "22/24")
+        ));
+    }
 
     @Override
-    public Result<User> getUser(int userId) {
-        return new Result<>(userList.get(userId));
+    public User getUser(int userId) {
+        return userList.get(userId);
     }
 
 }

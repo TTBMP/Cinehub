@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-      xmlns="http://javafx.com/javafx/8"
+      xmlns="http://javafx.com/javafx/11.0.1"
       fx:controller="com.ttbmp.cinehub.ui.desktop.ui.buyticket.choosemovie.ChooseMovieItemViewController">
     <children>
         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
@@ -57,14 +57,19 @@
                                 <Insets top="10.0"/>
                             </VBox.margin>
                         </HBox>
-                        <Label fx:id="overviewMovieLabel" prefHeight="100.0" prefWidth="350.0" wrapText="true">
-                            <padding>
-                                <Insets right="15.0"/>
-                            </padding>
+                        <HBox VBox.vgrow="ALWAYS">
+                            <children>
+                                <Label fx:id="overviewMovieLabel" maxHeight="1.7976931348623157E308"
+                                       maxWidth="1.7976931348623157E308" prefWidth="800.0" wrapText="true">
+                                    <padding>
+                                        <Insets right="15.0"/>
+                                    </padding>
+                                </Label>
+                            </children>
                             <VBox.margin>
-                                <Insets bottom="15.0" top="5.0"/>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </VBox.margin>
-                        </Label>
+                        </HBox>
                     </children>
                     <padding>
                         <Insets left="10.0"/>

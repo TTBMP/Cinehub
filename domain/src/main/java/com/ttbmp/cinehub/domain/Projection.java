@@ -70,4 +70,5 @@ public class Projection {
     public void addTicket(Ticket ticket) {
         this.ticket.add(ticket);
     }
+
 }

@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.app.datamapper;
 
 import com.ttbmp.cinehub.app.dto.HallDto;
-import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.app.utilities.DataMapperHelper;
+import com.ttbmp.cinehub.domain.Hall;
 
 import java.util.List;
 

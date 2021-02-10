@@ -5,6 +5,9 @@ package com.ttbmp.cinehub.domain;
  */
 public class Seat {
 
+    private int id;
+    private char rows;
+    private int number;
     private Long price;
     private Boolean state;
 
@@ -21,7 +24,6 @@ public class Seat {
         this.state = state;
     }
 
-
     public Long getPrice() {
         return price;
     }
@@ -30,25 +32,18 @@ public class Seat {
         this.price = price;
     }
 
-
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
+        if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        if (this.getClass() != obj.getClass()) {
-            return false;
-        }
-        Seat elem = (Seat) obj;
-
-        return this.getState().equals(elem.getState())
-                && this.getPrice().equals(elem.getPrice());
+        Seat other = (Seat) obj;
+        return this.id == other.id;
     }
 
     @Override
     public int hashCode() {
-        return 0;
+        return id;
     }
-
 
 }

@@ -12,9 +12,6 @@ public abstract class Shift {
     private String start;
     private String end;
 
-    protected Shift() {
-    }
-
     protected Shift(Employee employee, String date, String start, String end) {
         this.employee = employee;
         this.date = date;
@@ -56,22 +53,19 @@ public abstract class Shift {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
+        if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        if (this.getClass() != obj.getClass()) {
-            return false;
-        }
-        Shift elem = (Shift) obj;
-
-        return this.getEmployee().equals(elem.getEmployee())
-                && this.getDate().equals(elem.getDate())
-                && this.getStart().equals(elem.getStart())
-                && this.getEnd().equals(elem.getEnd());
+        Shift other = (Shift) obj;
+        return employee.equals(other.employee)
+                && date.equals(other.date)
+                && start.equals(other.start)
+                && end.equals(other.end);
     }
 
     @Override
     public int hashCode() {
-        return 0;
+        return employee.hashCode() + date.hashCode() + start.hashCode() + end.hashCode();
     }
+
 }

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class ShiftProjectionistDto extends ShiftDto {
+
     private final HallDto hallDto;
 
     public ShiftProjectionistDto(EmployeeDto employee, LocalDate date, LocalTime start, LocalTime end, HallDto hallDto) {
@@ -14,4 +15,5 @@ public class ShiftProjectionistDto extends ShiftDto {
     public HallDto getHallDto() {
         return hallDto;
     }
+
 }

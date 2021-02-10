@@ -9,7 +9,6 @@ public class TicketDto {
     private long price;
     private String position;
 
-
     public TicketDto(long price) {
         this.price = price;
     }
@@ -34,4 +33,5 @@ public class TicketDto {
     public void setPosition(String position) {
         this.position = position;
     }
+
 }

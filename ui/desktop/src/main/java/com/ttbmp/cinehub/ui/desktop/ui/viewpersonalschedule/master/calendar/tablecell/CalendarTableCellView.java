@@ -10,7 +10,7 @@ import java.io.IOException;
 public class CalendarTableCellView extends FxmlView {
 
     public CalendarTableCellView() throws IOException {
-        super("calendar_table_cell.fxml");
+        super("view_personal_schedule/calendar_table_cell.fxml");
         addStylesheet("styles.css");
     }
 

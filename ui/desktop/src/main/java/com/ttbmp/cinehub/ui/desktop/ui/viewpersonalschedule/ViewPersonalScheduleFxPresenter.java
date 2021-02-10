@@ -1,9 +1,9 @@
 package com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule;
 
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.GetShiftListReply;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.GetShiftListRequest;
-import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.GetShiftListResponse;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.GetShiftProjectionListReply;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalSchedulePresenter;
-import com.ttbmp.cinehub.app.utilities.result.Result;
 
 /**
  * @author Fabio Buracchi
@@ -17,11 +17,8 @@ public class ViewPersonalScheduleFxPresenter implements ViewPersonalSchedulePres
     }
 
     @Override
-    public void presentGetShiftList(Result<GetShiftListResponse> result) {
-        if (result.hasError()) {
-            result.getError().printStackTrace();
-        }
-        viewModel.getShiftList().setAll(result.getValue().getShiftDtoList());
+    public void presentGetShiftList(GetShiftListReply result) {
+        viewModel.getShiftList().setAll(result.getShiftDtoList());
     }
 
     @Override
@@ -50,6 +47,11 @@ public class ViewPersonalScheduleFxPresenter implements ViewPersonalSchedulePres
     @Override
     public void presentGetShiftListNullRequest() {
         System.out.println("Request can't be null");
+    }
+
+    @Override
+    public void presentGetProjectionList(GetShiftProjectionListReply getShiftProjectionListReply) {
+        viewModel.getProjectionList().setAll(getShiftProjectionListReply.getProjectionDtoList());
     }
 
 }

@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.app.datamapper;
 
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.app.utilities.DataMapperHelper;
+import com.ttbmp.cinehub.domain.Projection;
 
 import java.util.List;
 

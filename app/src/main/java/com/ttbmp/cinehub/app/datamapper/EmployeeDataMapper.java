@@ -3,10 +3,10 @@ package com.ttbmp.cinehub.app.datamapper;
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.ProjectionistDto;
 import com.ttbmp.cinehub.app.dto.UsherDto;
+import com.ttbmp.cinehub.app.utilities.DataMapperHelper;
 import com.ttbmp.cinehub.domain.Employee;
 import com.ttbmp.cinehub.domain.Projectionist;
 import com.ttbmp.cinehub.domain.Usher;
-import com.ttbmp.cinehub.app.utilities.DataMapperHelper;
 
 import java.util.List;
 
@@ -42,6 +42,8 @@ public class EmployeeDataMapper {
                     employeeDto.getId(),
                     employeeDto.getName(),
                     employeeDto.getSurname(),
+                    null,
+                    null,
                     CinemaDataMapper.mapToEntity(employeeDto.getCinema())
             );
         } else {
@@ -49,6 +51,8 @@ public class EmployeeDataMapper {
                     employeeDto.getId(),
                     employeeDto.getName(),
                     employeeDto.getSurname(),
+                    null,
+                    null,
                     CinemaDataMapper.mapToEntity(employeeDto.getCinema())
             );
         }

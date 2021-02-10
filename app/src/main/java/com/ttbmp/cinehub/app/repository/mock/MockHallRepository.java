@@ -1,9 +1,9 @@
 package com.ttbmp.cinehub.app.repository.mock;
 
+import com.ttbmp.cinehub.app.repository.HallRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Seat;
-import com.ttbmp.cinehub.app.repository.HallRepository;
 
 import java.util.ArrayList;
 import java.util.List;

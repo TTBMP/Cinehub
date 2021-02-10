@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.ui.desktop.ui.manageshift;
 
 import com.ttbmp.cinehub.app.repository.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.HallRepository;
-import com.ttbmp.cinehub.app.repository.ShiftRepository;
+import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftController;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;

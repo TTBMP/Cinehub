@@ -1,9 +1,9 @@
 package com.ttbmp.cinehub.app.repository.mock;
 
+import com.ttbmp.cinehub.app.repository.EmployeeRepository;
 import com.ttbmp.cinehub.domain.Employee;
 import com.ttbmp.cinehub.domain.Projectionist;
 import com.ttbmp.cinehub.domain.Usher;
-import com.ttbmp.cinehub.app.repository.EmployeeRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,28 +16,21 @@ public class MockEmployeeRepository implements EmployeeRepository {
     private static final List<Employee> employeeList = new ArrayList<>();
 
     static {
+        MockUserRepository userRepository = new MockUserRepository();
         employeeList.add(new Usher(
-                0,
-                "Fabio",
-                "Buracchi",
+                userRepository.getUser(0),
                 new MockCinemaRepository().getCinema(0)
         ));
         employeeList.add(new Projectionist(
-                1,
-                "Massimo",
-                "Mazzetti",
+                userRepository.getUser(1),
                 new MockCinemaRepository().getCinema(0)
         ));
         employeeList.add(new Usher(
-                2,
-                "Ivan",
-                "Palmieri",
+                userRepository.getUser(2),
                 new MockCinemaRepository().getCinema(1)
         ));
         employeeList.add(new Projectionist(
-                3,
-                "Mario",
-                "Rossi",
+                userRepository.getUser(3),
                 new MockCinemaRepository().getCinema(1)
         ));
     }

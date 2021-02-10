@@ -9,4 +9,6 @@ public interface ViewPersonalScheduleUseCase extends UseCase {
 
     void getShiftList(GetShiftListRequest request);
 
+    void getShiftProjectionList(GetShiftProjectionListRequest request);
+
 }

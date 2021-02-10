@@ -8,4 +8,5 @@ public class ShiftUsherDto extends ShiftDto {
     public ShiftUsherDto(EmployeeDto employee, LocalDate date, LocalTime start, LocalTime end) {
         super(employee, date, start, end);
     }
+
 }

@@ -1,12 +1,13 @@
 package com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.repository.EmployeeRepository;
-import com.ttbmp.cinehub.app.repository.ShiftRepository;
+import com.ttbmp.cinehub.app.repository.ProjectionRepository;
+import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalScheduleController;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalScheduleUseCase;
 import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
-import com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.master.PersonalScheduleView;
+import com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.master.ScheduleView;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 
 import java.io.IOException;
@@ -18,10 +19,11 @@ public class ViewPersonalScheduleActivity extends Activity {
 
     private final ShiftRepository shiftRepository = CinehubApplication.APP_CONTAINER.getFactory(ShiftRepository.class).get();
     private final EmployeeRepository employeeRepository = CinehubApplication.APP_CONTAINER.getFactory(EmployeeRepository.class).get();
+    private final ProjectionRepository projectionRepository = CinehubApplication.APP_CONTAINER.getFactory(ProjectionRepository.class).get();
     private final AuthenticationService authenticationService = CinehubApplication.APP_CONTAINER.getFactory(AuthenticationService.class).get();
 
     public ViewPersonalScheduleActivity() throws IOException {
-        super(new PersonalScheduleView());
+        super(new ScheduleView());
         viewModelStore.put(ViewPersonalScheduleViewModel.class, new ViewPersonalScheduleViewModel());
         useCaseFactory.put(
                 ViewPersonalScheduleUseCase.class,
@@ -29,6 +31,7 @@ public class ViewPersonalScheduleActivity extends Activity {
                         new ViewPersonalScheduleFxPresenter(getViewModel(ViewPersonalScheduleViewModel.class)),
                         shiftRepository,
                         employeeRepository,
+                        projectionRepository,
                         authenticationService
                 ));
     }

@@ -3,10 +3,11 @@ package com.ttbmp.cinehub.app.repository.mock;
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.MovieDto;
+import com.ttbmp.cinehub.app.repository.ProjectionRepository;
 import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
-import com.ttbmp.cinehub.app.repository.ProjectionRepository;
+import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -71,6 +72,21 @@ public class MockProjectionRepository implements ProjectionRepository {
         List<Projection> result = new ArrayList<>();
         for (Projection projection : projectionList) {
             if (projection.getDate().equals(date) && projection.getMovie().getId() == movie.getId()) {
+                result.add(projection);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<Projection> getProjectionList(ProjectionistShift shift) {
+        List<Projection> result = new ArrayList<>();
+        for (Projection projection : projectionList) {
+            if (projection.getDate().equals(shift.getDate())
+                    && projection.getHall().equals(shift.getHall())
+                    && LocalTime.parse(projection.getStartTime()).isAfter(LocalTime.parse(shift.getStart()))
+                    && LocalTime.parse(projection.getStartTime()).isBefore(LocalTime.parse(shift.getEnd()))) {
+                // TODO: Check projectionist
                 result.add(projection);
             }
         }
