@@ -58,16 +58,6 @@ class ViewPersonalScheduleControllerTest {
         }
 
         @Override
-        public void presentAuthenticationError(Throwable error) {
-
-        }
-
-        @Override
-        public void presentShiftListError(Throwable error) {
-
-        }
-
-        @Override
         public void presentShiftListNullRequest() {
 
         }

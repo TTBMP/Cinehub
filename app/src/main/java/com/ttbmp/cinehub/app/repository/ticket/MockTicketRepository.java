@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.app.repository.ticket;
 
-import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 import java.util.ArrayList;

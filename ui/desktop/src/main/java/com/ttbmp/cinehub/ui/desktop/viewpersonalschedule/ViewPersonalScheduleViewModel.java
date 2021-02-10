@@ -20,6 +20,8 @@ import java.util.Map;
  */
 public class ViewPersonalScheduleViewModel implements ViewModel {
 
+    private final StringProperty errorMessage = new SimpleStringProperty();
+
     private final ObjectProperty<LocalDate> date = new SimpleObjectProperty<>(LocalDate.now());
     private final ObservableList<ShiftDto> shiftList = FXCollections.observableArrayList();
 
@@ -53,6 +55,18 @@ public class ViewPersonalScheduleViewModel implements ViewModel {
         selectedShiftEnd.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEnd().toString()));
         selectedProjectionistShiftHall.bind(ObjectBindings.map(selectedShift, shiftDto -> ((ShiftProjectionistDto) shiftDto).getHallDto().getId().toString()));
         isProjectionsDetailButtonVisible.bind(ObjectBindings.map(selectedShiftEmployeeRole, e -> e.equals("projectionist")));   // TODO: refactor
+    }
+
+    public String getErrorMessage() {
+        return errorMessage.get();
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage.set(errorMessage);
+    }
+
+    public StringProperty errorMessageProperty() {
+        return errorMessage;
     }
 
     public LocalDate getDate() {

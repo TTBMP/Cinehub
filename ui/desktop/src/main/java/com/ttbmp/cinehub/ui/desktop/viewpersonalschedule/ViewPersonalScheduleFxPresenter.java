@@ -20,30 +20,22 @@ public class ViewPersonalScheduleFxPresenter implements ViewPersonalSchedulePres
 
     @Override
     public void presentInvalidShiftListRequest(ShiftListRequest request) {
+        String message = "";
         if (request.getErrorList().contains(ShiftListRequest.MISSING_START_TIME_ERROR)) {
-            System.out.println(ShiftListRequest.MISSING_START_TIME_ERROR.getMessage());
+            message += ShiftListRequest.MISSING_START_TIME_ERROR.getMessage() + "\n";
         }
         if (request.getErrorList().contains(ShiftListRequest.MISSING_END_TIME_ERROR)) {
-            System.out.println(ShiftListRequest.MISSING_END_TIME_ERROR.getMessage());
+            message += ShiftListRequest.MISSING_END_TIME_ERROR.getMessage() + "\n";
         }
         if (request.getErrorList().contains(ShiftListRequest.INVALID_TIME_SELECTION_ERROR)) {
-            System.out.println(ShiftListRequest.INVALID_TIME_SELECTION_ERROR.getMessage());
+            message += ShiftListRequest.INVALID_TIME_SELECTION_ERROR.getMessage() + "\n";
         }
-    }
-
-    @Override
-    public void presentAuthenticationError(Throwable error) {
-        System.out.println(error.getMessage());
-    }
-
-    @Override
-    public void presentShiftListError(Throwable error) {
-        System.out.println(error.getMessage());
+        viewModel.setErrorMessage(message);
     }
 
     @Override
     public void presentShiftListNullRequest() {
-        System.out.println("Request can't be null");
+        viewModel.setErrorMessage("Request can't be null");
     }
 
     @Override
@@ -53,17 +45,19 @@ public class ViewPersonalScheduleFxPresenter implements ViewPersonalSchedulePres
 
     @Override
     public void presentProjectionListNullRequest() {
-        System.out.println("Request can't be null");
+        viewModel.setErrorMessage("Request can't be null");
     }
 
     @Override
     public void presentInvalidProjectionListRequest(ProjectionListRequest request) {
+        String message = "";
         if (request.getErrorList().contains(ProjectionListRequest.INVALID_SHIFT_ERROR)) {
-            System.out.println(ProjectionListRequest.INVALID_SHIFT_ERROR.getMessage());
+            message += ProjectionListRequest.INVALID_SHIFT_ERROR.getMessage() + "\n";
         }
         if (request.getErrorList().contains(ProjectionListRequest.MISSING_SHIFT_ERROR)) {
-            System.out.println(ProjectionListRequest.MISSING_SHIFT_ERROR.getMessage());
+            message += ProjectionListRequest.MISSING_SHIFT_ERROR.getMessage() + "\n";
         }
+        viewModel.setErrorMessage(message);
     }
 
 }

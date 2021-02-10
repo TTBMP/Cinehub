@@ -3,7 +3,6 @@ package com.ttbmp.cinehub.app.repository.projection;
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.MovieDto;
-import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.cinema.MockCinemaRepository;
 import com.ttbmp.cinehub.app.repository.hall.MockHallRepository;
 import com.ttbmp.cinehub.app.repository.movie.MockMovieRepository;

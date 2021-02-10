@@ -9,10 +9,6 @@ public interface ViewPersonalSchedulePresenter {
 
     void presentInvalidShiftListRequest(ShiftListRequest request);
 
-    void presentAuthenticationError(Throwable error);
-
-    void presentShiftListError(Throwable error);
-
     void presentShiftListNullRequest();
 
     void presentGetProjectionList(ProjectionListReply projectionListReply);

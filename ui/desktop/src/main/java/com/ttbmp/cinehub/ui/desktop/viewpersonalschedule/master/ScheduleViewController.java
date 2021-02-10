@@ -1,10 +1,12 @@
 package com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.master;
 
-import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalScheduleUseCase;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ShiftListRequest;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalScheduleUseCase;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
+import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavDestination;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.ViewPersonalScheduleViewModel;
+import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.error.ErrorDialogView;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.master.calendar.CalendarDay;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.master.calendar.tablecell.CalendarTableCell;
 import javafx.event.Event;
@@ -17,6 +19,7 @@ import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Map;
@@ -52,6 +55,13 @@ public class ScheduleViewController extends ViewController {
     protected void onLoad() {
         appBarController.load(activity, navController);
         ViewPersonalScheduleViewModel viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
+        viewModel.errorMessageProperty().addListener(l -> {
+            try {
+                navController.openInDialog(new NavDestination(new ErrorDialogView()), "Error");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         datePicker.valueProperty().bindBidirectional(viewModel.dateProperty());
         datePicker.setOnAction(a -> activity.getUseCase(ViewPersonalScheduleUseCase.class).getShiftList(
                 new ShiftListRequest(

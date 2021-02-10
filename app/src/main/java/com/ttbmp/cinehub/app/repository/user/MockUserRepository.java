@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.app.repository.user;
 
-import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.CreditCard;
 import com.ttbmp.cinehub.domain.User;
 

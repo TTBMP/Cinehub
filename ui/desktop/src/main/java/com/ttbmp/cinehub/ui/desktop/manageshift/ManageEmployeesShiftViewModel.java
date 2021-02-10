@@ -31,7 +31,6 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
     private final BooleanProperty errorModifyVisibility = new SimpleBooleanProperty();
     private final StringProperty error = new SimpleStringProperty();
 
-
     private final BooleanProperty repeatVisibility = new SimpleBooleanProperty();
     private final ObjectProperty<LocalTime> startSpinnerTime = new SimpleObjectProperty<>();
     private final ObjectProperty<LocalTime> endSpinnerTime = new SimpleObjectProperty<>();
@@ -80,94 +79,6 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
         }));
     }
 
-    public boolean isHallVisibility() {
-        return hallVisibility.get();
-    }
-
-    public void setHallVisibility(boolean hallVisibility) {
-        this.hallVisibility.set(hallVisibility);
-    }
-
-    public BooleanProperty hallVisibilityProperty() {
-        return hallVisibility;
-    }
-
-    public String getError() {
-        return error.get();
-    }
-
-    public void setError(String error) {
-        this.error.set(error);
-    }
-
-    public StringProperty errorProperty() {
-        return error;
-    }
-
-    public boolean isErrorAssignVisibility() {
-        return errorAssignVisibility.get();
-    }
-
-    public void setErrorAssignVisibility(boolean errorAssignVisibility) {
-        this.errorAssignVisibility.set(errorAssignVisibility);
-    }
-
-    public BooleanProperty errorAssignVisibilityProperty() {
-        return errorAssignVisibility;
-    }
-
-    public boolean isErrorModifyVisibility() {
-        return errorModifyVisibility.get();
-    }
-
-    public void setErrorModifyVisibility(boolean errorModifyVisibility) {
-        this.errorModifyVisibility.set(errorModifyVisibility);
-    }
-
-    public BooleanProperty errorModifyVisibilityProperty() {
-        return errorModifyVisibility;
-    }
-
-    public ShiftDto getShiftCreated() {
-        return shiftCreated.get();
-    }
-
-    public void setShiftCreated(ShiftDto shiftCreated) {
-        this.shiftCreated.set(shiftCreated);
-    }
-
-    public ObjectProperty<ShiftDto> shiftCreatedProperty() {
-        return shiftCreated;
-    }
-
-    public ShiftRepeatingOption getSelectedOptions() {
-        return selectedOptions.get();
-    }
-
-    public void setSelectedOptions(ShiftRepeatingOption selectedOptions) {
-        this.selectedOptions.set(selectedOptions);
-    }
-
-    public ObjectProperty<ShiftRepeatingOption> selectedOptionsProperty() {
-        return selectedOptions;
-    }
-
-    public ObservableList<String> getOptions() {
-        return options;
-    }
-
-    public String getSelectedShiftCinema() {
-        return selectedShiftCinema.get();
-    }
-
-    public void setSelectedShiftCinema(String selectedShiftCinema) {
-        this.selectedShiftCinema.set(selectedShiftCinema);
-    }
-
-    public StringProperty selectedShiftCinemaProperty() {
-        return selectedShiftCinema;
-    }
-
     public CinemaDto getSelectedCinema() {
         return selectedCinema.get();
     }
@@ -210,6 +121,42 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
 
     public ObjectProperty<HallDto> selectedHallProperty() {
         return selectedHall;
+    }
+
+    public boolean isErrorAssignVisibility() {
+        return errorAssignVisibility.get();
+    }
+
+    public void setErrorAssignVisibility(boolean errorAssignVisibility) {
+        this.errorAssignVisibility.set(errorAssignVisibility);
+    }
+
+    public BooleanProperty errorAssignVisibilityProperty() {
+        return errorAssignVisibility;
+    }
+
+    public boolean isErrorModifyVisibility() {
+        return errorModifyVisibility.get();
+    }
+
+    public void setErrorModifyVisibility(boolean errorModifyVisibility) {
+        this.errorModifyVisibility.set(errorModifyVisibility);
+    }
+
+    public BooleanProperty errorModifyVisibilityProperty() {
+        return errorModifyVisibility;
+    }
+
+    public String getError() {
+        return error.get();
+    }
+
+    public void setError(String error) {
+        this.error.set(error);
+    }
+
+    public StringProperty errorProperty() {
+        return error;
     }
 
     public boolean isRepeatVisibility() {
@@ -304,6 +251,45 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
         return employeeShiftWeekList;
     }
 
+    public ShiftRepeatingOption getSelectedOptions() {
+        return selectedOptions.get();
+    }
+
+    public void setSelectedOptions(ShiftRepeatingOption selectedOptions) {
+        this.selectedOptions.set(selectedOptions);
+    }
+
+    public ObjectProperty<ShiftRepeatingOption> selectedOptionsProperty() {
+        return selectedOptions;
+    }
+
+    public ObservableList<String> getOptions() {
+        return options;
+    }
+
+    public ShiftDto getShiftCreated() {
+        return shiftCreated.get();
+    }
+
+    public void setShiftCreated(ShiftDto shiftCreated) {
+        this.shiftCreated.set(shiftCreated);
+    }
+
+    public ObjectProperty<ShiftDto> shiftCreatedProperty() {
+        return shiftCreated;
+    }
+
+    public boolean isHallVisibility() {
+        return hallVisibility.get();
+    }
+
+    public void setHallVisibility(boolean hallVisibility) {
+        this.hallVisibility.set(hallVisibility);
+    }
+
+    public BooleanProperty hallVisibilityProperty() {
+        return hallVisibility;
+    }
 
     public String getSelectedShiftEmployeeName() {
         return selectedShiftEmployeeName.get();
@@ -389,6 +375,18 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
         return selectedShiftHall;
     }
 
+    public String getSelectedShiftCinema() {
+        return selectedShiftCinema.get();
+    }
+
+    public void setSelectedShiftCinema(String selectedShiftCinema) {
+        this.selectedShiftCinema.set(selectedShiftCinema);
+    }
+
+    public StringProperty selectedShiftCinemaProperty() {
+        return selectedShiftCinema;
+    }
+
     public LocalTime getStartSpinnerModifyTime() {
         return startSpinnerModifyTime.get();
     }
@@ -412,4 +410,5 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
     public ObjectProperty<LocalTime> endSpinnerModifyTimeProperty() {
         return endSpinnerModifyTime;
     }
+
 }
