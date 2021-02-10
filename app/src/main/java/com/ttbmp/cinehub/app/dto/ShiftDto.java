@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.app.dto;
 
+import com.ttbmp.cinehub.domain.shift.Shift;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -50,6 +52,23 @@ public class ShiftDto {
 
     public void setEnd(LocalTime end) {
         this.end = end;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        ShiftDto other = (ShiftDto) obj;
+        return employee.equals(other.employee)
+                && date.equals(other.date)
+                && start.equals(other.start)
+                && end.equals(other.end);
+    }
+
+    @Override
+    public int hashCode() {
+        return employee.hashCode() + date.hashCode() + start.hashCode() + end.hashCode();
     }
 
 }

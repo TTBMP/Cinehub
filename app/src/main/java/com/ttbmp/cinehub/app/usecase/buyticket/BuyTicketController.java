@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.usecase.buyticket;
 
 import com.ttbmp.cinehub.app.datamapper.*;
+import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.*;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
 import com.ttbmp.cinehub.app.service.email.EmailService;
@@ -26,38 +27,28 @@ import java.util.List;
  */
 public class BuyTicketController implements BuyTicketUseCase {
 
+    private final BuyTicketPresenter buyTicketPresenter;
+
     private final PaymentService paymentService;
     private final EmailService emailService;
-    private final BuyTicketPresenter buyTicketPresenter;
+    private final AuthenticationService authenticationService;
     private final MovieRepository movieRepository;
     private final CinemaRepository cinemaRepository;
-    private final AuthenticationService authenticationService;
     private final ProjectionRepository projectionRepository;
     private final UserRepository userRepository;
     private final TicketRepository ticketRepository;
 
-
-    public BuyTicketController(PaymentService paymentService,
-                               EmailService emailService,
-                               BuyTicketPresenter buyTicketPresenter,
-                               MovieRepository movieRepository,
-                               CinemaRepository cinemaRepository,
-                               AuthenticationService authenticationService,
-                               ProjectionRepository projectionRepository,
-                               UserRepository userRepository,
-                               TicketRepository ticketRepository
-    ) {
-        this.paymentService = paymentService;
-        this.emailService = emailService;
+    public BuyTicketController(ServiceLocator serviceLocator, BuyTicketPresenter buyTicketPresenter) {
         this.buyTicketPresenter = buyTicketPresenter;
-        this.movieRepository = movieRepository;
-        this.cinemaRepository = cinemaRepository;
-        this.authenticationService = authenticationService;
-        this.projectionRepository = projectionRepository;
-        this.userRepository = userRepository;
-        this.ticketRepository = ticketRepository;
+        this.paymentService = serviceLocator.getService(PaymentService.class);
+        this.emailService = serviceLocator.getService(EmailService.class);
+        this.authenticationService = serviceLocator.getService(AuthenticationService.class);
+        this.movieRepository = serviceLocator.getService(MovieRepository.class);
+        this.cinemaRepository = serviceLocator.getService(CinemaRepository.class);
+        this.projectionRepository = serviceLocator.getService(ProjectionRepository.class);
+        this.userRepository = serviceLocator.getService(UserRepository.class);
+        this.ticketRepository = serviceLocator.getService(TicketRepository.class);
     }
-
 
     @Override
     public boolean pay(PayRequest request) {
@@ -110,7 +101,6 @@ public class BuyTicketController implements BuyTicketUseCase {
         }
     }
 
-
     @Override
     public void getListCinema(GetListCinemaRequest request) {
         try {
@@ -124,8 +114,6 @@ public class BuyTicketController implements BuyTicketUseCase {
         } catch (Request.InvalidRequestException e) {
             buyTicketPresenter.presentInvalidGetListCinema(request);
         }
-
-
     }
 
     @Override
@@ -161,8 +149,6 @@ public class BuyTicketController implements BuyTicketUseCase {
         } catch (Request.InvalidRequestException e) {
             buyTicketPresenter.presentInvalidGetTicketBySeats(request);
         }
-
-
     }
 
     /*To find the times of the screenings given a film, a cinema and a date*/
@@ -200,6 +186,6 @@ public class BuyTicketController implements BuyTicketUseCase {
         } catch (Request.InvalidRequestException e) {
             buyTicketPresenter.presentInvalidGetNumberOfSeats(request);
         }
-
     }
+
 }

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="140.0" prefWidth="140.0"
             xmlns="http://javafx.com/javafx/11.0.1"
-            fx:controller="com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.master.calendar.tablecell.CalendarTableCellViewController">
+            fx:controller="com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.master.calendar.tablecell.CalendarTableCellViewController">
     <center>
         <VBox fx:id="shiftVBox" spacing="4.0">
             <BorderPane.margin>

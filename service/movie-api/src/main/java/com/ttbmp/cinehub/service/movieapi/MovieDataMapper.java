@@ -18,11 +18,8 @@ public class MovieDataMapper {
         return new MovieDto(
                 movie.getId(),
                 movie.getName(),
-                movie.getVote(),
-                movie.getOverview(),
-                movie.getReleases(),
-                movie.getImageUrl(),
-                movie.getDuration()
+                movie.getOverview(), movie.getDuration(), movie.getImageUrl(), movie.getVote(),
+                movie.getReleases()
         );
     }
 

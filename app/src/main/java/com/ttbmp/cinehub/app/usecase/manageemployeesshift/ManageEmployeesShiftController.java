@@ -4,6 +4,7 @@ import com.ttbmp.cinehub.app.datamapper.CinemaDataMapper;
 import com.ttbmp.cinehub.app.datamapper.EmployeeDataMapper;
 import com.ttbmp.cinehub.app.datamapper.HallDataMapper;
 import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
+import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.app.repository.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.HallRepository;
@@ -28,22 +29,20 @@ import java.util.function.UnaryOperator;
  * @author Massimo Mazzetti
  */
 public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCase {
+
     private final ManageEmployeesShiftPresenter manageEmployeesShiftPresenter;
+
     private final ShiftRepository shiftRepository;
     private final CinemaRepository cinemaRepository;
     private final HallRepository hallRepository;
     private final EmailService emailService;
 
-    public ManageEmployeesShiftController(ManageEmployeesShiftPresenter manageEmployeesShiftPresenter,
-                                          ShiftRepository shiftRepository,
-                                          CinemaRepository cinemaRepository,
-                                          HallRepository hallRepository,
-                                          EmailService emailService) {
+    public ManageEmployeesShiftController(ServiceLocator serviceLocator, ManageEmployeesShiftPresenter manageEmployeesShiftPresenter) {
         this.manageEmployeesShiftPresenter = manageEmployeesShiftPresenter;
-        this.shiftRepository = shiftRepository;
-        this.cinemaRepository = cinemaRepository;
-        this.hallRepository = hallRepository;
-        this.emailService = emailService;
+        this.shiftRepository = serviceLocator.getService(ShiftRepository.class);
+        this.cinemaRepository = serviceLocator.getService(CinemaRepository.class);
+        this.hallRepository = serviceLocator.getService(HallRepository.class);
+        this.emailService = serviceLocator.getService(EmailService.class);
     }
 
     @Override

@@ -7,13 +7,13 @@ package com.ttbmp.cinehub.app.dto;
 public class MovieDto {
     private int id;
     private String name;
-    private String vote;
     private String overview;
-    private String releases;
-    private String movieUrl;
     private String duration;
+    private String movieUrl;
+    private String vote;
+    private String releases;
 
-    public MovieDto(int id, String name, String vote, String overview, String releases, String movieUrl, String duration) {
+    public MovieDto(int id, String name, String overview, String duration, String movieUrl, String vote, String releases) {
         this.id = id;
         this.name = name;
         this.vote = vote;

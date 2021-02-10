@@ -18,11 +18,11 @@ public class MovieDataMapper {
         return new MovieDto(
                 movie.getId(),
                 movie.getName(),
-                movie.getRating(),
                 movie.getOverview(),
-                movie.getReleaseDate(),
+                Integer.toString(movie.getDuration()),
                 movie.getImageUrl(),
-                Integer.toString(movie.getDuration())
+                movie.getRating(),
+                movie.getReleaseDate()
         );
     }
 
@@ -31,10 +31,10 @@ public class MovieDataMapper {
                 movieDto.getId(),
                 movieDto.getName(),
                 movieDto.getOverview(),
-                movieDto.getReleases(),
-                Integer.getInteger(movieDto.getVote()),
+                Integer.parseInt(movieDto.getDuration()),
                 movieDto.getMovieUrl(),
-                movieDto.getDuration()
+                movieDto.getVote(),
+                movieDto.getReleases()
         );
     }
 

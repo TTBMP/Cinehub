@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
+import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
@@ -19,25 +20,21 @@ import java.util.List;
 public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCase {
 
     private final ViewPersonalSchedulePresenter presenter;
+
     private final ShiftRepository shiftRepository;
     private final EmployeeRepository employeeRepository;
     private final ProjectionRepository projectionRepository;
     private final AuthenticationService authenticationService;
 
-    public ViewPersonalScheduleController(
-            ViewPersonalSchedulePresenter presenter,
-            ShiftRepository shiftRepository,
-            EmployeeRepository employeeRepository,
-            ProjectionRepository projectionRepository,
-            AuthenticationService authenticationService) {
+    public ViewPersonalScheduleController(ServiceLocator serviceLocator, ViewPersonalSchedulePresenter presenter) {
         this.presenter = presenter;
-        this.shiftRepository = shiftRepository;
-        this.employeeRepository = employeeRepository;
-        this.projectionRepository = projectionRepository;
-        this.authenticationService = authenticationService;
+        this.shiftRepository = serviceLocator.getService(ShiftRepository.class);
+        this.employeeRepository = serviceLocator.getService(EmployeeRepository.class);
+        this.projectionRepository = serviceLocator.getService(ProjectionRepository.class);
+        this.authenticationService = serviceLocator.getService(AuthenticationService.class);
     }
 
-    public void getShiftList(GetShiftListRequest request) {
+    public void getShiftList(ShiftListRequest request) {
         try {
             Request.validate(request);
             int userId = authenticationService.sigIn();
@@ -47,7 +44,7 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
                     request.getStart(),
                     request.getEnd()
             );
-            presenter.presentGetShiftList(new GetShiftListReply(shiftList));
+            presenter.presentGetShiftList(new ShiftListReply(shiftList));
         } catch (Request.NullRequestException e) {
             presenter.presentGetShiftListNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -56,12 +53,12 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
     }
 
     @Override
-    public void getShiftProjectionList(GetShiftProjectionListRequest request) {
+    public void getShiftProjectionList(ProjectionListRequest request) {
         try {
             Request.validate(request);
             ProjectionistShift shift = (ProjectionistShift) ShiftDataMapper.mapToEntity(request.getShiftDto());
             List<Projection> projectionList = projectionRepository.getProjectionList(shift);
-            presenter.presentGetProjectionList(new GetShiftProjectionListReply(projectionList));
+            presenter.presentGetProjectionList(new ProjectionListReply(projectionList));
         } catch (Request.NullRequestException e) {
             e.printStackTrace();
         } catch (Request.InvalidRequestException e) {

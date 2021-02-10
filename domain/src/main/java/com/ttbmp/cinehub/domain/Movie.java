@@ -7,17 +7,17 @@ public class Movie {
 
     private int id;
     private String name;
-    private String rating;
-    private String imageUrl;
-    private int duration;
     private String overview;
+    private int duration;
+    private String imageUrl;
+    private String rating;
     private String releaseDate;
 
     public Movie(int id) {
         this.id = id;
     }
 
-    public Movie(int id, String name, String rating, String imageUrl, int duration, String overview, String releaseDate) {
+    public Movie(int id, String name, String overview, int duration, String imageUrl, String rating, String releaseDate) {
         this.id = id;
         this.name = name;
         this.rating = rating;

@@ -9,7 +9,7 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
             minWidth="-Infinity"
             prefHeight="94.0" prefWidth="364.0" xmlns="http://javafx.com/javafx/8"
-            fx:controller="com.ttbmp.cinehub.ui.desktop.ui.buyticket.choosecinema.ChooseCinemaItemViewController">
+            fx:controller="com.ttbmp.cinehub.ui.desktop.buyticket.choosecinema.ChooseCinemaItemViewController">
     <children>
         <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
               AnchorPane.topAnchor="0.0">
