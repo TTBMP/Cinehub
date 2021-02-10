@@ -1,9 +1,21 @@
 package com.ttbmp.cinehub.app.di;
 
-import com.ttbmp.cinehub.app.repository.*;
-import com.ttbmp.cinehub.app.repository.mock.*;
+import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
+import com.ttbmp.cinehub.app.repository.cinema.MockCinemaRepository;
+import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
+import com.ttbmp.cinehub.app.repository.employee.MockEmployeeRepository;
+import com.ttbmp.cinehub.app.repository.hall.HallRepository;
+import com.ttbmp.cinehub.app.repository.hall.MockHallRepository;
+import com.ttbmp.cinehub.app.repository.movie.MockMovieRepository;
+import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
+import com.ttbmp.cinehub.app.repository.projection.MockProjectionRepository;
+import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
+import com.ttbmp.cinehub.app.repository.ticket.MockTicketRepository;
+import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
+import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
+import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
 import com.ttbmp.cinehub.app.service.authentication.MockAuthenticationService;
 import com.ttbmp.cinehub.app.service.email.EmailService;

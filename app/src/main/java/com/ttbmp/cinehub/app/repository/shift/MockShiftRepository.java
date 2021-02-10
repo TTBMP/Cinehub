@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.app.repository.shift;
 
-import com.ttbmp.cinehub.app.repository.mock.MockEmployeeRepository;
+import com.ttbmp.cinehub.app.repository.employee.MockEmployeeRepository;
 import com.ttbmp.cinehub.domain.Employee;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 import com.ttbmp.cinehub.domain.shift.Shift;

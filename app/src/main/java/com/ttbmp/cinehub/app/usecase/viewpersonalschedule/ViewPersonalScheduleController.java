@@ -2,8 +2,8 @@ package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
-import com.ttbmp.cinehub.app.repository.EmployeeRepository;
-import com.ttbmp.cinehub.app.repository.ProjectionRepository;
+import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
+import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
 import com.ttbmp.cinehub.app.usecase.Request;
@@ -46,9 +46,9 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
             );
             presenter.presentGetShiftList(new ShiftListReply(shiftList));
         } catch (Request.NullRequestException e) {
-            presenter.presentGetShiftListNullRequest();
+            presenter.presentShiftListNullRequest();
         } catch (Request.InvalidRequestException e) {
-            presenter.presentInvalidGetShiftListRequest(request);
+            presenter.presentInvalidShiftListRequest(request);
         }
     }
 
@@ -60,9 +60,9 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
             List<Projection> projectionList = projectionRepository.getProjectionList(shift);
             presenter.presentGetProjectionList(new ProjectionListReply(projectionList));
         } catch (Request.NullRequestException e) {
-            e.printStackTrace();
+            presenter.presentProjectionListNullRequest();
         } catch (Request.InvalidRequestException e) {
-            e.printStackTrace();
+            presenter.presentInvalidProjectionListRequest(request);
         }
     }
 

@@ -2,13 +2,11 @@ package com.ttbmp.cinehub.app.service.movieapi;
 
 import com.ttbmp.cinehub.app.dto.MovieDto;
 
-import java.io.IOException;
-
 /**
- * @author Palmieri Ivan
+ * @author Palmieri Ivan, Fabio Buracchi
  */
 public interface MovieApiService {
 
-    MovieDto getMovie(int movieId) throws IOException;
+    MovieDto getMovie(int movieId) throws MovieApiServiceException;
 
 }

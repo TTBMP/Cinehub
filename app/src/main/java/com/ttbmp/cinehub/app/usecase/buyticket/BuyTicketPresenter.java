@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.app.usecase.buyticket;
 
-import com.ttbmp.cinehub.app.service.payment.PaymentException;
+import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 
@@ -40,7 +40,7 @@ public interface BuyTicketPresenter {
 
     void presentGetListMovieError();
 
-    void presentErrorByStripe(PaymentException error);
+    void presentErrorByStripe(PaymentServiceException error);
 
     void presentProjectionList(ProjectionListResponse projectionTimeList);
 

@@ -1,6 +1,7 @@
-package com.ttbmp.cinehub.app.repository.mock;
+package com.ttbmp.cinehub.app.repository.employee;
 
-import com.ttbmp.cinehub.app.repository.EmployeeRepository;
+import com.ttbmp.cinehub.app.repository.cinema.MockCinemaRepository;
+import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
 import com.ttbmp.cinehub.domain.Employee;
 import com.ttbmp.cinehub.domain.Projectionist;
 import com.ttbmp.cinehub.domain.Usher;

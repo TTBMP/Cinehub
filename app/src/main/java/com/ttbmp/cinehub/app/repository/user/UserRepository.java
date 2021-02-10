@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.app.repository;
+package com.ttbmp.cinehub.app.repository.user;
 
 import com.ttbmp.cinehub.domain.User;
 

@@ -3,8 +3,6 @@ plugins {
 }
 
 dependencies {
-    api(project(":app"))
-
     implementation("com.google.code.gson", "gson", "2.8.5")
 
     testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.6.2")

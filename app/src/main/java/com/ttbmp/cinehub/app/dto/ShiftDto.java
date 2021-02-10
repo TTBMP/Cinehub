@@ -1,7 +1,5 @@
 package com.ttbmp.cinehub.app.dto;
 
-import com.ttbmp.cinehub.domain.shift.Shift;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 

@@ -1,6 +1,6 @@
-package com.ttbmp.cinehub.app.repository.mock;
+package com.ttbmp.cinehub.app.repository.hall;
 
-import com.ttbmp.cinehub.app.repository.HallRepository;
+import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Seat;

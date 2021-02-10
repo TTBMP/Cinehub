@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
 import com.ttbmp.cinehub.app.dto.ShiftDto;
-import com.ttbmp.cinehub.app.repository.EmployeeRepository;
+import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
 import com.ttbmp.cinehub.domain.Employee;
@@ -13,8 +13,6 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ViewPersonalScheduleControllerTest {
 
@@ -55,7 +53,7 @@ class ViewPersonalScheduleControllerTest {
         }
 
         @Override
-        public void presentInvalidGetShiftListRequest(ShiftListRequest request) {
+        public void presentInvalidShiftListRequest(ShiftListRequest request) {
 
         }
 
@@ -70,12 +68,22 @@ class ViewPersonalScheduleControllerTest {
         }
 
         @Override
-        public void presentGetShiftListNullRequest() {
+        public void presentShiftListNullRequest() {
 
         }
 
         @Override
         public void presentGetProjectionList(ProjectionListReply projectionListReply) {
+
+        }
+
+        @Override
+        public void presentProjectionListNullRequest() {
+
+        }
+
+        @Override
+        public void presentInvalidProjectionListRequest(ProjectionListRequest request) {
 
         }
 

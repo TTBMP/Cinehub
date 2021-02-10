@@ -2,13 +2,17 @@ package com.ttbmp.cinehub.app.usecase.buyticket;
 
 import com.ttbmp.cinehub.app.datamapper.*;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
-import com.ttbmp.cinehub.app.repository.*;
+import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
+import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
+import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
+import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
+import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
 import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
-import com.ttbmp.cinehub.app.service.payment.PaymentException;
+import com.ttbmp.cinehub.app.service.payment.PayServiceRequest;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
-import com.ttbmp.cinehub.app.service.payment.request.PayServiceRequest;
+import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.Request;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
@@ -79,7 +83,7 @@ public class BuyTicketController implements BuyTicketUseCase {
         } catch (Request.InvalidRequestException e) {
             buyTicketPresenter.presentInvalidPay(request);
             return false;
-        } catch (PaymentException e) {
+        } catch (PaymentServiceException e) {
             buyTicketPresenter.presentErrorByStripe(e);
             return false;
         }

@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.app.repository;
+package com.ttbmp.cinehub.app.repository.projection;
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.MovieDto;
