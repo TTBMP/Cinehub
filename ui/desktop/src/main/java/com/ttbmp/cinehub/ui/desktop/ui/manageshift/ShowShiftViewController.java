@@ -77,7 +77,7 @@ public class ShowShiftViewController extends ViewController {
         activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
                 new GetShiftListRequest(
                         viewModel.getSelectedWeek(),
-                        viewModel.getSelectedCinema()
+                        viewModel.getSelectedCinema().getId()
                 )
         );
 
@@ -88,13 +88,13 @@ public class ShowShiftViewController extends ViewController {
         periodDatePicker.setOnAction(a -> activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
                 new GetShiftListRequest(
                         viewModel.getSelectedWeek(),
-                        viewModel.getSelectedCinema()
+                        viewModel.getSelectedCinema().getId()
                 )
         ));
         cinemaComboBox.setOnAction(a -> activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
                 new GetShiftListRequest(
                         viewModel.getSelectedWeek(),
-                        viewModel.getSelectedCinema()
+                        viewModel.getSelectedCinema().getId()
                 )
         ));
         shiftEmployeeTableColumn.setCellValueFactory(new PropertyValueFactory<>("employeeDto"));

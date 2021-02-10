@@ -75,9 +75,9 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         try {
             Request.validate(request);
             manageEmployeesShiftPresenter.presentShiftList(new Result<>(new GetShiftListResponse(
-                    ShiftDataMapper.mapToDtoList(shiftRepository.getShiftList().getValue()),
+                    ShiftDataMapper.mapToDtoList(shiftRepository.getShiftList(request.getCinemaId()).getValue()),
                     request.getStart(),
-                    request.getCinema())
+                    request.getCinemaId())
             ));
         } catch (Request.NullRequestException e) {
             manageEmployeesShiftPresenter.presentGetShiftListNullRequest();
