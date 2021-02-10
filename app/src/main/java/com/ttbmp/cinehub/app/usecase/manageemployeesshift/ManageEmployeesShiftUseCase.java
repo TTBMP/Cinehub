@@ -17,11 +17,11 @@ public interface ManageEmployeesShiftUseCase extends UseCase {
 
     void saveRepeatedShift(ShiftRepeatRequest request);
 
-    void deleteShift(ShiftRequest shift);
+    void deleteShift(ShiftRequest request);
 
     void createShift(CreateShiftRequest request);
 
-    void saveShift(ShiftRequest shift);
+    void saveShift(ShiftRequest request);
 
     void modifyShift(ShiftModifyRequest request);
 

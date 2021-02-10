@@ -7,6 +7,8 @@ import com.ttbmp.cinehub.app.usecase.UseCase;
  */
 public interface ViewPersonalScheduleUseCase extends UseCase {
 
-    void getShiftList(GetShiftListRequest request);
+    void getShiftList(ShiftListRequest request);
+
+    void getShiftProjectionList(ProjectionListRequest request);
 
 }

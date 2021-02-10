@@ -8,19 +8,10 @@ import java.time.LocalTime;
  */
 public class ShiftDto {
 
-    private final LocalTime start;
     private EmployeeDto employee;
-    private String employeeName;
     private LocalDate date;
+    private LocalTime start;
     private LocalTime end;
-
-
-    public ShiftDto(String employeeName, LocalDate date, LocalTime start, LocalTime end) {
-        this.employeeName = employeeName;
-        this.date = date;
-        this.start = start;
-        this.end = end;
-    }
 
     public ShiftDto(EmployeeDto employee, LocalDate date, LocalTime start, LocalTime end) {
         this.employee = employee;
@@ -29,17 +20,12 @@ public class ShiftDto {
         this.end = end;
     }
 
-
     public EmployeeDto getEmployee() {
         return employee;
     }
 
     public void setEmployee(EmployeeDto employee) {
         this.employee = employee;
-    }
-
-    public String getEmployeeName() {
-        return employeeName;
     }
 
     public LocalDate getDate() {
@@ -54,6 +40,10 @@ public class ShiftDto {
         return start;
     }
 
+    public void setStart(LocalTime start) {
+        this.start = start;
+    }
+
     public LocalTime getEnd() {
         return end;
     }
@@ -62,5 +52,21 @@ public class ShiftDto {
         this.end = end;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        ShiftDto other = (ShiftDto) obj;
+        return employee.equals(other.employee)
+                && date.equals(other.date)
+                && start.equals(other.start)
+                && end.equals(other.end);
+    }
+
+    @Override
+    public int hashCode() {
+        return employee.hashCode() + date.hashCode() + start.hashCode() + end.hashCode();
+    }
 
 }

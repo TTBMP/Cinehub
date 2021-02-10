@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1"
-      fx:controller="com.ttbmp.cinehub.ui.desktop.ui.manageshift.table.ShiftItemViewController">
+      fx:controller="com.ttbmp.cinehub.ui.desktop.manageshift.table.ShiftItemViewController">
     <children>
         <HBox fx:id="shiftHBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="28.0"
               prefWidth="74.0" spacing="5.0" style="-fx-background-color: lightblue;">

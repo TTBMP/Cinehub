@@ -25,24 +25,12 @@ public class ProjectionistShift extends Shift {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (this.getClass() != obj.getClass()) {
-            return false;
-        }
-        ProjectionistShift elem = (ProjectionistShift) obj;
-
-        return this.getEmployee().equals(elem.getEmployee())
-                && this.getDate().equals(elem.getDate())
-                && this.getStart().equals(elem.getStart())
-                && this.getEnd().equals(elem.getEnd())
-                && this.getHall().equals(elem.getHall());
+        return super.equals(obj);
     }
 
     @Override
     public int hashCode() {
-        return 0;
+        return super.hashCode();
     }
 
 }

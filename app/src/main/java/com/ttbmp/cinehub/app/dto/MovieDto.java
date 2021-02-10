@@ -7,31 +7,19 @@ package com.ttbmp.cinehub.app.dto;
 public class MovieDto {
     private int id;
     private String name;
-    private String vote;
     private String overview;
-    private String releases;
-    private String movieUrl;
     private String duration;
+    private String movieUrl;
+    private String vote;
+    private String releases;
 
-
-    public MovieDto(String name) {
-        this.name = name;
-    }
-
-    public MovieDto(int id, String name, String vote, String overview, String releases, String movieUrl) {
+    public MovieDto(int id, String name, String overview, String duration, String movieUrl, String vote, String releases) {
         this.id = id;
         this.name = name;
         this.vote = vote;
         this.overview = overview;
         this.releases = releases;
         this.movieUrl = movieUrl;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
         this.duration = duration;
     }
 
@@ -81,6 +69,14 @@ public class MovieDto {
 
     public void setMovieUrl(String movieUrl) {
         this.movieUrl = movieUrl;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
 }

@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.app.datamapper;
 
 import com.ttbmp.cinehub.app.dto.MovieDto;
-import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.app.utilities.DataMapperHelper;
+import com.ttbmp.cinehub.domain.Movie;
 
 import java.util.List;
 
@@ -15,25 +15,27 @@ public class MovieDataMapper {
     }
 
     public static MovieDto mapToDto(Movie movie) {
-
         return new MovieDto(
                 movie.getId(),
                 movie.getName(),
-                movie.getVote(),
                 movie.getOverview(),
-                movie.getRelases(),
-                movie.getImageUrl()
+                Integer.toString(movie.getDuration()),
+                movie.getImageUrl(),
+                movie.getRating(),
+                movie.getReleaseDate()
         );
     }
 
     public static Movie mapToEntity(MovieDto movieDto) {
-        Movie movie = new Movie(movieDto.getId());
-        movie.setName(movieDto.getName());
-        movie.setOverview(movieDto.getOverview());
-        movie.setRelases(movieDto.getReleases());
-        movie.setVote(movieDto.getVote());
-        movie.setImageUrl(movieDto.getMovieUrl());
-        return movie;
+        return new Movie(
+                movieDto.getId(),
+                movieDto.getName(),
+                movieDto.getOverview(),
+                Integer.parseInt(movieDto.getDuration()),
+                movieDto.getMovieUrl(),
+                movieDto.getVote(),
+                movieDto.getReleases()
+        );
     }
 
     public static List<MovieDto> mapToDtoList(List<Movie> movieList) {

@@ -31,5 +31,4 @@ public class Payment {
         this.price = price;
     }
 
-
 }

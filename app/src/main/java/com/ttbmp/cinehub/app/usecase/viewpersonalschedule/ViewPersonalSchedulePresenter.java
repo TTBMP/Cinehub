@@ -1,20 +1,20 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
-import com.ttbmp.cinehub.app.utilities.result.Result;
-
 /**
  * @author Fabio Buracchi
  */
 public interface ViewPersonalSchedulePresenter {
 
-    void presentGetShiftList(Result<GetShiftListResponse> result);
+    void presentGetShiftList(ShiftListReply result);
 
-    void presentInvalidGetShiftListRequest(GetShiftListRequest request);
+    void presentInvalidShiftListRequest(ShiftListRequest request);
 
-    void presentAuthenticationError(Throwable error);
+    void presentShiftListNullRequest();
 
-    void presentShiftListError(Throwable error);
+    void presentGetProjectionList(ProjectionListReply projectionListReply);
 
-    void presentGetShiftListNullRequest();
+    void presentProjectionListNullRequest();
+
+    void presentInvalidProjectionListRequest(ProjectionListRequest request);
 
 }

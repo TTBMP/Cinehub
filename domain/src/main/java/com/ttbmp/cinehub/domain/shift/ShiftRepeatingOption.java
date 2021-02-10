@@ -4,6 +4,7 @@ package com.ttbmp.cinehub.domain.shift;
  * @author Massimo Mazzetti
  */
 public enum ShiftRepeatingOption {
+
     EVERY_DAY("Every day"),
     EVERY_WEEK("Every week"),
     EVERY_MONTH("Every month");

@@ -1,9 +1,5 @@
 package com.ttbmp.cinehub.service.email.emailservice;
 
-
-import com.ttbmp.cinehub.app.service.email.EmailService;
-import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
@@ -15,9 +11,8 @@ import java.util.Properties;
 /**
  * @author Palmieri Ivan
  */
-public class SendEmailService implements EmailService {
+public class SendEmailService {
 
-    @Override
     public void sendMail(EmailServiceRequest emailServiceRequest) {
         final String username = "yourUsername@email.com";
         final String password = "password";
@@ -64,6 +59,7 @@ public class SendEmailService implements EmailService {
             e.printStackTrace();
         }
     }
+
 }
 
 

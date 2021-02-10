@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.app.datamapper;
 
 import com.ttbmp.cinehub.app.dto.SeatDto;
-import com.ttbmp.cinehub.domain.Seat;
 import com.ttbmp.cinehub.app.utilities.DataMapperHelper;
+import com.ttbmp.cinehub.domain.Seat;
 
 import java.util.List;
 

@@ -2,9 +2,9 @@ package com.ttbmp.cinehub.domain.shift;
 
 
 import com.ttbmp.cinehub.domain.Employee;
+import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Projectionist;
 import com.ttbmp.cinehub.domain.Usher;
-import com.ttbmp.cinehub.domain.Hall;
 
 public class ShiftFactory {
 
