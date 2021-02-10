@@ -59,11 +59,11 @@ public class Movie {
         this.imageUrl = imageUrl;
     }
 
-    public String getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 

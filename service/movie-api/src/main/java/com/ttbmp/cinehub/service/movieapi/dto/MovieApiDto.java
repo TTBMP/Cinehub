@@ -1,16 +1,33 @@
 package com.ttbmp.cinehub.service.movieapi.dto;
 
 
+import com.google.gson.annotations.SerializedName;
+
 /**
- * @author Palmieri Ivan
+ * @author Palmieri Ivan, Fabio Buracchi
  */
 public class MovieApiDto {
+
+    @SerializedName("id")
     private int id;
+
+    @SerializedName("title")
     private String movieName;
+
+    @SerializedName("vote_average")
     private String movieVote;
+
+    @SerializedName("poster_path")
     private String movieImageUrl;
+
+    @SerializedName("overview")
     private String movieOverview;
+
+    @SerializedName("release_date")
     private String movieReleases;
+
+    @SerializedName("runtime")
+    private String movieDuration;
 
     public int getId() {
         return id;
@@ -59,5 +76,14 @@ public class MovieApiDto {
     public void setMovieReleases(String movieReleases) {
         this.movieReleases = movieReleases;
     }
+
+    public String getMovieDuration() {
+        return movieDuration;
+    }
+
+    public void setMovieDuration(String movieDuration) {
+        this.movieDuration = movieDuration;
+    }
+
 }
 

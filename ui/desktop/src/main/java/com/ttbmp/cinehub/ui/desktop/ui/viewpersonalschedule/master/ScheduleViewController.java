@@ -1,7 +1,9 @@
 package com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.master;
 
+import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.GetShiftListRequest;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalScheduleUseCase;
+import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.ui.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.ViewPersonalScheduleViewModel;
 import com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.master.calendar.CalendarDay;
@@ -17,6 +19,7 @@ import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Map;
@@ -85,6 +88,11 @@ public class ScheduleViewController extends ViewController {
                         viewModel.getCalendarPageFirstDate(),
                         viewModel.getCalendarPageLastDate())
         );
+        try {
+            CinehubApplication.APP_CONTAINER.getFactory(MovieApiService.class).get().getMovie(11);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

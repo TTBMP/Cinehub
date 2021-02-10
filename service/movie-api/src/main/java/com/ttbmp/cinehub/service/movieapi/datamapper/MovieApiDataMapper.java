@@ -15,14 +15,15 @@ public class MovieApiDataMapper {
     }
 
     public static MovieDto mapToDto(MovieApiDto movie) {
-
         return new MovieDto(
                 movie.getId(),
                 movie.getMovieName(),
                 movie.getMovieVote(),
                 movie.getMovieOverview(),
                 movie.getMovieReleases(),
-                movie.getMovieImageUrl());
+                movie.getMovieImageUrl(),
+                movie.getMovieDuration()
+        );
     }
 
 

@@ -15,25 +15,27 @@ public class MovieDataMapper {
     }
 
     public static MovieDto mapToDto(Movie movie) {
-
         return new MovieDto(
                 movie.getId(),
                 movie.getName(),
                 movie.getRating(),
                 movie.getOverview(),
                 movie.getReleaseDate(),
-                movie.getImageUrl()
+                movie.getImageUrl(),
+                Integer.toString(movie.getDuration())
         );
     }
 
     public static Movie mapToEntity(MovieDto movieDto) {
-        Movie movie = new Movie(movieDto.getId());
-        movie.setName(movieDto.getName());
-        movie.setOverview(movieDto.getOverview());
-        movie.setReleaseDate(movieDto.getReleases());
-        movie.setRating(movieDto.getVote());
-        movie.setImageUrl(movieDto.getMovieUrl());
-        return movie;
+        return new Movie(
+                movieDto.getId(),
+                movieDto.getName(),
+                movieDto.getOverview(),
+                movieDto.getReleases(),
+                Integer.getInteger(movieDto.getVote()),
+                movieDto.getMovieUrl(),
+                movieDto.getDuration()
+        );
     }
 
     public static List<MovieDto> mapToDtoList(List<Movie> movieList) {

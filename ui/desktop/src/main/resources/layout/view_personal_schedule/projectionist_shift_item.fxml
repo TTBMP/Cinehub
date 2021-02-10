@@ -5,13 +5,19 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="4.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.detail.projectionist.ProjectionistShiftItemViewController">
     <children>
         <Label fx:id="timeLabel" text="time" />
         <Separator orientation="VERTICAL" />
         <ImageView fx:id="movieImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-        <Label fx:id="titleLabel" text="title" />
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="8.0">
+         <children>
+              <Label fx:id="titleLabel" text="title" />
+            <Label fx:id="durationMovieLabel" text="duration" />
+         </children>
+      </VBox>
     </children>
    <padding>
       <Insets left="8.0" right="8.0" />

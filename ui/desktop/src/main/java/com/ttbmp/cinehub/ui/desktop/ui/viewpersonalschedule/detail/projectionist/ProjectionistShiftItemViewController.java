@@ -23,6 +23,9 @@ public class ProjectionistShiftItemViewController extends ViewController {
     @FXML
     private ImageView movieImageView;
 
+    @FXML
+    private Label durationMovieLabel;
+
     private ProjectionDto projectionDto;
 
     @Override
@@ -30,6 +33,7 @@ public class ProjectionistShiftItemViewController extends ViewController {
         timeLabel.setText(projectionDto.getStartTime());
         titleLabel.setText(projectionDto.getMovieDto().getName());
         movieImageView.setImage(new Image(projectionDto.getMovieDto().getMovieUrl()));
+        durationMovieLabel.setText(projectionDto.getMovieDto().getDuration());
     }
 
     public void load(Activity activity, NavController navController, ProjectionDto projectionDto) {

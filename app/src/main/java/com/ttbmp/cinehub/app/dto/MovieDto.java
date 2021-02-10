@@ -13,25 +13,13 @@ public class MovieDto {
     private String movieUrl;
     private String duration;
 
-
-    public MovieDto(String name) {
-        this.name = name;
-    }
-
-    public MovieDto(int id, String name, String vote, String overview, String releases, String movieUrl) {
+    public MovieDto(int id, String name, String vote, String overview, String releases, String movieUrl, String duration) {
         this.id = id;
         this.name = name;
         this.vote = vote;
         this.overview = overview;
         this.releases = releases;
         this.movieUrl = movieUrl;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
         this.duration = duration;
     }
 
@@ -81,6 +69,14 @@ public class MovieDto {
 
     public void setMovieUrl(String movieUrl) {
         this.movieUrl = movieUrl;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
 }
