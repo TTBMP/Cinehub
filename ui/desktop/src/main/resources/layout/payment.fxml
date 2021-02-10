@@ -79,21 +79,6 @@
                     <VBox.margin>
                         <Insets bottom="16.0" left="16.0" right="16.0" />
                     </VBox.margin>
-               <bottom>
-                  <HBox BorderPane.alignment="CENTER">
-                     <children>
-                        <Label fx:id="timerCount" />
-                        <Label fx:id="timerFinish" text="The session has expired, go back and select a new seat" textFill="RED">
-                           <padding>
-                              <Insets left="15.0" />
-                           </padding>
-                        </Label>
-                     </children>
-                     <BorderPane.margin>
-                        <Insets top="10.0" />
-                     </BorderPane.margin>
-                  </HBox>
-               </bottom>
                 </BorderPane>
             </children>
         </VBox>
