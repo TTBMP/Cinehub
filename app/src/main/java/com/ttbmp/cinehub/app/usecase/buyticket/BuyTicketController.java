@@ -37,6 +37,7 @@ public class BuyTicketController implements BuyTicketUseCase {
     private final AuthenticationService authenticationService;
     private final ProjectionRepository projectionRepository;
     private final UserRepository userRepository;
+    private final TicketRepository ticketRepository;
 
 
     public BuyTicketController(PaymentService paymentService,
@@ -46,7 +47,9 @@ public class BuyTicketController implements BuyTicketUseCase {
                                CinemaRepository cinemaRepository,
                                AuthenticationService authenticationService,
                                ProjectionRepository projectionRepository,
-                               UserRepository userRepository) {
+                               UserRepository userRepository,
+                               TicketRepository ticketRepository
+    ) {
         this.paymentService = paymentService;
         this.emailService = emailService;
         this.buyTicketPresenter = buyTicketPresenter;
@@ -55,7 +58,7 @@ public class BuyTicketController implements BuyTicketUseCase {
         this.authenticationService = authenticationService;
         this.projectionRepository = projectionRepository;
         this.userRepository = userRepository;
-
+        this.ticketRepository = ticketRepository;
     }
 
 
@@ -74,7 +77,7 @@ public class BuyTicketController implements BuyTicketUseCase {
                     ticket.getPrice()
             ));
             ticket.setOwner(user);
-            ticket.setState(true);
+            ticketRepository.saveTicket(ticket);
             projection.addTicket(ticket);
             projection.getHall().getSeatList().get(index).setState(false);
             emailService.sendMail(new EmailServiceRequest(

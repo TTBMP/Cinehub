@@ -1,9 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.ui.buyticket;
 
-import com.ttbmp.cinehub.app.repository.CinemaRepository;
-import com.ttbmp.cinehub.app.repository.MovieRepository;
-import com.ttbmp.cinehub.app.repository.ProjectionRepository;
-import com.ttbmp.cinehub.app.repository.UserRepository;
+import com.ttbmp.cinehub.app.repository.*;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
 import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
@@ -26,6 +23,7 @@ public class BuyTicketActivity extends Activity {
     private final EmailService emailService = CinehubApplication.APP_CONTAINER.getFactory(EmailService.class).get();
     private final AuthenticationService authenticationService = CinehubApplication.APP_CONTAINER.getFactory(AuthenticationService.class).get();
     private final UserRepository userRepository = CinehubApplication.APP_CONTAINER.getFactory(UserRepository.class).get();
+    private final TicketRepository ticketRepository = CinehubApplication.APP_CONTAINER.getFactory(TicketRepository.class).get();
 
 
     public BuyTicketActivity() throws IOException {
@@ -40,7 +38,8 @@ public class BuyTicketActivity extends Activity {
                         cinemaRepository,
                         authenticationService,
                         projectionRepository,
-                        userRepository
+                        userRepository,
+                        ticketRepository
                 ));
     }
 }

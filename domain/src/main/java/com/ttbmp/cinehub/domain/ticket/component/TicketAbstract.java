@@ -6,7 +6,6 @@ package com.ttbmp.cinehub.domain.ticket.component;
 public abstract class TicketAbstract {
 
     private long price;
-    private Boolean state;
     private String position;
 
 
@@ -28,12 +27,4 @@ public abstract class TicketAbstract {
         this.price = price;
     }
 
-
-    public Boolean getState() {
-        return state;
-    }
-
-    public void setState(Boolean state) {
-        this.state = state;
-    }
 }
