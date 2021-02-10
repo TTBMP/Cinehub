@@ -2,45 +2,67 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <script crossorigin="anonymous"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Getting Started: Serving Web Content</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 </head>
-<body style="background-color: black" >
+<body style="background-color: black">
 <div class="container" style="color: aliceblue">
-    <div class="row row text-uppercase">
+    <div class="row ">
         <div class="col-md-12 text-center mt-3">
-            <div class="jumbotron" style="background-color: #212121">
-                <h1 style="color: white">Seats</h1>
+            <div class="col-md-5 p-lg-5 mx-auto my-5">
+                <h1 class="display-4 font-weight-normal">View of the seats </h1>
+                <p class="lead font-weight-normal">Select the place you like the most, don't hesitate to ask for some
+                    extras .</p>
             </div>
+            <div class="product-device box-shadow d-none d-md-block"></div>
+            <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
         </div>
         <!--Checkbox-->
         <div class="col-12">
             <h3>Additional options: </h3>
-            <input id="c1" type="checkbox" th:checked="${boolean1}" th:onchange="${boolean1}">
+            <input id="c1" th:checked="${boolean1}" th:onchange="${boolean1}" type="checkbox">
             <label> Skip line</label><br>
-            <input id="c2" type="checkbox" th:checked="${boolean2}">
+            <input id="c2" th:checked="${boolean2}" type="checkbox">
             <label> Folding armchair</label><br>
-            <input id="c3" type="checkbox" th:checked="${boolean3}">
-            <label > Heated armchair</label><br>
+            <input id="c3" th:checked="${boolean3}" type="checkbox">
+            <label> Heated armchair</label><br>
             <p style="color: #ff0000">Each optional choice increases the cost of the ticket by one euro</p>
         </div>
-        <div class="card m-5 p-2"  style="background-color: #1b1b1b;border-color: #6d6d6d">
-        <div class="container col-5 mt-5 mb-5" >
+        <div class="card m-5 p-2" style="background-color: #1b1b1b;border-color: #6d6d6d">
+            <div class="container col-5 mt-5 mb-5">
 
-            <div class="row" >
-                <!--/Checkbox-->
+                <div class="row">
+                    <!--/Checkbox-->
 
                     <tr th:each="seat,inter : ${seatList}">
-                        <div class="form-check m-2">
-                            <div th:text="${valList.get((inter.index))}"></div>
-                           <a id="url" th:href="@{|/payment/${valList.get((inter.index))}/${inter.index}|}" onclick="href+='/'+ document.getElementById('c1').checked+'/'+ document.getElementById('c2').checked+'/'+ document.getElementById('c3').checked" th:disabled="${seat.state}">
-                               <i class="" th:class="${classValue}" th:style="${color}">event_seat</i>
-                           </a>
-                            <div th:text="${seat.price}+'€'"></div>
+                        <div th:if="${seat.state}">
+                            <div class="form-check m-2">
+                                <div th:text="${valList.get((inter.index))}"></div>
+                                    <a id="url" onclick="href +='/'+ document.getElementById('c1').checked+'/'+ document.getElementById('c2').checked+'/'+ document.getElementById('c3').checked"
+                                       th:href="@{|/payment/${valList.get((inter.index))}/${inter.index}|}">
+                                        <i class="" th:class="${classValue}" th:style="${color}">event_seat</i>
+                                    </a>
+
+                                <div th:text="${seat.price}+'€'"></div>
+                            </div>
+                        </div>
+                        <div th:if="!${seat.state}">
+                            <div class="form-check m-2 mt-2" style="color: #6d6d6d">
+                                <div class="mt-3">Sell</div>
+                                <i class="" th:class="${classValue}" >event_seat</i>
+                            </div>
                         </div>
                     </tr>
                 </div>

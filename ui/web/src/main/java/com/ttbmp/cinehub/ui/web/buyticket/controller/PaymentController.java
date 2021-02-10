@@ -15,16 +15,16 @@ public class PaymentController {
     private static final BuyTicketUseCase USE_CASE = UseCase.buyTicketUseCase;
     private final BuyTicketViewModel viewModel = UseCase.getViewModel();
 
-    @GetMapping("/payment/{position}/{index}/{val1}/{val2}/{val3}")
+    @GetMapping("/payment/{position}/{index}/{optionOne}/{optionTwo}/{optionThree}")
     public String payment(
             @PathVariable("position")String position,
-            @PathVariable("index")Integer pos,
-            @PathVariable("val1")Boolean val1,
-            @PathVariable("val2")Boolean val2,
-            @PathVariable("val3")Boolean val3,
+            @PathVariable("index")Integer number,
+            @PathVariable("optionOne")Boolean optionOne,
+            @PathVariable("optionTwo")Boolean optionTwo,
+            @PathVariable("optionThree")Boolean optionThree,
             Model model) {
-        viewModel.setSelectedPosition(pos);
-        USE_CASE.createTicket(new GetTicketBySeatsRequest(viewModel.getSeatDtoList(),position,pos,val1,val2,val3));
+        viewModel.setSelectedPosition(number);
+        USE_CASE.createTicket(new GetTicketBySeatsRequest(viewModel.getSeatDtoList(),position,number,optionOne,optionTwo,optionThree));
         model.addAttribute("projection", viewModel.getSelectedProjection());
         model.addAttribute("ticket", viewModel.getSelectedTicket());
         return "payment";

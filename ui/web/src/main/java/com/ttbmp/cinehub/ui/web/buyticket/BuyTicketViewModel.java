@@ -23,6 +23,51 @@ public class BuyTicketViewModel  {
     private ProjectionDto selectedProjection;
     private TicketDto selectedTicket;
     private Integer selectedPosition;
+    private String emailError ;
+    private String movieError ;
+    private String cinemaError ;
+    private String seatError ;
+    private String paymentError ;
+
+    public String getEmailError() {
+        return emailError;
+    }
+
+    public void setEmailError(String emailError) {
+        this.emailError = emailError;
+    }
+
+    public String getMovieError() {
+        return movieError;
+    }
+
+    public void setMovieError(String movieError) {
+        this.movieError = movieError;
+    }
+
+    public String getCinemaError() {
+        return cinemaError;
+    }
+
+    public void setCinemaError(String cinemaError) {
+        this.cinemaError = cinemaError;
+    }
+
+    public String getSeatError() {
+        return seatError;
+    }
+
+    public void setSeatError(String seatError) {
+        this.seatError = seatError;
+    }
+
+    public String getPaymentError() {
+        return paymentError;
+    }
+
+    public void setPaymentError(String paymentError) {
+        this.paymentError = paymentError;
+    }
 
     public Integer getSelectedPosition() {
         return selectedPosition;

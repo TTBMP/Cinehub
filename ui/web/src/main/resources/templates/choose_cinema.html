@@ -16,9 +16,12 @@
 <div class="container" style="color: aliceblue">
     <div class="row row justify-content-center">
         <div class="col-12 text-center mt-3">
-            <div class="jumbotron" style="background-color: #212121">
-                <h1>Cinema</h1>
+            <div class="col-md-5 p-lg-5 mx-auto my-5">
+                <h1 class="display-4 font-weight-normal">Cinema</h1>
+                <p class="lead font-weight-normal">Select the cinema closest to you, otherwise have a good trip... .</p>
             </div>
+            <div class="product-device box-shadow d-none d-md-block"></div>
+            <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
         </div>
         <div th:if="${projectionList == null}">
             <div class="row text-center justify-content-center">

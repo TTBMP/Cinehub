@@ -4,8 +4,6 @@ package com.ttbmp.cinehub.ui.web.buyticket.controller;
 import com.ttbmp.cinehub.app.datamapper.HallDataMapper;
 import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.dto.SeatDto;
-import com.ttbmp.cinehub.app.repository.HallRepository;
 import com.ttbmp.cinehub.app.repository.mock.MockHallRepository;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetNumberOfSeatsRequest;
@@ -24,16 +22,12 @@ public class ChooseSeatsController {
 
     private static final BuyTicketUseCase USE_CASE = UseCase.buyTicketUseCase;
     private final BuyTicketViewModel viewModel = UseCase.getViewModel();
-    String color ="white";
-
-
 
     @GetMapping("/choose_seats/{startTime}/{hall_id}")
     public String chooseSeats(
             @PathVariable("startTime")String startTime,
             @PathVariable("hall_id")Integer hall,
-            Model model
-    ) {
+            Model model) {
         MockHallRepository hallRepository = new MockHallRepository();
         HallDto hallDto = HallDataMapper.mapToDto(hallRepository.getHall(hall)) ;
         viewModel.setSelectedHall(hallDto);
@@ -45,7 +39,6 @@ public class ChooseSeatsController {
                 viewModel.getSelectedTime(),
                 viewModel.getSelectedDate()
         ));
-
         USE_CASE.getListOfSeat(new GetNumberOfSeatsRequest(viewModel.getSelectedProjection()));
         viewModel.setSeatList(viewModel.getSeatDtoList());
         model.addAttribute("projection", viewModel.getSelectedProjection());
@@ -53,14 +46,13 @@ public class ChooseSeatsController {
         model.addAttribute("boolean1",false);
         model.addAttribute("boolean2",false);
         model.addAttribute("boolean3",false);
-
-        model.addAttribute("color","color:"+color);//per cambiargli colore
+        model.addAttribute("color","color:"+"white");//per cambiargli colore
         model.addAttribute("classValue","material-icons");//per impostarlo disabilitato
-        addNameAtSeat(model);
+        addNameAtSeats(model);
         return "choose_seats";
     }
 
-    private void addNameAtSeat(Model model) {
+    private void addNameAtSeats(Model model) {
         int size = (viewModel.getSeatList()).size();
         int rows = 10;
         int columns = (size / rows);

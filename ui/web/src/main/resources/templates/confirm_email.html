@@ -8,37 +8,38 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body style="background-color: black" >
-<div class="container" style="color: aliceblue">
+<div class="container mt-3" style="background-color: black; color: white">
 
-    <div id="promo">
-        <div class="container">
-            <div class="jumbotron" style="background-color: #212121">
+        <div class="card" style="border-color: white;background-color: black">
+            <div class="jumbotron"  style="background-color: black" >
                 <h1 class="display-3" th:text="${result}"></h1>
-                <p class="lead">
-                    An email has been sent to the address associated with this account.</p>
-                <hr class="my-4">
-                <div class="row">
-                    <div class="col-6">
-                        <h4>Ticket: </h4>
-                        <h6 th:text="${ticket}"></h6>
-                        <h4>Cinema: </h4>
-                        <h6 th:text="${cinema}"></h6>
-                        <h4>Movie: </h4>
-                        <h6 th:text="${movie}"></h6>
-                    </div>
-                    <div class="col-6">
-                        <h4>Date: </h4>
-                        <h6 th:text="${date}"></h6>
-                        <h4>Screening time: </h4>
-                        <h6 th:text="${screening_time}"></h6>
-                        <h4>Price: </h4>
-                        <h6 th:text="${price}+'€'"></h6>
+                <div th:if="${boolean_result}">
+                    <p class="lead">
+                        An email has been sent to the address associated with this account.</p>
+                    <hr class="my-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4>Ticket: </h4>
+                            <h6 th:text="${ticket}"></h6>
+                            <h4>Cinema: </h4>
+                            <h6 th:text="${cinema}"></h6>
+                            <h4>Movie: </h4>
+                            <h6 th:text="${movie}"></h6>
+                        </div>
+                        <div class="col-6">
+                            <h4>Date: </h4>
+                            <h6 th:text="${date}"></h6>
+                            <h4>Screening time: </h4>
+                            <h6 th:text="${screening_time}"></h6>
+                            <h4>Price: </h4>
+                            <h6 th:text="${price}+'€'"></h6>
+                        </div>
                     </div>
                 </div>
-                <p class="lead"> <a href="\choose_movie" class="btn btn-primary btn-lg" role="button">Back to menu</a> </p>
+                <p class="lead mt-4"> <a href="\choose_movie" class="btn btn-primary btn-lg" role="button">Back to menu</a> </p>
             </div>
         </div>
-    </div>
+
 </div>
 </body>
 </html>

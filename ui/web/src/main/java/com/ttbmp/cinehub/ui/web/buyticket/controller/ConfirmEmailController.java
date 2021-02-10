@@ -19,6 +19,7 @@ public class ConfirmEmailController {
     public String confirmEmail(Model model) {
         if(!USE_CASE.pay(new PayRequest(viewModel.getSelectedTicket(), viewModel.getSelectedProjection(), viewModel.getSelectedPosition()))){
             model.addAttribute("result","Error with the Payment");
+            model.addAttribute("boolean_result",false);
         }
         else {
             model.addAttribute("result", "Payment with success!");
@@ -28,8 +29,8 @@ public class ConfirmEmailController {
             model.addAttribute("date", viewModel.getSelectedProjection().getDate());
             model.addAttribute("screening_time",viewModel.getSelectedProjection().getStartTime());
             model.addAttribute("price",viewModel.getSelectedTicket().getPrice());
+            model.addAttribute("boolean_result",true);
         }
-
         return "confirm_email";
     }
 }
