@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.service.movieapi.dto;
+package com.ttbmp.cinehub.service.movieapi;
 
 
 import com.google.gson.annotations.SerializedName;

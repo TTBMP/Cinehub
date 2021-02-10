@@ -8,7 +8,6 @@ import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
 import com.ttbmp.cinehub.app.usecase.Request;
 import com.ttbmp.cinehub.domain.Employee;
 import com.ttbmp.cinehub.domain.Projection;
-import com.ttbmp.cinehub.domain.Projectionist;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 import com.ttbmp.cinehub.domain.shift.Shift;
 

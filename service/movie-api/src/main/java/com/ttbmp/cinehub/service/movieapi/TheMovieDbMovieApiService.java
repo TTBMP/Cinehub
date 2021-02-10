@@ -4,8 +4,6 @@ package com.ttbmp.cinehub.service.movieapi;
 import com.google.gson.Gson;
 import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
-import com.ttbmp.cinehub.service.movieapi.datamapper.MovieDataMapper;
-import com.ttbmp.cinehub.service.movieapi.dto.Movie;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,7 +23,7 @@ public class TheMovieDbMovieApiService implements MovieApiService {
 
     @Override
     public MovieDto getMovie(int movieId) throws IOException {
-        Reader reader = getJsonReader(new URL(URL_START + movieId + API_KEY));;
+        Reader reader = getJsonReader(new URL(URL_START + movieId + API_KEY));
         Movie movie = new Gson().fromJson(reader, Movie.class);
         movie.setImageUrl(IMAGE_URL + movie.getImageUrl());
         return MovieDataMapper.mapToDto(movie);

@@ -7,9 +7,7 @@ import com.ttbmp.cinehub.app.repository.ProjectionRepository;
 import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
-import com.ttbmp.cinehub.domain.Projectionist;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
-import com.ttbmp.cinehub.domain.shift.Shift;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
