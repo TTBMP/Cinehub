@@ -21,6 +21,8 @@ public class CinemaDto {
         this.halList = halList;
     }
 
+
+
     public int getId() {
         return id;
     }

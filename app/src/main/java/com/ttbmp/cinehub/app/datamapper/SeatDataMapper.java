@@ -25,8 +25,8 @@ public class SeatDataMapper {
         return DataMapperHelper.mapList(seatList, SeatDataMapper::mapToDto);
     }
 
-    public static List<Seat> mapToEntityList(List<SeatDto> ticketDtoList) {
-        return DataMapperHelper.mapList(ticketDtoList, SeatDataMapper::mapToEntity);
+    public static List<Seat> mapToEntityList(List<SeatDto> seatDtoList) {
+        return DataMapperHelper.mapList(seatDtoList, SeatDataMapper::mapToEntity);
 
     }
 }

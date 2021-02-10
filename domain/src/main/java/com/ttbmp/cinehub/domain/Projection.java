@@ -13,11 +13,10 @@ public class Projection {
 
     private final String startTime;
     private final Hall hall;
-    private Cinema cinema;//TODO : should we delete cinema?
+    private Cinema cinema;
     private Movie movie;
     private List<Ticket> ticket = new ArrayList<>();
     private String date;
-    private Projectionist projectionist;
 
     public Projection(Movie movie, Cinema cinema, Hall hall, String startTime, String date) {
         this.movie = movie;

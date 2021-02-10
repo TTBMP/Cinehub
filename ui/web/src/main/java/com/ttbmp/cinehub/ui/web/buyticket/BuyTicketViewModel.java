@@ -1,0 +1,138 @@
+package com.ttbmp.cinehub.ui.web.buyticket;
+
+
+import com.ttbmp.cinehub.app.dto.*;
+
+import java.util.List;
+
+/**
+ * @author Palmieri Ivan
+ */
+
+public class BuyTicketViewModel  {
+
+    private List<MovieDto> movieDtoList;
+    private List<CinemaDto> cinemaDtoList;
+    private List<ProjectionDto> projectionList;
+    private List<SeatDto> seatList;
+    private MovieDto selectedMovie;
+    private String selectedDate;
+    private CinemaDto selectedCinema;
+    private HallDto selectedHall;
+    private String selectedTime;
+    private ProjectionDto selectedProjection;
+    private TicketDto selectedTicket;
+    private Integer selectedPosition;
+
+    public Integer getSelectedPosition() {
+        return selectedPosition;
+    }
+
+    public void setSelectedPosition(Integer selectedPosition) {
+        this.selectedPosition = selectedPosition;
+    }
+
+    public TicketDto getSelectedTicket() {
+        return selectedTicket;
+    }
+
+    public void setSelectedTicket(TicketDto selectedTicket) {
+        this.selectedTicket = selectedTicket;
+    }
+
+    public List<SeatDto> getSeatList() {
+        return seatList;
+    }
+
+    public void setSeatList(List<SeatDto> seatList) {
+        this.seatList = seatList;
+    }
+
+    public ProjectionDto getSelectedProjection() {
+        return selectedProjection;
+    }
+
+    public void setSelectedProjection(ProjectionDto selectedProjection) {
+        this.selectedProjection = selectedProjection;
+    }
+
+    public String getSelectedTime() {
+        return selectedTime;
+    }
+
+    public void setSelectedTime(String selectedTime) {
+        this.selectedTime = selectedTime;
+    }
+
+    public HallDto getSelectedHall() {
+        return selectedHall;
+    }
+
+    public void setSelectedHall(HallDto selectedHall) {
+        this.selectedHall = selectedHall;
+    }
+
+    public CinemaDto getSelectedCinema() {
+        return selectedCinema;
+    }
+
+    public void setSelectedCinema(CinemaDto selectedCinema) {
+        this.selectedCinema = selectedCinema;
+    }
+
+    public MovieDto getSelectedMovie() {
+        return selectedMovie;
+    }
+
+    public void setSelectedMovie(MovieDto selectedMovie) {
+        this.selectedMovie = selectedMovie;
+    }
+
+    public String getSelectedDate() {
+        return selectedDate;
+    }
+
+    public void setSelectedDate(String selectedDate) {
+        this.selectedDate = selectedDate;
+    }
+
+    public void setProjectionList(List<ProjectionDto> projectionList) {
+        this.projectionList = projectionList;
+    }
+
+    public List<ProjectionDto> getProjectionList() {
+        return projectionList;
+    }
+
+    public List<SeatDto> getSeatDtoList() {
+        return seatDtoList;
+    }
+
+    public void setSeatDtoList(List<SeatDto> seatDtoList) {
+        this.seatDtoList = seatDtoList;
+    }
+
+    private List<SeatDto> seatDtoList;
+
+
+    public List<CinemaDto> getCinemaDtoList() {
+        return cinemaDtoList;
+    }
+
+    public void setCinemaDtoList(List<CinemaDto> cinemaDtoList) {
+        this.cinemaDtoList = cinemaDtoList;
+    }
+
+
+
+    public void setMovieDtoList(List<MovieDto> movieDtoList) {
+        this.movieDtoList = movieDtoList;
+    }
+
+    public List<MovieDto> getMovieDtoList() {
+        return movieDtoList;
+    }
+
+
+
+}

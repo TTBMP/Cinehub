@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body style="background-color: black" >
+<div class="container justify-content-center" style="color:#212121">
+    <div class="row row text-uppercase">
+          <div class="col-md-8 order-md-1 text-body">
+                    <a class="needs-validation" novalidate=""></a>
+                    <div class="col-md-12 text-center mt-3" style="color:#212121">
+                        <h1 class="text-light">Payment</h1>
+                    </div>
+                    <form>
+                        <div class="mb-3">
+                            <div class="invalid-feedback">
+                                Please enter a valid email address for shipping updates.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3" style="color: aliceblue">
+                                <label for="cc-name">Nome proprietario</label>
+                                <input type="text" class="form-control"  placeholder="" required >
+                                <small class="text-muted">Nome che troverai nella ricevuta</small>
+                                <div class="invalid-feedback">
+                                    Name on card is required
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3" style="color: aliceblue">
+                                <label for="cc-number">Congome del proprietario</label>
+                                <input type="text" class="form-control" placeholder="" required >
+                                <div class="invalid-feedback">
+                                    Credit card number is required
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3" style="color: aliceblue">
+                                <label for="cc-name">Email proprietario</label>
+                                <input type="email" class="form-control" id="cc-name" placeholder="" required >
+                                <small class="text-muted">Email su cui ricevere la ricevuta</small>
+                                <div class="invalid-feedback">
+                                    Name on card is required
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3" style="color: aliceblue">
+                                <label for="cc-number">Numero Carta&nbsp;</label>
+                                <input type="text" class="form-control" id="cc-number" placeholder="" required >
+                                <div class="invalid-feedback">
+                                    Credit card number is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 mb-3" style="color: aliceblue">
+                                <label >Data di Scadenza</label>
+                                <input type="date">
+                            </div>
+                            <div class="col-md-3 mb-3" style="color: aliceblue">
+                                <label >CVV</label>
+                                <input type="text" class="align-bottom form-control" id="cc-cvv" placeholder="" required >
+                                <div class="invalid-feedback">
+                                    Security code required
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="mb-4">
+                    </form>
+              <a href="/confirm_email"><button class="btn btn-block btn-sm btn-primary mb-5 pb-auto" type="submit">Pay</button></a>
+
+
+                </div>
+
+        <!-- Bootstrap core JavaScript -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="/lib/jquery/jquery.min.js"></script>
+        <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+
+    </div>
+</div>
+</body>
+</html>

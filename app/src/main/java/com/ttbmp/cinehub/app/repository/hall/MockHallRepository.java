@@ -38,4 +38,8 @@ public class MockHallRepository implements HallRepository {
     public List<Hall> getHallList(int cinemaId) {
         return hallList.subList(7 * cinemaId, 7 + cinemaId * 7);
     }
+
+    public Hall getHall(int id) {
+        return hallList.get(id);
+    }
 }
