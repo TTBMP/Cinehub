@@ -10,17 +10,9 @@ public class MockTicketRepository implements TicketRepository {
 
     private static final List<Ticket> ticketList = new ArrayList<>();
 
-    static {
-        ticketList.add(new Ticket(3));
-        ticketList.add(new Ticket(3));
-        ticketList.add(new Ticket(3));
-        ticketList.add(new Ticket(3));
-        ticketList.add(new Ticket(3));
-        ticketList.add(new Ticket(3));
-    }
-
     @Override
     public void saveTicket(Ticket ticket) {
         ticketList.add(ticket);
     }
+
 }

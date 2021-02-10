@@ -1,10 +1,7 @@
 package com.ttbmp.cinehub.app.usecase.buyticket;
 
 import com.ttbmp.cinehub.app.datamapper.*;
-import com.ttbmp.cinehub.app.repository.CinemaRepository;
-import com.ttbmp.cinehub.app.repository.MovieRepository;
-import com.ttbmp.cinehub.app.repository.ProjectionRepository;
-import com.ttbmp.cinehub.app.repository.UserRepository;
+import com.ttbmp.cinehub.app.repository.*;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
 import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
