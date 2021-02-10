@@ -7,19 +7,34 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="4.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.detail.projectionist.ProjectionistShiftItemViewController">
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.ui.desktop.ui.viewpersonalschedule.detail.projectionist.ProjectionistShiftItemViewController">
     <children>
-        <Label fx:id="timeLabel" text="time" />
+        <Label fx:id="timeLabel" style="-fx-font-size: 16;" text="start time">
+         <HBox.margin>
+            <Insets left="16.0" right="16.0" />
+         </HBox.margin>
+         <padding>
+            <Insets left="4.0" right="4.0" />
+         </padding></Label>
         <Separator orientation="VERTICAL" />
-        <ImageView fx:id="movieImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-      <VBox prefHeight="200.0" prefWidth="100.0" spacing="8.0">
+        <ImageView fx:id="movieImageView" fitHeight="120.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin></ImageView>
+      <VBox spacing="8.0">
          <children>
-              <Label fx:id="titleLabel" text="title" />
-            <Label fx:id="durationMovieLabel" text="duration" />
+              <Label fx:id="titleLabel" style="-fx-font-weight: bold; -fx-font-size: 16;" text="title" />
+            <HBox spacing="4.0">
+               <children>
+                  <Label text="Duration:" />
+                  <Label fx:id="durationMovieLabel" text="duration" />
+                  <Label text="minutes" />
+               </children>
+            </HBox>
          </children>
+         <HBox.margin>
+            <Insets left="8.0" />
+         </HBox.margin>
       </VBox>
     </children>
-   <padding>
-      <Insets left="8.0" right="8.0" />
-   </padding>
 </HBox>

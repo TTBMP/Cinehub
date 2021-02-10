@@ -88,11 +88,6 @@ public class ScheduleViewController extends ViewController {
                         viewModel.getCalendarPageFirstDate(),
                         viewModel.getCalendarPageLastDate())
         );
-        try {
-            CinehubApplication.APP_CONTAINER.getFactory(MovieApiService.class).get().getMovie(11);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 }

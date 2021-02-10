@@ -36,7 +36,7 @@
         <Separator />
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
          <children>
-            <Label text="Hall:" />
+            <Label text="Working in the hall" />
             <Label fx:id="hallLabel" text="hall" />
          </children>
       </HBox>

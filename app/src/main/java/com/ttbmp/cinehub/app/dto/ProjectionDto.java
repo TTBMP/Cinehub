@@ -64,4 +64,5 @@ public class ProjectionDto {
     public void setDate(String date) {
         this.date = date;
     }
+
 }
