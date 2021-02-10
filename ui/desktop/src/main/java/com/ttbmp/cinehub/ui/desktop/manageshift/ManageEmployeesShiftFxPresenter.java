@@ -245,13 +245,13 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     private List<EmployeeShiftWeek> getEmployeeShiftWeekList(GetShiftListResponse response) {
         List<EmployeeShiftWeek> result = new ArrayList<>();
         List<ShiftDto> shiftList = response.getShiftDtoList();
-        CinemaDto cinema = response.getCinema();
+        int cinema = response.getCinema();
         TemporalField temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
         LocalDate firstDayOfWeek = response.getDate().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
 
         List<EmployeeDto> employeeList = shiftList.stream()
                 .map(ShiftDto::getEmployee)
-                .filter(employee -> employee.getCinema().equals(cinema))
+                .filter(employee -> employee.getCinema().getId() == (cinema))
                 .distinct()
                 .collect(Collectors.toList());
 

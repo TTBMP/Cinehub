@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.app.repository.shift;
 
+
 import com.ttbmp.cinehub.app.repository.employee.MockEmployeeRepository;
 import com.ttbmp.cinehub.domain.Employee;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
@@ -8,9 +9,12 @@ import com.ttbmp.cinehub.domain.shift.UsherShift;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 /**
@@ -29,6 +33,12 @@ public class MockShiftRepository implements ShiftRepository {
                                 LocalDate.now().plusWeeks(i).plusDays(j).toString(),
                                 LocalTime.now().minusHours(2).withSecond(0).withNano(0).toString(),
                                 LocalTime.now().plusHours(0).withSecond(0).withNano(0).toString(),
+                                new MockEmployeeRepository().getEmployee(1).getCinema().getHallList().get(1)
+                        ), new ProjectionistShift(
+                                new MockEmployeeRepository().getEmployee(1),
+                                LocalDate.now().plusWeeks(i).plusDays(j).toString(),
+                                LocalTime.now().minusHours(0).withSecond(0).withNano(0).toString(),
+                                LocalTime.now().plusHours(2).withSecond(0).withNano(0).toString(),
                                 new MockEmployeeRepository().getEmployee(1).getCinema().getHallList().get(1)
                         ),
                         new UsherShift(
@@ -65,8 +75,10 @@ public class MockShiftRepository implements ShiftRepository {
     }
 
     @Override
-    public List<Shift> getShiftList() {
-        return shiftList;
+    public List<Shift> getShiftList(int cinemaId) {
+        return shiftList.stream()
+                        .filter(s-> s.getEmployee().getCinema().getId() == cinemaId)
+                        .collect(Collectors.toList());
     }
 
     @Override

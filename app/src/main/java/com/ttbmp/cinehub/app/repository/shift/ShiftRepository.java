@@ -13,7 +13,7 @@ public interface ShiftRepository {
 
     List<Shift> getAllEmployeeShiftBetweenDate(Employee employee, LocalDate start, LocalDate end);
 
-    List<Shift> getShiftList();
+    List<Shift> getShiftList(int cinemaId);
 
     void saveShift(Shift shift) throws ShiftSaveException;
 
