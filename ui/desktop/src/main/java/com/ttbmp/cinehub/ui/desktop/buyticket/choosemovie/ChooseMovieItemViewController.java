@@ -19,6 +19,7 @@ public class ChooseMovieItemViewController extends ViewController {
 
 
     private MovieDto movieDto;
+
     @FXML
     private Label overviewMovieLabel;
 

@@ -11,6 +11,6 @@ import java.io.IOException;
 public class PaymentView extends FxmlView {
 
     public PaymentView() throws IOException {
-        super("payment.fxml");
+        super("buy_ticket/payment.fxml");
     }
 }

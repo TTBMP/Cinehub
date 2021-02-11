@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" minHeight="730.0" minWidth="1156.0" xmlns="http://javafx.com/javafx/11.0.1"
+<VBox minHeight="730.0" minWidth="1156.0" stylesheets="@../../styles/stylesIvan.css" xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.ttbmp.cinehub.ui.desktop.buyticket.chooseseat.ChooseSeatViewController">
     <children>
-        <fx:include fx:id="appBar" source="app_bar/app_bar.fxml"/>
+        <fx:include fx:id="appBar" source="/layout/app_bar/app_bar.fxml"/>
         <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
             <children>
                 <GridPane layoutX="26.0" layoutY="522.0" VBox.vgrow="ALWAYS">
@@ -43,9 +44,21 @@
                         <Insets bottom="16.0"/>
                     </VBox.margin>
                 </Label>
-                <CheckBox fx:id="foldingArmchairRadioButton" mnemonicParsing="false" text="Heated armchair"/>
-                <CheckBox fx:id="heatedArmchairRadioButton" mnemonicParsing="false" text="Folding armchair"/>
-                <CheckBox fx:id="skipLineRadioButton" mnemonicParsing="false" text="Skip line"/>
+                <CheckBox fx:id="foldingArmchairRadioButton" mnemonicParsing="false" text="Heated armchair">
+                    <VBox.margin>
+                        <Insets top="5.0"/>
+                    </VBox.margin>
+                </CheckBox>
+                <CheckBox fx:id="heatedArmchairRadioButton" mnemonicParsing="false" text="Folding armchair">
+                    <VBox.margin>
+                        <Insets top="5.0"/>
+                    </VBox.margin>
+                </CheckBox>
+                <CheckBox fx:id="skipLineRadioButton" mnemonicParsing="false" text="Skip line">
+                    <VBox.margin>
+                        <Insets top="5.0"/>
+                    </VBox.margin>
+                </CheckBox>
                 <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
                     <children>
                         <Label style="-fx-font-size: 20px; -fx-font-weight: bold;"
