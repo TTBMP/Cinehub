@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.ui.desktop.appbar;
 
 import com.ttbmp.cinehub.ui.desktop.about.AboutActivity;
 import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketActivity;
+import com.ttbmp.cinehub.ui.desktop.login.LoginActivity;
 import com.ttbmp.cinehub.ui.desktop.manageshift.ManageShiftActivity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
@@ -30,13 +31,16 @@ public class AppBarViewController extends ViewController {
     private Tab buyTicketTab;
 
     @FXML
-    private Tab aboutTab;
+    private Tab manageShiftTab;
 
     @FXML
     private Tab viewPersonalScheduleTab;
 
     @FXML
-    private Tab manageShiftTab;
+    private Tab loginTab;
+
+    @FXML
+    private Tab aboutTab;
 
     @Override
     protected void onLoad() {
@@ -58,6 +62,7 @@ public class AppBarViewController extends ViewController {
     }
 
     private void loadActivityTabMap() {
+        activityTabMap.put(LoginActivity.class, loginTab);
         activityTabMap.put(BuyTicketActivity.class, buyTicketTab);
         activityTabMap.put(ManageShiftActivity.class, manageShiftTab);
         activityTabMap.put(ViewPersonalScheduleActivity.class, viewPersonalScheduleTab);

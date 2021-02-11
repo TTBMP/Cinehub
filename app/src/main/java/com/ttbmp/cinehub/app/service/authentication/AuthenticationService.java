@@ -11,4 +11,6 @@ public interface AuthenticationService {
 
     Session verifySessionCookie(String sessionCookie) throws AuthenticationException;
 
+    String sigIn(String email, String password);
+
 }

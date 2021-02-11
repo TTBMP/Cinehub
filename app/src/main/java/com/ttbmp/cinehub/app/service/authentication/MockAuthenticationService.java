@@ -20,4 +20,9 @@ public class MockAuthenticationService implements AuthenticationService {
         return new Session("1", "");
     }
 
+    @Override
+    public String sigIn(String email, String password) {
+        return "keyId";
+    }
+
 }
