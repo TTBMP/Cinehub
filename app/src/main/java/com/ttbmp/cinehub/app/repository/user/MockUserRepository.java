@@ -15,28 +15,28 @@ public class MockUserRepository implements UserRepository {
 
     static {
         userList.add(new User(
-                0,
+                "0",
                 "Fabio",
                 "Buracchi",
                 "fb@cinehub.com",
                 new CreditCard("4242424242424242", 354, "22/24")
         ));
         userList.add(new User(
-                1,
+                "1",
                 "Massimo",
                 "Mazzetti",
                 "mm@cinehub.com",
                 new CreditCard("4242424242424242", 354, "22/24")
         ));
         userList.add(new User(
-                2,
+                "2",
                 "Ivan",
                 "Palmieri",
                 "ip@cinehub.com",
                 new CreditCard("4242424242424242", 354, "22/24")
         ));
         userList.add(new User(
-                3,
+                "3",
                 "Mario",
                 "Rossi",
                 "mr@cinehub.com",
@@ -45,8 +45,8 @@ public class MockUserRepository implements UserRepository {
     }
 
     @Override
-    public User getUser(int userId) {
-        return userList.get(userId);
+    public User getUser(String userId) {
+        return userList.get(Integer.parseInt(userId));
     }
 
 }

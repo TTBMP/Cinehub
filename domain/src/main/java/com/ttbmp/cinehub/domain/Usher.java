@@ -6,7 +6,7 @@ public class Usher extends Employee {
         super(user, cinema);
     }
 
-    public Usher(int id, String name, String surname, String email, CreditCard creditCard, Cinema cinema) {
+    public Usher(String id, String name, String surname, String email, CreditCard creditCard, Cinema cinema) {
         super(id, name, surname, email, creditCard, cinema);
     }
 

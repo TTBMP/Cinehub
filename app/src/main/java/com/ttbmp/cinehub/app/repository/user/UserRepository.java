@@ -7,6 +7,6 @@ import com.ttbmp.cinehub.domain.User;
  */
 public interface UserRepository {
 
-    User getUser(int userId);
+    User getUser(String userId);
 
 }

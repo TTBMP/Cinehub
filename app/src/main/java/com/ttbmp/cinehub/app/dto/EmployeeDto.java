@@ -5,23 +5,23 @@ package com.ttbmp.cinehub.app.dto;
  */
 public class EmployeeDto {
 
-    private int id;
+    private String id;
     private String name;
     private String surname;
     private CinemaDto cinema;
 
-    public EmployeeDto(int id, String name, String surname, CinemaDto cinema) {
+    public EmployeeDto(String id, String name, String surname, CinemaDto cinema) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.cinema = cinema;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -55,12 +55,12 @@ public class EmployeeDto {
             return false;
         }
         EmployeeDto other = (EmployeeDto) obj;
-        return id == other.getId();
+        return id.equals(other.getId());
     }
 
     @Override
     public int hashCode() {
-        return id;
+        return id.hashCode();
     }
 
 }
