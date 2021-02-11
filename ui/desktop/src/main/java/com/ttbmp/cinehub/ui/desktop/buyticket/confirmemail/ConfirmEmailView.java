@@ -11,6 +11,6 @@ import java.io.IOException;
 public class ConfirmEmailView extends FxmlView {
 
     public ConfirmEmailView() throws IOException {
-        super("confirm_email.fxml");
+        super("buy_ticket/confirm_email.fxml");
     }
 }
