@@ -17,16 +17,17 @@ public class PaymentController {
 
     @GetMapping("/payment/{position}/{index}/{optionOne}/{optionTwo}/{optionThree}")
     public String payment(
-            @PathVariable("position")String position,
-            @PathVariable("index")Integer number,
-            @PathVariable("optionOne")Boolean optionOne,
-            @PathVariable("optionTwo")Boolean optionTwo,
-            @PathVariable("optionThree")Boolean optionThree,
+            @PathVariable("position") String position,
+            @PathVariable("index") Integer number,
+            @PathVariable("optionOne") Boolean optionOne,
+            @PathVariable("optionTwo") Boolean optionTwo,
+            @PathVariable("optionThree") Boolean optionThree,
             Model model) {
         viewModel.setSelectedPosition(number);
-        USE_CASE.createTicket(new GetTicketBySeatsRequest(viewModel.getSeatDtoList(),position,number,optionOne,optionTwo,optionThree));
+        USE_CASE.createTicket(new GetTicketBySeatsRequest(viewModel.getSeatDtoList(), position, number, optionOne, optionTwo, optionThree));
         model.addAttribute("projection", viewModel.getSelectedProjection());
         model.addAttribute("ticket", viewModel.getSelectedTicket());
         return "payment";
     }
+
 }

@@ -9,7 +9,7 @@ import java.util.List;
  * @author Palmieri Ivan
  */
 
-public class BuyTicketViewModel  {
+public class BuyTicketViewModel {
 
     private List<MovieDto> movieDtoList;
     private List<CinemaDto> cinemaDtoList;
@@ -23,11 +23,12 @@ public class BuyTicketViewModel  {
     private ProjectionDto selectedProjection;
     private TicketDto selectedTicket;
     private Integer selectedPosition;
-    private String emailError ;
-    private String movieError ;
-    private String cinemaError ;
-    private String seatError ;
-    private String paymentError ;
+    private String emailError;
+    private String movieError;
+    private String cinemaError;
+    private String seatError;
+    private String paymentError;
+    private List<SeatDto> seatDtoList;
 
     public String getEmailError() {
         return emailError;
@@ -141,12 +142,12 @@ public class BuyTicketViewModel  {
         this.selectedDate = selectedDate;
     }
 
-    public void setProjectionList(List<ProjectionDto> projectionList) {
-        this.projectionList = projectionList;
-    }
-
     public List<ProjectionDto> getProjectionList() {
         return projectionList;
+    }
+
+    public void setProjectionList(List<ProjectionDto> projectionList) {
+        this.projectionList = projectionList;
     }
 
     public List<SeatDto> getSeatDtoList() {
@@ -157,9 +158,6 @@ public class BuyTicketViewModel  {
         this.seatDtoList = seatDtoList;
     }
 
-    private List<SeatDto> seatDtoList;
-
-
     public List<CinemaDto> getCinemaDtoList() {
         return cinemaDtoList;
     }
@@ -168,16 +166,12 @@ public class BuyTicketViewModel  {
         this.cinemaDtoList = cinemaDtoList;
     }
 
-
-
-    public void setMovieDtoList(List<MovieDto> movieDtoList) {
-        this.movieDtoList = movieDtoList;
-    }
-
     public List<MovieDto> getMovieDtoList() {
         return movieDtoList;
     }
 
-
+    public void setMovieDtoList(List<MovieDto> movieDtoList) {
+        this.movieDtoList = movieDtoList;
+    }
 
 }

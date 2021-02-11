@@ -1,9 +1,6 @@
 package com.ttbmp.cinehub.ui.web.buyticket;
 
-
-
-
-import com.ttbmp.cinehub.app.service.payment.PaymentException;
+import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketPresenter;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
@@ -125,7 +122,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentErrorByStripe(PaymentException error) {
+    public void presentErrorByStripe(PaymentServiceException error) {
         viewModel.setPaymentError(error.getMessage());
     }
 
@@ -145,5 +142,9 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
         viewModel.setMovieError(GetListCinemaRequest.MISSING_MOVIE_ERROR.getMessage());
     }
 
+    @Override
+    public void presentAutenticationError() {
+
+    }
 
 }

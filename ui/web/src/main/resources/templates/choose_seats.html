@@ -50,10 +50,11 @@
                         <div th:if="${seat.state}">
                             <div class="form-check m-2">
                                 <div th:text="${valList.get((inter.index))}"></div>
-                                    <a id="url" onclick="href +='/'+ document.getElementById('c1').checked+'/'+ document.getElementById('c2').checked+'/'+ document.getElementById('c3').checked"
-                                       th:href="@{|/payment/${valList.get((inter.index))}/${inter.index}|}">
-                                        <i class="" th:class="${classValue}" th:style="${color}">event_seat</i>
-                                    </a>
+                                <a id="url"
+                                   onclick="href +='/'+ document.getElementById('c1').checked+'/'+ document.getElementById('c2').checked+'/'+ document.getElementById('c3').checked"
+                                   th:href="@{|/payment/${valList.get((inter.index))}/${inter.index}|}">
+                                    <i class="" th:class="${classValue}" th:style="${color}">event_seat</i>
+                                </a>
 
                                 <div th:text="${seat.price}+'€'"></div>
                             </div>
@@ -61,7 +62,7 @@
                         <div th:if="!${seat.state}">
                             <div class="form-check m-2 mt-2" style="color: #6d6d6d">
                                 <div class="mt-3">Sell</div>
-                                <i class="" th:class="${classValue}" >event_seat</i>
+                                <i class="" th:class="${classValue}">event_seat</i>
                             </div>
                         </div>
                     </tr>

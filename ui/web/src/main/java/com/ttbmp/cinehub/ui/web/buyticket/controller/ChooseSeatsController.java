@@ -1,10 +1,9 @@
 package com.ttbmp.cinehub.ui.web.buyticket.controller;
 
-
 import com.ttbmp.cinehub.app.datamapper.HallDataMapper;
 import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.repository.mock.MockHallRepository;
+import com.ttbmp.cinehub.app.repository.hall.MockHallRepository;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetNumberOfSeatsRequest;
 import com.ttbmp.cinehub.ui.web.buyticket.BuyTicketViewModel;
@@ -25,11 +24,11 @@ public class ChooseSeatsController {
 
     @GetMapping("/choose_seats/{startTime}/{hall_id}")
     public String chooseSeats(
-            @PathVariable("startTime")String startTime,
-            @PathVariable("hall_id")Integer hall,
+            @PathVariable("startTime") String startTime,
+            @PathVariable("hall_id") Integer hall,
             Model model) {
         MockHallRepository hallRepository = new MockHallRepository();
-        HallDto hallDto = HallDataMapper.mapToDto(hallRepository.getHall(hall)) ;
+        HallDto hallDto = HallDataMapper.mapToDto(hallRepository.getHall(hall));
         viewModel.setSelectedHall(hallDto);
         viewModel.setSelectedTime(startTime);
         viewModel.setSelectedProjection(new ProjectionDto(
@@ -43,11 +42,11 @@ public class ChooseSeatsController {
         viewModel.setSeatList(viewModel.getSeatDtoList());
         model.addAttribute("projection", viewModel.getSelectedProjection());
         model.addAttribute("seatList", viewModel.getSeatList());
-        model.addAttribute("boolean1",false);
-        model.addAttribute("boolean2",false);
-        model.addAttribute("boolean3",false);
-        model.addAttribute("color","color:"+"white");//per cambiargli colore
-        model.addAttribute("classValue","material-icons");//per impostarlo disabilitato
+        model.addAttribute("boolean1", false);
+        model.addAttribute("boolean2", false);
+        model.addAttribute("boolean3", false);
+        model.addAttribute("color", "color:" + "white");//per cambiargli colore
+        model.addAttribute("classValue", "material-icons");//per impostarlo disabilitato
         addNameAtSeats(model);
         return "choose_seats";
     }
@@ -61,14 +60,13 @@ public class ChooseSeatsController {
         char[] a = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'Z'};
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                valList.add(String.valueOf(a[i])+j);
+                valList.add(String.valueOf(a[i]) + j);
             }
         }
         for (int k = 0; k < rest; k++) {
-            valList.add(String.valueOf(a[columns + 1])+k);
+            valList.add(String.valueOf(a[columns + 1]) + k);
         }
-        model.addAttribute("valList",valList);
+        model.addAttribute("valList", valList);
     }
-
 
 }
