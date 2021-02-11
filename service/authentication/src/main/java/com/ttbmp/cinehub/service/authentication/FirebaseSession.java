@@ -11,10 +11,10 @@ public class FirebaseSession {
     private String email;
     private String sessionCookie;
 
-    public FirebaseSession(UserRecord loggedUserRecord, String sessionCookie) {
+    public FirebaseSession(UserRecord loggedUserRecord) {
         this.uid = loggedUserRecord.getUid();
         this.email = loggedUserRecord.getEmail();
-        this.sessionCookie = sessionCookie;
+        this.sessionCookie = loggedUserRecord.getEmail();
     }
 
     public String getUid() {

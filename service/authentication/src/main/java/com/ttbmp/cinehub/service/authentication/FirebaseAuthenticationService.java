@@ -5,9 +5,8 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.*;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+import java.io.InputStream;
 
 /**
  * @author Fabio Buracchi, Ivan Palmieri
@@ -18,9 +17,7 @@ public class FirebaseAuthenticationService {
 
     public FirebaseAuthenticationService() throws FirebaseException {
         try {
-            FileInputStream settings = new FileInputStream(
-                    this.getClass().getResource("resources/firebase_settings.json").getPath()
-            );
+            InputStream settings = this.getClass().getResourceAsStream("/firebase_settings.json");
             FirebaseOptions options = FirebaseOptions.builder()
                     .setDatabaseUrl("https://noreply@cinehub-d2abc.firebaseio.com/")
                     .setCredentials(GoogleCredentials.fromStream(settings))
@@ -40,9 +37,7 @@ public class FirebaseAuthenticationService {
                     .setPassword(password)
                     .setDisabled(false);
             UserRecord userRecord = firebaseAuth.createUser(request);
-            String idToken = firebaseAuth.createCustomToken(userRecord.getUid());
-            String sessionCookie = createSessionCookie(idToken);
-            return new FirebaseSession(userRecord, sessionCookie);
+            return new FirebaseSession(userRecord);
         } catch (FirebaseAuthException e) {
             throw new FirebaseException(e.getMessage());
         }
@@ -52,9 +47,7 @@ public class FirebaseAuthenticationService {
     public FirebaseSession authenticateUser(String email, String password) throws FirebaseException {
         try {
             UserRecord userRecord = firebaseAuth.getUserByEmail(email);
-            String idToken = firebaseAuth.createCustomToken(userRecord.getUid());
-            String sessionCookie = createSessionCookie(idToken);
-            return new FirebaseSession(userRecord, sessionCookie);
+            return new FirebaseSession(userRecord);
         } catch (FirebaseAuthException e) {
             throw new FirebaseException(e.getMessage());
         }
@@ -62,22 +55,9 @@ public class FirebaseAuthenticationService {
 
     public FirebaseSession verifySessionCookie(String sessionCookie) throws FirebaseException {
         try {
-            FirebaseToken firebaseToken = firebaseAuth.verifySessionCookie(sessionCookie, true);
-            return new FirebaseSession(
-                    firebaseAuth.getUser(firebaseToken.getUid()),
-                    sessionCookie
-            );
-        } catch (FirebaseAuthException e) {
-            throw new FirebaseException(e.getMessage());
-        }
-    }
-
-    private String createSessionCookie(String idToken) throws FirebaseException {
-        try {
-            SessionCookieOptions options = SessionCookieOptions.builder()
-                    .setExpiresIn(TimeUnit.DAYS.toMillis(5))
-                    .build();
-            return firebaseAuth.createSessionCookie(idToken, options);
+            String email = sessionCookie;
+            UserRecord userRecord = firebaseAuth.getUserByEmail(email);
+            return new FirebaseSession(userRecord);
         } catch (FirebaseAuthException e) {
             throw new FirebaseException(e.getMessage());
         }
