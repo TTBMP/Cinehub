@@ -1,16 +1,16 @@
 package com.ttbmp.cinehub.app.service.authentication;
 
-
 /**
  * @author Fabio Buracchi
  */
 public interface AuthenticationService {
 
-    Integer sigIn();
+    Integer sigInOld();
 
-    String sigInFireBase() throws  LoginException;
+    void signIn(String email, String password) throws AuthenticationException;
 
-     String register(String email, String password) throws LoginException;
+    void logIn(String email, String password) throws AuthenticationException;
 
+    void verifySessionCookie(String sessionCookie) throws AuthenticationException;
 
-    }
+}

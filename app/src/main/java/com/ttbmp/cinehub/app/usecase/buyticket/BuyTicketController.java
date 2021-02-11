@@ -58,7 +58,7 @@ public class BuyTicketController implements BuyTicketUseCase {
     public boolean pay(PayRequest request) {
         try {
             Request.validate(request);
-            User user = userRepository.getUser(authenticationService.sigIn());
+            User user = userRepository.getUser(authenticationService.sigInOld());
             Ticket ticket = TicketDataMapper.mapToEntity(request.getTicket());
             Projection projection = ProjectionDataMapper.mapToEntity(request.getProjection());
             Integer index = request.getIndex();

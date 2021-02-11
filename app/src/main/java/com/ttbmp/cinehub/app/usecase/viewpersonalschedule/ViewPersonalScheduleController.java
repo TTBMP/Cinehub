@@ -37,7 +37,7 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
     public void getShiftList(ShiftListRequest request) {
         try {
             Request.validate(request);
-            int userId = authenticationService.sigIn();
+            int userId = authenticationService.sigInOld();
             Employee employee = employeeRepository.getEmployee(userId);
             List<Shift> shiftList = shiftRepository.getAllEmployeeShiftBetweenDate(
                     employee,

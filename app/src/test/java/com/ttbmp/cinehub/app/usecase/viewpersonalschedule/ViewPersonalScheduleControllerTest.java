@@ -40,7 +40,7 @@ class ViewPersonalScheduleControllerTest {
 
         @Override
         public void presentGetShiftList(ShiftListReply result) {
-            int userId = serviceLocator.getService(AuthenticationService.class).sigIn();
+            int userId = serviceLocator.getService(AuthenticationService.class).sigInOld();
             Employee employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(userId);
             List<Shift> shiftList = serviceLocator.getService(ShiftRepository.class).getAllEmployeeShiftBetweenDate(
                     employee,
