@@ -44,8 +44,6 @@ public class BuyTicketViewModel implements ViewModel {
     private final LongProperty selectedTicketPrice = new SimpleLongProperty();
     private final IntegerProperty selectedPositionSeatInteger = new SimpleIntegerProperty();
 
-    private final ObjectProperty<LocalDate> fieldExpirationDatePicker = new SimpleObjectProperty<>();
-
     private final StringProperty emailError = new SimpleStringProperty();
     private final StringProperty movieError = new SimpleStringProperty();
     private final StringProperty cinemaError = new SimpleStringProperty();
@@ -147,10 +145,6 @@ public class BuyTicketViewModel implements ViewModel {
 
     public StringProperty paymentErrorProperty() {
         return paymentError;
-    }
-
-    public ObjectProperty<LocalDate> fieldExpirationDatePickerProperty() {
-        return fieldExpirationDatePicker;
     }
 
     public ObjectProperty<ProjectionDto> selectedProjectionProperty() {
