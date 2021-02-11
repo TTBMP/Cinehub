@@ -12,7 +12,7 @@ public abstract class Employee extends User {
         this.cinema = cinema;
     }
 
-    protected Employee(int id, String name, String surname, String email, CreditCard creditCard, Cinema cinema) {
+    protected Employee(String id, String name, String surname, String email, CreditCard creditCard, Cinema cinema) {
         super(id, name, surname, email, creditCard);
         this.cinema = cinema;
     }

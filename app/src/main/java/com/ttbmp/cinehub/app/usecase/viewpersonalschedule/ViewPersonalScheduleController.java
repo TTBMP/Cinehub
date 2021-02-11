@@ -5,6 +5,7 @@ import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
+import com.ttbmp.cinehub.app.service.authentication.AuthenticationException;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
 import com.ttbmp.cinehub.app.usecase.Request;
 import com.ttbmp.cinehub.domain.Employee;
@@ -37,7 +38,7 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
     public void getShiftList(ShiftListRequest request) {
         try {
             Request.validate(request);
-            int userId = authenticationService.sigInOld();
+            String userId = authenticationService.signIn("", "").getUserId();
             Employee employee = employeeRepository.getEmployee(userId);
             List<Shift> shiftList = shiftRepository.getAllEmployeeShiftBetweenDate(
                     employee,
@@ -49,6 +50,8 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
             presenter.presentShiftListNullRequest();
         } catch (Request.InvalidRequestException e) {
             presenter.presentInvalidShiftListRequest(request);
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
         }
     }
 

@@ -5,12 +5,10 @@ package com.ttbmp.cinehub.app.service.authentication;
  */
 public interface AuthenticationService {
 
-    Integer sigInOld();
+    Session signIn(String email, String password) throws AuthenticationException;
 
-    void signIn(String email, String password) throws AuthenticationException;
+    Session logIn(String email, String password) throws AuthenticationException;
 
-    void logIn(String email, String password) throws AuthenticationException;
-
-    void verifySessionCookie(String sessionCookie) throws AuthenticationException;
+    Session verifySessionCookie(String sessionCookie) throws AuthenticationException;
 
 }

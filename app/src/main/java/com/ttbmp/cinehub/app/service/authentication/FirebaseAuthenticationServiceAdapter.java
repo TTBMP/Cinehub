@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.app.service.authentication;
 
 import com.ttbmp.cinehub.service.authentication.FirebaseAuthenticationService;
 import com.ttbmp.cinehub.service.authentication.FirebaseException;
+import com.ttbmp.cinehub.service.authentication.FirebaseSession;
 
 /**
  * @author Fabio Buracchi
@@ -19,32 +20,30 @@ public class FirebaseAuthenticationServiceAdapter implements AuthenticationServi
     }
 
     @Override
-    public Integer sigInOld() {
-        return null;
-    }
-
-    @Override
-    public void signIn(String email, String password) throws AuthenticationException {
+    public Session signIn(String email, String password) throws AuthenticationException {
         try {
-            authenticationService.createUser(email, password);
+            FirebaseSession session = authenticationService.createUser(email, password);
+            return new Session(session.getUid(), session.getSessionCookie());
         } catch (FirebaseException e) {
             throw new AuthenticationException(e.getMessage());
         }
     }
 
     @Override
-    public void logIn(String email, String password) throws AuthenticationException {
+    public Session logIn(String email, String password) throws AuthenticationException {
         try {
-            authenticationService.authenticateUser(email, password);
+            FirebaseSession session = authenticationService.authenticateUser(email, password);
+            return new Session(session.getUid(), session.getSessionCookie());
         } catch (FirebaseException e) {
             throw new AuthenticationException(e.getMessage());
         }
     }
 
     @Override
-    public void verifySessionCookie(String sessionCookie) throws AuthenticationException {
+    public Session verifySessionCookie(String sessionCookie) throws AuthenticationException {
         try {
-            authenticationService.verifySessionCookie(sessionCookie);
+            FirebaseSession session = authenticationService.verifySessionCookie(sessionCookie);
+            return new Session(session.getUid(), session.getSessionCookie());
         } catch (FirebaseException e) {
             throw new AuthenticationException(e.getMessage());
         }
