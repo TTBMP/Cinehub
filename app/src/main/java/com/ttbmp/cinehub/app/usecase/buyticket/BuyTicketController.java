@@ -158,7 +158,7 @@ public class BuyTicketController implements BuyTicketUseCase {
 
     /*To find the times of the screenings given a film, a cinema and a date*/
     @Override
-    public void getProjectionList(GetTimeOfProjectionRequest request) {
+    public void getProjectionList(GetProjectionRequest request) {
         try {
             Request.validate(request);
             Cinema cinema = CinemaDataMapper.mapToEntity(request.getCinemaDto());

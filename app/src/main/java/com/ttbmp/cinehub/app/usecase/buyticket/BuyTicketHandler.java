@@ -32,7 +32,7 @@ public class BuyTicketHandler implements BuyTicketUseCase {
     }
 
     @Override
-    public void getProjectionList(GetTimeOfProjectionRequest request) {
+    public void getProjectionList(GetProjectionRequest request) {
         controller.getProjectionList(request);
     }
 

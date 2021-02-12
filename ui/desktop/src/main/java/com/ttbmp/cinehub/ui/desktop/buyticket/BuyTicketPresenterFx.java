@@ -98,12 +98,12 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentInvalidGetTimeOfProjection(GetTimeOfProjectionRequest request) {
-        if (request.getErrorList().contains(GetTimeOfProjectionRequest.MISSING_MOVIE_ERROR)) {
-            viewModel.cinemaErrorProperty().setValue(GetTimeOfProjectionRequest.MISSING_MOVIE_ERROR.getMessage());
+    public void presentInvalidGetTimeOfProjection(GetProjectionRequest request) {
+        if (request.getErrorList().contains(GetProjectionRequest.MISSING_MOVIE_ERROR)) {
+            viewModel.cinemaErrorProperty().setValue(GetProjectionRequest.MISSING_MOVIE_ERROR.getMessage());
         }
-        if (request.getErrorList().contains(GetTimeOfProjectionRequest.MISSING_DATE_ERROR)) {
-            viewModel.cinemaErrorProperty().setValue(GetTimeOfProjectionRequest.MISSING_DATE_ERROR.getMessage());
+        if (request.getErrorList().contains(GetProjectionRequest.MISSING_DATE_ERROR)) {
+            viewModel.cinemaErrorProperty().setValue(GetProjectionRequest.MISSING_DATE_ERROR.getMessage());
         }
     }
 

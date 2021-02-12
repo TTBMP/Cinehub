@@ -1,11 +1,9 @@
 package com.ttbmp.cinehub.ui.web.buyticket.controller;
 
-import com.ttbmp.cinehub.app.datamapper.HallDataMapper;
-import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.repository.hall.MockHallRepository;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetNumberOfSeatsRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.GetProjectionRequest;
 import com.ttbmp.cinehub.ui.web.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.web.buyticket.UseCase;
 import org.springframework.stereotype.Controller;
@@ -13,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,23 +20,20 @@ public class ChooseSeatsController {
 
     private static final BuyTicketUseCase USE_CASE = UseCase.buyTicketUseCase;
     private final BuyTicketViewModel viewModel = UseCase.getViewModel();
+    private  ProjectionDto selectedProjection;
 
-    @GetMapping("/choose_seats/{startTime}/{hall_id}")
+    @GetMapping("/choose_seats/{projection_id}")//TODO passarmi id projection
     public String chooseSeats(
-            @PathVariable("startTime") String startTime,
-            @PathVariable("hall_id") Integer hall,
+            @PathVariable("projection_id") int id,
             Model model) {
-        MockHallRepository hallRepository = new MockHallRepository();
-        HallDto hallDto = HallDataMapper.mapToDto(hallRepository.getHall(hall));
-        viewModel.setSelectedHall(hallDto);
-        viewModel.setSelectedTime(startTime);
-        viewModel.setSelectedProjection(new ProjectionDto(
-                viewModel.getSelectedMovie(),
-                viewModel.getSelectedCinema(),
-                viewModel.getSelectedHall(),
-                viewModel.getSelectedTime(),
-                viewModel.getSelectedDate()
-        ));
+
+        USE_CASE.getProjectionList(new GetProjectionRequest(viewModel.getSelectedMovie(), viewModel.getSelectedCinema(), LocalDate.parse(viewModel.getSelectedDate())));
+        viewModel.getProjectionList().forEach(x->{
+            if(x.getHallDto().getId()==id){
+                selectedProjection = x;
+            }
+        });
+        viewModel.setSelectedProjection(selectedProjection);
         USE_CASE.getListOfSeat(new GetNumberOfSeatsRequest(viewModel.getSelectedProjection()));
         viewModel.setSeatList(viewModel.getSeatDtoList());
         model.addAttribute("projection", viewModel.getSelectedProjection());
