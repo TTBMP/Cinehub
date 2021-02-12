@@ -57,5 +57,6 @@ public class LoginViewController extends ViewController {
                     viewModel.usernameUserProperty().getValue()
                     ));
             });
+        loginButton.disableProperty().bind(viewModel.passwordUserProperty().isEmpty().or(viewModel.usernameUserProperty().isEmpty()));
     }
 }
