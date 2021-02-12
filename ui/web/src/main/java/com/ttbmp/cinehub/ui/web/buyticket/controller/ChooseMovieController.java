@@ -23,15 +23,7 @@ public class ChooseMovieController {
     private static final  String CHOOSE_DATE = "choose_date";
     private static final String CHOOSE_MOVIE = "choose_movie";
     private static final String MOVIE_LIST = "movieList";
-
-    @GetMapping("/choose_movie/{email}/{password}")
-    public String chooseMovie(@PathVariable("email") String email, @PathVariable("password") String password, Model model) {
-        model.addAttribute(CHOOSE_DATE, LocalDate.now().toString());
-        USE_CASE.getListMovie(new GetListMovieRequest(formatDate(LocalDate.now().toString())));
-        model.addAttribute(MOVIE_LIST, viewModel.getMovieDtoList());
-        return CHOOSE_MOVIE;
-    }
-
+    
     @GetMapping("/choose_movie")
     public String chooseMovie(Model model) {
         model.addAttribute(CHOOSE_DATE, LocalDate.now().toString());
