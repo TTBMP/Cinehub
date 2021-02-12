@@ -20,7 +20,9 @@ public class HallDataMapper {
 
     public static Hall mapToEntity(HallDto hallDto) {
         if (hallDto != null) {
-            return new Hall(hallDto.getId(), SeatDataMapper.mapToEntityList(hallDto.getSeatList()));
+            return new Hall(
+                    hallDto.getId()
+                    , SeatDataMapper.mapToEntityList(hallDto.getSeatList()));
         }
         return null;
     }

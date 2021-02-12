@@ -14,11 +14,11 @@ public class SeatDataMapper {
     }
 
     public static SeatDto mapToDto(Seat seat) {
-        return new SeatDto(seat.getPrice(), seat.getState());
+        return new SeatDto(seat.getPrice(), seat.getId());
     }
 
     public static Seat mapToEntity(SeatDto seatDto) {
-        return new Seat(seatDto.getPrice(), seatDto.getState());
+        return new Seat(seatDto.getPrice(), seatDto.getId());
     }
 
     public static List<SeatDto> mapToDtoList(List<Seat> seatList) {

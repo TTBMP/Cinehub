@@ -1,14 +1,27 @@
-package com.ttbmp.cinehub.domain.ticket.component;
+package com.ttbmp.cinehub.domain.ticket;
 
 import com.ttbmp.cinehub.domain.User;
 
 /**
  * @author Palmieri Ivan
  */
-public class Ticket extends TicketAbstract {
+public class Ticket  {
 
-    private final long price;
+    private long price;
     private User owner;
+    private String position;
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPrice(long price) {
+        this.price = price;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
 
     public Ticket(long price) {
         this.price = price;
@@ -22,14 +35,12 @@ public class Ticket extends TicketAbstract {
         this.owner = owner;
     }
 
-    @Override
-    public long increasePrice() {
-        return this.price;
-    }
 
-    @Override
     public long getPrice() {
         return this.price;
     }
+
+
+
 
 }

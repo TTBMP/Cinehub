@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.domain;
 
 
-import com.ttbmp.cinehub.domain.ticket.component.Ticket;
+import com.ttbmp.cinehub.domain.ticket.Ticket;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ public class Projection {
     private final Hall hall;
     private Cinema cinema;
     private Movie movie;
-    private List<Ticket> ticket = new ArrayList<>();
+    private List<Ticket> ticketList = new ArrayList<>();
     private String date;
 
     public Projection(Movie movie, Cinema cinema, Hall hall, String startTime, String date) {
@@ -58,16 +58,16 @@ public class Projection {
         this.movie = movie;
     }
 
-    public List<Ticket> getTicket() {
-        return ticket;
+    public List<Ticket> getTicketList() {
+        return ticketList;
     }
 
-    public void setTicket(List<Ticket> ticket) {
-        this.ticket = ticket;
+    public void setTicketList(List<Ticket> ticketList) {
+        this.ticketList = ticketList;
     }
 
     public void addTicket(Ticket ticket) {
-        this.ticket.add(ticket);
+        this.ticketList.add(ticket);
     }
 
 }

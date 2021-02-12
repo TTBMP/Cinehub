@@ -12,37 +12,40 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * @author Palmieri Ivan
+ */
 @Controller
 public class ChooseMovieController {
 
     private static final BuyTicketUseCase USE_CASE = UseCase.buyTicketUseCase;
     private final BuyTicketViewModel viewModel = UseCase.getViewModel();
-    private final String chooseDate = "choose_date";
-    private final String chooseMovie = "choose_movie";
-    private final String movieList = "movieList";
+    private static final  String CHOOSE_DATE = "choose_date";
+    private static final String CHOOSE_MOVIE = "choose_movie";
+    private static final String MOVIE_LIST = "movieList";
 
     @GetMapping("/choose_movie/{email}/{password}")
     public String chooseMovie(@PathVariable("email") String email, @PathVariable("password") String password, Model model) {
-        model.addAttribute(chooseDate, LocalDate.now().toString());
+        model.addAttribute(CHOOSE_DATE, LocalDate.now().toString());
         USE_CASE.getListMovie(new GetListMovieRequest(formatDate(LocalDate.now().toString())));
-        model.addAttribute(movieList, viewModel.getMovieDtoList());
-        return chooseMovie;
+        model.addAttribute(MOVIE_LIST, viewModel.getMovieDtoList());
+        return CHOOSE_MOVIE;
     }
 
     @GetMapping("/choose_movie")
     public String chooseMovie(Model model) {
-        model.addAttribute(chooseDate, LocalDate.now().toString());
+        model.addAttribute(CHOOSE_DATE, LocalDate.now().toString());
         USE_CASE.getListMovie(new GetListMovieRequest(formatDate(LocalDate.now().toString())));
-        model.addAttribute(movieList, viewModel.getMovieDtoList());
-        return chooseMovie;
+        model.addAttribute(MOVIE_LIST, viewModel.getMovieDtoList());
+        return CHOOSE_MOVIE;
     }
 
     @GetMapping("/choose_movie/{date}")
     public String getMovie(@PathVariable("date") String date, Model model) {
-        model.addAttribute(chooseDate, date);
+        model.addAttribute(CHOOSE_DATE, date);
         USE_CASE.getListMovie(new GetListMovieRequest(formatDate(date)));
-        model.addAttribute(movieList, viewModel.getMovieDtoList());
-        return chooseMovie;
+        model.addAttribute(MOVIE_LIST, viewModel.getMovieDtoList());
+        return CHOOSE_MOVIE;
     }
 
     private LocalDate formatDate(String date) {

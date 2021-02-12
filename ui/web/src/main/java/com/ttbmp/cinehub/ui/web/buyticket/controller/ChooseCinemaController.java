@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.time.LocalDate;
 
 
+/**
+ * @author Palmieri Ivan
+ */
 @Controller
 public class ChooseCinemaController {
 

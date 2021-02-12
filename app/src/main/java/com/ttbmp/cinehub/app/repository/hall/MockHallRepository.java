@@ -15,12 +15,10 @@ public class MockHallRepository implements HallRepository {
     private static final List<Hall> hallList = new ArrayList<>();
 
     static {
-        boolean status = true;
         for (int i = 0; i < 14; i++) {
             List<Seat> seatList = new ArrayList<>();
             for (int j = 0; j < 50 + i; j++) {
-                seatList.add(new Seat(5L, status));
-                status = !status;
+                seatList.add(new Seat(5L, i));
             }
             hallList.add(new Hall(i, seatList));
         }

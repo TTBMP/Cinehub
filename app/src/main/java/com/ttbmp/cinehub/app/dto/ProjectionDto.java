@@ -13,7 +13,7 @@ public class ProjectionDto {
     private final HallDto hallDto;
     private CinemaDto cinemaDto;
     private MovieDto movieDto;
-    private List<TicketDto> ticketBasicList;
+    private List<TicketDto> ticketList;
     private String date;
 
     public ProjectionDto(MovieDto movie, CinemaDto cinema, HallDto hall, String startTime, String date) {
@@ -24,12 +24,12 @@ public class ProjectionDto {
         this.date = date;
     }
 
-    public List<TicketDto> getTicketBasicList() {
-        return ticketBasicList;
+    public List<TicketDto> getTicketList() {
+        return ticketList;
     }
 
-    public void setTicketBasicList(List<TicketDto> ticketBasicList) {
-        this.ticketBasicList = ticketBasicList;
+    public void setTicketList(List<TicketDto> ticketList) {
+        this.ticketList = ticketList;
     }
 
     public String getStartTime() {

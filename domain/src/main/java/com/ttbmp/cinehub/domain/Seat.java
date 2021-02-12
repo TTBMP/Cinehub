@@ -6,22 +6,21 @@ package com.ttbmp.cinehub.domain;
 public class Seat {
 
     private int id;
-    private char rows;
-    private int number;
     private Long price;
-    private Boolean state;
 
-    public Seat(Long price, Boolean state) {
+
+    public Seat(Long price,int id) {
         this.price = price;
-        this.state = state;
+        this.id = id;
+
     }
 
-    public Boolean getState() {
-        return state;
+    public int getId() {
+        return id;
     }
 
-    public void setState(Boolean state) {
-        this.state = state;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Long getPrice() {

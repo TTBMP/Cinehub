@@ -6,11 +6,11 @@ package com.ttbmp.cinehub.app.dto;
 public class SeatDto {
 
     private Long price;
-    private Boolean state;
+    private int id;
 
-    public SeatDto(Long price, Boolean state) {
+    public SeatDto(Long price, int state) {
         this.price = price;
-        this.state = state;
+        this.id = state;
 
     }
 
@@ -22,11 +22,11 @@ public class SeatDto {
         this.price = price;
     }
 
-    public Boolean getState() {
-        return state;
+    public int getId() {
+        return id;
     }
 
-    public void setState(Boolean state) {
-        this.state = state;
+    public void setId(int state) {
+        this.id = state;
     }
 }

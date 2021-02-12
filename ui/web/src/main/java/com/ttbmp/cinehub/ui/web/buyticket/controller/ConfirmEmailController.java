@@ -8,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * @author Palmieri Ivan
+ */
 @Controller
 public class ConfirmEmailController {
     private static final BuyTicketUseCase USE_CASE = UseCase.buyTicketUseCase;
@@ -15,7 +18,12 @@ public class ConfirmEmailController {
 
     @GetMapping("/confirm_email")
     public String confirmEmail(Model model) {
-        if (!USE_CASE.pay(new PayRequest(viewModel.getSelectedTicket(), viewModel.getSelectedProjection(), viewModel.getSelectedPosition()))) {
+        if (!USE_CASE.pay(new PayRequest(viewModel.getSelectedTicket(),
+                viewModel.getSelectedProjection(),
+                viewModel.getSelectedPosition(),
+                viewModel.getSelectedCinema(),
+                viewModel.getSelectedMovie(),
+                viewModel.getSelectedDate()))) {
             model.addAttribute("result", "Error with the Payment");
             model.addAttribute("boolean_result", false);
         } else {

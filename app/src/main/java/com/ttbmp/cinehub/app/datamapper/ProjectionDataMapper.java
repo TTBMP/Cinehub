@@ -15,23 +15,27 @@ public class ProjectionDataMapper {
     }
 
     public static ProjectionDto mapToDto(Projection projection) {
-        return new ProjectionDto(
+        ProjectionDto projectionDto = new ProjectionDto(
                 MovieDataMapper.mapToDto(projection.getMovie()),
                 CinemaDataMapper.mapToDto(projection.getCinema()),
                 HallDataMapper.mapToDto(projection.getHall()),
                 projection.getStartTime(),
                 projection.getDate()
         );
+        projectionDto.setTicketList(TicketDataMapper.mapToDtoList(projection.getTicketList()));
+        return projectionDto;
     }
 
     public static Projection mapToEntity(ProjectionDto projectionDto) {
-        return new Projection(
+        Projection projection= new Projection(
                 MovieDataMapper.mapToEntity(projectionDto.getMovieDto()),
                 CinemaDataMapper.mapToEntity(projectionDto.getCinemaDto()),
                 HallDataMapper.mapToEntity(projectionDto.getHallDto()),
                 projectionDto.getStartTime(),
                 projectionDto.getDate()
         );
+        projection.setTicketList(TicketDataMapper.mapToEntityList(projectionDto.getTicketList()));
+        return projection;
     }
 
     public static List<ProjectionDto> mapToDtoList(List<Projection> projectionList) {

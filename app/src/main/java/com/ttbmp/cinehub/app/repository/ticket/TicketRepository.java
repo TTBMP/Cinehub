@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.app.repository.ticket;
 
-import com.ttbmp.cinehub.domain.ticket.component.Ticket;
+import com.ttbmp.cinehub.domain.ticket.Ticket;
 
 public interface TicketRepository {
 

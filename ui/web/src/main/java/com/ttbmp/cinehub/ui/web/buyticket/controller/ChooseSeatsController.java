@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.ui.web.buyticket.controller;
 
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
+import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetNumberOfSeatsRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetProjectionRequest;
@@ -15,6 +16,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Palmieri Ivan
+ */
 @Controller
 public class ChooseSeatsController {
 
@@ -22,7 +26,9 @@ public class ChooseSeatsController {
     private final BuyTicketViewModel viewModel = UseCase.getViewModel();
     private  ProjectionDto selectedProjection;
 
-    @GetMapping("/choose_seats/{projection_id}")//TODO passarmi id projection
+
+
+    @GetMapping("/choose_seats/{projection_id}")
     public String chooseSeats(
             @PathVariable("projection_id") int id,
             Model model) {
@@ -49,20 +55,65 @@ public class ChooseSeatsController {
 
     private void addNameAtSeats(Model model) {
         int size = (viewModel.getSeatList()).size();
-        int rows = 10;
+        int rows = 7;
         int columns = (size / rows);
         int rest = size % rows;
         List<String> valList = new ArrayList<>();
         char[] a = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'Z'};
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                valList.add(String.valueOf(a[i]) + j);
+                addName(valList,a,j,i);
             }
         }
         for (int k = 0; k < rest; k++) {
-            valList.add(String.valueOf(a[columns + 1]) + k);
+           addRestantName(a,columns,valList,k);
         }
         model.addAttribute("valList", valList);
     }
+
+    private void addRestantName(char[] a, int columns, List<String> valList, int k) {
+        if(!viewModel.getSelectedProjection().getTicketList().isEmpty()) {
+            List<TicketDto> ticketDtoList = viewModel.getSelectedProjection().getTicketList();
+            boolean count = false;
+            for(TicketDto ticket: ticketDtoList){
+                String val = a[columns + 1] + String.valueOf(k);
+                if (ticket.getPosition().equals(val) ) {
+                    count=true;
+                    valList.add("SOLD");
+                }
+            }
+            if(!count){
+                valList.add(String.valueOf(a[columns + 1]) + k);
+            }
+        }
+        else{
+            valList.add(String.valueOf(a[columns + 1]) + k);
+        }
+
+    }
+
+
+
+
+    private void addName(List<String> valList, char[] a, int j, int i) {
+        if(!viewModel.getSelectedProjection().getTicketList().isEmpty()) {
+            List<TicketDto> ticketDtoList = viewModel.getSelectedProjection().getTicketList();
+            boolean count = false;
+            for(TicketDto ticket: ticketDtoList){
+                String val = (a[j]) + String.valueOf(i);
+                if (ticket.getPosition().equals(val) ) {
+                    count=true;
+                    valList.add("SOLD");
+                }
+            }
+            if(!count){
+                valList.add(String.valueOf(a[i]) + j);
+            }
+        }
+        else{
+            valList.add(String.valueOf(a[i]) + j);
+        }
+    }
+
 
 }

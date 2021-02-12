@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.domain.ticket.decorator;
 
-import com.ttbmp.cinehub.domain.ticket.component.TicketAbstract;
+import com.ttbmp.cinehub.domain.ticket.Ticket;
 
 /**
  * @author Palmieri Ivan
@@ -8,13 +8,13 @@ import com.ttbmp.cinehub.domain.ticket.component.TicketAbstract;
 public class TicketSkipLine extends TicketDecorator {
 
 
-    public TicketSkipLine(TicketAbstract ticketAbstract) {
-        super(ticketAbstract);
+    public TicketSkipLine(Ticket ticket) {
+        super(ticket);
     }
 
     @Override
-    public long increasePrice() {
-        return this.addPrice(super.increasePrice());
+    public long getPrice() {
+        return this.addPrice(super.getPrice());
     }
 
     private long addPrice(long price) {

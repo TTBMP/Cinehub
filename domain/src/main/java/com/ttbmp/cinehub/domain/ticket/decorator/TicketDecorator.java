@@ -1,20 +1,21 @@
 package com.ttbmp.cinehub.domain.ticket.decorator;
 
-import com.ttbmp.cinehub.domain.ticket.component.TicketAbstract;
+import com.ttbmp.cinehub.domain.ticket.Ticket;
 
 /**
  * @author Palmieri Ivan
  */
-public abstract class TicketDecorator extends TicketAbstract {
+public abstract class TicketDecorator extends Ticket {
 
-    TicketAbstract ticketAbstract;
+    protected Ticket ticket;
 
-    TicketDecorator(TicketAbstract ticketAbstract) {
-        this.ticketAbstract = ticketAbstract;
+    TicketDecorator(Ticket ticket) {
+        super(ticket.getPrice());
+        this.ticket = ticket;
     }
 
     @Override
-    public long increasePrice() {
-        return ticketAbstract.increasePrice();
+    public long getPrice() {
+        return ticket.getPrice();
     }
 }
