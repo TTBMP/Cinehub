@@ -85,7 +85,7 @@ public class ModifyShiftViewController extends ViewController {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
             hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
         } else {
-            activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(viewModel.getSelectedShift().getEmployee().getCinema()));
+            activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(viewModel.getSelectedShift().getEmployee().getCinema().getId()));
             hallComboBox.setItems(viewModel.getHallList());
             viewModel.selectedHallProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
         }

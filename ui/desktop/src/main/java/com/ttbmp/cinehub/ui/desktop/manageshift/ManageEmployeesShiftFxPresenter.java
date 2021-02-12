@@ -150,6 +150,12 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     }
 
     @Override
+    public void presentSaveRepeatedShiftError(Throwable error) {
+        viewModel.errorProperty().setValue("IMPOSSIBLE ASSIGN SHIFT");
+        viewModel.setErrorAssignVisibility(true);
+    }
+
+    @Override
     public void presentInvalidModifyShiftListRequest(ShiftModifyRequest request) {
         if (request.getErrorList().contains(ShiftModifyRequest.MISSING_NEW_SHIFT)) {
             viewModel.errorProperty().setValue(ShiftModifyRequest.MISSING_NEW_SHIFT.getMessage());

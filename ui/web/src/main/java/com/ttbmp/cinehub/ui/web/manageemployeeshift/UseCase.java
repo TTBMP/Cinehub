@@ -11,8 +11,7 @@ public class UseCase {
     }
 
     public static final ManageEmployeesShiftUseCase manageEmployeeUseCase =
-            new ManageEmployeesShiftHandler(
-                    new ManageEmployeeShiftPresenterWeb(getViewModel()));
+            new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(getViewModel()));
 
     public static ManageEmployeeShiftViewModel getViewModel(){
         if(viewModel==null){

@@ -20,18 +20,17 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
         this.viewModel = manageEmployeeShiftViewModel;
     }
 
-
     @Override
     public void presentShiftList(GetShiftListResponse shiftList) {
         TemporalField temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
-        viewModel.setShiftList(shiftList.getShiftDtoList());
+
         List<EmployeeDto> employeeList = shiftList.getShiftDtoList().stream()
                 .map(ShiftDto::getEmployee)
                 .filter(employee -> employee.getCinema().getId() == viewModel.getSelectedCinema())
                 .distinct()
                 .collect(Collectors.toList());
 
-        /*List<EmployeeDto> tmp = new ArrayList<>();
+        List<EmployeeDto> tmp = new ArrayList<>();
         for (int i = 0, employeeListSize = employeeList.size(); i < employeeListSize; i++) {
             boolean duplicate = false;
             for (int j = 0; j < i; j++) {
@@ -44,10 +43,10 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
                 tmp.add(employeeList.get(i));
             }
         }
-        employeeList = tmp;*/
+        employeeList = tmp;
         viewModel.setEmployeeDtoList(employeeList);
 
-        Map<EmployeeDto, List<Object>> employeeShiftListMap = new HashMap<>();
+        Map<EmployeeDto, List<ShiftDto>> employeeShiftListMap = new HashMap<>();
         for (EmployeeDto employee : employeeList) {
             employeeShiftListMap.put(
                     employee,
@@ -68,7 +67,7 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
 
     @Override
     public void presentHallList(GetHallListResponse listHall) {
-
+        viewModel.setHallDtoList(listHall.getListHall());
     }
 
     @Override
@@ -83,12 +82,12 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
 
     @Override
     public void presentRepeatShift(ShiftRepeatResponse response) {
-
+        System.out.println(response.getShiftDto());
     }
 
     @Override
     public void presentCreateShift(CreateShiftResponse response) {
-
+        viewModel.setShiftCreated(response.getShiftDto());
     }
 
     @Override
@@ -122,6 +121,11 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     }
 
     @Override
+    public void presentSaveRepeatedShiftError(Throwable error) {
+
+    }
+
+    @Override
     public void presentInvalidModifyShiftListRequest(ShiftModifyRequest request) {
 
     }
@@ -133,6 +137,7 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
 
     @Override
     public void presentModifyShiftError(Throwable error) {
+
 
     }
 

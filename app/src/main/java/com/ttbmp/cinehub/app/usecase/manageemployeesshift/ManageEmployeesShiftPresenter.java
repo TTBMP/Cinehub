@@ -35,6 +35,8 @@ public interface ManageEmployeesShiftPresenter {
 
     void presentDeleteShiftError(Throwable error);
 
+    void presentSaveRepeatedShiftError(Throwable error);
+
     void presentInvalidModifyShiftListRequest(ShiftModifyRequest request);
 
     void presentModifyShiftNullRequest();

@@ -80,7 +80,7 @@ public class AssignShiftViewController extends ViewController {
             hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
         }
         viewModel.setErrorAssignVisibility(false);
-        activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(viewModel.getSelectedDayWeek().getEmployee().getCinema()));
+        activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(viewModel.getSelectedDayWeek().getEmployee().getCinema().getId()));
         hallComboBox.setItems(viewModel.getHallList());
         viewModel.selectedHallProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
 
@@ -137,7 +137,7 @@ public class AssignShiftViewController extends ViewController {
                 viewModel.getEndSpinnerTime().withNano(0),
                 viewModel.getSelectedHall()));
 
-        if (viewModel.getSelectedOptions() == null)
+        if (!viewModel.isRepeatVisibility())
             saveShift();
         else {
             saveRepeatedShift();
@@ -162,6 +162,7 @@ public class AssignShiftViewController extends ViewController {
     }
 
     public void saveRepeatedShift() {
+        viewModel.setErrorAssignVisibility(false);
         if (viewModel.getShiftCreated() != null && viewModel.getSelectedEndRepeatDay() != null) {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).saveRepeatedShift(
                     new ShiftRepeatRequest(
@@ -172,16 +173,17 @@ public class AssignShiftViewController extends ViewController {
                             viewModel.getSelectedHall()
                     )
             );
-            try {
-                viewModel.setSelectedOptions(null);
-                viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());
-                navController.popBackStack();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (!viewModel.isErrorAssignVisibility()) {
+                try {
+                    if (shiftRepeatCheckBox.isSelected()) {
+                        viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());
+                    }
+                    viewModel.setSelectedOptions(null);
+                    navController.popBackStack();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        } else {
-            repeatDatePicker.setStyle("-fx-background-color: red;");
-            errorVBox.setVisible(true);
         }
     }
 }

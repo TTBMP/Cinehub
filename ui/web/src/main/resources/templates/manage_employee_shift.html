@@ -25,7 +25,7 @@
         <div class="row justify-content-center">
             <div class="bg-white col-md-8 order-md-1 text-body">
 
-                <form action="#" th:action="@{/manage_employee_shift}" th:object="${getShiftListRequest}" method="POST">
+                <form action="#" th:action="@{/manage_employee_shift}" th:object="${getShiftListRequest}" method="post">
                     <label>Select Cinema</label>
                     <select th:field="*{cinemaId}">
                         <option th:each="cinema : ${cinemaList}"
@@ -34,13 +34,14 @@
                     </select>
                     <br/>
                     <label>Date</label>
-                    <input type="date" id="date" th:value="${date}" th:field="*{start}"/>
+                    <input type="date" id="date" th:value="${date}" th:field="*{start}" required/>
                     <br/>
-                    <button type="submit">Search</button>
+                    <br/>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Search</button>
                 </form>
                 <hr class="mb-4">
                 <thead>
-                <table class="table table-bordered">
+                <table class="table table-striped" align="center">
                     <tr>
                         <th scope="col">Employee</th>
                         <th scope="col">Monday</th>
@@ -53,248 +54,116 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="employee, indexEmployee : ${shiftList}">
-                        <td th:text="${indexEmployee.index}+')'+ ${employee.key.name} + ' ' + ${employee.key.surname}"></td>
-
+                    <tr th:each="employee : ${shiftList}">
+                        <td th:if=${employee.key.class.name.equals("com.ttbmp.cinehub.app.dto.ProjectionistDto")}
+                            th:text=" 'Projectionist' + ' ' + ${employee.key.name} + ' ' + ${employee.key.surname} "></td>
+                        <td th:unless=${employee.key.class.name.equals("com.ttbmp.cinehub.app.dto.ProjectionistDto")}
+                            th:text=" 'Usher' + ' ' + ${employee.key.name} + ' ' + ${employee.key.surname} "></td>
                         <td>
                             <span th:each="shift,indexShift : ${employee.value}">
                                 <span th:if=${shift.date.dayOfWeek.toString.equals("MONDAY")}>
-                                    <a th:href="@{|/shift_detail/${indexEmployee.index}/${indexShift.index}|}">
+                                    <a th:href="@{|/shift_detail/${employee.key.id}/${indexShift.index}|}">
                                         <Button th:text="${shift.start} + '-' + ${shift.end} "
-                                                th:value="${shift}" type="button" class="btn btn-outline-info"></Button>
+                                                type="button" class="btn btn-outline-info"></Button>
                                     </a>
                                 </span>
                             </span>
-
-                            <button class="btn btn-primary" type="button" data-toggle="modal"
-                                    data-target="#assignShift">+
-                            </button>
                         </td>
-
 
                         <td>
                             <span th:each="shift,indexShift : ${employee.value}">
                                 <span th:if=${shift.date.dayOfWeek.toString.equals("TUESDAY")}>
-                                    <a th:href="@{|/shift_detail/${indexEmployee.index}/${indexShift.index}|}">
+                                    <a th:href="@{|/shift_detail/${employee.key.id}/${indexShift.index}|}">
                                         <Button th:text="${shift.start} + '-' + ${shift.end} "
-                                                th:value="${shift}" type="button" class="btn btn-outline-info"></Button>
+                                                type="button" class="btn btn-outline-info"></Button>
                                     </a>
                                 </span>
                             </span>
-
-                            <button class="btn btn-primary" type="button" data-toggle="modal"
-                                    data-target="#assignShift">+
-                            </button>
                         </td>
 
                         <td>
                             <span th:each="shift,indexShift : ${employee.value}">
                                 <span th:if=${shift.date.dayOfWeek.toString.equals("WEDNESDAY")}>
-                                    <a th:href="@{|/shift_detail/${indexEmployee.index}/${indexShift.index}|}">
+                                    <a th:href="@{|/shift_detail/${employee.key.id}/${indexShift.index}|}">
                                         <Button th:text="${shift.start} + '-' + ${shift.end} "
-                                                th:value="${shift}" type="button" class="btn btn-outline-info"></Button>
+                                                type="button" class="btn btn-outline-info"></Button>
                                     </a>
                                 </span>
                             </span>
-
-                            <button class="btn btn-primary" type="button" data-toggle="modal"
-                                    data-target="#assignShift">+
-                            </button>
                         </td>
 
                         <td>
                             <span th:each="shift,indexShift : ${employee.value}">
                                 <span th:if=${shift.date.dayOfWeek.toString.equals("THURSDAY")}>
-                                    <a th:href="@{|/shift_detail/${indexEmployee.index}/${indexShift.index}|}">
+                                    <a th:href="@{|/shift_detail/${employee.key.id}/${indexShift.index}|}">
                                         <Button th:text="${shift.start} + '-' + ${shift.end} "
-                                                th:value="${shift}" type="button" class="btn btn-outline-info"></Button>
+                                                type="button" class="btn btn-outline-info"></Button>
                                     </a>
                                 </span>
                             </span>
-
-                            <button class="btn btn-primary" type="button" data-toggle="modal"
-                                    data-target="#assignShift">+
-                            </button>
                         </td>
-
 
                         <td>
                             <span th:each="shift,indexShift : ${employee.value}">
                                 <span th:if=${shift.date.dayOfWeek.toString.equals("FRIDAY")}>
-                                    <a th:href="@{|/shift_detail/${indexEmployee.index}/${indexShift.index}|}">
+                                    <a th:href="@{|/shift_detail/${employee.key.id}/${indexShift.index}|}">
                                         <Button th:text="${shift.start} + '-' + ${shift.end} "
-                                                th:value="${shift}" type="button" class="btn btn-outline-info"></Button>
+                                                type="button" class="btn btn-outline-info"></Button>
                                     </a>
                                 </span>
                             </span>
-
-                            <button class="btn btn-primary" type="button" data-toggle="modal"
-                                    data-target="#assignShift">+
-                            </button>
                         </td>
 
 
                         <td>
                             <span th:each="shift,indexShift : ${employee.value}">
                                 <span th:if=${shift.date.dayOfWeek.toString.equals("SATURDAY")}>
-                                    <a th:href="@{|/shift_detail/${indexEmployee.index}/${indexShift.index}|}">
+                                    <a th:href="@{|/shift_detail/${employee.key.id}/${indexShift.index}|}">
                                         <Button th:text="${shift.start} + '-' + ${shift.end} "
-                                                th:value="${shift}" type="button" class="btn btn-outline-info"></Button>
+                                                type="button" class="btn btn-outline-info"></Button>
                                     </a>
                                 </span>
                             </span>
-
-                            <button class="btn btn-primary" type="button" data-toggle="modal"
-                                    data-target="#assignShift">+
-                            </button>
                         </td>
                         <td>
                             <span th:each="shift,indexShift : ${employee.value}">
                                 <span th:if=${shift.date.dayOfWeek.toString.equals("SUNDAY")}>
-                                    <a th:href="@{|/shift_detail/${indexEmployee.index}/${indexShift.index}|}">
+                                    <a th:href="@{|/shift_detail/${employee.key.id}/${indexShift.index}|}">
                                         <Button th:text="${shift.start} + '-' + ${shift.end} "
-                                                th:value="${shift}" type="button" class="btn btn-outline-info"></Button>
+                                                type="button" class="btn btn-outline-info"></Button>
                                     </a>
                                 </span>
                              </span>
-                            <button class="btn btn-primary" type="button" data-toggle="modal"
-                                    data-target="#assignShift">+
-                            </button>
                         </td>
-
 
                     </tr>
                     </tbody>
 
                 </table>
-
-                <div class="modal it-dialog-scrollable fade" tabindex="-1" role="dialog" id="assignShift">
-                    <div class="modal-dialog modal-dialog-right" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Assign Shift</h5>
-                            </div>
-                            <div class="modal-body">
-
-                                <form>
-
-                                    <div class="form-group row">
-                                        <div class="col-md-3 mb-3">
-                                            <label for="start_time">Start Shift</label>
-                                            <input type="time" class="form-control" id="start_time"
-                                                   aria-describedby="inputGroupPrepend2" required>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <div class="col-md-3 mb-3">
-                                            <label for="end_time">End Shift</label>
-                                            <input type="time" class="form-control" id="end_time" required>
-                                        </div>
-                                    </div>
-
-                                    <label class="my-1 mr-2" for="hallComboBox">Select Hall</label>
-                                    <select class="custom-select my-1 mr-sm-2" id="hallComboBox">
-                                        <option selected>1</option>
-                                        <option value="1">2</option>
-                                        <option value="2">3</option>
-                                    </select>
-
-                                    <div class="form-group row">
-                                        <div class="col-sm-10">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                       id="repeateCheckBox">
-                                                <label class="form-check-label" for="repeateCheckBox">
-                                                    Repeate Shift
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <label class="my-1 mr-2" for="repeateComboBox">Preference</label>
-                                    <select class="custom-select my-1 mr-sm-2" id="repeateComboBox">
-                                        <option selected>Every day</option>
-                                        <option value="1">Every Week</option>
-                                        <option value="2">Every Month</option>
-                                    </select>
-
-                                    <label class="my-1 mr-2" for="repeateDate">to</label>
-                                    <input type="date" id="repeateDate">
-
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-outline-primary btn-sm" type="button" data-dismiss="modal">
-                                    Close
-                                </button>
-                                <button type="button" class="btn btn-primary">Save Shift</button>
-                            </div>
-                        </div>
-                    </div>
+                <div th:if="${cinemaSelected}">
+                    <br/>
+                    <a th:href="@{|/assign_projectionist_shift|}">
+                        <button class="btn btn-primary btn-lg btn-block" type="button">Assign New Projectionist Shift
+                        </button>
+                    </a>
+                    <br/>
+                    <a th:href="@{|/assign_repeated_projectionist_shift|}">
+                        <button class="btn btn-primary btn-lg btn-block" type="button">Assign New Repeated Projectionist
+                            Shift
+                        </button>
+                    </a>
+                    <br/>
+                    <a th:href="@{|/assign_usher_shift|}">
+                        <button class="btn btn-primary btn-lg btn-block" type="button">Assign New Usher Shift
+                        </button>
+                    </a>
+                    <br/>
+                    <a th:href="@{|/assign_repeated_usher_shift|}">
+                        <button class="btn btn-primary btn-lg btn-block" type="button">Assign New Repeated Usher Shift
+                        </button>
+                    </a>
+                    <br/>
                 </div>
-
-
-                <div class="modal it-dialog-scrollable fade" tabindex="-1" role="dialog" id="modifyShift">
-                    <div class="modal-dialog modal-dialog-right" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Modify Shift</h5>
-                            </div>
-                            <div class="modal-body">
-
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-sm"> Name</div>
-                                        <div class="col-sm"> Pippo</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm"> Surname</div>
-                                        <div class="col-sm"> Pluto</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm"> Role</div>
-                                        <div class="col-sm"> Usher</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm"> Date</div>
-                                        <input type="date" id="modifyDate">
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm"> Start Time</div>
-                                        <input type="time" id="modifyStartTime" required>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm"> End Time</div>
-                                        <input type="time" id="modifyEndTime" required>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm"> Cinema</div>
-                                        <div class="col-sm"> Comunale</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm"> Hall</div>
-                                        <select id="modifyHallComboBox">
-                                            <option selected>1</option>
-                                            <option value="1">2</option>
-                                            <option value="2">3</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-outline-primary btn-sm" type="button" data-dismiss="modal">
-                                    Close
-                                </button>
-                                <button class="btn btn-danger" type="button" data-dismiss="modal">Modify Shift</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
             </div>
         </div>
         <!-- Bootstrap core JavaScript -->

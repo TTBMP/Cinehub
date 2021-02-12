@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.app.dto.ShiftDto;
 
 import java.time.LocalDate;
@@ -10,13 +11,40 @@ import java.util.Map;
 
 public class ManageEmployeeShiftViewModel {
 
-    private ShiftDto shiftDto;
+    private Object selectedShiftDto;
     private List<CinemaDto> cinemaDtoList;
     private int selectedCinema;
     private LocalDate selectedDate;
     private List<ShiftDto> shiftList;
-    private Map<EmployeeDto, List<Object>> employeeShiftMap;
+    private Map<EmployeeDto, List<ShiftDto>> employeeShiftMap;
     private List<EmployeeDto> employeeDtoList;
+    private List<HallDto> hallDtoList;
+    private ShiftDto shiftCreated;
+    private ShiftDto shiftSelected;
+
+    public ShiftDto getShiftSelected() {
+        return shiftSelected;
+    }
+
+    public void setShiftSelected(ShiftDto shiftSelected) {
+        this.shiftSelected = shiftSelected;
+    }
+
+    public List<HallDto> getHallDtoList() {
+        return hallDtoList;
+    }
+
+    public void setHallDtoList(List<HallDto> hallDtoList) {
+        this.hallDtoList = hallDtoList;
+    }
+
+    public ShiftDto getShiftCreated() {
+        return shiftCreated;
+    }
+
+    public void setShiftCreated(ShiftDto shiftCreated) {
+        this.shiftCreated = shiftCreated;
+    }
 
     public List<EmployeeDto> getEmployeeDtoList() {
         return employeeDtoList;
@@ -26,19 +54,19 @@ public class ManageEmployeeShiftViewModel {
         this.employeeDtoList = employeeDtoList;
     }
 
-    public ShiftDto getShiftDto() {
-        return shiftDto;
+    public Object getSelectedShiftDto() {
+        return selectedShiftDto;
     }
 
-    public void setShiftDto(ShiftDto shiftDto) {
-        this.shiftDto = shiftDto;
+    public void setSelectedShiftDto(Object selectedShiftDto) {
+        this.selectedShiftDto = selectedShiftDto;
     }
 
-    public Map<EmployeeDto, List<Object>> getEmployeeShiftMap() {
+    public Map<EmployeeDto, List<ShiftDto>> getEmployeeShiftMap() {
         return employeeShiftMap;
     }
 
-    public void setEmployeeShiftMap(Map<EmployeeDto, List<Object>> employeeShiftMap) {
+    public void setEmployeeShiftMap(Map<EmployeeDto, List<ShiftDto>> employeeShiftMap) {
         this.employeeShiftMap = employeeShiftMap;
     }
 

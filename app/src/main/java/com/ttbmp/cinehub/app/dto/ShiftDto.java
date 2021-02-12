@@ -13,6 +13,9 @@ public class ShiftDto {
     private LocalTime start;
     private LocalTime end;
 
+    public ShiftDto() {
+    }
+
     public ShiftDto(EmployeeDto employee, LocalDate date, LocalTime start, LocalTime end) {
         this.employee = employee;
         this.date = date;

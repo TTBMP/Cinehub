@@ -21,4 +21,5 @@ public interface ShiftRepository {
 
     void modifyShift(Shift oldShift, Shift newShift) throws ShiftSaveException;
 
+
 }

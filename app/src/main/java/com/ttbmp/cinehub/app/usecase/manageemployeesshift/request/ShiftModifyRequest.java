@@ -39,5 +39,6 @@ public class ShiftModifyRequest extends Request {
         if (oldShift == null) {
             addError(MISSING_OLD_SHIFT);
         }
+
     }
 }

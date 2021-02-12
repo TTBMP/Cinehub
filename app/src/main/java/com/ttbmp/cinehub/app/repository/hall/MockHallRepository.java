@@ -1,5 +1,9 @@
 package com.ttbmp.cinehub.app.repository.hall;
 
+import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
+import com.ttbmp.cinehub.app.repository.cinema.MockCinemaRepository;
+import com.ttbmp.cinehub.app.repository.projection.MockProjectionRepository;
+import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Seat;
@@ -27,7 +31,9 @@ public class MockHallRepository implements HallRepository {
     }
 
     @Override
-    public List<Hall> getCinemaHallList(Cinema cinema) {
+    public List<Hall> getCinemaHallList(int cinemaId) {
+        Cinema cinema = new MockCinemaRepository().getCinema(cinemaId);
+
         return cinema.getHallList();
     }
 

@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface HallRepository {
 
-    List<Hall> getCinemaHallList(Cinema cinema);
+    List<Hall> getCinemaHallList(int cinemaId);
 
 }

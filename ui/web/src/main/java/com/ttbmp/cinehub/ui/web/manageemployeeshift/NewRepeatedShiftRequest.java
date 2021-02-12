@@ -1,0 +1,74 @@
+package com.ttbmp.cinehub.ui.web.manageemployeeshift;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+public class NewRepeatedShiftRequest {
+
+    int employeeId;
+    LocalDate date;
+    LocalTime start;
+    LocalTime end;
+    int hallId;
+    String preference;
+    LocalDate dateRepeated;
+
+    public NewRepeatedShiftRequest() {
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getStart() {
+        return start;
+    }
+
+    public void setStart(LocalTime start) {
+        this.start = start;
+    }
+
+    public LocalTime getEnd() {
+        return end;
+    }
+
+    public void setEnd(LocalTime end) {
+        this.end = end;
+    }
+
+    public int getHallId() {
+        return hallId;
+    }
+
+    public void setHallId(int hallId) {
+        this.hallId = hallId;
+    }
+
+    public String getPreference() {
+        return preference;
+    }
+
+    public void setPreference(String preference) {
+        this.preference = preference;
+    }
+
+    public LocalDate getDateRepeated() {
+        return dateRepeated;
+    }
+
+    public void setDateRepeated(LocalDate dateRepeated) {
+        this.dateRepeated = dateRepeated;
+    }
+}

@@ -58,7 +58,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             Request.validate(request);
             manageEmployeesShiftPresenter.presentHallList(new GetHallListResponse(
                     HallDataMapper.mapToDtoList(hallRepository.getCinemaHallList(
-                            CinemaDataMapper.mapToEntity(request.getCinema())
+                            request.getCinemaId()
                     ))
             ));
         } catch (Request.NullRequestException e) {
@@ -185,7 +185,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (Request.InvalidRequestException e) {
             manageEmployeesShiftPresenter.presentInvalidRepeatedShiftListRequest(request);
         } catch (ShiftSaveException e) {
-            manageEmployeesShiftPresenter.presentSaveShiftError(e);
+            manageEmployeesShiftPresenter.presentSaveRepeatedShiftError(e);
         }
     }
 
