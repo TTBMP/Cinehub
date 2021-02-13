@@ -11,16 +11,70 @@ import java.util.Map;
 
 public class ManageEmployeeShiftViewModel {
 
-    private Object selectedShiftDto;
+
     private List<CinemaDto> cinemaDtoList;
-    private int selectedCinema;
+    private CinemaDto selectedCinema;
     private LocalDate selectedDate;
-    private List<ShiftDto> shiftList;
     private Map<EmployeeDto, List<ShiftDto>> employeeShiftMap;
     private List<EmployeeDto> employeeDtoList;
     private List<HallDto> hallDtoList;
     private ShiftDto shiftCreated;
     private ShiftDto shiftSelected;
+
+    private boolean assignError;
+    private boolean deleteError;
+    private boolean modifyError;
+    private String assignErrorText;
+    private String deleteErrorText;
+    private String modifyErrorText;
+
+    public boolean isModifyError() {
+        return modifyError;
+    }
+
+    public void setModifyError(boolean modifyError) {
+        this.modifyError = modifyError;
+    }
+
+    public String getModifyErrorText() {
+        return modifyErrorText;
+    }
+
+    public void setModifyErrorText(String modifyErrorText) {
+        this.modifyErrorText = modifyErrorText;
+    }
+
+    public String getAssignErrorText() {
+        return assignErrorText;
+    }
+
+    public void setAssignErrorText(String assignErrorText) {
+        this.assignErrorText = assignErrorText;
+    }
+
+    public String getDeleteErrorText() {
+        return deleteErrorText;
+    }
+
+    public void setDeleteErrorText(String deleteErrorText) {
+        this.deleteErrorText = deleteErrorText;
+    }
+
+    public boolean isAssignError() {
+        return assignError;
+    }
+
+    public void setAssignError(boolean assignError) {
+        this.assignError = assignError;
+    }
+
+    public boolean isDeleteError() {
+        return deleteError;
+    }
+
+    public void setDeleteError(boolean deleteError) {
+        this.deleteError = deleteError;
+    }
 
     public ShiftDto getShiftSelected() {
         return shiftSelected;
@@ -54,14 +108,6 @@ public class ManageEmployeeShiftViewModel {
         this.employeeDtoList = employeeDtoList;
     }
 
-    public Object getSelectedShiftDto() {
-        return selectedShiftDto;
-    }
-
-    public void setSelectedShiftDto(Object selectedShiftDto) {
-        this.selectedShiftDto = selectedShiftDto;
-    }
-
     public Map<EmployeeDto, List<ShiftDto>> getEmployeeShiftMap() {
         return employeeShiftMap;
     }
@@ -70,19 +116,11 @@ public class ManageEmployeeShiftViewModel {
         this.employeeShiftMap = employeeShiftMap;
     }
 
-    public List<ShiftDto> getShiftList() {
-        return shiftList;
-    }
-
-    public void setShiftList(List<ShiftDto> shiftList) {
-        this.shiftList = shiftList;
-    }
-
-    public int getSelectedCinema() {
+    public CinemaDto getSelectedCinema() {
         return selectedCinema;
     }
 
-    public void setSelectedCinema(int selectedCinema) {
+    public void setSelectedCinema(CinemaDto selectedCinema) {
         this.selectedCinema = selectedCinema;
     }
 

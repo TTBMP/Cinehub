@@ -58,7 +58,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             Request.validate(request);
             manageEmployeesShiftPresenter.presentHallList(new GetHallListResponse(
                     HallDataMapper.mapToDtoList(hallRepository.getCinemaHallList(
-                            request.getCinemaId()
+                            CinemaDataMapper.mapToEntity(request.getCinema())
                     ))
             ));
         } catch (Request.NullRequestException e) {
@@ -111,14 +111,16 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             shiftRepository.modifyShift(ShiftDataMapper.mapToEntity(request.getOldShift()), ShiftDataMapper.mapToEntity(request.getNewShift()));
             manageEmployeesShiftPresenter.presentSaveShift();
             manageEmployeesShiftPresenter.presentDeleteShift();
+
             emailService.sendMail(new EmailServiceRequest(
                     EmployeeDataMapper.matToEntity(request.getNewShift().getEmployee()).getEmail(),
                     "Shift Modify"
             ));
+
         } catch (Request.NullRequestException e) {
             manageEmployeesShiftPresenter.presentModifyShiftNullRequest();
         } catch (Request.InvalidRequestException e) {
-            manageEmployeesShiftPresenter.presentInvalidModifyShiftListRequest(request);
+            manageEmployeesShiftPresenter.presentInvalidModifyRequest(request);
         } catch (ShiftSaveException e) {
             manageEmployeesShiftPresenter.presentModifyShiftError(e);
         }

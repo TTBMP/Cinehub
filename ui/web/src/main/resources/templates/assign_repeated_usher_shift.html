@@ -60,7 +60,9 @@
 
         <label class="my-1 mr-2" for="repeateDate" >to</label>
         <input type="date" id="repeateDate" th:field="*{dateRepeated}" th:attr="min=${now}">
-
+        <div th:if="${error}">
+            <h1 th:text="${errorText}" align="center"></h1>
+        </div>
         <br/>
         <button type="submit" class="btn btn-primary btn-lg btn-block">Save Shift</button>
         <br/>

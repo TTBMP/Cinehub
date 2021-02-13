@@ -19,7 +19,7 @@
 <body>
 <h1 align="center">Assign Usher Shift</h1>
 <div>
-    <form action="#" th:action="@{/assign_usher_shift}" th:object="${assignRequest}"   method="post" >
+    <form action="#" th:action="@{/assign_usher_shift}" th:object="${assignRequest}" method="post">
 
         <div class="col-sm"> Employee</div>
         <select id="employeeComboBox" th:field="*{employeeId}">
@@ -37,19 +37,24 @@
             <div class="col-md-3 mb-3">
                 <label for="start_time">Start Shift</label>
                 <input type="time" class="form-control" id="start_time"
-                       aria-describedby="inputGroupPrepend2" required  th:field="*{start}">
+                       aria-describedby="inputGroupPrepend2" required th:field="*{start}">
             </div>
         </div>
 
         <div class="form-group row">
             <div class="col-md-3 mb-3">
                 <label for="end_time">End Shift</label>
-                <input type="time" class="form-control" id="end_time" required th:field="*{end}">
+                <input type="time" class="form-control" id="end_time" required th:field="*{end}" >
             </div>
         </div>
 
         <br/>
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Save Shift</button>
+        <div th:if="${error}">
+            <h1 th:text="${errorText}" align="center"></h1>
+        </div>
+        <a href="/shift_assigned">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Save Shift</button>
+        </a>
         <br/>
         <a href="/manage_employee_shift">
             <button class="btn btn-secondary btn-lg btn-block" type="button">

@@ -31,8 +31,7 @@ public class MockHallRepository implements HallRepository {
     }
 
     @Override
-    public List<Hall> getCinemaHallList(int cinemaId) {
-        Cinema cinema = new MockCinemaRepository().getCinema(cinemaId);
+    public List<Hall> getCinemaHallList(Cinema cinema) {
 
         return cinema.getHallList();
     }

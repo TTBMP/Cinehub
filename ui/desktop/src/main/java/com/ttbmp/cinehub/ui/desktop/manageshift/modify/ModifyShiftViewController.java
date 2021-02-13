@@ -79,13 +79,13 @@ public class ModifyShiftViewController extends ViewController {
 
         viewModel.setErrorAssignVisibility(false);
         errorHBox.visibleProperty().bind(viewModel.errorAssignVisibilityProperty());
-        errorLabel.textProperty().bind(viewModel.errorProperty());
+        errorLabel.textProperty().bind(viewModel.errorModifyProperty());
 
         if (viewModel.getSelectedShift().getEmployee() instanceof UsherDto) {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
             hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
         } else {
-            activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(viewModel.getSelectedShift().getEmployee().getCinema().getId()));
+            activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(viewModel.getSelectedShift().getEmployee().getCinema()));
             hallComboBox.setItems(viewModel.getHallList());
             viewModel.selectedHallProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
         }

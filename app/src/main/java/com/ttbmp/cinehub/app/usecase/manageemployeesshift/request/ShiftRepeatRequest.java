@@ -12,6 +12,7 @@ public class ShiftRepeatRequest extends Request {
     public static final Request.Error MISSING_START = new Request.Error("inizio non valido");
     public static final Request.Error MISSING_END = new Request.Error("fine non valida");
     public static final Request.Error MISSING_OPTION = new Request.Error("opzione non valida");
+    public static final Request.Error PERIOD_NOT_VALID = new Request.Error("periodo non valido");
 
     private LocalDate start;
     private LocalDate end;
@@ -80,6 +81,9 @@ public class ShiftRepeatRequest extends Request {
         }
         if (end == null) {
             addError(MISSING_END);
+        }
+        if(start.isAfter(end)){
+            addError(PERIOD_NOT_VALID);
         }
     }
 }

@@ -16,7 +16,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<h1>Shift Delete Success</h1>
+
+<h1 th:if="${error}">Shift Delete Success</h1>
+<h1 th:unless="${error}" th:text="${errorText}"></h1>
+
 <a href="/manage_employee_shift">
     <button class="btn btn-outline-primary btn-sm" type="button">
         Close

@@ -29,7 +29,9 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
 
     private final BooleanProperty errorAssignVisibility = new SimpleBooleanProperty();
     private final BooleanProperty errorModifyVisibility = new SimpleBooleanProperty();
-    private final StringProperty error = new SimpleStringProperty();
+    private final StringProperty errorAssign = new SimpleStringProperty();
+    private final StringProperty errorModify = new SimpleStringProperty();
+    private final StringProperty errorDelete = new SimpleStringProperty();
 
     private final BooleanProperty repeatVisibility = new SimpleBooleanProperty();
     private final ObjectProperty<LocalTime> startSpinnerTime = new SimpleObjectProperty<>();
@@ -77,6 +79,30 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
             }
             return null;
         }));
+    }
+
+    public String getErrorModify() {
+        return errorModify.get();
+    }
+
+    public StringProperty errorModifyProperty() {
+        return errorModify;
+    }
+
+    public void setErrorModify(String errorModify) {
+        this.errorModify.set(errorModify);
+    }
+
+    public String getErrorDelete() {
+        return errorDelete.get();
+    }
+
+    public StringProperty errorDeleteProperty() {
+        return errorDelete;
+    }
+
+    public void setErrorDelete(String errorDelete) {
+        this.errorDelete.set(errorDelete);
     }
 
     public CinemaDto getSelectedCinema() {
@@ -147,16 +173,16 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
         return errorModifyVisibility;
     }
 
-    public String getError() {
-        return error.get();
+    public String getErrorAssign() {
+        return errorAssign.get();
     }
 
-    public void setError(String error) {
-        this.error.set(error);
+    public void setErrorAssign(String errorAssign) {
+        this.errorAssign.set(errorAssign);
     }
 
-    public StringProperty errorProperty() {
-        return error;
+    public StringProperty errorAssignProperty() {
+        return errorAssign;
     }
 
     public boolean isRepeatVisibility() {

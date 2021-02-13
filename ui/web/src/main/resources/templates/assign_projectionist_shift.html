@@ -56,8 +56,13 @@
             </option>
         </select>
         <br/>
+        <div th:if="${error}">
+            <h1 th:text="${errorText}" align="center"></h1>
+        </div>
+        <a href="/shift_assigned">
         <button type="submit" class="btn btn-primary btn-lg btn-block">Save Shift</button>
-        <br/>
+        </a>
+            <br/>
         <a href="/manage_employee_shift">
             <button class="btn btn-secondary btn-lg btn-block" type="button">
                 Close

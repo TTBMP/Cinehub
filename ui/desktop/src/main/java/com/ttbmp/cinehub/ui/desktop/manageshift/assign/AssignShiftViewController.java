@@ -80,7 +80,7 @@ public class AssignShiftViewController extends ViewController {
             hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
         }
         viewModel.setErrorAssignVisibility(false);
-        activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(viewModel.getSelectedDayWeek().getEmployee().getCinema().getId()));
+        activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(viewModel.getSelectedDayWeek().getEmployee().getCinema()));
         hallComboBox.setItems(viewModel.getHallList());
         viewModel.selectedHallProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
 
@@ -95,7 +95,7 @@ public class AssignShiftViewController extends ViewController {
 
         optionVBox.visibleProperty().bind(viewModel.repeatVisibilityProperty());
         dateVBox.visibleProperty().bind(viewModel.repeatVisibilityProperty());
-        errorLabel.textProperty().bind(viewModel.errorProperty());
+        errorLabel.textProperty().bind(viewModel.errorAssignProperty());
 
         viewModel.setRepeatVisibility(viewModel.isRepeatVisibility());
         shiftRepeatCheckBox.setOnAction(event -> viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility()));
