@@ -61,8 +61,6 @@ public class BuyTicketController implements BuyTicketUseCase {
             Request.validate(request);
             User user = userRepository.getUser(authenticationService.signIn("", "").getUserId());
             Ticket ticket = TicketDataMapper.mapToEntity(request.getTicket());
-            Projection projection = ProjectionDataMapper.mapToEntity(request.getProjection());
-            Integer index = request.getIndex();
             paymentService.pay(new PayServiceRequest(
                     user.getEmail(),
                     user.getName(),
@@ -71,8 +69,6 @@ public class BuyTicketController implements BuyTicketUseCase {
             ));
             ticket.setOwner(user);
             ticketRepository.saveTicket(ticket);
-            projection.addTicket(ticket);
-            projection.getHall().getSeatList().get(index).setState(false);
             emailService.sendMail(new EmailServiceRequest(
                     user.getEmail(),
                     "Payment receipt"

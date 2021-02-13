@@ -2,8 +2,11 @@ package com.ttbmp.cinehub.app.datamapper;
 
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.utilities.DataMapperHelper;
+import com.ttbmp.cinehub.domain.CreditCard;
 import com.ttbmp.cinehub.domain.Projection;
+import com.ttbmp.cinehub.domain.employee.Projectionist;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,11 +29,16 @@ public class ProjectionDataMapper {
 
     public static Projection mapToEntity(ProjectionDto projectionDto) {
         return new Projection(
-                MovieDataMapper.mapToEntity(projectionDto.getMovieDto()),
-                CinemaDataMapper.mapToEntity(projectionDto.getCinemaDto()),
-                HallDataMapper.mapToEntity(projectionDto.getHallDto()),
+                0,
+                projectionDto.getDate(),
                 projectionDto.getStartTime(),
-                projectionDto.getDate()
+                MovieDataMapper.mapToEntity(projectionDto.getMovieDto()),
+                HallDataMapper.mapToEntity(projectionDto.getHallDto()),
+                CinemaDataMapper.mapToEntity(projectionDto.getCinemaDto()),
+                new Projectionist(
+                        "", "", "", "", new CreditCard(0, "", 0, ""),
+                        CinemaDataMapper.mapToEntity(projectionDto.getCinemaDto())),
+                new ArrayList<>()
         );
     }
 
@@ -41,4 +49,5 @@ public class ProjectionDataMapper {
     public static List<Projection> mapToEntityList(List<ProjectionDto> projectionDtoList) {
         return DataMapperHelper.mapList(projectionDtoList, ProjectionDataMapper::mapToEntity);
     }
+
 }

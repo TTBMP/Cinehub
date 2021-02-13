@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.app.service.movieapi;
 
-import com.ttbmp.cinehub.app.dto.MovieDto;
-import com.ttbmp.cinehub.service.movieapi.Movie;
+import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.service.movieapi.TheMovieDbApiException;
 import com.ttbmp.cinehub.service.movieapi.TheMovieDbApiService;
 
@@ -13,15 +12,15 @@ public class TheMovieDbApiServiceAdapter implements MovieApiService {
     private final TheMovieDbApiService service = new TheMovieDbApiService();
 
     @Override
-    public MovieDto getMovie(int movieId) throws MovieApiServiceException {
-        MovieDto result;
+    public Movie getMovie(int movieId) throws MovieApiServiceException {
+        Movie result;
         try {
-            Movie movie = service.getMovie(movieId);
-            result = new MovieDto(
+            com.ttbmp.cinehub.service.movieapi.Movie movie = service.getMovie(movieId);
+            result = new Movie(
                     movie.getId(),
                     movie.getName(),
                     movie.getOverview(),
-                    movie.getDuration(),
+                    Integer.parseInt(movie.getDuration()),
                     movie.getImageUrl(),
                     movie.getVote(),
                     movie.getReleases()

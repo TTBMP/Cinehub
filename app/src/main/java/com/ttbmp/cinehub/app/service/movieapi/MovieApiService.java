@@ -1,12 +1,12 @@
 package com.ttbmp.cinehub.app.service.movieapi;
 
-import com.ttbmp.cinehub.app.dto.MovieDto;
+import com.ttbmp.cinehub.domain.Movie;
 
 /**
  * @author Palmieri Ivan, Fabio Buracchi
  */
 public interface MovieApiService {
 
-    MovieDto getMovie(int movieId) throws MovieApiServiceException;
+    Movie getMovie(int movieId) throws MovieApiServiceException;
 
 }

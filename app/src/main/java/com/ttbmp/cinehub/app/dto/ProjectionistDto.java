@@ -1,5 +1,8 @@
 package com.ttbmp.cinehub.app.dto;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class ProjectionistDto extends EmployeeDto {
 
     public ProjectionistDto(String id, String name, String surname, CinemaDto cinema) {

@@ -8,10 +8,25 @@ import com.ttbmp.cinehub.domain.User;
 public class Ticket extends TicketAbstract {
 
     private final long price;
+    private int id;
     private User owner;
 
     public Ticket(long price) {
         this.price = price;
+    }
+
+    public Ticket(int id, long price, User owner) {
+        this.id = id;
+        this.price = price;
+        this.owner = owner;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public User getOwner() {

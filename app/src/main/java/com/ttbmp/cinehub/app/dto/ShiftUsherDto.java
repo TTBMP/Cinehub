@@ -3,10 +3,13 @@ package com.ttbmp.cinehub.app.dto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class ShiftUsherDto extends ShiftDto {
 
-    public ShiftUsherDto(EmployeeDto employee, LocalDate date, LocalTime start, LocalTime end) {
-        super(employee, date, start, end);
+    public ShiftUsherDto(int id, EmployeeDto employee, LocalDate date, LocalTime start, LocalTime end) {
+        super(id, employee, date, start, end);
     }
 
 }

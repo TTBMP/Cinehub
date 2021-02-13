@@ -15,7 +15,7 @@ import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.app.usecase.Request;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
-import com.ttbmp.cinehub.domain.Employee;
+import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.shift.Shift;
 import com.ttbmp.cinehub.domain.shift.ShiftFactory;
 
@@ -57,7 +57,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         try {
             Request.validate(request);
             manageEmployeesShiftPresenter.presentHallList(new GetHallListResponse(
-                    HallDataMapper.mapToDtoList(hallRepository.getCinemaHallList(
+                    HallDataMapper.mapToDtoList(hallRepository.getHallList(
                             CinemaDataMapper.mapToEntity(request.getCinema())
                     ))
             ));

@@ -1,10 +1,10 @@
 package com.ttbmp.cinehub.domain.shift;
 
 
-import com.ttbmp.cinehub.domain.Employee;
 import com.ttbmp.cinehub.domain.Hall;
-import com.ttbmp.cinehub.domain.Projectionist;
-import com.ttbmp.cinehub.domain.Usher;
+import com.ttbmp.cinehub.domain.employee.Employee;
+import com.ttbmp.cinehub.domain.employee.Projectionist;
+import com.ttbmp.cinehub.domain.employee.Usher;
 
 public class ShiftFactory {
 
@@ -18,11 +18,11 @@ public class ShiftFactory {
     }
 
     private Shift createShiftProjectionist(Employee employee, String date, String start, String end, Hall hall) {
-        return new ProjectionistShift(employee, date, start, end, hall);
+        return new ProjectionistShift(0, employee, date, start, end, hall, null);
     }
 
     private Shift createShiftUsher(Employee employee, String date, String start, String end) {
-        return new UsherShift(employee, date, start, end);
+        return new UsherShift(0, employee, date, start, end);
     }
 
 }

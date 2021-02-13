@@ -4,9 +4,9 @@ import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.ProjectionistDto;
 import com.ttbmp.cinehub.app.dto.UsherDto;
 import com.ttbmp.cinehub.app.utilities.DataMapperHelper;
-import com.ttbmp.cinehub.domain.Employee;
-import com.ttbmp.cinehub.domain.Projectionist;
-import com.ttbmp.cinehub.domain.Usher;
+import com.ttbmp.cinehub.domain.employee.Employee;
+import com.ttbmp.cinehub.domain.employee.Projectionist;
+import com.ttbmp.cinehub.domain.employee.Usher;
 
 import java.util.List;
 
