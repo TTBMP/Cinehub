@@ -11,6 +11,6 @@ import java.io.IOException;
 public class ChooseCinemaView extends FxmlView {
 
     public ChooseCinemaView() throws IOException {
-        super("choose_cinema.fxml");
+        super("buy_ticket/choose_cinema.fxml");
     }
 }

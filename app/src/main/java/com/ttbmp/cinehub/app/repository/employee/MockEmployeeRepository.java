@@ -19,26 +19,26 @@ public class MockEmployeeRepository implements EmployeeRepository {
     static {
         MockUserRepository userRepository = new MockUserRepository();
         employeeList.add(new Usher(
-                userRepository.getUser(0),
+                userRepository.getUser("0"),
                 new MockCinemaRepository().getCinema(0)
         ));
         employeeList.add(new Projectionist(
-                userRepository.getUser(1),
+                userRepository.getUser("1"),
                 new MockCinemaRepository().getCinema(0)
         ));
         employeeList.add(new Usher(
-                userRepository.getUser(2),
+                userRepository.getUser("2"),
                 new MockCinemaRepository().getCinema(1)
         ));
         employeeList.add(new Projectionist(
-                userRepository.getUser(3),
+                userRepository.getUser("3"),
                 new MockCinemaRepository().getCinema(1)
         ));
     }
 
     @Override
-    public Employee getEmployee(int userId) {
-        return employeeList.get(userId);
+    public Employee getEmployee(String userId) {
+        return employeeList.get(Integer.parseInt(userId));
     }
 
 }

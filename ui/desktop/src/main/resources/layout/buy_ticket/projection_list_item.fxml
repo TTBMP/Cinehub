@@ -3,13 +3,28 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.ttbmp.cinehub.ui.desktop.buyticket.choosecinema.ChooseProjectionItemViewController">
     <children>
         <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
               AnchorPane.topAnchor="0.0">
             <children>
-                <Label fx:id="projectionTimeLabel"/>
+                <Label text="Hall:"/>
+                <Label fx:id="hallNameLabel">
+                    <HBox.margin>
+                        <Insets left="10.0"/>
+                    </HBox.margin>
+                </Label>
+                <Label text="Starting time:" textFill="#a8a5a5">
+                    <HBox.margin>
+                        <Insets left="50.0"/>
+                    </HBox.margin>
+                </Label>
+                <Label fx:id="projectionTimeLabel" textFill="#a8a5a5">
+                    <HBox.margin>
+                        <Insets left="10.0"/>
+                    </HBox.margin>
+                </Label>
                 <Label text="Total seat:" textFill="#a8a5a5">
                     <HBox.margin>
                         <Insets left="50.0"/>

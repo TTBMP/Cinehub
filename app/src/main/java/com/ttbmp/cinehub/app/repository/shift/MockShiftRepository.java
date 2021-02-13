@@ -40,20 +40,20 @@ public class MockShiftRepository implements ShiftRepository {
                                 new MockEmployeeRepository().getEmployee(1).getCinema().getHallList().get(1)
                         ),
                         new UsherShift(
-                                new MockEmployeeRepository().getEmployee(0),
+                                new MockEmployeeRepository().getEmployee("0"),
                                 LocalDate.now().minusWeeks(i).plusDays(j).toString(),
                                 LocalTime.now().minusHours(0).withSecond(0).withNano(0).toString(),
                                 LocalTime.now().plusHours(2).withSecond(0).withNano(0).toString()
                         ),
                         new ProjectionistShift(
-                                new MockEmployeeRepository().getEmployee(3),
+                                new MockEmployeeRepository().getEmployee("1"),
                                 LocalDate.now().plusWeeks(i).plusDays(j).toString(),
                                 LocalTime.now().minusHours(0).withSecond(0).withNano(0).toString(),
                                 LocalTime.now().plusHours(2).withSecond(0).withNano(0).toString(),
                                 new MockEmployeeRepository().getEmployee(3).getCinema().getHallList().get(0)
                         ),
                         new UsherShift(
-                                new MockEmployeeRepository().getEmployee(2),
+                                new MockEmployeeRepository().getEmployee("2"),
                                 LocalDate.now().minusWeeks(i).plusDays(j).toString(),
                                 LocalTime.now().minusHours(0).withSecond(0).withNano(0).toString(),
                                 LocalTime.now().plusHours(2).withSecond(0).withNano(0).toString()
@@ -68,7 +68,7 @@ public class MockShiftRepository implements ShiftRepository {
         return shiftList.stream()
                 .filter(shift -> LocalDate.parse(shift.getDate()).isAfter(start.minusDays(1))
                         && LocalDate.parse(shift.getDate()).isBefore(end.plusDays(1))
-                        && employee.getId() == shift.getEmployee().getId())
+                        && employee.getId().equals(shift.getEmployee().getId()))
                 .collect(Collectors.toList());
     }
 

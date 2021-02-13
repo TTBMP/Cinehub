@@ -7,6 +7,6 @@ import com.ttbmp.cinehub.domain.Employee;
  */
 public interface EmployeeRepository {
 
-    Employee getEmployee(int userId);
+    Employee getEmployee(String userId);
 
 }

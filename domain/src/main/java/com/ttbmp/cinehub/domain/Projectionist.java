@@ -7,7 +7,7 @@ public class Projectionist extends Employee {
         super(user, cinema);
     }
 
-    public Projectionist(int id, String name, String surname, String email, CreditCard creditCard, Cinema cinema) {
+    public Projectionist(String id, String name, String surname, String email, CreditCard creditCard, Cinema cinema) {
         super(id, name, surname, email, creditCard, cinema);
     }
 

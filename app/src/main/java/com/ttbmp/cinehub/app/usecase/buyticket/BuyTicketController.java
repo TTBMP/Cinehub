@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
+import com.ttbmp.cinehub.app.service.authentication.AuthenticationException;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
 import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
@@ -58,7 +59,7 @@ public class BuyTicketController implements BuyTicketUseCase {
     public boolean pay(PayRequest request) {
         try {
             Request.validate(request);
-            User user = userRepository.getUser(authenticationService.sigIn());
+            User user = userRepository.getUser(authenticationService.signIn("", "").getUserId());
             Ticket ticket = TicketDataMapper.mapToEntity(request.getTicket());
             Projection projection = ProjectionDataMapper.mapToEntity(request.getProjection());
             Integer index = request.getIndex();
@@ -79,14 +80,14 @@ public class BuyTicketController implements BuyTicketUseCase {
             return true;
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentPayNullRequest();
-            return false;
         } catch (Request.InvalidRequestException e) {
             buyTicketPresenter.presentInvalidPay(request);
-            return false;
         } catch (PaymentServiceException e) {
             buyTicketPresenter.presentErrorByStripe(e);
-            return false;
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
         }
+        return false;
     }
 
     @Override

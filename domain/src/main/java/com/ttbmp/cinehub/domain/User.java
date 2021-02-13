@@ -5,13 +5,13 @@ package com.ttbmp.cinehub.domain;
  */
 public class User {
 
-    private int id;
+    private String id;
     private String name;
     private String surname;
     private String email;
     private CreditCard creditCard;
 
-    public User(int id, String name, String surname, String email, CreditCard creditCard) {
+    public User(String id, String name, String surname, String email, CreditCard creditCard) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -19,11 +19,11 @@ public class User {
         this.creditCard = creditCard;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -65,12 +65,12 @@ public class User {
             return false;
         }
         Employee other = (Employee) obj;
-        return id == other.getId();
+        return id.equals(other.getId());
     }
 
     @Override
     public int hashCode() {
-        return id;
+        return id.hashCode();
     }
 
 }
