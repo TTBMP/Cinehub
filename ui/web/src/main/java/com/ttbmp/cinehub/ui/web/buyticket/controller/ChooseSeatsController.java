@@ -66,12 +66,12 @@ public class ChooseSeatsController {
             }
         }
         for (int k = 0; k < rest; k++) {
-           addRestantName(a,columns,valList,k);
+           addRestartName(a,columns,valList,k);
         }
         model.addAttribute("valList", valList);
     }
 
-    private void addRestantName(char[] a, int columns, List<String> valList, int k) {
+    private void addRestartName(char[] a, int columns, List<String> valList, int k) {
         if(!viewModel.getSelectedProjection().getTicketList().isEmpty()) {
             List<TicketDto> ticketDtoList = viewModel.getSelectedProjection().getTicketList();
             boolean count = false;
@@ -100,7 +100,7 @@ public class ChooseSeatsController {
             List<TicketDto> ticketDtoList = viewModel.getSelectedProjection().getTicketList();
             boolean count = false;
             for(TicketDto ticket: ticketDtoList){
-                String val = (a[j]) + String.valueOf(i);
+                String val = (a[i]) + String.valueOf(j);
                 if (ticket.getPosition().equals(val) ) {
                     count=true;
                     valList.add("SOLD");

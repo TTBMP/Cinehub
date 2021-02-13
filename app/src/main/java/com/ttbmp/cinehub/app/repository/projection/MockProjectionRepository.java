@@ -6,6 +6,7 @@ import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.repository.cinema.MockCinemaRepository;
 import com.ttbmp.cinehub.app.repository.hall.MockHallRepository;
 import com.ttbmp.cinehub.app.repository.movie.MockMovieRepository;
+import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
@@ -46,7 +47,7 @@ public class MockProjectionRepository implements ProjectionRepository {
     }
 
     @Override
-    public List<Projection> getProjectionList(CinemaDto cinema, MovieDto movie, String date) {
+    public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date) {
         List<Projection> result = new ArrayList<>();
         for (Projection projection : projectionList) {
             if (projection.getCinema().getName().equals(cinema.getName()) &&

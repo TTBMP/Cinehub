@@ -3,7 +3,6 @@ package com.ttbmp.cinehub.app.usecase.buyticket;
 import com.ttbmp.cinehub.app.datamapper.*;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
-import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
@@ -73,7 +72,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             ticket.setOwner(user);
             ticketRepository.saveTicket(ticket);
             projection.addTicket(ticket);
-            projectionRepository.getProjectionList(request.getCinemaDto(), request.getMovieDto(), request.getSelectedDate()).forEach(x->{
+            projectionRepository.getProjectionList(CinemaDataMapper.mapToEntity(request.getCinemaDto()),MovieDataMapper.mapToEntity(request.getMovieDto()), request.getSelectedDate()).forEach(x->{
                 if(x.getHall().getId() == request.getProjection().getHallDto().getId()){
                     x.addTicket(ticket);
                 }
@@ -137,7 +136,6 @@ public class BuyTicketController implements BuyTicketUseCase {
 
             /*DECORATOR PATTERN GOF*/
             Ticket ticket = new Ticket(selectedSeats.getPrice());
-            ticket.getPrice();
             if (Boolean.TRUE.equals(request.getHeatedArmchairOption())) {
                 ticket = new TicketSkipLine(ticket);
                 ticket.setPrice(ticket.getPrice());
@@ -151,7 +149,7 @@ public class BuyTicketController implements BuyTicketUseCase {
                 ticket.setPrice(ticket.getPrice());
             }
             /*-----------------------------------------*/
-
+            
             ticket.setPosition(position);
             buyTicketPresenter.setSelectedTicket(new GetTicketBySeatsResponse(TicketDataMapper.mapToDto(ticket)));
         } catch (Request.NullRequestException e) {
@@ -170,8 +168,8 @@ public class BuyTicketController implements BuyTicketUseCase {
             Movie movie = MovieDataMapper.mapToEntity(request.getMovieDto());
             String date = request.getLocalDate();
             List<Projection> projectionList = projectionRepository.getProjectionList(
-                    CinemaDataMapper.mapToDto(cinema),
-                    MovieDataMapper.mapToDto(movie),
+                    cinema,
+                    movie,
                     date);
 
             buyTicketPresenter.presentProjectionList(
