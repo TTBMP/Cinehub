@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class PaymentController {
 
+
     private static final BuyTicketUseCase USE_CASE = UseCase.buyTicketUseCase;
     private final BuyTicketViewModel viewModel = UseCase.getViewModel();
 
