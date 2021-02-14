@@ -1,174 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
-<VBox minHeight="730.0" minWidth="1156.0"
-      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+<VBox minHeight="730.0" minWidth="1156.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.ttbmp.cinehub.ui.desktop.about.AboutViewController">
     <children>
-        <fx:include fx:id="appBar" source="/layout/app_bar/app_bar.fxml"/>
-        <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-            <content>
-                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+        <fx:include fx:id="appBar" source="app_bar/app_bar.fxml"/>
+        <VBox VBox.vgrow="ALWAYS">
+            <children>
+                <HBox alignment="CENTER" prefHeight="150.0">
                     <children>
-                        <HBox>
-                            <children>
-                                <VBox HBox.hgrow="ALWAYS">
-                                    <children>
-                                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308"
-                                               text="Services offered by: " VBox.vgrow="ALWAYS">
-                                            <VBox.margin>
-                                                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0"/>
-                                            </VBox.margin>
-                                            <font>
-                                                <Font size="20.0"/>
-                                            </font>
-                                        </Label>
-                                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308"
-                                               maxWidth="1.7976931348623157E308" text="Massimo Mazzetti"
-                                               VBox.vgrow="ALWAYS">
-                                            <VBox.margin>
-                                                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0"/>
-                                            </VBox.margin>
-                                        </Label>
-                                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308"
-                                               maxWidth="1.7976931348623157E308" text="Palmieri Ivan"
-                                               VBox.vgrow="ALWAYS">
-                                            <VBox.margin>
-                                                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0"/>
-                                            </VBox.margin>
-                                        </Label>
-                                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308"
-                                               maxWidth="1.7976931348623157E308" text="Fabio Buracchi"
-                                               VBox.vgrow="ALWAYS">
-                                            <VBox.margin>
-                                                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0"/>
-                                            </VBox.margin>
-                                        </Label>
-                                    </children>
-                                </VBox>
-                            </children>
-                        </HBox>
-                        <HBox maxHeight="-Infinity" VBox.vgrow="ALWAYS">
-                            <children>
-                                <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308"
-                                       minHeight="-Infinity" minWidth="-Infinity" text=" Organizations TTBMP"
-                                       HBox.hgrow="ALWAYS">
-                                    <font>
-                                        <Font size="20.0"/>
-                                    </font>
-                                </Label>
-                            </children>
-                        </HBox>
-                        <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308"
-                              VBox.vgrow="ALWAYS">
-                            <children>
-                                <ImageView fx:id="ttbmpLogoImageView" fitHeight="100.0" fitWidth="400.0"
-                                           pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../drawable/ttbmpLogo.png"/>
-                                    </image>
-                                    <effect>
-                                        <Reflection/>
-                                    </effect>
-                                    <HBox.margin>
-                                        <Insets top="16.0"/>
-                                    </HBox.margin>
-                                </ImageView>
-                            </children>
-                            <VBox.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                            </VBox.margin>
-                        </HBox>
-                        <HBox>
-                            <children>
-                                <Label alignment="CENTER" maxHeight="1.7976931348623157E308"
-                                       maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
-                                       text="In partnership with:" HBox.hgrow="ALWAYS">
-                                    <font>
-                                        <Font size="20.0"/>
-                                    </font>
-                                </Label>
-                            </children>
-                            <VBox.margin>
-                                <Insets top="50.0"/>
-                            </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
-                            <children>
-                                <ImageView fx:id="emailServiceLogoImageView" fitHeight="100.0" fitWidth="400.0"
-                                           pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
-                                    <image>
-                                        <Image url="@../drawable/emailServiceLogo.jpg"/>
-                                    </image>
-                                    <effect>
-                                        <Reflection/>
-                                    </effect>
-                                    <HBox.margin>
-                                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
-                                    </HBox.margin>
-                                </ImageView>
-                                <ImageView fx:id="theMovieDbLogoImageView" fitHeight="100.0" fitWidth="400.0"
-                                           pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
-                                    <image>
-                                        <Image url="@../drawable/theMovieDbLogo.png"/>
-                                    </image>
-                                    <effect>
-                                        <Reflection/>
-                                    </effect>
-                                    <HBox.margin>
-                                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
-                                    </HBox.margin>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
-                            </padding>
-                        </HBox>
-                        <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
-                            <children>
-                                <ImageView fx:id="stripeLogoImageView" fitHeight="100.0" fitWidth="400.0"
-                                           pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
-                                    <image>
-                                        <Image url="@../drawable/stripeLogo.png"/>
-                                    </image>
-                                    <effect>
-                                        <Reflection/>
-                                    </effect>
-                                    <HBox.margin>
-                                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
-                                    </HBox.margin>
-                                </ImageView>
-                                <ImageView fx:id="firebaseImageView" fitHeight="100.0" fitWidth="400.0"
-                                           pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
-                                    <image>
-                                        <Image url="@../drawable/firebaseLogo.png"/>
-                                    </image>
-                                    <effect>
-                                        <Reflection/>
-                                    </effect>
-                                    <HBox.margin>
-                                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
-                                    </HBox.margin>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets bottom="100.0" left="16.0" right="16.0" top="16.0"/>
-                            </padding>
-                            <VBox.margin>
-                                <Insets top="50.0"/>
-                            </VBox.margin>
-                        </HBox>
+                        <Label style="-fx-font-weight: bold; -fx-font-size: 32;" text="About us"/>
+                    </children>
+                </HBox>
+                <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label style="-fx-font-size: 16;" text="TTBMP organization"/>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../drawables/ttbmpLogo.png"/>
+                            </image>
+                        </ImageView>
+                    </children>
+                </VBox>
+                <HBox>
+                    <children>
+                        <Label style="-fx-font-size: 16;" text="Powered by:"/>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" spacing="24.0">
+                    <children>
+                        <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../drawables/java-logo.png"/>
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../drawables/firebaseLogo.png"/>
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../drawables/javamail_api.png"/>
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../drawables/stripeLogo.png"/>
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../drawables/theMovieDbLogo.png"/>
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../drawables/MySQL-Logo.png"/>
+                            </image>
+                        </ImageView>
                     </children>
                     <padding>
-                        <Insets top="16.0"/>
+                        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
                     </padding>
-                </VBox>
-            </content>
-        </ScrollPane>
+                </HBox>
+            </children>
+            <VBox.margin>
+                <Insets bottom="16.0" left="16.0" right="16.0"/>
+            </VBox.margin>
+        </VBox>
     </children>
 </VBox>

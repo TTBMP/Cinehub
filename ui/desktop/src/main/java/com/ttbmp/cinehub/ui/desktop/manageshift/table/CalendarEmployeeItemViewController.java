@@ -38,7 +38,7 @@ public class CalendarEmployeeItemViewController extends ViewController {
 
     @Override
     protected void onLoad() {
-        employeeImageView.setImage(new Image("drawable/employee.jpg"));
+        employeeImageView.setImage(new Image("drawables/employee.jpg"));
 
         nameLabel.setText(employee.getName());
         surnameLabel.setText(employee.getSurname());
