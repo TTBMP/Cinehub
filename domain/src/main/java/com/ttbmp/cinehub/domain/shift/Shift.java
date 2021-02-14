@@ -1,6 +1,11 @@
 package com.ttbmp.cinehub.domain.shift;
 
+import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.employee.Employee;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
 /**
  * @author Fabio Buracchi, Massimo Mazzetti
@@ -20,6 +25,8 @@ public abstract class Shift {
         this.start = start;
         this.end = end;
     }
+
+    public abstract void modifyShift(Shift shift, LocalDate date, LocalTime start, LocalTime end, Hall hall) throws ModifyShiftException;
 
     public int getId() {
         return id;

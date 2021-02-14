@@ -23,11 +23,7 @@ public interface ManageEmployeesShiftPresenter {
 
     void presentCreateShift(CreateShiftResponse response);
 
-    void presentInvalidSaveShiftListRequest(ShiftRequest request);
-
-    void presentSaveShiftNullRequest();
-
-    void presentSaveShiftError(Throwable error);
+    void presentCreateShiftError(Throwable error);
 
     void presentInvalidDeleteShiftListRequest(ShiftRequest request);
 

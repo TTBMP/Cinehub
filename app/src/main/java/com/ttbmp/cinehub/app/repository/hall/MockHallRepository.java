@@ -79,6 +79,15 @@ public class MockHallRepository implements HallRepository {
                 .get(0);
     }
 
+    @Override
+    public Hall getHall(int hallId) {
+        return HALL_DATA_LIST.stream()
+                .filter(d-> d.id == hallId)
+                .map(d-> new HallProxy(d.id, serviceLocator.getService(SeatRepository.class)))
+                .collect(Collectors.toList())
+                .get(0);
+    }
+
     public static class HallData {
 
         private int id;

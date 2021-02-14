@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
+import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftSaveException;
@@ -15,9 +16,12 @@ import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.app.usecase.Request;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
+import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.employee.Employee;
+import com.ttbmp.cinehub.domain.shift.ModifyShiftException;
 import com.ttbmp.cinehub.domain.shift.Shift;
-import com.ttbmp.cinehub.domain.shift.ShiftFactory;
+import com.ttbmp.cinehub.domain.shift.factory.CreateShiftException;
+import com.ttbmp.cinehub.domain.shift.factory.ShiftFactory;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -36,6 +40,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
     private final CinemaRepository cinemaRepository;
     private final HallRepository hallRepository;
     private final EmailService emailService;
+    private final EmployeeRepository employeeRepository;
 
     public ManageEmployeesShiftController(ServiceLocator serviceLocator, ManageEmployeesShiftPresenter manageEmployeesShiftPresenter) {
         this.manageEmployeesShiftPresenter = manageEmployeesShiftPresenter;
@@ -43,6 +48,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         this.cinemaRepository = serviceLocator.getService(CinemaRepository.class);
         this.hallRepository = serviceLocator.getService(HallRepository.class);
         this.emailService = serviceLocator.getService(EmailService.class);
+        this.employeeRepository = serviceLocator.getService(EmployeeRepository.class);
     }
 
     @Override
@@ -85,40 +91,29 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
     }
 
     @Override
-    public void saveShift(ShiftRequest request) {
-        try {
-            Request.validate(request);
-            shiftRepository.saveShift(ShiftDataMapper.mapToEntity(request.getShift()));
-            manageEmployeesShiftPresenter.presentSaveShift();
-            emailService.sendMail(new EmailServiceRequest(
-                    EmployeeDataMapper.matToEntity(request.getShift().getEmployee()).getEmail(),
-                    "Shift Assign"
-            ));
-        } catch (Request.NullRequestException e) {
-            manageEmployeesShiftPresenter.presentSaveShiftNullRequest();
-        } catch (Request.InvalidRequestException e) {
-            manageEmployeesShiftPresenter.presentInvalidSaveShiftListRequest(request);
-        } catch (ShiftSaveException e) {
-            manageEmployeesShiftPresenter.presentSaveShiftError(e);
-        }
-    }
-
-    @Override
     public void modifyShift(ShiftModifyRequest request) {
         try {
             Request.validate(request);
-            shiftRepository.modifyShift(shiftRepository.getShift(request.getNewShift().getId()));
-            manageEmployeesShiftPresenter.presentSaveShift();
-            manageEmployeesShiftPresenter.presentDeleteShift();
+            Shift shift= shiftRepository.getShift(request.getShiftId());
+            Employee employee = employeeRepository.getEmployee(request.getEmployeeDto().getId());
+           /* Hall hall= hallRepository.getHall(request.getHall().getId());*/
+            shift.modifyShift(shift,request.getDate(),request.getStart(),request.getEnd(),HallDataMapper.mapToEntity(request.getHall()));
+            shiftRepository.modifyShift(shift);
             emailService.sendMail(new EmailServiceRequest(
-                    EmployeeDataMapper.matToEntity(request.getNewShift().getEmployee()).getEmail(),
+                    employee.getEmail(),
                     "Shift Modify"
             ));
+            manageEmployeesShiftPresenter.presentCreateShift(new CreateShiftResponse(ShiftDataMapper.mapToDto(shift)));
+            manageEmployeesShiftPresenter.presentDeleteShift();
+            manageEmployeesShiftPresenter.presentSaveShift();
+
         } catch (Request.NullRequestException e) {
             manageEmployeesShiftPresenter.presentModifyShiftNullRequest();
         } catch (Request.InvalidRequestException e) {
             manageEmployeesShiftPresenter.presentInvalidModifyShiftListRequest(request);
         } catch (ShiftSaveException e) {
+           manageEmployeesShiftPresenter.presentCreateShiftError(e);
+        } catch (ModifyShiftException e) {
             manageEmployeesShiftPresenter.presentModifyShiftError(e);
         }
 
@@ -149,6 +144,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             Request.validate(request);
             List<ShiftDto> shiftDtoList = new ArrayList<>();
             UnaryOperator<LocalDate> increaseDateFunction;
+            Employee employee  = employeeRepository.getEmployee(request.getEmployeeDto().getId());
             switch (request.getOption()) {
                 case "EVERY_DAY":
                     increaseDateFunction = date -> date.plusDays(1);
@@ -165,17 +161,17 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             for (LocalDate date = request.getStart(); date.isBefore(request.getEnd().plusDays(1)); date = increaseDateFunction.apply(date)) {
                 ShiftFactory shiftFactory = new ShiftFactory();
                 Shift shift = shiftFactory.createConcreteShift(
-                        EmployeeDataMapper.matToEntity(request.getShift().getEmployee()),
+                        employee,
                         date.toString(),
-                        request.getShift().getStart().toString(),
-                        request.getShift().getEnd().toString(),
+                        request.getStartShift().toString(),
+                        request.getEndShift().toString(),
                         HallDataMapper.mapToEntity(request.getHall())
                 );
                 shiftRepository.saveShift(shift);
                 shiftDtoList.add(ShiftDataMapper.mapToDto(shift));
             }
             emailService.sendMail(new EmailServiceRequest(
-                    EmployeeDataMapper.matToEntity(request.getShift().getEmployee()).getEmail(),
+                    employee.getEmail(),
                     "Shift Modify"
             ));
             manageEmployeesShiftPresenter.presentRepeatShift(new ShiftRepeatResponse(shiftDtoList));
@@ -183,8 +179,8 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             manageEmployeesShiftPresenter.presentRepeatedShiftNullRequest();
         } catch (Request.InvalidRequestException e) {
             manageEmployeesShiftPresenter.presentInvalidRepeatedShiftListRequest(request);
-        } catch (ShiftSaveException e) {
-            manageEmployeesShiftPresenter.presentSaveShiftError(e);
+        } catch (CreateShiftException e) {
+           manageEmployeesShiftPresenter.presentCreateShiftError(e);
         }
     }
 
@@ -192,7 +188,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
     public void createShift(CreateShiftRequest request) {
         try {
             Request.validate(request);
-            Employee employee = EmployeeDataMapper.matToEntity(request.getEmployee());
+            Employee employee = employeeRepository.getEmployee(request.getEmployee().getId());
             String date = request.getDate().toString();
             String start = request.getStart().toString();
             String end = request.getEnd().toString();
@@ -200,10 +196,20 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             Shift shift = shiftFactory.createConcreteShift(employee, date, start, end, HallDataMapper.mapToEntity(request.getHall()));
 
             manageEmployeesShiftPresenter.presentCreateShift(new CreateShiftResponse(ShiftDataMapper.mapToDto(shift)));
+
+            shiftRepository.saveShift(shift);
+            manageEmployeesShiftPresenter.presentSaveShift();
+            emailService.sendMail(new EmailServiceRequest(
+                    employee.getEmail(),
+                    "Shift Assign"
+            ));
+
         } catch (Request.NullRequestException e) {
             manageEmployeesShiftPresenter.presentCreateShiftNullRequest();
         } catch (Request.InvalidRequestException e) {
             manageEmployeesShiftPresenter.presentInvalidCreateShiftListRequest(request);
+        } catch (CreateShiftException e) {
+            manageEmployeesShiftPresenter.presentCreateShiftError(e);
         }
     }
 

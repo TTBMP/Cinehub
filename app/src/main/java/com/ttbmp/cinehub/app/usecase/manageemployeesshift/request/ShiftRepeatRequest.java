@@ -1,37 +1,39 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
+import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.HallDto;
-import com.ttbmp.cinehub.app.dto.ShiftDto;
+import com.ttbmp.cinehub.app.dto.ProjectionistDto;
 import com.ttbmp.cinehub.app.usecase.Request;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 
 public class ShiftRepeatRequest extends Request {
-    public static final Request.Error MISSING_SHIFT = new Request.Error("turni non validi");
-    public static final Request.Error MISSING_START = new Request.Error("inizio non valido");
-    public static final Request.Error MISSING_END = new Request.Error("fine non valida");
-    public static final Request.Error MISSING_OPTION = new Request.Error("opzione non valida");
+    public static final Request.Error MISSING_EMPLOYEE = new Request.Error("Dipendente non valido");
+    public static final Request.Error MISSING_START = new Request.Error("Data inizio non valido");
+    public static final Request.Error MISSING_END = new Request.Error("Data fine non valida");
+    public static final Request.Error MISSING_OPTION = new Request.Error("Opzione non valida");
+    public static final Request.Error MISSING_START_SHIFT = new Request.Error("Ora inizio non valido");
+    public static final Request.Error MISSING_END_SHIFT = new Request.Error("Ora fine non valida");
+    public static final Request.Error MISSING_HALL = new Request.Error("Sala non valida");
+
 
     private LocalDate start;
     private LocalDate end;
     private String option;
-    private ShiftDto shift;
+    private EmployeeDto employeeDto;
+    private LocalTime startShift;
+    private LocalTime endShift;
     private HallDto hall;
 
-    public ShiftRepeatRequest(LocalDate start, LocalDate end, String option, ShiftDto shift, HallDto hall) {
+    public ShiftRepeatRequest(LocalDate start, LocalDate end, String option, EmployeeDto employeeDto, LocalTime startShift, LocalTime endShift, HallDto hall) {
         this.start = start;
         this.end = end;
         this.option = option;
-        this.shift = shift;
-        this.hall = hall;
-    }
-
-    public HallDto getHall() {
-        return hall;
-    }
-
-    public void setHall(HallDto hall) {
+        this.employeeDto = employeeDto;
+        this.startShift = startShift;
+        this.endShift = endShift;
         this.hall = hall;
     }
 
@@ -59,18 +61,42 @@ public class ShiftRepeatRequest extends Request {
         this.option = option;
     }
 
-    public ShiftDto getShift() {
-        return shift;
+    public EmployeeDto getEmployeeDto() {
+        return employeeDto;
     }
 
-    public void setShift(ShiftDto shift) {
-        this.shift = shift;
+    public void setEmployeeDto(EmployeeDto employeeDto) {
+        this.employeeDto = employeeDto;
+    }
+
+    public LocalTime getStartShift() {
+        return startShift;
+    }
+
+    public void setStartShift(LocalTime startShift) {
+        this.startShift = startShift;
+    }
+
+    public LocalTime getEndShift() {
+        return endShift;
+    }
+
+    public void setEndShift(LocalTime endShift) {
+        this.endShift = endShift;
+    }
+
+    public HallDto getHall() {
+        return hall;
+    }
+
+    public void setHall(HallDto hall) {
+        this.hall = hall;
     }
 
     @Override
     public void onValidate() {
-        if (shift == null) {
-            addError(MISSING_SHIFT);
+        if (employeeDto == null) {
+            addError(MISSING_EMPLOYEE);
         }
         if (option == null) {
             addError(MISSING_OPTION);
@@ -81,5 +107,14 @@ public class ShiftRepeatRequest extends Request {
         if (end == null) {
             addError(MISSING_END);
         }
+        if(startShift == null){
+            addError(MISSING_START_SHIFT);
+        }if(endShift == null){
+            addError(MISSING_END_SHIFT);
+        }
+        if(hall == null && employeeDto instanceof ProjectionistDto){
+            addError(MISSING_HALL);
+        }
     }
+
 }
