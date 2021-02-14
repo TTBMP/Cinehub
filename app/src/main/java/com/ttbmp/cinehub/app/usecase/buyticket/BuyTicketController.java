@@ -67,7 +67,7 @@ public class BuyTicketController implements BuyTicketUseCase {
                     ticket.getPrice()
             ));
             ticket.setOwner(user);
-            ticketRepository.saveTicket(ticket,request.getProjection().getId());
+            ticketRepository.saveTicket(ticket, request.getProjection().getId());
             emailService.sendMail(new EmailServiceRequest(
                     user.getEmail(),
                     "Payment receipt"
@@ -123,7 +123,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             Seat seat = seats.get(pos);
             User user = userRepository.getUser(authenticationService.signIn("", "").getUserId());
             /*DECORATOR PATTERN GOF*/
-            Ticket ticket = new Ticket(0,seat.getPrice(),user,seat);
+            Ticket ticket = new Ticket(0, seat.getPrice(), user, seat);
             if (Boolean.TRUE.equals(request.getHeatedArmchairOption())) {
                 ticket = new TicketSkipLine(ticket);
                 ticket.setPrice(ticket.increasePrice());
@@ -156,7 +156,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             Movie movie = MovieDataMapper.mapToEntity(request.getMovieDto());
             String date = request.getLocalDate();
             List<Projection> projectionList = projectionRepository.getProjectionList(
-                   cinema,
+                    cinema,
                     movie,
                     date);
             buyTicketPresenter.presentProjectionList(

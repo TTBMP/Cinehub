@@ -10,7 +10,7 @@ public class SeatDto {
     private Boolean state;
     private String position;
 
-    public SeatDto(int id, Long price, Boolean state,String position) {
+    public SeatDto(int id, Long price, Boolean state, String position) {
         this.id = id;
         this.price = price;
         this.state = state;

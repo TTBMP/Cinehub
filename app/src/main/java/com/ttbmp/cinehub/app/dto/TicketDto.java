@@ -12,9 +12,9 @@ public class TicketDto {
     private User owner;
     private SeatDto seatDto;
 
-    public TicketDto(int id,long price,User owner,SeatDto seatDto) {
-        this.id =id;
-        this.owner=owner;
+    public TicketDto(int id, long price, User owner, SeatDto seatDto) {
+        this.id = id;
+        this.owner = owner;
         this.price = price;
         this.seatDto = seatDto;
     }
@@ -54,7 +54,6 @@ public class TicketDto {
     public void setPrice(Long price) {
         this.price = price;
     }
-
 
 
 }

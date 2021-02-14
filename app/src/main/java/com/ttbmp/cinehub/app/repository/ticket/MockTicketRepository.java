@@ -12,12 +12,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author Fabio Buracchi and Palmieri Ivan
+ * @author Fabio Buracchi, Palmieri Ivan
  */
 public class MockTicketRepository implements TicketRepository {
 
     private static final List<TicketData> TICKET_DATA_LIST = new ArrayList<>();
-    private static int counterTicketId =0;
+    private static int counterTicketId = 0;
+
     static {
         List<String> userIdList = MockUserRepository.getUserDataList().stream()
                 .map(MockUserRepository.UserData::getId)
@@ -36,7 +37,7 @@ public class MockTicketRepository implements TicketRepository {
     }
 
     @Override
-    public void saveTicket(Ticket ticket, int projectionId) {
+    public synchronized void saveTicket(Ticket ticket, int projectionId) {
         TICKET_DATA_LIST.add(new TicketData(
                 counterTicketId++,
                 ticket.getPrice(),
@@ -74,7 +75,7 @@ public class MockTicketRepository implements TicketRepository {
             this.price = price;
             this.userId = userId;
             this.projectionId = projectionId;
-            this.seatId =seatId;
+            this.seatId = seatId;
         }
 
 

@@ -24,7 +24,7 @@ public class ProjectionDataMapper {
                 TicketDataMapper.mapToDtoList(projection.getTicketList()),
                 projection.getId(),
                 projection.getProjectionist()
-                );
+        );
     }
 
     public static Projection mapToEntity(ProjectionDto projectionDto) {

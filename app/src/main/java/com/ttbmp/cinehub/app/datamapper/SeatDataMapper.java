@@ -18,7 +18,7 @@ public class SeatDataMapper {
     }
 
     public static Seat mapToEntity(SeatDto seatDto) {
-        return new Seat(seatDto.getId(), seatDto.getPrice(), seatDto.getState(),seatDto.getPosition());
+        return new Seat(seatDto.getId(), seatDto.getPrice(), seatDto.getState(), seatDto.getPosition());
     }
 
     public static List<SeatDto> mapToDtoList(List<Seat> seatList) {

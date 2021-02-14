@@ -1,7 +1,5 @@
 package com.ttbmp.cinehub.app.repository.projection;
 
-import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;

@@ -1,8 +1,6 @@
 package com.ttbmp.cinehub.app.repository.projection;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
-import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
 import com.ttbmp.cinehub.app.repository.hall.HallRepository;
@@ -11,13 +9,11 @@ import com.ttbmp.cinehub.app.repository.movie.MockMovieRepository;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.MockProjectionistShiftRepository;
-import com.ttbmp.cinehub.app.repository.ticket.MockTicketRepository;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
-import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

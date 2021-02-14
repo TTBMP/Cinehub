@@ -6,7 +6,7 @@ import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import java.util.List;
 
 /**
- * @author Fabio Buracchi and Palmieri Ivan
+ * @author Fabio Buracchi, Palmieri Ivan
  */
 public interface TicketRepository {
 

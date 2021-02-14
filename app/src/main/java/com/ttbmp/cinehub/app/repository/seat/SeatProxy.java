@@ -7,8 +7,8 @@ import com.ttbmp.cinehub.domain.Seat;
  */
 public class SeatProxy extends Seat {
 
-    public SeatProxy(int id, Long price, Boolean state,String position) {
-        super(id, price, state,position);
+    public SeatProxy(int id, Long price, Boolean state, String position) {
+        super(id, price, state, position);
     }
 
 }
