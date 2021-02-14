@@ -1,8 +1,10 @@
 package com.ttbmp.cinehub.app.repository.seat;
 
 import com.ttbmp.cinehub.app.repository.hall.MockHallRepository;
+import com.ttbmp.cinehub.app.repository.ticket.MockTicketRepository;
 import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Seat;
+import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.stream.Collectors;
  */
 public class MockSeatRepository implements SeatRepository {
 
-    private static final List<SeatEntity> SEAT_ENTITY_LIST = new ArrayList<>();
+    private static final List<SeatData> SEAT_DATA_LIST = new ArrayList<>();
     private static int seatIdCounter = 0;
 
     static {
@@ -21,36 +23,62 @@ public class MockSeatRepository implements SeatRepository {
                 .map(MockHallRepository.HallData::getId)
                 .collect(Collectors.toList());
         for (int hallId : hallIdList) {
-            for (int i = 0; i < 50 + 10 * (seatIdCounter % 3); i++, seatIdCounter++) {
-                SEAT_ENTITY_LIST.add(new SeatEntity(seatIdCounter, 5L + seatIdCounter % 3, seatIdCounter % 2 == 0, hallId));
+            for (char c : new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'L'}) {
+                for (int i = 0; i < 7; i++) {
+                    SEAT_DATA_LIST.add(new SeatData(seatIdCounter++, 5L + seatIdCounter % 3, seatIdCounter % 2 == 0, hallId, c + String.valueOf(i)));
+                }
             }
         }
     }
 
-    public static List<SeatEntity> getSeatEntityList() {
-        return SEAT_ENTITY_LIST;
+    public static List<SeatData> getSeatDataList() {
+        return SEAT_DATA_LIST;
     }
 
     @Override
     public List<Seat> getSeatList(Hall hall) {
-        return SEAT_ENTITY_LIST.stream()
-                .filter(e -> e.hallId == hall.getId())
-                .map(e -> new SeatProxy(e.id, e.price, e.state))
+        return SEAT_DATA_LIST.stream()
+                .filter(d -> d.hallId == hall.getId())
+                .map(d -> new SeatProxy(d.id, d.price, d.state, d.position))
                 .collect(Collectors.toList());
     }
 
-    public static class SeatEntity {
+    @Override
+    public Seat getSeat(Ticket ticket) {
+        int ticketSeatId = MockTicketRepository.getTicketDataList().stream()
+                .filter(d -> d.getId() == ticket.getId())
+                .map(MockTicketRepository.TicketData::getSeatId)
+                .collect(Collectors.toList())
+                .get(0);
+        return SEAT_DATA_LIST.stream()
+                .filter(d -> d.id == ticketSeatId)
+                .map(d -> new SeatProxy(d.id, d.price, d.state, d.position))
+                .collect(Collectors.toList())
+                .get(0);
+    }
+
+    public static class SeatData {
 
         private int id;
         private long price;
         private boolean state;
         private int hallId;
+        private String position;
 
-        public SeatEntity(int id, long price, boolean state, int hallId) {
+        public SeatData(int id, long price, boolean state, int hallId, String position) {
             this.id = id;
             this.price = price;
             this.state = state;
             this.hallId = hallId;
+            this.position = position;
+        }
+
+        public String getPosition() {
+            return position;
+        }
+
+        public void setPosition(String position) {
+            this.position = position;
         }
 
         public int getId() {

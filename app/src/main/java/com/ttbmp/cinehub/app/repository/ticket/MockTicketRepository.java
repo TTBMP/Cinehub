@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.repository.ticket;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
 import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Projection;
@@ -11,12 +12,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author Fabio Buracchi
+ * @author Fabio Buracchi and Palmieri Ivan
  */
 public class MockTicketRepository implements TicketRepository {
 
     private static final List<TicketData> TICKET_DATA_LIST = new ArrayList<>();
-
+    private static int counterTicketId =0;
     static {
         List<String> userIdList = MockUserRepository.getUserDataList().stream()
                 .map(MockUserRepository.UserData::getId)
@@ -35,16 +36,17 @@ public class MockTicketRepository implements TicketRepository {
     }
 
     @Override
-    public void saveTicket(Ticket ticket) {
-        // TODO get seat and projection information
+    public void saveTicket(Ticket ticket, int projectionId) {
         TICKET_DATA_LIST.add(new TicketData(
-                ticket.getId(),
+                counterTicketId++,
                 ticket.getPrice(),
                 ticket.getOwner().getId(),
-                0,
-                0
+                projectionId,
+                ticket.getSeat().getId()
+
         ));
     }
+
 
     @Override
     public List<Ticket> getTicketList(Projection projection) {
@@ -53,7 +55,8 @@ public class MockTicketRepository implements TicketRepository {
                 .map(d -> new TicketProxy(
                         d.id,
                         d.price,
-                        serviceLocator.getService(UserRepository.class)
+                        serviceLocator.getService(UserRepository.class),
+                        serviceLocator.getService(SeatRepository.class)
                 ))
                 .collect(Collectors.toList());
     }
@@ -71,8 +74,9 @@ public class MockTicketRepository implements TicketRepository {
             this.price = price;
             this.userId = userId;
             this.projectionId = projectionId;
-            this.seatId = seatId;
+            this.seatId =seatId;
         }
+
 
         public int getId() {
             return id;
@@ -113,7 +117,6 @@ public class MockTicketRepository implements TicketRepository {
         public void setSeatId(int seatId) {
             this.seatId = seatId;
         }
-
     }
 
 }

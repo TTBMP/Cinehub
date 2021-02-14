@@ -25,36 +25,6 @@
                         <Insets left="10.0"/>
                     </HBox.margin>
                 </Label>
-                <Label text="Total seat:" textFill="#a8a5a5">
-                    <HBox.margin>
-                        <Insets left="50.0"/>
-                    </HBox.margin>
-                </Label>
-                <Label fx:id="projectionCapacityLabel" textFill="#a8a5a5">
-                    <HBox.margin>
-                        <Insets left="10.0"/>
-                    </HBox.margin>
-                </Label>
-                <Label text="Free seats" textFill="#a8a5a5">
-                    <HBox.margin>
-                        <Insets left="50.0"/>
-                    </HBox.margin>
-                </Label>
-                <Label fx:id="freeSeatLabel" textFill="#a8a5a5">
-                    <HBox.margin>
-                        <Insets left="10.0"/>
-                    </HBox.margin>
-                </Label>
-                <Label text="Sold seats" textFill="#a8a5a5">
-                    <HBox.margin>
-                        <Insets left="50.0"/>
-                    </HBox.margin>
-                </Label>
-                <Label fx:id="buysSeatLabel" textFill="#a8a5a5">
-                    <HBox.margin>
-                        <Insets left="10.0"/>
-                    </HBox.margin>
-                </Label>
             </children>
         </HBox>
     </children>

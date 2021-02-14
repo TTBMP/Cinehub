@@ -1,14 +1,14 @@
 package com.ttbmp.cinehub.domain.ticket.decorator;
 
-import com.ttbmp.cinehub.domain.ticket.component.TicketAbstract;
+import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 /**
  * @author Palmieri Ivan
  */
 public class TicketHeatedArmchair extends TicketDecorator {
 
-    public TicketHeatedArmchair(TicketAbstract ticketAbstract) {
-        super(ticketAbstract);
+    public TicketHeatedArmchair(Ticket ticket) {
+        super(ticket);
     }
 
     @Override

@@ -43,38 +43,54 @@ public class SeatsMatrixViewController extends ViewController {
         int rest = size % rows;
         int count = 0;
         int buy = 0;
-        char[] a = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'Z'};
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 RadioButton radioButton = new RadioButton();
                 radioButton.setPadding(new Insets(5, 5, 5, 5));
-                radioButton.setText("" + a[j] + i + "\n" + seatDtoList.get(count).getPrice() + "\u20ac");
+                radioButton.setText(seatDtoList.get(count).getPosition()+ "\n" + seatDtoList.get(count).getPrice() + "\u20ac");
                 radioButton.setToggleGroup(toggleGroup);
                 ImageView imageView = new ImageView(new Image(String.valueOf(this.getClass().getResource("/drawables/office-chair.png"))));
                 imageView.setFitWidth(25);
                 imageView.setFitHeight(25);
                 radioButton.setGraphic(imageView);
-                if (seatDtoList.get(count).getState().equals(Boolean.FALSE)) {
-                    radioButton.setDisable(true);
+
+                if(!viewModel.selectedProjectionProperty().getValue().getListTicket().isEmpty()) {
+                    int finalCount = count;
+                    viewModel.selectedProjectionProperty().getValue().getListTicket().forEach(x -> {
+                        String val = seatDtoList.get(finalCount).getPosition();
+                        if (x.getSeatDto().getPosition().equals(val) ) {
+                            radioButton.setDisable(true);
+                        }
+                    });
+                }
+                if (radioButton.isDisabled()) {
                     buy++;
                 }
-
                 gridSeats.add(radioButton, i, j);
                 count++;
             }
         }
-        addOtherButton(seatDtoList, columns, rest, count, buy, a);
+        addOtherButton(seatDtoList, columns, rest, count, buy,viewModel);
         updateValue(viewModel, size, buy);
     }
 
-    private void addOtherButton(List<SeatDto> seatDtoList, int columns, int rest, int count, int buy, char[] a) {
+    private void addOtherButton(List<SeatDto> seatDtoList, int columns, int rest, int count, int buy, BuyTicketViewModel viewModel) {
         for (int k = 0; k < rest; k++) {
             RadioButton radioButton = new RadioButton();
-            radioButton.setText("" + a[columns + 1] + k + "\n" + seatDtoList.get(count).getPrice() + "\u20ac");
+            radioButton.setText(seatDtoList.get(count).getPosition() + "\n" + seatDtoList.get(count).getPrice() + "\u20ac");
             radioButton.setToggleGroup(toggleGroup);
             radioButton.setPadding(new Insets(5, 5, 5, 5));
-            if (seatDtoList.get(count).getState().equals(Boolean.FALSE)) {
-                radioButton.setDisable(true);
+            if(!viewModel.selectedProjectionProperty().getValue().getListTicket().isEmpty()) {
+
+                int finalCount = count;
+                viewModel.selectedProjectionProperty().getValue().getListTicket().forEach(x -> {
+                    String val = seatDtoList.get(finalCount).getPosition();
+                    if (x.getSeatDto().getPosition().equals(val) ) {
+                        radioButton.setDisable(true);
+                    }
+                });
+            }
+            if (radioButton.isDisabled()) {
                 buy++;
             }
             ImageView imageView = new ImageView(new Image(String.valueOf(this.getClass().getResource("/drawables/office-chair.png"))));

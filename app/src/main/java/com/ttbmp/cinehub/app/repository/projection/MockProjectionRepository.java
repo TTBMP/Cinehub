@@ -11,10 +11,13 @@ import com.ttbmp.cinehub.app.repository.movie.MockMovieRepository;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.MockProjectionistShiftRepository;
+import com.ttbmp.cinehub.app.repository.ticket.MockTicketRepository;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
+import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
+import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -57,6 +60,7 @@ public class MockProjectionRepository implements ProjectionRepository {
                                 .map(MockShiftRepository.ShiftData::getEmployeeId)
                                 .collect(Collectors.toList())
                                 .get(0);
+
                         PROJECTION_DATA_LIST.add(new ProjectionData(
                                 projectionIdCounter++,
                                 date.toString(),
@@ -83,7 +87,7 @@ public class MockProjectionRepository implements ProjectionRepository {
     }
 
     @Override
-    public List<Projection> getProjectionList(CinemaDto cinema, MovieDto movie, String date) {
+    public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date) {
         return PROJECTION_DATA_LIST.stream()
                 .filter(d -> d.cinemaId == cinema.getId() && d.movieId == movie.getId() && d.date.equals(date))
                 .map(d -> new ProjectionProxy(
@@ -98,6 +102,7 @@ public class MockProjectionRepository implements ProjectionRepository {
                 ))
                 .collect(Collectors.toList());
     }
+
 
     @Override
     public List<Projection> getProjectionList(String localDate) {
@@ -165,6 +170,7 @@ public class MockProjectionRepository implements ProjectionRepository {
         private int cinemaId;
         private String projectionistId;
 
+
         public ProjectionData(int id, String date, String startTime, int movieId, int hallId, int cinemaId, String projectionistId) {
             this.id = id;
             this.date = date;
@@ -173,6 +179,7 @@ public class MockProjectionRepository implements ProjectionRepository {
             this.hallId = hallId;
             this.cinemaId = cinemaId;
             this.projectionistId = projectionistId;
+
         }
 
         public int getId() {

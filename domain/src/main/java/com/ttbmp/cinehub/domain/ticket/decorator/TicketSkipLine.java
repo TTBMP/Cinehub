@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.domain.ticket.decorator;
 
-import com.ttbmp.cinehub.domain.ticket.component.TicketAbstract;
+import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 /**
  * @author Palmieri Ivan
@@ -8,8 +8,8 @@ import com.ttbmp.cinehub.domain.ticket.component.TicketAbstract;
 public class TicketSkipLine extends TicketDecorator {
 
 
-    public TicketSkipLine(TicketAbstract ticketAbstract) {
-        super(ticketAbstract);
+    public TicketSkipLine(Ticket ticket) {
+        super(ticket);
     }
 
     @Override

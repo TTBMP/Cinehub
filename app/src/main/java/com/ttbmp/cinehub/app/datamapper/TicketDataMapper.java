@@ -4,7 +4,6 @@ package com.ttbmp.cinehub.app.datamapper;
 import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.utilities.DataMapperHelper;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
-import com.ttbmp.cinehub.domain.ticket.component.TicketAbstract;
 
 import java.util.List;
 
@@ -16,24 +15,20 @@ public class TicketDataMapper {
     private TicketDataMapper() {
     }
 
-    public static TicketDto mapToDto(TicketAbstract ticketAbstract) {
-        TicketDto ticketDto = new TicketDto(ticketAbstract.getPrice());
-        ticketDto.setPosition(ticketAbstract.getPosition());
-        return ticketDto;
+    public static TicketDto mapToDto(Ticket ticket) {
+        return new TicketDto(ticket.getId(),ticket.getPrice(),ticket.getOwner(),SeatDataMapper.mapToDto(ticket.getSeat()));
     }
 
     public static Ticket mapToEntity(TicketDto ticketDto) {
-        Ticket ticket = new Ticket(ticketDto.getPrice());
-        ticket.setPosition(ticketDto.getPosition());
-        return ticket;
+        return new Ticket(ticketDto.getId(),ticketDto.getPrice(),ticketDto.getOwner(),SeatDataMapper.mapToEntity(ticketDto.getSeatDto()));
     }
 
     public static List<TicketDto> mapToDtoList(List<Ticket> ticketList) {
         return DataMapperHelper.mapList(ticketList, TicketDataMapper::mapToDto);
     }
 
-    public static List<Ticket> mapToEntityList(List<TicketDto> ticketDtos) {
-        return DataMapperHelper.mapList(ticketDtos, TicketDataMapper::mapToEntity);
+    public static List<Ticket> mapToEntityList(List<TicketDto> ticketDto) {
+        return DataMapperHelper.mapList(ticketDto, TicketDataMapper::mapToEntity);
     }
 
 }
