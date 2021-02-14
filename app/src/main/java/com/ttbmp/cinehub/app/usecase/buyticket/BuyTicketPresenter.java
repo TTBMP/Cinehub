@@ -47,4 +47,6 @@ public interface BuyTicketPresenter {
     void presentGetListMovieNullRequest();
 
     void presentInvalidGetListMovie(GetListMovieRequest request);
+
+    void presentAutenticationError();
 }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity"
+            prefHeight="94.0" prefWidth="364.0" stylesheets="@../../styles/stylesIvan.css"
+            xmlns="http://javafx.com/javafx/8"
+            fx:controller="com.ttbmp.cinehub.ui.desktop.buyticket.choosecinema.ChooseCinemaItemViewController">
+    <children>
+        <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+              AnchorPane.topAnchor="0.0">
+            <children>
+                <ImageView fitHeight="97.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../drawables/map.png"/>
+                    </image>
+                </ImageView>
+                <VBox prefHeight="94.0" prefWidth="234.0">
+                    <children>
+                        <Label fx:id="nameCinemaLabel" prefHeight="44.0" prefWidth="250.0" textAlignment="CENTER">
+                            <font>
+                                <Font size="20.0"/>
+                            </font>
+                            <VBox.margin>
+                                <Insets left="10.0" top="5.0"/>
+                            </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Text fill="#9e9c9c" strokeType="OUTSIDE" strokeWidth="0.0" text="City:">
+                                    <HBox.margin>
+                                        <Insets left="10.0"/>
+                                    </HBox.margin>
+                                </Text>
+                                <Text fx:id="cinemaCityText" fill="#9e9c9c" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      wrappingWidth="90.0">
+                                    <HBox.margin>
+                                        <Insets left="10.0"/>
+                                    </HBox.margin>
+                                </Text>
+                            </children>
+                            <VBox.margin>
+                                <Insets top="10.0"/>
+                            </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Text fill="#9e9c9c" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:">
+                                    <HBox.margin>
+                                        <Insets left="10.0"/>
+                                    </HBox.margin>
+                                </Text>
+                                <Text fx:id="cinemaAddressText" fill="#9e9c9c" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      wrappingWidth="81.0">
+                                    <HBox.margin>
+                                        <Insets left="10.0"/>
+                                    </HBox.margin>
+                                </Text>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>

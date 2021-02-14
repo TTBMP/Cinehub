@@ -1,17 +1,119 @@
 package com.ttbmp.cinehub.app.repository.ticket;
 
+import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
+import com.ttbmp.cinehub.app.repository.user.UserRepository;
+import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class MockTicketRepository implements TicketRepository {
 
-    private static final List<Ticket> ticketList = new ArrayList<>();
+    private static final List<TicketData> TICKET_DATA_LIST = new ArrayList<>();
+
+    static {
+        List<String> userIdList = MockUserRepository.getUserDataList().stream()
+                .map(MockUserRepository.UserData::getId)
+                .collect(Collectors.toList());
+        // TODO
+    }
+
+    private final ServiceLocator serviceLocator;
+
+    public MockTicketRepository(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
+    }
+
+    public static List<TicketData> getTicketDataList() {
+        return TICKET_DATA_LIST;
+    }
 
     @Override
     public void saveTicket(Ticket ticket) {
-        ticketList.add(ticket);
+        // TODO get seat and projection information
+        TICKET_DATA_LIST.add(new TicketData(
+                ticket.getId(),
+                ticket.getPrice(),
+                ticket.getOwner().getId(),
+                0,
+                0
+        ));
+    }
+
+    @Override
+    public List<Ticket> getTicketList(Projection projection) {
+        return TICKET_DATA_LIST.stream()
+                .filter(d -> d.projectionId == projection.getId())
+                .map(d -> new TicketProxy(
+                        d.id,
+                        d.price,
+                        serviceLocator.getService(UserRepository.class)
+                ))
+                .collect(Collectors.toList());
+    }
+
+    public static class TicketData {
+
+        private int id;
+        private long price;
+        private String userId;
+        private int projectionId;
+        private int seatId;
+
+        public TicketData(int id, long price, String userId, int projectionId, int seatId) {
+            this.id = id;
+            this.price = price;
+            this.userId = userId;
+            this.projectionId = projectionId;
+            this.seatId = seatId;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public long getPrice() {
+            return price;
+        }
+
+        public void setPrice(long price) {
+            this.price = price;
+        }
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public void setUserId(String userId) {
+            this.userId = userId;
+        }
+
+        public int getProjectionId() {
+            return projectionId;
+        }
+
+        public void setProjectionId(int projectionId) {
+            this.projectionId = projectionId;
+        }
+
+        public int getSeatId() {
+            return seatId;
+        }
+
+        public void setSeatId(int seatId) {
+            this.seatId = seatId;
+        }
+
     }
 
 }

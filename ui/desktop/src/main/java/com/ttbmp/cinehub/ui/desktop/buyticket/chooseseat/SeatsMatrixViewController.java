@@ -50,7 +50,7 @@ public class SeatsMatrixViewController extends ViewController {
                 radioButton.setPadding(new Insets(5, 5, 5, 5));
                 radioButton.setText("" + a[j] + i + "\n" + seatDtoList.get(count).getPrice() + "\u20ac");
                 radioButton.setToggleGroup(toggleGroup);
-                ImageView imageView = new ImageView(new Image(String.valueOf(this.getClass().getResource("/drawable/office-chair.png"))));
+                ImageView imageView = new ImageView(new Image(String.valueOf(this.getClass().getResource("/drawables/office-chair.png"))));
                 imageView.setFitWidth(25);
                 imageView.setFitHeight(25);
                 radioButton.setGraphic(imageView);
@@ -77,7 +77,7 @@ public class SeatsMatrixViewController extends ViewController {
                 radioButton.setDisable(true);
                 buy++;
             }
-            ImageView imageView = new ImageView(new Image(String.valueOf(this.getClass().getResource("/drawable/office-chair.png"))));
+            ImageView imageView = new ImageView(new Image(String.valueOf(this.getClass().getResource("/drawables/office-chair.png"))));
             imageView.setFitWidth(25);
             imageView.setFitHeight(25);
             radioButton.setGraphic(imageView);

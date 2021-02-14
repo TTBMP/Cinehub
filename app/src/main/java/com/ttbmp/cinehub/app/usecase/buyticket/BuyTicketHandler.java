@@ -3,6 +3,9 @@ package com.ttbmp.cinehub.app.usecase.buyticket;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class BuyTicketHandler implements BuyTicketUseCase {
 
     private final BuyTicketController controller;

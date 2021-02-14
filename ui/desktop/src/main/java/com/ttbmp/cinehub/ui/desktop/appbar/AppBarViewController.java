@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.appbar;
 
+import com.ttbmp.cinehub.ui.desktop.about.AboutActivity;
 import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketActivity;
 import com.ttbmp.cinehub.ui.desktop.manageshift.ManageShiftActivity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
@@ -27,6 +28,9 @@ public class AppBarViewController extends ViewController {
 
     @FXML
     private Tab buyTicketTab;
+
+    @FXML
+    private Tab aboutTab;
 
     @FXML
     private Tab viewPersonalScheduleTab;
@@ -57,6 +61,7 @@ public class AppBarViewController extends ViewController {
         activityTabMap.put(BuyTicketActivity.class, buyTicketTab);
         activityTabMap.put(ManageShiftActivity.class, manageShiftTab);
         activityTabMap.put(ViewPersonalScheduleActivity.class, viewPersonalScheduleTab);
+        activityTabMap.put(AboutActivity.class, aboutTab);
     }
 
 }

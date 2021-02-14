@@ -13,10 +13,6 @@ public class Movie {
     private String rating;
     private String releaseDate;
 
-    public Movie(int id) {
-        this.id = id;
-    }
-
     public Movie(int id, String name, String overview, int duration, String imageUrl, String rating, String releaseDate) {
         this.id = id;
         this.name = name;

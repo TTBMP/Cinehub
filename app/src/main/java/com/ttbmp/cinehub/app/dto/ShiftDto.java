@@ -8,16 +8,26 @@ import java.time.LocalTime;
  */
 public class ShiftDto {
 
+    private int id;
     private EmployeeDto employee;
     private LocalDate date;
     private LocalTime start;
     private LocalTime end;
 
-    public ShiftDto(EmployeeDto employee, LocalDate date, LocalTime start, LocalTime end) {
+    public ShiftDto(int id, EmployeeDto employee, LocalDate date, LocalTime start, LocalTime end) {
+        this.id = id;
         this.employee = employee;
         this.date = date;
         this.start = start;
         this.end = end;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public EmployeeDto getEmployee() {

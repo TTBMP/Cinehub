@@ -82,15 +82,14 @@ public class PaymentViewController extends ViewController {
                         or(viewModel.nameUserProperty().isNull().
                                 or(viewModel.surnameUserProperty().isNull().
                                         or(viewModel.txtCvvProperty().isNull().
-                                                or(viewModel.numberOfCardUserProperty().isNull().
-                                                        or(viewModel.fieldExpirationDatePickerProperty().isNull()))))));
+                                                or(viewModel.numberOfCardUserProperty().isNull()
+                                                )))));
         errorSectionLabel.textProperty().bind(viewModel.paymentErrorProperty());
         emailTextField.textProperty().bindBidirectional(viewModel.emailUserProperty());
         nameTextField.textProperty().bindBidirectional(viewModel.nameUserProperty());
         surnameTextField.textProperty().bindBidirectional(viewModel.surnameUserProperty());
         numberOfCreditCardTextField.textProperty().bindBidirectional(viewModel.numberOfCardUserProperty());
         cvvTextField.textProperty().bindBidirectional(viewModel.txtCvvProperty());
-        fieldExpirationDatePicker.valueProperty().bindBidirectional(viewModel.fieldExpirationDatePickerProperty());
         fieldExpirationDatePicker.setDayCellFactory(CustomDateCell::new);
     }
 

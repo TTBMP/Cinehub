@@ -1,30 +1,41 @@
 package com.ttbmp.cinehub.domain;
 
-
+import com.ttbmp.cinehub.domain.employee.Projectionist;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Fabio Buracchi, Ivan Palmieri
  */
 public class Projection {
 
-    private final String startTime;
-    private final Hall hall;
-    private Cinema cinema;//TODO : should we delete cinema?
-    private Movie movie;
-    private List<Ticket> ticket = new ArrayList<>();
+    private int id;
     private String date;
+    private String startTime;
+    private Movie movie;
+    private Hall hall;
+    private Cinema cinema;
     private Projectionist projectionist;
+    private List<Ticket> ticketList;
 
-    public Projection(Movie movie, Cinema cinema, Hall hall, String startTime, String date) {
-        this.movie = movie;
-        this.cinema = cinema;
-        this.hall = hall;
-        this.startTime = startTime;
+    public Projection(int id, String date, String startTime, Movie movie, Hall hall, Cinema cinema, Projectionist projectionist, List<Ticket> ticketList) {
+        this.id = id;
         this.date = date;
+        this.startTime = startTime;
+        this.movie = movie;
+        this.hall = hall;
+        this.cinema = cinema;
+        this.projectionist = projectionist;
+        this.ticketList = ticketList;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDate() {
@@ -39,16 +50,8 @@ public class Projection {
         return startTime;
     }
 
-    public Cinema getCinema() {
-        return cinema;
-    }
-
-    public void setCinema(Cinema cinema) {
-        this.cinema = cinema;
-    }
-
-    public Hall getHall() {
-        return hall;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
     public Movie getMovie() {
@@ -59,16 +62,36 @@ public class Projection {
         this.movie = movie;
     }
 
-    public List<Ticket> getTicket() {
-        return ticket;
+    public Hall getHall() {
+        return hall;
     }
 
-    public void setTicket(List<Ticket> ticket) {
-        this.ticket = ticket;
+    public void setHall(Hall hall) {
+        this.hall = hall;
     }
 
-    public void addTicket(Ticket ticket) {
-        this.ticket.add(ticket);
+    public Cinema getCinema() {
+        return cinema;
+    }
+
+    public void setCinema(Cinema cinema) {
+        this.cinema = cinema;
+    }
+
+    public Projectionist getProjectionist() {
+        return projectionist;
+    }
+
+    public void setProjectionist(Projectionist projectionist) {
+        this.projectionist = projectionist;
+    }
+
+    public List<Ticket> getTicketList() {
+        return ticketList;
+    }
+
+    public void setTicketList(List<Ticket> ticketList) {
+        this.ticketList = ticketList;
     }
 
 }
