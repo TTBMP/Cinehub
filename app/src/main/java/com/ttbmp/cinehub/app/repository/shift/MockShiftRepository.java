@@ -9,7 +9,6 @@ import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.MockProjectionistShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftProxy;
-import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.usher.UsherShiftProxy;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.employee.Projectionist;
@@ -84,7 +83,8 @@ public class MockShiftRepository implements ShiftRepository {
                     serviceLocator.getService(HallRepository.class),
                     serviceLocator.getService(ProjectionRepository.class)
             );
-        } else if (employee instanceof Usher) {
+        }
+        if (employee instanceof Usher) {
             return new UsherShiftProxy(
                     data.id,
                     data.date,
@@ -105,7 +105,37 @@ public class MockShiftRepository implements ShiftRepository {
 
     @Override
     public List<Shift> getShiftList(Employee employee) {
-        // TODO
+        List<ShiftData> employeeShiftData = SHIFT_DATA_LIST.stream()
+                .filter(d -> d.employeeId.equals(employee.getId()))
+                .collect(Collectors.toList());
+        if (employee instanceof Projectionist) {
+            return SHIFT_DATA_LIST.stream()
+                    .filter(employeeShiftData::contains)
+                    .map(d -> new ProjectionistShiftProxy(
+                                    d.id,
+                                    d.date,
+                                    d.start,
+                                    d.end,
+                                    serviceLocator.getService(ProjectionistRepository.class),
+                                    serviceLocator.getService(HallRepository.class),
+                                    serviceLocator.getService(ProjectionRepository.class)
+                            )
+                    )
+                    .collect(Collectors.toList());
+        }
+        if (employee instanceof Usher) {
+            return SHIFT_DATA_LIST.stream()
+                    .filter(employeeShiftData::contains)
+                    .map(d -> new UsherShiftProxy(
+                                    d.id,
+                                    d.date,
+                                    d.start,
+                                    d.end,
+                                    serviceLocator.getService(UsherRepository.class)
+                            )
+                    )
+                    .collect(Collectors.toList());
+        }
         return null;
     }
 
