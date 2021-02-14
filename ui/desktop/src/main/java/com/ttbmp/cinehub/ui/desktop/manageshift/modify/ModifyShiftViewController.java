@@ -121,17 +121,15 @@ public class ModifyShiftViewController extends ViewController {
 
     private void submitButtonOnAction(ActionEvent action) {
         viewModel.setErrorAssignVisibility(false);
-        activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(
-                new CreateShiftRequest(
+
+        activity.getUseCase(ManageEmployeesShiftUseCase.class).modifyShift(
+                new ShiftModifyRequest(
                         viewModel.getSelectedShift().getEmployee(),
+                        viewModel.getSelectedShift().getId(),
                         viewModel.getSelectedDays(),
                         viewModel.getStartSpinnerModifyTime().withNano(0),
                         viewModel.getEndSpinnerModifyTime().withNano(0),
-                        viewModel.getSelectedHall()
-                )
-        );
-
-        activity.getUseCase(ManageEmployeesShiftUseCase.class).modifyShift(new ShiftModifyRequest(viewModel.getSelectedShift(), viewModel.getShiftCreated()));
+                        viewModel.getSelectedHall()));
 
         if (!viewModel.isErrorAssignVisibility()) {
             try {

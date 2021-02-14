@@ -17,7 +17,7 @@ public interface ShiftRepository {
 
     List<Shift> getShiftList(Employee employee);
 
-    void saveShift(Shift shift) throws ShiftSaveException;
+    void saveShift(Shift shift);
 
     void deletedShift(Shift shift) throws ShiftSaveException;
 

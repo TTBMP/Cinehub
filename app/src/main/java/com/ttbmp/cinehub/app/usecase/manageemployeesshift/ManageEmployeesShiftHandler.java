@@ -45,11 +45,6 @@ public class ManageEmployeesShiftHandler implements ManageEmployeesShiftUseCase 
     }
 
     @Override
-    public void saveShift(ShiftRequest request) {
-        controller.saveShift(request);
-    }
-
-    @Override
     public void modifyShift(ShiftModifyRequest request) {
         controller.modifyShift(request);
     }

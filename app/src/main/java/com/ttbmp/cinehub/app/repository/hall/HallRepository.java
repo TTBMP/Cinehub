@@ -18,4 +18,6 @@ public interface HallRepository {
 
     Hall getHall(ProjectionistShift projectionistShift);
 
+    Hall getHall(int hallId);
+
 }

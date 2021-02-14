@@ -6,7 +6,6 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUs
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.CreateShiftRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetHallListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftRepeatRequest;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftRequest;
 import com.ttbmp.cinehub.domain.shift.ShiftRepeatingOption;
 import com.ttbmp.cinehub.ui.desktop.manageshift.ManageEmployeesShiftViewModel;
 import com.ttbmp.cinehub.ui.desktop.manageshift.components.ComboBoxOptionValueFactory;
@@ -21,7 +20,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
@@ -79,6 +77,7 @@ public class AssignShiftViewController extends ViewController {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
             hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
         }
+        viewModel.setRepeatVisibility(false);
         viewModel.setErrorAssignVisibility(false);
         activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(viewModel.getSelectedDayWeek().getEmployee().getCinema()));
         hallComboBox.setItems(viewModel.getHallList());
@@ -98,7 +97,8 @@ public class AssignShiftViewController extends ViewController {
         errorLabel.textProperty().bind(viewModel.errorProperty());
 
         viewModel.setRepeatVisibility(viewModel.isRepeatVisibility());
-        shiftRepeatCheckBox.setOnAction(event -> viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility()));
+
+        shiftRepeatCheckBox.selectedProperty().bindBidirectional(viewModel.repeatVisibilityProperty());
 
         viewModel.setStartSpinnerTime(LocalTime.NOON);
         viewModel.setEndSpinnerTime(LocalTime.NOON.plusHours(1));
@@ -112,7 +112,7 @@ public class AssignShiftViewController extends ViewController {
         optionRepeatComboBox.getItems().setAll(ShiftRepeatingOption.values());
         optionRepeatComboBox.setButtonCell(new ComboBoxOptionValueFactory(null));
         optionRepeatComboBox.setCellFactory(ComboBoxOptionValueFactory::new);
-        optionRepeatComboBox.valueProperty().bindBidirectional(viewModel.selectedOptionsProperty());
+        optionRepeatComboBox.valueProperty().bindBidirectional(viewModel.selectedOptionProperty());
         confirmButton.setOnAction(this::confirmButtonOnAction);
 
         cancelButton.setOnAction(a -> {
@@ -120,7 +120,7 @@ public class AssignShiftViewController extends ViewController {
                 if (shiftRepeatCheckBox.isSelected()) {
                     viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());
                 }
-                viewModel.setSelectedOptions(null);
+                viewModel.setSelectedOption(null);
                 navController.popBackStack();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -130,60 +130,36 @@ public class AssignShiftViewController extends ViewController {
 
     private void confirmButtonOnAction(ActionEvent action) {
 
-        activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(
-                viewModel.getSelectedDayWeek().getEmployee(),
-                viewModel.getSelectedDayWeek().getDate(),
-                viewModel.getStartSpinnerTime().withNano(0),
-                viewModel.getEndSpinnerTime().withNano(0),
-                viewModel.getSelectedHall()));
-
-        if (viewModel.getSelectedOptions() == null)
-            saveShift();
-        else {
-            saveRepeatedShift();
-        }
-    }
-
-    public void saveShift() {
-        viewModel.setErrorAssignVisibility(false);
-        activity.getUseCase(ManageEmployeesShiftUseCase.class).saveShift(new ShiftRequest(viewModel.getShiftCreated()));
-        if (!viewModel.isErrorAssignVisibility()) {
-            try {
-                if (shiftRepeatCheckBox.isSelected()) {
-                    viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());
-                }
-                viewModel.setSelectedOptions(null);
-                navController.popBackStack();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-    public void saveRepeatedShift() {
-        if (viewModel.getShiftCreated() != null && viewModel.getSelectedEndRepeatDay() != null) {
+        if (!viewModel.isRepeatVisibility()) {
+            activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(
+                    viewModel.getSelectedDayWeek().getEmployee(),
+                    viewModel.getSelectedDayWeek().getDate(),
+                    viewModel.getStartSpinnerTime().withNano(0),
+                    viewModel.getEndSpinnerTime().withNano(0),
+                    viewModel.getSelectedHall()));
+        } else {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).saveRepeatedShift(
                     new ShiftRepeatRequest(
-                            LocalDate.parse(viewModel.getSelectedDayWeek().getDate().toString()),
+                            viewModel.getSelectedDayWeek().getDate(),
                             viewModel.getSelectedEndRepeatDay(),
-                            viewModel.getSelectedOptions().toString(),
-                            viewModel.getShiftCreated(),
+                            viewModel.getSelectedOption().toString(),
+                            viewModel.getSelectedDayWeek().getEmployee(),
+                            viewModel.getStartSpinnerTime(),
+                            viewModel.getEndSpinnerTime(),
                             viewModel.getSelectedHall()
                     )
             );
+        }
+        if (!viewModel.isErrorAssignVisibility()) {
             try {
-                viewModel.setSelectedOptions(null);
-                viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());
+                viewModel.setSelectedOption(null);
                 navController.popBackStack();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
-            repeatDatePicker.setStyle("-fx-background-color: red;");
-            errorVBox.setVisible(true);
         }
     }
+
 }
 
 
