@@ -51,11 +51,8 @@ public class ViewPersonalScheduleFxPresenter implements ViewPersonalSchedulePres
     @Override
     public void presentInvalidProjectionListRequest(ProjectionListRequest request) {
         String message = "";
-        if (request.getErrorList().contains(ProjectionListRequest.INVALID_SHIFT_ERROR)) {
-            message += ProjectionListRequest.INVALID_SHIFT_ERROR.getMessage() + "\n";
-        }
-        if (request.getErrorList().contains(ProjectionListRequest.MISSING_SHIFT_ERROR)) {
-            message += ProjectionListRequest.MISSING_SHIFT_ERROR.getMessage() + "\n";
+        if (request.getErrorList().contains(ProjectionListRequest.INVALID_SHIFT_ID_ERROR)) {
+            message += ProjectionListRequest.INVALID_SHIFT_ID_ERROR.getMessage() + "\n";
         }
         viewModel.setErrorMessage(message);
     }

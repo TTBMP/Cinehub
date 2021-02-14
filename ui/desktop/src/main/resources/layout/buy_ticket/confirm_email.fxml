@@ -4,8 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<VBox minHeight="730.0" minWidth="1156.0" stylesheets="@../../styles/stylesIvan.css" xmlns="http://javafx.com/javafx/8"
-      xmlns:fx="http://javafx.com/fxml/1"
+<VBox xmlns:fx="http://javafx.com/fxml/1" minHeight="730.0" minWidth="1156.0" stylesheets="@../../styles/stylesIvan.css"
+      xmlns="http://javafx.com/javafx/8"
       fx:controller="com.ttbmp.cinehub.ui.desktop.buyticket.confirmemail.ConfirmEmailViewController">
     <children>
         <fx:include fx:id="appBar" source="/layout/app_bar/app_bar.fxml"/>

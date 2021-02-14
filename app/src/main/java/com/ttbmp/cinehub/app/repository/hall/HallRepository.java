@@ -2,6 +2,8 @@ package com.ttbmp.cinehub.app.repository.hall;
 
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.Hall;
+import com.ttbmp.cinehub.domain.Projection;
+import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 
 import java.util.List;
 
@@ -10,6 +12,10 @@ import java.util.List;
  */
 public interface HallRepository {
 
-    List<Hall> getCinemaHallList(Cinema cinema);
+    List<Hall> getHallList(Cinema cinema);
+
+    Hall getHall(Projection projection);
+
+    Hall getHall(ProjectionistShift projectionistShift);
 
 }

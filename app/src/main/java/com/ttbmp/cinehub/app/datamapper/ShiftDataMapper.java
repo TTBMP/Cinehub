@@ -5,7 +5,7 @@ import com.ttbmp.cinehub.app.dto.ShiftProjectionistDto;
 import com.ttbmp.cinehub.app.dto.ShiftUsherDto;
 import com.ttbmp.cinehub.app.dto.UsherDto;
 import com.ttbmp.cinehub.app.utilities.DataMapperHelper;
-import com.ttbmp.cinehub.domain.Usher;
+import com.ttbmp.cinehub.domain.employee.Usher;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 import com.ttbmp.cinehub.domain.shift.Shift;
 import com.ttbmp.cinehub.domain.shift.UsherShift;
@@ -28,6 +28,7 @@ public class ShiftDataMapper {
         Objects.requireNonNull(shift);
         if (shift.getEmployee() instanceof Usher) {
             return new ShiftUsherDto(
+                    shift.getId(),
                     EmployeeDataMapper.mapToDto(shift.getEmployee()),
                     LocalDate.parse(shift.getDate()),
                     LocalTime.parse(shift.getStart()),
@@ -35,6 +36,7 @@ public class ShiftDataMapper {
             );
         } else {
             return new ShiftProjectionistDto(
+                    shift.getId(),
                     EmployeeDataMapper.mapToDto(shift.getEmployee()),
                     LocalDate.parse(shift.getDate()),
                     LocalTime.parse(shift.getStart()),
@@ -48,6 +50,7 @@ public class ShiftDataMapper {
         Objects.requireNonNull(shiftDto);
         if (shiftDto.getEmployee() instanceof UsherDto)
             return new UsherShift(
+                    shiftDto.getId(),
                     EmployeeDataMapper.matToEntity(shiftDto.getEmployee()),
                     shiftDto.getDate().toString(),
                     shiftDto.getStart().toString(),
@@ -55,11 +58,13 @@ public class ShiftDataMapper {
             );
         else
             return new ProjectionistShift(
+                    shiftDto.getId(),
                     EmployeeDataMapper.matToEntity(shiftDto.getEmployee()),
                     shiftDto.getDate().toString(),
                     shiftDto.getStart().toString(),
                     shiftDto.getEnd().toString(),
-                    HallDataMapper.mapToEntity(((ShiftProjectionistDto) shiftDto).getHallDto())
+                    HallDataMapper.mapToEntity(((ShiftProjectionistDto) shiftDto).getHallDto()),
+                    null
             );
     }
 

@@ -1,8 +1,6 @@
 package com.ttbmp.cinehub.app.dto;
 
-
 import java.util.List;
-
 
 /**
  * @author Palmieri Ivan

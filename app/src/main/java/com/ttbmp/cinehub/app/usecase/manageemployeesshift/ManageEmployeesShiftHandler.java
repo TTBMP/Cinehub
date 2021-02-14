@@ -3,6 +3,9 @@ package com.ttbmp.cinehub.app.usecase.manageemployeesshift;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class ManageEmployeesShiftHandler implements ManageEmployeesShiftUseCase {
 
     private final ManageEmployeesShiftController controller;

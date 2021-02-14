@@ -2,6 +2,9 @@ package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class ViewPersonalScheduleHandler implements ViewPersonalScheduleUseCase {
 
     private final ViewPersonalScheduleController controller;

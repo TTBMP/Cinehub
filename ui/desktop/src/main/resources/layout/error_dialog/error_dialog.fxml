@@ -6,7 +6,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity"
       prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1"
       fx:controller="com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.error.ErrorDialogViewController">
     <children>

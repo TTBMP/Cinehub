@@ -1,5 +1,10 @@
 package com.ttbmp.cinehub.domain;
 
+import com.ttbmp.cinehub.domain.employee.Employee;
+import com.ttbmp.cinehub.domain.ticket.component.Ticket;
+
+import java.util.List;
+
 /**
  * @author Fabio Buracchi, Palmieri Ivan
  */
@@ -10,6 +15,7 @@ public class User {
     private String surname;
     private String email;
     private CreditCard creditCard;
+    private List<Ticket> ownedTicketList;
 
     public User(String id, String name, String surname, String email, CreditCard creditCard) {
         this.id = id;
@@ -57,6 +63,14 @@ public class User {
 
     public void setCreditCard(CreditCard creditCard) {
         this.creditCard = creditCard;
+    }
+
+    public List<Ticket> getOwnedTicketList() {
+        return ownedTicketList;
+    }
+
+    public void setOwnedTicketList(List<Ticket> ownedTicketList) {
+        this.ownedTicketList = ownedTicketList;
     }
 
     @Override

@@ -1,7 +1,10 @@
 package com.ttbmp.cinehub.domain.shift;
 
-import com.ttbmp.cinehub.domain.Employee;
 import com.ttbmp.cinehub.domain.Hall;
+import com.ttbmp.cinehub.domain.Projection;
+import com.ttbmp.cinehub.domain.employee.Employee;
+
+import java.util.List;
 
 /**
  * @author Massimo Mazzetti
@@ -9,10 +12,12 @@ import com.ttbmp.cinehub.domain.Hall;
 public class ProjectionistShift extends Shift {
 
     private Hall hall;
+    private List<Projection> projectionList;
 
-    public ProjectionistShift(Employee employee, String date, String start, String end, Hall hall) {
-        super(employee, date, start, end);
+    public ProjectionistShift(int id, Employee employee, String date, String start, String end, Hall hall, List<Projection> projectionList) {
+        super(id, employee, date, start, end);
         this.hall = hall;
+        this.projectionList = projectionList;
     }
 
     public Hall getHall() {
@@ -21,6 +26,14 @@ public class ProjectionistShift extends Shift {
 
     public void setHall(Hall hall) {
         this.hall = hall;
+    }
+
+    public List<Projection> getProjectionList() {
+        return projectionList;
+    }
+
+    public void setProjectionList(List<Projection> projectionList) {
+        this.projectionList = projectionList;
     }
 
     @Override

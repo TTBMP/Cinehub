@@ -1,6 +1,5 @@
-.button
-{
-    -fx-border-radius:10;
+.button {
+    -fx-border-radius: 10;
 }
 
 .radio-button .radio {
@@ -11,22 +10,27 @@
     -fx-border-radius: 15px;
 
 }
+
 .radio-button .radio:selected {
     -fx-background-color: white;
     -fx-background-image: null;
 }
+
 .radio-button -radio:armed {
     -fx-background-color: white;
     -fx-background-image: null;
 }
+
 .radio-button -radio:determinate {
     -fx-background-color: white;
     -fx-background-image: null;
 }
+
 .radio-button -radio:indeterminate {
     -fx-background-color: white;
     -fx-background-image: null;
 }
+
 .radio-button .dot {
     -fx-background-radius: 15px;
 
@@ -35,8 +39,8 @@
 .check-box .box {
 
     -fx-background-color: white;
-    -fx-border-color:grey;
-    -fx-border-radius:3px;
+    -fx-border-color: grey;
+    -fx-border-radius: 3px;
 
 }
 
@@ -52,38 +56,37 @@
 }
 
 .text-field {
-    -fx-background-color: -fx-text-box-border, -fx-background ;
-    -fx-background-insets: 0, 0 0 1 0 ;
-    -fx-background-radius: 0 ;
-}
-.text-field:focused {
-    -fx-background-color: -fx-focus-color, -fx-background ;
+    -fx-background-color: -fx-text-box-border, -fx-background;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-background-radius: 0;
 }
 
-#confirmCinemaButton, #confirmMovieButton, #confirmButton, #confirmSeatButton,  #buyRandomButton, #timerCount {
+.text-field:focused {
+    -fx-background-color: -fx-focus-color, -fx-background;
+}
+
+#confirmCinemaButton, #confirmMovieButton, #confirmButton, #confirmSeatButton, #buyRandomButton, #timerCount {
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-background-color: linear-gradient(#cfff95, #6b9b37);
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
 }
 
 
-#cancelButton, #returnButton
-{
+#cancelButton, #returnButton {
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
     -fx-background-color: linear-gradient(#ff6434, #a30000);
 
 }
 
-#nextButton, #previousButton, #todayButton{
-    -fx-background-color:
-            #aeaeae,
-            linear-gradient(#fafdfe, #e8f5fc),
-            linear-gradient(#eaf6fd 0%, #ffffff 49%, #e0e0e0 50%, #aeaeae 100%);
-    -fx-background-insets: 0,1,2;
-    -fx-background-radius: 3,2,1;
+#nextButton, #previousButton, #todayButton {
+    -fx-background-color: #aeaeae,
+    linear-gradient(#fafdfe, #e8f5fc),
+    linear-gradient(#eaf6fd 0%, #ffffff 49%, #e0e0e0 50%, #aeaeae 100%);
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 3, 2, 1;
     -fx-padding: 3 15 3 15;
     -fx-text-fill: black;
     -fx-font-size: 12px;

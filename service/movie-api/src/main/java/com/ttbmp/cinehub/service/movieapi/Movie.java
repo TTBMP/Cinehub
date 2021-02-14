@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.service.movieapi;
 
-
 import com.google.gson.annotations.SerializedName;
 
 /**

@@ -1,22 +1,32 @@
 package com.ttbmp.cinehub.domain.shift;
 
-import com.ttbmp.cinehub.domain.Employee;
+import com.ttbmp.cinehub.domain.employee.Employee;
 
 /**
  * @author Fabio Buracchi, Massimo Mazzetti
  */
 public abstract class Shift {
 
+    private int id;
     private Employee employee;
     private String date;
     private String start;
     private String end;
 
-    protected Shift(Employee employee, String date, String start, String end) {
+    protected Shift(int id, Employee employee, String date, String start, String end) {
+        this.id = id;
         this.employee = employee;
         this.date = date;
         this.start = start;
         this.end = end;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Employee getEmployee() {
@@ -57,15 +67,12 @@ public abstract class Shift {
             return false;
         }
         Shift other = (Shift) obj;
-        return employee.equals(other.employee)
-                && date.equals(other.date)
-                && start.equals(other.start)
-                && end.equals(other.end);
+        return id == other.getId();
     }
 
     @Override
     public int hashCode() {
-        return employee.hashCode() + date.hashCode() + start.hashCode() + end.hashCode();
+        return id;
     }
 
 }

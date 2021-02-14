@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * @author Palmieri Ivan
  */
-public class AboutView  extends FxmlView {
+public class AboutView extends FxmlView {
 
     public AboutView() throws IOException {
         super("about_page.fxml");
