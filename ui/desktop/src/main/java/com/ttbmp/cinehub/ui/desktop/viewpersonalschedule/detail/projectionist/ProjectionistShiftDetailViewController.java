@@ -61,7 +61,7 @@ public class ProjectionistShiftDetailViewController extends ViewController {
             }
         });
         activity.getUseCase(ViewPersonalScheduleUseCase.class).getShiftProjectionList(
-                new ProjectionListRequest(viewModel.getSelectedShift())
+                new ProjectionListRequest(viewModel.getSelectedShift().getId())
         );
     }
 

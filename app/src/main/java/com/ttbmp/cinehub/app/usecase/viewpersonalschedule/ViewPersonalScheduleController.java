@@ -48,7 +48,7 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
     public void getShiftProjectionList(ProjectionListRequest request) {
         try {
             Request.validate(request);
-            ProjectionistShift shift = projectionistShiftRepository.getProjectionistShift(request.getShiftDto().getId());
+            ProjectionistShift shift = projectionistShiftRepository.getProjectionistShift(request.getProjectionistShiftId());
             presenter.presentGetProjectionList(new ProjectionListReply(shift.getProjectionList()));
         } catch (Request.NullRequestException e) {
             presenter.presentProjectionListNullRequest();

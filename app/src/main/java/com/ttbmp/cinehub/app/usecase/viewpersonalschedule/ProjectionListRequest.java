@@ -8,34 +8,26 @@ import com.ttbmp.cinehub.app.usecase.Request;
  */
 public class ProjectionListRequest extends Request {
 
-    public static final Request.Error MISSING_SHIFT_ERROR = new Request.Error("Shift value can't be null");
-    public static final Request.Error INVALID_SHIFT_ERROR = new Request.Error("Shift value is not valid");
+    public static final Request.Error INVALID_SHIFT_ID_ERROR = new Request.Error("Shift id can't be negative");
 
-    private ShiftDto shiftDto;
+    private int projectionistShiftId;
 
-    public ProjectionListRequest(ShiftDto shiftDto) {
-        this.shiftDto = shiftDto;
+    public ProjectionListRequest(int projectionistShiftId) {
+        this.projectionistShiftId = projectionistShiftId;
     }
 
-    public ShiftDto getShiftDto() {
-        return shiftDto;
+    public int getProjectionistShiftId() {
+        return projectionistShiftId;
     }
 
-    public void setShiftDto(ShiftDto shiftDto) {
-        this.shiftDto = shiftDto;
+    public void setProjectionistShiftId(int projectionistShiftId) {
+        this.projectionistShiftId = projectionistShiftId;
     }
 
     @Override
     protected void onValidate() {
-        if (shiftDto == null) {
-            addError(MISSING_SHIFT_ERROR);
-        } else {
-            if (shiftDto.getEmployee() == null
-                    || shiftDto.getDate() == null
-                    || shiftDto.getStart() == null
-                    || shiftDto.getEnd() == null) {
-                addError(INVALID_SHIFT_ERROR);
-            }
+        if (projectionistShiftId < 0) {
+            addError(INVALID_SHIFT_ID_ERROR);
         }
     }
 

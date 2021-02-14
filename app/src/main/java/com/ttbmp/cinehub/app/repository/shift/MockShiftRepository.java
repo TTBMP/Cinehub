@@ -5,11 +5,16 @@ import com.ttbmp.cinehub.app.repository.employee.MockEmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
 import com.ttbmp.cinehub.app.repository.employee.usher.UsherRepository;
 import com.ttbmp.cinehub.app.repository.hall.HallRepository;
+import com.ttbmp.cinehub.app.repository.projection.MockProjectionRepository;
 import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
+import com.ttbmp.cinehub.app.repository.shift.projectionist.MockProjectionistShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftProxy;
+import com.ttbmp.cinehub.app.repository.shift.usher.MockUsherShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.usher.UsherShiftProxy;
 import com.ttbmp.cinehub.domain.employee.Employee;
+import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 import com.ttbmp.cinehub.domain.shift.Shift;
+import com.ttbmp.cinehub.domain.shift.UsherShift;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -84,12 +89,20 @@ public class MockShiftRepository implements ShiftRepository {
     @Override
     public synchronized void saveShift(Shift shift) throws ShiftSaveException {
         SHIFT_DATA_LIST.add(new ShiftData(
-                shiftIdCounter++,
+                shiftIdCounter,
                 shift.getDate(),
                 shift.getStart(),
                 shift.getEnd(),
                 shift.getEmployee().getId()
         ));
+        if (shift instanceof ProjectionistShift) {
+            MockProjectionistShiftRepository.getProjectionistShiftDataList()
+                    .add(new MockProjectionistShiftRepository.ProjectionistShiftData(
+                            shiftIdCounter,
+                            ((ProjectionistShift) shift).getHall().getId()
+                    ));
+        }
+        shiftIdCounter++;
     }
 
     @Override
