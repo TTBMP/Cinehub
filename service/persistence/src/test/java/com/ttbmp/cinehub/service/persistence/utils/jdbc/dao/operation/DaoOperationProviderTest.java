@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.service.persistence.utils.jdbc.dao.operation;
 
-import com.ttbmp.cinehub.service.persistence.CinemaDao;
+import com.ttbmp.cinehub.service.persistence.dao.CinemaDao;
 import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Dao;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Database;

@@ -1,16 +1,14 @@
-package com.ttbmp.cinehub.service.persistence;
+package com.ttbmp.cinehub.service.persistence.entity;
 
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.ColumnInfo;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Entity;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.PrimaryKey;
 
-import java.io.Serializable;
-
 /**
  * @author Fabio Buracchi
  */
 @Entity(tableName = "cinema")
-public class CinemaDto implements Serializable {
+public class Cinema {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -25,10 +23,10 @@ public class CinemaDto implements Serializable {
     @ColumnInfo(name = "telefono")
     private String telephone;
 
-    public CinemaDto() {
+    public Cinema() {
     }
 
-    public CinemaDto(int id, String name, String address, String telephone) {
+    public Cinema(int id, String name, String address, String telephone) {
         this.id = id;
         this.name = name;
         this.address = address;
