@@ -3,11 +3,12 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
-      fx:controller="com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController">
+
+<VBox prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController">
     <TabPane fx:id="tabPane" minHeight="30.0" nodeOrientation="RIGHT_TO_LEFT" tabClosingPolicy="UNAVAILABLE">
-        <Tab fx:id="manageShiftTab" closable="false" text="Manage Shift"/>
-        <Tab fx:id="viewPersonalScheduleTab" closable="false" text="View Personal Schedule"/>
-        <Tab fx:id="buyTicketTab" text="Buy Ticket"/>
+        <Tab fx:id="aboutTab" text="About" />
+        <Tab fx:id="manageShiftTab" closable="false" text="Manage Shift" />
+        <Tab fx:id="viewPersonalScheduleTab" closable="false" text="View Personal Schedule" />
+        <Tab fx:id="buyTicketTab" text="Buy Ticket" />
     </TabPane>
 </VBox>

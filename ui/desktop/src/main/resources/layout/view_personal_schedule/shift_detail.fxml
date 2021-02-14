@@ -36,7 +36,7 @@
         <Label fx:id="addressLabel" layoutX="10.0" layoutY="160.0" text="address"/>
         <ImageView fitHeight="200.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../drawable/map.png"/>
+                <Image url="@../../drawables/map.png"/>
             </image>
         </ImageView>
     </VBox>
