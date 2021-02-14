@@ -32,7 +32,7 @@ public interface BuyTicketPresenter {
 
     void presentGetTimeOfProjectionNullRequest();
 
-    void presentInvalidGetTimeOfProjection(GetTimeOfProjectionRequest request);
+    void presentInvalidGetTimeOfProjection(GetProjectionRequest request);
 
     void presentGetNumberOfSeatsNullRequest();
 

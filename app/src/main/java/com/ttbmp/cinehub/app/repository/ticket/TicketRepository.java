@@ -6,11 +6,11 @@ import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import java.util.List;
 
 /**
- * @author Fabio Buracchi
+ * @author Fabio Buracchi, Palmieri Ivan
  */
 public interface TicketRepository {
 
-    void saveTicket(Ticket ticket);
+    void saveTicket(Ticket ticket, int projectionId);
 
     List<Ticket> getTicketList(Projection projection);
 
