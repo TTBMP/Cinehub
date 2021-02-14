@@ -107,32 +107,25 @@ public class MockShiftRepository implements ShiftRepository {
 
     @Override
     public void modifyShift(Shift oldShift, Shift newShift) throws ShiftSaveException {
-        if (oldShift.equals(newShift)) {
-            throw new ShiftSaveException(ShiftSaveException.ALREADY_EXIST_ERROR);
+        if (SHIFT_DATA_LIST.stream().noneMatch(d -> d.id == newShift.getId())) {
+            throw new ShiftSaveException(ShiftSaveException.NOT_EXIST_ERROR);
         }
-        SHIFT_DATA_LIST.removeIf(shiftData -> shiftData.id == oldShift.getId());
-        for (ShiftData shiftData : SHIFT_DATA_LIST) {
-            if (shiftData.date.equals(newShift.getDate())
-                    && LocalTime.parse(shiftData.start).isBefore(LocalTime.parse(newShift.getEnd()))
-                    && LocalTime.parse(shiftData.end).isAfter(LocalTime.parse(newShift.getStart()))
-                    && shiftData.employeeId.equals(newShift.getEmployee().getId())) {
-                SHIFT_DATA_LIST.add(new ShiftData(
-                        oldShift.getId(),
-                        oldShift.getDate(),
-                        oldShift.getStart(),
-                        oldShift.getEnd(),
-                        oldShift.getEmployee().getId())
-                );
-                throw new ShiftSaveException(ShiftSaveException.ALREADY_EXIST_ERROR);
-            }
+        ShiftData data = SHIFT_DATA_LIST.stream()
+                .filter(d -> d.id == newShift.getId())
+                .collect(Collectors.toList())
+                .get(0);
+        data.date = newShift.getDate();
+        data.start = newShift.getStart();
+        data.end = newShift.getEnd();
+        data.employeeId = newShift.getEmployee().getId();
+        if (newShift instanceof ProjectionistShift) {
+            MockProjectionistShiftRepository.ProjectionistShiftData projectionistShiftData;
+            projectionistShiftData = MockProjectionistShiftRepository.getProjectionistShiftDataList().stream()
+                    .filter(d -> d.getShiftId() == newShift.getId())
+                    .collect(Collectors.toList())
+                    .get(0);
+            projectionistShiftData.setHallId(((ProjectionistShift) newShift).getHall().getId());
         }
-        SHIFT_DATA_LIST.add(new ShiftData(
-                newShift.getId(),
-                newShift.getDate(),
-                newShift.getStart(),
-                newShift.getEnd(),
-                newShift.getEmployee().getId()
-        ));
     }
 
     public static class ShiftData {
