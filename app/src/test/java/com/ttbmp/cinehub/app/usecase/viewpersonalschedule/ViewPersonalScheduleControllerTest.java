@@ -48,14 +48,14 @@ class ViewPersonalScheduleControllerTest {
                 e.printStackTrace();
             }
             Employee employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(userId);
-                List<Shift> shiftList = serviceLocator.getService(ShiftRepository.class).getAllEmployeeShiftBetweenDate(
-                        employee,
-                        LocalDate.now(),
-                        LocalDate.now().plusDays(1)
-                );
-                List<ShiftDto> expected = ShiftDataMapper.mapToDtoList(shiftList);
-                List<ShiftDto> actual = result.getShiftDtoList();
-                Assertions.assertEquals(expected, result.getShiftDtoList());
+            List<Shift> shiftList = serviceLocator.getService(ShiftRepository.class).getAllEmployeeShiftBetweenDate(
+                    employee,
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(1)
+            );
+            List<ShiftDto> expected = ShiftDataMapper.mapToDtoList(shiftList);
+            List<ShiftDto> actual = result.getShiftDtoList();
+            Assertions.assertEquals(expected, result.getShiftDtoList());
         }
 
         @Override

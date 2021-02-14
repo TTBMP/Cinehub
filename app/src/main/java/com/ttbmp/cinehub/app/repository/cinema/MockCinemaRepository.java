@@ -100,7 +100,6 @@ public class MockCinemaRepository implements CinemaRepository {
                 .collect(Collectors.toList());
     }
 
-
     @Override
     public List<Cinema> getListCinema(Movie movie, String date) {
         List<Integer> projectionCinemaIdList = MockProjectionRepository.getProjectionDataList().stream()
