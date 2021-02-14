@@ -1,20 +1,21 @@
 package com.ttbmp.cinehub.app.repository.shift;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.MockEmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
 import com.ttbmp.cinehub.app.repository.employee.usher.UsherRepository;
 import com.ttbmp.cinehub.app.repository.hall.HallRepository;
-import com.ttbmp.cinehub.app.repository.projection.MockProjectionRepository;
 import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.MockProjectionistShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftProxy;
-import com.ttbmp.cinehub.app.repository.shift.usher.MockUsherShiftRepository;
+import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.usher.UsherShiftProxy;
 import com.ttbmp.cinehub.domain.employee.Employee;
+import com.ttbmp.cinehub.domain.employee.Projectionist;
+import com.ttbmp.cinehub.domain.employee.Usher;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 import com.ttbmp.cinehub.domain.shift.Shift;
-import com.ttbmp.cinehub.domain.shift.UsherShift;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -67,6 +68,35 @@ public class MockShiftRepository implements ShiftRepository {
     }
 
     @Override
+    public Shift getShift(int shiftId) {
+        ShiftData data = SHIFT_DATA_LIST.stream()
+                .filter(d -> d.id == shiftId)
+                .collect(Collectors.toList())
+                .get(0);
+        Employee employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(data.employeeId);
+        if (employee instanceof Projectionist) {
+            return new ProjectionistShiftProxy(
+                    data.id,
+                    data.date,
+                    data.start,
+                    data.end,
+                    serviceLocator.getService(ProjectionistRepository.class),
+                    serviceLocator.getService(HallRepository.class),
+                    serviceLocator.getService(ProjectionRepository.class)
+            );
+        } else if (employee instanceof Usher) {
+            return new UsherShiftProxy(
+                    data.id,
+                    data.date,
+                    data.start,
+                    data.end,
+                    serviceLocator.getService(UsherRepository.class)
+            );
+        }
+        return null;
+    }
+
+    @Override
     public List<Shift> getShiftList() {
         return SHIFT_DATA_LIST.stream()
                 .map(d -> new ShiftFactory().createShift(d))
@@ -106,25 +136,25 @@ public class MockShiftRepository implements ShiftRepository {
     }
 
     @Override
-    public void modifyShift(Shift oldShift, Shift newShift) throws ShiftSaveException {
-        if (SHIFT_DATA_LIST.stream().noneMatch(d -> d.id == newShift.getId())) {
+    public void modifyShift(Shift shift) throws ShiftSaveException {
+        if (SHIFT_DATA_LIST.stream().noneMatch(d -> d.id == shift.getId())) {
             throw new ShiftSaveException(ShiftSaveException.NOT_EXIST_ERROR);
         }
         ShiftData data = SHIFT_DATA_LIST.stream()
-                .filter(d -> d.id == newShift.getId())
+                .filter(d -> d.id == shift.getId())
                 .collect(Collectors.toList())
                 .get(0);
-        data.date = newShift.getDate();
-        data.start = newShift.getStart();
-        data.end = newShift.getEnd();
-        data.employeeId = newShift.getEmployee().getId();
-        if (newShift instanceof ProjectionistShift) {
+        data.date = shift.getDate();
+        data.start = shift.getStart();
+        data.end = shift.getEnd();
+        data.employeeId = shift.getEmployee().getId();
+        if (shift instanceof ProjectionistShift) {
             MockProjectionistShiftRepository.ProjectionistShiftData projectionistShiftData;
             projectionistShiftData = MockProjectionistShiftRepository.getProjectionistShiftDataList().stream()
-                    .filter(d -> d.getShiftId() == newShift.getId())
+                    .filter(d -> d.getShiftId() == shift.getId())
                     .collect(Collectors.toList())
                     .get(0);
-            projectionistShiftData.setHallId(((ProjectionistShift) newShift).getHall().getId());
+            projectionistShiftData.setHallId(((ProjectionistShift) shift).getHall().getId());
         }
     }
 

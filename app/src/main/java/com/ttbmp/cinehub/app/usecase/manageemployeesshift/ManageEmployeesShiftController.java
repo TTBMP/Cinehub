@@ -107,7 +107,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
     public void modifyShift(ShiftModifyRequest request) {
         try {
             Request.validate(request);
-            shiftRepository.modifyShift(ShiftDataMapper.mapToEntity(request.getOldShift()), ShiftDataMapper.mapToEntity(request.getNewShift()));
+            shiftRepository.modifyShift(shiftRepository.getShift(request.getNewShift().getId()));
             manageEmployeesShiftPresenter.presentSaveShift();
             manageEmployeesShiftPresenter.presentDeleteShift();
             emailService.sendMail(new EmailServiceRequest(

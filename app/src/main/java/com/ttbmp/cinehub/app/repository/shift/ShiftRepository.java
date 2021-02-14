@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface ShiftRepository {
 
+    Shift getShift(int shiftId);
+
     List<Shift> getShiftList();
 
     List<Shift> getShiftList(Employee employee);
@@ -19,7 +21,7 @@ public interface ShiftRepository {
 
     void deletedShift(Shift shift) throws ShiftSaveException;
 
-    void modifyShift(Shift oldShift, Shift newShift) throws ShiftSaveException; // TODO pass as a parameter only the shift to edit
+    void modifyShift(Shift shift) throws ShiftSaveException;
 
     List<Shift> getAllEmployeeShiftBetweenDate(Employee employee, LocalDate start, LocalDate end);
 
