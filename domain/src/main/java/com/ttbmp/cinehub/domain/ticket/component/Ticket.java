@@ -56,9 +56,4 @@ public class Ticket {
         this.owner = owner;
     }
 
-    public long increasePrice() {
-        return this.price;
-    }
-
-
 }
