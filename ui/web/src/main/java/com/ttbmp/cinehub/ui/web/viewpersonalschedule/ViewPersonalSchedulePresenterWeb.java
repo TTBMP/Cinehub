@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.ui.web.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.*;
+import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.ui.Model;
 
 import java.time.LocalDate;
@@ -21,8 +22,12 @@ public class ViewPersonalSchedulePresenterWeb implements ViewPersonalSchedulePre
 
     @Override
     public void presentGetShiftList(ShiftListReply result) {
-        LocalDate date = ((LocalDate) model.getAttribute("date"))
-                .with(TemporalAdjusters.firstDayOfMonth())
+        LocalDate date = ((LocalDate) model.getAttribute("date"));
+        if (date == null) {
+            model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
+            return;
+        }
+        date = date.with(TemporalAdjusters.firstDayOfMonth())
                 .with(TemporalAdjusters.previousOrSame(WeekFields.of(Locale.getDefault()).getFirstDayOfWeek()));
         List<CalendarDay> calendarDayList = new ArrayList<>();
         for (int i = 0; i < 42; i++) {
@@ -40,12 +45,12 @@ public class ViewPersonalSchedulePresenterWeb implements ViewPersonalSchedulePre
 
     @Override
     public void presentInvalidShiftListRequest(ShiftListRequest request) {
-
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
     }
 
     @Override
     public void presentShiftListNullRequest() {
-
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
     }
 
     @Override
@@ -56,12 +61,12 @@ public class ViewPersonalSchedulePresenterWeb implements ViewPersonalSchedulePre
 
     @Override
     public void presentProjectionListNullRequest() {
-
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
     }
 
     @Override
     public void presentInvalidProjectionListRequest(ProjectionListRequest request) {
-
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
     }
 
 }

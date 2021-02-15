@@ -5,6 +5,7 @@ import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ShiftListRequest;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalScheduleHandler;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalScheduleUseCase;
 import com.ttbmp.cinehub.ui.web.domain.Shift;
+import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,14 +36,14 @@ public class ViewPersonalScheduleViewController {
                 date.with(TemporalAdjusters.firstDayOfMonth()),
                 date.with(TemporalAdjusters.lastDayOfMonth())
         ));
-        return "schedule";
+        return ErrorHelper.returnView(model, "schedule");
     }
 
     @PostMapping("/schedule/detail")
     public String showShiftDetail(@ModelAttribute Shift shift, Model model) {
         useCase = new ViewPersonalScheduleHandler(new ViewPersonalSchedulePresenterWeb(model));
         model.addAttribute("shift", shift);
-        return "schedule_detail";
+        return ErrorHelper.returnView(model, "schedule_detail");
     }
 
     @PostMapping("/schedule/detail/projectionist")
@@ -50,7 +51,7 @@ public class ViewPersonalScheduleViewController {
         useCase = new ViewPersonalScheduleHandler(new ViewPersonalSchedulePresenterWeb(model));
         model.addAttribute("shift", shift);
         useCase.getShiftProjectionList(new ProjectionListRequest(shift.getId()));
-        return "schedule_projectionist_detail";
+        return ErrorHelper.returnView(model, "schedule_projectionist_detail");
     }
 
 }
