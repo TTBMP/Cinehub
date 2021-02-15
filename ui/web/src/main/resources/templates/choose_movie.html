@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <script crossorigin="anonymous"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Getting Started: Serving Web Content</title>
+    <!-- JavaScript Bundle with Popper -->
+    <script crossorigin="anonymous"
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- CSS only -->
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" rel="stylesheet">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body style="background: black">
+<div class="container mt-3" style="color: aliceblue">
+    <!--Top-->
+    <div class="row">
+        <div class="col-12 text-center">
+
+            <div class="col-md-5 p-lg-5 mx-auto my-5">
+                <h1 class="display-4 font-weight-normal">Movies available </h1>
+                <p class="lead font-weight-normal">Select a movie you like, we will find the cinemas that will present
+                    it .</p>
+            </div>
+            <div class="product-device box-shadow d-none d-md-block"></div>
+            <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
+
+        </div>
+        <div class="col-12">
+            <h4 class="h4">Selected a date:</h4>
+        </div>
+        <div class="col-12">
+            <a class="nav-link" th:href="@{|/choose_movie/|}">
+                <button class="btn-primary mb-1">Today</button>
+            </a>
+        </div>
+        <div class="col-2 mt-2 ">
+            <input id="date_picker" th:value="${choose_date} " type="date">
+        </div>
+        <div class="col-1 mr-5">
+            <a class="nav-link" id="nav-link" onclick="href+= document.getElementById('date_picker').value"
+               th:href="@{|/choose_movie/|}">
+                <button id="search" class="btn-primary mb-1">Search</button>
+            </a>
+        </div>
+    </div>
+    <!--/Top-->
+    <!--List Movie-->
+    <div  class="row justify-content-center text-center">
+        <tr th:each="movie,inter : ${movieList}">
+            <div  class="col-6 text-center justify-content-center mt-3">
+                <div th:id="${inter.index}" class="card p-2 m-3 text-center justify-content-center h-100"
+                     style="background-color: black; border-color: #6d6d6d">
+                    <h2 class="h2 mt-2">
+                        <span th:text="${movie.name}"> Title </span>
+                    </h2>
+                    <div class="text-center mt-3">
+                        <a class="text-center justify-content-center "
+                           th:href="@{|/choose_cinema/${choose_date}/${movie.id}|}">
+                            <img  class="figure-img img-fluid rounded" th:id="${movie.movieUrl}"
+                                 th:name="${movie.movieUrl}" th:src="${movie.movieUrl}">
+                        </a>
+                    </div>
+                    <h4 class="h4">Vote:</h4>
+                    <p class="h6" th:text="${movie.vote}"></p>
+                    <h4 class="h4">Releases:</h4>
+                    <p class="h6" th:text="${movie.releases}"></p>
+                    <h4 class="h4">Overview:</h4>
+                    <p class="h6" th:text="${movie.overview}"></p>
+                </div>
+            </div>
+        </tr>
+    </div>
+    <!--/List Movie-->
+
+</div>
+
+</body>
+</html>
