@@ -19,12 +19,6 @@ public class MockTicketRepository implements TicketRepository {
     private static final List<TicketData> TICKET_DATA_LIST = new ArrayList<>();
     private static int counterTicketId = 0;
 
-    static {
-        List<String> userIdList = MockUserRepository.getUserDataList().stream()
-                .map(MockUserRepository.UserData::getId)
-                .collect(Collectors.toList());
-        // TODO
-    }
 
     private final ServiceLocator serviceLocator;
 

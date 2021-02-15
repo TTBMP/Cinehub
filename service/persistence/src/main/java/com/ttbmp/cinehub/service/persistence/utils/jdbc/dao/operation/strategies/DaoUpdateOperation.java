@@ -25,6 +25,7 @@ public class DaoUpdateOperation extends DaoOperation {
     private final List<String> dtoColumnNameList;
     private final List<String> dtoPrimaryKeyColumnNameList;
 
+
     public DaoUpdateOperation(Method method, Connection connection, List<Class<?>> dataSourceEntityList) throws DaoMethodException {
         super(method, connection, dataSourceEntityList);
         if (!method.getReturnType().equals(Void.TYPE) || method.getParameterCount() != 1) {

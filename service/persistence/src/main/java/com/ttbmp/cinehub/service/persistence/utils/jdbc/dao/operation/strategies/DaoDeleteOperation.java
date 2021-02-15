@@ -44,7 +44,7 @@ public class DaoDeleteOperation extends DaoOperation {
 
     @Override
     public Object execute(Object[] args) throws InvocationTargetException, SQLException, NoSuchMethodException, IllegalAccessException {
-        // TODO: Handle foreign key delete behaviour
+
         try (PreparedStatement statement = connection.prepareStatement(
                 queryTemplate,
                 ResultSet.TYPE_SCROLL_SENSITIVE,

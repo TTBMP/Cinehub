@@ -41,7 +41,6 @@ public class DaoOperationHelper {
     }
 
     public static List<Method> getDtoSetterList(@NotNull Class<?> dtoType, @NotNull List<String> columnNameList) throws NoSuchMethodException {
-        // TODO: columnNameList is probably useless
         List<Method> dtoSetterList = new ArrayList<>();
         Field[] dtoFields = dtoType.getDeclaredFields();
         for (int i = 0; i < dtoFields.length; i++) {
@@ -77,7 +76,7 @@ public class DaoOperationHelper {
         return fieldAnnotation.name();
     }
 
-    // TODO: find a better name
+
     public static <T> Map<String, Object> getParameterMap(@NotNull T dto, @NotNull List<String> columnNameList) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         Map<String, Object> result = new HashMap<>();
         if (!columnNameList.isEmpty()) {
