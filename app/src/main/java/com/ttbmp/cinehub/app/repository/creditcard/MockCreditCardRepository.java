@@ -14,12 +14,16 @@ public class MockCreditCardRepository implements CreditCardRepository {
 
     private static final List<CreditCardData> CREDIT_CARD_DATA_LIST = new ArrayList<>();
 
+
+
     static {
-        CREDIT_CARD_DATA_LIST.add(new CreditCardData(0, "4242424242424242", 354, "22/24", "0"));
-        CREDIT_CARD_DATA_LIST.add(new CreditCardData(1, "4242424242424242", 354, "22/24", "1"));
-        CREDIT_CARD_DATA_LIST.add(new CreditCardData(2, "4242424242424242", 354, "22/24", "2"));
-        CREDIT_CARD_DATA_LIST.add(new CreditCardData(3, "4242424242424242", 354, "22/24", "3"));
-        CREDIT_CARD_DATA_LIST.add(new CreditCardData(4, "4242424242424242", 354, "22/24", "4"));
+        String numberCard ="4242424242424242";
+        String expirationDate ="22/24";
+        CREDIT_CARD_DATA_LIST.add(new CreditCardData(0, numberCard, 354, expirationDate, "0"));
+        CREDIT_CARD_DATA_LIST.add(new CreditCardData(1, numberCard, 354, expirationDate, "1"));
+        CREDIT_CARD_DATA_LIST.add(new CreditCardData(2, numberCard, 354, expirationDate, "2"));
+        CREDIT_CARD_DATA_LIST.add(new CreditCardData(3, numberCard, 354, expirationDate, "3"));
+        CREDIT_CARD_DATA_LIST.add(new CreditCardData(4, numberCard, 354, expirationDate, "4"));
     }
 
     public static List<CreditCardData> getCreditCardDataList() {
