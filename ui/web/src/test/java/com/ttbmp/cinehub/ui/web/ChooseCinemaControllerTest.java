@@ -18,7 +18,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class ChooseCinemaControllerTest {
+class ChooseCinemaControllerTest {
 
 
     public WebElement welcomeMessage;
@@ -48,7 +48,7 @@ public class ChooseCinemaControllerTest {
         driver.findElement(By.id("date_picker")).clear();
         driver.findElement(By.id("date_picker")).sendKeys("19/02/2021");
         driver.findElement(By.id("search")).click();
-        assertEquals(driver.findElement(By.xpath("/html/body/div/div[2]/div[1]/div/h4[1]")).getText(), "Vote:");
+        assertEquals("Vote:", driver.findElement(By.xpath("/html/body/div/div[2]/div[1]/div/h4[1]")).getText());
 
     }
 }
