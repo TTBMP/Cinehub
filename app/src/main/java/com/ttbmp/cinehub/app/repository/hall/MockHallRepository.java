@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class MockHallRepository implements HallRepository {
 
     private static final List<HallData> HALL_DATA_LIST = new ArrayList<>();

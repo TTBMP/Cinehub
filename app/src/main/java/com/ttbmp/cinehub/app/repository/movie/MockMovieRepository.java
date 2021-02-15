@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class MockMovieRepository implements MovieRepository {
 
     private static final List<MovieData> MOVIE_DATA_LIST = new ArrayList<>();

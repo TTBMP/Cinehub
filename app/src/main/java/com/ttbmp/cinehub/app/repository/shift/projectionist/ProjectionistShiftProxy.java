@@ -13,6 +13,7 @@ import java.util.List;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class ProjectionistShiftProxy extends ProjectionistShift {
 
     private final ProjectionistRepository projectionistRepository;

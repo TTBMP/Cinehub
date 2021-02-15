@@ -8,6 +8,7 @@ import java.util.Map;
 /**
  * @author Ivan Palmieri, Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class MockMovieApiService implements MovieApiService {
 
     private final Map<Integer, Movie> movieMap = new HashMap<>();

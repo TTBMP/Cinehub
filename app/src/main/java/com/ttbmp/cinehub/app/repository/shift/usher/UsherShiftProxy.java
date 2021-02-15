@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.domain.shift.UsherShift;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class UsherShiftProxy extends UsherShift {
 
     private final UsherRepository usherRepository;

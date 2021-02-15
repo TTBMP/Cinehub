@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class MockProjectionistShiftRepository implements ProjectionistShiftRepository {
 
     private static final List<ProjectionistShiftData> PROJECTIONIST_SHIFT_DATA_LIST = new ArrayList<>();

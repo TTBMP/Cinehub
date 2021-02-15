@@ -9,6 +9,7 @@ import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class TicketProxy extends Ticket {
 
     private final UserRepository userRepository;
