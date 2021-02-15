@@ -36,7 +36,7 @@ class ManageEmployeeShiftTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("http://localhost:8080/manage_employee_shift");
-        message = driver.findElement(By.id("search_shift_cinema"));
+        message = driver.findElement(By.xpath("/html/body/div/div/div[1]/h2"));
 
     }
 
@@ -46,7 +46,7 @@ class ManageEmployeeShiftTest {
     }
 
     @Test
-    void search() {
-        assertEquals("Search", message.getText());
+    void test() {
+        assertEquals("SHOW SHIFT", message.getText());
     }
 }
