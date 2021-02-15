@@ -25,12 +25,14 @@ public class MockHallRepository implements HallRepository {
         HALL_DATA_LIST.add(new HallData(1, 0));
         HALL_DATA_LIST.add(new HallData(2, 0));
         HALL_DATA_LIST.add(new HallData(3, 0));
-        HALL_DATA_LIST.add(new HallData(4, 1));
-        HALL_DATA_LIST.add(new HallData(5, 1));
+        HALL_DATA_LIST.add(new HallData(4, 0));
+        HALL_DATA_LIST.add(new HallData(5, 0));
         HALL_DATA_LIST.add(new HallData(6, 1));
         HALL_DATA_LIST.add(new HallData(7, 1));
         HALL_DATA_LIST.add(new HallData(8, 1));
         HALL_DATA_LIST.add(new HallData(9, 1));
+        HALL_DATA_LIST.add(new HallData(10, 1));
+        HALL_DATA_LIST.add(new HallData(11, 1));
     }
 
     private final ServiceLocator serviceLocator;

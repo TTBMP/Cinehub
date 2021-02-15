@@ -27,6 +27,18 @@ public class MockEmployeeRepository implements EmployeeRepository {
         EMPLOYEE_DATA_LIST.add(new EmployeeData("1", 0, EmployeeData.Role.PROJECTIONIST));
         EMPLOYEE_DATA_LIST.add(new EmployeeData("2", 1, EmployeeData.Role.USHER));
         EMPLOYEE_DATA_LIST.add(new EmployeeData("3", 1, EmployeeData.Role.PROJECTIONIST));
+
+        EMPLOYEE_DATA_LIST.add(new EmployeeData("5", 0, EmployeeData.Role.PROJECTIONIST));
+        EMPLOYEE_DATA_LIST.add(new EmployeeData("7", 0, EmployeeData.Role.PROJECTIONIST));
+        EMPLOYEE_DATA_LIST.add(new EmployeeData("9", 0, EmployeeData.Role.PROJECTIONIST));
+        EMPLOYEE_DATA_LIST.add(new EmployeeData("11", 0, EmployeeData.Role.PROJECTIONIST));
+        EMPLOYEE_DATA_LIST.add(new EmployeeData("13", 0, EmployeeData.Role.PROJECTIONIST));
+        EMPLOYEE_DATA_LIST.add(new EmployeeData("15", 1, EmployeeData.Role.PROJECTIONIST));
+        EMPLOYEE_DATA_LIST.add(new EmployeeData("17", 1, EmployeeData.Role.PROJECTIONIST));
+        EMPLOYEE_DATA_LIST.add(new EmployeeData("19", 1, EmployeeData.Role.PROJECTIONIST));
+        EMPLOYEE_DATA_LIST.add(new EmployeeData("21", 1, EmployeeData.Role.PROJECTIONIST));
+        EMPLOYEE_DATA_LIST.add(new EmployeeData("23", 1, EmployeeData.Role.PROJECTIONIST));
+
     }
 
     private final ServiceLocator serviceLocator;
