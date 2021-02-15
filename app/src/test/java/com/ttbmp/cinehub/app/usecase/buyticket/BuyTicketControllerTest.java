@@ -4,8 +4,6 @@ import com.ttbmp.cinehub.app.datamapper.MovieDataMapper;
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
 import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
-import com.ttbmp.cinehub.app.service.authentication.AuthenticationException;
-import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
@@ -33,10 +31,10 @@ class BuyTicketControllerTest {
         );
     }
 
-    class MockBuyTicketPresenter implements BuyTicketPresenter{
+    class MockBuyTicketPresenter implements BuyTicketPresenter {
 
         @Override
-        public void presentMovieApiList(GetListMovieResponse response){
+        public void presentMovieApiList(GetListMovieResponse response) {
             try {
                 List<Movie> movieDtoList = serviceLocator.getService(MovieRepository.class)
                         .getMovieList(

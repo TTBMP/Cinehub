@@ -20,9 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 class ViewPersonalScheduleSeleniumTest {
 
-    private WebDriver driver;
-
     public WebElement datePicker;
+    private WebDriver driver;
 
     @BeforeAll
     static void setupClass() {

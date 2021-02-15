@@ -8,8 +8,6 @@ import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetListCinemaRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetListMovieRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetProjectionRequest;
-import com.ttbmp.cinehub.ui.web.buyticket.BuyTicketPresenterWeb;
-import com.ttbmp.cinehub.ui.web.buyticket.BuyTicketViewModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

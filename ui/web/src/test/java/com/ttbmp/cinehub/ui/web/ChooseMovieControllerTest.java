@@ -21,8 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ChooseMovieControllerTest {
 
     public WebElement welcomeMessage;
-    private WebDriver driver;
     public WebElement datePicker;
+    private WebDriver driver;
 
     @BeforeAll
     static void setupClass() {
