@@ -124,7 +124,7 @@ public class MockShiftRepository implements ShiftRepository {
                     )
                     .collect(Collectors.toList());
         }
-        if (employee instanceof Usher) {
+         else  {
             return SHIFT_DATA_LIST.stream()
                     .filter(employeeShiftData::contains)
                     .map(d -> new UsherShiftProxy(
@@ -137,7 +137,7 @@ public class MockShiftRepository implements ShiftRepository {
                     )
                     .collect(Collectors.toList());
         }
-        return null;
+
     }
 
     @Override

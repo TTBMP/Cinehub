@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * @author Fabio Buracchi
  */
-@SuppressWarnings("common-java:DuplicatedBlocks")
+@SuppressWarnings({"common-java:DuplicatedBlocks","java:S107"})
 public class ProjectionProxy extends Projection {
 
     private final MovieRepository movieRepository;
