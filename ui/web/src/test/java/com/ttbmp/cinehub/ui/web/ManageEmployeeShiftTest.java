@@ -36,10 +36,7 @@ class ManageEmployeeShiftTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("http://localhost:8080/manage_employee_shift");
-        driver.findElement(By.xpath("//*[@id=\"date\"]")).sendKeys("20022021");
-        driver.findElement(By.xpath("//*[@id=\"search\"]")).click();
-        message = driver.findElement(By.xpath("//*[@id=\"27\"]/button"));
-
+        message = driver.findElement(By.xpath("//*[@id=\"search\"]"));
     }
 
     @AfterEach
@@ -49,6 +46,6 @@ class ManageEmployeeShiftTest {
 
     @Test
     void search() {
-        assertEquals("14:00-18:00", message.getText());
+        assertEquals("Search", message.getText());
     }
 }
