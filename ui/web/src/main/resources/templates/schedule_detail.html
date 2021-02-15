@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View personal schedule</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="container w-50">
+    <div class="row pt-5 pb-4">
+        <div class="col">
+            <span class="h3 pr-3" th:text="${shift.date}">Date</span>
+            <span class="h4" th:text="${shift.start + ' ' + shift.end}">Start - End</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <span class="h5"
+                  th:text="${shift.employee.cinema.city + ' as ' + shift.employee.getRole()}">City as role</span>
+        </div>
+    </div>
+    <hr/>
+    <div class="row pb-3">
+        <div class="col">
+            <span class="h5" th:text="${shift.employee.cinema.city + ' - ' + shift.employee.cinema.address}">Location - Address</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <img class="h5" src="../static/images/map.png" th:src="@{/images/map.png}"/>
+        </div>
+    </div>
+    <hr/>
+    <div class="row pt-3">
+        <div class="col" align="center">
+            <a class="btn btn-primary" href="schedule.html" th:href="@{/schedule}" role="button">BACK</a>
+        </div>
+        <div class="col" align="center">
+            <form action="schedule_projectionist_detail.html" th:action="@{/schedule/detail/projectionist}" method="POST"
+                  th:object="${shift}">
+                <input type="hidden" th:name="id" th:value="${shift.id}"/>
+                <input type="hidden" th:name="date" th:value="${shift.date}"/>
+                <input type="hidden" th:name="start" th:value="${shift.start}"/>
+                <input type="hidden" th:name="end" th:value="${shift.end}"/>
+                <input type="hidden" th:name="employee.role" th:value="${shift.employee.role}"/>
+                <input type="hidden" th:name="employee.cinema.address" th:value="${shift.employee.cinema.address}"/>
+                <input type="hidden" th:name="employee.cinema.city" th:value="${shift.employee.cinema.city}"/>
+                <input th:if="${shift.employee.role.equals('projectionist')}" class="btn btn-primary" type="submit"
+                       value="SHOW DETAIL"/>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>
