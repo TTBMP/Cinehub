@@ -50,7 +50,7 @@
                             <div th:text="${valList.get((inter.index))}"></div>
                             <div th:if="${valList.get((inter.index))}==('SOLD')">
                                 <a id="urlDisable">
-                                    <i class="" th:class="${classValue}" style="color: #6d6d6d" >event_seat</i>
+                                    <i class="" style="color: #6d6d6d" th:class="${classValue}">event_seat</i>
                                 </a>
                             </div>
                             <div th:if="!(${valList.get((inter.index))}==('SOLD'))">

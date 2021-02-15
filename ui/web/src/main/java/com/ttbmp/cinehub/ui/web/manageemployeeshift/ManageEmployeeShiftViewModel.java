@@ -139,4 +139,5 @@ public class ManageEmployeeShiftViewModel {
     public void setCinemaDtoList(List<CinemaDto> cinemaDtoList) {
         this.cinemaDtoList = cinemaDtoList;
     }
+
 }

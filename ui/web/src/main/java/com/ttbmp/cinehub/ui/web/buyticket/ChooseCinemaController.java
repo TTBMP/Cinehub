@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.ui.web.buyticket.controller;
+package com.ttbmp.cinehub.ui.web.buyticket;
 
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;

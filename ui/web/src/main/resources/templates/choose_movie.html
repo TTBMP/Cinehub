@@ -51,24 +51,24 @@
         <div class="col-1 mr-5">
             <a class="nav-link" id="nav-link" onclick="href+= document.getElementById('date_picker').value"
                th:href="@{|/choose_movie/|}">
-                <button id="search" class="btn-primary mb-1">Search</button>
+                <button class="btn-primary mb-1" id="search">Search</button>
             </a>
         </div>
     </div>
     <!--/Top-->
     <!--List Movie-->
-    <div  class="row justify-content-center text-center">
+    <div class="row justify-content-center text-center">
         <tr th:each="movie,inter : ${movieList}">
-            <div  class="col-6 text-center justify-content-center mt-3">
-                <div th:id="${inter.index}" class="card p-2 m-3 text-center justify-content-center h-100"
-                     style="background-color: black; border-color: #6d6d6d">
+            <div class="col-6 text-center justify-content-center mt-3">
+                <div class="card p-2 m-3 text-center justify-content-center h-100" style="background-color: black; border-color: #6d6d6d"
+                     th:id="${inter.index}">
                     <h2 class="h2 mt-2">
                         <span th:text="${movie.name}"> Title </span>
                     </h2>
                     <div class="text-center mt-3">
                         <a class="text-center justify-content-center "
                            th:href="@{|/choose_cinema/${choose_date}/${movie.id}|}">
-                            <img  class="figure-img img-fluid rounded" th:id="${movie.movieUrl}"
+                            <img class="figure-img img-fluid rounded" th:id="${movie.movieUrl}"
                                  th:name="${movie.movieUrl}" th:src="${movie.movieUrl}">
                         </a>
                     </div>

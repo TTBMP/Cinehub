@@ -95,7 +95,7 @@ public class CreateShiftRequest extends Request {
         if (hall == null && employee instanceof ProjectionistDto) {
             addError(MISSING_HALL);
         }
-        if(start.isAfter(end)){
+        if (start.isAfter(end)) {
             addError(DATE_ERROR);
         }
     }

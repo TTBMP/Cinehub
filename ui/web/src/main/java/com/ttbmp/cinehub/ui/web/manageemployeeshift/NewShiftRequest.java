@@ -62,4 +62,5 @@ public class NewShiftRequest {
     public void setHallId(int hallId) {
         this.hallId = hallId;
     }
+
 }

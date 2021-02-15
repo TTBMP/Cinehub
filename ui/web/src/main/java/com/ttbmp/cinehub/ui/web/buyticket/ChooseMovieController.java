@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.ui.web.buyticket.controller;
+package com.ttbmp.cinehub.ui.web.buyticket;
 
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
@@ -19,13 +19,11 @@ import java.time.format.DateTimeFormatter;
 @Controller
 public class ChooseMovieController {
 
-    private BuyTicketViewModel viewModel;
-    private BuyTicketUseCase useCase;
-
-
     private static final String CHOOSE_DATE = "choose_date";
     private static final String CHOOSE_MOVIE = "choose_movie";
     private static final String MOVIE_LIST = "movieList";
+    private BuyTicketViewModel viewModel;
+    private BuyTicketUseCase useCase;
 
     @GetMapping("/choose_movie")
     public String chooseMovie(Model model) {

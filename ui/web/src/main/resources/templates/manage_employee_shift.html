@@ -1,47 +1,47 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <script crossorigin="anonymous"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script crossorigin="anonymous"
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script crossorigin="anonymous"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <title>Manage Employee Shift</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 </head>
 <body class="p-3 mb-2 bg-white text-dark">
-<div class="container justify-content-center" >
+<div class="container justify-content-center">
     <div class="row row text-uppercase">
         <div class="col-md-12 text-center mt-3">
             <h2>Show Shift</h2>
         </div>
-        <body data-new-gr-c-s-check-loaded="8.868.0" data-gr-ext-installed="">
+        <body data-gr-ext-installed="" data-new-gr-c-s-check-loaded="8.868.0">
         <div class="row justify-content-center">
             <div class="bg-white col-md-8 order-md-1 text-body">
 
-                <form action="#" th:action="@{/manage_employee_shift}" th:object="${getShiftListRequest}" method="post">
+                <form action="#" method="post" th:action="@{/manage_employee_shift}" th:object="${getShiftListRequest}">
                     <label>Select Cinema</label>
                     <select th:field="*{cinemaId}">
                         <option th:each="cinema : ${cinemaList}"
-                                th:value="${cinema.id}"
-                                th:text="${cinema.name}"></option>
+                                th:text="${cinema.name}"
+                                th:value="${cinema.id}"></option>
                     </select>
                     <br/>
                     <label>Date</label>
-                    <input type="date" id="date" th:value="${date}" th:field="*{start}" required/>
+                    <input id="date" required th:field="*{start}" th:value="${date}" type="date"/>
                     <br/>
                     <br/>
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">Search</button>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Search</button>
                 </form>
                 <hr class="mb-4">
                 <thead>
-                <table class="table table-striped" align="center">
+                <table align="center" class="table table-striped">
                     <tr>
                         <th scope="col">Employee</th>
                         <th scope="col">Monday</th>
@@ -57,14 +57,14 @@
                     <tr th:each="employee : ${shiftList}">
                         <td th:if=${employee.key.class.name.equals("com.ttbmp.cinehub.app.dto.ProjectionistDto")}
                             th:text=" 'Projectionist' + ' ' + ${employee.key.name} + ' ' + ${employee.key.surname} "></td>
-                        <td th:unless=${employee.key.class.name.equals("com.ttbmp.cinehub.app.dto.ProjectionistDto")}
-                            th:text=" 'Usher' + ' ' + ${employee.key.name} + ' ' + ${employee.key.surname} "></td>
+                        <td th:text=" 'Usher' + ' ' + ${employee.key.name} + ' ' + ${employee.key.surname} "
+                            th:unless=${employee.key.class.name.equals("com.ttbmp.cinehub.app.dto.ProjectionistDto")}></td>
                         <td>
                             <span th:each="shift,indexShift : ${employee.value}">
                                 <span th:if=${shift.date.dayOfWeek.toString.equals("MONDAY")}>
                                     <a th:href="@{|/shift_detail/${employee.key.id}/${indexShift.index}|}">
-                                        <Button th:text="${shift.start} + '-' + ${shift.end} "
-                                                type="button" class="btn btn-outline-info"></Button>
+                                        <Button class="btn btn-outline-info"
+                                                th:text="${shift.start} + '-' + ${shift.end} " type="button"></Button>
                                     </a>
                                 </span>
                             </span>
@@ -74,8 +74,8 @@
                             <span th:each="shift,indexShift : ${employee.value}">
                                 <span th:if=${shift.date.dayOfWeek.toString.equals("TUESDAY")}>
                                     <a th:href="@{|/shift_detail/${employee.key.id}/${indexShift.index}|}">
-                                        <Button th:text="${shift.start} + '-' + ${shift.end} "
-                                                type="button" class="btn btn-outline-info"></Button>
+                                        <Button class="btn btn-outline-info"
+                                                th:text="${shift.start} + '-' + ${shift.end} " type="button"></Button>
                                     </a>
                                 </span>
                             </span>
@@ -85,8 +85,8 @@
                             <span th:each="shift,indexShift : ${employee.value}">
                                 <span th:if=${shift.date.dayOfWeek.toString.equals("WEDNESDAY")}>
                                     <a th:href="@{|/shift_detail/${employee.key.id}/${indexShift.index}|}">
-                                        <Button th:text="${shift.start} + '-' + ${shift.end} "
-                                                type="button" class="btn btn-outline-info"></Button>
+                                        <Button class="btn btn-outline-info"
+                                                th:text="${shift.start} + '-' + ${shift.end} " type="button"></Button>
                                     </a>
                                 </span>
                             </span>
@@ -96,8 +96,8 @@
                             <span th:each="shift,indexShift : ${employee.value}">
                                 <span th:if=${shift.date.dayOfWeek.toString.equals("THURSDAY")}>
                                     <a th:href="@{|/shift_detail/${employee.key.id}/${indexShift.index}|}">
-                                        <Button th:text="${shift.start} + '-' + ${shift.end} "
-                                                type="button" class="btn btn-outline-info"></Button>
+                                        <Button class="btn btn-outline-info"
+                                                th:text="${shift.start} + '-' + ${shift.end} " type="button"></Button>
                                     </a>
                                 </span>
                             </span>
@@ -107,8 +107,8 @@
                             <span th:each="shift,indexShift : ${employee.value}">
                                 <span th:if=${shift.date.dayOfWeek.toString.equals("FRIDAY")}>
                                     <a th:href="@{|/shift_detail/${employee.key.id}/${indexShift.index}|}">
-                                        <Button th:text="${shift.start} + '-' + ${shift.end} "
-                                                type="button" class="btn btn-outline-info"></Button>
+                                        <Button class="btn btn-outline-info"
+                                                th:text="${shift.start} + '-' + ${shift.end} " type="button"></Button>
                                     </a>
                                 </span>
                             </span>
@@ -119,8 +119,8 @@
                             <span th:each="shift,indexShift : ${employee.value}">
                                 <span th:if=${shift.date.dayOfWeek.toString.equals("SATURDAY")}>
                                     <a th:href="@{|/shift_detail/${employee.key.id}/${indexShift.index}|}">
-                                        <Button th:text="${shift.start} + '-' + ${shift.end} "
-                                                type="button" class="btn btn-outline-info"></Button>
+                                        <Button class="btn btn-outline-info"
+                                                th:text="${shift.start} + '-' + ${shift.end} " type="button"></Button>
                                     </a>
                                 </span>
                             </span>
@@ -129,8 +129,8 @@
                             <span th:each="shift,indexShift : ${employee.value}">
                                 <span th:if=${shift.date.dayOfWeek.toString.equals("SUNDAY")}>
                                     <a th:href="@{|/shift_detail/${employee.key.id}/${indexShift.index}|}">
-                                        <Button th:text="${shift.start} + '-' + ${shift.end} "
-                                                type="button" class="btn btn-outline-info"></Button>
+                                        <Button class="btn btn-outline-info"
+                                                th:text="${shift.start} + '-' + ${shift.end} " type="button"></Button>
                                     </a>
                                 </span>
                              </span>

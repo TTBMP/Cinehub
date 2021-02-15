@@ -13,7 +13,7 @@ public class TicketHeatedArmchair extends TicketDecorator {
 
     @Override
     public long getPrice() {
-        return ticket.getPrice()+1;
+        return ticket.getPrice() + 1;
     }
 
 

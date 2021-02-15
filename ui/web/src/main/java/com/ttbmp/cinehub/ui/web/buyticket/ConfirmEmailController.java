@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.ui.web.buyticket.controller;
+package com.ttbmp.cinehub.ui.web.buyticket;
 
 
 import org.springframework.stereotype.Controller;

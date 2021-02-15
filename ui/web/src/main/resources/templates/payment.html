@@ -40,50 +40,58 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label class="control-label mb-1" for="cc-number">Card number</label>
-                            <input autocomplete="off" class="form-control cc-number identified visa" id="cc-number" name="cc-number"
+                            <input autocomplete="off" class="form-control cc-number identified visa" id="cc-number"
+                                   name="cc-number"
                                    required type="tel">
                             <span class="invalid-feedback">Enter a valid 12 to 16 digit card number</span>
                         </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label class="control-label mb-1" for="cc-exp">Expiration</label>
-                                        <input autocomplete="cc-exp" class="form-control cc-exp" id="cc-exp" name="cc-exp" placeholder="MM / YY"
-                                               required type="tel">
-                                        <span class="invalid-feedback">Enter the expiration date</span>
-                                    </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="control-label mb-1" for="cc-exp">Expiration</label>
+                                    <input autocomplete="cc-exp" class="form-control cc-exp" id="cc-exp" name="cc-exp"
+                                           placeholder="MM / YY"
+                                           required type="tel">
+                                    <span class="invalid-feedback">Enter the expiration date</span>
                                 </div>
-                                <div class="col-6">
-                                    <label class="control-label mb-1" for="x_card_code">CVV</label>
-                                    <div class="input-group">
-                                        <input autocomplete="off" class="form-control cc-cvc" id="x_card_code" name="x_card_code"
-                                               required type="tel">
-                                        <span class="invalid-feedback order-last">Enter the 3-digit code on back</span>
-                                        <div class="input-group-append">
-                                            <div class="input-group-text">
+                            </div>
+                            <div class="col-6">
+                                <label class="control-label mb-1" for="x_card_code">CVV</label>
+                                <div class="input-group">
+                                    <input autocomplete="off" class="form-control cc-cvc" id="x_card_code"
+                                           name="x_card_code"
+                                           required type="tel">
+                                    <span class="invalid-feedback order-last">Enter the 3-digit code on back</span>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
                                                 <span class="fa fa-question-circle fa-lg" data-container="body"
-                                                      data-content="<div class='text-center one-card'>The 3 digit code on back of the card..<div class='visa-mc-cvc-preview'></div></div>" data-html="true" data-title="CVV"
+                                                      data-content="<div class='text-center one-card'>The 3 digit code on back of the card..<div class='visa-mc-cvc-preview'></div></div>"
+                                                      data-html="true" data-title="CVV"
                                                       data-toggle="popover"
                                                       data-trigger="hover"></span>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label class="control-label mb-1" for="x_zip">Name</label>
-                                        <input autocomplete="postal-code" class="form-control" data-val="true" data-val-required="Please enter the ZIP/Postal code" id="x_zip" name="x_zip"
-                                               required type="text" value="">
-                                        <span class="help-block" data-valmsg-for="x_zip" data-valmsg-replace="true"></span>
-                                    </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="control-label mb-1" for="x_zip">Name</label>
+                                    <input autocomplete="postal-code" class="form-control" data-val="true"
+                                           data-val-required="Please enter the ZIP/Postal code" id="x_zip" name="x_zip"
+                                           required type="text" value="">
+                                    <span class="help-block" data-valmsg-for="x_zip" data-valmsg-replace="true"></span>
                                 </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label class="control-label mb-1" for="x_promotion">Surname</label>
-                                        <input class="form-control" data-val="true" data-val-required="Please enter the Promotion  code" id="x_promotion" name="x_prom" type="text"
-                                               required value="">
-                                        <span class="help-block" data-valmsg-for="x_promotion" data-valmsg-replace="true"></span>
-                                    </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="control-label mb-1" for="x_promotion">Surname</label>
+                                    <input class="form-control" data-val="true"
+                                           data-val-required="Please enter the Promotion  code" id="x_promotion"
+                                           name="x_prom" required
+                                           type="text" value="">
+                                    <span class="help-block" data-valmsg-for="x_promotion"
+                                          data-valmsg-replace="true"></span>
+                                </div>
                                 <div>
                                 </div>
                             </div>

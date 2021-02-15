@@ -174,7 +174,7 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
             viewModel.setAssignErrorText(CreateShiftRequest.MISSING_HALL.getMessage());
             viewModel.setModifyErrorText(CreateShiftRequest.MISSING_HALL.getMessage());
         }
-        if(request.getErrorList().contains(CreateShiftRequest.DATE_ERROR)){
+        if (request.getErrorList().contains(CreateShiftRequest.DATE_ERROR)) {
             viewModel.setAssignErrorText(CreateShiftRequest.DATE_ERROR.getMessage());
             viewModel.setModifyErrorText(CreateShiftRequest.DATE_ERROR.getMessage());
         }

@@ -21,13 +21,6 @@ import java.util.stream.Collectors;
 public class ManageEmployeeShiftViewController {
 
     private static final ManageEmployeesShiftUseCase useCase = UseCase.manageEmployeeUseCase;
-    private final ManageEmployeeShiftViewModel viewModel = UseCase.getViewModel();
-    private Map<EmployeeDto, List<ShiftDto>> employeeShiftMap = new HashMap<>();
-    private EmployeeDto selectedEmployee;
-    private boolean projection;
-    private List<EmployeeDto> employeeComboBox;
-    private HallDto hall;
-
     private static final String HALL_LIST = "hallList";
     private static final String ERROR = "error";
     private static final String ERROR_TEXT = "errorText";
@@ -35,8 +28,12 @@ public class ManageEmployeeShiftViewController {
     private static final String ASSIGN_REQUEST = "assignRequest";
     private static final String SHIFT_ASSIGNED = "/shift_assigned";
     private static final String PREFERENCE_LIST = "preferenceList";
-
-
+    private final ManageEmployeeShiftViewModel viewModel = UseCase.getViewModel();
+    private Map<EmployeeDto, List<ShiftDto>> employeeShiftMap = new HashMap<>();
+    private EmployeeDto selectedEmployee;
+    private boolean projection;
+    private List<EmployeeDto> employeeComboBox;
+    private HallDto hall;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -126,12 +123,12 @@ public class ManageEmployeeShiftViewController {
                 request.getStart(),
                 request.getEnd(),
                 hall
-                ));
+        ));
 
         model.addAttribute(ERROR_TEXT, viewModel.getModifyErrorText());
         model.addAttribute(ERROR, viewModel.isModifyError());
-        if(!viewModel.isModifyError()) {
-           return "shift_modify";
+        if (!viewModel.isModifyError()) {
+            return "shift_modify";
         }
         return "/shift_detail";
 
@@ -172,7 +169,7 @@ public class ManageEmployeeShiftViewController {
         useCase.createShift(new CreateShiftRequest(selectedEmployee, request.date, request.start, request.end, hall));
         model.addAttribute(ERROR_TEXT, viewModel.getAssignErrorText());
         model.addAttribute(ERROR, viewModel.isAssignError());
-        if(!viewModel.isAssignError()) {
+        if (!viewModel.isAssignError()) {
             return SHIFT_ASSIGNED;
         }
         return "/assign_projectionist_shift";
@@ -203,7 +200,7 @@ public class ManageEmployeeShiftViewController {
         useCase.createShift(new CreateShiftRequest(selectedEmployee, request.date, request.start, request.end));
         model.addAttribute(ERROR_TEXT, viewModel.getAssignErrorText());
         model.addAttribute(ERROR, viewModel.isAssignError());
-        if(!viewModel.isAssignError()) {
+        if (!viewModel.isAssignError()) {
             return SHIFT_ASSIGNED;
         }
         return "/assign_usher_shift";
@@ -245,13 +242,13 @@ public class ManageEmployeeShiftViewController {
                 request.date,
                 request.dateRepeated,
                 request.preference,
-               selectedEmployee,
+                selectedEmployee,
                 request.getStart(),
                 request.getEnd(),
                 hall));
         model.addAttribute(ERROR_TEXT, viewModel.getAssignErrorText());
         model.addAttribute(ERROR, viewModel.isAssignError());
-        if(!viewModel.isAssignError()) {
+        if (!viewModel.isAssignError()) {
             return SHIFT_ASSIGNED;
         }
         return "/assign_repeated_projectionist_shift";
@@ -290,7 +287,7 @@ public class ManageEmployeeShiftViewController {
                 hall));
         model.addAttribute(ERROR_TEXT, viewModel.getAssignErrorText());
         model.addAttribute(ERROR, viewModel.isAssignError());
-        if(!viewModel.isAssignError()) {
+        if (!viewModel.isAssignError()) {
             return SHIFT_ASSIGNED;
         }
         return "/assign_repeated_usher_shift";
