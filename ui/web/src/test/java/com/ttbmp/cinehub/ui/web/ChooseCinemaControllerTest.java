@@ -32,8 +32,14 @@ class ChooseCinemaControllerTest {
     @BeforeEach
     void setUp() {
         driver = new ChromeDriver();
+        driver.get("http://localhost:8080/choose_movie");
+        driver.manage().window().setSize(new Dimension(1646, 930));
+        driver.findElement(By.id("date_picker")).click();
+        driver.findElement(By.id("date_picker")).clear();
+        driver.findElement(By.id("date_picker")).sendKeys("19/02/2021");
+        driver.findElement(By.id("search")).click();
+        welcomeMessage= driver.findElement(By.xpath("/html/body/div/div[2]/div[1]/div/h4[1]"));
     }
-
 
     @AfterEach
     void tearDown() {
@@ -42,13 +48,6 @@ class ChooseCinemaControllerTest {
 
     @Test
     void search() {
-        driver.get("http://localhost:8080/choose_movie");
-        driver.manage().window().setSize(new Dimension(1646, 930));
-        driver.findElement(By.id("date_picker")).click();
-        driver.findElement(By.id("date_picker")).clear();
-        driver.findElement(By.id("date_picker")).sendKeys("19/02/2021");
-        driver.findElement(By.id("search")).click();
-        assertEquals("Vote:", driver.findElement(By.xpath("/html/body/div/div[2]/div[1]/div/h4[1]")).getText());
-
+        assertEquals("Vote:", welcomeMessage.getText());
     }
 }
