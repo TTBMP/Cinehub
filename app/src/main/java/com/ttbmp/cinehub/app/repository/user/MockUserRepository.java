@@ -31,10 +31,6 @@ public class MockUserRepository implements UserRepository {
         this.serviceLocator = serviceLocator;
     }
 
-    public static List<UserData> getUserDataList() {
-        return USER_DATA_LIST;
-    }
-
     @Override
     public User getUser(String userId) {
         return USER_DATA_LIST.stream()

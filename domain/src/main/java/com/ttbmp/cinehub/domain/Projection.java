@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * @author Fabio Buracchi, Ivan Palmieri
  */
+@SuppressWarnings("java:S107")
 public class Projection {
 
     private int id;
