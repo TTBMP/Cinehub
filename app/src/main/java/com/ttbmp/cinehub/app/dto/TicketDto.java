@@ -5,6 +5,7 @@ import com.ttbmp.cinehub.domain.User;
 /**
  * @author Ivan Palmieri
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class TicketDto {
 
     private long price;

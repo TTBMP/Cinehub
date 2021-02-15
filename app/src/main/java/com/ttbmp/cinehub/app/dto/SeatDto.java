@@ -3,6 +3,7 @@ package com.ttbmp.cinehub.app.dto;
 /**
  * @author Ivan Palmieri
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class SeatDto {
 
     private int id;

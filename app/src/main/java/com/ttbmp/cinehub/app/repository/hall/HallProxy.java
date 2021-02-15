@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class HallProxy extends Hall {
 
     private final SeatRepository seatRepository;

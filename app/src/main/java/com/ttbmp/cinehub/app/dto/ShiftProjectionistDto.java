@@ -6,6 +6,7 @@ import java.time.LocalTime;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class ShiftProjectionistDto extends ShiftDto {
 
     private final HallDto hallDto;

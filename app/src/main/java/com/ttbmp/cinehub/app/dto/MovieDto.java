@@ -4,6 +4,7 @@ package com.ttbmp.cinehub.app.dto;
 /**
  * @author Ivan Palmieri
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class MovieDto {
     private int id;
     private String name;

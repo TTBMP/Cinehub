@@ -6,6 +6,7 @@ import java.time.LocalTime;
 /**
  * @author Fabio Buracchi, Massimo Mazzetti
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class ShiftDto {
 
     private int id;

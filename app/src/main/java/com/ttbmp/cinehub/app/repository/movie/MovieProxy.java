@@ -8,6 +8,7 @@ import com.ttbmp.cinehub.domain.Movie;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class MovieProxy extends Movie {
 
     private final MovieApiService movieApiService;

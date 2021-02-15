@@ -5,6 +5,7 @@ import java.util.List;
 /**
  * @author Ivan Palmieri, Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class CinemaDto {
 
     private final int id;

@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class ProjectionistProxy extends Projectionist {
 
     private final UserRepository userRepository;

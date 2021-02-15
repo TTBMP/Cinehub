@@ -3,6 +3,7 @@ package com.ttbmp.cinehub.app.dto;
 /**
  * @author Massimo Mazzetti
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class EmployeeDto {
 
     private String id;

@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class CinemaProxy extends Cinema {
 
     private final HallRepository hallRepository;

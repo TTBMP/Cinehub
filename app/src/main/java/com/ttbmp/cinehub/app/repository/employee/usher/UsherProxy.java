@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class UsherProxy extends Usher {
 
     private final UserRepository userRepository;

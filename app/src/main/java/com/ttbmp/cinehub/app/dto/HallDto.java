@@ -5,6 +5,7 @@ import java.util.List;
 /**
  * @author Ivan Palmieri
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class HallDto {
 
     private Integer id;

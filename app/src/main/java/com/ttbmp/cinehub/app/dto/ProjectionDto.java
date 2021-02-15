@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * @author Ivan Palmieri
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class ProjectionDto {
 
     private final String startTime;
