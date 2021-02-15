@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <title>Shift Detail</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1 align="center">Shift Detail</h1>
+
+<br/>
+<div class="container" th:value="${employee} + ${shiftDetail} + ${projection}">
+    <div class="row">
+        <div class="col-sm"> Name</div>
+        <div class="col-sm" th:text="${employee.name}"> Pippo</div>
+    </div>
+    <div class="row">
+        <div class="col-sm"> Surname</div>
+        <div class="col-sm" th:text="${employee.surname}"> Pluto</div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm"> Role</div>
+        <div class="col-sm" th:if="${projection}">Projectionist</div>
+        <!-- ELSE -->
+        <div class="col-sm" th:unless="${projection}">Usher</div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm"> Date</div>
+        <div class="col-sm" th:text="${shiftDetail.date}"> 2021-02-02</div>
+    </div>
+    <div class="row">
+        <div class="col-sm"> Start Time</div>
+        <div class="col-sm" th:text="${shiftDetail.start}"> 11:00</div>
+    </div>
+    <div class="row">
+        <div class="col-sm"> End Time</div>
+        <div class="col-sm" th:text="${shiftDetail.end}"> 18:00</div>
+    </div>
+    <div class="row">
+        <div class="col-sm"> Cinema</div>
+        <div class="col-sm" th:text="${employee.cinema.name}"> Comunale</div>
+    </div>
+    <div class="row" th:if="${projection}">
+        <div class="col-sm"> Hall</div>
+        <div class="col-sm" th:text="${shiftDetail.hallDto.id}"> 1</div>
+    </div>
+
+
+    <div th:if="${error}">
+        <h1 th:text="${errorText}" align="center"></h1>
+    </div>
+
+    <div>
+        <a href="/manage_employee_shift">
+            <button class="btn btn-outline-primary btn-sm" type="button">
+                Close
+            </button>
+        </a>
+        <div th:value="${now}" th:if="${shiftDetail.date.isAfter({now})}">
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modifyShift">Modify changes
+            </button>
+
+            <a href="/delete_shift">
+                <button type="button" class="btn btn-danger">Delete Shift</button>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="modal it-dialog-scrollable fade" tabindex="-1" role="dialog" id="modifyShift">
+    <div class="modal-dialog modal-dialog-right" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modify Shift</h5>
+            </div>
+            <div class="modal-body">
+                <form action="#" th:action="@{/shift_detail}" th:object="${modifyRequest}" method="post">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm"> Name</div>
+                            <div class="col-sm" th:text="${employee.name}"> Pippo</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm"> Surname</div>
+                            <div class="col-sm" th:text="${employee.surname}"> Pluto</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm"> Role</div>
+                            <div class="col-sm" th:if="${projection}">Projectionist</div>
+                            <!-- ELSE -->
+                            <div class="col-sm" th:unless="${projection}">Usher</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm"> Date</div>
+                            <input type="date" id="modifyDate" th:attr="min=${now}" th:text="${shiftDetail.date}"
+                                   th:value="${date}" required th:field="*{date}">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm"> Start Time</div>
+                            <input type="time" id="modifyStartTime" th:text="${shiftDetail.start}" required
+                                   th:value="${start}" th:field="*{start}">
+                        </div>
+                        <div class=" row">
+                            <div class="col-sm"> End Time</div>
+                            <input type="time" id="modifyEndTime" th:text="${shiftDetail.end}" required
+                                   th:value="${end}" th:field="*{end}">
+                        </div>
+                        <div class=" row">
+                            <div class="col-sm"> Cinema</div>
+                            <div class="col-sm" th:text="${employee.cinema.name}"></div>
+                        </div>
+                        <div class="row" th:if="${projection}">
+                            <div class="col-sm"> Hall</div>
+                            <select id="modifyHallComboBox" th:value="${hall}" th:field="*{hallId}">
+                                <option th:each="hall : ${hallList}"
+                                        th:value="${hall.id}"
+                                        th:text="${hall.id}">1
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Modify
+                            Shift
+                        </button>
+
+                        <button type="button" class="btn btn-secondary btn-lg btn-block" data-dismiss="modal">Close
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
