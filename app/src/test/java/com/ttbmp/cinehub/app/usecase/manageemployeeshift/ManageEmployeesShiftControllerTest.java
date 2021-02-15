@@ -57,17 +57,17 @@ class ManageEmployeesShiftControllerTest {
 
         @Override
         public void presentShiftList(GetShiftListResponse shiftList) {
-            Assertions.assertNotEquals(shiftList.getShiftDtoList().size(), 0);
+            Assertions.assertNotEquals(0,shiftList.getShiftDtoList().size());
         }
 
         @Override
         public void presentCinemaList(GetCinemaListResponse listCinema) {
-            Assertions.assertNotEquals(listCinema.getCinemaList().size(), 0);
+            Assertions.assertNotEquals(0,listCinema.getCinemaList().size());
         }
 
         @Override
         public void presentHallList(GetHallListResponse listHall) {
-            Assertions.assertNotEquals(listHall.getListHall().size(), 0);
+            Assertions.assertNotEquals(0,listHall.getListHall().size());
         }
 
         @Override
