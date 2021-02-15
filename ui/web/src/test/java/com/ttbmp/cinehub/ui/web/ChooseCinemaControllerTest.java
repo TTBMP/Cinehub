@@ -48,7 +48,7 @@ public class ChooseCinemaControllerTest {
         driver.findElement(By.id("date_picker")).clear();
         driver.findElement(By.id("date_picker")).sendKeys("19/02/2021");
         driver.findElement(By.id("search")).click();
-        driver.findElement(By.id("filmContainer")).click();
+        driver.findElement(By.id("0")).click();
         assertEquals(driver.findElement(By.cssSelector(".display-4")).getText(), "Cinema");
 
     }

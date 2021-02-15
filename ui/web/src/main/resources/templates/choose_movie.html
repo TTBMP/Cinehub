@@ -57,10 +57,10 @@
     </div>
     <!--/Top-->
     <!--List Movie-->
-    <div class="row justify-content-center text-center">
-        <tr th:each="movie : ${movieList}">
-            <div id="filmContainer" class="col-6 text-center justify-content-center mt-3">
-                <div class="card p-2 m-3 text-center justify-content-center h-100"
+    <div  class="row justify-content-center text-center">
+        <tr th:each="movie,inter : ${movieList}">
+            <div  class="col-6 text-center justify-content-center mt-3">
+                <div th:id="${inter.index}" class="card p-2 m-3 text-center justify-content-center h-100"
                      style="background-color: black; border-color: #6d6d6d">
                     <h2 class="h2 mt-2">
                         <span th:text="${movie.name}"> Title </span>
@@ -68,7 +68,7 @@
                     <div class="text-center mt-3">
                         <a class="text-center justify-content-center "
                            th:href="@{|/choose_cinema/${choose_date}/${movie.id}|}">
-                            <img class="figure-img img-fluid rounded" th:id="${movie.movieUrl}"
+                            <img  class="figure-img img-fluid rounded" th:id="${movie.movieUrl}"
                                  th:name="${movie.movieUrl}" th:src="${movie.movieUrl}">
                         </a>
                     </div>
