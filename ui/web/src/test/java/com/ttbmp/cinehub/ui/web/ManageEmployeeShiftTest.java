@@ -38,9 +38,9 @@ class ManageEmployeeShiftTest {
         driver.get("http://localhost:8080/manage_employee_shift");
         WebElement datep = driver.findElement(By.xpath("//*[@id=\"date\"]"));
         datep.sendKeys("20022021");
-        driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/button")).click();
-        driver.findElement(By.xpath("/html/body/div/div/div[2]/div/table/tbody[2]/tr[1]/td[8]/span[5]/span/a")).click();
-        message = driver.findElement(By.xpath("/html/body/div[1]/div[4]/div[2]"));
+        driver.findElement(By.xpath("//*[@id=\"search\"]")).click();
+        driver.findElement(By.xpath("//*[@id=\"27\"]")).click();
+        message = driver.findElement(By.xpath("//*[@id=\"day\"]"));
     }
 
     @AfterEach

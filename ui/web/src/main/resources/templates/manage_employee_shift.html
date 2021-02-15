@@ -37,7 +37,7 @@
                     <input id="date" required th:field="*{start}" th:value="${date}" type="date"/>
                     <br/>
                     <br/>
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Search</button>
+                    <button id="search" class="btn btn-primary btn-lg btn-block" type="submit">Search</button>
                 </form>
                 <hr class="mb-4">
                 <thead>
@@ -128,7 +128,7 @@
                         <td>
                             <span th:each="shift,indexShift : ${employee.value}">
                                 <span th:if=${shift.date.dayOfWeek.toString.equals("SUNDAY")}>
-                                    <a th:href="@{|/shift_detail/${employee.key.id}/${indexShift.index}|}">
+                                    <a th:href="@{|/shift_detail/${employee.key.id}/${indexShift.index}|}" th:id="${shift.id}">
                                         <Button class="btn btn-outline-info"
                                                 th:text="${shift.start} + '-' + ${shift.end} " type="button"></Button>
                                     </a>
