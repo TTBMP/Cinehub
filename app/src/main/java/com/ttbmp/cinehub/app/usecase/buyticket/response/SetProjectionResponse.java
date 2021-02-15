@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.app.usecase.buyticket.response;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class SetProjectionResponse {
 

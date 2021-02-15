@@ -21,7 +21,7 @@ public class UsherShift extends Shift {
     public void modifyShift(Shift shift, LocalDate date, LocalTime start, LocalTime end, Hall hall) throws ModifyShiftException {
         List<Shift> shiftList = shift.getEmployee().getShiftListBetween(date.minusDays(1), date.plusDays(1));
         for (Shift elem : shiftList) {
-            if (elem.getId() !=shift.getId()
+            if (elem.getId() != shift.getId()
                     && LocalDate.parse(elem.getDate()).equals(date)
                     && (start.isBefore(LocalTime.parse(elem.getEnd()))
                     && (end.isAfter(LocalTime.parse(elem.getStart()))))) {

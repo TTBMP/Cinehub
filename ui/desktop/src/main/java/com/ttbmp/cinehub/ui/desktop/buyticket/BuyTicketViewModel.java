@@ -14,7 +14,7 @@ import java.util.List;
 
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class BuyTicketViewModel implements ViewModel {
 
@@ -76,7 +76,7 @@ public class BuyTicketViewModel implements ViewModel {
         selectedCinemaCity.bind(ObjectBindings.map(selectedCinema, CinemaDto::getCity));
         selectedCinemaName.bind(ObjectBindings.map(selectedCinema, CinemaDto::getName));
         selectedTicketPrice.bind(ObjectBindings.map(selectedTicket, TicketDto::getPrice));
-        selectedTicketPosition.bind(ObjectBindings.map(selectedTicket,ticket-> ticket.getSeatDto().getPosition()));
+        selectedTicketPosition.bind(ObjectBindings.map(selectedTicket, ticket -> ticket.getSeatDto().getPosition()));
         StringProperty selectedMovieRating = new SimpleStringProperty();
         selectedMovieRating.bind(ObjectBindings.map(selectedMovie, MovieDto::getVote));
         StringProperty selectedMovieOverview = new SimpleStringProperty();

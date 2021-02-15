@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.app.service.payment;
 import com.ttbmp.cinehub.app.usecase.Request;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class PayServiceRequest extends Request {
 

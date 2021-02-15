@@ -8,7 +8,7 @@ import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public interface ProjectionRepository {
 

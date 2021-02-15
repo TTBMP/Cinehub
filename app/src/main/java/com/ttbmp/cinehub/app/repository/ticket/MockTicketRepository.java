@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author Fabio Buracchi, Palmieri Ivan
+ * @author Fabio Buracchi, Ivan Palmieri
  */
 public class MockTicketRepository implements TicketRepository {
 

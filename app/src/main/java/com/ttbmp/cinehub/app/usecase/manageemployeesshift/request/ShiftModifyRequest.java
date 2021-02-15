@@ -20,7 +20,7 @@ public class ShiftModifyRequest extends Request {
     private int shiftId;
     private LocalDate date;
     private LocalTime start;
-    private  LocalTime end;
+    private LocalTime end;
     private HallDto hall;
 
     public ShiftModifyRequest(EmployeeDto employeeDto, int shiftId, LocalDate date, LocalTime start, LocalTime end, HallDto hall) {
@@ -97,7 +97,7 @@ public class ShiftModifyRequest extends Request {
         if (hall == null && employeeDto instanceof ProjectionistDto) {
             addError(MISSING_HALL);
         }
-        if(employeeDto == null){
+        if (employeeDto == null) {
             addError(MISSING_EMPLOYEE);
         }
 

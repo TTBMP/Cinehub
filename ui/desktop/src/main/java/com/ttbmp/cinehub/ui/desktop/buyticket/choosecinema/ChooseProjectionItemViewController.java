@@ -10,12 +10,11 @@ import javafx.scene.control.Label;
 import java.util.Objects;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class ChooseProjectionItemViewController extends ViewController {
 
     private ProjectionDto projectionDto;
-
 
 
     @FXML

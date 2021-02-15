@@ -6,7 +6,7 @@ import javafx.scene.control.DatePicker;
 import java.time.LocalDate;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 @SuppressWarnings("java:S110")
 public class CustomDateCell extends DateCell {

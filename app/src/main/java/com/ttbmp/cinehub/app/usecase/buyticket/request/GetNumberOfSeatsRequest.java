@@ -4,7 +4,7 @@ import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.usecase.Request;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class GetNumberOfSeatsRequest extends Request {
 

@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.app.dto;
 import com.ttbmp.cinehub.domain.User;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class TicketDto {
 

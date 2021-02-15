@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.domain;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class Seat {
 
@@ -10,7 +10,7 @@ public class Seat {
     private boolean state;
     private String position;
 
-    public Seat(int id, long price, boolean state,String position) {
+    public Seat(int id, long price, boolean state, String position) {
         this.id = id;
         this.price = price;
         this.state = state;

@@ -107,12 +107,13 @@ public class ShiftRepeatRequest extends Request {
         if (end == null) {
             addError(MISSING_END);
         }
-        if(startShift == null){
+        if (startShift == null) {
             addError(MISSING_START_SHIFT);
-        }if(endShift == null){
+        }
+        if (endShift == null) {
             addError(MISSING_END_SHIFT);
         }
-        if(hall == null && employeeDto instanceof ProjectionistDto){
+        if (hall == null && employeeDto instanceof ProjectionistDto) {
             addError(MISSING_HALL);
         }
     }

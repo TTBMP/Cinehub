@@ -200,26 +200,27 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     public void presentInvalidRepeatedShiftListRequest(ShiftRepeatRequest request) {
         String error = "";
         if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_EMPLOYEE)) {
-            viewModel.errorProperty().setValue(error +ShiftRepeatRequest.MISSING_EMPLOYEE.getMessage());
+            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_EMPLOYEE.getMessage());
         }
         if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_START)) {
             viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_START.getMessage());
         }
         if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_END)) {
-            viewModel.errorProperty().setValue(error+ShiftRepeatRequest.MISSING_END.getMessage());
+            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_END.getMessage());
         }
         if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_OPTION)) {
-            viewModel.errorProperty().setValue(error+ShiftRepeatRequest.MISSING_OPTION.getMessage());
+            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_OPTION.getMessage());
         }
         if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_START_SHIFT)) {
             viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_START_SHIFT.getMessage());
         }
         if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_END_SHIFT)) {
-            viewModel.errorProperty().setValue(error+ShiftRepeatRequest.MISSING_END_SHIFT.getMessage());
+            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_END_SHIFT.getMessage());
         }
         if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_HALL)) {
-            viewModel.errorProperty().setValue(error+ShiftRepeatRequest.MISSING_HALL.getMessage());
-        }viewModel.errorAssignVisibilityProperty().setValue(true);
+            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_HALL.getMessage());
+        }
+        viewModel.errorAssignVisibilityProperty().setValue(true);
     }
 
     @Override

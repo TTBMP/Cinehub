@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class BuyTicketController implements BuyTicketUseCase {
 

@@ -24,7 +24,7 @@ import java.time.LocalDate;
 
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class ChooseMovieViewController extends ViewController {
 

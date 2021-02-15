@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.app.dto;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan, Fabio Buracchi
+ * @author Ivan Palmieri, Fabio Buracchi
  */
 public class CinemaDto {
 

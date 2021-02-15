@@ -16,7 +16,6 @@ import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.app.usecase.Request;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
-import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.shift.ModifyShiftException;
 import com.ttbmp.cinehub.domain.shift.Shift;
@@ -94,10 +93,10 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
     public void modifyShift(ShiftModifyRequest request) {
         try {
             Request.validate(request);
-            Shift shift= shiftRepository.getShift(request.getShiftId());
+            Shift shift = shiftRepository.getShift(request.getShiftId());
             Employee employee = employeeRepository.getEmployee(request.getEmployeeDto().getId());
-           /* Hall hall= hallRepository.getHall(request.getHall().getId());*/
-            shift.modifyShift(shift,request.getDate(),request.getStart(),request.getEnd(),HallDataMapper.mapToEntity(request.getHall()));
+            /* Hall hall= hallRepository.getHall(request.getHall().getId());*/
+            shift.modifyShift(shift, request.getDate(), request.getStart(), request.getEnd(), HallDataMapper.mapToEntity(request.getHall()));
             shiftRepository.modifyShift(shift);
             emailService.sendMail(new EmailServiceRequest(
                     employee.getEmail(),
@@ -112,7 +111,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (Request.InvalidRequestException e) {
             manageEmployeesShiftPresenter.presentInvalidModifyShiftListRequest(request);
         } catch (ShiftSaveException e) {
-           manageEmployeesShiftPresenter.presentCreateShiftError(e);
+            manageEmployeesShiftPresenter.presentCreateShiftError(e);
         } catch (ModifyShiftException e) {
             manageEmployeesShiftPresenter.presentModifyShiftError(e);
         }
@@ -144,7 +143,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             Request.validate(request);
             List<ShiftDto> shiftDtoList = new ArrayList<>();
             UnaryOperator<LocalDate> increaseDateFunction;
-            Employee employee  = employeeRepository.getEmployee(request.getEmployeeDto().getId());
+            Employee employee = employeeRepository.getEmployee(request.getEmployeeDto().getId());
             switch (request.getOption()) {
                 case "EVERY_DAY":
                     increaseDateFunction = date -> date.plusDays(1);
@@ -180,7 +179,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (Request.InvalidRequestException e) {
             manageEmployeesShiftPresenter.presentInvalidRepeatedShiftListRequest(request);
         } catch (CreateShiftException e) {
-           manageEmployeesShiftPresenter.presentCreateShiftError(e);
+            manageEmployeesShiftPresenter.presentCreateShiftError(e);
         }
     }
 

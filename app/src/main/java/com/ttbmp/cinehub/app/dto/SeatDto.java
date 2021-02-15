@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.app.dto;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class SeatDto {
 

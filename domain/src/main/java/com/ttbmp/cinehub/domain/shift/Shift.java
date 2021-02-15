@@ -5,7 +5,6 @@ import com.ttbmp.cinehub.domain.employee.Employee;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 /**
  * @author Fabio Buracchi, Massimo Mazzetti

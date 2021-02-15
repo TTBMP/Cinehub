@@ -3,14 +3,14 @@ package com.ttbmp.cinehub.domain.ticket.decorator;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public abstract class TicketDecorator extends Ticket {
 
     Ticket ticket;
 
     TicketDecorator(Ticket ticket) {
-        super(ticket.getId(),ticket.getPrice(),  ticket.getOwner(), ticket.getSeat());
+        super(ticket.getId(), ticket.getPrice(), ticket.getOwner(), ticket.getSeat());
         this.ticket = ticket;
     }
 

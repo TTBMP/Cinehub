@@ -5,7 +5,7 @@ import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public interface BuyTicketPresenter {
 

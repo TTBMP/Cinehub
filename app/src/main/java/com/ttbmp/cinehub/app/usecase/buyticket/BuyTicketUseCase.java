@@ -4,7 +4,7 @@ import com.ttbmp.cinehub.app.usecase.UseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public interface BuyTicketUseCase extends UseCase {
 

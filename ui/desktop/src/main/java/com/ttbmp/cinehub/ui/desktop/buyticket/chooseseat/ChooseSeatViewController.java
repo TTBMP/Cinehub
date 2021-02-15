@@ -18,7 +18,7 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class ChooseSeatViewController extends ViewController {
 

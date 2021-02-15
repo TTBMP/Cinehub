@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class PaymentViewController extends ViewController {
 
@@ -102,12 +102,12 @@ public class PaymentViewController extends ViewController {
                 viewModel.selectedCinemaProperty().getValue(),
                 viewModel.selectedMovieProperty().getValue(),
                 String.valueOf(viewModel.selectedDateProperty().getValue())
-        )) ;
-            try {
-                navController.navigate(new NavDestination(new ConfirmEmailView()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        ));
+        try {
+            navController.navigate(new NavDestination(new ConfirmEmailView()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

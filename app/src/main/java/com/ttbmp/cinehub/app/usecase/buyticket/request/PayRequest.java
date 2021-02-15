@@ -8,7 +8,7 @@ import com.ttbmp.cinehub.app.usecase.Request;
 
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class PayRequest extends Request {
     public static final Request.Error MISSING_TICKET_ERROR = new Request.Error("Ticket can't be null");

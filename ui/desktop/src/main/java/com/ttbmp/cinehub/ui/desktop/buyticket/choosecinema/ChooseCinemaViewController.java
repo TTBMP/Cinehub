@@ -20,7 +20,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class ChooseCinemaViewController extends ViewController {
 

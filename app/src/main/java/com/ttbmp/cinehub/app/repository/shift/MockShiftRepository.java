@@ -147,7 +147,7 @@ public class MockShiftRepository implements ShiftRepository {
     }
 
     @Override
-    public synchronized void saveShift(Shift shift){
+    public synchronized void saveShift(Shift shift) {
         SHIFT_DATA_LIST.add(new ShiftData(
                 shiftIdCounter,
                 shift.getDate(),

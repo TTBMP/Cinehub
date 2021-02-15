@@ -15,7 +15,7 @@ import javafx.scene.layout.GridPane;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class SeatsMatrixViewController extends ViewController {
 
@@ -47,18 +47,18 @@ public class SeatsMatrixViewController extends ViewController {
             for (int j = 0; j < columns; j++) {
                 RadioButton radioButton = new RadioButton();
                 radioButton.setPadding(new Insets(5, 5, 5, 5));
-                radioButton.setText(seatDtoList.get(count).getPosition()+ "\n" + seatDtoList.get(count).getPrice() + "\u20ac");
+                radioButton.setText(seatDtoList.get(count).getPosition() + "\n" + seatDtoList.get(count).getPrice() + "\u20ac");
                 radioButton.setToggleGroup(toggleGroup);
                 ImageView imageView = new ImageView(new Image(String.valueOf(this.getClass().getResource("/drawables/office-chair.png"))));
                 imageView.setFitWidth(25);
                 imageView.setFitHeight(25);
                 radioButton.setGraphic(imageView);
 
-                if(!viewModel.selectedProjectionProperty().getValue().getListTicket().isEmpty()) {
+                if (!viewModel.selectedProjectionProperty().getValue().getListTicket().isEmpty()) {
                     int finalCount = count;
                     viewModel.selectedProjectionProperty().getValue().getListTicket().forEach(x -> {
                         String val = seatDtoList.get(finalCount).getPosition();
-                        if (x.getSeatDto().getPosition().equals(val) ) {
+                        if (x.getSeatDto().getPosition().equals(val)) {
                             radioButton.setDisable(true);
                         }
                     });
@@ -70,7 +70,7 @@ public class SeatsMatrixViewController extends ViewController {
                 count++;
             }
         }
-        addOtherButton(seatDtoList, columns, rest, count, buy,viewModel);
+        addOtherButton(seatDtoList, columns, rest, count, buy, viewModel);
         updateValue(viewModel, size, buy);
     }
 
@@ -80,12 +80,12 @@ public class SeatsMatrixViewController extends ViewController {
             radioButton.setText(seatDtoList.get(count).getPosition() + "\n" + seatDtoList.get(count).getPrice() + "\u20ac");
             radioButton.setToggleGroup(toggleGroup);
             radioButton.setPadding(new Insets(5, 5, 5, 5));
-            if(!viewModel.selectedProjectionProperty().getValue().getListTicket().isEmpty()) {
+            if (!viewModel.selectedProjectionProperty().getValue().getListTicket().isEmpty()) {
 
                 int finalCount = count;
                 viewModel.selectedProjectionProperty().getValue().getListTicket().forEach(x -> {
                     String val = seatDtoList.get(finalCount).getPosition();
-                    if (x.getSeatDto().getPosition().equals(val) ) {
+                    if (x.getSeatDto().getPosition().equals(val)) {
                         radioButton.setDisable(true);
                     }
                 });

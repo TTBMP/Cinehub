@@ -7,7 +7,7 @@ import com.ttbmp.cinehub.domain.Projection;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class ProjectionDataMapper {
 

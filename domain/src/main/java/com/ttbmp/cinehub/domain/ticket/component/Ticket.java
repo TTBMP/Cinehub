@@ -4,7 +4,7 @@ import com.ttbmp.cinehub.domain.Seat;
 import com.ttbmp.cinehub.domain.User;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class Ticket {
 
@@ -15,7 +15,7 @@ public class Ticket {
     private User owner;
 
 
-    public Ticket(int id, long price, User owner,Seat seat) {
+    public Ticket(int id, long price, User owner, Seat seat) {
         this.id = id;
         this.price = price;
         this.owner = owner;
@@ -59,7 +59,6 @@ public class Ticket {
     public long increasePrice() {
         return this.price;
     }
-
 
 
 }

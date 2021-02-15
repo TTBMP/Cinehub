@@ -5,7 +5,7 @@ import com.ttbmp.cinehub.app.dto.SeatDto;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class GetNumberOfSeatsResponse {
 

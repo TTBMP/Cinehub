@@ -6,7 +6,7 @@ import com.ttbmp.cinehub.app.usecase.Request;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class GetTicketBySeatsRequest extends Request {
 

@@ -5,7 +5,7 @@ import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import java.io.IOException;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class AboutActivity extends Activity {
 
