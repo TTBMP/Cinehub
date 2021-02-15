@@ -18,6 +18,7 @@ import java.util.Map;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class ViewPersonalScheduleViewModel implements ViewModel {
 
     private final StringProperty errorMessage = new SimpleStringProperty();

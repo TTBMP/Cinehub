@@ -22,6 +22,7 @@ import java.util.List;
 /**
  * @author Palmieri Ivan
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 @Controller
 public class ChooseSeatsController {
 

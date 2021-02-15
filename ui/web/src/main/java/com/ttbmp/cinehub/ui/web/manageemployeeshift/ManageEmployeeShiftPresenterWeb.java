@@ -11,7 +11,7 @@ import java.time.temporal.WeekFields;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPresenter {
 
     private final ManageEmployeeShiftViewModel viewModel;

@@ -17,6 +17,7 @@ import java.time.LocalTime;
 /**
  * @author Massimo Mazzetti
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class ManageEmployeesShiftViewModel implements ViewModel {
 
     private final ObjectProperty<CinemaDto> selectedCinema = new SimpleObjectProperty<>();

@@ -16,6 +16,7 @@ import java.time.LocalDate;
 /**
  * @author Palmieri Ivan
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 @Controller
 public class PaymentController {
     private ProjectionDto selectedProjection;

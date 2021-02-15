@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 /**
  * @author Massimo Mazzetti
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPresenter {
 
     private final ManageEmployeesShiftViewModel viewModel;

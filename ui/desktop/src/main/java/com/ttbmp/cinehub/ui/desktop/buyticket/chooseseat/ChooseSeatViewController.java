@@ -20,6 +20,7 @@ import java.io.IOException;
 /**
  * @author Ivan Palmieri
  */
+
 public class ChooseSeatViewController extends ViewController {
 
     private final ToggleGroup toggleGroup = new ToggleGroup();

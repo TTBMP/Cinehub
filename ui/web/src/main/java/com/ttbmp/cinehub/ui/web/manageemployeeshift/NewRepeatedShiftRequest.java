@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class NewRepeatedShiftRequest {
 
     String employeeId;
