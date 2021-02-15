@@ -95,7 +95,6 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             Request.validate(request);
             Shift shift = shiftRepository.getShift(request.getShiftId());
             Employee employee = employeeRepository.getEmployee(request.getEmployeeDto().getId());
-            /* Hall hall= hallRepository.getHall(request.getHall().getId());*/
             shift.modifyShift(shift, request.getDate(), request.getStart(), request.getEnd(), HallDataMapper.mapToEntity(request.getHall()));
             shiftRepository.modifyShift(shift);
             emailService.sendMail(new EmailServiceRequest(

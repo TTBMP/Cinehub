@@ -10,6 +10,11 @@ public class GetCinemaRequest {
     public GetCinemaRequest() {
     }
 
+    public GetCinemaRequest(int cinemaId, LocalDate start) {
+        this.cinemaId = cinemaId;
+        this.start = start;
+    }
+
     public int getCinemaId() {
         return cinemaId;
     }
