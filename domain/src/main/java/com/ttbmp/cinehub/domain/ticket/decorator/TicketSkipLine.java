@@ -13,11 +13,9 @@ public class TicketSkipLine extends TicketDecorator {
     }
 
     @Override
-    public long increasePrice() {
-        return this.addPrice(super.increasePrice());
+    public long getPrice() {
+        return ticket.getPrice()+1;
     }
 
-    private long addPrice(long price) {
-        return price + 1;
-    }
+
 }

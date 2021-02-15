@@ -126,15 +126,15 @@ public class BuyTicketController implements BuyTicketUseCase {
             Ticket ticket = new Ticket(0, seat.getPrice(), user, seat);
             if (Boolean.TRUE.equals(request.getHeatedArmchairOption())) {
                 ticket = new TicketSkipLine(ticket);
-                ticket.setPrice(ticket.increasePrice());
+                ticket.setPrice(ticket.getPrice());
             }
             if (Boolean.TRUE.equals(request.getFoldingArmchairOption())) {
                 ticket = new TicketFoldingArmchair(ticket);
-                ticket.setPrice(ticket.increasePrice());
+                ticket.setPrice(ticket.getPrice());
             }
             if (Boolean.TRUE.equals(request.getSkipLineRadioOption())) {
                 ticket = new TicketHeatedArmchair(ticket);
-                ticket.setPrice(ticket.increasePrice());
+                ticket.setPrice(ticket.getPrice());
             }
             /*-----------------------------------------*/
             buyTicketPresenter.setSelectedTicket(new GetTicketBySeatsResponse(TicketDataMapper.mapToDto(ticket)));
