@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -14,12 +13,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class ChooseCinemaControllerTest {
-
+class ChooseMovieControllerTest {
 
     public WebElement welcomeMessage;
     private WebDriver driver;
@@ -32,24 +29,20 @@ public class ChooseCinemaControllerTest {
     @BeforeEach
     void setUp() {
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.get("http://localhost:8080/choose_movie");
+        welcomeMessage = driver.findElement(By.xpath("/html/body/div/div[1]/div[1]/div[1]/h1"));
     }
 
 
     @AfterEach
     void tearDown() {
-        driver.close();
+        driver.quit();
     }
 
     @Test
     void search() {
-        driver.get("http://localhost:8080/choose_movie");
-        driver.manage().window().setSize(new Dimension(1646, 930));
-        driver.findElement(By.id("date_picker")).click();
-        driver.findElement(By.id("date_picker")).clear();
-        driver.findElement(By.id("date_picker")).sendKeys("19/02/2021");
-        driver.findElement(By.id("search")).click();
-        driver.findElement(By.id("filmContainer")).click();
-        assertEquals(driver.findElement(By.cssSelector(".display-4")).getText(), "Cinema");
-
+        assertEquals("Movies available", welcomeMessage.getText());
     }
 }

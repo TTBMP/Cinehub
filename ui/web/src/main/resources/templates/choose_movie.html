@@ -45,13 +45,13 @@
                 <button class="btn-primary mb-1">Today</button>
             </a>
         </div>
-        <div class="col-1 mt-2">
+        <div class="col-2 mt-2 ">
             <input id="date_picker" th:value="${choose_date} " type="date">
         </div>
-        <div class="col-1">
+        <div class="col-1 mr-5">
             <a class="nav-link" id="nav-link" onclick="href+= document.getElementById('date_picker').value"
                th:href="@{|/choose_movie/|}">
-                <button class="btn-primary mb-1">Search</button>
+                <button id="search" class="btn-primary mb-1">Search</button>
             </a>
         </div>
     </div>
@@ -59,7 +59,7 @@
     <!--List Movie-->
     <div class="row justify-content-center text-center">
         <tr th:each="movie : ${movieList}">
-            <div class="col-6 text-center justify-content-center mt-3">
+            <div id="filmContainer" class="col-6 text-center justify-content-center mt-3">
                 <div class="card p-2 m-3 text-center justify-content-center h-100"
                      style="background-color: black; border-color: #6d6d6d">
                     <h2 class="h2 mt-2">
