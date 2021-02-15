@@ -1,0 +1,14 @@
+.calendar-label {
+    border: solid 1px;
+}
+
+.calendar-day {
+    min-width: 160px;
+    min-height: 160px;
+    border: solid 1px;
+}
+
+.movie-thumbnail {
+    width: auto;
+    height: 200px;
+}
