@@ -36,7 +36,7 @@ class ManageEmployeeShiftTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("http://localhost:8080/manage_employee_shift");
-        message = driver.findElement(By.id("search"));
+        message = driver.findElement(By.id("search_shift_cinema"));
 
     }
 
