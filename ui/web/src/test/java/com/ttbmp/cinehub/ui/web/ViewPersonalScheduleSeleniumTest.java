@@ -18,10 +18,10 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class ChooseMovieControllerTest {
+class ViewPersonalScheduleSeleniumTest {
 
-    public WebElement welcomeMessage;
     private WebDriver driver;
+
     public WebElement datePicker;
 
     @BeforeAll
@@ -34,10 +34,9 @@ class ChooseMovieControllerTest {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-        driver.get("http://localhost:8080/choose_movie");
-        datePicker = driver.findElement(By.id("date_picker"));
+        driver.get("http://localhost:8080/schedule");
+        datePicker = driver.findElement(By.id("date-picker"));
     }
-
 
     @AfterEach
     void tearDown() {
@@ -45,7 +44,11 @@ class ChooseMovieControllerTest {
     }
 
     @Test
-    void search() {
-        assertEquals(LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE), datePicker.getAttribute("value"));
+    void isDefaultDateTodayDate() {
+        assertEquals(
+                LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE),
+                datePicker.getAttribute("value")
+        );
     }
+
 }
