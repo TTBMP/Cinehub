@@ -110,24 +110,13 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
 
     @Override
     public void presentCreateShift(CreateShiftResponse response) {
+        viewModel.setErrorAssignVisibility(false);
         viewModel.setShiftCreated(response.getShiftDto());
     }
 
     @Override
-    public void presentInvalidSaveShiftListRequest(ShiftRequest request) {
-        if (request.getErrorList().contains(ShiftRequest.MISSING_SHIFT)) {
-            viewModel.errorProperty().setValue(ShiftRequest.MISSING_SHIFT.getMessage());
-        }
-    }
-
-    @Override
-    public void presentSaveShiftNullRequest() {
-        viewModel.errorProperty().setValue("Error with operation save shift");
-    }
-
-    @Override
-    public void presentSaveShiftError(Throwable error) {
-        viewModel.errorProperty().setValue("IMPOSSIBLE ASSIGN SHIFT");
+    public void presentCreateShiftError(Throwable error) {
+        viewModel.errorProperty().setValue(error.getMessage());
         viewModel.setErrorAssignVisibility(true);
     }
 
@@ -151,12 +140,25 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
 
     @Override
     public void presentInvalidModifyShiftListRequest(ShiftModifyRequest request) {
-        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_NEW_SHIFT)) {
-            viewModel.errorProperty().setValue(ShiftModifyRequest.MISSING_NEW_SHIFT.getMessage());
+        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_EMPLOYEE)) {
+            viewModel.errorProperty().setValue(ShiftModifyRequest.MISSING_EMPLOYEE.getMessage());
         }
-        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_OLD_SHIFT)) {
-            viewModel.errorProperty().setValue(ShiftModifyRequest.MISSING_OLD_SHIFT.getMessage());
+        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_SHIFT)) {
+            viewModel.errorProperty().setValue(ShiftModifyRequest.MISSING_SHIFT.getMessage());
         }
+        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_DATE)) {
+            viewModel.errorProperty().setValue(ShiftModifyRequest.MISSING_DATE.getMessage());
+        }
+        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_HALL)) {
+            viewModel.errorProperty().setValue(ShiftModifyRequest.MISSING_HALL.getMessage());
+        }
+        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_START)) {
+            viewModel.errorProperty().setValue(ShiftModifyRequest.MISSING_START.getMessage());
+        }
+        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_END)) {
+            viewModel.errorProperty().setValue(ShiftModifyRequest.MISSING_END.getMessage());
+        }
+
     }
 
     @Override
@@ -196,18 +198,29 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
 
     @Override
     public void presentInvalidRepeatedShiftListRequest(ShiftRepeatRequest request) {
-        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_SHIFT)) {
-            viewModel.errorProperty().setValue(ShiftRepeatRequest.MISSING_SHIFT.getMessage());
+        String error = "";
+        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_EMPLOYEE)) {
+            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_EMPLOYEE.getMessage());
         }
         if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_START)) {
-            viewModel.errorProperty().setValue(ShiftRepeatRequest.MISSING_START.getMessage());
+            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_START.getMessage());
         }
         if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_END)) {
-            viewModel.errorProperty().setValue(ShiftRepeatRequest.MISSING_END.getMessage());
+            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_END.getMessage());
         }
         if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_OPTION)) {
-            viewModel.errorProperty().setValue(ShiftRepeatRequest.MISSING_OPTION.getMessage());
+            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_OPTION.getMessage());
         }
+        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_START_SHIFT)) {
+            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_START_SHIFT.getMessage());
+        }
+        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_END_SHIFT)) {
+            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_END_SHIFT.getMessage());
+        }
+        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_HALL)) {
+            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_HALL.getMessage());
+        }
+        viewModel.errorAssignVisibilityProperty().setValue(true);
     }
 
     @Override

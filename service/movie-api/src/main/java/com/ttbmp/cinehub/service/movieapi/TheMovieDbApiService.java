@@ -9,7 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * @author Palmieri Ivan, Fabio Buracchi
+ * @author Ivan Palmieri, Fabio Buracchi
  */
 public class TheMovieDbApiService {
 

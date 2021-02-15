@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.domain;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class Cinema {
 

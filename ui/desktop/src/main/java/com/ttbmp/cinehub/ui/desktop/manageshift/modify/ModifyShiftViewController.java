@@ -3,7 +3,6 @@ package com.ttbmp.cinehub.ui.desktop.manageshift.modify;
 import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.app.dto.UsherDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.CreateShiftRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetHallListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftModifyRequest;
 import com.ttbmp.cinehub.ui.desktop.manageshift.ManageEmployeesShiftViewModel;
@@ -121,17 +120,15 @@ public class ModifyShiftViewController extends ViewController {
 
     private void submitButtonOnAction(ActionEvent action) {
         viewModel.setErrorAssignVisibility(false);
-        activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(
-                new CreateShiftRequest(
+
+        activity.getUseCase(ManageEmployeesShiftUseCase.class).modifyShift(
+                new ShiftModifyRequest(
                         viewModel.getSelectedShift().getEmployee(),
+                        viewModel.getSelectedShift().getId(),
                         viewModel.getSelectedDays(),
                         viewModel.getStartSpinnerModifyTime().withNano(0),
                         viewModel.getEndSpinnerModifyTime().withNano(0),
-                        viewModel.getSelectedHall()
-                )
-        );
-
-        activity.getUseCase(ManageEmployeesShiftUseCase.class).modifyShift(new ShiftModifyRequest(viewModel.getSelectedShift(), viewModel.getShiftCreated()));
+                        viewModel.getSelectedHall()));
 
         if (!viewModel.isErrorAssignVisibility()) {
             try {

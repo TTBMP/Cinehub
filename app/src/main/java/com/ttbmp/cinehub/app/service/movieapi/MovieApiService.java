@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.app.service.movieapi;
 import com.ttbmp.cinehub.domain.Movie;
 
 /**
- * @author Palmieri Ivan, Fabio Buracchi
+ * @author Ivan Palmieri, Fabio Buracchi
  */
 public interface MovieApiService {
 

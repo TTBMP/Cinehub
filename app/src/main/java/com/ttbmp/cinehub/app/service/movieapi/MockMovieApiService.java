@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Palmieri Ivan, Fabio Buracchi
+ * @author Ivan Palmieri, Fabio Buracchi
  */
 public class MockMovieApiService implements MovieApiService {
 

@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class AboutViewController extends ViewController {
 

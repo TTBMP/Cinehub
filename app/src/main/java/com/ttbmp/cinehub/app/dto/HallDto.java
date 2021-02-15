@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.app.dto;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class HallDto {
 

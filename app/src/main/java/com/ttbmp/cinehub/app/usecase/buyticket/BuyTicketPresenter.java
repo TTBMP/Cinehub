@@ -5,7 +5,7 @@ import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public interface BuyTicketPresenter {
 
@@ -32,7 +32,7 @@ public interface BuyTicketPresenter {
 
     void presentGetTimeOfProjectionNullRequest();
 
-    void presentInvalidGetTimeOfProjection(GetTimeOfProjectionRequest request);
+    void presentInvalidGetTimeOfProjection(GetProjectionRequest request);
 
     void presentGetNumberOfSeatsNullRequest();
 

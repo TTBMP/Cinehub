@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.app.service.payment;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public interface PaymentService {
 

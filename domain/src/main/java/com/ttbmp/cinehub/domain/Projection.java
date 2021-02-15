@@ -94,4 +94,8 @@ public class Projection {
         this.ticketList = ticketList;
     }
 
+    public void addTicket(Ticket ticket) {
+        this.ticketList.add(ticket);
+    }
+
 }

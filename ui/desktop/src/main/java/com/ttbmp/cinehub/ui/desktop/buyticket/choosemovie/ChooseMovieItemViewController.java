@@ -13,7 +13,7 @@ import javafx.scene.image.ImageView;
 import java.util.Objects;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class ChooseMovieItemViewController extends ViewController {
 

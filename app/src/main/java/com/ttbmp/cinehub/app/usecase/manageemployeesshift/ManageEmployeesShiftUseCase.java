@@ -21,8 +21,6 @@ public interface ManageEmployeesShiftUseCase extends UseCase {
 
     void createShift(CreateShiftRequest request);
 
-    void saveShift(ShiftRequest request);
-
     void modifyShift(ShiftModifyRequest request);
 
 }

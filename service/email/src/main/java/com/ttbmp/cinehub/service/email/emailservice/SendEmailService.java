@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class SendEmailService {
 

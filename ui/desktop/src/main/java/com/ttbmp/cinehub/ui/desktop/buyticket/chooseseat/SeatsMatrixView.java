@@ -8,7 +8,7 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class SeatsMatrixView extends View {
 

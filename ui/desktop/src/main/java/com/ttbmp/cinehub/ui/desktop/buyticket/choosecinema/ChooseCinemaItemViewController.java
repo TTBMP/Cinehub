@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 import java.util.Objects;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class ChooseCinemaItemViewController extends ViewController {
 

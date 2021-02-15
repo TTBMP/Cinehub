@@ -7,7 +7,7 @@ import com.ttbmp.cinehub.app.usecase.Request;
 import java.time.LocalDate;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class SetSelectedProjectionRequest extends Request {
 

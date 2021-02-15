@@ -7,9 +7,9 @@ import com.ttbmp.cinehub.app.usecase.Request;
 import java.time.LocalDate;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
-public class GetTimeOfProjectionRequest extends Request {
+public class GetProjectionRequest extends Request {
 
     public static final Request.Error MISSING_MOVIE_ERROR = new Request.Error("Movie can't be null");
     public static final Request.Error MISSING_DATE_ERROR = new Request.Error("Date can't be null");
@@ -19,7 +19,7 @@ public class GetTimeOfProjectionRequest extends Request {
     private CinemaDto cinemaDto;
     private String localDate;
 
-    public GetTimeOfProjectionRequest(MovieDto movieDto, CinemaDto cinemaDto, LocalDate localDate) {
+    public GetProjectionRequest(MovieDto movieDto, CinemaDto cinemaDto, LocalDate localDate) {
         this.movieDto = movieDto;
         this.cinemaDto = cinemaDto;
         this.localDate = localDate.toString();

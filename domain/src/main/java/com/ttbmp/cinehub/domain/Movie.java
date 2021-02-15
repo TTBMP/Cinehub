@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.domain;
 
 /**
- * @author Palmieri Ivan, Fabio Buracchi
+ * @author Ivan Palmieri, Fabio Buracchi
  */
 public class Movie {
 

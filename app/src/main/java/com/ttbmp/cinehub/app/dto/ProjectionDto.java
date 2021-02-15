@@ -1,33 +1,64 @@
 package com.ttbmp.cinehub.app.dto;
 
+import com.ttbmp.cinehub.domain.employee.Projectionist;
+
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class ProjectionDto {
 
     private final String startTime;
     private final HallDto hallDto;
-    private CinemaDto cinemaDto;
-    private MovieDto movieDto;
-    private List<TicketDto> ticketBasicList;
+    private int id;
     private String date;
+    private MovieDto movieDto;
+    private CinemaDto cinemaDto;
+    private Projectionist projectionist;
+    private List<TicketDto> listTicket;
 
-    public ProjectionDto(MovieDto movie, CinemaDto cinema, HallDto hall, String startTime, String date) {
+    public ProjectionDto(MovieDto movie,
+                         CinemaDto cinema,
+                         HallDto hall,
+                         String startTime,
+                         String date,
+                         List<TicketDto> listTicket,
+                         int id,
+                         Projectionist projectionist
+    ) {
+        this.id = id;
+        this.projectionist = projectionist;
         this.movieDto = movie;
         this.cinemaDto = cinema;
         this.hallDto = hall;
         this.startTime = startTime;
         this.date = date;
+        this.listTicket = listTicket;
     }
 
-    public List<TicketDto> getTicketBasicList() {
-        return ticketBasicList;
+    public int getId() {
+        return id;
     }
 
-    public void setTicketBasicList(List<TicketDto> ticketBasicList) {
-        this.ticketBasicList = ticketBasicList;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Projectionist getProjectionist() {
+        return projectionist;
+    }
+
+    public void setProjectionist(Projectionist projectionist) {
+        this.projectionist = projectionist;
+    }
+
+    public List<TicketDto> getListTicket() {
+        return listTicket;
+    }
+
+    public void setListTicket(List<TicketDto> listTicket) {
+        this.listTicket = listTicket;
     }
 
     public String getStartTime() {

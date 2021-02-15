@@ -5,7 +5,7 @@ import com.stripe.model.Customer;
 import com.stripe.model.PaymentMethod;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class StripeService {
 

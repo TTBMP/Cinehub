@@ -15,8 +15,8 @@ public class BuyTicketHandler implements BuyTicketUseCase {
     }
 
     @Override
-    public boolean pay(PayRequest request) {
-        return controller.pay(request);
+    public void pay(PayRequest request) {
+        controller.pay(request);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class BuyTicketHandler implements BuyTicketUseCase {
     }
 
     @Override
-    public void getProjectionList(GetTimeOfProjectionRequest request) {
+    public void getProjectionList(GetProjectionRequest request) {
         controller.getProjectionList(request);
     }
 

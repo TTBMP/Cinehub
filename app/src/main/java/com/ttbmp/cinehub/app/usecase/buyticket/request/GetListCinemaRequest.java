@@ -4,7 +4,7 @@ import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.usecase.Request;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class GetListCinemaRequest extends Request {
     public static final Request.Error MISSING_MOVIE_ERROR = new Request.Error("Cinema can't be null");

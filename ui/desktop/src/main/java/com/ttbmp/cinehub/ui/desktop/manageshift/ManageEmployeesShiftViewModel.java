@@ -40,7 +40,7 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
     private final ObjectProperty<DayWeek> selectedDayWeek = new SimpleObjectProperty<>();
     private final ObjectProperty<LocalDate> selectedWeek = new SimpleObjectProperty<>();
     private final ObservableList<EmployeeShiftWeek> employeeShiftWeekList = FXCollections.observableArrayList();
-    private final ObjectProperty<ShiftRepeatingOption> selectedOptions = new SimpleObjectProperty<>();
+    private final ObjectProperty<ShiftRepeatingOption> selectedOption = new SimpleObjectProperty<>(ShiftRepeatingOption.EVERY_DAY);
     private final ObservableList<String> options = FXCollections.observableArrayList();
 
     private final ObjectProperty<ShiftDto> shiftCreated = new SimpleObjectProperty<>();
@@ -251,16 +251,16 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
         return employeeShiftWeekList;
     }
 
-    public ShiftRepeatingOption getSelectedOptions() {
-        return selectedOptions.get();
+    public ShiftRepeatingOption getSelectedOption() {
+        return selectedOption.get();
     }
 
-    public void setSelectedOptions(ShiftRepeatingOption selectedOptions) {
-        this.selectedOptions.set(selectedOptions);
+    public void setSelectedOption(ShiftRepeatingOption selectedOption) {
+        this.selectedOption.set(selectedOption);
     }
 
-    public ObjectProperty<ShiftRepeatingOption> selectedOptionsProperty() {
-        return selectedOptions;
+    public ObjectProperty<ShiftRepeatingOption> selectedOptionProperty() {
+        return selectedOption;
     }
 
     public ObservableList<String> getOptions() {

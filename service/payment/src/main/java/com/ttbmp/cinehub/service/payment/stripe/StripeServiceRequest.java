@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class StripeServiceRequest {
 
