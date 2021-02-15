@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class MockProjectionRepository implements ProjectionRepository {
 
     private static final List<ProjectionData> PROJECTION_DATA_LIST = new ArrayList<>();

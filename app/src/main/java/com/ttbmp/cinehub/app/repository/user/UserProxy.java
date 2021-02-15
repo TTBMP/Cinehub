@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.domain.User;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class UserProxy extends User {
 
     private final CreditCardRepository creditCardRepository;

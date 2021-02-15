@@ -3,6 +3,7 @@ package com.ttbmp.cinehub.app.service.authentication;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class MockAuthenticationService implements AuthenticationService {
 
     @Override

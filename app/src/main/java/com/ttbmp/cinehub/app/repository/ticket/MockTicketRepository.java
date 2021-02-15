@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 /**
  * @author Fabio Buracchi, Ivan Palmieri
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class MockTicketRepository implements TicketRepository {
 
     private static final List<TicketData> TICKET_DATA_LIST = new ArrayList<>();

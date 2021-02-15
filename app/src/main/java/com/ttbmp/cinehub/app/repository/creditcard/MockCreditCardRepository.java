@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class MockCreditCardRepository implements CreditCardRepository {
 
     private static final List<CreditCardData> CREDIT_CARD_DATA_LIST = new ArrayList<>();

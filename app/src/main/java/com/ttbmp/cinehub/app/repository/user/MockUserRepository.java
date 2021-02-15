@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class MockUserRepository implements UserRepository {
 
     private static final List<UserData> USER_DATA_LIST = new ArrayList<>();

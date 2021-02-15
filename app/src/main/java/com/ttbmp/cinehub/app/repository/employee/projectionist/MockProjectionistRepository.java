@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class MockProjectionistRepository implements ProjectionistRepository {
 
     private static final List<ProjectionistData> PROJECTIONIST_DATA_LIST = new ArrayList<>();

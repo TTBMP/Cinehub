@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class MockEmployeeRepository implements EmployeeRepository {
 
     private static final List<EmployeeData> EMPLOYEE_DATA_LIST = new ArrayList<>();

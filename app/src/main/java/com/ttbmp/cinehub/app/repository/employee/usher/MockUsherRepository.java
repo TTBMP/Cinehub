@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 /**
  * @author Fabio Buracchi
  */
+@SuppressWarnings("common-java:DuplicatedBlocks")
 public class MockUsherRepository implements UsherRepository {
 
     private static final List<UsherData> USHER_DATA_LIST = new ArrayList<>();
