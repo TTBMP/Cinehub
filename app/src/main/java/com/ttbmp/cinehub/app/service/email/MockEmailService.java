@@ -4,7 +4,7 @@ package com.ttbmp.cinehub.app.service.email;
 /**
  * @author Ivan Palmieri
  */
-@SuppressWarnings("common-java:DuplicatedBlocks")
+@SuppressWarnings({"common-java:DuplicatedBlocks", "java:S106"})
 public class MockEmailService implements EmailService {
 
     @Override
