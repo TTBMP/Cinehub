@@ -15,6 +15,13 @@ public class NewShiftRequest {
 
     }
 
+    public NewShiftRequest(String employeeId, LocalDate date, LocalTime start, LocalTime end, int hallId) {
+        this.employeeId = employeeId;
+        this.date = date;
+        this.start = start;
+        this.end = end;
+        this.hallId = hallId;
+    }
 
     public String getEmployeeId() {
         return employeeId;

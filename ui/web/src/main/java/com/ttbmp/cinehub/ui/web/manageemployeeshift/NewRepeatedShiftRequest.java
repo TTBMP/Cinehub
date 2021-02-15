@@ -16,6 +16,16 @@ public class NewRepeatedShiftRequest {
     public NewRepeatedShiftRequest() {
     }
 
+    public NewRepeatedShiftRequest(String employeeId, LocalDate date, LocalTime start, LocalTime end, int hallId, String preference, LocalDate dateRepeated) {
+        this.employeeId = employeeId;
+        this.date = date;
+        this.start = start;
+        this.end = end;
+        this.hallId = hallId;
+        this.preference = preference;
+        this.dateRepeated = dateRepeated;
+    }
+
     public String getEmployeeId() {
         return employeeId;
     }
