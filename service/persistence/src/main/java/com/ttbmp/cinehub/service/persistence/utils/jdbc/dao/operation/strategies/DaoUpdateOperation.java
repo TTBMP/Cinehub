@@ -85,6 +85,7 @@ public class DaoUpdateOperation extends DaoOperation {
     }
 
     private String getQueryTemplate() throws DaoMethodException {
+        String delimiter = " = ?, ";
         String dtoTableName = dtoType.getAnnotation(Entity.class).tableName();
         String query;
         switch (updateStrategy) {
@@ -92,16 +93,16 @@ public class DaoUpdateOperation extends DaoOperation {
                 query = String.format(
                         "UPDATE %s SET %s = ? WHERE %s = ?",
                         dtoTableName,
-                        String.join(" = ?, ", dtoColumnNameList),
-                        String.join(" = ?, ", dtoPrimaryKeyColumnNameList)
+                        String.join(delimiter, dtoColumnNameList),
+                        String.join(delimiter, dtoPrimaryKeyColumnNameList)
                 );
                 break;
             case OnConflictStrategy.IGNORE:
                 query = String.format(
                         "UPDATE IGNORE %s SET %s = ? WHERE %s = ?",
                         dtoTableName,
-                        String.join(" = ?, ", dtoColumnNameList),
-                        String.join(" = ?, ", dtoPrimaryKeyColumnNameList)
+                        String.join(delimiter, dtoColumnNameList),
+                        String.join(delimiter, dtoPrimaryKeyColumnNameList)
                 );
                 break;
             case OnConflictStrategy.REPLACE:

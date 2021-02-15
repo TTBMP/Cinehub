@@ -30,6 +30,8 @@ public class MockProjectionRepository implements ProjectionRepository {
     private static int projectionIdCounter = 0;
 
     static {
+        String time;
+        time = "16:00";
         for (LocalDate date = LocalDate.now().minusMonths(1); date.isBefore(LocalDate.now().plusMonths(1)); date = date.plusDays(1)) {
             for (MockHallRepository.HallData hallData : MockHallRepository.getHallDataList()) {
                 for (MockMovieRepository.MovieData movieData : MockMovieRepository.getMovieDataList()) {
@@ -37,8 +39,8 @@ public class MockProjectionRepository implements ProjectionRepository {
                         LocalDate finalDate = date;
                         List<Integer> shiftIdList = MockShiftRepository.getShiftDataList().stream()
                                 .filter(d -> LocalDate.parse(d.getDate()).equals(finalDate)
-                                        && LocalTime.parse("16:00").isAfter(LocalTime.parse(d.getStart()))
-                                        && LocalTime.parse("16:00").isBefore(LocalTime.parse(d.getEnd()))
+                                        && LocalTime.parse(time).isAfter(LocalTime.parse(d.getStart()))
+                                        && LocalTime.parse(time).isBefore(LocalTime.parse(d.getEnd()))
                                 )
                                 .map(MockShiftRepository.ShiftData::getId)
                                 .collect(Collectors.toList());

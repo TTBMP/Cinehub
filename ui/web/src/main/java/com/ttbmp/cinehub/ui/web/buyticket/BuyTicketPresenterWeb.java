@@ -144,7 +144,7 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     @Override
     public void presentAutenticationError() {
-
+        viewModel.setMovieError("");
     }
 
 }
