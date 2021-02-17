@@ -36,13 +36,19 @@ class BuyTicketControllerTest {
         @Override
         public void presentMovieApiList(GetListMovieResponse response) {
             try {
+                boolean result = true;
                 List<Movie> movieDtoList = serviceLocator.getService(MovieRepository.class)
-                        .getMovieList(
-                                String.valueOf(LocalDate.now())
-                        );
+                        .getMovieList(String.valueOf(LocalDate.now()));
                 List<MovieDto> expected = MovieDataMapper.mapToDtoList(movieDtoList);
                 List<MovieDto> actual = response.getMovieList();
-                Assertions.assertEquals(expected, actual);
+                for(int i = 0; i<expected.size();i++){
+                    if (expected.get(i).equals(actual.get(i))){
+                        result = false;
+                        break;
+                    }
+                }
+                result = result&&expected.size()==actual.size();
+                Assertions.assertTrue(result);
             } catch (IOException e) {
                 e.printStackTrace();
             }
