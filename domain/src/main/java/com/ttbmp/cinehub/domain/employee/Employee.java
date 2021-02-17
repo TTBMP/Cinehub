@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.domain.employee;
 
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.CreditCard;
-import com.ttbmp.cinehub.domain.User;
+import com.ttbmp.cinehub.domain.user.User;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
 import java.time.LocalDate;

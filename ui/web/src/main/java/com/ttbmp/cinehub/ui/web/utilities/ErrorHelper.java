@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.web.utilities;
 
 import com.google.common.base.Joiner;
-import com.ttbmp.cinehub.app.usecase.Request;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 import org.springframework.ui.Model;
 
 import java.util.ArrayList;

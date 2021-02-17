@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.app.repository.user;
 
 import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
 import com.ttbmp.cinehub.domain.CreditCard;
-import com.ttbmp.cinehub.domain.User;
+import com.ttbmp.cinehub.domain.user.User;
 
 /**
  * @author Fabio Buracchi

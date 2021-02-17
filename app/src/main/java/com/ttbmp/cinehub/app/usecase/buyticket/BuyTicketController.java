@@ -14,10 +14,11 @@ import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.app.service.payment.PayServiceRequest;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
-import com.ttbmp.cinehub.app.usecase.Request;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 import com.ttbmp.cinehub.domain.*;
+import com.ttbmp.cinehub.domain.user.User;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketFoldingArmchair;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketHeatedArmchair;
@@ -58,7 +59,7 @@ public class BuyTicketController implements BuyTicketUseCase {
     public void pay(PayRequest request) {
         try {
             Request.validate(request);
-            User user = userRepository.getUser(authenticationService.signIn("", "").getUserId());
+            User user = userRepository.getUser(authenticationService.authenticate(""));
             Ticket ticket = TicketDataMapper.mapToEntity(request.getTicket());
             paymentService.pay(new PayServiceRequest(
                     user.getEmail(),
@@ -121,7 +122,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             List<Seat> seats = SeatDataMapper.mapToEntityList(request.getSeatDtoList());
             Integer pos = request.getPos();
             Seat seat = seats.get(pos);
-            User user = userRepository.getUser(authenticationService.signIn("", "").getUserId());
+            User user = userRepository.getUser(authenticationService.authenticate(""));
             /*DECORATOR PATTERN GOF*/
             Ticket ticket = new Ticket(0, seat.getPrice(), user, seat);
             if (Boolean.TRUE.equals(request.getHeatedArmchairOption())) {

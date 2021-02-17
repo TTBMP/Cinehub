@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.app.service.payment;
 
-import com.ttbmp.cinehub.app.usecase.Request;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 
 /**
  * @author Ivan Palmieri

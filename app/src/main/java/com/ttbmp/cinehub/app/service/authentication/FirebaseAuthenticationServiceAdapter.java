@@ -20,30 +20,30 @@ public class FirebaseAuthenticationServiceAdapter implements AuthenticationServi
     }
 
     @Override
-    public Session signIn(String email, String password) throws AuthenticationException {
+    public String signIn(String email, String password) throws AuthenticationException {
         try {
             FirebaseSession session = authenticationService.createUser(email, password);
-            return new Session(session.getUid(), session.getSessionCookie());
+            return session.getSessionCookie();
         } catch (FirebaseException e) {
             throw new AuthenticationException(e.getMessage());
         }
     }
 
     @Override
-    public Session logIn(String email, String password) throws AuthenticationException {
+    public String logIn(String email, String password) throws AuthenticationException {
         try {
             FirebaseSession session = authenticationService.authenticateUser(email, password);
-            return new Session(session.getUid(), session.getSessionCookie());
+            return session.getSessionCookie();
         } catch (FirebaseException e) {
             throw new AuthenticationException(e.getMessage());
         }
     }
 
     @Override
-    public Session verifySessionCookie(String sessionCookie) throws AuthenticationException {
+    public String authenticate(String sessionToken) throws AuthenticationException {
         try {
-            FirebaseSession session = authenticationService.verifySessionCookie(sessionCookie);
-            return new Session(session.getUid(), session.getSessionCookie());
+            FirebaseSession session = authenticationService.verifySessionCookie(sessionToken);
+            return session.getUid();
         } catch (FirebaseException e) {
             throw new AuthenticationException(e.getMessage());
         }

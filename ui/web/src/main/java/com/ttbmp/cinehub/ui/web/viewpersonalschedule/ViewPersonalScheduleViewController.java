@@ -33,6 +33,7 @@ public class ViewPersonalScheduleViewController {
         model.addAttribute("date", date);
         model.addAttribute("selectedShift", new Shift());
         useCase.getShiftList(new ShiftListRequest(
+                "",
                 date.with(TemporalAdjusters.firstDayOfMonth()),
                 date.with(TemporalAdjusters.lastDayOfMonth())
         ));
