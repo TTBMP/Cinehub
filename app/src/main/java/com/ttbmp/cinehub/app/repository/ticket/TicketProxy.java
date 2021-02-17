@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.app.repository.ticket;
 import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Seat;
-import com.ttbmp.cinehub.domain.User;
+import com.ttbmp.cinehub.domain.user.User;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 /**

@@ -1,13 +1,14 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
-import com.ttbmp.cinehub.app.usecase.Request;
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 
 import java.time.LocalDate;
 
 /**
  * @author Fabio Buracchi
  */
-public class ShiftListRequest extends Request {
+public class ShiftListRequest extends AuthenticatedRequest {
 
     public static final Request.Error MISSING_START_TIME_ERROR = new Request.Error("Start time value can't be null");
     public static final Request.Error MISSING_END_TIME_ERROR = new Request.Error("End time value can't be null");
@@ -16,7 +17,8 @@ public class ShiftListRequest extends Request {
     private LocalDate start;
     private LocalDate end;
 
-    public ShiftListRequest(LocalDate start, LocalDate end) {
+    public ShiftListRequest(String sessionToken, LocalDate start, LocalDate end) {
+        super(sessionToken);
         this.start = start;
         this.end = end;
     }

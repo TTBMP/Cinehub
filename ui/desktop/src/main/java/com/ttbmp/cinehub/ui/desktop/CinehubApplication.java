@@ -6,11 +6,20 @@ import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-
 public class CinehubApplication extends Application {
+
+    private static String sessionToken;
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public static String getSessionToken() {
+        return sessionToken;
+    }
+
+    public static void setSessionToken(String sessionToken) {
+        CinehubApplication.sessionToken = sessionToken;
     }
 
     @Override

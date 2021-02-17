@@ -6,23 +6,18 @@ package com.ttbmp.cinehub.app.service.authentication;
 public class MockAuthenticationService implements AuthenticationService {
 
     @Override
-    public Session signIn(String email, String password) throws AuthenticationException {
-        return new Session("1", "");
+    public String signIn(String email, String password) throws AuthenticationException {
+        return "";
     }
 
     @Override
-    public Session logIn(String email, String password) throws AuthenticationException {
-        return new Session("1", "");
+    public String logIn(String email, String password) throws AuthenticationException {
+        return "";
     }
 
     @Override
-    public Session verifySessionCookie(String sessionCookie) throws AuthenticationException {
-        return new Session("1", "");
-    }
-
-    @Override
-    public String sigIn(String email, String password) {
-        return "keyId";
+    public String authenticate(String sessionToken) throws AuthenticationException {
+        return "1";
     }
 
 }

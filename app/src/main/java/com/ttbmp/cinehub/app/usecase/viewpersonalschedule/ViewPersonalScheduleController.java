@@ -3,9 +3,9 @@ package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftRepository;
-import com.ttbmp.cinehub.app.service.authentication.AuthenticationException;
-import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
-import com.ttbmp.cinehub.app.usecase.Request;
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
+import com.ttbmp.cinehub.domain.user.Permission;
 
 /**
  * @author Fabio Buracchi
@@ -16,20 +16,24 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
 
     private final EmployeeRepository employeeRepository;
     private final ProjectionistShiftRepository projectionistShiftRepository;
-    private final AuthenticationService authenticationService;
+
+    private final ServiceLocator serviceLocator;
 
     public ViewPersonalScheduleController(ServiceLocator serviceLocator, ViewPersonalSchedulePresenter presenter) {
         this.presenter = presenter;
-        this.authenticationService = serviceLocator.getService(AuthenticationService.class);
         this.employeeRepository = serviceLocator.getService(EmployeeRepository.class);
         this.projectionistShiftRepository = serviceLocator.getService(ProjectionistShiftRepository.class);
+        this.serviceLocator = serviceLocator;
     }
 
     public void getShiftList(ShiftListRequest request) {
         try {
-            Request.validate(request);
-            var userId = authenticationService.signIn("", "").getUserId();
-            var employee = employeeRepository.getEmployee(userId);
+            AuthenticatedRequest.validate(
+                    request,
+                    new Permission[]{Permission.GET_OWN_SHIFT_LIST},
+                    serviceLocator
+            );
+            var employee = employeeRepository.getEmployee(request.getUser().getId());
             presenter.presentGetShiftList(new ShiftListReply(
                     employee.getShiftListBetween(request.getStart(), request.getEnd())
             ));
@@ -37,7 +41,9 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
             presenter.presentShiftListNullRequest();
         } catch (Request.InvalidRequestException e) {
             presenter.presentInvalidShiftListRequest(request);
-        } catch (AuthenticationException e) {
+        } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
+            e.printStackTrace();
+        } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
             e.printStackTrace();
         }
     }

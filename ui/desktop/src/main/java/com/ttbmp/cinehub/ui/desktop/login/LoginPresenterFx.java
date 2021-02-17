@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.ui.desktop.login;
 
 import com.ttbmp.cinehub.app.usecase.login.LoginPresenter;
 import com.ttbmp.cinehub.app.usecase.login.LoginRequest;
+import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 
 public class LoginPresenterFx implements LoginPresenter {
 
@@ -9,6 +10,11 @@ public class LoginPresenterFx implements LoginPresenter {
 
     public LoginPresenterFx(LoginViewModel viewModel) {
         this.viewModel = viewModel;
+    }
+
+    @Override
+    public void presentSessionToken(String sessionToken) {
+        CinehubApplication.setSessionToken(sessionToken);
     }
 
     @Override

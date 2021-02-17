@@ -11,6 +11,9 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
+/**
+ * @author Fabio Buracchi
+ */
 class ViewPersonalScheduleControllerTest {
 
     private final MockServiceLocator serviceLocator = new MockServiceLocator();
@@ -22,6 +25,7 @@ class ViewPersonalScheduleControllerTest {
                 new MockViewPersonalSchedulePresenter()
         );
         var request = new ShiftListRequest(
+                "",
                 LocalDate.now(),
                 LocalDate.now().plusDays(1)
         );
@@ -39,7 +43,7 @@ class ViewPersonalScheduleControllerTest {
         public void presentGetShiftList(ShiftListReply result) {
             String userId = null;
             try {
-                userId = serviceLocator.getService(AuthenticationService.class).signIn("", "").getUserId();
+                userId = serviceLocator.getService(AuthenticationService.class).authenticate("");
             } catch (AuthenticationException e) {
                 e.printStackTrace();
             }

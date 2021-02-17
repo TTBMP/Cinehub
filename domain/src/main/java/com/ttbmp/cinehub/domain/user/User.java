@@ -1,6 +1,6 @@
-package com.ttbmp.cinehub.domain;
+package com.ttbmp.cinehub.domain.user;
 
-import com.ttbmp.cinehub.domain.employee.Employee;
+import com.ttbmp.cinehub.domain.CreditCard;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 import java.util.List;
@@ -16,6 +16,7 @@ public class User {
     private String email;
     private CreditCard creditCard;
     private List<Ticket> ownedTicketList;
+    private Role[] roles;
 
     public User(String id, String name, String surname, String email, CreditCard creditCard) {
         this.id = id;
@@ -73,12 +74,24 @@ public class User {
         this.ownedTicketList = ownedTicketList;
     }
 
+    public boolean hasPermission(Permission requiredPermission) {
+        return true;
+//        for (Role role : roles) {
+//            for (Permission permission : role.getPermissions()) {
+//                if (permission.equals(requiredPermission)) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        var other = (Employee) obj;
+        var other = (User) obj;
         return id.equals(other.getId());
     }
 

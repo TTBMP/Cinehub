@@ -10,9 +10,9 @@ public class LoginHandler  implements LoginUseCase {
         controller = new LoginController(new ServiceLocator(), presenter);
     }
 
-
     @Override
     public void login(LoginRequest request) {
         controller.login(request);
     }
+
 }

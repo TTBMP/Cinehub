@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.app.usecase;
+package com.ttbmp.cinehub.app.utilities.request;
 
 import java.util.ArrayList;
 import java.util.List;

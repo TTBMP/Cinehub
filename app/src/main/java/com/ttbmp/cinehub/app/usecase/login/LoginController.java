@@ -1,18 +1,17 @@
 package com.ttbmp.cinehub.app.usecase.login;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.service.authentication.AuthenticationException;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
-import com.ttbmp.cinehub.app.usecase.Request;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 
-public class LoginController implements  LoginUseCase{
+public class LoginController implements LoginUseCase {
 
-    private final LoginPresenter loginPresenter;
+    private final LoginPresenter presenter;
     private final AuthenticationService authenticationService;
 
-    public LoginController(
-            ServiceLocator serviceLocator, LoginPresenter loginPresenter
-    ) {
-        this.loginPresenter = loginPresenter;
+    public LoginController(ServiceLocator serviceLocator, LoginPresenter presenter) {
+        this.presenter = presenter;
         this.authenticationService = serviceLocator.getService(AuthenticationService.class);
     }
 
@@ -20,11 +19,15 @@ public class LoginController implements  LoginUseCase{
     public void login(LoginRequest request) {
         try {
             Request.validate(request);
-            authenticationService.sigIn(request.getUsername(),request.getUsername());
+            String sessionToken = authenticationService.logIn(request.getUsername(), request.getUsername());
+            presenter.presentSessionToken(sessionToken);
         } catch (Request.NullRequestException e) {
-            loginPresenter.presentNullRequestException();
+            presenter.presentNullRequestException();
         } catch (Request.InvalidRequestException e) {
-            loginPresenter.presentInvalidRequestException(request);
+            presenter.presentInvalidRequestException(request);
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
         }
     }
+
 }

@@ -14,7 +14,7 @@ import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.app.service.payment.PayServiceRequest;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
-import com.ttbmp.cinehub.app.usecase.Request;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
@@ -56,7 +56,7 @@ public class BuyTicketController implements BuyTicketUseCase {
     public void pay(PaymentRequest request) {
         try {
             Request.validate(request);
-            var user = userRepository.getUser(authenticationService.signIn("", "").getUserId());
+            var user = userRepository.getUser(authenticationService.authenticate(""));
             var ticket = TicketDataMapper.mapToEntity(request.getTicket());
             paymentService.pay(new PayServiceRequest(
                     user.getEmail(),
@@ -116,7 +116,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             var seats = SeatDataMapper.mapToEntityList(request.getSeatDtoList());
             var pos = request.getPos();
             var seat = seats.get(pos);
-            var user = userRepository.getUser(authenticationService.signIn("", "").getUserId());
+            var user = userRepository.getUser(authenticationService.authenticate(""));
             /*DECORATOR PATTERN GOF*/
             var ticket = new Ticket(0, seat.getPrice(), user, seat);
             if (Boolean.TRUE.equals(request.getHeatedArmchairOption())) {

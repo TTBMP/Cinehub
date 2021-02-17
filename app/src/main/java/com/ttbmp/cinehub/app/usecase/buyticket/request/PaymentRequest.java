@@ -4,7 +4,7 @@ import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.dto.TicketDto;
-import com.ttbmp.cinehub.app.usecase.Request;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 
 
 /**
