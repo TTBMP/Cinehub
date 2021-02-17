@@ -35,13 +35,11 @@ class BuyTicketBuyTicketControllerTest {
             try {
                 var result = true;
                 var movieDtoList = serviceLocator.getService(MovieRepository.class)
-                        .getMovieList(
-                                String.valueOf(LocalDate.now())
-                        );
+                        .getMovieList(String.valueOf(LocalDate.now()));
                 var expected = MovieDataMapper.mapToDtoList(movieDtoList);
                 var actual = response.getMovieList();
-                for (var i = 0; i < expected.size(); i++) {
-                    if (expected.get(i).getId() != actual.get(i).getId()) {
+                for(var i = 0; i<expected.size();i++){
+                    if (expected.get(i).equals(actual.get(i))){
                         result = false;
                         break;
                     }
