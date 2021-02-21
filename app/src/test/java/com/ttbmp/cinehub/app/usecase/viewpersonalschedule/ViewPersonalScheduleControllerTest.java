@@ -7,8 +7,6 @@ import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.service.security.SecurityService;
-import com.ttbmp.cinehub.app.service.security.authentication.AuthenticationException;
-import com.ttbmp.cinehub.app.service.security.authentication.AuthenticationService;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.shift.Shift;
 import org.junit.jupiter.api.Assertions;
