@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.app.dto;
 
-import com.ttbmp.cinehub.domain.user.User;
+import com.ttbmp.cinehub.domain.User;
 
 /**
  * @author Ivan Palmieri

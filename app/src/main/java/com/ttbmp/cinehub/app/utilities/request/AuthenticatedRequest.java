@@ -1,15 +1,13 @@
 package com.ttbmp.cinehub.app.utilities.request;
 
-import com.ttbmp.cinehub.app.di.ServiceLocator;
-import com.ttbmp.cinehub.app.repository.user.UserRepository;
-import com.ttbmp.cinehub.app.service.authentication.AuthenticationException;
-import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
-import com.ttbmp.cinehub.domain.user.Permission;
-import com.ttbmp.cinehub.domain.user.User;
+import com.ttbmp.cinehub.app.service.security.SecurityException;
+import com.ttbmp.cinehub.app.service.security.SecurityService;
+import com.ttbmp.cinehub.app.service.security.Permission;
+import com.ttbmp.cinehub.app.service.security.User;
 
 public abstract class AuthenticatedRequest extends Request {
 
-    private User user;
+    private String userId;
     private String sessionToken;
 
     protected AuthenticatedRequest(String sessionToken) {
@@ -24,31 +22,31 @@ public abstract class AuthenticatedRequest extends Request {
         this.sessionToken = sessionToken;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public static void validate(AuthenticatedRequest request, Permission[] permissions, ServiceLocator serviceLocator)
+    public static void validate(AuthenticatedRequest request, SecurityService securityService, Permission[] permissions)
             throws NullRequestException, InvalidRequestException, UnauthenticatedRequestException, UnauthorizedRequestException {
+        User user;
         if (request == null) {
             throw new NullRequestException();
         }
         try {
-            request.user = serviceLocator.getService(UserRepository.class).getUser(
-                    serviceLocator.getService(AuthenticationService.class).authenticate(request.sessionToken)
-            );
-        } catch (AuthenticationException e) {
+            user = securityService.authenticate(request.sessionToken);
+        } catch (SecurityException e) {
             throw new UnauthenticatedRequestException();
         }
         for (Permission permission : permissions) {
-            if (!request.user.hasPermission(permission)) {
+            if (!user.hasPermission(permission)) {
                 throw new UnauthorizedRequestException();
             }
         }
+        request.userId = user.getId();
         request.onValidate();
         if (!request.getErrorList().isEmpty()) {
             throw new InvalidRequestException();

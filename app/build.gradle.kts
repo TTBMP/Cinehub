@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
     api(project(":domain"))
-    implementation(project(":service:authentication"))
+    implementation(project(":service:security"))
     implementation(project(":service:email"))
     implementation(project(":service:movie-api"))
     implementation(project(":service:payment"))

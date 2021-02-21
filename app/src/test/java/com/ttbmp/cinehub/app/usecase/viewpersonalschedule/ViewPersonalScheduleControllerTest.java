@@ -4,8 +4,8 @@ import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
-import com.ttbmp.cinehub.app.service.authentication.AuthenticationException;
-import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
+import com.ttbmp.cinehub.app.service.security.SecurityException;
+import com.ttbmp.cinehub.app.service.security.SecurityService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -43,8 +43,8 @@ class ViewPersonalScheduleControllerTest {
         public void presentGetShiftList(ShiftListReply result) {
             String userId = null;
             try {
-                userId = serviceLocator.getService(AuthenticationService.class).authenticate("");
-            } catch (AuthenticationException e) {
+                userId = serviceLocator.getService(SecurityService.class).authenticate("").getId();
+            } catch (SecurityException e) {
                 e.printStackTrace();
             }
             var employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(userId);

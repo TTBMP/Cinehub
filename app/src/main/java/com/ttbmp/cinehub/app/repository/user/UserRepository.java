@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.app.repository.user;
 
-import com.ttbmp.cinehub.domain.user.User;
+import com.ttbmp.cinehub.domain.User;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 /**

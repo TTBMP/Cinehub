@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.app.repository.creditcard;
 
 import com.ttbmp.cinehub.domain.CreditCard;
-import com.ttbmp.cinehub.domain.user.User;
+import com.ttbmp.cinehub.domain.User;
 
 import java.util.ArrayList;
 import java.util.List;

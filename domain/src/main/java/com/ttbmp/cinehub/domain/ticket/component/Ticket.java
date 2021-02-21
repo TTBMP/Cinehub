@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.domain.ticket.component;
 
 import com.ttbmp.cinehub.domain.Seat;
-import com.ttbmp.cinehub.domain.user.User;
+import com.ttbmp.cinehub.domain.User;
 
 /**
  * @author Ivan Palmieri
