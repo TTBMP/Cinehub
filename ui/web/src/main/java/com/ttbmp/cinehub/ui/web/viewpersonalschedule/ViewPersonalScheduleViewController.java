@@ -51,7 +51,10 @@ public class ViewPersonalScheduleViewController {
     public String showProjectionistShiftDetail(@ModelAttribute Shift shift, Model model) {
         useCase = new ViewPersonalScheduleHandler(new ViewPersonalSchedulePresenterWeb(model));
         model.addAttribute("shift", shift);
-        useCase.getShiftProjectionList(new ProjectionListRequest(shift.getId()));
+        useCase.getShiftProjectionList(new ProjectionListRequest(
+                "",
+                shift.getId())
+        );
         return ErrorHelper.returnView(model, "schedule_projectionist_detail");
     }
 

@@ -7,8 +7,8 @@ import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
-import com.ttbmp.cinehub.app.service.authentication.AuthenticationException;
-import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
+import com.ttbmp.cinehub.app.service.security.SecurityException;
+import com.ttbmp.cinehub.app.service.security.SecurityService;
 import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.app.service.payment.PayServiceRequest;
@@ -18,7 +18,7 @@ import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 import com.ttbmp.cinehub.domain.*;
-import com.ttbmp.cinehub.domain.user.User;
+import com.ttbmp.cinehub.domain.User;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketFoldingArmchair;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketHeatedArmchair;
@@ -36,7 +36,7 @@ public class BuyTicketController implements BuyTicketUseCase {
 
     private final PaymentService paymentService;
     private final EmailService emailService;
-    private final AuthenticationService authenticationService;
+    private final SecurityService securityService;
     private final MovieRepository movieRepository;
     private final CinemaRepository cinemaRepository;
     private final ProjectionRepository projectionRepository;
@@ -47,7 +47,7 @@ public class BuyTicketController implements BuyTicketUseCase {
         this.buyTicketPresenter = buyTicketPresenter;
         this.paymentService = serviceLocator.getService(PaymentService.class);
         this.emailService = serviceLocator.getService(EmailService.class);
-        this.authenticationService = serviceLocator.getService(AuthenticationService.class);
+        this.securityService = serviceLocator.getService(SecurityService.class);
         this.movieRepository = serviceLocator.getService(MovieRepository.class);
         this.cinemaRepository = serviceLocator.getService(CinemaRepository.class);
         this.projectionRepository = serviceLocator.getService(ProjectionRepository.class);
@@ -59,7 +59,7 @@ public class BuyTicketController implements BuyTicketUseCase {
     public void pay(PayRequest request) {
         try {
             Request.validate(request);
-            User user = userRepository.getUser(authenticationService.authenticate(""));
+            User user = userRepository.getUser(securityService.authenticate("").getId());
             Ticket ticket = TicketDataMapper.mapToEntity(request.getTicket());
             paymentService.pay(new PayServiceRequest(
                     user.getEmail(),
@@ -79,7 +79,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             buyTicketPresenter.presentInvalidPay(request);
         } catch (PaymentServiceException e) {
             buyTicketPresenter.presentErrorByStripe(e);
-        } catch (AuthenticationException e) {
+        } catch (SecurityException e) {
             buyTicketPresenter.presentAutenticationError();
         }
     }
@@ -122,7 +122,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             List<Seat> seats = SeatDataMapper.mapToEntityList(request.getSeatDtoList());
             Integer pos = request.getPos();
             Seat seat = seats.get(pos);
-            User user = userRepository.getUser(authenticationService.authenticate(""));
+            User user = userRepository.getUser(securityService.authenticate("").getId());
             /*DECORATOR PATTERN GOF*/
             Ticket ticket = new Ticket(0, seat.getPrice(), user, seat);
             if (Boolean.TRUE.equals(request.getHeatedArmchairOption())) {
@@ -143,7 +143,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             buyTicketPresenter.presentGetTicketBySeatsNullRequest();
         } catch (Request.InvalidRequestException e) {
             buyTicketPresenter.presentInvalidGetTicketBySeats(request);
-        } catch (AuthenticationException e) {
+        } catch (SecurityException e) {
             buyTicketPresenter.presentAutenticationError();
         }
     }
