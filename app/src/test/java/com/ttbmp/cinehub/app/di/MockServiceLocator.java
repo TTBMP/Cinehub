@@ -28,23 +28,23 @@ import com.ttbmp.cinehub.app.repository.ticket.MockTicketRepository;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
 import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
-import com.ttbmp.cinehub.app.service.security.authentication.AuthenticationService;
-import com.ttbmp.cinehub.app.service.security.authentication.MockAuthenticationService;
 import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.service.email.MockEmailService;
 import com.ttbmp.cinehub.app.service.movieapi.MockMovieApiService;
 import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
 import com.ttbmp.cinehub.app.service.payment.MockPaymentService;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
+import com.ttbmp.cinehub.app.service.security.MockSecurityService;
+import com.ttbmp.cinehub.app.service.security.SecurityService;
 
 public class MockServiceLocator extends ServiceLocator {
 
     @Override
     public void addServicesFactory() {
-        serviceFactoryMap.put(AuthenticationService.class, MockAuthenticationService::new);
         serviceFactoryMap.put(EmailService.class, MockEmailService::new);
         serviceFactoryMap.put(MovieApiService.class, MockMovieApiService::new);
         serviceFactoryMap.put(PaymentService.class, MockPaymentService::new);
+        serviceFactoryMap.put(SecurityService.class, MockSecurityService::new);
         serviceFactoryMap.put(CinemaRepository.class, () -> new MockCinemaRepository(this));
         serviceFactoryMap.put(CreditCardRepository.class, MockCreditCardRepository::new);
         serviceFactoryMap.put(EmployeeRepository.class, () -> new MockEmployeeRepository(this));
