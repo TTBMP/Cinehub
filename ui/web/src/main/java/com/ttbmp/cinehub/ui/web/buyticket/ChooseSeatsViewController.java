@@ -6,14 +6,13 @@ import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.GetListCinemaRequest;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.GetListMovieRequest;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.GetNumberOfSeatsRequest;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.GetProjectionRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ import java.util.List;
  * @author Palmieri Ivan
  */
 @Controller
-public class ChooseSeatsController {
+public class ChooseSeatsViewController {
 
     private BuyTicketViewModel viewModel;
     private ProjectionDto selectedProjection;
@@ -31,32 +30,29 @@ public class ChooseSeatsController {
     private CinemaDto selectedCinema;
 
 
-    @GetMapping("/choose_seats/{hall_id}/{selected_date}/{movie_id}/{cinema_id}")
+    @PostMapping("/choose_seat")
     public String chooseSeats(
-            @PathVariable("hall_id") int hallId,
-            @PathVariable("selected_date") String date,
-            @PathVariable("movie_id") int movieId,
-            @PathVariable("cinema_id") int cinemaId,
+            @ModelAttribute("getListSeatRequest") GetListSeatRequest getListSeatRequest,
             Model model) {
         viewModel = new BuyTicketViewModel();
         BuyTicketUseCase useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(viewModel));
-        useCase.getListMovie(new GetListMovieRequest(LocalDate.parse(date)));
+        useCase.getListMovie(new GetListMovieRequest(LocalDate.parse(getListSeatRequest.getDate())));
         viewModel.getMovieDtoList().forEach(movie -> {
-            if (movie.getId() == movieId) {
+            if (movie.getId() == getListSeatRequest.getMovieId()) {
                 selectedMovie = movie;
             }
         });
 
-        useCase.getListCinema(new GetListCinemaRequest(selectedMovie, date));
+        useCase.getListCinema(new GetListCinemaRequest(selectedMovie.getId(), getListSeatRequest.getDate()));
         viewModel.getCinemaDtoList().forEach(cinema -> {
-            if (cinema.getId() == cinemaId) {
+            if (cinema.getId() == getListSeatRequest.getCinemaId()) {
                 selectedCinema = cinema;
             }
         });
 
-        useCase.getProjectionList(new GetProjectionRequest(selectedMovie, selectedCinema, LocalDate.parse(date)));
+        useCase.getProjectionList(new GetProjectionRequest(selectedMovie, selectedCinema, LocalDate.parse(getListSeatRequest.getDate())));
         viewModel.getProjectionList().forEach(projection -> {
-            if (projection.getHallDto().getId() == hallId) {
+            if (projection.getHallDto().getId() == getListSeatRequest.getHallId()) {
                 selectedProjection = projection;
             }
         });
@@ -70,15 +66,24 @@ public class ChooseSeatsController {
         model.addAttribute("boolean1", false);
         model.addAttribute("boolean2", false);
         model.addAttribute("boolean3", false);
-        model.addAttribute("selectedDate", date);
+        model.addAttribute("selectedDate", getListSeatRequest.getDate());
         model.addAttribute("movieId", selectedMovie.getId());
         model.addAttribute("cinemaId", selectedCinema.getId());
         model.addAttribute("hallId", selectedProjection.getHallDto().getId());
-        model.addAttribute("color", "color:" + "white");//per cambiargli colore
-        model.addAttribute("classValue", "material-icons");//per impostarlo disabilitato
+        model.addAttribute("color", "color:" + "white");
+        model.addAttribute("classValue", "material-icons");
+        model.addAttribute("paymentRequest", new PaymentRequest(
+                "",
+                0,
+                0,
+                "",
+                0,
+                0
+        ));
         addNameAtSeats(model);
         return "choose_seats";
     }
+
 
     private void addNameAtSeats(Model model) {
         int size = (viewModel.getSeatList()).size();

@@ -103,7 +103,7 @@ public class BuyTicketController implements BuyTicketUseCase {
     public void getListCinema(GetListCinemaRequest request) {
         try {
             Request.validate(request);
-            Movie movie = MovieDataMapper.mapToEntity(request.getMovieDto());
+            Movie movie = movieRepository.getMovieById(request.getMovieId());
             String date = request.getData();
             List<Cinema> cinemaList = cinemaRepository.getListCinema(movie, date);
             buyTicketPresenter.presentCinemaList(new GetListCinemaResponse(CinemaDataMapper.mapToDtoList(cinemaList)));

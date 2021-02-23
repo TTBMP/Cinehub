@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="english">
 <head>
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
@@ -41,19 +41,21 @@
             <h4 class="h4">Selected a date:</h4>
         </div>
         <div class="col-12">
-            <a class="nav-link" th:href="@{|/choose_movie/|}">
+            <a class="nav-link" th:href="@{|/choose_movie|}">
                 <button class="btn-primary mb-1">Today</button>
             </a>
         </div>
-        <div class="col-2 mt-2 ">
-            <input id="date_picker" th:value="${choose_date} " type="date">
-        </div>
-        <div class="col-1 mr-5">
-            <a class="nav-link" id="nav-link" onclick="href+= document.getElementById('date_picker').value"
-               th:href="@{|/choose_movie/|}">
-                <button class="btn-primary mb-1" id="search">Search</button>
-            </a>
-        </div>
+        <div class="col-12">
+        <form action="#" method="post" th:action="@{/choose_movie}" th:object="${getListMovieRequest}">
+            <label for="date"></label><input id="date" required th:field="*{date}" type="date"/>
+                <button class="btn btn-primary" type="submit">Search
+                </button>
+
+        </form>
+    </div>
+
+
+
     </div>
     <!--/Top-->
     <!--List Movie-->
@@ -66,12 +68,10 @@
                     <h2 class="h2 mt-2">
                         <span th:text="${movie.name}"> Title </span>
                     </h2>
+
                     <div class="text-center mt-3">
-                        <a class="text-center justify-content-center "
-                           th:href="@{|/choose_cinema/${choose_date}/${movie.id}|}">
-                            <img class="figure-img img-fluid rounded" th:id="${movie.movieUrl}"
-                                 th:name="${movie.movieUrl}" th:src="${movie.movieUrl}">
-                        </a>
+                        <img class="figure-img img-fluid rounded" th:id="${movie.movieUrl}"
+                             th:name="${movie.movieUrl}" th:src="${movie.movieUrl}" alt="">
                     </div>
                     <h4 class="h4">Vote:</h4>
                     <p class="h6" th:text="${movie.vote}"></p>
@@ -79,6 +79,16 @@
                     <p class="h6" th:text="${movie.releases}"></p>
                     <h4 class="h4">Overview:</h4>
                     <p class="h6" th:text="${movie.overview}"></p>
+                    <form action="#" method="post" th:action="@{/choose_cinema}" th:object="${getListCinemaRequest}">
+                        <select style="display: none" th:field="*{movieId}">
+                            <option style="display: none" th:value="${movie.id}"></option>
+                        </select>
+                        <select style="display: none" th:field="*{data}">
+                            <option  style="display: none" th:value="${choose_date}"></option>
+                        </select>
+                        <button class="btn btn-primary " id="search_shift_cinema" type="submit">Search
+                        </button>
+                    </form>
                 </div>
             </div>
         </tr>

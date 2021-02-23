@@ -9,7 +9,9 @@ import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
 
@@ -17,7 +19,7 @@ import java.time.LocalDate;
  * @author Palmieri Ivan
  */
 @Controller
-public class PaymentController {
+public class PaymentViewController {
     private ProjectionDto selectedProjection;
     private MovieDto selectedMovie;
     private CinemaDto selectedCinema;
@@ -25,52 +27,53 @@ public class PaymentController {
     private BuyTicketUseCase useCase;
 
 
-    @GetMapping("/payment/{position}/{index}/{hall_id}/{selected_date}/{movie_id}/{cinema_id}/{optionOne}/{optionTwo}/{optionThree}")
+    @PostMapping("/payment/{optionOne}/{optionTwo}/{optionThree}")
     public String payment(
-            @PathVariable("position") String position,
-            @PathVariable("index") Integer number,
-            @PathVariable("optionOne") Boolean optionOne,
-            @PathVariable("optionTwo") Boolean optionTwo,
-            @PathVariable("optionThree") Boolean optionThree,
-            @PathVariable("hall_id") int hallId,
-            @PathVariable("selected_date") String date,
-            @PathVariable("movie_id") int movieId,
-            @PathVariable("cinema_id") int cinemaId,
+            @ModelAttribute("paymentRequest") PaymentRequest paymentRequest,
+            @PathVariable("optionOne") boolean optionOne,
+            @PathVariable("optionTwo") boolean optionTwo,
+            @PathVariable("optionThree") boolean optionThree,
             Model model) {
         viewModel = new BuyTicketViewModel();
-        viewModel.setSelectedPosition(number);
+        viewModel.setSelectedPosition(paymentRequest.getNumber());
         useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(viewModel));
-
-
-        useCase.getListMovie(new GetListMovieRequest(LocalDate.parse(date)));
+        useCase.getListMovie(new GetListMovieRequest(LocalDate.parse(paymentRequest.getDate())));
         viewModel.getMovieDtoList().forEach(movie -> {
-            if (movie.getId() == movieId) {
+            if (movie.getId() == paymentRequest.getMovieId()) {
                 selectedMovie = movie;
             }
         });
-
-        useCase.getListCinema(new GetListCinemaRequest(selectedMovie, date));
+        useCase.getListCinema(new GetListCinemaRequest(selectedMovie.getId(), paymentRequest.getDate()));
         viewModel.getCinemaDtoList().forEach(cinema -> {
-            if (cinema.getId() == cinemaId) {
+            if (cinema.getId() == paymentRequest.getCinemaId()) {
                 selectedCinema = cinema;
             }
         });
 
-        useCase.getProjectionList(new GetProjectionRequest(selectedMovie, selectedCinema, LocalDate.parse(date)));
+        useCase.getProjectionList(new GetProjectionRequest(selectedMovie, selectedCinema, LocalDate.parse(paymentRequest.getDate())));
         viewModel.getProjectionList().forEach(projection -> {
-            if (projection.getHallDto().getId() == hallId) {
+            if (projection.getHallDto().getId() == paymentRequest.getHallId()) {
                 selectedProjection = projection;
             }
         });
 
-        useCase.createTicket(new GetTicketBySeatsRequest(selectedProjection.getHallDto().getSeatList(), position, number, optionOne, optionTwo, optionThree));
+        useCase.createTicket(new GetTicketBySeatsRequest(
+                selectedProjection.getHallDto().getSeatList(),
+                paymentRequest.getPosition(),
+                paymentRequest.getNumber(),
+                optionOne,
+                optionTwo,
+                optionThree
+        ));
         viewModel.setSelectedCinema(selectedCinema);
         viewModel.setSelectedProjection(selectedProjection);
-        viewModel.setSelectedDate(date);
-        viewModel.setSelectedPosition(number);
+        viewModel.setSelectedDate(paymentRequest.getDate());
+        viewModel.setSelectedPosition(paymentRequest.getNumber());
         viewModel.setSelectedMovie(selectedMovie);
         return "payment";
     }
+
+
 
     @GetMapping("/payment")
     public String payment(Model model) {
