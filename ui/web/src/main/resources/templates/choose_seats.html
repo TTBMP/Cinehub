@@ -41,51 +41,63 @@
             <p style="color: #ff0000">Each optional choice increases the cost of the ticket by one euro</p>
         </div>
         <div class="card m-5 p-2" style="background-color: #1b1b1b;border-color: #6d6d6d">
-            <div class="container col-5 mt-5 mb-5">
+            <div class="container mt-5 mb-5">
                 <div class="row">
                     <!--/Checkbox-->
                     <tr th:each="seat,inter : ${seatList}">
-                        <div class="card p-2 m-3 text-center justify-content-center" style="background-color: #000000;border-color: #6d6d6d">
-                            <div class="form-check m-2">
-                                <div th:text="${valList.get((inter.index))}"></div>
-                                <div th:if="${valList.get((inter.index))}==('SOLD')">
-                                    <a id="urlDisable">
-                                        <i class="" style="color: #6d6d6d" th:class="${classValue}">event_seat</i>
-                                    </a>
-                                </div>
-                                <div th:if="!(${valList.get((inter.index))}==('SOLD'))">
-                                    <form action="#" method="post" th:action="@{/payment}"
-                                          onclick="action +='/'+ document.getElementById('c1').checked+'/'+ document.getElementById('c2').checked+'/'+ document.getElementById('c3').checked"
-                                          th:object="${paymentRequest}">
-                                        <select style="display: none" th:field="*{position}">
-                                            <option style="display: none"
-                                                    th:value="${valList.get((inter.index))}"></option>
-                                        </select>
-                                        <select style="display: none" th:field="*{number}">
-                                            <option style="display: none" th:value="${inter.index}"></option>
-                                        </select>
-                                        <select style="display: none" th:field="*{hallId}">
-                                            <option style="display: none" th:value="${hallId}"></option>
-                                        </select>
-                                        <select style="display: none" th:field="*{date}">
-                                            <option style="display: none" th:value="${selectedDate}"></option>
-                                        </select>
-                                        <select style="display: none" th:field="*{movieId}">
-                                            <option style="display: none" th:value="${movieId}"></option>
-                                        </select>
-                                        <select style="display: none" th:field="*{cinemaId}">
-                                            <option style="display: none" th:value="${cinemaId}"></option>
-                                        </select>
-                                        <div th:text="${seat.price}+'€'"></div>
-                                        <p id="url">
-                                            <i class="" th:class="${classValue}" th:style="${color}">event_seat</i>
-                                        </p>
-                                        <button class="btn btn-primary " type="submit">Buy
-                                        </button>
-                                    </form>
+                        <div class="card p-2 m-2 justify-content-center"
+                             style="background-color: #000000;border-color: #6d6d6d">
 
-                                </div>
+                            <div th:if="${valList.get((inter.index))}==('SOLD')">
+                                <a id="urlDisable">
+                                    <i class="" style="color: #6d6d6d" th:class="${classValue}">event_seat</i>
+                                </a>
                             </div>
+                            <div th:if="!(${valList.get((inter.index))}==('SOLD'))">
+                                <form action="#" method="post"
+                                      onclick="action +='/'+ document.getElementById('c1').checked+'/'+ document.getElementById('c2').checked+'/'+ document.getElementById('c3').checked"
+                                      th:action="@{/payment}"
+                                      th:object="${paymentRequest}">
+                                    <select style="display: none" th:field="*{position}">
+                                        <option style="display: none"
+                                                th:value="${valList.get((inter.index))}"></option>
+                                    </select>
+                                    <select style="display: none" th:field="*{number}">
+                                        <option style="display: none" th:value="${inter.index}"></option>
+                                    </select>
+                                    <select style="display: none" th:field="*{hallId}">
+                                        <option style="display: none" th:value="${hallId}"></option>
+                                    </select>
+                                    <select style="display: none" th:field="*{date}">
+                                        <option style="display: none" th:value="${selectedDate}"></option>
+                                    </select>
+                                    <select style="display: none" th:field="*{movieId}">
+                                        <option style="display: none" th:value="${movieId}"></option>
+                                    </select>
+                                    <select style="display: none" th:field="*{cinemaId}">
+                                        <option style="display: none" th:value="${cinemaId}"></option>
+                                    </select>
+
+                                    <div class="col-12">
+                                        <p id="url">
+                                            <i class="" th:class="${classValue}"
+                                               th:style="${color}">event_seat</i>
+                                        </p>
+                                    </div>
+                                    <div class="col-12">
+                                        <div th:text="${valList.get((inter.index))}"></div>
+                                    </div>
+                                    <div class="col-12">
+                                        <p th:text="${seat.price}+'€'">
+                                        </p>
+                                    </div>
+                                    <button class="btn btn-primary " type="submit">Buy
+                                    </button>
+
+                                </form>
+
+                            </div>
+
                         </div>
                     </tr>
                 </div>

@@ -33,6 +33,8 @@ public class ChooseMovieViewController {
         model.addAttribute(CHOOSE_DATE, LocalDate.now().toString());
         useCase.getListMovie(request);
         model.addAttribute(MOVIE_LIST, viewModel.getMovieDtoList());
+        GetListCinemaRequest getListCinemaRequest = new GetListCinemaRequest(0,null);
+        model.addAttribute("getListCinemaRequest", getListCinemaRequest);
         model.addAttribute("getListMovieRequest", request);
         return CHOOSE_MOVIE;
     }
