@@ -35,7 +35,7 @@ class ChooseMovieViewControllerTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         driver.get("http://localhost:8080/choose_movie");
-        datePicker = driver.findElement(By.id("date_picker"));
+        datePicker = driver.findElement(By.id("date"));
     }
 
 
