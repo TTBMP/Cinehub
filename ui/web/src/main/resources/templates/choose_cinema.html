@@ -83,8 +83,8 @@
                                 <h5>City:</h5>
                                 <p th:text="${cinema.city}"></p>
                                 <form action="#" method="post" th:action="@{/choose_projection}"
-                                      th:object="${getCinemaRequest}">
-                                    <select style="display: none" th:field="*{idCinema}">
+                                      th:object="${cinema}">
+                                    <select style="display: none" th:field="*{id}">
                                         <option style="display: none" th:value="${cinema.id}"></option>
                                     </select>
                                     <button class="btn btn-primary " id="search_shift_cinema" type="submit">Continue
@@ -109,7 +109,7 @@
                 <div class="col-2 mt-5 text-center">
                         <div class="card p-2 m-3 text-center justify-content-center"
                              style="background-color: #000000;border-color: #6d6d6d">
-                       <form action="#" method="post" th:action="@{/choose_seat}" th:object="${getListSeatRequest}">
+                       <form action="#" method="post" th:action="@{/choose_seat}" th:object="${projection}">
                             <select style="display: none" th:field="*{hallId}">
                                 <option style="display: none" th:value="${projection.getHallDto().getId()}"></option>
                             </select>

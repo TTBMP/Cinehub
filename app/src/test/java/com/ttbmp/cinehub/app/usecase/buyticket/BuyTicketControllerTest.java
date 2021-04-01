@@ -77,7 +77,7 @@ class BuyTicketControllerTest {
         }
 
         @Override
-        public void presentInvalidPay(PayRequest request) {
+        public void presentInvalidPay(PaymentRequest request) {
 
         }
 

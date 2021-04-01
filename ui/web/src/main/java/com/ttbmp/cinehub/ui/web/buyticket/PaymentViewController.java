@@ -6,6 +6,7 @@ import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
+import com.ttbmp.cinehub.ui.web.domain.Payment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,46 +30,46 @@ public class PaymentViewController {
 
     @PostMapping("/payment/{optionOne}/{optionTwo}/{optionThree}")
     public String payment(
-            @ModelAttribute("paymentRequest") PaymentRequest paymentRequest,
+            @ModelAttribute("payment") Payment payment,
             @PathVariable("optionOne") boolean optionOne,
             @PathVariable("optionTwo") boolean optionTwo,
             @PathVariable("optionThree") boolean optionThree,
             Model model) {
         viewModel = new BuyTicketViewModel();
-        viewModel.setSelectedPosition(paymentRequest.getNumber());
+        viewModel.setSelectedPosition(payment.getNumber());
         useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(viewModel));
-        useCase.getListMovie(new GetListMovieRequest(LocalDate.parse(paymentRequest.getDate())));
+        useCase.getListMovie(new GetListMovieRequest(LocalDate.parse(payment.getDate())));
         viewModel.getMovieDtoList().forEach(movie -> {
-            if (movie.getId() == paymentRequest.getMovieId()) {
+            if (movie.getId() == payment.getMovieId()) {
                 selectedMovie = movie;
             }
         });
-        useCase.getListCinema(new GetListCinemaRequest(selectedMovie.getId(), paymentRequest.getDate()));
+        useCase.getListCinema(new GetListCinemaRequest(selectedMovie.getId(), payment.getDate()));
         viewModel.getCinemaDtoList().forEach(cinema -> {
-            if (cinema.getId() == paymentRequest.getCinemaId()) {
+            if (cinema.getId() == payment.getCinemaId()) {
                 selectedCinema = cinema;
             }
         });
 
-        useCase.getProjectionList(new GetProjectionRequest(selectedMovie, selectedCinema, LocalDate.parse(paymentRequest.getDate())));
+        useCase.getProjectionList(new GetProjectionRequest(selectedMovie, selectedCinema, LocalDate.parse(payment.getDate())));
         viewModel.getProjectionList().forEach(projection -> {
-            if (projection.getHallDto().getId() == paymentRequest.getHallId()) {
+            if (projection.getHallDto().getId() == payment.getHallId()) {
                 selectedProjection = projection;
             }
         });
 
         useCase.createTicket(new GetTicketBySeatsRequest(
                 selectedProjection.getHallDto().getSeatList(),
-                paymentRequest.getPosition(),
-                paymentRequest.getNumber(),
+                payment.getPosition(),
+                payment.getNumber(),
                 optionOne,
                 optionTwo,
                 optionThree
         ));
         viewModel.setSelectedCinema(selectedCinema);
         viewModel.setSelectedProjection(selectedProjection);
-        viewModel.setSelectedDate(paymentRequest.getDate());
-        viewModel.setSelectedPosition(paymentRequest.getNumber());
+        viewModel.setSelectedDate(payment.getDate());
+        viewModel.setSelectedPosition(payment.getNumber());
         viewModel.setSelectedMovie(selectedMovie);
         return "payment";
     }
@@ -77,7 +78,7 @@ public class PaymentViewController {
 
     @GetMapping("/payment")
     public String payment(Model model) {
-        useCase.pay(new PayRequest(viewModel.getSelectedTicket(),
+        useCase.pay(new PaymentRequest(viewModel.getSelectedTicket(),
                 viewModel.getSelectedProjection(),
                 viewModel.getSelectedPosition(),
                 viewModel.getSelectedCinema(),

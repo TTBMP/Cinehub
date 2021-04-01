@@ -15,7 +15,7 @@ public class BuyTicketHandler implements BuyTicketUseCase {
     }
 
     @Override
-    public void pay(PayRequest request) {
+    public void pay(PaymentRequest request) {
         controller.pay(request);
     }
 

@@ -70,8 +70,9 @@
         </div>
         <div class="col-12 text-center">
             <h6 class="h6">Selected a date:</h6>
-            <form action="#" method="post" th:action="@{/choose_movie}" th:object="${getListMovieRequest}">
-                <label for="date"></label><input id="date" required th:field="*{date}" type="date"/>
+            <form action="#" method="post" th:action="@{/choose_movie}" th:object="${projection}">
+                <label for="date"></label>
+                <input id="date" required th:field="*{date}" type="date"/>
                 <button class="btn btn-primary" type="submit">Search
                 </button>
             </form>
@@ -109,11 +110,11 @@
                                     <p th:text="${movie.overview}"></p>
                                 </div>
                                 <form action="#" method="post" th:action="@{/choose_cinema}"
-                                      th:object="${getListCinemaRequest}">
+                                      th:object="${projection}">
                                     <select style="display: none" th:field="*{movieId}">
                                         <option style="display: none" th:value="${movie.id}"></option>
                                     </select>
-                                    <select style="display: none" th:field="*{data}">
+                                    <select style="display: none" th:field="*{date}">
                                         <option style="display: none" th:value="${choose_date}"></option>
                                     </select>
                                     <button class="btn btn-primary mt-2 mb-2" type="submit">Continue

@@ -53,7 +53,7 @@ public class MockMovieRepository implements MovieRepository {
     @Override
     public Movie getMovieById(Integer movieId) {
         return MOVIE_DATA_LIST.stream()
-                .filter(d-> d.id == movieId)
+                .filter(d -> d.id == movieId)
                 .map(d -> new MovieProxy(d.id, serviceLocator.getService(MovieApiService.class)))
                 .collect(Collectors.toList())
                 .get(0);

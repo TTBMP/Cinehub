@@ -46,15 +46,15 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentInvalidPay(PayRequest request) {
-        if (request.getErrorList().contains(PayRequest.MISSING_INDEX_ERROR)) {
-            viewModel.setPaymentError(PayRequest.MISSING_INDEX_ERROR.getMessage());
+    public void presentInvalidPay(PaymentRequest request) {
+        if (request.getErrorList().contains(PaymentRequest.MISSING_INDEX_ERROR)) {
+            viewModel.setPaymentError(PaymentRequest.MISSING_INDEX_ERROR.getMessage());
         }
-        if (request.getErrorList().contains(PayRequest.MISSING_TICKET_ERROR)) {
-            viewModel.setPaymentError(PayRequest.MISSING_TICKET_ERROR.getMessage());
+        if (request.getErrorList().contains(PaymentRequest.MISSING_TICKET_ERROR)) {
+            viewModel.setPaymentError(PaymentRequest.MISSING_TICKET_ERROR.getMessage());
         }
-        if (request.getErrorList().contains(PayRequest.MISSING_PROJECTION_ERROR)) {
-            viewModel.setPaymentError(PayRequest.MISSING_PROJECTION_ERROR.getMessage());
+        if (request.getErrorList().contains(PaymentRequest.MISSING_PROJECTION_ERROR)) {
+            viewModel.setPaymentError(PaymentRequest.MISSING_PROJECTION_ERROR.getMessage());
         }
     }
 

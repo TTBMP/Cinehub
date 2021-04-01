@@ -6,6 +6,8 @@ import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
+import com.ttbmp.cinehub.ui.web.domain.Cinema;
+import com.ttbmp.cinehub.ui.web.domain.Projection;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 
 /**
@@ -28,39 +31,39 @@ public class ChooseCinemaViewController {
     private MovieDto selectedMovieDto;
     private CinemaDto selectedCinemaDto;
 
-
-
     @PostMapping("/choose_cinema")
     public String chooseTimeOfProjectionPost(
-            @ModelAttribute("getListCinemaRequest") GetListCinemaRequest request,
+            @ModelAttribute("projection") Projection projection,
             Model model) {
         viewModel = new BuyTicketViewModel();
         useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(viewModel));
-        useCase.getListMovie(new GetListMovieRequest(LocalDate.parse(request.getData())));
-        viewModel.getMovieDtoList().forEach(x -> {
-            if (x.getId() == request.getMovieId()) {
-                selectedMovieDto = x;
+        useCase.getListMovie(new GetListMovieRequest(LocalDate.parse(projection.getDate())));
+
+
+        viewModel.getMovieDtoList().forEach(movieDto -> {
+            if (movieDto.getId() == projection.getMovieId()) {
+                selectedMovieDto = movieDto;
             }
         });
+
         viewModel.setSelectedMovie(selectedMovieDto);
-        viewModel.setSelectedDate(request.getData());
-        useCase.getListCinema(request);
-        model.addAttribute("getListCinemaRequest",request);
-        model.addAttribute("getCinemaRequest",new GetCinemaRequest(0));
+        viewModel.setSelectedDate(projection.getDate());
+        useCase.getListCinema(new GetListCinemaRequest(projection.getMovieId(),projection.getDate()) );
+        model.addAttribute("projection",projection);
+        model.addAttribute("cinema",new Cinema());
         model.addAttribute("cinemaList", viewModel.getCinemaDtoList());
         return "choose_cinema";
     }
 
 
-
     @PostMapping("/choose_projection")
     public String getListSeat(
-            @ModelAttribute("getCinemaRequest") GetCinemaRequest getCinemaRequest,
+            @ModelAttribute("cinema") Cinema cinema,
             Model model) {
         useCase.getListCinema(new GetListCinemaRequest(viewModel.getSelectedMovie().getId(), viewModel.getSelectedDate()));
-        viewModel.getCinemaDtoList().forEach(x -> {
-            if (x.getId() == getCinemaRequest.getIdCinema()) {
-                selectedCinemaDto = x;
+        viewModel.getCinemaDtoList().forEach(cinemaDto -> {
+            if (cinemaDto.getId() == cinema.getId()) {
+                selectedCinemaDto = cinemaDto;
             }
         });
         viewModel.setSelectedCinema(selectedCinemaDto);
@@ -69,7 +72,7 @@ public class ChooseCinemaViewController {
                 viewModel.getSelectedCinema(),
                 LocalDate.parse(viewModel.getSelectedDate())
         ));
-        model.addAttribute("getListSeatRequest", new GetListSeatRequest(0,"",0,0));
+        model.addAttribute("projection", new Projection());
         model.addAttribute("projectionList", viewModel.getProjectionList());
         model.addAttribute("selectedDate", viewModel.getSelectedDate());
         model.addAttribute("movieId", viewModel.getSelectedMovie().getId());

@@ -20,7 +20,7 @@ public interface BuyTicketPresenter {
 
     void presentPayNullRequest();
 
-    void presentInvalidPay(PayRequest request);
+    void presentInvalidPay(PaymentRequest request);
 
     void presentGetTicketBySeatsNullRequest();
 

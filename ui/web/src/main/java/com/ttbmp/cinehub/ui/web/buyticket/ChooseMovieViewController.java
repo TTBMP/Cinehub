@@ -4,12 +4,14 @@ import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetListCinemaRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetListMovieRequest;
+import com.ttbmp.cinehub.ui.web.domain.Projection;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.beans.PropertyEditorSupport;
+import java.sql.Array;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -29,25 +31,21 @@ public class ChooseMovieViewController {
     public String chooseMovie(Model model) {
         viewModel = new BuyTicketViewModel();
         useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(viewModel));
-        GetListMovieRequest request = new GetListMovieRequest(LocalDate.now());
-        model.addAttribute(CHOOSE_DATE, LocalDate.now().toString());
-        useCase.getListMovie(request);
+        model.addAttribute(CHOOSE_DATE, LocalDate.now());
+        useCase.getListMovie(new GetListMovieRequest(LocalDate.now()));
         model.addAttribute(MOVIE_LIST, viewModel.getMovieDtoList());
-        GetListCinemaRequest getListCinemaRequest = new GetListCinemaRequest(0,null);
-        model.addAttribute("getListCinemaRequest", getListCinemaRequest);
-        model.addAttribute("getListMovieRequest", request);
+        model.addAttribute("projection", new Projection());
         return CHOOSE_MOVIE;
     }
 
 
+
     @PostMapping("/choose_movie")
-    public String getMoviePost(@ModelAttribute("getListMovieRequest") GetListMovieRequest getListMovieRequest, Model model) {
-        useCase.getListMovie(getListMovieRequest);
+    public String getMoviePost(@ModelAttribute("projection") Projection projection, Model model) {
+        useCase.getListMovie(new GetListMovieRequest(LocalDate.parse(projection.getDate())));
         model.addAttribute(MOVIE_LIST, viewModel.getMovieDtoList());
-        model.addAttribute(CHOOSE_DATE, getListMovieRequest.getDate().toString());
-        model.addAttribute("getListMovieRequest", getListMovieRequest);
-        GetListCinemaRequest getListCinemaRequest = new GetListCinemaRequest(0,null);
-        model.addAttribute("getListCinemaRequest", getListCinemaRequest);
+        model.addAttribute(CHOOSE_DATE, projection.getDate());
+        model.addAttribute("projection", projection);
         return CHOOSE_MOVIE;
     }
 

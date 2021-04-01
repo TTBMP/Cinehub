@@ -7,6 +7,8 @@ import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
+import com.ttbmp.cinehub.ui.web.domain.Payment;
+import com.ttbmp.cinehub.ui.web.domain.Projection;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,28 +34,28 @@ public class ChooseSeatsViewController {
 
     @PostMapping("/choose_seat")
     public String chooseSeats(
-            @ModelAttribute("getListSeatRequest") GetListSeatRequest getListSeatRequest,
+            @ModelAttribute("projection") Projection projection,
             Model model) {
         viewModel = new BuyTicketViewModel();
         BuyTicketUseCase useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(viewModel));
-        useCase.getListMovie(new GetListMovieRequest(LocalDate.parse(getListSeatRequest.getDate())));
-        viewModel.getMovieDtoList().forEach(movie -> {
-            if (movie.getId() == getListSeatRequest.getMovieId()) {
-                selectedMovie = movie;
+        useCase.getListMovie(new GetListMovieRequest(LocalDate.parse(projection.getDate())));
+        viewModel.getMovieDtoList().forEach(movieDto -> {
+            if (movieDto.getId() == projection.getMovieId()) {
+                selectedMovie = movieDto;
             }
         });
 
-        useCase.getListCinema(new GetListCinemaRequest(selectedMovie.getId(), getListSeatRequest.getDate()));
-        viewModel.getCinemaDtoList().forEach(cinema -> {
-            if (cinema.getId() == getListSeatRequest.getCinemaId()) {
-                selectedCinema = cinema;
+        useCase.getListCinema(new GetListCinemaRequest(selectedMovie.getId(), projection.getDate()));
+        viewModel.getCinemaDtoList().forEach(cinemaDto -> {
+            if (cinemaDto.getId() == projection.getCinemaId()) {
+                selectedCinema = cinemaDto;
             }
         });
 
-        useCase.getProjectionList(new GetProjectionRequest(selectedMovie, selectedCinema, LocalDate.parse(getListSeatRequest.getDate())));
-        viewModel.getProjectionList().forEach(projection -> {
-            if (projection.getHallDto().getId() == getListSeatRequest.getHallId()) {
-                selectedProjection = projection;
+        useCase.getProjectionList(new GetProjectionRequest(selectedMovie, selectedCinema, LocalDate.parse(projection.getDate())));
+        viewModel.getProjectionList().forEach(projectionDto -> {
+            if (projectionDto.getHallDto().getId() == projection.getHallId()) {
+                selectedProjection = projectionDto;
             }
         });
 
@@ -66,20 +68,13 @@ public class ChooseSeatsViewController {
         model.addAttribute("boolean1", false);
         model.addAttribute("boolean2", false);
         model.addAttribute("boolean3", false);
-        model.addAttribute("selectedDate", getListSeatRequest.getDate());
+        model.addAttribute("selectedDate", projection.getDate());
         model.addAttribute("movieId", selectedMovie.getId());
         model.addAttribute("cinemaId", selectedCinema.getId());
         model.addAttribute("hallId", selectedProjection.getHallDto().getId());
         model.addAttribute("color", "color:" + "white");
         model.addAttribute("classValue", "material-icons");
-        model.addAttribute("paymentRequest", new PaymentRequest(
-                "",
-                0,
-                0,
-                "",
-                0,
-                0
-        ));
+        model.addAttribute("payment", new Payment());
         addNameAtSeats(model);
         return "choose_seats";
     }

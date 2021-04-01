@@ -50,15 +50,15 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentInvalidPay(PayRequest request) {
-        if (request.getErrorList().contains(PayRequest.MISSING_INDEX_ERROR)) {
-            viewModel.paymentErrorProperty().setValue(PayRequest.MISSING_INDEX_ERROR.getMessage());
+    public void presentInvalidPay(PaymentRequest request) {
+        if (request.getErrorList().contains(PaymentRequest.MISSING_INDEX_ERROR)) {
+            viewModel.paymentErrorProperty().setValue(PaymentRequest.MISSING_INDEX_ERROR.getMessage());
         }
-        if (request.getErrorList().contains(PayRequest.MISSING_TICKET_ERROR)) {
-            viewModel.paymentErrorProperty().setValue(PayRequest.MISSING_TICKET_ERROR.getMessage());
+        if (request.getErrorList().contains(PaymentRequest.MISSING_TICKET_ERROR)) {
+            viewModel.paymentErrorProperty().setValue(PaymentRequest.MISSING_TICKET_ERROR.getMessage());
         }
-        if (request.getErrorList().contains(PayRequest.MISSING_PROJECTION_ERROR)) {
-            viewModel.paymentErrorProperty().setValue(PayRequest.MISSING_PROJECTION_ERROR.getMessage());
+        if (request.getErrorList().contains(PaymentRequest.MISSING_PROJECTION_ERROR)) {
+            viewModel.paymentErrorProperty().setValue(PaymentRequest.MISSING_PROJECTION_ERROR.getMessage());
         }
 
     }

@@ -55,7 +55,7 @@ public class BuyTicketController implements BuyTicketUseCase {
     }
 
     @Override
-    public void pay(PayRequest request) {
+    public void pay(PaymentRequest request) {
         try {
             Request.validate(request);
             User user = userRepository.getUser(authenticationService.signIn("", "").getUserId());

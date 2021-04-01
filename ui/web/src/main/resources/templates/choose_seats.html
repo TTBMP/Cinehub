@@ -57,7 +57,7 @@
                                 <form action="#" method="post"
                                       onclick="action +='/'+ document.getElementById('c1').checked+'/'+ document.getElementById('c2').checked+'/'+ document.getElementById('c3').checked"
                                       th:action="@{/payment}"
-                                      th:object="${paymentRequest}">
+                                      th:object="${payment}">
                                     <select style="display: none" th:field="*{position}">
                                         <option style="display: none"
                                                 th:value="${valList.get((inter.index))}"></option>
