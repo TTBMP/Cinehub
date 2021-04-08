@@ -18,8 +18,6 @@ public class BuyTicketViewModel {
     private MovieDto selectedMovie;
     private String selectedDate;
     private CinemaDto selectedCinema;
-    private HallDto selectedHall;
-    private String selectedTime;
     private ProjectionDto selectedProjection;
     private TicketDto selectedTicket;
     private Integer selectedPosition;
@@ -30,32 +28,13 @@ public class BuyTicketViewModel {
     private String paymentError;
     private List<SeatDto> seatDtoList;
 
-    public String getEmailError() {
-        return emailError;
-    }
-
-    public void setEmailError(String emailError) {
-        this.emailError = emailError;
-    }
-
-    public String getMovieError() {
-        return movieError;
-    }
 
     public void setMovieError(String movieError) {
         this.movieError = movieError;
     }
 
-    public String getCinemaError() {
-        return cinemaError;
-    }
-
     public void setCinemaError(String cinemaError) {
         this.cinemaError = cinemaError;
-    }
-
-    public String getSeatError() {
-        return seatError;
     }
 
     public void setSeatError(String seatError) {
@@ -100,22 +79,6 @@ public class BuyTicketViewModel {
 
     public void setSelectedProjection(ProjectionDto selectedProjection) {
         this.selectedProjection = selectedProjection;
-    }
-
-    public String getSelectedTime() {
-        return selectedTime;
-    }
-
-    public void setSelectedTime(String selectedTime) {
-        this.selectedTime = selectedTime;
-    }
-
-    public HallDto getSelectedHall() {
-        return selectedHall;
-    }
-
-    public void setSelectedHall(HallDto selectedHall) {
-        this.selectedHall = selectedHall;
     }
 
     public CinemaDto getSelectedCinema() {
