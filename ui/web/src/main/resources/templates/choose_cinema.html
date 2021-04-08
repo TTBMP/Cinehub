@@ -82,10 +82,18 @@
                                 <p th:text="${cinema.address}"></p>
                                 <h5>City:</h5>
                                 <p th:text="${cinema.city}"></p>
+
+
                                 <form action="#" method="post" th:action="@{/choose_projection}"
-                                      th:object="${cinema}">
-                                    <select style="display: none" th:field="*{id}">
+                                      th:object="${projection}">
+                                    <select style="display: none" th:field="*{cinemaId}">
                                         <option style="display: none" th:value="${cinema.id}"></option>
+                                    </select>
+                                    <select style="display: none" th:field="*{movieId}">
+                                        <option style="display: none" th:value="${idMovie}"></option>
+                                    </select>
+                                    <select style="display: none" th:field="*{date}">
+                                        <option style="display: none" th:value="${dateProjection}"></option>
                                     </select>
                                     <button class="btn btn-primary " id="search_shift_cinema" type="submit">Continue
                                     </button>
@@ -114,15 +122,15 @@
                                 <option style="display: none" th:value="${projection.getHallDto().getId()}"></option>
                             </select>
                             <select style="display: none" th:field="*{date}">
-                                <option style="display: none" th:value="${selectedDate}"></option>
+                                <option style="display: none" th:value="${projection.getDate()}"></option>
                             </select>
                             <select style="display: none" th:field="*{movieId}">
-                                <option style="display: none" th:value="${movieId}"></option>
+                                <option style="display: none" th:value="${projection.getMovieDto().getId()}"></option>
                             </select>
                             <select style="display: none" th:field="*{cinemaId}">
-                                <option style="display: none" th:value="${cinemaId}"></option>
+                                <option style="display: none" th:value="${projection.getCinemaDto().getId()}"></option>
                             </select>
-                             <p th:text="${projection.getStartTime()}"> </p>
+                           <p th:text="${projection.getStartTime()}"> </p>
                             <button class="btn btn-primary " type="submit">Continue
                             </button>
                         </form>

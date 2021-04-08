@@ -4,7 +4,7 @@ import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.dto.TicketDto;
-import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
+import com.ttbmp.cinehub.app.usecase.buyticket.Handler;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetListCinemaRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetListMovieRequest;
@@ -38,22 +38,25 @@ public class ChooseSeatsViewController {
             @ModelAttribute("projection") Projection projection,
             Model model) {
         viewModel = new BuyTicketViewModel();
-        BuyTicketUseCase useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(viewModel));
-        useCase.getListMovie(new GetListMovieRequest(LocalDate.parse(projection.getDate())));
+        //BuyTicketUseCase useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(viewModel));
+        BuyTicketUseCase buyTicketUseCase = new Handler(new BuyTicketPresenterWeb(model));
+
+        buyTicketUseCase.getListMovie(new GetListMovieRequest(LocalDate.parse(projection.getDate())));
         viewModel.getMovieDtoList().forEach(movieDto -> {
             if (movieDto.getId() == projection.getMovieId()) {
                 selectedMovie = movieDto;
             }
         });
 
-        useCase.getListCinema(new GetListCinemaRequest(selectedMovie.getId(), projection.getDate()));
+        buyTicketUseCase.getListCinema(new GetListCinemaRequest(selectedMovie.getId(), projection.getDate()));
         viewModel.getCinemaDtoList().forEach(cinemaDto -> {
             if (cinemaDto.getId() == projection.getCinemaId()) {
                 selectedCinema = cinemaDto;
             }
         });
 
-        useCase.getProjectionList(new GetProjectionRequest(selectedMovie, selectedCinema, LocalDate.parse(projection.getDate())));
+
+        buyTicketUseCase.getProjectionList(new GetProjectionRequest(selectedMovie.getId(), selectedCinema.getId(), LocalDate.parse(projection.getDate())));
         viewModel.getProjectionList().forEach(projectionDto -> {
             if (projectionDto.getHallDto().getId() == projection.getHallId()) {
                 selectedProjection = projectionDto;
@@ -61,7 +64,10 @@ public class ChooseSeatsViewController {
         });
 
         viewModel.setSelectedProjection(selectedProjection);
-        useCase.getListOfSeat(new GetNumberOfSeatsRequest(viewModel.getSelectedProjection()));
+
+       //TODO buyTicketUseCase.getListOfSeat(new GetNumberOfSeatsRequest(projection.getMovieId(), projection.getCinemaId(), LocalDate.parse(projection.getDate()));
+
+        buyTicketUseCase.getListOfSeat(new GetNumberOfSeatsRequest(viewModel.getSelectedProjection()));
 
         viewModel.setSeatList(viewModel.getSeatDtoList());
         model.addAttribute("projection", viewModel.getSelectedProjection());

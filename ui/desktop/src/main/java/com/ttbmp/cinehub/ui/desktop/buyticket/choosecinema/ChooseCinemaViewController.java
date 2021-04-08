@@ -89,8 +89,8 @@ public class ChooseCinemaViewController extends ViewController {
         if (viewModel.selectedCinemaProperty().getValue() != null) {
             viewModel.getTimeOfProjectionList().clear();
             activity.getUseCase(BuyTicketUseCase.class).getProjectionList(new GetProjectionRequest(
-                            viewModel.selectedMovieProperty().getValue(),
-                            viewModel.selectedCinemaProperty().getValue(),
+                            viewModel.selectedMovieProperty().getValue().getId(),
+                            viewModel.selectedCinemaProperty().getValue().getId(),
                             viewModel.selectedDateProperty().getValue()
                     )
             );

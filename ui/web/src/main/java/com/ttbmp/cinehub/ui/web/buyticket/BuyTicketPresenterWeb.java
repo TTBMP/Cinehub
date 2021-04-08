@@ -4,6 +4,7 @@ import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketPresenter;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
+import org.springframework.ui.Model;
 
 /**
  * @author Palmieri Ivan
@@ -11,27 +12,29 @@ import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
 
-    private final BuyTicketViewModel viewModel;
+    private  BuyTicketViewModel viewModel;
+    private final Model model;
 
-    public BuyTicketPresenterWeb(BuyTicketViewModel viewModel) {
-        this.viewModel = viewModel;
+
+    public BuyTicketPresenterWeb(Model model) {
+        this.model = model;
     }
 
 
     @Override
     public void presentMovieApiList(GetListMovieResponse response) {
-        viewModel.setMovieDtoList(response.getMovieList());
+        model.addAttribute("movieList", response.getMovieList());
     }
 
     @Override
     public void presentCinemaList(GetListCinemaResponse response) {
-        viewModel.setCinemaDtoList(response.getCinemaList());
+        model.addAttribute("cinemaList", response.getCinemaList());
     }
 
 
     @Override
     public void presentSeatList(GetNumberOfSeatsResponse response) {
-        viewModel.setSeatDtoList(response.getSeatDtoList());
+        model.addAttribute("projectionList", response.getSeatDtoList());
     }
 
     @Override
@@ -128,7 +131,7 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     @Override
     public void presentProjectionList(ProjectionListResponse projectionTimeList) {
-        viewModel.setProjectionList(projectionTimeList.getProjectionDto());
+        model.addAttribute("projectionList",projectionTimeList.getProjectionDto());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.web.buyticket;
 
-import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
+import com.ttbmp.cinehub.app.usecase.buyticket.Handler;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetListMovieRequest;
 import com.ttbmp.cinehub.ui.web.domain.Projection;
@@ -24,17 +24,13 @@ public class ChooseMovieViewController {
 
     private static final String CHOOSE_DATE = "choose_date";
     private static final String CHOOSE_MOVIE = "choose_movie";
-    private static final String MOVIE_LIST = "movieList";
-    private BuyTicketViewModel viewModel;
-    private BuyTicketUseCase useCase;
+    private BuyTicketUseCase buyTicketUseCase;
 
     @GetMapping("/choose_movie")
     public String chooseMovie(Model model) {
-        viewModel = new BuyTicketViewModel();
-        useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(viewModel));
+        buyTicketUseCase = new Handler(new BuyTicketPresenterWeb(model));
         model.addAttribute(CHOOSE_DATE, LocalDate.now());
-        useCase.getListMovie(new GetListMovieRequest(LocalDate.now()));
-        model.addAttribute(MOVIE_LIST, viewModel.getMovieDtoList());
+        buyTicketUseCase.getListMovie(new GetListMovieRequest(LocalDate.now()));
         model.addAttribute("projection", new Projection());
         return CHOOSE_MOVIE;
     }
@@ -42,9 +38,9 @@ public class ChooseMovieViewController {
 
 
     @PostMapping("/choose_movie")
-    public String getMoviePost(@ModelAttribute("projection") Projection projection, Model model) {
-        useCase.getListMovie(new GetListMovieRequest(LocalDate.parse(projection.getDate())));
-        model.addAttribute(MOVIE_LIST, viewModel.getMovieDtoList());
+    public String getMoviePost(@ModelAttribute("projection") Projection projection,Model model) {
+        buyTicketUseCase = new Handler(new BuyTicketPresenterWeb(model));
+        buyTicketUseCase.getListMovie(new GetListMovieRequest(LocalDate.parse(projection.getDate())));
         model.addAttribute(CHOOSE_DATE, projection.getDate());
         model.addAttribute("projection", projection);
         return CHOOSE_MOVIE;

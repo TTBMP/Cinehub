@@ -6,12 +6,12 @@ import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 /**
  * @author Fabio Buracchi
  */
-public class BuyTicketHandler implements BuyTicketUseCase {
+public class Handler implements BuyTicketUseCase {
 
-    private final BuyTicketController controller;
+    private final Controller controller;
 
-    public BuyTicketHandler(BuyTicketPresenter presenter) {
-        controller = new BuyTicketController(new ServiceLocator(), presenter);
+    public Handler(BuyTicketPresenter presenter) {
+        controller = new Controller(new ServiceLocator(), presenter);
     }
 
     @Override

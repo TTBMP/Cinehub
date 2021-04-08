@@ -6,6 +6,15 @@ public class Projection {
     private  String date;
     private  int movieId;
     private  int cinemaId;
+    private String startTime;
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
 
     public int getHallId() {
         return hallId;

@@ -22,7 +22,7 @@ class BuyTicketControllerTest {
 
     @Test
     void getListMovie_whitCorrectRequest_notGenerateErrors() {
-        BuyTicketController buyTicketController = new BuyTicketController(
+        Controller buyTicketController = new Controller(
                 serviceLocator,
                 new MockBuyTicketPresenter()
         );

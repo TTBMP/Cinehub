@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.ui.web.buyticket;
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
+import com.ttbmp.cinehub.app.usecase.buyticket.Handler;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.ui.web.domain.Payment;
@@ -25,7 +25,7 @@ public class PaymentViewController {
     private MovieDto selectedMovie;
     private CinemaDto selectedCinema;
     private BuyTicketViewModel viewModel;
-    private BuyTicketUseCase useCase;
+    private BuyTicketUseCase buyTicketUseCase;
 
 
     @PostMapping("/payment/{optionOne}/{optionTwo}/{optionThree}")
@@ -37,28 +37,29 @@ public class PaymentViewController {
             Model model) {
         viewModel = new BuyTicketViewModel();
         viewModel.setSelectedPosition(payment.getNumber());
-        useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(viewModel));
-        useCase.getListMovie(new GetListMovieRequest(LocalDate.parse(payment.getDate())));
+     //   useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(viewModel));
+        buyTicketUseCase = new Handler(new BuyTicketPresenterWeb(model));
+        buyTicketUseCase.getListMovie(new GetListMovieRequest(LocalDate.parse(payment.getDate())));
         viewModel.getMovieDtoList().forEach(movie -> {
             if (movie.getId() == payment.getMovieId()) {
                 selectedMovie = movie;
             }
         });
-        useCase.getListCinema(new GetListCinemaRequest(selectedMovie.getId(), payment.getDate()));
+        buyTicketUseCase.getListCinema(new GetListCinemaRequest(selectedMovie.getId(), payment.getDate()));
         viewModel.getCinemaDtoList().forEach(cinema -> {
             if (cinema.getId() == payment.getCinemaId()) {
                 selectedCinema = cinema;
             }
         });
 
-        useCase.getProjectionList(new GetProjectionRequest(selectedMovie, selectedCinema, LocalDate.parse(payment.getDate())));
+        buyTicketUseCase.getProjectionList(new GetProjectionRequest(selectedMovie.getId(), selectedCinema.getId(), LocalDate.parse(payment.getDate())));
         viewModel.getProjectionList().forEach(projection -> {
             if (projection.getHallDto().getId() == payment.getHallId()) {
                 selectedProjection = projection;
             }
         });
 
-        useCase.createTicket(new GetTicketBySeatsRequest(
+        buyTicketUseCase.createTicket(new GetTicketBySeatsRequest(
                 selectedProjection.getHallDto().getSeatList(),
                 payment.getPosition(),
                 payment.getNumber(),
@@ -78,7 +79,7 @@ public class PaymentViewController {
 
     @GetMapping("/payment")
     public String payment(Model model) {
-        useCase.pay(new PaymentRequest(viewModel.getSelectedTicket(),
+        buyTicketUseCase.pay(new PaymentRequest(viewModel.getSelectedTicket(),
                 viewModel.getSelectedProjection(),
                 viewModel.getSelectedPosition(),
                 viewModel.getSelectedCinema(),

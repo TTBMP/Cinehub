@@ -37,6 +37,7 @@ public class MockCinemaRepository implements CinemaRepository {
         return CINEMA_DATA_LIST;
     }
 
+    @Override
     public Cinema getCinema(int cinemaId) {
         return CINEMA_DATA_LIST.stream()
                 .filter(d -> d.id == cinemaId)
