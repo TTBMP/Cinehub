@@ -158,7 +158,9 @@ public class Controller implements BuyTicketUseCase {
             List<Projection> projectionList = projectionRepository.getProjectionList(
                     cinema,
                     movie,
-                    date);
+                    date,
+                    request.getStartTime(),
+                    request.getHallId());
             buyTicketPresenter.presentProjectionList(
                     new ProjectionListResponse(ProjectionDataMapper.mapToDtoList(projectionList)));//Lista delle possiobili proiezioni da scegliere
         } catch (Request.NullRequestException e) {

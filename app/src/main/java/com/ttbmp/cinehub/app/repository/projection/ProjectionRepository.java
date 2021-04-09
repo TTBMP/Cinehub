@@ -20,4 +20,7 @@ public interface ProjectionRepository {
 
     List<Projection> getProjectionList(ProjectionistShift shift);
 
+    List<Projection> getProjectionList(Cinema cinema, Movie movie, String date,String time,Integer hallId);
+
+    List<Projection> getProjectionList(Cinema cinema, Movie movie, String date,Integer hallId);
 }

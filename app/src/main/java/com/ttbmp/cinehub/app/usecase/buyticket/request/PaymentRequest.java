@@ -23,7 +23,7 @@ public class PaymentRequest extends Request {
     private String selectedDate;
 
 
-    public PaymentRequest(TicketDto ticket, ProjectionDto projection, Integer index, CinemaDto cinemaDto, MovieDto movieDto, String selectedDate) {
+    public PaymentRequest(TicketDto ticket, ProjectionDto projection, int index, CinemaDto cinemaDto, MovieDto movieDto, String selectedDate) {
         this.index = index;
         this.projection = projection;
         this.ticket = ticket;

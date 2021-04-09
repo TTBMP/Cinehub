@@ -130,6 +130,9 @@
                             <select style="display: none" th:field="*{cinemaId}">
                                 <option style="display: none" th:value="${projection.getCinemaDto().getId()}"></option>
                             </select>
+                           <select style="display: none" th:field="*{startTime}">
+                                <option style="display: none" th:value="${projection.getStartTime()}"></option>
+                            </select>
                            <p th:text="${projection.getStartTime()}"> </p>
                             <button class="btn btn-primary " type="submit">Continue
                             </button>

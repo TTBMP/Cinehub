@@ -24,11 +24,11 @@ public class ChooseMovieViewController {
 
     private static final String CHOOSE_DATE = "choose_date";
     private static final String CHOOSE_MOVIE = "choose_movie";
-    private BuyTicketUseCase buyTicketUseCase;
+
 
     @GetMapping("/choose_movie")
     public String chooseMovie(Model model) {
-        buyTicketUseCase = new Handler(new BuyTicketPresenterWeb(model));
+        BuyTicketUseCase buyTicketUseCase = new Handler(new BuyTicketPresenterWeb(model));
         model.addAttribute(CHOOSE_DATE, LocalDate.now());
         buyTicketUseCase.getListMovie(new GetListMovieRequest(LocalDate.now()));
         model.addAttribute("projection", new Projection());
@@ -37,9 +37,9 @@ public class ChooseMovieViewController {
 
 
 
-    @PostMapping("/choose_movie")
+    @PostMapping("/choose_movie")//USARE UNA DATA
     public String getMoviePost(@ModelAttribute("projection") Projection projection,Model model) {
-        buyTicketUseCase = new Handler(new BuyTicketPresenterWeb(model));
+        BuyTicketUseCase buyTicketUseCase = new Handler(new BuyTicketPresenterWeb(model));
         buyTicketUseCase.getListMovie(new GetListMovieRequest(LocalDate.parse(projection.getDate())));
         model.addAttribute(CHOOSE_DATE, projection.getDate());
         model.addAttribute("projection", projection);

@@ -34,10 +34,48 @@
             <div class="product-device box-shadow d-none d-md-block"></div>
             <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
         </div>
-        <form action="\payment" method="get">
-            <div class="col-12 col-sm-8 col-md-6 col-lg-4 mx-auto">
-                <div class="card" id="pay-invoice" style="background-color: black; color: white">
-                    <div class="card-body">
+        <div class="col-12 col-sm-8 col-md-6 col-lg-4 mx-auto">
+            <div class="card" id="pay-invoice" style="background-color: black; color: white">
+                <div class="card-body">
+                    <form action="#" method="post"
+                          th:action="@{/payment}"
+                          th:object="${ticket}">
+                        <select style="display: none" th:field="*{cinemaId}">
+                            <option style="display: none"
+                                    th:value="${seat.cinemaId}"></option>
+                        </select>
+                        <select style="display: none" th:field="*{hallId}">
+                            <option style="display: none"
+                                    th:value="${seat.hallId}"></option>
+                        </select>
+                        <select style="display: none" th:field="*{movieId}">
+                            <option style="display: none"
+                                    th:value="${seat.movieId}"></option>
+                        </select>
+                        <select style="display: none" th:field="*{date}">
+                            <option style="display: none"
+                                    th:value="${seat.date}"></option>
+                        </select>
+                        <select style="display: none" th:field="*{option1}">
+                            <option style="display: none"
+                                    th:value="${option1}"></option>
+                        </select>
+                        <select style="display: none" th:field="*{option2}">
+                            <option style="display: none"
+                                    th:value="${option2}"></option>
+                        </select>
+                        <select style="display: none" th:field="*{option3}">
+                            <option style="display: none"
+                                    th:value="${option3}"></option>
+                        </select>
+                        <select style="display: none" th:field="*{position}">
+                            <option style="display: none"
+                                    th:value="${seat.position}"></option>
+                        </select>
+                        <select style="display: none" th:field="*{number}">
+                            <option style="display: none"
+                                    th:value="${seat.number}"></option>
+                        </select>
                         <div class="form-group">
                             <label class="control-label mb-1" for="cc-number">Card number</label>
                             <input autocomplete="off" class="form-control cc-number identified visa" id="cc-number"
@@ -96,16 +134,15 @@
                                 </div>
                             </div>
                         </div>
-
-                            <button class="btn btn-lg btn-primary"type="submit">
-                                <span id="payment-button-amount">Pay </span>
-                            </button>
-                    </div>
+                        <button class="btn btn-lg btn-primary" type="submit">
+                            <span id="payment-button-amount">Pay </span>
+                        </button>
+                    </form>
                 </div>
             </div>
-        </form>
+        </div>
         <div th:if="${errorPayment} =='There are an error with the payment, try to late...'">
-            <h3 th:text="$(errorPayment)"></h3>
+            <h3 th:text="${errorPayment}"></h3>
         </div>
     </div>
 </div>

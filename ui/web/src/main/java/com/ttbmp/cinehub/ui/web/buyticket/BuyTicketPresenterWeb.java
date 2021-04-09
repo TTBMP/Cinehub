@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
 
-    private  BuyTicketViewModel viewModel;
+
     private final Model model;
 
 
@@ -34,99 +34,88 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     @Override
     public void presentSeatList(GetNumberOfSeatsResponse response) {
-        model.addAttribute("projectionList", response.getSeatDtoList());
+        model.addAttribute("seatList", response.getSeatDtoList());
+        model.addAttribute("sizeSeatList",response.getSeatDtoList().size());
     }
 
     @Override
     public void setSelectedTicket(GetTicketBySeatsResponse response) {
-        viewModel.setSelectedTicket(response.getTicketDto());
+        model.addAttribute("selectedTicket",response.getTicketDto());
     }
 
 
     @Override
     public void presentPayNullRequest() {
-        viewModel.setPaymentError("Error with operation Pay");
+        model.addAttribute("paymentError","Error with operation Pay");
+
     }
 
     @Override
     public void presentInvalidPay(PaymentRequest request) {
         if (request.getErrorList().contains(PaymentRequest.MISSING_INDEX_ERROR)) {
-            viewModel.setPaymentError(PaymentRequest.MISSING_INDEX_ERROR.getMessage());
+            model.addAttribute("paymentError",PaymentRequest.MISSING_INDEX_ERROR.getMessage());
         }
         if (request.getErrorList().contains(PaymentRequest.MISSING_TICKET_ERROR)) {
-            viewModel.setPaymentError(PaymentRequest.MISSING_TICKET_ERROR.getMessage());
+            model.addAttribute("paymentError",PaymentRequest.MISSING_TICKET_ERROR.getMessage());
         }
         if (request.getErrorList().contains(PaymentRequest.MISSING_PROJECTION_ERROR)) {
-            viewModel.setPaymentError(PaymentRequest.MISSING_PROJECTION_ERROR.getMessage());
+            model.addAttribute("paymentError",PaymentRequest.MISSING_PROJECTION_ERROR.getMessage());
         }
     }
 
     @Override
     public void presentGetTicketBySeatsNullRequest() {
-        viewModel.setSeatError("Error with operation GetTicketBySeats");
 
     }
 
     @Override
     public void presentInvalidGetTicketBySeats(GetTicketBySeatsRequest request) {
-        if (request.getErrorList().contains(GetTicketBySeatsRequest.MISSING_LIST_SEATS_ERROR)) {
-            viewModel.setSeatError(GetTicketBySeatsRequest.MISSING_LIST_SEATS_ERROR.getMessage());
-        }
-        if (request.getErrorList().contains(GetTicketBySeatsRequest.MISSING_POSITION_ERROR)) {
-            viewModel.setSeatError(GetTicketBySeatsRequest.MISSING_POSITION_ERROR.getMessage());
-        }
-        if (request.getErrorList().contains(GetTicketBySeatsRequest.MISSING_INDEX_ERROR)) {
-            viewModel.setSeatError(GetTicketBySeatsRequest.MISSING_INDEX_ERROR.getMessage());
-        }
+
     }
 
     @Override
     public void presentGetListCinemaNullRequest() {
-        viewModel.setCinemaError("Error with operation GetListCinema");
+
     }
 
     @Override
     public void presentInvalidGetListCinema(GetListCinemaRequest request) {
-        viewModel.setCinemaError(GetListCinemaRequest.MISSING_MOVIE_ERROR.getMessage());
+
 
     }
 
     @Override
     public void presentGetTimeOfProjectionNullRequest() {
-        viewModel.setCinemaError("Error with operation GetTimeOfProjection");
+
 
     }
 
     @Override
     public void presentInvalidGetTimeOfProjection(GetProjectionRequest request) {
         if (request.getErrorList().contains(GetProjectionRequest.MISSING_MOVIE_ERROR)) {
-            viewModel.setCinemaError((GetProjectionRequest.MISSING_MOVIE_ERROR.getMessage()));
         }
         if (request.getErrorList().contains(GetProjectionRequest.MISSING_DATE_ERROR)) {
-            viewModel.setCinemaError((GetProjectionRequest.MISSING_DATE_ERROR.getMessage()));
         }
     }
 
 
     @Override
     public void presentGetNumberOfSeatsNullRequest() {
-        viewModel.setSeatError("Error with operation GetNumberOfSeats");
 
     }
 
     @Override
     public void presentInvalidGetNumberOfSeats(GetNumberOfSeatsRequest request) {
-        viewModel.setSeatError(GetNumberOfSeatsRequest.MISSING_PROJECTION_ERROR.getMessage());
     }
 
     @Override
     public void presentGetListMovieError() {
-        viewModel.setMovieError("Unable to recover movies by service");
+
     }
 
     @Override
     public void presentErrorByStripe(PaymentServiceException error) {
-        viewModel.setPaymentError(error.getMessage());
+        model.addAttribute("paymentError",error.getMessage());
     }
 
     @Override
@@ -136,18 +125,16 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     @Override
     public void presentGetListMovieNullRequest() {
-        viewModel.setMovieError("Unable to recover movies by service");
 
     }
 
     @Override
     public void presentInvalidGetListMovie(GetListMovieRequest request) {
-        viewModel.setMovieError(GetListCinemaRequest.MISSING_MOVIE_ERROR.getMessage());
     }
 
     @Override
     public void presentAutenticationError() {
-        viewModel.setPaymentError("Unable to autenticate");
+        
     }
 
 }

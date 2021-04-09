@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.web.domain;
 
-public class Payment {
+public class Seat {
     private  String position;
     private   Integer number;
 

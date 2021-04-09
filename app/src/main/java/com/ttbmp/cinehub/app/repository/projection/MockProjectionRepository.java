@@ -156,6 +156,51 @@ public class MockProjectionRepository implements ProjectionRepository {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date, String time,Integer hallId) {
+        if (time == null && hallId == null) {
+            return getProjectionList(cinema, movie, date);
+        }
+        if(time == null){
+            return getProjectionList(cinema, movie, date,hallId);
+        } else{
+            return PROJECTION_DATA_LIST.stream()
+                    .filter(d -> d.cinemaId == cinema.getId() && d.movieId == movie.getId() && d.date.equals(date) && d.startTime.equals(time) && d.hallId== hallId)
+                    .map(d -> new ProjectionProxy(
+                            d.id,
+                            d.date,
+                            d.startTime,
+                            serviceLocator.getService(MovieRepository.class),
+                            serviceLocator.getService(HallRepository.class),
+                            serviceLocator.getService(CinemaRepository.class),
+                            serviceLocator.getService(ProjectionistRepository.class),
+                            serviceLocator.getService(TicketRepository.class)
+                    ))
+                    .collect(Collectors.toList());
+        }
+    }
+
+    @Override
+    public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date, Integer hallId) {
+        if (hallId == null) {
+            return getProjectionList(cinema, movie, date);
+        } else {
+            return PROJECTION_DATA_LIST.stream()
+                    .filter(d -> d.cinemaId == cinema.getId() && d.movieId == movie.getId() && d.date.equals(date) &&  d.hallId== hallId)
+                    .map(d -> new ProjectionProxy(
+                            d.id,
+                            d.date,
+                            d.startTime,
+                            serviceLocator.getService(MovieRepository.class),
+                            serviceLocator.getService(HallRepository.class),
+                            serviceLocator.getService(CinemaRepository.class),
+                            serviceLocator.getService(ProjectionistRepository.class),
+                            serviceLocator.getService(TicketRepository.class)
+                    ))
+                    .collect(Collectors.toList());
+        }
+    }
+
     public static class ProjectionData {
 
         private int id;

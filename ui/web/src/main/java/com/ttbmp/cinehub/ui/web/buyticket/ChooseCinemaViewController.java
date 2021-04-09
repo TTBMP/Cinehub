@@ -27,14 +27,13 @@ import java.time.LocalDate;
 public class ChooseCinemaViewController {
 
 
-    private BuyTicketUseCase useCase;
 
 
     @PostMapping("/choose_cinema")
     public String chooseTimeOfProjectionPost(@ModelAttribute("projection") Projection projection,
             Model model) {
 
-        useCase = new Handler(new BuyTicketPresenterWeb(model));
+        BuyTicketUseCase useCase = new Handler(new BuyTicketPresenterWeb(model));
         useCase.getListMovie(new GetListMovieRequest(LocalDate.parse(projection.getDate())));
         useCase.getListCinema(new GetListCinemaRequest(projection.getMovieId(),projection.getDate()));
         model.addAttribute("idMovie",projection.getMovieId());
@@ -50,11 +49,13 @@ public class ChooseCinemaViewController {
             @ModelAttribute("projection") Projection projection,
             Model model) {
 
-        useCase = new Handler(new BuyTicketPresenterWeb(model));
+        BuyTicketUseCase useCase = new Handler(new BuyTicketPresenterWeb(model));
         useCase.getProjectionList(new GetProjectionRequest(
                 projection.getMovieId(),
                 projection.getCinemaId(),
-                LocalDate.parse(projection.getDate())
+                LocalDate.parse(projection.getDate()),
+                null,
+                null
         ));
 
         model.addAttribute("projection", new Projection());

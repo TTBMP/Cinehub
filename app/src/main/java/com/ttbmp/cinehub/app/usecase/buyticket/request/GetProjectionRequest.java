@@ -18,11 +18,32 @@ public class GetProjectionRequest extends Request {
     private Integer movieDtoId;
     private Integer cinemaDtoId;
     private String localDate;
+    private String startTime;
+    private Integer hallId;
 
-    public GetProjectionRequest(Integer movieDtoId, Integer cinemaDtoId, LocalDate localDate) {
+    public GetProjectionRequest(Integer movieDtoId, Integer cinemaDtoId, LocalDate localDate,String startTime,Integer hallId) {
         this.movieDtoId = movieDtoId;
         this.cinemaDtoId = cinemaDtoId;
         this.localDate = localDate.toString();
+        this.startTime = startTime;
+        this.hallId = hallId;
+    }
+
+
+    public Integer getHallId() {
+        return hallId;
+    }
+
+    public void setHallId(Integer hallId) {
+        this.hallId = hallId;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
     public String getLocalDate() {
