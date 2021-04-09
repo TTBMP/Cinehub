@@ -70,13 +70,13 @@
         </div>
         <div class="col-12 text-center">
             <h6 class="h6">Selected a date:</h6>
-            <form action="#" method="post" th:action="@{/choose_movie}" th:object="${projection}">
-                <label for="date"></label>
-                <input id="date" required th:field="*{date}" type="date"/>
-                <button class="btn btn-primary" type="submit">Search
-                </button>
-            </form>
-            <a href="/choose_movie">Today</a>
+            <input action="#" method="post" th:action="@{/choose_movie}" id="date-picker"
+                   onchange="window.location.href = '?date='+document.getElementById('date-picker').value;"
+                  th:value="${choose_date}"
+                  type="date">
+                <label for="date-picker"></label>
+
+            <a href="/choose_movie" type="button">Today</a>
 
         </div>
     </div>
