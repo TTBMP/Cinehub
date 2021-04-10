@@ -75,9 +75,9 @@
                   th:value="${choose_date}"
                   type="date">
                 <label for="date-picker"></label>
-
-            <a href="/choose_movie" type="button">Today</a>
-
+            <a href="/choose_movie" >
+            <button class=" btn btn-primary"  type="button">Today</button>
+            </a>
         </div>
     </div>
     <!--/Top-->
@@ -95,28 +95,32 @@
 
                         <div class="overlay">
                             <div class="box ml-3">
-                                <div class="row">
+                                <div class="row text-center">
                                 <br>
-                                <div class="col-12">
+                                <div class="col-12 text-center">
                                     <h5 class="h5">Vote:</h5>
                                     <p th:text="${movie.vote}"></p>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12 text-center">
                                     <h5 class="h5">Releases:</h5>
                                     <p th:text="${movie.releases}"></p>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12 text-center">
                                     <h5 class="h5">Overview:</h5>
                                     <p th:text="${movie.overview}"></p>
                                 </div>
                                 <form action="#" method="post" th:action="@{/choose_cinema}"
                                       th:object="${projection}">
-                                    <select style="display: none" th:field="*{movieId}">
-                                        <option style="display: none" th:value="${movie.id}"></option>
-                                    </select>
-                                    <select style="display: none" th:field="*{date}">
-                                        <option style="display: none" th:value="${choose_date}"></option>
-                                    </select>
+                                    <label>
+                                        <select style="display: none" th:field="*{movieId}">
+                                            <option style="display: none" th:value="${movie.id}"></option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <select style="display: none" th:field="*{date}">
+                                            <option style="display: none" th:value="${choose_date}"></option>
+                                        </select>
+                                    </label>
                                     <button class="btn btn-primary mt-2 mb-2" type="submit">Continue
                                     </button>
                                 </form>

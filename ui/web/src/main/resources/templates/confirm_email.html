@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
@@ -21,7 +22,47 @@
     <div class="card" style="border-color: white;background-color: black">
         <div class="jumbotron" style="background-color: black">
             <h1 class="display-3">Payment With Success</h1>
-            <p class="lead">
+            <div class="row mt-5">
+                <div class="col-3 mt-2">
+                    <h5>Ticket: </h5>
+                </div>
+                <div class="col-3 mt-2">
+                    <p th:text="${ticketId}"> </p>
+                </div>
+                <div class="col-3 mt-2">
+                    <h5>Cinema: </h5>
+                </div>
+                <div class="col-3 mt-2">
+                    <p th:text="${cinemaName}"> </p>
+                </div>
+
+                <div class="col-3 mt-2">
+                    <h5>Movie: </h5>
+                </div>
+                <div class="col-3 mt-2">
+                    <p th:text="${movieName}"> </p>
+                </div>
+                <div class="col-3 mt-2">
+                    <h5>Date: </h5>
+                </div>
+                <div class="col-3 mt-2">
+                    <p th:text="${date}"> </p>
+                </div>
+
+                <div class="col-3 mt-2">
+                    <h5>Screening time: </h5>
+                </div>
+                <div class="col-3 mt-2">
+                    <p th:text="${screeningTime}"> </p>
+                </div>
+                <div class="col-3 mt-2">
+                    <h5>Price: </h5>
+                </div>
+                <div class="col-3 mt-2">
+                    <p th:text="${price}"> </p>
+                </div>
+            </div>
+            <p class="lead mt-5">
                 An email has been sent to the address associated with this account.</p>
             <hr class="my-4">
         </div>
@@ -30,6 +71,5 @@
     </div>
 </div>
 
-</div>
 </body>
 </html>

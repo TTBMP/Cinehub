@@ -32,11 +32,11 @@
         <!--Checkbox-->
         <div class="col-12">
             <h3>Additional options: </h3>
-            <input id="c1" th:checked="*{boolean1}" type="checkbox">
+            <label for="c1"></label><input id="c1" th:checked="*{boolean1}" type="checkbox">
             <label> Skip line</label><br>
-            <input id="c2" th:checked="*{boolean2}" type="checkbox">
+            <label for="c2"></label><input id="c2" th:checked="*{boolean2}" type="checkbox">
             <label> Folding armchair</label><br>
-            <input id="c3" th:checked="*{boolean3}" type="checkbox">
+            <label for="c3"></label><input id="c3" th:checked="*{boolean3}" type="checkbox">
             <label> Heated armchair</label><br>
             <p style="color: #ff0000">Each optional choice increases the cost of the ticket by one euro</p>
         </div>
@@ -58,25 +58,37 @@
                                       onclick="action +='/'+ document.getElementById('c1').checked+'/'+ document.getElementById('c2').checked+'/'+ document.getElementById('c3').checked"
                                       th:action="@{/payment}"
                                       th:object="${seat}">
-                                    <select style="display: none" th:field="*{position}">
-                                        <option style="display: none"
-                                                th:value="${valList.get((inter.index))}"></option>
-                                    </select>
-                                    <select style="display: none" th:field="*{number}">
-                                        <option style="display: none" th:value="${inter.index}"></option>
-                                    </select>
-                                    <select style="display: none" th:field="*{hallId}">
-                                        <option style="display: none" th:value="${hallId}"></option>
-                                    </select>
-                                    <select style="display: none" th:field="*{date}">
-                                        <option style="display: none" th:value="${selectedDate}"></option>
-                                    </select>
-                                    <select style="display: none" th:field="*{movieId}">
-                                        <option style="display: none" th:value="${movieId}"></option>
-                                    </select>
-                                    <select style="display: none" th:field="*{cinemaId}">
-                                        <option style="display: none" th:value="${cinemaId}"></option>
-                                    </select>
+                                    <label>
+                                        <select style="display: none" th:field="*{position}">
+                                            <option style="display: none"
+                                                    th:value="${valList.get((inter.index))}"></option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <select style="display: none" th:field="*{number}">
+                                            <option style="display: none" th:value="${inter.index}"></option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <select style="display: none" th:field="*{hallId}">
+                                            <option style="display: none" th:value="${hallId}"></option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <select style="display: none" th:field="*{date}">
+                                            <option style="display: none" th:value="${selectedDate}"></option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <select style="display: none" th:field="*{movieId}">
+                                            <option style="display: none" th:value="${movieId}"></option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <select style="display: none" th:field="*{cinemaId}">
+                                            <option style="display: none" th:value="${cinemaId}"></option>
+                                        </select>
+                                    </label>
 
                                     <div class="col-12">
                                         <p id="url">
