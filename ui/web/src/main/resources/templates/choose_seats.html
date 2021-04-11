@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link href="styleIvan.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -22,7 +23,7 @@
     <div class="row ">
         <div class="col-md-12 text-center mt-3">
             <div class="col-md-5 p-lg-5 mx-auto my-5">
-                <h1 class="display-4 font-weight-normal">View of the seats </h1>
+                <h1 class="display-4 font-weight-normal" style="text-shadow: 5px 5px 5px #FFFFFF">View of the seats </h1>
                 <p class="lead font-weight-normal">Select the place you like the most, don't hesitate to ask for some
                     extras .</p>
             </div>
@@ -31,14 +32,14 @@
         </div>
         <!--Checkbox-->
         <div class="col-12">
-            <h3>Additional options: </h3>
+            <h3 >Additional options: </h3>
             <label for="c1"></label><input id="c1" th:checked="*{boolean1}" type="checkbox">
             <label> Skip line</label><br>
             <label for="c2"></label><input id="c2" th:checked="*{boolean2}" type="checkbox">
             <label> Folding armchair</label><br>
             <label for="c3"></label><input id="c3" th:checked="*{boolean3}" type="checkbox">
             <label> Heated armchair</label><br>
-            <p style="color: #ff0000">Each optional choice increases the cost of the ticket by one euro</p>
+            <p style="color: red">Each optional choice increases the cost of the ticket by one euro</p>
         </div>
         <div class="card m-5 p-2" style="background-color: #1b1b1b;border-color: #6d6d6d">
             <div class="container mt-5 mb-5">

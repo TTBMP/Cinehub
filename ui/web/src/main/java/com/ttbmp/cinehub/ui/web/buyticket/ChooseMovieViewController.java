@@ -25,7 +25,7 @@ public class ChooseMovieViewController {
 
     @GetMapping("/choose_movie")
     public String getMoviePost(@RequestParam(value="date",required = false) @DateTimeFormat (iso=DateTimeFormat.ISO.DATE) LocalDate date, Model model) {
-        if(date == null){
+        if(date == null ){
             date = LocalDate.now();
         }
         BuyTicketUseCase buyTicketUseCase = new Handler(new BuyTicketPresenterWeb(model));
