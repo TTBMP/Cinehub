@@ -12,6 +12,9 @@ import org.springframework.ui.Model;
 public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     private final Model model;
+    private String paymentError = "paymentError";
+    private String movieError = "movieError";
+
 
     public BuyTicketPresenterWeb(Model model) {
         this.model = model;
@@ -42,20 +45,20 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     @Override
     public void presentPayNullRequest() {
-        model.addAttribute("paymentError","Error with operation Pay");
+        model.addAttribute(paymentError,"Error with operation Pay");
 
     }
 
     @Override
     public void presentInvalidPay(PaymentRequest request) {
         if (request.getErrorList().contains(PaymentRequest.MISSING_INDEX_ERROR)) {
-            model.addAttribute("paymentError",PaymentRequest.MISSING_INDEX_ERROR.getMessage());
+            model.addAttribute(paymentError,PaymentRequest.MISSING_INDEX_ERROR.getMessage());
         }
         if (request.getErrorList().contains(PaymentRequest.MISSING_TICKET_ERROR)) {
-            model.addAttribute("paymentError",PaymentRequest.MISSING_TICKET_ERROR.getMessage());
+            model.addAttribute(paymentError,PaymentRequest.MISSING_TICKET_ERROR.getMessage());
         }
         if (request.getErrorList().contains(PaymentRequest.MISSING_PROJECTION_ERROR)) {
-            model.addAttribute("paymentError",PaymentRequest.MISSING_PROJECTION_ERROR.getMessage());
+            model.addAttribute(paymentError,PaymentRequest.MISSING_PROJECTION_ERROR.getMessage());
         }
     }
 
@@ -112,12 +115,12 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     @Override
     public void presentGetListMovieError() {
-        model.addAttribute("movieError","Unable to retrieve list of movie");
+        model.addAttribute(movieError,"Unable to retrieve list of movie");
     }
 
     @Override
     public void presentErrorByStripe(PaymentServiceException error) {
-        model.addAttribute("paymentError",error.getMessage());
+        model.addAttribute(paymentError,error.getMessage());
     }
 
     @Override
@@ -127,12 +130,12 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     @Override
     public void presentGetListMovieNullRequest() {
-        model.addAttribute("movieError","Movie can't be null");
+        model.addAttribute(movieError,"Movie can't be null");
     }
 
     @Override
     public void presentInvalidGetListMovie(GetListMovieRequest request) {
-        model.addAttribute("movieError","Movie can't be null");
+        model.addAttribute(movieError,"Movie can't be null");
     }
 
     @Override

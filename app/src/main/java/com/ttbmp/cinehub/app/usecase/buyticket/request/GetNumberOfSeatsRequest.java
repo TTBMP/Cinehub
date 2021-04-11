@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.app.usecase.buyticket.request;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.usecase.Request;
 
-import java.time.LocalDate;
+
 
 /**
  * @author Ivan Palmieri

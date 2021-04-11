@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.app.usecase.buyticket.request;
 
-import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.dto.MovieDto;
+
 import com.ttbmp.cinehub.app.usecase.Request;
 
 import java.time.LocalDate;
