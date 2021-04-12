@@ -39,19 +39,16 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     @Override
     public void presentSeatList(GetNumberOfSeatsResponse response) {
         model.addAttribute("seatList", response.getSeatDtoList());
-        model.addAttribute("sizeSeatList",response.getSeatDtoList().size());
-        addNameAtSeats(model);
-
+        ProjectionDto selectedProjection = ((ArrayList<ProjectionDto>) model.getAttribute("projectionList")).get(0);
+        model.addAttribute("valList", getSeatsNameList(selectedProjection,response.getSeatDtoList().size()));
     }
 
-    private void addNameAtSeats(Model model) {
-        int size = (int) model.getAttribute("sizeSeatList");
-        ProjectionDto selectedProjection = ((ArrayList<ProjectionDto>) model.getAttribute("projectionList")).get(0);
+    private List<String> getSeatsNameList(ProjectionDto selectedProjection, int size) {
         List<String> valList = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             valList.add(getName(selectedProjection, i));
         }
-        model.addAttribute("valList", valList);
+        return valList;
     }
 
     private String getName(ProjectionDto projection, int seatNumber) {

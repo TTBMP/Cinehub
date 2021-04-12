@@ -16,7 +16,7 @@ import java.time.LocalDate;
 /**
  * @author Massimo Mazzetti
  **/
-class ManageEmployeesShiftBuyTicketControllerTest {
+class ManageEmployeesShiftControllerTest {
 
     private final MockServiceLocator serviceLocator = new MockServiceLocator();
 
