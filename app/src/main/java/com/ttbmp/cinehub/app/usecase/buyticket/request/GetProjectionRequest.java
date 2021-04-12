@@ -12,8 +12,6 @@ public class GetProjectionRequest extends Request {
 
     public static final Request.Error MISSING_MOVIE_ERROR = new Request.Error("Movie can't be null");
     public static final Request.Error MISSING_DATE_ERROR = new Request.Error("Date can't be null");
-
-
     private Integer movieId;
     private Integer cinemaId;
     private String localDate;
@@ -27,7 +25,6 @@ public class GetProjectionRequest extends Request {
         this.startTime = startTime;
         this.hallId = hallId;
     }
-
 
     public Integer getHallId() {
         return hallId;
