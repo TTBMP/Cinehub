@@ -14,15 +14,15 @@ public class GetProjectionRequest extends Request {
     public static final Request.Error MISSING_DATE_ERROR = new Request.Error("Date can't be null");
 
 
-    private Integer movieDtoId;
-    private Integer cinemaDtoId;
+    private Integer movieId;
+    private Integer cinemaId;
     private String localDate;
     private String startTime;
     private Integer hallId;
 
-    public GetProjectionRequest(Integer movieDtoId, Integer cinemaDtoId, LocalDate localDate,String startTime,Integer hallId) {
-        this.movieDtoId = movieDtoId;
-        this.cinemaDtoId = cinemaDtoId;
+    public GetProjectionRequest(Integer movieId, Integer cinemaId, LocalDate localDate, String startTime, Integer hallId) {
+        this.movieId = movieId;
+        this.cinemaId = cinemaId;
         this.localDate = localDate.toString();
         this.startTime = startTime;
         this.hallId = hallId;
@@ -53,25 +53,25 @@ public class GetProjectionRequest extends Request {
         this.localDate = localDate;
     }
 
-    public Integer getMovieDtoId() {
-        return movieDtoId;
+    public Integer getMovieId() {
+        return movieId;
     }
 
-    public void setMovieDtoId(Integer movieDtoId) {
-        this.movieDtoId = movieDtoId;
+    public void setMovieId(Integer movieId) {
+        this.movieId = movieId;
     }
 
-    public Integer getCinemaDtoId() {
-        return cinemaDtoId;
+    public Integer getCinemaId() {
+        return cinemaId;
     }
 
-    public void setCinemaDtoId(Integer cinemaDtoId) {
-        this.cinemaDtoId = cinemaDtoId;
+    public void setCinemaId(Integer cinemaId) {
+        this.cinemaId = cinemaId;
     }
 
     @Override
     public void onValidate() {
-        if (movieDtoId == null) {
+        if (movieId == null) {
             addError(MISSING_MOVIE_ERROR);
         }
         if (localDate == null) {

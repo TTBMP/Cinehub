@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.ui.web.buyticket;
 
 
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.app.usecase.buyticket.Handler;
+import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetListCinemaRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetListMovieRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetProjectionRequest;
@@ -29,7 +29,7 @@ public class ChooseCinemaViewController {
     public String chooseTimeOfProjectionPost(
             @ModelAttribute("projection") Projection projection,
             Model model) {
-        BuyTicketUseCase useCase = new Handler(new BuyTicketPresenterWeb(model));
+        BuyTicketUseCase useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
         useCase.getListMovie(new GetListMovieRequest(LocalDate.parse(projection.getDate())));
         useCase.getListCinema(new GetListCinemaRequest(projection.getMovieId(),projection.getDate()));
         model.addAttribute("idMovie",projection.getMovieId());
@@ -43,7 +43,7 @@ public class ChooseCinemaViewController {
     public String getListSeat(
             @ModelAttribute("projection") Projection projection,
             Model model) {
-        BuyTicketUseCase useCase = new Handler(new BuyTicketPresenterWeb(model));
+        BuyTicketUseCase useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
         useCase.getProjectionList(new GetProjectionRequest(
                 projection.getMovieId(),
                 projection.getCinemaId(),

@@ -4,7 +4,7 @@ package com.ttbmp.cinehub.ui.web.buyticket;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.app.usecase.buyticket.Handler;
+import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetProjectionRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetTicketBySeatsRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.PaymentRequest;
@@ -26,7 +26,7 @@ public class ConfirmEmailViewController {
 
     @PostMapping("/confirm_email")
     public String confirmEmail(@ModelAttribute("ticket") Ticket ticket, Model model) {
-        BuyTicketUseCase buyTicketUseCase = new Handler(new BuyTicketPresenterWeb(model));
+        BuyTicketUseCase buyTicketUseCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
         model.addAttribute("paymentError","");
         buyTicketUseCase.getProjectionList(new GetProjectionRequest(ticket.getMovieId(), ticket.getCinemaId(), LocalDate.parse(ticket.getDate()) ,null, ticket.getHallId()));
         ProjectionDto projection = ((ArrayList<ProjectionDto>) model.getAttribute("projectionList")).get(0);

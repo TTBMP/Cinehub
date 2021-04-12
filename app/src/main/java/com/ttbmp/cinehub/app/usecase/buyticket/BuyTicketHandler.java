@@ -6,42 +6,42 @@ import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 /**
  * @author Fabio Buracchi
  */
-public class Handler implements BuyTicketUseCase {
+public class BuyTicketHandler implements BuyTicketUseCase {
 
-    private final Controller controller;
+    private final BuyTicketController buyTicketController;
 
-    public Handler(BuyTicketPresenter presenter) {
-        controller = new Controller(new ServiceLocator(), presenter);
+    public BuyTicketHandler(BuyTicketPresenter presenter) {
+        buyTicketController = new BuyTicketController(new ServiceLocator(), presenter);
     }
 
     @Override
     public void pay(PaymentRequest request) {
-        controller.pay(request);
+        buyTicketController.pay(request);
     }
 
     @Override
     public void getListMovie(GetListMovieRequest request) {
-        controller.getListMovie(request);
+        buyTicketController.getListMovie(request);
     }
 
     @Override
     public void createTicket(GetTicketBySeatsRequest request) {
-        controller.createTicket(request);
+        buyTicketController.createTicket(request);
     }
 
     @Override
     public void getListCinema(GetListCinemaRequest request) {
-        controller.getListCinema(request);
+        buyTicketController.getListCinema(request);
     }
 
     @Override
     public void getProjectionList(GetProjectionRequest request) {
-        controller.getProjectionList(request);
+        buyTicketController.getProjectionList(request);
     }
 
     @Override
     public void getListOfSeat(GetNumberOfSeatsRequest request) {
-        controller.getListOfSeat(request);
+        buyTicketController.getListOfSeat(request);
     }
 
 }

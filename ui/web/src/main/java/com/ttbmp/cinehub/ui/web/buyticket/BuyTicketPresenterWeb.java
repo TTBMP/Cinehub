@@ -1,10 +1,15 @@
 package com.ttbmp.cinehub.ui.web.buyticket;
 
+import com.ttbmp.cinehub.app.dto.ProjectionDto;
+import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketPresenter;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 import org.springframework.ui.Model;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Palmieri Ivan
@@ -35,6 +40,28 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     public void presentSeatList(GetNumberOfSeatsResponse response) {
         model.addAttribute("seatList", response.getSeatDtoList());
         model.addAttribute("sizeSeatList",response.getSeatDtoList().size());
+        addNameAtSeats(model);
+
+    }
+
+    private void addNameAtSeats(Model model) {
+        int size = (int) model.getAttribute("sizeSeatList");
+        ProjectionDto selectedProjection = ((ArrayList<ProjectionDto>) model.getAttribute("projectionList")).get(0);
+        List<String> valList = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            valList.add(getName(selectedProjection, i));
+        }
+        model.addAttribute("valList", valList);
+    }
+
+    private String getName(ProjectionDto projection, int seatNumber) {
+        String position = projection.getHallDto().getSeatList().get(seatNumber).getPosition();
+        for (TicketDto ticket : projection.getListTicket()) {
+            if (ticket.getSeatDto().getPosition().equals(position)) {
+                return "SOLD";
+            }
+        }
+        return position;
     }
 
     @Override

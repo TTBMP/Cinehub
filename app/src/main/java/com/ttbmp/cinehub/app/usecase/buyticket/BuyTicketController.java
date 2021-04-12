@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * @author Ivan Palmieri
  */
-public class Controller implements BuyTicketUseCase {
+public class BuyTicketController implements BuyTicketUseCase {
 
     private final BuyTicketPresenter buyTicketPresenter;
 
@@ -42,7 +42,7 @@ public class Controller implements BuyTicketUseCase {
     private final UserRepository userRepository;
     private final TicketRepository ticketRepository;
 
-    public Controller(ServiceLocator serviceLocator, BuyTicketPresenter buyTicketPresenter) {
+    public BuyTicketController(ServiceLocator serviceLocator, BuyTicketPresenter buyTicketPresenter) {
         this.buyTicketPresenter = buyTicketPresenter;
         this.paymentService = serviceLocator.getService(PaymentService.class);
         this.emailService = serviceLocator.getService(EmailService.class);
@@ -152,8 +152,8 @@ public class Controller implements BuyTicketUseCase {
     public void getProjectionList(GetProjectionRequest request) {
         try {
             Request.validate(request);
-            Cinema cinema = cinemaRepository.getCinema(request.getCinemaDtoId());
-            Movie movie =  movieRepository.getMovieById(request.getMovieDtoId());
+            Cinema cinema = cinemaRepository.getCinema(request.getCinemaId());
+            Movie movie =  movieRepository.getMovieById(request.getMovieId());
             String date = request.getLocalDate();
             List<Projection> projectionList = projectionRepository.getProjectionList(
                     cinema,

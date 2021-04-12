@@ -16,13 +16,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-class BuyTicketControllerTest {
+class BuyTicketBuyTicketControllerTest {
 
     private final MockServiceLocator serviceLocator = new MockServiceLocator();
 
     @Test
     void getListMovie_whitCorrectRequest_notGenerateErrors() {
-        Controller buyTicketController = new Controller(
+        BuyTicketController buyTicketController = new BuyTicketController(
                 serviceLocator,
                 new MockBuyTicketPresenter()
         );

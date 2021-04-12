@@ -1,11 +1,12 @@
 package com.ttbmp.cinehub.app.usecase.buyticket;
 
+import com.ttbmp.cinehub.app.usecase.UseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 
 /**
  * @author Ivan Palmieri
  */
-public interface BuyTicketUseCase extends com.ttbmp.cinehub.app.usecase.UseCase {
+public interface BuyTicketUseCase extends UseCase {
 
     void pay(PaymentRequest request);
 

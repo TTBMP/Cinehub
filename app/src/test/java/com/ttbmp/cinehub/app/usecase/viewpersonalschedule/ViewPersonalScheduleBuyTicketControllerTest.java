@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.List;
 
-class ViewPersonalScheduleControllerTest {
+class ViewPersonalScheduleBuyTicketControllerTest {
 
     private final MockServiceLocator serviceLocator = new MockServiceLocator();
 
