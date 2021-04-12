@@ -23,7 +23,7 @@ public class CinemaProxy extends Cinema {
     @Override
     public List<Hall> getHallList() {
         if (!isHallListLoaded) {
-            setHallList(hallRepository.getHallList(this));
+            setHallList(hallRepository.getHallList(this.getId()));
         }
         return super.getHallList();
     }

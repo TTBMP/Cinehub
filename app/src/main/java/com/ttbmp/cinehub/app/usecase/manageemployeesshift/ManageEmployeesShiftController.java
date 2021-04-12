@@ -63,7 +63,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             Request.validate(request);
             manageEmployeesShiftPresenter.presentHallList(new GetHallListResponse(
                     HallDataMapper.mapToDtoList(hallRepository.getHallList(
-                            CinemaDataMapper.mapToEntity(request.getCinema())
+                            request.getCinemaId()
                     ))
             ));
         } catch (Request.NullRequestException e) {
@@ -80,7 +80,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             manageEmployeesShiftPresenter.presentShiftList(new GetShiftListResponse(
                     ShiftDataMapper.mapToDtoList(shiftRepository.getShiftList()),
                     request.getStart(),
-                    request.getCinema())
+                    request.getCinemaId())
             );
         } catch (Request.NullRequestException e) {
             manageEmployeesShiftPresenter.presentGetShiftListNullRequest();

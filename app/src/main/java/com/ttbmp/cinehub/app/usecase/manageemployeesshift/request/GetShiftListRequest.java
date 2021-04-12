@@ -12,23 +12,23 @@ public class GetShiftListRequest extends Request {
     public static final Request.Error MISSING_CINEMA = new Request.Error("Cinema non valido");
     public static final Request.Error MISSING_START = new Request.Error("Inizio non valido");
 
-    private CinemaDto cinema;
+    private int cinemaId;
     private LocalDate start;
 
     public GetShiftListRequest() {
     }
 
-    public GetShiftListRequest(LocalDate start, CinemaDto cinema) {
+    public GetShiftListRequest(LocalDate start, int cinema) {
         this.start = start;
-        this.cinema = cinema;
+        this.cinemaId = cinema;
     }
 
-    public CinemaDto getCinema() {
-        return cinema;
+    public int getCinemaId() {
+        return cinemaId;
     }
 
-    public void setCinema(CinemaDto cinema) {
-        this.cinema = cinema;
+    public void setCinemaId(int cinemaId) {
+        this.cinemaId = cinemaId;
     }
 
     public LocalDate getStart() {
@@ -41,7 +41,7 @@ public class GetShiftListRequest extends Request {
 
     @Override
     protected void onValidate() {
-        if (cinema == null) {
+        if (cinemaId == -1) {
             addError(MISSING_CINEMA);
         }
         if (start == null) {

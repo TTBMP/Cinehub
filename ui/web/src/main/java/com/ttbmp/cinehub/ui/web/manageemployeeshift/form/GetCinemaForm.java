@@ -1,16 +1,16 @@
-package com.ttbmp.cinehub.ui.web.manageemployeeshift;
+package com.ttbmp.cinehub.ui.web.manageemployeeshift.form;
 
 import java.time.LocalDate;
 
-public class GetCinemaRequest {
+public class GetCinemaForm {
 
     private int cinemaId;
     private LocalDate start;
 
-    public GetCinemaRequest() {
+    public GetCinemaForm() {
     }
 
-    public GetCinemaRequest(int cinemaId, LocalDate start) {
+    public GetCinemaForm(int cinemaId, LocalDate start) {
         this.cinemaId = cinemaId;
         this.start = start;
     }

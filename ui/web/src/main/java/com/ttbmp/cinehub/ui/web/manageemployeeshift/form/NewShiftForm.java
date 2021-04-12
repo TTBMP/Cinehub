@@ -1,24 +1,24 @@
-package com.ttbmp.cinehub.ui.web.manageemployeeshift;
+package com.ttbmp.cinehub.ui.web.manageemployeeshift.form;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class NewShiftRequest {
+public class NewShiftForm {
 
-    String employeeId;
-    LocalDate date;
-    LocalTime start;
-    LocalTime end;
+    private String employeeId;
+    private LocalDate date;
+    private LocalTime inizio;
+    private LocalTime end;
     int hallId;
 
-    public NewShiftRequest() {
+    public NewShiftForm() {
 
     }
 
-    public NewShiftRequest(String employeeId, LocalDate date, LocalTime start, LocalTime end, int hallId) {
+    public NewShiftForm(String employeeId, LocalDate date, LocalTime inizio, LocalTime end, int hallId) {
         this.employeeId = employeeId;
         this.date = date;
-        this.start = start;
+        this.inizio = inizio;
         this.end = end;
         this.hallId = hallId;
     }
@@ -39,12 +39,12 @@ public class NewShiftRequest {
         this.date = date;
     }
 
-    public LocalTime getStart() {
-        return start;
+    public LocalTime getInizio() {
+        return inizio;
     }
 
-    public void setStart(LocalTime start) {
-        this.start = start;
+    public void setInizio(LocalTime inizio) {
+        this.inizio = inizio;
     }
 
     public LocalTime getEnd() {
@@ -62,5 +62,4 @@ public class NewShiftRequest {
     public void setHallId(int hallId) {
         this.hallId = hallId;
     }
-
 }

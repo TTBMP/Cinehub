@@ -11,23 +11,23 @@ public class GetHallListRequest extends Request {
 
     public static final Request.Error MISSING_HALL = new Request.Error("sala non valida");
 
-    private CinemaDto cinema;
+    private Integer cinemaId;
 
-    public GetHallListRequest(CinemaDto cinema) {
-        this.cinema = cinema;
+    public GetHallListRequest(Integer cinemaId) {
+        this.cinemaId = cinemaId;
     }
 
-    public CinemaDto getCinema() {
-        return cinema;
+    public Integer getCinemaId() {
+        return cinemaId;
     }
 
-    public void setCinema(CinemaDto cinema) {
-        this.cinema = cinema;
+    public void setCinemaId(Integer cinemaId) {
+        this.cinemaId = cinemaId;
     }
 
     @Override
     public void onValidate() {
-        if (cinema == null) {
+        if (cinemaId == null) {
             addError(MISSING_HALL);
         }
     }

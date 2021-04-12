@@ -13,12 +13,12 @@ import java.util.List;
 public class GetShiftListResponse {
     private List<ShiftDto> shiftDtoList;
     private LocalDate date;
-    private CinemaDto cinema;
+    private int cinemaId;
 
-    public GetShiftListResponse(List<ShiftDto> shiftList, LocalDate date, CinemaDto cinema) {
+    public GetShiftListResponse(List<ShiftDto> shiftList, LocalDate date, int cinema) {
         this.shiftDtoList = shiftList;
         this.date = date;
-        this.cinema = cinema;
+        this.cinemaId = cinema;
     }
 
     public List<ShiftDto> getShiftDtoList() {
@@ -37,12 +37,11 @@ public class GetShiftListResponse {
         this.date = date;
     }
 
-    public CinemaDto getCinema() {
-        return cinema;
+    public int getCinemaId() {
+        return cinemaId;
     }
 
-    public void setCinema(CinemaDto cinema) {
-        this.cinema = cinema;
+    public void setCinemaId(int cinemaId) {
+        this.cinemaId = cinemaId;
     }
-
 }

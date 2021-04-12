@@ -19,10 +19,10 @@
 <body>
 <h1 align="center">Assign Projectionist Shift</h1>
 <div>
-    <form action="#" method="post" th:action="@{/assign_projectionist_shift}" th:object="${assignRequest}">
+    <form action="#" method="post" th:object="${assignRequest}">
 
         <div class="col-sm"> Employee</div>
-        <select id="employeeComboBox" th:field="*{employeeId}">
+        <select id="employeeComboBox" th:field="*{employeeId}" required>
             <option th:each="employee : ${employeeList}"
                     th:text="${employee.name + ' '+ employee.surname}"
                     th:value="${employee.id}">1
@@ -36,8 +36,8 @@
         <div class="form-group row">
             <div class="col-md-3 mb-3">
                 <label for="start_time">Start Shift</label>
-                <input aria-describedby="inputGroupPrepend2" class="form-control" id="start_time"
-                       required th:field="*{start}" type="time">
+                <input class="form-control" id="start_time"
+                       required th:field="*{inizio}" type="time">
             </div>
         </div>
 
@@ -49,7 +49,7 @@
         </div>
 
         <div class="col-sm"> Hall</div>
-        <select id="modifyHallComboBox" th:field="*{hallId}" th:value="${hall}">
+        <select id="modifyHallComboBox" th:field="*{hallId}" th:value="${hall}" required>
             <option th:each="hall : ${hallList}"
                     th:text="${hall.id}"
                     th:value="${hall.id}">1
