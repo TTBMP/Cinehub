@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="navbar">
+<head>
+    <style>
+
+        .hoverable{
+            display:inline-block;
+
+            vertical-align: middle;
+            position:relative;
+            box-shadow: 0 0 1px rgba(0,0,0,0);
+            tranform: translateZ(0);
+            transition-duration: .3s;
+
+        }
+
+        .hoverable:before{
+            position:absolute;
+            pointer-events: none;
+            z-index:-1;
+            content: '';
+            top: 100%;
+            left: 5%;
+            height:10px;
+            width:90%;
+            opacity:0;
+            background: -webkit-radial-gradient(center, ellipse, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 80%);
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 80%);
+            /* W3C */
+            transition-duration: 0.3s;
+            transition-property: transform, opacity;
+        }
+
+        .hoverable:hover, .hoverable:active, .hoverable:focus{
+            transform: translateY(-5px);
+        }
+        .hoverable:hover:before, .hoverable:active:before, .hoverable:focus:before{
+            opacity: 2;
+            transform: translateY(-5px);
+        }
+
+
+
+        @keyframes bounce-animation {
+            16.65% {
+                -webkit-transform: translateY(8px);
+                transform: translateY(8px);
+            }
+
+            33.3% {
+                -webkit-transform: translateY(-6px);
+                transform: translateY(-6px);
+            }
+
+            49.95% {
+                -webkit-transform: translateY(4px);
+                transform: translateY(4px);
+            }
+
+            66.6% {
+                -webkit-transform: translateY(-2px);
+                transform: translateY(-2px);
+            }
+
+            83.25% {
+                -webkit-transform: translateY(1px);
+                transform: translateY(1px);
+            }
+
+            100% {
+                -webkit-transform: translateY(0);
+                transform: translateY(0);
+            }
+        }
+
+        .bounce {
+            animation-name: bounce-animation;
+            animation-duration: 2s;
+        }
+        nav {
+            background: none !important;
+        li {
+            margin-left: 3em;
+            margin-right: 3em;
+        a{
+            transition: .5s ;
+        }
+        }
+        }
+    </style>
+    <!-- CSS only -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title></title>
+    <!------ Include the above in your HEAD tag ---------->
+</head>
+<body>
+<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
+        <h4 class="text-white mt-1">Cine</h4>
+        <h4 class="ml-1  bg-primary mt-1 text-dark rectangle rounded">hub</h4>
+    <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+            data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class=" ml-4 nav-item active">
+                <a class="nav-link" href="/choose_movie" style="text-decoration:none " >
+                    <i class="fa fa-envelope-o">
+                        <img src="../static/images/tickets.png"  style="max-height: 30px">
+                    </i>
+                <li><a class="hoverable mt-2" href="/choose_movie" style="color: white" >Buy ticket</a></li>
+            <span class="sr-only">(current)</span>
+                </a>
+            </li>
+
+            <li class=" ml-4 nav-item">
+                <a class="nav-link" href="/manage_employee_shift" style="text-decoration: none">
+                    <i class="fa fa-envelope-o">
+                        <img src="../static/images/employee.jpg" style="max-height: 30px">
+                    </i>
+            <li><a class="hoverable mt-2" href="/manage_employee_shift" style="color: white" >Manage employee shift</a></li>
+                </a>
+            </li>
+            <li class=" ml-4 nav-item">
+                <a class="nav-link " href="/schedule" style="text-decoration: none">
+                    <i class="fa fa-envelope-o">
+                        <img src="../static/images/schedule.png" style="max-height: 30px">
+                    </i>
+                    <li><a class="hoverable mt-2 disabled" href="/schedule" style="color: white" >View personal schedule</a></li>
+                </a>
+            </li>
+            <li class="ml-4 nav-item">
+                <a class="nav-link " href="/about" style="text-decoration: none">
+                    <i class="fa fa-envelope-o">
+                        <img src="../static/images/information.png" style="max-height: 30px" alt="">
+                    </i>
+            <li><a class="hoverable mt-2 disabled" href="/about" style="color: white ">About</a></li>
+            </a>
+            </li>
+        </ul>
+        <ul class=" navbar-nav ">
+            <li class="mr-4 nav-item">
+                <a class="nav-link" href="#" style="text-decoration: transparent">
+                    <i class="fa fa-bell">
+                        <img src="../static/images/login.png" style="max-height: 30px">
+                    </i>
+                    Login
+                </a>
+            </li>
+            <li class=" mr-4 nav-item">
+                <a class=" nav-link" href="#" style="text-decoration: transparent">
+                    <i class="fa fa-globe">
+                        <img src="../static/images/register.png" style="max-height: 30px">
+                    </i>
+                    Register
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<script>
+    $(function(){
+        var str = '#len'; //increment by 1 up to 1-nelemnts
+        $(document).ready(function(){
+            var i, stop;
+            i = 1;
+            stop = 4; //num elements
+            setInterval(function(){
+                if (i > stop){
+                    return;
+                }
+                $('#len'+(i++)).toggleClass('bounce');
+            }, 500)
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>
