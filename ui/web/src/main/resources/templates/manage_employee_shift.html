@@ -103,7 +103,6 @@
                                 </span>
                             </span>
                         </td>
-
                         <td>
                             <span th:each="shift,indexShift : ${employee.value}">
                                 <span th:if=${shift.date.dayOfWeek.toString.equals("FRIDAY")}>
@@ -114,8 +113,6 @@
                                 </span>
                             </span>
                         </td>
-
-
                         <td>
                             <span th:each="shift,indexShift : ${employee.value}">
                                 <span th:if=${shift.date.dayOfWeek.toString.equals("SATURDAY")}>
@@ -168,6 +165,8 @@
                 </div>
             </div>
         </div>
+
+
         <!-- Bootstrap core JavaScript -->
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="/lib/jquery/jquery.min.js"></script>
@@ -175,5 +174,7 @@
         </body>
     </div>
 </div>
+
+<div th:include="footer :: footer"></div>
 </body>
 </html>
