@@ -67,7 +67,7 @@ public class BuyTicketController implements BuyTicketUseCase {
                     ticket.getPrice()
             ));
             ticket.setOwner(user);
-            ticketRepository.saveTicket(ticket, request.getProjection().getId());
+            ticketRepository.saveTicket(ticket, request.getProjection().getId());//passare l'id del ticket invece che il ticket
             emailService.sendMail(new EmailServiceRequest(
                     user.getEmail(),
                     "Payment receipt"
@@ -88,7 +88,7 @@ public class BuyTicketController implements BuyTicketUseCase {
         try {
             Request.validate(request);
             String localDate = request.getDate().toString();
-            List<Movie> movieList = movieRepository.getMovieList(localDate);//I recover them movies from the bee service
+            List<Movie> movieList = movieRepository.getMovieList(localDate);
             buyTicketPresenter.presentMovieApiList(new GetListMovieResponse(MovieDataMapper.mapToDtoList(movieList)));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetListMovieNullRequest();
@@ -105,7 +105,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             Request.validate(request);
             Movie movie = movieRepository.getMovieById(request.getMovieId());
             String date = request.getData();
-            List<Cinema> cinemaList = cinemaRepository.getListCinema(movie, date);
+            List<Cinema> cinemaList = cinemaRepository.getListCinema(movie.getId(), date);
             buyTicketPresenter.presentCinemaList(new GetListCinemaResponse(CinemaDataMapper.mapToDtoList(cinemaList)));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetListCinemaNullRequest();
@@ -162,7 +162,7 @@ public class BuyTicketController implements BuyTicketUseCase {
                     request.getStartTime(),
                     request.getHallId());
             buyTicketPresenter.presentProjectionList(
-                    new ProjectionListResponse(ProjectionDataMapper.mapToDtoList(projectionList)));//Lista delle possiobili proiezioni da scegliere
+                    new ProjectionListResponse(ProjectionDataMapper.mapToDtoList(projectionList)));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetTimeOfProjectionNullRequest();
         } catch (Request.InvalidRequestException e) {

@@ -102,9 +102,9 @@ public class MockCinemaRepository implements CinemaRepository {
     }
 
     @Override
-    public List<Cinema> getListCinema(Movie movie, String date) {
+    public List<Cinema> getListCinema(Integer movieId, String date) {
         List<Integer> projectionCinemaIdList = MockProjectionRepository.getProjectionDataList().stream()
-                .filter(d -> d.getMovieId() == movie.getId() && d.getDate().equals(date))
+                .filter(d -> d.getMovieId() == movieId && d.getDate().equals(date))
                 .map(MockProjectionRepository.ProjectionData::getCinemaId)
                 .distinct()
                 .collect(Collectors.toList());
