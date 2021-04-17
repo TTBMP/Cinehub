@@ -101,8 +101,30 @@ public class DaoOperationHelper {
             for (int i = 0; i < columnNameList.size(); i++) {
                 Object parameter = parameterMap.get(columnNameIterator.next());
                 Class<?> typeClass = parameter.getClass();
-                if (typeClass.equals(Integer.class)) {
-                    typeClass = int.class;
+                switch (typeClass.getName()) {
+                    case "java.lang.Boolean":
+                        typeClass = boolean.class;
+                        break;
+                    case "java.lang.Byte":
+                        typeClass = byte.class;
+                        break;
+                    case "java.lang.Short":
+                        typeClass = short.class;
+                        break;
+                    case "java.lang.Integer":
+                        typeClass = int.class;
+                        break;
+                    case "java.lang.Long":
+                        typeClass = long.class;
+                        break;
+                    case "java.lang.Float":
+                        typeClass = float.class;
+                        break;
+                    case "java.lang.Double":
+                        typeClass = double.class;
+                        break;
+                    default:
+                        break;
                 }
                 String typeName = typeClass.getSimpleName();
                 String methodName = "set" + typeName.substring(0, 1).toUpperCase() + typeName.substring(1);
