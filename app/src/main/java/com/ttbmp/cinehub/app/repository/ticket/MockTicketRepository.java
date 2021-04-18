@@ -37,12 +37,12 @@ public class MockTicketRepository implements TicketRepository {
     }
 
     @Override
-    public synchronized void saveTicket(Ticket ticket, int projectionId) {
+    public synchronized void saveTicket(Ticket ticket, Projection projection) {
         TICKET_DATA_LIST.add(new TicketData(
                 counterTicketId++,
                 ticket.getPrice(),
                 ticket.getOwner().getId(),
-                projectionId,
+                projection.getId(),
                 ticket.getSeat().getId()
 
         ));

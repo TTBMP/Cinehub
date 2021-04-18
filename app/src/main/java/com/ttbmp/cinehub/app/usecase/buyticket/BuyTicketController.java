@@ -67,7 +67,7 @@ public class BuyTicketController implements BuyTicketUseCase {
                     ticket.getPrice()
             ));
             ticket.setOwner(user);
-            ticketRepository.saveTicket(ticket, request.getProjection().getId());//passare l'id del ticket invece che il ticket
+            ticketRepository.saveTicket(ticket, ProjectionDataMapper.mapToEntity(request.getProjection()));
             emailService.sendMail(new EmailServiceRequest(
                     user.getEmail(),
                     "Payment receipt"
