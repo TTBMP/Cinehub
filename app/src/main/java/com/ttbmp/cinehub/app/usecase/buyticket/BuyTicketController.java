@@ -105,7 +105,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             Request.validate(request);
             Movie movie = movieRepository.getMovieById(request.getMovieId());
             String date = request.getData();
-            List<Cinema> cinemaList = cinemaRepository.getListCinema(movie.getId(), date);
+            List<Cinema> cinemaList = cinemaRepository.getListCinema(movie, date);
             buyTicketPresenter.presentCinemaList(new GetListCinemaResponse(CinemaDataMapper.mapToDtoList(cinemaList)));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetListCinemaNullRequest();
@@ -149,24 +149,46 @@ public class BuyTicketController implements BuyTicketUseCase {
 
     /*To find the times of the screenings given a film, a cinema and a date*/
     @Override
-    public void getProjectionList(GetProjectionRequest request) {
+    public void getProjectionList(GetProjectionListRequest request) {
         try {
             Request.validate(request);
             Cinema cinema = cinemaRepository.getCinema(request.getCinemaId());
-            Movie movie =  movieRepository.getMovieById(request.getMovieId());
+            Movie movie = movieRepository.getMovieById(request.getMovieId());
             String date = request.getLocalDate();
             List<Projection> projectionList = projectionRepository.getProjectionList(
                     cinema,
                     movie,
-                    date,
-                    request.getStartTime(),
-                    request.getHallId());
+                    date);
             buyTicketPresenter.presentProjectionList(
-                    new ProjectionListResponse(ProjectionDataMapper.mapToDtoList(projectionList)));
+                    new GetProjectionListResponse(ProjectionDataMapper.mapToDtoList(projectionList)));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetTimeOfProjectionNullRequest();
         } catch (Request.InvalidRequestException e) {
             buyTicketPresenter.presentInvalidGetTimeOfProjection(request);
+        }
+    }
+
+
+    @Override
+    public void getProjection(GetProjectionRequest request) {
+        Projection projection = projectionRepository.getProjection(
+                request.getLocalDate(),
+                request.getStartTime(),
+                request.getHallId());
+        buyTicketPresenter.presentProjection(
+                new GetProjectionResponse(ProjectionDataMapper.mapToDto(projection)));
+    }
+
+    @Override
+    public void getCinema(GetCinemaRequest request) {
+        try {
+            Request.validate(request);
+            Cinema cinema = cinemaRepository.getCinema(ProjectionDataMapper.mapToEntity(request.getProjectionDto()));
+            buyTicketPresenter.presentCinema(new GetCinemaResponse(CinemaDataMapper.mapToDto(cinema)));
+        } catch (Request.NullRequestException e) {
+            buyTicketPresenter.presentGetListCinemaNullRequest();
+        } catch (Request.InvalidRequestException e) {
+            buyTicketPresenter.presentInvalidGetCinema(request);
         }
     }
 

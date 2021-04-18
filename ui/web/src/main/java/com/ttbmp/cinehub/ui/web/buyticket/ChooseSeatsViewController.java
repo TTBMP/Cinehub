@@ -1,10 +1,10 @@
 package com.ttbmp.cinehub.ui.web.buyticket;
 
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetNumberOfSeatsRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.GetProjectionListRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetProjectionRequest;
 import com.ttbmp.cinehub.ui.web.domain.Projection;
 import com.ttbmp.cinehub.ui.web.domain.Seat;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Palmieri Ivan
@@ -30,14 +29,13 @@ public class ChooseSeatsViewController {
             Model model) {
 
         BuyTicketUseCase buyTicketUseCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
-        buyTicketUseCase.getProjectionList(new GetProjectionRequest(
-                projection.getMovieId(),
-                projection.getCinemaId(),
+
+        buyTicketUseCase.getProjection(new GetProjectionRequest(
                 LocalDate.parse(projection.getDate()),
                 projection.getStartTime(),
                 projection.getHallId()
         ));
-        buyTicketUseCase.getListOfSeat(new GetNumberOfSeatsRequest(((ArrayList<ProjectionDto>)model.getAttribute(projectionList)).get(0)));
+        buyTicketUseCase.getListOfSeat(new GetNumberOfSeatsRequest(((ProjectionDto)model.getAttribute("projection"))));
         model.addAttribute("boolean1", false);
         model.addAttribute("boolean2", false);
         model.addAttribute("boolean3", false);

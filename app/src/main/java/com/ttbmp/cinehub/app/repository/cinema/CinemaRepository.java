@@ -15,7 +15,7 @@ public interface CinemaRepository {
 
     List<Cinema> getAllCinema();
 
-    List<Cinema> getListCinema(Integer movieId, String date);
+    List<Cinema> getListCinema(Movie movie, String date);
 
     Cinema getCinema(Hall hall);
 

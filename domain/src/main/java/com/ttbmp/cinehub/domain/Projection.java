@@ -15,17 +15,15 @@ public class Projection {
     private String startTime;
     private Movie movie;
     private Hall hall;
-    private Cinema cinema;
     private Projectionist projectionist;
     private List<Ticket> ticketList;
 
-    public Projection(int id, String date, String startTime, Movie movie, Hall hall, Cinema cinema, Projectionist projectionist, List<Ticket> ticketList) {
+    public Projection(int id, String date, String startTime, Movie movie, Hall hall, Projectionist projectionist, List<Ticket> ticketList) {
         this.id = id;
         this.date = date;
         this.startTime = startTime;
         this.movie = movie;
         this.hall = hall;
-        this.cinema = cinema;
         this.projectionist = projectionist;
         this.ticketList = ticketList;
     }
@@ -68,14 +66,6 @@ public class Projection {
 
     public void setHall(Hall hall) {
         this.hall = hall;
-    }
-
-    public Cinema getCinema() {
-        return cinema;
-    }
-
-    public void setCinema(Cinema cinema) {
-        this.cinema = cinema;
     }
 
     public Projectionist getProjectionist() {

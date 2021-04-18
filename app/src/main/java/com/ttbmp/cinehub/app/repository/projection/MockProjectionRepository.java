@@ -101,40 +101,6 @@ public class MockProjectionRepository implements ProjectionRepository {
 
 
     @Override
-    public List<Projection> getProjectionList(String localDate) {
-        return PROJECTION_DATA_LIST.stream()
-                .filter(d -> d.date.equals(localDate))
-                .map(d -> new ProjectionProxy(
-                        d.id,
-                        d.date,
-                        d.startTime,
-                        serviceLocator.getService(MovieRepository.class),
-                        serviceLocator.getService(HallRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
-                        serviceLocator.getService(ProjectionistRepository.class),
-                        serviceLocator.getService(TicketRepository.class)
-                ))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Projection> getProjectionList(Movie movie, String date) {
-        return PROJECTION_DATA_LIST.stream()
-                .filter(d -> d.movieId == movie.getId() && d.date.equals(date))
-                .map(d -> new ProjectionProxy(
-                        d.id,
-                        d.date,
-                        d.startTime,
-                        serviceLocator.getService(MovieRepository.class),
-                        serviceLocator.getService(HallRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
-                        serviceLocator.getService(ProjectionistRepository.class),
-                        serviceLocator.getService(TicketRepository.class)
-                ))
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public List<Projection> getProjectionList(ProjectionistShift shift) {
         return PROJECTION_DATA_LIST.stream()
                 .filter(d -> d.date.equals(shift.getDate())
@@ -157,27 +123,20 @@ public class MockProjectionRepository implements ProjectionRepository {
     }
 
     @Override
-    public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date, String time,Integer hallId) {
-        if (time == null && hallId == null) {
-            return getProjectionList(cinema, movie, date);
-        }
-        if(time == null){
-            return getProjectionList(cinema, movie, date,hallId);
-        } else{
-            return PROJECTION_DATA_LIST.stream()
-                    .filter(d -> d.cinemaId == cinema.getId() && d.movieId == movie.getId() && d.date.equals(date) && d.startTime.equals(time) && d.hallId== hallId)
-                    .map(d -> new ProjectionProxy(
-                            d.id,
-                            d.date,
-                            d.startTime,
-                            serviceLocator.getService(MovieRepository.class),
-                            serviceLocator.getService(HallRepository.class),
-                            serviceLocator.getService(CinemaRepository.class),
-                            serviceLocator.getService(ProjectionistRepository.class),
-                            serviceLocator.getService(TicketRepository.class)
-                    ))
-                    .collect(Collectors.toList());
-        }
+    public Projection getProjection(String date, String time,Integer hallId) {
+        return PROJECTION_DATA_LIST.stream()
+                .filter(d -> d.date.equals(date) && d.startTime.equals(time) && d.hallId== hallId)
+                .map(d -> new ProjectionProxy(
+                        d.id,
+                        d.date,
+                        d.startTime,
+                        serviceLocator.getService(MovieRepository.class),
+                        serviceLocator.getService(HallRepository.class),
+                        serviceLocator.getService(CinemaRepository.class),
+                        serviceLocator.getService(ProjectionistRepository.class),
+                        serviceLocator.getService(TicketRepository.class)
+                ))
+                .collect(Collectors.toList()).get(0);
     }
 
     @Override

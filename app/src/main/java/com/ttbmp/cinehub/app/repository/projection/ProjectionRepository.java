@@ -14,13 +14,9 @@ public interface ProjectionRepository {
 
     List<Projection> getProjectionList(Cinema cinema, Movie movie, String date);
 
-    List<Projection> getProjectionList(String localDate);
-
-    List<Projection> getProjectionList(Movie movie, String date);
-
     List<Projection> getProjectionList(ProjectionistShift shift);
 
-    List<Projection> getProjectionList(Cinema cinema, Movie movie, String date,String time,Integer hallId);
+    Projection getProjection(String date,String time,Integer hallId);
 
     List<Projection> getProjectionList(Cinema cinema, Movie movie, String date,Integer hallId);
 }

@@ -14,7 +14,8 @@ public class PaymentRequest extends Request {
 
     public static final Request.Error MISSING_TICKET_ERROR = new Request.Error("Ticket can't be null");
     public static final Request.Error MISSING_PROJECTION_ERROR = new Request.Error("Projection can't be null");
-    public static final Request.Error MISSING_INDEX_ERROR = new Request.Error("Index can't be after the end time");
+
+
     private final Integer index;
     private ProjectionDto projection;
     private TicketDto ticket;
@@ -79,9 +80,6 @@ public class PaymentRequest extends Request {
 
     @Override
     public void onValidate() {
-        if (index == null) {
-            addError(MISSING_INDEX_ERROR);
-        }
         if (projection == null) {
             addError(MISSING_PROJECTION_ERROR);
 

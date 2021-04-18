@@ -62,6 +62,11 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
+        public void presentCinema(GetCinemaResponse response) {
+
+        }
+
+        @Override
         public void presentSeatList(GetNumberOfSeatsResponse response) {
 
         }
@@ -107,7 +112,12 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentInvalidGetTimeOfProjection(GetProjectionRequest request) {
+        public void presentInvalidGetTimeOfProjection(GetProjectionListRequest request) {
+
+        }
+
+        @Override
+        public void presentProjection(GetProjectionResponse request) {
 
         }
 
@@ -132,7 +142,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentProjectionList(ProjectionListResponse projectionTimeList) {
+        public void presentProjectionList(GetProjectionListResponse projectionTimeList) {
 
         }
 
@@ -148,6 +158,11 @@ class BuyTicketBuyTicketControllerTest {
 
         @Override
         public void presentAutenticationError() {
+
+        }
+
+        @Override
+        public void presentInvalidGetCinema(GetCinemaRequest request) {
 
         }
     }

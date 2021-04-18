@@ -7,7 +7,7 @@ public class MockPaymentService implements PaymentService {
 
     @Override
     public void pay(PayServiceRequest payServiceRequest) {
-        System.out.println("Payment successful!");
+        payServiceRequest.onValidate();
     }
 
 }

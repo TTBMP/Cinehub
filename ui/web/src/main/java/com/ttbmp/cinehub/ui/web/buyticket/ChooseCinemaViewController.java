@@ -1,11 +1,11 @@
 package com.ttbmp.cinehub.ui.web.buyticket;
 
 
+import com.ttbmp.cinehub.app.dto.CinemaDto;
+import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.GetListCinemaRequest;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.GetListMovieRequest;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.GetProjectionRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.ui.web.domain.Projection;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,13 +44,14 @@ public class ChooseCinemaViewController {
             @ModelAttribute("projection") Projection projection,
             Model model) {
         BuyTicketUseCase useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
-        useCase.getProjectionList(new GetProjectionRequest(
+        useCase.getProjectionList(new GetProjectionListRequest(
                 projection.getMovieId(),
                 projection.getCinemaId(),
                 LocalDate.parse(projection.getDate()),
-                null,
-                null
+                0
         ));
+
+        model.addAttribute("cinemaDtoId", projection.getCinemaId());
         model.addAttribute("projection", new Projection());
         return "/choose_cinema";
     }

@@ -40,7 +40,7 @@ public class ProjectionProxy extends Projection {
             CinemaRepository cinemaRepository,
             ProjectionistRepository projectionistRepository,
             TicketRepository ticketRepository) {
-        super(id, date, startTime, null, null, null, null, null);
+        super(id, date, startTime,  null, null, null, null);
         this.movieRepository = movieRepository;
         this.hallRepository = hallRepository;
         this.cinemaRepository = cinemaRepository;
@@ -76,19 +76,6 @@ public class ProjectionProxy extends Projection {
         super.setHall(hall);
     }
 
-    @Override
-    public Cinema getCinema() {
-        if (!isCinemaLoaded) {
-            setCinema(cinemaRepository.getCinema(this));
-        }
-        return super.getCinema();
-    }
-
-    @Override
-    public void setCinema(Cinema cinema) {
-        isCinemaLoaded = true;
-        super.setCinema(cinema);
-    }
 
     @Override
     public Projectionist getProjectionist() {

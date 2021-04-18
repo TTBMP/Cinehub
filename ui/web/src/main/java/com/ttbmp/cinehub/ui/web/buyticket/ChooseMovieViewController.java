@@ -35,16 +35,6 @@ public class ChooseMovieViewController {
         return "choose_movie";
     }
 
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String text) {
-                if (text != null)
-                    setValue(LocalDate.parse(text, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            }
-        });
-    }
 
 
 }

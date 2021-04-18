@@ -14,6 +14,8 @@ public interface BuyTicketPresenter {
 
     void presentCinemaList(GetListCinemaResponse response);
 
+    void presentCinema(GetCinemaResponse response);
+
     void presentSeatList(GetNumberOfSeatsResponse response);
 
     void setSelectedTicket(GetTicketBySeatsResponse response);
@@ -32,7 +34,9 @@ public interface BuyTicketPresenter {
 
     void presentGetTimeOfProjectionNullRequest();
 
-    void presentInvalidGetTimeOfProjection(GetProjectionRequest request);
+    void presentInvalidGetTimeOfProjection(GetProjectionListRequest request);
+
+    void presentProjection(GetProjectionResponse request);
 
     void presentGetNumberOfSeatsNullRequest();
 
@@ -42,11 +46,13 @@ public interface BuyTicketPresenter {
 
     void presentErrorByStripe(PaymentServiceException error);
 
-    void presentProjectionList(ProjectionListResponse projectionTimeList);
+    void presentProjectionList(GetProjectionListResponse projectionTimeList);
 
     void presentGetListMovieNullRequest();
 
     void presentInvalidGetListMovie(GetListMovieRequest request);
 
     void presentAutenticationError();
+
+    void presentInvalidGetCinema(GetCinemaRequest request);
 }
