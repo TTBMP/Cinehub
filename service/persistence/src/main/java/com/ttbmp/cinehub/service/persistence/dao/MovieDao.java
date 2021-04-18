@@ -10,7 +10,7 @@ import java.sql.Time;
 import java.util.List;
 
 /**
- * @author Fabio Buracchi
+ * @author Fabio Buracchi, Ivan Palmieri, Massimo Mazzetti
  */
 @Dao
 public interface MovieDao {
@@ -21,15 +21,30 @@ public interface MovieDao {
     @Query("SELECT DISTINCT film.id " +
             "FROM film, proiezione" +
             " WHERE film.id = proiezione.id_film AND proiezione.id_film = :date")
-    List<Movie> getMovieList(Time date) throws IOException;
+    List<Movie> getMovieList(
+            Time date) throws DaoMethodException;
 
-    @Query("SELECT DISTINCT film.id " +
-            "FROM film, proiezione" +
-            " WHERE film.id = proiezione.id_film AND proiezione.id_film = :projectionId")
-    Movie getMovie(int projectionId);
+
+    @Query("SELECT * FROM film" +
+            " WHERE film.id in ( SELECT proiezione.id_film FROM proiezione WHERE proiezione.id = :projectionId)")
+    Movie getMovieByProjection(
+            @Parameter(name = "projectionId") @NotNull Integer projectionId
+            ) throws DaoMethodException;
+
+
+    @Query("SELECT * FROM film WHERE film.id = :movieId")
+    Movie getMovieById(
+            @Parameter(name = "movieId") @NotNull Integer name
+    )  throws DaoMethodException;
+
+    @Query("SELECT * FROM film WHERE film.id in ( " +
+                "SELECT proiezione.id_film FROM proiezione WHERE proiezione.data = :data)")
+    List<Movie> getMovieByData(
+            @Parameter(name = "data") @NotNull String name
+    ) throws DaoMethodException;
 
     @Insert
-    void insert(@NotNull Movie movie) throws DaoMethodException;
+    void insert(@NotNull Movie movie) ;
 
     @Insert
     void insert(@NotNull List<Movie> movie) throws DaoMethodException;

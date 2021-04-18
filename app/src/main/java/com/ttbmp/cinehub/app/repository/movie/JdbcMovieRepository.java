@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
 import com.ttbmp.cinehub.service.persistence.dao.MovieDao;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourceProvider;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
 import java.io.IOException;
 import java.sql.Time;
@@ -33,8 +34,8 @@ public class JdbcMovieRepository implements MovieRepository {
     }
 
     @Override
-    public Movie getMovie(Projection projection) {
-        com.ttbmp.cinehub.service.persistence.entity.Movie movie = getMovieDao().getMovie(projection.getId());
+    public Movie getMovie(Projection projection) throws IOException, DaoMethodException {
+        com.ttbmp.cinehub.service.persistence.entity.Movie movie = getMovieDao().getMovieByProjection(projection.getId());
         return new MovieProxy(movie.getId(), serviceLocator.getService(MovieApiService.class));
     }
 

@@ -2,7 +2,9 @@ package com.ttbmp.cinehub.service.persistence.utils.jdbc.dao.operation.strategie
 
 import com.ttbmp.cinehub.service.persistence.dao.CinemaDao;
 import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
+import com.ttbmp.cinehub.service.persistence.dao.TicketDao;
 import com.ttbmp.cinehub.service.persistence.entity.Cinema;
+import com.ttbmp.cinehub.service.persistence.entity.Ticket;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourceProvider;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceClassException;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceMethodException;

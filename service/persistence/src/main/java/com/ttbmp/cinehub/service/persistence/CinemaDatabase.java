@@ -1,10 +1,7 @@
 package com.ttbmp.cinehub.service.persistence;
 
-import com.ttbmp.cinehub.service.persistence.dao.MovieDao;
-import com.ttbmp.cinehub.service.persistence.entity.Cinema;
-import com.ttbmp.cinehub.service.persistence.dao.CinemaDao;
-import com.ttbmp.cinehub.service.persistence.entity.Movie;
-import com.ttbmp.cinehub.service.persistence.entity.Projection;
+import com.ttbmp.cinehub.service.persistence.dao.*;
+import com.ttbmp.cinehub.service.persistence.entity.*;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Database;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSource;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceMethodException;
@@ -22,7 +19,14 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceMeth
         entities = {
                 Cinema.class,
                 Movie.class,
-                Projection.class
+                Projection.class,
+                Hall.class,
+                Shift.class,
+                Ticket.class,
+                User.class,
+                Seat.class,
+                Employee.class
+
         }
 )
 public interface CinemaDatabase extends JdbcDataSource {
@@ -30,5 +34,21 @@ public interface CinemaDatabase extends JdbcDataSource {
     CinemaDao getCinemaDao() throws DataSourceMethodException;
 
     MovieDao getMovieDao() throws DataSourceMethodException;
+
+    HallDao getHallDao() throws DataSourceMethodException;
+
+    ShiftDao getShiftDao() throws DataSourceMethodException;
+
+    TicketDao getTicketDao() throws DataSourceMethodException;
+
+    UserDao getUserDao() throws DataSourceMethodException;
+
+    SeatDao getSeatDao() throws DataSourceMethodException;
+
+    ProjectionDao getProjectionDao() throws DataSourceMethodException;
+
+    EmployeeDao getEmployeeDao() throws DataSourceMethodException;
+
+
 
 }
