@@ -21,16 +21,16 @@ public class Cinema {
     private String address;
 
     @ColumnInfo(name = "citta")
-    private String telephone;
+    private String city;
 
     public Cinema() {
     }
 
-    public Cinema(int id, String name, String address, String telephone) {
+    public Cinema(int id, String name, String address, String city) {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.telephone = telephone;
+        this.city = city;
     }
 
     public int getId() {
@@ -57,12 +57,12 @@ public class Cinema {
         this.address = address;
     }
 
-    public String getTelephone() {
-        return telephone;
+    public String getCity() {
+        return city;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
+    public void setCity(String city) {
+        this.city = city;
     }
 
 }

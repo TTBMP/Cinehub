@@ -24,6 +24,6 @@ class TicketDaoTest {
     @Test
     void execute_SaveTicket_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
         TicketDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getTicketDao();
-        assertDoesNotThrow(() -> dao.insert(new Ticket(0,1,1,"0",2.0)));
+        assertDoesNotThrow(() -> dao.insert(new Ticket(0,1,1,"0",2)));
     }
 }

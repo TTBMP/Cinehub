@@ -66,19 +66,7 @@ public class MockCinemaRepository implements CinemaRepository {
                 .get(0);
     }
 
-    @Override
-    public Cinema getCinema(Hall hall) {
-        int hallCinemaId = MockHallRepository.getHallDataList().stream()
-                .filter(d -> d.getId() == hall.getId())
-                .map(MockHallRepository.HallData::getCinemaId)
-                .collect(Collectors.toList())
-                .get(0);
-        return CINEMA_DATA_LIST.stream()
-                .filter(d -> d.id == hallCinemaId)
-                .map(d -> new CinemaProxy(d.id, d.name, d.city, d.address, serviceLocator.getService(HallRepository.class)))
-                .collect(Collectors.toList())
-                .get(0);
-    }
+
 
     @Override
     public Cinema getCinema(Projection projection) {

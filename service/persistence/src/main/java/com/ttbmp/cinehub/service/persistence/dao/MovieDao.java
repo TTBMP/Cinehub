@@ -15,15 +15,6 @@ import java.util.List;
 @Dao
 public interface MovieDao {
 
-    @Query("SELECT * FROM cinema")
-    List<Movie> getAllMovie() throws DaoMethodException;
-
-    @Query("SELECT DISTINCT film.id " +
-            "FROM film, proiezione" +
-            " WHERE film.id = proiezione.id_film AND proiezione.id_film = :date")
-    List<Movie> getMovieList(
-            Time date) throws DaoMethodException;
-
 
     @Query("SELECT * FROM film" +
             " WHERE film.id in ( SELECT proiezione.id_film FROM proiezione WHERE proiezione.id = :projectionId)")

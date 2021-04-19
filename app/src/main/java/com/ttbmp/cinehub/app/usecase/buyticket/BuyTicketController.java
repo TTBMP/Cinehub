@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.app.usecase.buyticket;
 
 import com.ttbmp.cinehub.app.datamapper.*;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
@@ -22,6 +23,7 @@ import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketFoldingArmchair;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketHeatedArmchair;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketSkipLine;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
 import java.io.IOException;
 import java.util.List;
@@ -78,7 +80,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             buyTicketPresenter.presentInvalidPay(request);
         } catch (PaymentServiceException e) {
             buyTicketPresenter.presentErrorByStripe(e);
-        } catch (AuthenticationException e) {
+        } catch (AuthenticationException | RepositoryException e) {
             buyTicketPresenter.presentAutenticationError();
         }
     }
@@ -88,14 +90,14 @@ public class BuyTicketController implements BuyTicketUseCase {
         try {
             Request.validate(request);
             String localDate = request.getDate().toString();
-            List<Movie> movieList = movieRepository.getMovieList(localDate);//I recover them movies from the bee service
+            List<Movie> movieList = movieRepository.getMovieList(localDate);
             buyTicketPresenter.presentMovieApiList(new GetListMovieResponse(MovieDataMapper.mapToDtoList(movieList)));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetListMovieNullRequest();
         } catch (Request.InvalidRequestException e) {
             buyTicketPresenter.presentInvalidGetListMovie(request);
-        } catch (IOException e) {
-            buyTicketPresenter.presentGetListMovieError();
+        } catch (RepositoryException e) {
+            e.printStackTrace();
         }
     }
 
@@ -109,7 +111,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             buyTicketPresenter.presentCinemaList(new GetListCinemaResponse(CinemaDataMapper.mapToDtoList(cinemaList)));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetListCinemaNullRequest();
-        } catch (Request.InvalidRequestException e) {
+        } catch (Request.InvalidRequestException | RepositoryException e) {
             buyTicketPresenter.presentInvalidGetListCinema(request);
         }
     }
@@ -142,7 +144,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             buyTicketPresenter.presentGetTicketBySeatsNullRequest();
         } catch (Request.InvalidRequestException e) {
             buyTicketPresenter.presentInvalidGetTicketBySeats(request);
-        } catch (AuthenticationException e) {
+        } catch (AuthenticationException | RepositoryException e) {
             buyTicketPresenter.presentAutenticationError();
         }
     }
@@ -163,7 +165,7 @@ public class BuyTicketController implements BuyTicketUseCase {
                     new ProjectionListResponse(ProjectionDataMapper.mapToDtoList(projectionList)));//Lista delle possiobili proiezioni da scegliere
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetTimeOfProjectionNullRequest();
-        } catch (Request.InvalidRequestException e) {
+        } catch (Request.InvalidRequestException | RepositoryException e) {
             buyTicketPresenter.presentInvalidGetTimeOfProjection(request);
         }
     }

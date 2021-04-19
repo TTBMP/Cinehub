@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.app.repository.employee.usher;
 
+import com.ttbmp.cinehub.app.repository.LazyLoadingException;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
@@ -66,11 +68,17 @@ public class UsherProxy extends Usher {
     }
 
     private void loadUser() {
-        User user = userRepository.getUser(getId());
-        setName(user.getName());
-        setSurname(user.getSurname());
-        setEmail(user.getEmail());
-        isUserLoaded = true;
+
+        try {
+            User user = userRepository.getUser(getId());
+            setName(user.getName());
+            setSurname(user.getSurname());
+            setEmail(user.getEmail());
+            isUserLoaded = true;
+        } catch (RepositoryException e) {
+            throw new LazyLoadingException(e.getMessage());
+        }
+
     }
 
     @Override
@@ -89,10 +97,15 @@ public class UsherProxy extends Usher {
 
     @Override
     public Cinema getCinema() {
-        if (!isCinemaLoaded) {
-            setCinema(cinemaRepository.getCinema(this));
+
+        try {
+            if (!isCinemaLoaded) {
+                setCinema(cinemaRepository.getCinema(this));
+            }
+            return super.getCinema();
+        } catch (RepositoryException e) {
+            throw new LazyLoadingException(e.getMessage());
         }
-        return super.getCinema();
     }
 
     @Override

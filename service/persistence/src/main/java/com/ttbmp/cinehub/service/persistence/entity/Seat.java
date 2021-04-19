@@ -14,10 +14,10 @@ public class Seat {
     private int id;
 
     @ColumnInfo(name = "prezzo")
-    private double price;
+    private long price;
 
     @ColumnInfo(name = "stato")
-    private int state;
+    private boolean state;
 
     @ColumnInfo(name = "id_sala")
     private int hallId;
@@ -28,7 +28,7 @@ public class Seat {
     public Seat() {
     }
 
-    public Seat(int id, Double price, int state, int hallId, String position) {
+    public Seat(int id, long price, boolean state, int hallId, String position) {
         this.id = id;
         this.price = price;
         this.state = state;
@@ -45,19 +45,19 @@ public class Seat {
         this.id = id;
     }
 
-    public double getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
-    public int getState() {
+    public boolean getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(boolean state) {
         this.state = state;
     }
 

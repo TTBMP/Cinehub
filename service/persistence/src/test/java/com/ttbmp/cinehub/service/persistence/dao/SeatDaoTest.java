@@ -15,14 +15,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class SeatDaoTest {
 
    @Test
-    void getSeatList() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
+    void getSeatListByHallId() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
         SeatDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getSeatDao();
         assertDoesNotThrow(()->dao.getSeatList(0));
 
     }
 
     @Test
-    void getSeatByTicket() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
+    void getSeatByTicketId() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
         SeatDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getSeatDao();
         assertDoesNotThrow(()->dao.getSeatByTicketId(5));
 

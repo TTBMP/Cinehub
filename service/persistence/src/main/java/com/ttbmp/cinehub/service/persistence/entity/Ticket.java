@@ -23,14 +23,14 @@ public class Ticket {
     private String userId;
 
     @ColumnInfo(name = "prezzo")
-    private double price;
+    private long price;
 
 
 
     public Ticket() {
     }
 
-    public Ticket(int id, int seatId, int projectionId, String userId, Double price ) {
+    public Ticket(int id, int seatId, int projectionId, String userId, long price ) {
         this.id = id;
         this.seatId = seatId;
         this.projectionId = projectionId;
@@ -70,11 +70,11 @@ public class Ticket {
         this.userId = userId;
     }
 
-    public Double getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 }

@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.app.repository.shift;
 
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.shift.Shift;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
 import java.time.LocalDate;
 import java.util.List;

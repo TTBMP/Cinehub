@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.app.repository.projection;
 
+import com.ttbmp.cinehub.app.repository.LazyLoadingException;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
 import com.ttbmp.cinehub.app.repository.hall.HallRepository;
@@ -50,10 +52,14 @@ public class ProjectionProxy extends Projection {
 
     @Override
     public Movie getMovie() {
-        if (!isMovieLoaded) {
-            setMovie(movieRepository.getMovie(this));
+        try {
+            if (!isMovieLoaded) {
+                setMovie(movieRepository.getMovie(this));
+            }
+            return super.getMovie();
+        } catch (RepositoryException e) {
+            throw new LazyLoadingException(e.getMessage());
         }
-        return super.getMovie();
     }
 
     @Override
@@ -64,10 +70,14 @@ public class ProjectionProxy extends Projection {
 
     @Override
     public Hall getHall() {
-        if (!isHallLoaded) {
-            setHall(hallRepository.getHall(this));
+        try {
+            if (!isHallLoaded) {
+                setHall(hallRepository.getHall(this));
+            }
+            return super.getHall();
+        } catch (RepositoryException e) {
+            throw new LazyLoadingException(e.getMessage());
         }
-        return super.getHall();
     }
 
     @Override
@@ -78,10 +88,14 @@ public class ProjectionProxy extends Projection {
 
     @Override
     public Cinema getCinema() {
-        if (!isCinemaLoaded) {
-            setCinema(cinemaRepository.getCinema(this));
+        try {
+            if (!isCinemaLoaded) {
+                setCinema(cinemaRepository.getCinema(this));
+            }
+            return super.getCinema();
+        } catch (RepositoryException e) {
+            throw new LazyLoadingException(e.getMessage());
         }
-        return super.getCinema();
     }
 
     @Override
@@ -106,10 +120,14 @@ public class ProjectionProxy extends Projection {
 
     @Override
     public List<Ticket> getTicketList() {
-        if (!isTicketListLoaded) {
-            setTicketList(ticketRepository.getTicketList(this));
+        try {
+            if (!isTicketListLoaded) {
+                setTicketList(ticketRepository.getTicketList(this));
+            }
+            return super.getTicketList();
+        } catch (RepositoryException e) {
+            throw new LazyLoadingException(e.getMessage());
         }
-        return super.getTicketList();
     }
 
     @Override

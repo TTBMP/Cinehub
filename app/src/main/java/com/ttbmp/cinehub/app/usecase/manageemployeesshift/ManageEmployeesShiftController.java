@@ -6,6 +6,7 @@ import com.ttbmp.cinehub.app.datamapper.HallDataMapper;
 import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.dto.ShiftDto;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.hall.HallRepository;
@@ -53,9 +54,13 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
 
     @Override
     public void getCinemaList() {
-        manageEmployeesShiftPresenter.presentCinemaList(new GetCinemaListResponse(
-                CinemaDataMapper.mapToDtoList(cinemaRepository.getAllCinema())
-        ));
+        try {
+            manageEmployeesShiftPresenter.presentCinemaList(new GetCinemaListResponse(
+                    CinemaDataMapper.mapToDtoList(cinemaRepository.getAllCinema())
+            ));
+        } catch (RepositoryException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -71,6 +76,8 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             manageEmployeesShiftPresenter.presentHallListNullRequest();
         } catch (Request.InvalidRequestException e) {
             manageEmployeesShiftPresenter.presentInvalidHallListRequest(request);
+        } catch (RepositoryException e) {
+            e.printStackTrace();
         }
     }
 
