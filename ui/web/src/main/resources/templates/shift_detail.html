@@ -68,7 +68,7 @@
         </button>
     </a>
 
-    <div th:if="${shiftDetail.date.isAfter({now})}" th:value="${now}">
+    <div th:if="${shiftDetail.date.isAfter({now.minusDays(1)})}" th:value="${now}">
         <div class="container">
             <div class="row">
                 <div class="col-6 col-sm-3"></div>

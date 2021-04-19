@@ -22,7 +22,7 @@ public class CinemaDto implements Serializable {
     @ColumnInfo(name = "indirizzo")
     private String address;
 
-    @ColumnInfo(name = "telefono")
+    @ColumnInfo(name = "citta")
     private String telephone;
 
     public CinemaDto() {

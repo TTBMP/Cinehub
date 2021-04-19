@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
+import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.ProjectionistDto;
 import com.ttbmp.cinehub.app.dto.UsherDto;
@@ -23,7 +24,6 @@ import java.util.stream.Collectors;
 public class AssignUsherShiftViewController {
 
     private static final String ERROR = "error";
-    private static final String EMPLOYEE_LIST = "employeeList";
     private static final String ASSIGN_REQUEST = "assignRequest";
     private static final String SHIFT_ASSIGNED = "/shift_assigned";
 
@@ -44,11 +44,11 @@ public class AssignUsherShiftViewController {
 
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
 
-        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), cinemaId));
-        List<EmployeeDto> employeeComboBox = (List<EmployeeDto>) model.getAttribute("employeeList");
+        model.addAttribute("idCinema", cinemaId);
+        useCase.getCinemaList();
+        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
 
-        model.addAttribute(EMPLOYEE_LIST, employeeComboBox.stream()
-                .filter(employeeDto -> employeeDto.getClass().equals(UsherDto.class)).collect(Collectors.toList()));
+        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
 
         model.addAttribute("now", LocalDate.now().plusDays(1));
 
@@ -64,21 +64,15 @@ public class AssignUsherShiftViewController {
                                  @ModelAttribute(ASSIGN_REQUEST) NewShiftForm request,
                                  Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
+        model.addAttribute("selectedEmployeeId", request.getEmployeeId());
+        model.addAttribute("idCinema", cinemaId);
+        useCase.getCinemaList();
+        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
 
-        EmployeeDto selectedEmployee = null;
-        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), cinemaId));
-        List<EmployeeDto> employeeComboBox = (List<EmployeeDto>) model.getAttribute("employeeList");
-        assert employeeComboBox != null;
-        model.addAttribute(EMPLOYEE_LIST, employeeComboBox.stream()
-                .filter(employeeDto -> employeeDto.getClass().equals(ProjectionistDto.class)).collect(Collectors.toList()));
+        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
 
+        EmployeeDto selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
         model.addAttribute("now", LocalDate.now().plusDays(1));
-
-        for (EmployeeDto employeeDto : employeeComboBox) {
-            if (employeeDto.getId().equals(request.getEmployeeId())) {
-                selectedEmployee = employeeDto;
-            }
-        }
 
         useCase.createShift(new CreateShiftRequest(selectedEmployee, request.getDate(), request.getInizio(), request.getEnd()));
         boolean error = (boolean) model.getAttribute(ERROR);

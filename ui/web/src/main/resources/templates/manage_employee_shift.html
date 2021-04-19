@@ -16,7 +16,7 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 </head>
 
-<body data-gr-ext-installed="" data-new-gr-c-s-check-loaded="8.868.0" style="background-color: black">
+<body data-gr-ext-installed="" data-new-gr-c-s-check-loaded="8.868.0" style="background-color: black ">
 
 
 <div class="col-md-12 text-center mt-3">
@@ -88,7 +88,6 @@
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("MONDAY")}>
                             <form action="/shift_detail" method="get">
-                                <input th:value="${shift.date}" name="shiftDate" type="hidden"/>
                                 <input th:value="${idCinema}" name="idCinema" type="hidden"/>
                                 <input th:value="${shift.id}" name="shiftId" type="hidden"/>
                                 <button class="btn btn-outline-primary"
@@ -102,7 +101,6 @@
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("TUESDAY")}>
                             <form action="/shift_detail" method="get">
-                                <input th:value="${shift.date}" name="shiftDate" type="hidden"/>
                                 <input th:value="${idCinema}" name="idCinema" type="hidden"/>
                                 <input th:value="${shift.id}" name="shiftId" type="hidden"/>
                                 <button class="btn btn-outline-primary"
@@ -116,7 +114,6 @@
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("WEDNESDAY")}>
                             <form action="/shift_detail" method="get">
-                                <input th:value="${shift.date}" name="shiftDate" type="hidden"/>
                                 <input th:value="${idCinema}" name="idCinema" type="hidden"/>
                                 <input th:value="${shift.id}" name="shiftId" type="hidden"/>
                                 <button class="btn btn-outline-primary"
@@ -129,7 +126,6 @@
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("THURSDAY")}>
                             <form action="/shift_detail" method="get">
-                                <input th:value="${shift.date}" name="shiftDate" type="hidden"/>
                                 <input th:value="${idCinema}" name="idCinema" type="hidden"/>
                                 <input th:value="${shift.id}" name="shiftId" type="hidden"/>
                                 <button class="btn btn-outline-primary"
@@ -142,7 +138,6 @@
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("FRIDAY")}>
                             <form action="/shift_detail" method="get">
-                                <input th:value="${shift.date}" name="shiftDate" type="hidden"/>
                                 <input th:value="${idCinema}" name="idCinema" type="hidden"/>
                                 <input th:value="${shift.id}" name="shiftId" type="hidden"/>
                                 <button class="btn btn-outline-primary"
@@ -155,7 +150,6 @@
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("SATURDAY")}>
                             <form action="/shift_detail" method="get">
-                                <input th:value="${shift.date}" name="shiftDate" type="hidden"/>
                                 <input th:value="${idCinema}" name="idCinema" type="hidden"/>
                                 <input th:value="${shift.id}" name="shiftId" type="hidden"/>
                                 <button class="btn btn-outline-primary"
@@ -168,7 +162,6 @@
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("SUNDAY")}>
                             <form action="/shift_detail" method="get">
-                                <input th:value="${shift.date}" name="shiftDate" type="hidden"/>
                                 <input th:value="${idCinema}" name="idCinema" type="hidden"/>
                                 <input th:value="${shift.id}" name="shiftId" type="hidden"/>
                                 <button class="btn btn-outline-primary"

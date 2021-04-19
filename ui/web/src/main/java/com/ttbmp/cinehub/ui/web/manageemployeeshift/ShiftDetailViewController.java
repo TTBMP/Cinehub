@@ -1,9 +1,6 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
-import com.ttbmp.cinehub.app.dto.EmployeeDto;
-import com.ttbmp.cinehub.app.dto.HallDto;
-import com.ttbmp.cinehub.app.dto.ShiftDto;
-import com.ttbmp.cinehub.app.dto.ShiftProjectionistDto;
+import com.ttbmp.cinehub.app.dto.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetHallListRequest;
@@ -38,31 +35,27 @@ public class ShiftDetailViewController {
     }
 
     @GetMapping("/shift_detail")
-    public String shiftDetail(@RequestParam("shiftDate") LocalDate date,
-                              @RequestParam("idCinema") int cinemaId,
+    public String shiftDetail(@RequestParam("idCinema") int cinemaId,
                               @RequestParam("shiftId") int shiftId,
                               Model model) {
 
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-        ShiftDto selectedShift = null;
-        EmployeeDto selectedEmployee = null;
 
-        useCase.getShiftList(new GetShiftListRequest(date, cinemaId));
-        List<EmployeeDto> employeeDtoList = (List<EmployeeDto>) model.getAttribute("employeeList");
-        Map<EmployeeDto, List<ShiftDto>> employeeShiftMap = (Map<EmployeeDto, List<ShiftDto>>) model.getAttribute("shiftList");
+        model.addAttribute("shiftId", shiftId);
+        model.addAttribute("idCinema", cinemaId);
 
-        for (EmployeeDto employeeDto : employeeDtoList) {
-            for (ShiftDto shiftDto : employeeShiftMap.get(employeeDto)) {
-                if (shiftDto.getId() == shiftId) {
-                    selectedShift = shiftDto;
-                    selectedEmployee = shiftDto.getEmployee();
-                }
-            }
-        }
+        useCase.getCinemaList();
+        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
+
+        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
+
+        EmployeeDto selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
+
+        ShiftDto selectedShift = (ShiftDto) model.getAttribute("selectedShift");
 
         boolean projection = selectedShift instanceof ShiftProjectionistDto;
 
-        useCase.getHallList(new GetHallListRequest(cinemaId));
+        useCase.getHallList(new GetHallListRequest(selectedCinema));
 
         model.addAttribute("projection", projection);
         model.addAttribute("shiftDetail", selectedShift);
@@ -74,38 +67,29 @@ public class ShiftDetailViewController {
     }
 
     @PostMapping("/shift_detail")
-    public String modifyShift(@RequestParam("shiftDate") LocalDate date,
-                              @RequestParam("idCinema") int cinemaId,
+    public String modifyShift(@RequestParam("idCinema") int cinemaId,
                               @RequestParam("shiftId") int shiftId,
                               @ModelAttribute("modifyRequest") NewShiftForm request,
                               Model model) {
 
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-        useCase.getHallList(new GetHallListRequest(cinemaId));
-        HallDto selectedHall = null;
-        List<HallDto> hallList = (List<HallDto>) model.getAttribute("hallList");
 
-        for (HallDto hallDto : hallList) {
-            if (hallDto.getId() == request.getHallId()) {
-                selectedHall = hallDto;
-            }
-        }
+        model.addAttribute("shiftId", shiftId);
+        model.addAttribute("idCinema", cinemaId);
+        model.addAttribute("selectedHallId", request.getHallId());
 
-        ShiftDto selectedShift = null;
-        EmployeeDto selectedEmployee = null;
+        useCase.getCinemaList();
+        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
 
-        useCase.getShiftList(new GetShiftListRequest(date, cinemaId));
-        List<EmployeeDto> employeeDtoList = (List<EmployeeDto>) model.getAttribute("employeeList");
-        Map<EmployeeDto, List<ShiftDto>> employeeShiftMap = (Map<EmployeeDto, List<ShiftDto>>) model.getAttribute("shiftList");
+        useCase.getHallList(new GetHallListRequest(selectedCinema));
 
-        for (EmployeeDto employeeDto : employeeDtoList) {
-            for (ShiftDto shiftDto : employeeShiftMap.get(employeeDto)) {
-                if (shiftDto.getId() == shiftId) {
-                    selectedShift = shiftDto;
-                    selectedEmployee = shiftDto.getEmployee();
-                }
-            }
-        }
+        HallDto selectedHall = (HallDto) model.getAttribute("selectedHall");
+
+
+        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
+
+        ShiftDto selectedShift = (ShiftDto) model.getAttribute("selectedShift");
+        EmployeeDto selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
 
         boolean projection = selectedShift instanceof ShiftProjectionistDto;
 

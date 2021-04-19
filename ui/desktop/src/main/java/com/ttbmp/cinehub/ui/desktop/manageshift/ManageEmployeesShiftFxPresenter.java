@@ -245,8 +245,8 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
 
     @Override
     public void presentInvalidHallListRequest(GetHallListRequest request) {
-        if (request.getErrorList().contains(GetHallListRequest.MISSING_HALL)) {
-            viewModel.errorProperty().setValue(GetHallListRequest.MISSING_HALL.getMessage());
+        if (request.getErrorList().contains(GetHallListRequest.MISSING_CINEMA)) {
+            viewModel.errorProperty().setValue(GetHallListRequest.MISSING_CINEMA.getMessage());
         }
     }
 

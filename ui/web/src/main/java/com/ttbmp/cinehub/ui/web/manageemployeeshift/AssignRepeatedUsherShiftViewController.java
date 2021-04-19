@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
+import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
-import com.ttbmp.cinehub.app.dto.ProjectionistDto;
-import com.ttbmp.cinehub.app.dto.UsherDto;
+
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetShiftListRequest;
@@ -17,14 +17,12 @@ import org.springframework.web.bind.annotation.*;
 import java.beans.PropertyEditorSupport;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Controller
 public class AssignRepeatedUsherShiftViewController {
 
     private static final String ERROR = "error";
-    private static final String EMPLOYEE_LIST = "employeeList";
     private static final String ASSIGN_REQUEST = "assignRequest";
     private static final String SHIFT_ASSIGNED = "/shift_assigned";
     private static final String PREFERENCE_LIST = "preferenceList";
@@ -45,11 +43,11 @@ public class AssignRepeatedUsherShiftViewController {
     public String assignRepeatedUsherShift(@RequestParam(value = "idCinema") int cinemaId, Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
 
-        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), cinemaId));
-        List<EmployeeDto> employeeComboBox = (List<EmployeeDto>) model.getAttribute("employeeList");
+        model.addAttribute("idCinema", cinemaId);
+        useCase.getCinemaList();
+        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
 
-        model.addAttribute(EMPLOYEE_LIST, employeeComboBox.stream()
-                .filter(employeeDto -> employeeDto.getClass().equals(UsherDto.class)).collect(Collectors.toList()));
+        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
 
         model.addAttribute("now", LocalDate.now().plusDays(1));
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
@@ -63,20 +61,16 @@ public class AssignRepeatedUsherShiftViewController {
                                          Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
 
-        EmployeeDto selectedEmployee = null;
-        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), cinemaId));
-        List<EmployeeDto> employeeComboBox = (List<EmployeeDto>) model.getAttribute("employeeList");
-        assert employeeComboBox != null;
-        model.addAttribute(EMPLOYEE_LIST, employeeComboBox.stream()
-                .filter(employeeDto -> employeeDto.getClass().equals(ProjectionistDto.class)).collect(Collectors.toList()));
+        model.addAttribute("selectedEmployeeId", request.getEmployeeId());
+        model.addAttribute("idCinema", cinemaId);
+        useCase.getCinemaList();
+        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
+
+        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
 
         model.addAttribute("now", LocalDate.now().plusDays(1));
 
-        for (EmployeeDto employeeDto : employeeComboBox) {
-            if (employeeDto.getId().equals(request.getEmployeeId())) {
-                selectedEmployee = employeeDto;
-            }
-        }
+        EmployeeDto selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
 
         useCase.saveRepeatedShift(new ShiftRepeatRequest(

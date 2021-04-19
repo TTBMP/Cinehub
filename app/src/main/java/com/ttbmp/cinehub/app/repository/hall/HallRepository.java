@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface HallRepository {
 
-    List<Hall> getHallList(int cinema);
+    List<Hall> getHallList(Cinema cinema);
 
     Hall getHall(Projection projection);
 

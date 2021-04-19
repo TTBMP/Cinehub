@@ -37,7 +37,7 @@ class ManageEmployeesShiftControllerTest {
         );
         CinemaRepository cinemaRepository = serviceLocator.getService(CinemaRepository.class);
         Cinema cinema = cinemaRepository.getAllCinema().get(0);
-        GetShiftListRequest getShiftListRequest = new GetShiftListRequest(LocalDate.now(), CinemaDataMapper.mapToDto(cinema).getId());
+        GetShiftListRequest getShiftListRequest = new GetShiftListRequest(LocalDate.now(), CinemaDataMapper.mapToDto(cinema));
         controller.getShiftList(getShiftListRequest);
     }
 

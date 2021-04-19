@@ -9,26 +9,26 @@ import com.ttbmp.cinehub.app.usecase.Request;
  */
 public class GetHallListRequest extends Request {
 
-    public static final Request.Error MISSING_HALL = new Request.Error("sala non valida");
+    public static final Request.Error MISSING_CINEMA = new Request.Error("cinema non valido");
 
-    private Integer cinemaId;
+    private CinemaDto cinema;
 
-    public GetHallListRequest(Integer cinemaId) {
-        this.cinemaId = cinemaId;
+    public GetHallListRequest(CinemaDto cinema) {
+        this.cinema = cinema;
     }
 
-    public Integer getCinemaId() {
-        return cinemaId;
+    public CinemaDto getCinema() {
+        return cinema;
     }
 
-    public void setCinemaId(Integer cinemaId) {
-        this.cinemaId = cinemaId;
+    public void setCinema(CinemaDto cinema) {
+        this.cinema = cinema;
     }
 
     @Override
     public void onValidate() {
-        if (cinemaId == null) {
-            addError(MISSING_HALL);
+        if (cinema == null) {
+            addError(MISSING_CINEMA);
         }
     }
 

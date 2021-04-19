@@ -23,7 +23,7 @@
 
         <div class="col-sm"> Employee</div>
         <select id="employeeComboBox" th:field="*{employeeId}" required>
-            <option th:each="employee : ${employeeList}"
+            <option th:each="employee : ${projectionistList}"
                     th:text="${employee.name + ' '+ employee.surname}"
                     th:value="${employee.id}">1
             </option>

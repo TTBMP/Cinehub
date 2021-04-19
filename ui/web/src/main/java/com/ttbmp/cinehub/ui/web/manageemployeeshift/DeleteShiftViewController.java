@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
-import com.ttbmp.cinehub.app.dto.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.beans.PropertyEditorSupport;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 public class DeleteShiftViewController {
@@ -34,25 +32,19 @@ public class DeleteShiftViewController {
     }
 
     @GetMapping("/delete_shift")
-    public String deleteShift(@RequestParam("shiftDate") LocalDate date,
-                              @RequestParam("idCinema") int cinemaId,
+    public String deleteShift(@RequestParam("idCinema") int cinemaId,
                               @RequestParam("shiftId") int shiftId,
                               Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
 
-        ShiftDto selectedShift = null;
+        model.addAttribute("shiftId", shiftId);
+        model.addAttribute("idCinema", cinemaId);
+        useCase.getCinemaList();
+        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
 
-        useCase.getShiftList(new GetShiftListRequest(date, cinemaId));
-        List<EmployeeDto> employeeDtoList = (List<EmployeeDto>) model.getAttribute("employeeList");
-        Map<EmployeeDto, List<ShiftDto>> employeeShiftMap = (Map<EmployeeDto, List<ShiftDto>>) model.getAttribute("shiftList");
+        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
 
-        for (EmployeeDto employeeDto : employeeDtoList) {
-            for (ShiftDto shiftDto : employeeShiftMap.get(employeeDto)) {
-                if (shiftDto.getId() == shiftId) {
-                    selectedShift = shiftDto;
-                }
-            }
-        }
+        ShiftDto selectedShift = (ShiftDto) model.getAttribute("selectedShift");
 
         useCase.deleteShift(new ShiftRequest(selectedShift));
 

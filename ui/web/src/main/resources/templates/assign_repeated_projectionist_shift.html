@@ -25,7 +25,7 @@
         <div class="col-sm"> Employee</div>
         <div class="col-sm"> Employee</div>
         <select id="employeeComboBox" th:field="*{employeeId}">
-            <option th:each="employee : ${employeeList}"
+            <option th:each="employee : ${projectionistList}"
                     th:text="${employee.name + ' '+ employee.surname}"
                     th:value="${employee.id}">1
             </option>

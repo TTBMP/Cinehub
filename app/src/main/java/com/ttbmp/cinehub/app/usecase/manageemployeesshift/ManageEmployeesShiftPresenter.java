@@ -49,7 +49,7 @@ public interface ManageEmployeesShiftPresenter {
 
     void presentGetShiftListNullRequest();
 
-    void presentInvalidHallListRequest(GetHallListRequest request);
+      void presentInvalidHallListRequest(GetHallListRequest request);
 
     void presentHallListNullRequest();
 

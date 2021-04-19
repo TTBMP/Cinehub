@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
-import com.ttbmp.cinehub.app.dto.EmployeeDto;
-import com.ttbmp.cinehub.app.dto.ShiftDto;
+import com.ttbmp.cinehub.app.dto.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
@@ -53,6 +52,34 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
         employeeList = tmp;
         model.addAttribute("employeeList", employeeList);
 
+        model.addAttribute("projectionistList", employeeList.stream()
+                .filter(employeeDto -> employeeDto.getClass()
+                        .equals(ProjectionistDto.class))
+                .collect(Collectors.toList()));
+        model.addAttribute("usherList", employeeList.stream()
+                .filter(employeeDto -> employeeDto.getClass()
+                        .equals(UsherDto.class))
+                .collect(Collectors.toList()));
+
+        if(model.getAttribute("selectedEmployeeId")!=null){
+            String employeeId = (String) model.getAttribute("selectedEmployeeId");
+            for (EmployeeDto employeeDto : employeeList) {
+                if (employeeDto.getId().equals(employeeId)) {
+                    model.addAttribute("selectedEmployee", employeeDto);
+                }
+            }
+        }
+
+        if(model.getAttribute("shiftId")!=null){
+            int shiftId = (int) model.getAttribute("shiftId");
+            for(ShiftDto shiftDto : shiftList.getShiftDtoList()){
+                if(shiftDto.getId() == shiftId){
+                    model.addAttribute("selectedShift", shiftDto);
+                    model.addAttribute("selectedEmployee", shiftDto.getEmployee());
+                }
+            }
+        }
+
         Map<EmployeeDto, List<ShiftDto>> employeeShiftListMap = new HashMap<>();
         for (EmployeeDto employee : employeeList) {
             employeeShiftListMap.put(
@@ -71,12 +98,28 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     @Override
     public void presentCinemaList(GetCinemaListResponse listCinema) {
         model.addAttribute("cinemaList", listCinema.getCinemaList());
+
+        if (model.getAttribute("idCinema") != null) {
+            int idCinema = (int) model.getAttribute("idCinema");
+            for (CinemaDto cinemaDto : listCinema.getCinemaList()) {
+                if (cinemaDto.getId() == idCinema) {
+                    model.addAttribute("selectedCinema", cinemaDto);
+                }
+            }
+        }
     }
 
     @Override
     public void presentHallList(GetHallListResponse listHall) {
-
         model.addAttribute("hallList", listHall.getListHall());
+        if(model.getAttribute("selectedHallId")!= null){
+            int hallId= (int) model.getAttribute("selectedHallId");
+            for (HallDto hallDto : listHall.getListHall()) {
+                if (hallDto.getId() == hallId) {
+                    model.addAttribute("selectedHall", hallDto);
+                }
+            }
+        }
     }
 
     @Override
@@ -238,41 +281,40 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
 
     @Override
     public void presentRepeatedShiftNullRequest() {
-        model.addAttribute(ERROR_TEXT,"Error with operation save repeated shift");
+        model.addAttribute(ERROR_TEXT, "Error with operation save repeated shift");
         model.addAttribute(ERROR, true);
     }
 
     @Override
     public void presentInvalidGetShiftListRequest(GetShiftListRequest request) {
         if (request.getErrorList().contains(GetShiftListRequest.MISSING_START)) {
-            model.addAttribute(ERROR_TEXT,GetShiftListRequest.MISSING_START.getMessage());
+            model.addAttribute(ERROR_TEXT, GetShiftListRequest.MISSING_START.getMessage());
         }
         if (request.getErrorList().contains(GetShiftListRequest.MISSING_CINEMA)) {
-            model.addAttribute(ERROR_TEXT,GetShiftListRequest.MISSING_CINEMA.getMessage());
+            model.addAttribute(ERROR_TEXT, GetShiftListRequest.MISSING_CINEMA.getMessage());
         }
         model.addAttribute(ERROR, true);
     }
 
     @Override
     public void presentGetShiftListNullRequest() {
-        model.addAttribute(ERROR_TEXT,"Error with operation get Shift List");
+        model.addAttribute(ERROR_TEXT, "Error with operation get Shift List");
         model.addAttribute(ERROR, true);
     }
 
     @Override
     public void presentInvalidHallListRequest(GetHallListRequest request) {
-        if (request.getErrorList().contains(GetHallListRequest.MISSING_HALL)) {
-            model.addAttribute(ERROR_TEXT,GetHallListRequest.MISSING_HALL.getMessage());
+        if (request.getErrorList().contains(GetHallListRequest.MISSING_CINEMA)) {
+            model.addAttribute(ERROR_TEXT, GetHallListRequest.MISSING_CINEMA.getMessage());
         }
         model.addAttribute(ERROR, true);
     }
 
     @Override
     public void presentHallListNullRequest() {
-        model.addAttribute(ERROR_TEXT,"Error with operation get Hall List");
+        model.addAttribute(ERROR_TEXT, "Error with operation get Hall List");
         model.addAttribute(ERROR, true);
     }
-
 
 
 }
