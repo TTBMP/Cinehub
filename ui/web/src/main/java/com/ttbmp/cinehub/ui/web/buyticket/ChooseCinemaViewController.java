@@ -1,11 +1,11 @@
 package com.ttbmp.cinehub.ui.web.buyticket;
 
 
-import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
+import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.GetListCinemaRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.GetListMovieRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.GetProjectionListRequest;
 import com.ttbmp.cinehub.ui.web.domain.Projection;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,14 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.time.LocalDate;
 
 
-
 /**
  * @author Palmieri Ivan
  */
 @Controller
 public class ChooseCinemaViewController {
-
-
 
 
     @PostMapping("/choose_cinema")
@@ -31,10 +28,10 @@ public class ChooseCinemaViewController {
             Model model) {
         BuyTicketUseCase useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
         useCase.getListMovie(new GetListMovieRequest(LocalDate.parse(projection.getDate())));
-        useCase.getListCinema(new GetListCinemaRequest(projection.getMovieId(),projection.getDate()));
-        model.addAttribute("idMovie",projection.getMovieId());
-        model.addAttribute("dateProjection",projection.getDate());
-        model.addAttribute("projection",projection);
+        useCase.getListCinema(new GetListCinemaRequest(projection.getMovieId(), projection.getDate()));
+        model.addAttribute("idMovie", projection.getMovieId());
+        model.addAttribute("dateProjection", projection.getDate());
+        model.addAttribute("projection", projection);
         return "choose_cinema";
     }
 

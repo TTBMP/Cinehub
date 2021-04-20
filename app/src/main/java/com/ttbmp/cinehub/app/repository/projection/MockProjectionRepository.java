@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.app.repository.projection;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
-import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
 import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.app.repository.hall.MockHallRepository;
@@ -22,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author Fabio Buracchi
+ * @author Fabio Buracchi, Ivan Palmieri
  */
 public class MockProjectionRepository implements ProjectionRepository {
 
@@ -83,22 +82,20 @@ public class MockProjectionRepository implements ProjectionRepository {
     }
 
     @Override
-    public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date) {
+    public Projection getProjection(String date, String time, Integer hallId) {
         return PROJECTION_DATA_LIST.stream()
-                .filter(d -> d.cinemaId == cinema.getId() && d.movieId == movie.getId() && d.date.equals(date))
+                .filter(d -> d.date.equals(date) && d.startTime.equals(time) && d.hallId == hallId)
                 .map(d -> new ProjectionProxy(
                         d.id,
                         d.date,
                         d.startTime,
                         serviceLocator.getService(MovieRepository.class),
                         serviceLocator.getService(HallRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
                         serviceLocator.getService(ProjectionistRepository.class),
                         serviceLocator.getService(TicketRepository.class)
                 ))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()).get(0);
     }
-
 
     @Override
     public List<Projection> getProjectionList(ProjectionistShift shift) {
@@ -115,7 +112,6 @@ public class MockProjectionRepository implements ProjectionRepository {
                         d.startTime,
                         serviceLocator.getService(MovieRepository.class),
                         serviceLocator.getService(HallRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
                         serviceLocator.getService(ProjectionistRepository.class),
                         serviceLocator.getService(TicketRepository.class)
                 ))
@@ -123,41 +119,35 @@ public class MockProjectionRepository implements ProjectionRepository {
     }
 
     @Override
-    public Projection getProjection(String date, String time,Integer hallId) {
+    public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date) {
         return PROJECTION_DATA_LIST.stream()
-                .filter(d -> d.date.equals(date) && d.startTime.equals(time) && d.hallId== hallId)
+                .filter(d -> d.cinemaId == cinema.getId() && d.movieId == movie.getId() && d.date.equals(date))
                 .map(d -> new ProjectionProxy(
                         d.id,
                         d.date,
                         d.startTime,
                         serviceLocator.getService(MovieRepository.class),
                         serviceLocator.getService(HallRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
                         serviceLocator.getService(ProjectionistRepository.class),
                         serviceLocator.getService(TicketRepository.class)
                 ))
-                .collect(Collectors.toList()).get(0);
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date, Integer hallId) {
-        if (hallId == null) {
-            return getProjectionList(cinema, movie, date);
-        } else {
-            return PROJECTION_DATA_LIST.stream()
-                    .filter(d -> d.cinemaId == cinema.getId() && d.movieId == movie.getId() && d.date.equals(date) &&  d.hallId== hallId)
+        return PROJECTION_DATA_LIST.stream()
+                    .filter(d -> d.cinemaId == cinema.getId() && d.movieId == movie.getId() && d.date.equals(date) && d.hallId == hallId)
                     .map(d -> new ProjectionProxy(
                             d.id,
                             d.date,
                             d.startTime,
                             serviceLocator.getService(MovieRepository.class),
                             serviceLocator.getService(HallRepository.class),
-                            serviceLocator.getService(CinemaRepository.class),
                             serviceLocator.getService(ProjectionistRepository.class),
                             serviceLocator.getService(TicketRepository.class)
                     ))
                     .collect(Collectors.toList());
-        }
     }
 
     public static class ProjectionData {

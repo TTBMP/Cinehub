@@ -8,7 +8,6 @@ import java.util.List;
 public class GetProjectionResponse {
 
 
-
     private final ProjectionDto projectionDto;
     private final List<String> projectionDtoTime = new ArrayList<>();
 

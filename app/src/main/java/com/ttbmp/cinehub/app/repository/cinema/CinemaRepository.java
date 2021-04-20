@@ -23,6 +23,6 @@ public interface CinemaRepository {
 
     Cinema getCinema(Employee employee);
 
-     Cinema getCinema(int cinemaId);
+    Cinema getCinema(int cinemaId);
 
 }

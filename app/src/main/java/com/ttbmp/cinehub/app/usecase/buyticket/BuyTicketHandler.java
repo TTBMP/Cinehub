@@ -54,6 +54,4 @@ public class BuyTicketHandler implements BuyTicketUseCase {
         buyTicketController.getProjection(request);
     }
 
-
-
 }

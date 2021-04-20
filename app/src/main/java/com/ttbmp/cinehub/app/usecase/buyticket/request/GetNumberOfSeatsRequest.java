@@ -4,7 +4,6 @@ import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.usecase.Request;
 
 
-
 /**
  * @author Ivan Palmieri
  */
@@ -14,7 +13,7 @@ public class GetNumberOfSeatsRequest extends Request {
     private ProjectionDto projectionDto;
 
     public GetNumberOfSeatsRequest(ProjectionDto projectionDto) {
-     this.projectionDto = projectionDto;
+        this.projectionDto = projectionDto;
     }
 
     public ProjectionDto getProjectionDto() {
@@ -27,7 +26,7 @@ public class GetNumberOfSeatsRequest extends Request {
 
     @Override
     public void onValidate() {
-        if (projectionDto == null ) {
+        if (projectionDto == null) {
             addError(MISSING_PROJECTION_ERROR);
         }
     }

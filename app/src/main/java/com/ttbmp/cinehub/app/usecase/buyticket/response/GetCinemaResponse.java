@@ -2,8 +2,6 @@ package com.ttbmp.cinehub.app.usecase.buyticket.response;
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 
-import java.util.List;
-
 public class GetCinemaResponse {
 
 

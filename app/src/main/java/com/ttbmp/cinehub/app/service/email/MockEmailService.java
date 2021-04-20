@@ -8,6 +8,6 @@ public class MockEmailService implements EmailService {
 
     @Override
     public void sendMail(EmailServiceRequest emailServiceRequest) {
-        emailServiceRequest.setEmail("Payment with success");
+        System.out.println("Email sent");
     }
 }

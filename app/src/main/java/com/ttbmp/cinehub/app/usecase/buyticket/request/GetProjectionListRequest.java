@@ -15,9 +15,9 @@ public class GetProjectionListRequest extends Request {
     private Integer movieId;
     private Integer cinemaId;
     private String localDate;
-    private  int hallId;
+    private int hallId;
 
-    public GetProjectionListRequest(Integer movieId, Integer cinemaId, LocalDate localDate,int hallId) {
+    public GetProjectionListRequest(Integer movieId, Integer cinemaId, LocalDate localDate, int hallId) {
         this.movieId = movieId;
         this.cinemaId = cinemaId;
         this.localDate = localDate.toString();

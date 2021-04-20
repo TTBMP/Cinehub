@@ -1,10 +1,9 @@
 package com.ttbmp.cinehub.ui.web.buyticket;
 
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
+import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetNumberOfSeatsRequest;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.GetProjectionListRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.GetProjectionRequest;
 import com.ttbmp.cinehub.ui.web.domain.Projection;
 import com.ttbmp.cinehub.ui.web.domain.Seat;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 /**
  * @author Palmieri Ivan
@@ -22,11 +20,11 @@ import java.util.ArrayList;
 @Controller
 public class ChooseSeatsViewController {
 
-    private final String projectionList="projectionList";
+    private final String projectionList = "projectionList";
 
     @PostMapping("/choose_seat")
     public String chooseSeats(@ModelAttribute("projection") Projection projection,
-            Model model) {
+                              Model model) {
 
         BuyTicketUseCase buyTicketUseCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
 
@@ -35,7 +33,7 @@ public class ChooseSeatsViewController {
                 projection.getStartTime(),
                 projection.getHallId()
         ));
-        buyTicketUseCase.getListOfSeat(new GetNumberOfSeatsRequest(((ProjectionDto)model.getAttribute("projection"))));
+        buyTicketUseCase.getListOfSeat(new GetNumberOfSeatsRequest(((ProjectionDto) model.getAttribute("projection"))));
         model.addAttribute("boolean1", false);
         model.addAttribute("boolean2", false);
         model.addAttribute("boolean3", false);
@@ -48,8 +46,6 @@ public class ChooseSeatsViewController {
         model.addAttribute("seat", new Seat());
         return "choose_seats";
     }
-
-
 
 
 }
