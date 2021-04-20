@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface TicketRepository {
 
-    void saveTicket(Ticket ticket, int projectionId);
+    void saveTicket(Ticket ticket, Projection projection);
 
     List<Ticket> getTicketList(Projection projection);
 

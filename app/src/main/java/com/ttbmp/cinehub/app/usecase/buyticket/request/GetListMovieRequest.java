@@ -22,7 +22,6 @@ public class GetListMovieRequest extends Request {
         this.date = date;
     }
 
-
     @Override
     public void onValidate() {
         if (date == null) {

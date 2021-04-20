@@ -10,10 +10,11 @@ import com.ttbmp.cinehub.app.usecase.Request;
 /**
  * @author Ivan Palmieri
  */
-public class PayRequest extends Request {
+public class PaymentRequest extends Request {
+
     public static final Request.Error MISSING_TICKET_ERROR = new Request.Error("Ticket can't be null");
     public static final Request.Error MISSING_PROJECTION_ERROR = new Request.Error("Projection can't be null");
-    public static final Request.Error MISSING_INDEX_ERROR = new Request.Error("Index can't be after the end time");
+
 
     private final Integer index;
     private ProjectionDto projection;
@@ -23,7 +24,7 @@ public class PayRequest extends Request {
     private String selectedDate;
 
 
-    public PayRequest(TicketDto ticket, ProjectionDto projection, Integer index, CinemaDto cinemaDto, MovieDto movieDto, String selectedDate) {
+    public PaymentRequest(TicketDto ticket, ProjectionDto projection, int index, CinemaDto cinemaDto, MovieDto movieDto, String selectedDate) {
         this.index = index;
         this.projection = projection;
         this.ticket = ticket;
@@ -57,7 +58,6 @@ public class PayRequest extends Request {
         this.cinemaDto = cinemaDto;
     }
 
-
     public ProjectionDto getProjection() {
         return projection;
     }
@@ -70,7 +70,6 @@ public class PayRequest extends Request {
         return index;
     }
 
-
     public TicketDto getTicket() {
         return ticket;
     }
@@ -81,9 +80,6 @@ public class PayRequest extends Request {
 
     @Override
     public void onValidate() {
-        if (index == null) {
-            addError(MISSING_INDEX_ERROR);
-        }
         if (projection == null) {
             addError(MISSING_PROJECTION_ERROR);
 
