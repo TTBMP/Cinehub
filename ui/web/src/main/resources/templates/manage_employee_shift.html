@@ -34,7 +34,7 @@
             </select>
             <br/>
             <label>Date</label>
-            <input class="form-control it-date-datepicker" placeholder="Inserisci la data" id="date" required
+            <input class="form-control it-date-datepicker" id="date" placeholder="Inserisci la data" required
                    th:field="*{start}" th:value="${date}" type="date"/>
             <br/>
             <br/>
@@ -88,8 +88,8 @@
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("MONDAY")}>
                             <form action="/shift_detail" method="get">
-                                <input th:value="${idCinema}" name="idCinema" type="hidden"/>
-                                <input th:value="${shift.id}" name="shiftId" type="hidden"/>
+                                <input name="idCinema" th:value="${idCinema}" type="hidden"/>
+                                <input name="shiftId" th:value="${shift.id}" type="hidden"/>
                                 <button class="btn btn-outline-primary"
                                         th:text="${shift.start} + '-' + ${shift.end} " type="submit"></button>
                             </form>
@@ -101,10 +101,10 @@
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("TUESDAY")}>
                             <form action="/shift_detail" method="get">
-                                <input th:value="${idCinema}" name="idCinema" type="hidden"/>
-                                <input th:value="${shift.id}" name="shiftId" type="hidden"/>
+                                <input name="idCinema" th:value="${idCinema}" type="hidden"/>
+                                <input name="shiftId" th:value="${shift.id}" type="hidden"/>
                                 <button class="btn btn-outline-primary"
-                                                th:text="${shift.start} + '-' + ${shift.end} " type="submit">k</button>
+                                        th:text="${shift.start} + '-' + ${shift.end} " type="submit">k</button>
                             </form>
                         </span>
                     </span>
@@ -114,8 +114,8 @@
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("WEDNESDAY")}>
                             <form action="/shift_detail" method="get">
-                                <input th:value="${idCinema}" name="idCinema" type="hidden"/>
-                                <input th:value="${shift.id}" name="shiftId" type="hidden"/>
+                                <input name="idCinema" th:value="${idCinema}" type="hidden"/>
+                                <input name="shiftId" th:value="${shift.id}" type="hidden"/>
                                 <button class="btn btn-outline-primary"
                                         th:text="${shift.start} + '-' + ${shift.end} " type="submit">k</button>
                             </form>
@@ -126,8 +126,8 @@
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("THURSDAY")}>
                             <form action="/shift_detail" method="get">
-                                <input th:value="${idCinema}" name="idCinema" type="hidden"/>
-                                <input th:value="${shift.id}" name="shiftId" type="hidden"/>
+                                <input name="idCinema" th:value="${idCinema}" type="hidden"/>
+                                <input name="shiftId" th:value="${shift.id}" type="hidden"/>
                                 <button class="btn btn-outline-primary"
                                         th:text="${shift.start} + '-' + ${shift.end} " type="submit">k</button>
                             </form>
@@ -138,8 +138,8 @@
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("FRIDAY")}>
                             <form action="/shift_detail" method="get">
-                                <input th:value="${idCinema}" name="idCinema" type="hidden"/>
-                                <input th:value="${shift.id}" name="shiftId" type="hidden"/>
+                                <input name="idCinema" th:value="${idCinema}" type="hidden"/>
+                                <input name="shiftId" th:value="${shift.id}" type="hidden"/>
                                 <button class="btn btn-outline-primary"
                                         th:text="${shift.start} + '-' + ${shift.end} " type="submit">k</button>
                             </form>
@@ -150,8 +150,8 @@
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("SATURDAY")}>
                             <form action="/shift_detail" method="get">
-                                <input th:value="${idCinema}" name="idCinema" type="hidden"/>
-                                <input th:value="${shift.id}" name="shiftId" type="hidden"/>
+                                <input name="idCinema" th:value="${idCinema}" type="hidden"/>
+                                <input name="shiftId" th:value="${shift.id}" type="hidden"/>
                                 <button class="btn btn-outline-primary"
                                         th:text="${shift.start} + '-' + ${shift.end} " type="submit">k</button>
                             </form>
@@ -162,8 +162,8 @@
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("SUNDAY")}>
                             <form action="/shift_detail" method="get">
-                                <input th:value="${idCinema}" name="idCinema" type="hidden"/>
-                                <input th:value="${shift.id}" name="shiftId" type="hidden"/>
+                                <input name="idCinema" th:value="${idCinema}" type="hidden"/>
+                                <input name="shiftId" th:value="${shift.id}" type="hidden"/>
                                 <button class="btn btn-outline-primary"
                                         th:text="${shift.start} + '-' + ${shift.end} " type="submit">k</button>
                             </form>
@@ -178,7 +178,7 @@
 
 
             <form action="/assign_projectionist_shift" method="get">
-                <input th:value="${idCinema}" name="idCinema" type="hidden"/>
+                <input name="idCinema" th:value="${idCinema}" type="hidden"/>
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Assign New Projectionist Shift
                 </button>
             </form>
@@ -186,7 +186,7 @@
             <br/>
 
             <form action="/assign_repeated_projectionist_shift" method="get">
-                <input th:value="${idCinema}" name="idCinema" type="hidden"/>
+                <input name="idCinema" th:value="${idCinema}" type="hidden"/>
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Assign New Repeated Projectionist
                     Shift
                 </button>
@@ -195,14 +195,14 @@
             <br/>
 
             <form action="/assign_usher_shift" method="get">
-                <input th:value="${idCinema}" name="idCinema" type="hidden"/>
+                <input name="idCinema" th:value="${idCinema}" type="hidden"/>
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Assign New Usher Shift</button>
             </form>
 
             <br/>
 
             <form action="/assign_repeated_usher_shift" method="get">
-                <input th:value="${idCinema}" name="idCinema" type="hidden"/>
+                <input name="idCinema" th:value="${idCinema}" type="hidden"/>
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Assign New Repeated Usher Shift
                 </button>
             </form>

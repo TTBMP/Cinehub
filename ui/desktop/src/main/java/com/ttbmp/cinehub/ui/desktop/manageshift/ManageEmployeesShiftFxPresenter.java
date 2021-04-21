@@ -2,12 +2,14 @@ package com.ttbmp.cinehub.ui.desktop.manageshift;
 
 import com.ttbmp.cinehub.app.datamapper.EmployeeDataMapper;
 import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
-import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.CreateShiftResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetCinemaListResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetShiftListResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.ShiftRepeatResponse;
 import com.ttbmp.cinehub.domain.shift.Shift;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.DayWeek;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.EmployeeShiftWeek;
@@ -47,12 +49,6 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     public void presentCinemaList(GetCinemaListResponse listCinema) {
         viewModel.getCinemaList().setAll(listCinema.getCinemaList());
     }
-
-    @Override
-    public void presentHallList(GetHallListResponse listHall) {
-        viewModel.getHallList().setAll(listHall.getListHall());
-    }
-
 
     @Override
     public void presentSaveShift() {
@@ -243,28 +239,16 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         viewModel.errorProperty().setValue("Error with operation get shift List");
     }
 
-    @Override
-    public void presentInvalidHallListRequest(GetHallListRequest request) {
-        if (request.getErrorList().contains(GetHallListRequest.MISSING_CINEMA)) {
-            viewModel.errorProperty().setValue(GetHallListRequest.MISSING_CINEMA.getMessage());
-        }
-    }
-
-    @Override
-    public void presentHallListNullRequest() {
-        viewModel.errorProperty().setValue("Error with operation get Hall list");
-    }
-
     private List<EmployeeShiftWeek> getEmployeeShiftWeekList(GetShiftListResponse response) {
         List<EmployeeShiftWeek> result = new ArrayList<>();
         List<ShiftDto> shiftList = response.getShiftDtoList();
-        int cinema = response.getCinemaId();
+        int cinemaId = response.getCinemaId();
         TemporalField temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
         LocalDate firstDayOfWeek = response.getDate().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
 
         List<EmployeeDto> employeeList = shiftList.stream()
                 .map(ShiftDto::getEmployee)
-                .filter(employee -> employee.getCinema().getId() == (cinema))
+                .filter(employee -> employee.getCinema().getId() == (cinemaId))
                 .distinct()
                 .collect(Collectors.toList());
 

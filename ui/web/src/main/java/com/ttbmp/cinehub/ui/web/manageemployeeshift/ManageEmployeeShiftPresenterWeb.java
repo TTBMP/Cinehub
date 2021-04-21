@@ -3,7 +3,10 @@ package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 import com.ttbmp.cinehub.app.dto.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.CreateShiftResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetCinemaListResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetShiftListResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.ShiftRepeatResponse;
 import org.springframework.ui.Model;
 
 import java.time.LocalDate;
@@ -61,24 +64,9 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
                         .equals(UsherDto.class))
                 .collect(Collectors.toList()));
 
-        if(model.getAttribute("selectedEmployeeId")!=null){
-            String employeeId = (String) model.getAttribute("selectedEmployeeId");
-            for (EmployeeDto employeeDto : employeeList) {
-                if (employeeDto.getId().equals(employeeId)) {
-                    model.addAttribute("selectedEmployee", employeeDto);
-                }
-            }
-        }
+        findEmployee(employeeList);
 
-        if(model.getAttribute("shiftId")!=null){
-            int shiftId = (int) model.getAttribute("shiftId");
-            for(ShiftDto shiftDto : shiftList.getShiftDtoList()){
-                if(shiftDto.getId() == shiftId){
-                    model.addAttribute("selectedShift", shiftDto);
-                    model.addAttribute("selectedEmployee", shiftDto.getEmployee());
-                }
-            }
-        }
+        findShift(shiftList.getShiftDtoList());
 
         Map<EmployeeDto, List<ShiftDto>> employeeShiftListMap = new HashMap<>();
         for (EmployeeDto employee : employeeList) {
@@ -104,22 +92,23 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
             for (CinemaDto cinemaDto : listCinema.getCinemaList()) {
                 if (cinemaDto.getId() == idCinema) {
                     model.addAttribute("selectedCinema", cinemaDto);
+                    model.addAttribute("hallList", cinemaDto.getHalList());
                 }
             }
         }
-    }
 
-    @Override
-    public void presentHallList(GetHallListResponse listHall) {
-        model.addAttribute("hallList", listHall.getListHall());
-        if(model.getAttribute("selectedHallId")!= null){
-            int hallId= (int) model.getAttribute("selectedHallId");
-            for (HallDto hallDto : listHall.getListHall()) {
+        if (model.getAttribute("selectedHallId") != null) {
+            List<HallDto> hallDtoList = (List<HallDto>) model.getAttribute("hallList");
+            int hallId = (int) model.getAttribute("selectedHallId");
+            assert hallDtoList != null;
+            for (HallDto hallDto : hallDtoList) {
                 if (hallDto.getId() == hallId) {
                     model.addAttribute("selectedHall", hallDto);
                 }
             }
         }
+
+
     }
 
     @Override
@@ -145,8 +134,7 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
 
     @Override
     public void presentCreateShiftError(Throwable error) {
-        model.addAttribute(ERROR, true);
-        model.addAttribute(ERROR_TEXT, error.getMessage());
+        presentError(error);
     }
 
     @Override
@@ -165,8 +153,7 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
 
     @Override
     public void presentDeleteShiftError(Throwable error) {
-        model.addAttribute(ERROR, true);
-        model.addAttribute(ERROR_TEXT, error.getMessage());
+        presentError(error);
     }
 
     @Override
@@ -199,14 +186,13 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     @Override
     public void presentModifyShiftNullRequest() {
         model.addAttribute(ERROR, true);
-        model.addAttribute(ERROR_TEXT, "Error with operation delete shift");
+        model.addAttribute(ERROR_TEXT, "Error with operation modify shift");
 
     }
 
     @Override
     public void presentModifyShiftError(Throwable error) {
-        model.addAttribute(ERROR, true);
-        model.addAttribute(ERROR_TEXT, error.getMessage());
+        presentError(error);
     }
 
     @Override
@@ -302,19 +288,31 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
         model.addAttribute(ERROR, true);
     }
 
-    @Override
-    public void presentInvalidHallListRequest(GetHallListRequest request) {
-        if (request.getErrorList().contains(GetHallListRequest.MISSING_CINEMA)) {
-            model.addAttribute(ERROR_TEXT, GetHallListRequest.MISSING_CINEMA.getMessage());
+    private void presentError(Throwable error) {
+        model.addAttribute(ERROR, true);
+        model.addAttribute(ERROR_TEXT, error.getMessage());
+    }
+
+    private void findEmployee(List<EmployeeDto> employeeList) {
+        if (model.getAttribute("selectedEmployeeId") != null) {
+            String employeeId = (String) model.getAttribute("selectedEmployeeId");
+            for (EmployeeDto employeeDto : employeeList) {
+                if (employeeDto.getId().equals(employeeId)) {
+                    model.addAttribute("selectedEmployee", employeeDto);
+                }
+            }
         }
-        model.addAttribute(ERROR, true);
     }
 
-    @Override
-    public void presentHallListNullRequest() {
-        model.addAttribute(ERROR_TEXT, "Error with operation get Hall List");
-        model.addAttribute(ERROR, true);
+    private void findShift(List<ShiftDto> shiftList) {
+        if (model.getAttribute("shiftId") != null) {
+            int shiftId = (int) model.getAttribute("shiftId");
+            for (ShiftDto shiftDto : shiftList) {
+                if (shiftDto.getId() == shiftId) {
+                    model.addAttribute("selectedShift", shiftDto);
+                    model.addAttribute("selectedEmployee", shiftDto.getEmployee());
+                }
+            }
+        }
     }
-
-
 }

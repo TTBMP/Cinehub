@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift.response;
 
-import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.ShiftDto;
 
 import java.time.LocalDate;

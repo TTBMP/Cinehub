@@ -101,7 +101,7 @@ public class ShiftModifyRequest extends Request {
         if (employeeDto == null) {
             addError(MISSING_EMPLOYEE);
         }
-        if(start.isAfter(end)){
+        if (start.isAfter(end)) {
             addError(ERROR_TIME);
         }
 

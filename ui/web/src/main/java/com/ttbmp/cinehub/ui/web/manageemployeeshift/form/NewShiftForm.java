@@ -5,11 +5,11 @@ import java.time.LocalTime;
 
 public class NewShiftForm {
 
+    int hallId;
     private String employeeId;
     private LocalDate date;
     private LocalTime inizio;
     private LocalTime end;
-    int hallId;
 
     public NewShiftForm() {
 

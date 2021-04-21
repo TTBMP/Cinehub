@@ -23,7 +23,7 @@ class DaoDeleteOperationTest {
     @Test
     void execute_DeleteDto_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, DaoMethodException {
         CinemaDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
-        CinemaDto dto = new CinemaDto(0, "pippo", "pluto", "paperino");
+        CinemaDto dto = new CinemaDto(1, "pippo", "pluto", "paperino");
         dao.insert(dto);
         dto = dao.getCinema("pippo");
         CinemaDto finalDto = dto;

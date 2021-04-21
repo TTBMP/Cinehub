@@ -6,7 +6,10 @@ import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftController;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.CreateShiftResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetCinemaListResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetShiftListResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.ShiftRepeatResponse;
 import com.ttbmp.cinehub.domain.Cinema;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -41,17 +44,6 @@ class ManageEmployeesShiftControllerTest {
         controller.getShiftList(getShiftListRequest);
     }
 
-    @Test
-    void getHallList() {
-        ManageEmployeesShiftController controller = new ManageEmployeesShiftController(
-                serviceLocator,
-                new MockManageEmployeePresenter()
-        );
-        CinemaRepository cinemaRepository = serviceLocator.getService(CinemaRepository.class);
-        Cinema cinema = cinemaRepository.getAllCinema().get(0);
-        GetHallListRequest getHallListRequest = new GetHallListRequest(CinemaDataMapper.mapToDto(cinema));
-        controller.getHallList(getHallListRequest);
-    }
 
     class MockManageEmployeePresenter implements ManageEmployeesShiftPresenter {
 
@@ -65,10 +57,6 @@ class ManageEmployeesShiftControllerTest {
             Assertions.assertNotEquals(listCinema.getCinemaList().size(), 0);
         }
 
-        @Override
-        public void presentHallList(GetHallListResponse listHall) {
-            Assertions.assertNotEquals(listHall.getListHall().size(), 0);
-        }
 
         @Override
         public void presentSaveShift() {
@@ -155,14 +143,5 @@ class ManageEmployeesShiftControllerTest {
 
         }
 
-        @Override
-        public void presentInvalidHallListRequest(GetHallListRequest request) {
-
-        }
-
-        @Override
-        public void presentHallListNullRequest() {
-
-        }
     }
 }

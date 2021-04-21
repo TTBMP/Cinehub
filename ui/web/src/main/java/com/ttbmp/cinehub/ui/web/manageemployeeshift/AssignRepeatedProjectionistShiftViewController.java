@@ -6,7 +6,6 @@ import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetHallListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetShiftListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftRepeatRequest;
 import com.ttbmp.cinehub.domain.shift.ShiftRepeatingOption;
@@ -50,7 +49,6 @@ public class AssignRepeatedProjectionistShiftViewController {
 
         CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
 
-        useCase.getHallList(new GetHallListRequest(selectedCinema));
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
 
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
@@ -74,7 +72,6 @@ public class AssignRepeatedProjectionistShiftViewController {
 
         CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
 
-        useCase.getHallList(new GetHallListRequest(selectedCinema));
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
 
         EmployeeDto selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");

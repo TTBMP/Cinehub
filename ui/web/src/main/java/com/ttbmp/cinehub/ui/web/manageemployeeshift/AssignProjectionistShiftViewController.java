@@ -6,7 +6,6 @@ import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.CreateShiftRequest;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetHallListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetShiftListRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewShiftForm;
 import org.springframework.stereotype.Controller;
@@ -48,7 +47,6 @@ public class AssignProjectionistShiftViewController {
 
         CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
 
-        useCase.getHallList(new GetHallListRequest(selectedCinema));
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
 
         model.addAttribute("now", LocalDate.now().plusDays(1));
@@ -72,7 +70,6 @@ public class AssignProjectionistShiftViewController {
 
         CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
 
-        useCase.getHallList(new GetHallListRequest(selectedCinema));
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
 
         model.addAttribute("now", LocalDate.now().plusDays(1));

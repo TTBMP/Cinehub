@@ -3,17 +3,19 @@ package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetShiftListRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.GetCinemaForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.beans.PropertyEditorSupport;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Controller
 public class ShowShiftViewController {
@@ -52,7 +54,7 @@ public class ShowShiftViewController {
         CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
 
         model.addAttribute("cinemaSelected", true);
-        useCase.getShiftList(new GetShiftListRequest(form.getStart(),selectedCinema));
+        useCase.getShiftList(new GetShiftListRequest(form.getStart(), selectedCinema));
 
         model.addAttribute("date", form.getStart());
 

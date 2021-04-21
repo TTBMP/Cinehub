@@ -22,7 +22,7 @@
     <form action="#" method="post" th:object="${assignRequest}">
 
         <div class="col-sm"> Employee</div>
-        <select id="employeeComboBox" th:field="*{employeeId}" required>
+        <select id="employeeComboBox" required th:field="*{employeeId}">
             <option th:each="employee : ${projectionistList}"
                     th:text="${employee.name + ' '+ employee.surname}"
                     th:value="${employee.id}">1
@@ -49,7 +49,7 @@
         </div>
 
         <div class="col-sm"> Hall</div>
-        <select id="modifyHallComboBox" th:field="*{hallId}" th:value="${hall}" required>
+        <select id="modifyHallComboBox" required th:field="*{hallId}" th:value="${hall}">
             <option th:each="hall : ${hallList}"
                     th:text="${hall.id}"
                     th:value="${hall.id}">1

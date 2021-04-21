@@ -3,7 +3,6 @@ package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 import com.ttbmp.cinehub.app.dto.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetHallListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetShiftListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftModifyRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewShiftForm;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.beans.PropertyEditorSupport;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 public class ShiftDetailViewController {
@@ -55,7 +52,6 @@ public class ShiftDetailViewController {
 
         boolean projection = selectedShift instanceof ShiftProjectionistDto;
 
-        useCase.getHallList(new GetHallListRequest(selectedCinema));
 
         model.addAttribute("projection", projection);
         model.addAttribute("shiftDetail", selectedShift);
@@ -81,7 +77,6 @@ public class ShiftDetailViewController {
         useCase.getCinemaList();
         CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
 
-        useCase.getHallList(new GetHallListRequest(selectedCinema));
 
         HallDto selectedHall = (HallDto) model.getAttribute("selectedHall");
 
