@@ -11,31 +11,15 @@ import com.ttbmp.cinehub.domain.ticket.component.Ticket;
  */
 public class TicketProxy extends Ticket {
 
-    private final UserRepository userRepository;
     private final SeatRepository seatRepository;
-    private boolean isUserLoaded = false;
     private boolean isSeatLoaded = false;
 
-    public TicketProxy(int id, long price, UserRepository userRepository, SeatRepository seatRepository) {
-        super(id, price, null, null);
+    public TicketProxy(int id, long price, SeatRepository seatRepository) {
+        super(id, price,  null);
         this.seatRepository = seatRepository;
-        this.userRepository = userRepository;
     }
 
 
-    @Override
-    public User getOwner() {
-        if (!isUserLoaded) {
-            setOwner(userRepository.getUser(this));
-        }
-        return super.getOwner();
-    }
-
-    @Override
-    public void setOwner(User owner) {
-        isUserLoaded = true;
-        super.setOwner(owner);
-    }
 
     @Override
     public Seat getSeat() {

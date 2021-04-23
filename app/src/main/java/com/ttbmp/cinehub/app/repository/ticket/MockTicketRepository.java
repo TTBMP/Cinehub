@@ -5,6 +5,7 @@ import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
 import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Projection;
+import com.ttbmp.cinehub.domain.User;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 import java.util.ArrayList;
@@ -37,11 +38,11 @@ public class MockTicketRepository implements TicketRepository {
     }
 
     @Override
-    public synchronized void saveTicket(Ticket ticket, Projection projection) {
+    public synchronized void saveTicket(Ticket ticket, User user, Projection projection) {
         TICKET_DATA_LIST.add(new TicketData(
                 counterTicketId++,
                 ticket.getPrice(),
-                ticket.getOwner().getId(),
+                user.getId(),
                 projection.getId(),
                 ticket.getSeat().getId()
 
@@ -56,7 +57,6 @@ public class MockTicketRepository implements TicketRepository {
                 .map(d -> new TicketProxy(
                         d.id,
                         d.price,
-                        serviceLocator.getService(UserRepository.class),
                         serviceLocator.getService(SeatRepository.class)
                 ))
                 .collect(Collectors.toList());
