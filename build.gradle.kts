@@ -17,6 +17,5 @@ sonarqube {
         property("sonar.projectKey", "TTBMP_Cinehub")
         property("sonar.organization", "ttbmp")
         property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.verbose", "true")
     }
 }
