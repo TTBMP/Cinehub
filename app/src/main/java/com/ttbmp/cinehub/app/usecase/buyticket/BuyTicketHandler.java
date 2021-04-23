@@ -8,40 +8,50 @@ import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
  */
 public class BuyTicketHandler implements BuyTicketUseCase {
 
-    private final BuyTicketController controller;
+    private final BuyTicketController buyTicketController;
 
     public BuyTicketHandler(BuyTicketPresenter presenter) {
-        controller = new BuyTicketController(new ServiceLocator(), presenter);
+        buyTicketController = new BuyTicketController(new ServiceLocator(), presenter);
     }
 
     @Override
-    public void pay(PayRequest request) {
-        controller.pay(request);
+    public void pay(PaymentRequest request) {
+        buyTicketController.pay(request);
     }
 
     @Override
     public void getListMovie(GetListMovieRequest request) {
-        controller.getListMovie(request);
+        buyTicketController.getListMovie(request);
     }
 
     @Override
     public void createTicket(GetTicketBySeatsRequest request) {
-        controller.createTicket(request);
+        buyTicketController.createTicket(request);
     }
 
     @Override
     public void getListCinema(GetListCinemaRequest request) {
-        controller.getListCinema(request);
+        buyTicketController.getListCinema(request);
     }
 
     @Override
-    public void getProjectionList(GetProjectionRequest request) {
-        controller.getProjectionList(request);
+    public void getCinema(GetCinemaRequest request) {
+        buyTicketController.getCinema(request);
+    }
+
+    @Override
+    public void getProjectionList(GetProjectionListRequest request) {
+        buyTicketController.getProjectionList(request);
     }
 
     @Override
     public void getListOfSeat(GetNumberOfSeatsRequest request) {
-        controller.getListOfSeat(request);
+        buyTicketController.getListOfSeat(request);
+    }
+
+    @Override
+    public void getProjection(GetProjectionRequest request) {
+        buyTicketController.getProjection(request);
     }
 
 }

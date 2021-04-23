@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift.form;
 
+import com.ttbmp.cinehub.app.dto.ProjectionDto;
+
 import java.time.LocalDate;
 
 public class GetCinemaForm {

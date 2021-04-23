@@ -55,7 +55,7 @@ public class BuyTicketController implements BuyTicketUseCase {
     }
 
     @Override
-    public void pay(PayRequest request) {
+    public void pay(PaymentRequest request) {
         try {
             Request.validate(request);
             User user = userRepository.getUser(authenticationService.signIn("", "").getUserId());
@@ -67,7 +67,7 @@ public class BuyTicketController implements BuyTicketUseCase {
                     ticket.getPrice()
             ));
             ticket.setOwner(user);
-            ticketRepository.saveTicket(ticket, request.getProjection().getId());
+            ticketRepository.saveTicket(ticket, ProjectionDataMapper.mapToEntity(request.getProjection()));
             emailService.sendMail(new EmailServiceRequest(
                     user.getEmail(),
                     "Payment receipt"
@@ -88,7 +88,7 @@ public class BuyTicketController implements BuyTicketUseCase {
         try {
             Request.validate(request);
             String localDate = request.getDate().toString();
-            List<Movie> movieList = movieRepository.getMovieList(localDate);//I recover them movies from the bee service
+            List<Movie> movieList = movieRepository.getMovieList(localDate);
             buyTicketPresenter.presentMovieApiList(new GetListMovieResponse(MovieDataMapper.mapToDtoList(movieList)));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetListMovieNullRequest();
@@ -103,7 +103,7 @@ public class BuyTicketController implements BuyTicketUseCase {
     public void getListCinema(GetListCinemaRequest request) {
         try {
             Request.validate(request);
-            Movie movie = MovieDataMapper.mapToEntity(request.getMovieDto());
+            Movie movie = movieRepository.getMovieById(request.getMovieId());
             String date = request.getData();
             List<Cinema> cinemaList = cinemaRepository.getListCinema(movie, date);
             buyTicketPresenter.presentCinemaList(new GetListCinemaResponse(CinemaDataMapper.mapToDtoList(cinemaList)));
@@ -149,22 +149,46 @@ public class BuyTicketController implements BuyTicketUseCase {
 
     /*To find the times of the screenings given a film, a cinema and a date*/
     @Override
-    public void getProjectionList(GetProjectionRequest request) {
+    public void getProjectionList(GetProjectionListRequest request) {
         try {
             Request.validate(request);
-            Cinema cinema = CinemaDataMapper.mapToEntity(request.getCinemaDto());
-            Movie movie = MovieDataMapper.mapToEntity(request.getMovieDto());
+            Cinema cinema = cinemaRepository.getCinema(request.getCinemaId());
+            Movie movie = movieRepository.getMovieById(request.getMovieId());
             String date = request.getLocalDate();
             List<Projection> projectionList = projectionRepository.getProjectionList(
                     cinema,
                     movie,
                     date);
             buyTicketPresenter.presentProjectionList(
-                    new ProjectionListResponse(ProjectionDataMapper.mapToDtoList(projectionList)));//Lista delle possiobili proiezioni da scegliere
+                    new GetProjectionListResponse(ProjectionDataMapper.mapToDtoList(projectionList)));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetTimeOfProjectionNullRequest();
         } catch (Request.InvalidRequestException e) {
             buyTicketPresenter.presentInvalidGetTimeOfProjection(request);
+        }
+    }
+
+
+    @Override
+    public void getProjection(GetProjectionRequest request) {
+        Projection projection = projectionRepository.getProjection(
+                request.getLocalDate(),
+                request.getStartTime(),
+                request.getHallId());
+        buyTicketPresenter.presentProjection(
+                new GetProjectionResponse(ProjectionDataMapper.mapToDto(projection)));
+    }
+
+    @Override
+    public void getCinema(GetCinemaRequest request) {
+        try {
+            Request.validate(request);
+            Cinema cinema = cinemaRepository.getCinema(ProjectionDataMapper.mapToEntity(request.getProjectionDto()));
+            buyTicketPresenter.presentCinema(new GetCinemaResponse(CinemaDataMapper.mapToDto(cinema)));
+        } catch (Request.NullRequestException e) {
+            buyTicketPresenter.presentGetListCinemaNullRequest();
+        } catch (Request.InvalidRequestException e) {
+            buyTicketPresenter.presentInvalidGetCinema(request);
         }
     }
 

@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.ui.desktop.buyticket.payment;
 
 
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.PayRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.PaymentRequest;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.desktop.buyticket.CustomDateCell;
@@ -95,7 +95,7 @@ public class PaymentViewController extends ViewController {
 
 
     private void startPayment(ActionEvent actionEvent) {
-        activity.getUseCase(BuyTicketUseCase.class).pay(new PayRequest(
+        activity.getUseCase(BuyTicketUseCase.class).pay(new PaymentRequest(
                 viewModel.selectedTicketProperty().getValue(),
                 viewModel.selectedProjectionProperty().getValue(),
                 viewModel.seatSelectedPosition().getValue(),

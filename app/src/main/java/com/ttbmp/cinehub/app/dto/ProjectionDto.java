@@ -14,12 +14,10 @@ public class ProjectionDto {
     private int id;
     private String date;
     private MovieDto movieDto;
-    private CinemaDto cinemaDto;
     private Projectionist projectionist;
     private List<TicketDto> listTicket;
 
     public ProjectionDto(MovieDto movie,
-                         CinemaDto cinema,
                          HallDto hall,
                          String startTime,
                          String date,
@@ -30,7 +28,6 @@ public class ProjectionDto {
         this.id = id;
         this.projectionist = projectionist;
         this.movieDto = movie;
-        this.cinemaDto = cinema;
         this.hallDto = hall;
         this.startTime = startTime;
         this.date = date;
@@ -65,14 +62,6 @@ public class ProjectionDto {
         return startTime;
     }
 
-
-    public CinemaDto getCinemaDto() {
-        return cinemaDto;
-    }
-
-    public void setCinemaDto(CinemaDto cinemaDto) {
-        this.cinemaDto = cinemaDto;
-    }
 
     public HallDto getHallDto() {
         return hallDto;
