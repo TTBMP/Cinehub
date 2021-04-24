@@ -56,8 +56,6 @@ public class ConfirmEmailViewController {
                 projection.getMovieDto(),
                 ticket.getDate()
         ));
-
-
         model.addAttribute("ticketId", ticket.getPosition());
         model.addAttribute("cinemaName", cinemaDto.getName());
         model.addAttribute("movieName", projection.getMovieDto().getName());

@@ -36,14 +36,14 @@ class BuyTicketBuyTicketControllerTest {
         @Override
         public void presentMovieApiList(GetListMovieResponse response) {
             try {
-                boolean result= true;
+                boolean result = true;
                 List<Movie> movieDtoList = serviceLocator.getService(MovieRepository.class)
                         .getMovieList(
                                 String.valueOf(LocalDate.now())
                         );
                 List<MovieDto> expected = MovieDataMapper.mapToDtoList(movieDtoList);
                 List<MovieDto> actual = response.getMovieList();
-                for(int i=0;i<expected.size();i++){
+                for (int i = 0; i < expected.size(); i++) {
                     if (expected.get(i).getId() != actual.get(i).getId()) {
                         result = false;
                         break;

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="english">
+<html lang="english" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
@@ -25,7 +25,6 @@
     <style>
 
 
-
         .flip-card {
             position: relative;
             width: auto;
@@ -46,11 +45,11 @@
         }
 
         .flip-card:hover {
-            -webkit-transform: rotate3d(0,1,0,-180deg);
-            -moz-transform: rotate3d(0,1,0,-180deg);
-            -o-transform: rotate3d(0,1,0,-180deg);
-            -ms-transform: rotate3d(0,1,0,-180deg);
-            transform: rotate3d(0,1,0,-180deg);
+            -webkit-transform: rotate3d(0, 1, 0, -180deg);
+            -moz-transform: rotate3d(0, 1, 0, -180deg);
+            -o-transform: rotate3d(0, 1, 0, -180deg);
+            -ms-transform: rotate3d(0, 1, 0, -180deg);
+            transform: rotate3d(0, 1, 0, -180deg);
         }
 
         .flip-card-front {
@@ -64,11 +63,11 @@
             background-color: black;
             width: auto;
             height: auto;
-            -webkit-transform: rotate3d(0,1,0,180deg);
-            -moz-transform: rotate3d(0,1,0,180deg);
-            -o-transform: rotate3d(0,1,0,180deg);
-            -ms-transform: rotate3d(0,1,0,180deg);
-            transform: rotate3d(0,1,0,180deg);
+            -webkit-transform: rotate3d(0, 1, 0, 180deg);
+            -moz-transform: rotate3d(0, 1, 0, 180deg);
+            -o-transform: rotate3d(0, 1, 0, 180deg);
+            -ms-transform: rotate3d(0, 1, 0, 180deg);
+            transform: rotate3d(0, 1, 0, 180deg);
             -webkit-backface-visibility: hidden;
             -moz-backface-visibility: hidden;
             -o-backface-visibility: hidden;
@@ -84,7 +83,7 @@
             font-weight: bold;
             letter-spacing: 2px;
             text-transform: uppercase;
-            text-shadow: 0 0 1px #fff, 0 1px 2px rgba(0,0,0,0.3);
+            text-shadow: 0 0 1px #fff, 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .flip-card-back p {
@@ -98,7 +97,7 @@
 
         .flip-card-back a {
             display: block;
-            color: rgba(85,85,85, 0.8);
+            color: rgba(85, 85, 85, 0.8);
             padding-top: 5px;
             font-size: 12px;
             font-style: normal;
@@ -108,16 +107,18 @@
         }
 
         .flip-card-back a:hover {
-            color: rgba(158,8,36,0.7);
+            color: rgba(158, 8, 36, 0.7);
         }
+
         div.scroll {
             background-color: black;
             border: black;
             width: auto;
             height: 500px;
-            overflow: auto ;
+            overflow: auto;
 
         }
+
         .slick-list:after {
             content: '';
             display: block;
@@ -133,7 +134,7 @@
     <div class="row justify-content-center text-center mb-5">
         <div class="col-12 text-center">
             <div class="col-md-5 p-lg-5 mx-auto my-5">
-                <h1 class="display-4 font-weight-normal" >Movies available </h1>
+                <h1 class="display-4 font-weight-normal">Movies available </h1>
                 <p class="lead font-weight-normal">Select a movie you like, we will find the cinemas that will present
                     it .</p>
             </div>
@@ -143,13 +144,13 @@
         </div>
         <div class="col-12 text-center">
             <h6 class="h6">Selected a date:</h6>
-            <input action="#" method="post" th:action="@{/choose_movie}" id="date-picker"
-                   onchange="window.location.href = '?date='+document.getElementById('date-picker').value;"
-                  th:value="${choose_date}"
-                  type="date">
-                <label for="date-picker"></label>
-            <a href="/choose_movie" >
-            <button class=" btn btn-primary"  type="button">Today</button>
+            <input action="#" id="date-picker" method="post" onchange="window.location.href = '?date='+document.getElementById('date-picker').value;"
+                   th:action="@{/choose_movie}"
+                   th:value="${choose_date}"
+                   type="date">
+            <label for="date-picker"></label>
+            <a href="/choose_movie">
+                <button class=" btn btn-primary" type="button">Today</button>
             </a>
         </div>
     </div>
@@ -157,59 +158,59 @@
     <div class="row justify-content-center ">
         <!--List Movie-->
         <tr th:each="movie,inter : ${movieList}">
-            <div class="col-lg-3 col-md-6 col-sm-12" >
-                    <!--Inizio modifica-->
-                    <div class="flip-card-container mb-4 " >
-                        <div class="flip-card" >
-                            <div id="flip-bob" class="flip-card-front">
-                                <h3 class="h3 mt-2 text-center">
-                                    <span th:text="${movie.name}"></span>
-                                </h3>
-                                <img class="rounded mx-auto d-block" th:id="${movie.movieUrl}"
-                                     th:name="${movie.movieUrl}" th:src="${movie.movieUrl}" alt=""
-                                     style="width:100%;max-width:400px">
-                            </div>
-                            <div class="flip-card-back">
-                                <div class="scroll">
-                                    <div class="row text-center">
-                                        <br>
-                                        <div class="col-12 text-center mt-4">
-                                            <h5 class="h5">Title:</h5>
-                                            <p th:text="${movie.name}" style="color: white"></p>
-                                        </div>
-                                        <div class="col-12 text-center">
-                                            <h5 class="h5">Vote:</h5>
-                                            <p th:text="${movie.vote}" style="color: white"></p>
-                                        </div>
-                                        <div class="col-12 text-center">
-                                            <h5 class="h5">Releases:</h5>
-                                            <p th:text="${movie.releases}" style="color: white"></p>
-                                        </div>
-                                        <div class="col-12 text-center">
-                                            <h5 class="h5">Overview:</h5>
-                                            <p th:text="${movie.overview}" style="color: white"></p>
-                                        </div>
-                                        <form action="#" method="post" th:action="@{/choose_cinema}"
-                                              th:object="${projection}">
-                                            <label>
-                                                <select style="display: none" th:field="*{movieId}">
-                                                    <option style="display: none" th:value="${movie.id}"></option>
-                                                </select>
-                                            </label>
-                                            <label>
-                                                <select style="display: none" th:field="*{date}">
-                                                    <option style="display: none" th:value="${choose_date}"></option>
-                                                </select>
-                                            </label>
-                                            <button class="btn btn-primary mt-2 mb-5" type="submit">Continue
-                                            </button>
-                                        </form>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <!--Inizio modifica-->
+                <div class="flip-card-container mb-4 ">
+                    <div class="flip-card">
+                        <div class="flip-card-front" id="flip-bob">
+                            <h3 class="h3 mt-2 text-center">
+                                <span th:text="${movie.name}"></span>
+                            </h3>
+                            <img alt="" class="rounded mx-auto d-block"
+                                 style="width:100%;max-width:400px" th:id="${movie.movieUrl}" th:name="${movie.movieUrl}"
+                                 th:src="${movie.movieUrl}">
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="scroll">
+                                <div class="row text-center">
+                                    <br>
+                                    <div class="col-12 text-center mt-4">
+                                        <h5 class="h5">Title:</h5>
+                                        <p style="color: white" th:text="${movie.name}"></p>
                                     </div>
+                                    <div class="col-12 text-center">
+                                        <h5 class="h5">Vote:</h5>
+                                        <p style="color: white" th:text="${movie.vote}"></p>
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <h5 class="h5">Releases:</h5>
+                                        <p style="color: white" th:text="${movie.releases}"></p>
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <h5 class="h5">Overview:</h5>
+                                        <p style="color: white" th:text="${movie.overview}"></p>
+                                    </div>
+                                    <form action="#" method="post" th:action="@{/choose_cinema}"
+                                          th:object="${projection}">
+                                        <label>
+                                            <select style="display: none" th:field="*{movieId}">
+                                                <option style="display: none" th:value="${movie.id}"></option>
+                                            </select>
+                                        </label>
+                                        <label>
+                                            <select style="display: none" th:field="*{date}">
+                                                <option style="display: none" th:value="${choose_date}"></option>
+                                            </select>
+                                        </label>
+                                        <button class="btn btn-primary mt-2 mb-5" type="submit">Continue
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!--/Fine modifica-->
+                </div>
+                <!--/Fine modifica-->
 
 
             </div>

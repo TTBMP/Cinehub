@@ -7,5 +7,4 @@ public interface PaymentService {
 
     void pay(PayServiceRequest payServiceRequest) throws PaymentServiceException;
 
-
 }

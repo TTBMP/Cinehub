@@ -16,4 +16,5 @@ public interface MovieRepository {
     Movie getMovie(Projection projection);
 
     Movie getMovieById(Integer movieId);
+
 }

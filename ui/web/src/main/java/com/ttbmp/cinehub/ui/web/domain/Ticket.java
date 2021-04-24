@@ -83,4 +83,5 @@ public class Ticket {
     public void setDate(String date) {
         this.date = date;
     }
+
 }

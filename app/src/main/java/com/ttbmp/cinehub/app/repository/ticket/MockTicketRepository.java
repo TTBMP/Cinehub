@@ -48,7 +48,6 @@ public class MockTicketRepository implements TicketRepository {
         ));
     }
 
-
     @Override
     public List<Ticket> getTicketList(Projection projection) {
         return TICKET_DATA_LIST.stream()

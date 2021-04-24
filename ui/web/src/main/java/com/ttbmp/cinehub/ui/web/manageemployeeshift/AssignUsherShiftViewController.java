@@ -37,21 +37,14 @@ public class AssignUsherShiftViewController {
 
     @GetMapping("/assign_usher_shift")
     public String assignUsherShift(@RequestParam(value = "idCinema") int cinemaId, Model model) {
-
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
         CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
-
         model.addAttribute("now", LocalDate.now().plusDays(1));
-
         NewShiftForm shiftRequest = new NewShiftForm();
         model.addAttribute(ASSIGN_REQUEST, shiftRequest);
-
-
         return "/assign_usher_shift";
     }
 
@@ -59,17 +52,15 @@ public class AssignUsherShiftViewController {
     public String assignUshShift(@RequestParam(value = "idCinema") int cinemaId,
                                  @ModelAttribute(ASSIGN_REQUEST) NewShiftForm request,
                                  Model model) {
+
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("selectedEmployeeId", request.getEmployeeId());
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
         CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
-
         EmployeeDto selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
         model.addAttribute("now", LocalDate.now().plusDays(1));
-
         useCase.createShift(new CreateShiftRequest(selectedEmployee, request.getDate(), request.getInizio(), request.getEnd()));
         boolean error = (boolean) model.getAttribute(ERROR);
         if (!error) {

@@ -137,17 +137,17 @@ public class MockProjectionRepository implements ProjectionRepository {
     @Override
     public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date, Integer hallId) {
         return PROJECTION_DATA_LIST.stream()
-                    .filter(d -> d.cinemaId == cinema.getId() && d.movieId == movie.getId() && d.date.equals(date) && d.hallId == hallId)
-                    .map(d -> new ProjectionProxy(
-                            d.id,
-                            d.date,
-                            d.startTime,
-                            serviceLocator.getService(MovieRepository.class),
-                            serviceLocator.getService(HallRepository.class),
-                            serviceLocator.getService(ProjectionistRepository.class),
-                            serviceLocator.getService(TicketRepository.class)
-                    ))
-                    .collect(Collectors.toList());
+                .filter(d -> d.cinemaId == cinema.getId() && d.movieId == movie.getId() && d.date.equals(date) && d.hallId == hallId)
+                .map(d -> new ProjectionProxy(
+                        d.id,
+                        d.date,
+                        d.startTime,
+                        serviceLocator.getService(MovieRepository.class),
+                        serviceLocator.getService(HallRepository.class),
+                        serviceLocator.getService(ProjectionistRepository.class),
+                        serviceLocator.getService(TicketRepository.class)
+                ))
+                .collect(Collectors.toList());
     }
 
     public static class ProjectionData {
@@ -229,4 +229,5 @@ public class MockProjectionRepository implements ProjectionRepository {
         }
 
     }
+
 }

@@ -62,4 +62,5 @@ public class NewShiftForm {
     public void setHallId(int hallId) {
         this.hallId = hallId;
     }
+
 }

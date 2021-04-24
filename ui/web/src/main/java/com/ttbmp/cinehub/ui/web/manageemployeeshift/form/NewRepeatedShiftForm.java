@@ -81,4 +81,5 @@ public class NewRepeatedShiftForm {
     public void setDateRepeated(LocalDate dateRepeated) {
         this.dateRepeated = dateRepeated;
     }
+
 }

@@ -21,7 +21,6 @@ import java.time.LocalDate;
 @Controller
 public class ChooseCinemaViewController {
 
-
     @PostMapping("/choose_cinema")
     public String chooseTimeOfProjectionPost(
             @ModelAttribute("projection") Projection projection,
@@ -35,7 +34,6 @@ public class ChooseCinemaViewController {
         return "choose_cinema";
     }
 
-
     @PostMapping("/choose_projection")
     public String getListSeat(
             @ModelAttribute("projection") Projection projection,
@@ -47,7 +45,6 @@ public class ChooseCinemaViewController {
                 LocalDate.parse(projection.getDate()),
                 0
         ));
-
         model.addAttribute("cinemaDtoId", projection.getCinemaId());
         model.addAttribute("projection", new Projection());
         return "/choose_cinema";

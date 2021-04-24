@@ -35,29 +35,21 @@ public class ShowShiftViewController {
     public String populateCinema(Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         useCase.getCinemaList();
-
         model.addAttribute("cinemaSelected", false);
         GetCinemaForm form = new GetCinemaForm();
         model.addAttribute("getShiftListRequest", form);
-
         return "/manage_employee_shift";
     }
 
     @PostMapping("/manage_employee_shift")
     public String loadShift(@ModelAttribute("getShiftListRequest") GetCinemaForm form, Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-
         model.addAttribute("idCinema", form.getCinemaId());
-
         useCase.getCinemaList();
-
         CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-
         model.addAttribute("cinemaSelected", true);
         useCase.getShiftList(new GetShiftListRequest(form.getStart(), selectedCinema));
-
         model.addAttribute("date", form.getStart());
-
         return "/manage_employee_shift";
     }
 

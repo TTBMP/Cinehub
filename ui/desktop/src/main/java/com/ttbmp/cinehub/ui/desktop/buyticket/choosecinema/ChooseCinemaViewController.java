@@ -92,7 +92,7 @@ public class ChooseCinemaViewController extends ViewController {
                             viewModel.selectedMovieProperty().getValue().getId(),
                             viewModel.selectedCinemaProperty().getValue().getId(),
                             viewModel.selectedDateProperty().getValue(),
-                    0
+                            0
                     )
             );
 

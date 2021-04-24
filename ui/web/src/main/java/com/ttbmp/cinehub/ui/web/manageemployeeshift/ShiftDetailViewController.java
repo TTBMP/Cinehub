@@ -37,22 +37,14 @@ public class ShiftDetailViewController {
                               Model model) {
 
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-
         model.addAttribute("shiftId", shiftId);
         model.addAttribute("idCinema", cinemaId);
-
         useCase.getCinemaList();
         CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
-
         EmployeeDto selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
-
         ShiftDto selectedShift = (ShiftDto) model.getAttribute("selectedShift");
-
         boolean projection = selectedShift instanceof ShiftProjectionistDto;
-
-
         model.addAttribute("projection", projection);
         model.addAttribute("shiftDetail", selectedShift);
         model.addAttribute("employee", selectedEmployee);
@@ -69,31 +61,20 @@ public class ShiftDetailViewController {
                               Model model) {
 
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-
         model.addAttribute("shiftId", shiftId);
         model.addAttribute("idCinema", cinemaId);
         model.addAttribute("selectedHallId", request.getHallId());
-
         useCase.getCinemaList();
         CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-
-
         HallDto selectedHall = (HallDto) model.getAttribute("selectedHall");
-
-
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
-
         ShiftDto selectedShift = (ShiftDto) model.getAttribute("selectedShift");
         EmployeeDto selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
-
         boolean projection = selectedShift instanceof ShiftProjectionistDto;
-
         model.addAttribute("projection", projection);
         model.addAttribute("shiftDetail", selectedShift);
         model.addAttribute("employee", selectedEmployee);
         model.addAttribute("now", LocalDate.now().plusDays(1));
-
-
         useCase.modifyShift(new ShiftModifyRequest(
                 selectedEmployee,
                 shiftId,
@@ -102,12 +83,11 @@ public class ShiftDetailViewController {
                 request.getEnd(),
                 selectedHall
         ));
-
         boolean error = (boolean) model.getAttribute(ERROR);
         if (!error) {
             return "shift_modify";
         }
         return "/shift_detail";
-
     }
+
 }

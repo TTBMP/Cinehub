@@ -36,18 +36,13 @@ public class DeleteShiftViewController {
                               @RequestParam("shiftId") int shiftId,
                               Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-
         model.addAttribute("shiftId", shiftId);
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
         CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
-
         ShiftDto selectedShift = (ShiftDto) model.getAttribute("selectedShift");
-
         useCase.deleteShift(new ShiftRequest(selectedShift));
-
         return "/delete_shift";
     }
 }

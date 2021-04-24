@@ -41,13 +41,10 @@ public class AssignRepeatedUsherShiftViewController {
     @GetMapping("/assign_repeated_usher_shift")
     public String assignRepeatedUsherShift(@RequestParam(value = "idCinema") int cinemaId, Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
         CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
-
         model.addAttribute("now", LocalDate.now().plusDays(1));
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
         NewRepeatedShiftForm request = new NewRepeatedShiftForm();
@@ -58,20 +55,16 @@ public class AssignRepeatedUsherShiftViewController {
     @PostMapping("/assign_repeated_usher_shift")
     public String assignRepeatedUshShift(@RequestParam(value = "idCinema") int cinemaId, @ModelAttribute(ASSIGN_REQUEST) NewRepeatedShiftForm request,
                                          Model model) {
-        ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
 
+        ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("selectedEmployeeId", request.getEmployeeId());
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
         CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
-
         model.addAttribute("now", LocalDate.now().plusDays(1));
-
         EmployeeDto selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
-
         useCase.saveRepeatedShift(new ShiftRepeatRequest(
                 request.getDate(),
                 request.getDateRepeated(),
@@ -86,4 +79,5 @@ public class AssignRepeatedUsherShiftViewController {
         }
         return "/assign_repeated_usher_shift";
     }
+
 }

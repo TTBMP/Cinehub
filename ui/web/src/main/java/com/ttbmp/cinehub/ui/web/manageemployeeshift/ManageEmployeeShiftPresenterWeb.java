@@ -29,16 +29,13 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     @Override
     public void presentShiftList(GetShiftListResponse shiftList) {
         TemporalField temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
-
         LocalDate dateSelected = shiftList.getDate();
         int cinemaSelected = shiftList.getCinemaId();
-
         List<EmployeeDto> employeeList = shiftList.getShiftDtoList().stream()
                 .map(ShiftDto::getEmployee)
                 .filter(employee -> employee.getCinema().getId() == cinemaSelected)
                 .distinct()
                 .collect(Collectors.toList());
-
         List<EmployeeDto> tmp = new ArrayList<>();
         for (int i = 0, employeeListSize = employeeList.size(); i < employeeListSize; i++) {
             boolean duplicate = false;
@@ -54,7 +51,6 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
         }
         employeeList = tmp;
         model.addAttribute("employeeList", employeeList);
-
         model.addAttribute("projectionistList", employeeList.stream()
                 .filter(employeeDto -> employeeDto.getClass()
                         .equals(ProjectionistDto.class))
@@ -65,9 +61,7 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
                 .collect(Collectors.toList()));
 
         findEmployee(employeeList);
-
         findShift(shiftList.getShiftDtoList());
-
         Map<EmployeeDto, List<ShiftDto>> employeeShiftListMap = new HashMap<>();
         for (EmployeeDto employee : employeeList) {
             employeeShiftListMap.put(
@@ -79,14 +73,12 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
                             .collect(Collectors.toList())
             );
         }
-
         model.addAttribute("shiftList", employeeShiftListMap);
     }
 
     @Override
     public void presentCinemaList(GetCinemaListResponse listCinema) {
         model.addAttribute("cinemaList", listCinema.getCinemaList());
-
         if (model.getAttribute("idCinema") != null) {
             int idCinema = (int) model.getAttribute("idCinema");
             for (CinemaDto cinemaDto : listCinema.getCinemaList()) {
@@ -96,7 +88,6 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
                 }
             }
         }
-
         if (model.getAttribute("selectedHallId") != null) {
             List<HallDto> hallDtoList = (List<HallDto>) model.getAttribute("hallList");
             int hallId = (int) model.getAttribute("selectedHallId");
@@ -158,7 +149,6 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
 
     @Override
     public void presentInvalidModifyShiftListRequest(ShiftModifyRequest request) {
-
         if (request.getErrorList().contains(ShiftModifyRequest.MISSING_SHIFT)) {
             model.addAttribute(ERROR_TEXT, ShiftModifyRequest.MISSING_SHIFT.getMessage());
         }
@@ -197,7 +187,6 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
 
     @Override
     public void presentInvalidCreateShiftListRequest(CreateShiftRequest request) {
-
         if (request.getErrorList().contains(CreateShiftRequest.MISSING_EMPLOYEE)) {
             model.addAttribute(ERROR_TEXT, CreateShiftRequest.MISSING_EMPLOYEE.getMessage());
             model.addAttribute(ERROR_TEXT, CreateShiftRequest.MISSING_EMPLOYEE.getMessage());
@@ -315,4 +304,5 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
             }
         }
     }
+
 }
