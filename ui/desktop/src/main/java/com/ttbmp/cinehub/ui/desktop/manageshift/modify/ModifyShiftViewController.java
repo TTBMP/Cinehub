@@ -3,7 +3,6 @@ package com.ttbmp.cinehub.ui.desktop.manageshift.modify;
 import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.app.dto.UsherDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetHallListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftModifyRequest;
 import com.ttbmp.cinehub.ui.desktop.manageshift.ManageEmployeesShiftViewModel;
 import com.ttbmp.cinehub.ui.desktop.manageshift.components.HallFactory;
@@ -84,7 +83,7 @@ public class ModifyShiftViewController extends ViewController {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
             hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
         } else {
-            activity.getUseCase(ManageEmployeesShiftUseCase.class).getHallList(new GetHallListRequest(viewModel.getSelectedShift().getEmployee().getCinema()));
+            viewModel.getHallList().setAll(viewModel.getSelectedShift().getEmployee().getCinema().getHalList());
             hallComboBox.setItems(viewModel.getHallList());
             viewModel.selectedHallProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
         }

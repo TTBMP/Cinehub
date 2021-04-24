@@ -1,22 +1,22 @@
-package com.ttbmp.cinehub.ui.web.manageemployeeshift;
+package com.ttbmp.cinehub.ui.web.manageemployeeshift.form;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class NewRepeatedShiftRequest {
+public class NewRepeatedShiftForm {
 
-    String employeeId;
-    LocalDate date;
-    LocalTime start;
-    LocalTime end;
-    int hallId;
-    String preference;
-    LocalDate dateRepeated;
+    private String employeeId;
+    private LocalDate date;
+    private LocalTime start;
+    private LocalTime end;
+    private int hallId;
+    private String preference;
+    private LocalDate dateRepeated;
 
-    public NewRepeatedShiftRequest() {
+    public NewRepeatedShiftForm() {
     }
 
-    public NewRepeatedShiftRequest(String employeeId, LocalDate date, LocalTime start, LocalTime end, int hallId, String preference, LocalDate dateRepeated) {
+    public NewRepeatedShiftForm(String employeeId, LocalDate date, LocalTime start, LocalTime end, int hallId, String preference, LocalDate dateRepeated) {
         this.employeeId = employeeId;
         this.date = date;
         this.start = start;

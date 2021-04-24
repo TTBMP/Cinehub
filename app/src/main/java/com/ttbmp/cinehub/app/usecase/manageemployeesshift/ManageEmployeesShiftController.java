@@ -8,14 +8,16 @@ import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
-import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftSaveException;
 import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.app.usecase.Request;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.CreateShiftResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetCinemaListResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetShiftListResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.ShiftRepeatResponse;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.shift.ModifyShiftException;
 import com.ttbmp.cinehub.domain.shift.Shift;
@@ -37,7 +39,6 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
 
     private final ShiftRepository shiftRepository;
     private final CinemaRepository cinemaRepository;
-    private final HallRepository hallRepository;
     private final EmailService emailService;
     private final EmployeeRepository employeeRepository;
 
@@ -45,7 +46,6 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         this.manageEmployeesShiftPresenter = manageEmployeesShiftPresenter;
         this.shiftRepository = serviceLocator.getService(ShiftRepository.class);
         this.cinemaRepository = serviceLocator.getService(CinemaRepository.class);
-        this.hallRepository = serviceLocator.getService(HallRepository.class);
         this.emailService = serviceLocator.getService(EmailService.class);
         this.employeeRepository = serviceLocator.getService(EmployeeRepository.class);
     }
@@ -57,21 +57,6 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         ));
     }
 
-    @Override
-    public void getHallList(GetHallListRequest request) {
-        try {
-            Request.validate(request);
-            manageEmployeesShiftPresenter.presentHallList(new GetHallListResponse(
-                    HallDataMapper.mapToDtoList(hallRepository.getHallList(
-                            CinemaDataMapper.mapToEntity(request.getCinema())
-                    ))
-            ));
-        } catch (Request.NullRequestException e) {
-            manageEmployeesShiftPresenter.presentHallListNullRequest();
-        } catch (Request.InvalidRequestException e) {
-            manageEmployeesShiftPresenter.presentInvalidHallListRequest(request);
-        }
-    }
 
     @Override
     public void getShiftList(GetShiftListRequest request) {
@@ -80,7 +65,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             manageEmployeesShiftPresenter.presentShiftList(new GetShiftListResponse(
                     ShiftDataMapper.mapToDtoList(shiftRepository.getShiftList()),
                     request.getStart(),
-                    request.getCinema())
+                    request.getCinema().getId())
             );
         } catch (Request.NullRequestException e) {
             manageEmployeesShiftPresenter.presentGetShiftListNullRequest();
