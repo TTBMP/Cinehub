@@ -10,7 +10,6 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodExcep
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -45,7 +44,7 @@ public class DaoDeleteOperation extends DaoOperation {
     @Override
     public Object execute(Object[] args) throws InvocationTargetException, SQLException, NoSuchMethodException, IllegalAccessException {
         // TODO: Handle foreign key delete behaviour
-        try (PreparedStatement statement = connection.prepareStatement(
+        try (var statement = connection.prepareStatement(
                 queryTemplate,
                 ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE
@@ -61,7 +60,7 @@ public class DaoDeleteOperation extends DaoOperation {
                 }
                 statement.executeBatch();
             } else {
-                Object dto = args[0];
+                var dto = args[0];
                 DaoOperationHelper.bindPreparedStatement(
                         statement,
                         DaoOperationHelper.getParameterMap(dto, dtoPrimaryKeyColumnNameList),

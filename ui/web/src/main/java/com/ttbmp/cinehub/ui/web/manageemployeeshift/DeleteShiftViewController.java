@@ -39,9 +39,9 @@ public class DeleteShiftViewController {
         model.addAttribute("shiftId", shiftId);
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
-        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
+        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
-        ShiftDto selectedShift = (ShiftDto) model.getAttribute("selectedShift");
+        var selectedShift = (ShiftDto) model.getAttribute("selectedShift");
         useCase.deleteShift(new ShiftRequest(selectedShift));
         return "/delete_shift";
     }

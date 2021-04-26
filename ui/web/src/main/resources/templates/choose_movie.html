@@ -144,7 +144,8 @@
         </div>
         <div class="col-12 text-center">
             <h6 class="h6">Selected a date:</h6>
-            <input action="#" id="date-picker" method="post" onchange="window.location.href = '?date='+document.getElementById('date-picker').value;"
+            <input action="#" id="date-picker" method="post"
+                   onchange="window.location.href = '?date='+document.getElementById('date-picker').value;"
                    th:action="@{/choose_movie}"
                    th:value="${choose_date}"
                    type="date">
@@ -167,7 +168,8 @@
                                 <span th:text="${movie.name}"></span>
                             </h3>
                             <img alt="" class="rounded mx-auto d-block"
-                                 style="width:100%;max-width:400px" th:id="${movie.movieUrl}" th:name="${movie.movieUrl}"
+                                 style="width:100%;max-width:400px" th:id="${movie.movieUrl}"
+                                 th:name="${movie.movieUrl}"
                                  th:src="${movie.movieUrl}">
                         </div>
                         <div class="flip-card-back">

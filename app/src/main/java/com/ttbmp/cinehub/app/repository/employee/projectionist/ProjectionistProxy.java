@@ -6,7 +6,6 @@ import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.CreditCard;
-import com.ttbmp.cinehub.domain.User;
 import com.ttbmp.cinehub.domain.employee.Projectionist;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
@@ -66,7 +65,7 @@ public class ProjectionistProxy extends Projectionist {
     }
 
     private void loadUser() {
-        User user = userRepository.getUser(getId());
+        var user = userRepository.getUser(getId());
         setName(user.getName());
         setSurname(user.getSurname());
         setEmail(user.getEmail());

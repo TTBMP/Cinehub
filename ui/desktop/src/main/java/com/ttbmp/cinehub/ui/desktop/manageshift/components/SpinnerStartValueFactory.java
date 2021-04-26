@@ -26,7 +26,7 @@ public class SpinnerStartValueFactory extends SpinnerValueFactory<LocalTime> {
         if (getValue() == null)
             setValue(LocalTime.NOON.minusNanos(0));
         else {
-            LocalTime time = getValue();
+            var time = getValue();
             if (time.isAfter(LocalTime.MIN))
                 setValue(time.minusMinutes(5));
         }
@@ -37,7 +37,7 @@ public class SpinnerStartValueFactory extends SpinnerValueFactory<LocalTime> {
         if (getValue() == null)
             setValue(LocalTime.NOON.minusNanos(0));
         else {
-            LocalTime time = getValue();
+            var time = getValue();
             if (time.equals(LocalTime.MIN) || time.isAfter(LocalTime.MIN) &&
                     (time.isBefore(end.getValue().minusMinutes(5))))
                 setValue(time.plusMinutes(5));

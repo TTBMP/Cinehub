@@ -36,7 +36,7 @@ public class ConfirmEmailViewController {
                 LocalDate.parse(ticket.getDate()),
                 ticket.getHallId()
         ));
-        ProjectionDto projection = ((List<ProjectionDto>) model.getAttribute("projectionList")).get(0);
+        var projection = ((List<ProjectionDto>) model.getAttribute("projectionList")).get(0);
         buyTicketUseCase.createTicket(new GetTicketBySeatsRequest(
                 projection.getHallDto().getSeatList(),
                 ticket.getPosition(),
@@ -46,8 +46,8 @@ public class ConfirmEmailViewController {
                 ticket.getOption3()
         ));
         buyTicketUseCase.getCinema(new GetCinemaRequest(projection));
-        CinemaDto cinemaDto = (CinemaDto) model.getAttribute("cinema");
-        TicketDto ticketDto = (TicketDto) model.getAttribute("selectedTicket");
+        var cinemaDto = (CinemaDto) model.getAttribute("cinema");
+        var ticketDto = (TicketDto) model.getAttribute("selectedTicket");
         buyTicketUseCase.pay(new PaymentRequest(
                 ticketDto,
                 projection,

@@ -43,11 +43,11 @@ public class AssignRepeatedUsherShiftViewController {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
-        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
+        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
-        NewRepeatedShiftForm request = new NewRepeatedShiftForm();
+        var request = new NewRepeatedShiftForm();
         model.addAttribute(ASSIGN_REQUEST, request);
         return "/assign_repeated_usher_shift";
     }
@@ -60,10 +60,10 @@ public class AssignRepeatedUsherShiftViewController {
         model.addAttribute("selectedEmployeeId", request.getEmployeeId());
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
-        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
+        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
         model.addAttribute("now", LocalDate.now().plusDays(1));
-        EmployeeDto selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
+        var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
         useCase.saveRepeatedShift(new ShiftRepeatRequest(
                 request.getDate(),
@@ -73,7 +73,7 @@ public class AssignRepeatedUsherShiftViewController {
                 request.getStart(),
                 request.getEnd(),
                 null));
-        boolean error = (boolean) model.getAttribute(ERROR);
+        var error = (boolean) model.getAttribute(ERROR);
         if (!error) {
             return SHIFT_ASSIGNED;
         }

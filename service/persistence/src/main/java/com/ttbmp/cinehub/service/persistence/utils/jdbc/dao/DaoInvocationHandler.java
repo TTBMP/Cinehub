@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.service.persistence.utils.jdbc.dao;
 
-import com.ttbmp.cinehub.service.persistence.utils.jdbc.dao.operation.DaoOperation;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.dao.operation.DaoOperationProvider;
 
 import javax.validation.constraints.NotNull;
@@ -27,7 +26,7 @@ public class DaoInvocationHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        DaoOperation operation = operationProvider.getDaoOperation(method, connection, dataSourceEntityList);
+        var operation = operationProvider.getDaoOperation(method, connection, dataSourceEntityList);
         return operation.execute(args);
     }
 

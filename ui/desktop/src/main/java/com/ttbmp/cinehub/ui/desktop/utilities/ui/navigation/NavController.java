@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation;
 
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.stage.DialogStage;
 import javafx.stage.Stage;
 
@@ -27,7 +26,7 @@ public class NavController {
         if (destination instanceof NavActivityDestination) {
             currentDestination = destination;
         } else {
-            Activity activity = currentDestination.activity;
+            var activity = currentDestination.activity;
             currentDestination = destination;
             currentDestination.activity = activity;
         }
@@ -39,7 +38,7 @@ public class NavController {
     public void openInDialog(NavDestination destination, String title) throws IOException {
         Objects.requireNonNull(destination);
         Objects.requireNonNull(title);
-        NavController dialogNavController = new NavController(new DialogStage(stage, title));
+        var dialogNavController = new NavController(new DialogStage(stage, title));
         dialogNavController.navigate(new NavActivityDestination(currentDestination.activity, destination.view));
         dialogNavController.stage.show();
     }
@@ -54,7 +53,7 @@ public class NavController {
             if (navBackStack.isEmpty()) {
                 stage.close();
             } else {
-                NavDestination destination = navBackStack.pop();
+                var destination = navBackStack.pop();
                 navigate(destination);
                 currentDestination = destination;
             }

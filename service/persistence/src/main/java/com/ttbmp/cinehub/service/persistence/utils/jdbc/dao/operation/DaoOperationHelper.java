@@ -30,9 +30,9 @@ public class DaoOperationHelper {
     }
 
     private static Class<?> getActualDtoType(@NotNull Type genericInputType, List<Class<?>> dataSourceEntityList) throws DaoMethodException {
-        Type[] actualTypeArguments = ((ParameterizedType) genericInputType).getActualTypeArguments();
+        var actualTypeArguments = ((ParameterizedType) genericInputType).getActualTypeArguments();
         if (actualTypeArguments.length == 1) {
-            Class<?> genericType = (Class<?>) actualTypeArguments[0];
+            var genericType = (Class<?>) actualTypeArguments[0];
             if (dataSourceEntityList.contains(genericType)) {
                 return genericType;
             }
@@ -43,11 +43,11 @@ public class DaoOperationHelper {
     public static List<Method> getDtoSetterList(@NotNull Class<?> dtoType, @NotNull List<String> columnNameList) throws NoSuchMethodException {
         // TODO: columnNameList is probably useless
         List<Method> dtoSetterList = new ArrayList<>();
-        Field[] dtoFields = dtoType.getDeclaredFields();
-        for (int i = 0; i < dtoFields.length; i++) {
+        var dtoFields = dtoType.getDeclaredFields();
+        for (var i = 0; i < dtoFields.length; i++) {
             if (columnNameList.get(i) != null) {
-                String fieldName = dtoFields[i].getName();
-                String setterName = "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                var fieldName = dtoFields[i].getName();
+                var setterName = "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
                 dtoSetterList.add(dtoType.getMethod(setterName, dtoFields[i].getType()));
             }
         }
@@ -56,11 +56,11 @@ public class DaoOperationHelper {
 
     public static List<Method> getResultSetGetterList(@NotNull Class<?> dtoType, @NotNull List<String> columnNameList) throws NoSuchMethodException {
         List<Method> resultSetGetterList = new ArrayList<>();
-        Field[] dtoFields = dtoType.getDeclaredFields();
-        for (int i = 0; i < dtoFields.length; i++) {
+        var dtoFields = dtoType.getDeclaredFields();
+        for (var i = 0; i < dtoFields.length; i++) {
             if (columnNameList.get(i) != null) {
-                String fieldTypeName = dtoFields[i].getType().getSimpleName();
-                String getterName = "get" + fieldTypeName.substring(0, 1).toUpperCase() + fieldTypeName.substring(1);
+                var fieldTypeName = dtoFields[i].getType().getSimpleName();
+                var getterName = "get" + fieldTypeName.substring(0, 1).toUpperCase() + fieldTypeName.substring(1);
                 resultSetGetterList.add(ResultSet.class.getMethod(getterName, String.class));
             }
         }
@@ -68,7 +68,7 @@ public class DaoOperationHelper {
     }
 
     public static String getFieldColumnName(@NotNull Field field) {
-        ColumnInfo fieldAnnotation = field.getAnnotation(ColumnInfo.class);
+        var fieldAnnotation = field.getAnnotation(ColumnInfo.class);
         if (fieldAnnotation == null) {
             return null;
         } else if (fieldAnnotation.name().equals("[field-name]")) {
@@ -81,14 +81,14 @@ public class DaoOperationHelper {
     public static <T> Map<String, Object> getParameterMap(@NotNull T dto, @NotNull List<String> columnNameList) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         Map<String, Object> result = new HashMap<>();
         if (!columnNameList.isEmpty()) {
-            Map<String, Field> fieldMap = Arrays.stream(dto.getClass().getDeclaredFields())
+            var fieldMap = Arrays.stream(dto.getClass().getDeclaredFields())
                     .filter(f -> columnNameList.contains(f.getAnnotation(ColumnInfo.class).name()))
                     .collect(Collectors.toMap(f -> f.getAnnotation(ColumnInfo.class).name(), f -> f));
-            for (String columnName : columnNameList) {
-                Field field = fieldMap.get(columnName);
-                String fieldName = field.getName();
-                String methodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-                Method fieldGetMethod = dto.getClass().getMethod(methodName);
+            for (var columnName : columnNameList) {
+                var field = fieldMap.get(columnName);
+                var fieldName = field.getName();
+                var methodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                var fieldGetMethod = dto.getClass().getMethod(methodName);
                 result.put(columnName, fieldGetMethod.invoke(dto));
             }
         }
@@ -98,15 +98,15 @@ public class DaoOperationHelper {
     public static void bindPreparedStatement(@NotNull PreparedStatement statement, @NotNull Map<String, Object> parameterMap, @NotNull List<String> columnNameList) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         if (!columnNameList.isEmpty()) {
             Iterator<String> columnNameIterator = columnNameList.listIterator();
-            for (int i = 0; i < columnNameList.size(); i++) {
-                Object parameter = parameterMap.get(columnNameIterator.next());
-                Class<?> typeClass = parameter.getClass();
+            for (var i = 0; i < columnNameList.size(); i++) {
+                var parameter = parameterMap.get(columnNameIterator.next());
+                var typeClass = parameter.getClass();
                 if (typeClass.equals(Integer.class)) {
                     typeClass = int.class;
                 }
-                String typeName = typeClass.getSimpleName();
-                String methodName = "set" + typeName.substring(0, 1).toUpperCase() + typeName.substring(1);
-                Method statementSetMethod = PreparedStatement.class.getMethod(methodName, int.class, typeClass);
+                var typeName = typeClass.getSimpleName();
+                var methodName = "set" + typeName.substring(0, 1).toUpperCase() + typeName.substring(1);
+                var statementSetMethod = PreparedStatement.class.getMethod(methodName, int.class, typeClass);
                 statementSetMethod.invoke(statement, i + 1, parameter);
             }
         }

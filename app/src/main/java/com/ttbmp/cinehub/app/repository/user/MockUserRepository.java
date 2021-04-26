@@ -51,7 +51,7 @@ public class MockUserRepository implements UserRepository {
 
     @Override
     public User getUser(Ticket ticket) {
-        String ticketUserId = MockTicketRepository.getTicketDataList().stream()
+        var ticketUserId = MockTicketRepository.getTicketDataList().stream()
                 .filter(d -> d.getId() == ticket.getId())
                 .map(MockTicketRepository.TicketData::getUserId)
                 .collect(Collectors.toList())

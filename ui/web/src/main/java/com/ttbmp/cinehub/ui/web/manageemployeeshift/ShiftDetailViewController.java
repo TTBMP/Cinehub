@@ -40,16 +40,16 @@ public class ShiftDetailViewController {
         model.addAttribute("shiftId", shiftId);
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
-        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
+        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
-        EmployeeDto selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
-        ShiftDto selectedShift = (ShiftDto) model.getAttribute("selectedShift");
-        boolean projection = selectedShift instanceof ShiftProjectionistDto;
+        var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
+        var selectedShift = (ShiftDto) model.getAttribute("selectedShift");
+        var projection = selectedShift instanceof ShiftProjectionistDto;
         model.addAttribute("projection", projection);
         model.addAttribute("shiftDetail", selectedShift);
         model.addAttribute("employee", selectedEmployee);
         model.addAttribute("now", LocalDate.now().plusDays(1));
-        NewShiftForm request = new NewShiftForm();
+        var request = new NewShiftForm();
         model.addAttribute("modifyRequest", request);
         return "/shift_detail";
     }
@@ -65,12 +65,12 @@ public class ShiftDetailViewController {
         model.addAttribute("idCinema", cinemaId);
         model.addAttribute("selectedHallId", request.getHallId());
         useCase.getCinemaList();
-        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        HallDto selectedHall = (HallDto) model.getAttribute("selectedHall");
+        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
+        var selectedHall = (HallDto) model.getAttribute("selectedHall");
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
-        ShiftDto selectedShift = (ShiftDto) model.getAttribute("selectedShift");
-        EmployeeDto selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
-        boolean projection = selectedShift instanceof ShiftProjectionistDto;
+        var selectedShift = (ShiftDto) model.getAttribute("selectedShift");
+        var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
+        var projection = selectedShift instanceof ShiftProjectionistDto;
         model.addAttribute("projection", projection);
         model.addAttribute("shiftDetail", selectedShift);
         model.addAttribute("employee", selectedEmployee);
@@ -83,7 +83,7 @@ public class ShiftDetailViewController {
                 request.getEnd(),
                 selectedHall
         ));
-        boolean error = (boolean) model.getAttribute(ERROR);
+        var error = (boolean) model.getAttribute(ERROR);
         if (!error) {
             return "shift_modify";
         }

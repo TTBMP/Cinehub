@@ -20,7 +20,7 @@ public class ViewPersonalScheduleFxPresenter implements ViewPersonalSchedulePres
 
     @Override
     public void presentInvalidShiftListRequest(ShiftListRequest request) {
-        String message = "";
+        var message = "";
         if (request.getErrorList().contains(ShiftListRequest.MISSING_START_TIME_ERROR)) {
             message += ShiftListRequest.MISSING_START_TIME_ERROR.getMessage() + "\n";
         }
@@ -50,7 +50,7 @@ public class ViewPersonalScheduleFxPresenter implements ViewPersonalSchedulePres
 
     @Override
     public void presentInvalidProjectionListRequest(ProjectionListRequest request) {
-        String message = "";
+        var message = "";
         if (request.getErrorList().contains(ProjectionListRequest.INVALID_SHIFT_ID_ERROR)) {
             message += ProjectionListRequest.INVALID_SHIFT_ID_ERROR.getMessage() + "\n";
         }

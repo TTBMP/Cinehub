@@ -152,14 +152,14 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentAutenticationError() {
-        viewModel.autenticationErrorProperty().setValue("Problems with accessing the server ");
+    public void presentAuthenticationError() {
+        viewModel.authenticationErrorProperty().setValue("Problems with accessing the server ");
 
     }
 
     @Override
     public void presentInvalidGetCinema(GetCinemaRequest request) {
-        viewModel.cinemaErrorProperty().setValue("Problems with retrive the cinema ");
+        viewModel.cinemaErrorProperty().setValue("Problems with retrieve the cinema ");
     }
 
 

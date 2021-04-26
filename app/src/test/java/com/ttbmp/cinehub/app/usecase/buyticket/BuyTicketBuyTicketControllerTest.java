@@ -2,18 +2,15 @@ package com.ttbmp.cinehub.app.usecase.buyticket;
 
 import com.ttbmp.cinehub.app.datamapper.MovieDataMapper;
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
-import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
-import com.ttbmp.cinehub.domain.Movie;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
 
 
 class BuyTicketBuyTicketControllerTest {
@@ -22,7 +19,7 @@ class BuyTicketBuyTicketControllerTest {
 
     @Test
     void getListMovie_whitCorrectRequest_notGenerateErrors() {
-        BuyTicketController buyTicketController = new BuyTicketController(
+        var buyTicketController = new BuyTicketController(
                 serviceLocator,
                 new MockBuyTicketPresenter()
         );
@@ -36,14 +33,14 @@ class BuyTicketBuyTicketControllerTest {
         @Override
         public void presentMovieApiList(GetListMovieResponse response) {
             try {
-                boolean result = true;
-                List<Movie> movieDtoList = serviceLocator.getService(MovieRepository.class)
+                var result = true;
+                var movieDtoList = serviceLocator.getService(MovieRepository.class)
                         .getMovieList(
                                 String.valueOf(LocalDate.now())
                         );
-                List<MovieDto> expected = MovieDataMapper.mapToDtoList(movieDtoList);
-                List<MovieDto> actual = response.getMovieList();
-                for (int i = 0; i < expected.size(); i++) {
+                var expected = MovieDataMapper.mapToDtoList(movieDtoList);
+                var actual = response.getMovieList();
+                for (var i = 0; i < expected.size(); i++) {
                     if (expected.get(i).getId() != actual.get(i).getId()) {
                         result = false;
                         break;
@@ -157,7 +154,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentAutenticationError() {
+        public void presentAuthenticationError() {
 
         }
 

@@ -69,7 +69,7 @@ public class MovieProxy extends Movie {
 
     private void loadMovie() {
         try {
-            Movie movie = movieApiService.getMovie(getId());
+            var movie = movieApiService.getMovie(getId());
             setName(movie.getName());
             setOverview(movie.getOverview());
             setDuration(movie.getDuration());

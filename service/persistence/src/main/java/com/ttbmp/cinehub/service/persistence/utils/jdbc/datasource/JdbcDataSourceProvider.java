@@ -29,7 +29,7 @@ public class JdbcDataSourceProvider {
     private static <T extends JdbcDataSource> T createDataSource(@NotNull Class<T> dataSourceClass)
             throws DataSourceClassException, SQLException, ClassNotFoundException {
 
-        Database databaseAnnotation = dataSourceClass.getAnnotation(Database.class);
+        var databaseAnnotation = dataSourceClass.getAnnotation(Database.class);
         if (databaseAnnotation == null) {
             throw new DataSourceClassException();
         }

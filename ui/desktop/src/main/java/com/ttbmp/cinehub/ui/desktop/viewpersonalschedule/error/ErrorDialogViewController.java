@@ -18,7 +18,7 @@ public class ErrorDialogViewController extends ViewController {
 
     @Override
     protected void onLoad() {
-        ViewPersonalScheduleViewModel viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
+        var viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
         messageLabel.setText(viewModel.getErrorMessage());
         closeButton.setOnAction(e -> {
             try {

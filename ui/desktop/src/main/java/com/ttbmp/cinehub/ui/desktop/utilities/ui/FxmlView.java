@@ -4,7 +4,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Objects;
 
 /**
@@ -17,7 +16,7 @@ public abstract class FxmlView extends View {
     protected FxmlView(String fxmlResourceName) throws IOException {
         super();
         Objects.requireNonNull(fxmlResourceName);
-        URL fxmlResourceUrl = this.getClass().getResource("/layout/" + fxmlResourceName);
+        var fxmlResourceUrl = this.getClass().getResource("/layout/" + fxmlResourceName);
         Objects.requireNonNull(fxmlResourceUrl);
         loader = new FXMLLoader(fxmlResourceUrl);
     }

@@ -16,7 +16,7 @@ public abstract class View {
     private final List<String> stylesheetList = new ArrayList<>();
 
     protected View() throws IOException {
-        String instanceName = this.getClass().getSimpleName();
+        var instanceName = this.getClass().getSimpleName();
         if (!this.getClass().getName().matches(".*View$")) {
             throw new IOException("Invalid View class name: " + instanceName + "view classes must end with the View suffix");
         }

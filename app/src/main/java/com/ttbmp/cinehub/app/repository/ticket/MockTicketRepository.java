@@ -20,7 +20,7 @@ public class MockTicketRepository implements TicketRepository {
     private static int counterTicketId = 0;
 
     static {
-        List<String> userIdList = MockUserRepository.getUserDataList().stream()
+        var userIdList = MockUserRepository.getUserDataList().stream()
                 .map(MockUserRepository.UserData::getId)
                 .collect(Collectors.toList());
         // TODO

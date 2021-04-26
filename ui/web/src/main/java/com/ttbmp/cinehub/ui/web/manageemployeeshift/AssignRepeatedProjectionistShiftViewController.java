@@ -43,11 +43,11 @@ public class AssignRepeatedProjectionistShiftViewController {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
-        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
+        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
         model.addAttribute("now", LocalDate.now().plusDays(1));
-        NewRepeatedShiftForm request = new NewRepeatedShiftForm();
+        var request = new NewRepeatedShiftForm();
         model.addAttribute(ASSIGN_REQUEST, request);
         return "/assign_repeated_projectionist_shift";
     }
@@ -62,10 +62,10 @@ public class AssignRepeatedProjectionistShiftViewController {
         model.addAttribute("selectedEmployeeId", request.getEmployeeId());
         model.addAttribute("selectedHallId", request.getHallId());
         useCase.getCinemaList();
-        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
+        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
-        EmployeeDto selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
-        HallDto selectedHall = (HallDto) model.getAttribute("selectedHall");
+        var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
+        var selectedHall = (HallDto) model.getAttribute("selectedHall");
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
         model.addAttribute("now", LocalDate.now().plusDays(1));
         useCase.saveRepeatedShift(new ShiftRepeatRequest(
@@ -76,7 +76,7 @@ public class AssignRepeatedProjectionistShiftViewController {
                 request.getStart(),
                 request.getEnd(),
                 selectedHall));
-        boolean error = (boolean) model.getAttribute(ERROR);
+        var error = (boolean) model.getAttribute(ERROR);
         if (!error) {
             return SHIFT_ASSIGNED;
         }

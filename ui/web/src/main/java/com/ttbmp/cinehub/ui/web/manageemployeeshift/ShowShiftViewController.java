@@ -36,7 +36,7 @@ public class ShowShiftViewController {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         useCase.getCinemaList();
         model.addAttribute("cinemaSelected", false);
-        GetCinemaForm form = new GetCinemaForm();
+        var form = new GetCinemaForm();
         model.addAttribute("getShiftListRequest", form);
         return "/manage_employee_shift";
     }
@@ -46,7 +46,7 @@ public class ShowShiftViewController {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", form.getCinemaId());
         useCase.getCinemaList();
-        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
+        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
         model.addAttribute("cinemaSelected", true);
         useCase.getShiftList(new GetShiftListRequest(form.getStart(), selectedCinema));
         model.addAttribute("date", form.getStart());

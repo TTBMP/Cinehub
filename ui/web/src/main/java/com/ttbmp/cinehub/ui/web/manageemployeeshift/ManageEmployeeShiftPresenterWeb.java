@@ -9,8 +9,6 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetShiftListR
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.ShiftRepeatResponse;
 import org.springframework.ui.Model;
 
-import java.time.LocalDate;
-import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,18 +26,18 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
 
     @Override
     public void presentShiftList(GetShiftListResponse shiftList) {
-        TemporalField temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
-        LocalDate dateSelected = shiftList.getDate();
-        int cinemaSelected = shiftList.getCinemaId();
-        List<EmployeeDto> employeeList = shiftList.getShiftDtoList().stream()
+        var temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
+        var dateSelected = shiftList.getDate();
+        var cinemaSelected = shiftList.getCinemaId();
+        var employeeList = shiftList.getShiftDtoList().stream()
                 .map(ShiftDto::getEmployee)
                 .filter(employee -> employee.getCinema().getId() == cinemaSelected)
                 .distinct()
                 .collect(Collectors.toList());
         List<EmployeeDto> tmp = new ArrayList<>();
         for (int i = 0, employeeListSize = employeeList.size(); i < employeeListSize; i++) {
-            boolean duplicate = false;
-            for (int j = 0; j < i; j++) {
+            var duplicate = false;
+            for (var j = 0; j < i; j++) {
                 if (employeeList.get(i) != employeeList.get(j) && employeeList.get(i).equals(employeeList.get(j))) {
                     duplicate = true;
                     break;
@@ -63,7 +61,7 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
         findEmployee(employeeList);
         findShift(shiftList.getShiftDtoList());
         Map<EmployeeDto, List<ShiftDto>> employeeShiftListMap = new HashMap<>();
-        for (EmployeeDto employee : employeeList) {
+        for (var employee : employeeList) {
             employeeShiftListMap.put(
                     employee,
                     shiftList.getShiftDtoList().stream()
@@ -80,8 +78,8 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     public void presentCinemaList(GetCinemaListResponse listCinema) {
         model.addAttribute("cinemaList", listCinema.getCinemaList());
         if (model.getAttribute("idCinema") != null) {
-            int idCinema = (int) model.getAttribute("idCinema");
-            for (CinemaDto cinemaDto : listCinema.getCinemaList()) {
+            var idCinema = (int) model.getAttribute("idCinema");
+            for (var cinemaDto : listCinema.getCinemaList()) {
                 if (cinemaDto.getId() == idCinema) {
                     model.addAttribute("selectedCinema", cinemaDto);
                     model.addAttribute("hallList", cinemaDto.getHalList());
@@ -89,10 +87,10 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
             }
         }
         if (model.getAttribute("selectedHallId") != null) {
-            List<HallDto> hallDtoList = (List<HallDto>) model.getAttribute("hallList");
-            int hallId = (int) model.getAttribute("selectedHallId");
+            var hallDtoList = (List<HallDto>) model.getAttribute("hallList");
+            var hallId = (int) model.getAttribute("selectedHallId");
             assert hallDtoList != null;
-            for (HallDto hallDto : hallDtoList) {
+            for (var hallDto : hallDtoList) {
                 if (hallDto.getId() == hallId) {
                     model.addAttribute("selectedHall", hallDto);
                 }
@@ -284,8 +282,8 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
 
     private void findEmployee(List<EmployeeDto> employeeList) {
         if (model.getAttribute("selectedEmployeeId") != null) {
-            String employeeId = (String) model.getAttribute("selectedEmployeeId");
-            for (EmployeeDto employeeDto : employeeList) {
+            var employeeId = (String) model.getAttribute("selectedEmployeeId");
+            for (var employeeDto : employeeList) {
                 if (employeeDto.getId().equals(employeeId)) {
                     model.addAttribute("selectedEmployee", employeeDto);
                 }
@@ -295,8 +293,8 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
 
     private void findShift(List<ShiftDto> shiftList) {
         if (model.getAttribute("shiftId") != null) {
-            int shiftId = (int) model.getAttribute("shiftId");
-            for (ShiftDto shiftDto : shiftList) {
+            var shiftId = (int) model.getAttribute("shiftId");
+            for (var shiftDto : shiftList) {
                 if (shiftDto.getId() == shiftId) {
                     model.addAttribute("selectedShift", shiftDto);
                     model.addAttribute("selectedEmployee", shiftDto.getEmployee());

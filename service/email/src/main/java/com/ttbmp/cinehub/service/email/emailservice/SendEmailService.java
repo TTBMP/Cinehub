@@ -14,25 +14,25 @@ import java.util.Properties;
 public class SendEmailService {
 
     public void sendMail(EmailServiceRequest emailServiceRequest) {
-        final String username = "yourUsername@email.com";
-        final String password = "password";
-        String fromEmail = emailServiceRequest.getEmail();
-        String toEmail = "toEmail@example.com";
+        final var username = "yourUsername@email.com";
+        final var password = "password";
+        var fromEmail = emailServiceRequest.getEmail();
+        var toEmail = "toEmail@example.com";
 
-        Properties properties = new Properties();
+        var properties = new Properties();
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.host", "smtp.mail.yahoo.com");
         properties.put("mail.smtp.port", "587");
 
-        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+        var session = Session.getInstance(properties, new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(username, password);
             }
         });
         //Start our mail message
-        MimeMessage msg = new MimeMessage(session);
+        var msg = new MimeMessage(session);
         try {
             msg.setFrom(new InternetAddress(fromEmail));
             msg.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
@@ -41,11 +41,11 @@ public class SendEmailService {
             Multipart emailContent = new MimeMultipart();
 
             //Text body part
-            MimeBodyPart textBodyPart = new MimeBodyPart();
+            var textBodyPart = new MimeBodyPart();
             textBodyPart.setText("My multipart text");
 
             //Attachment body part.
-            MimeBodyPart pdfAttachment = new MimeBodyPart();
+            var pdfAttachment = new MimeBodyPart();
             pdfAttachment.attachFile("/home/parallels/Documents/docs/javamail.pdf");
 
             //Attach body parts

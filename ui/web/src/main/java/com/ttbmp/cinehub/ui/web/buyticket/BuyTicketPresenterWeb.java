@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.ui.web.buyticket;
 
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketPresenter;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
@@ -45,21 +44,21 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     @Override
     public void presentSeatList(GetNumberOfSeatsResponse response) {
         model.addAttribute("seatList", response.getSeatDtoList());
-        ProjectionDto selectedProjection = ((ProjectionDto) model.getAttribute("projection"));
+        var selectedProjection = ((ProjectionDto) model.getAttribute("projection"));
         model.addAttribute("valList", getSeatsNameList(selectedProjection, response.getSeatDtoList().size()));
     }
 
     private List<String> getSeatsNameList(ProjectionDto selectedProjection, int size) {
         List<String> valList = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
+        for (var i = 0; i < size; i++) {
             valList.add(getName(selectedProjection, i));
         }
         return valList;
     }
 
     private String getName(ProjectionDto projection, int seatNumber) {
-        String position = projection.getHallDto().getSeatList().get(seatNumber).getPosition();
-        for (TicketDto ticket : projection.getListTicket()) {
+        var position = projection.getHallDto().getSeatList().get(seatNumber).getPosition();
+        for (var ticket : projection.getListTicket()) {
             if (ticket.getSeatDto().getPosition().equals(position)) {
                 return "SOLD";
             }
@@ -171,7 +170,7 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentAutenticationError() {
+    public void presentAuthenticationError() {
         model.addAttribute("autenticationError", "Error with the autentication");
 
     }

@@ -41,7 +41,7 @@ public class MockProjectionistRepository implements ProjectionistRepository {
 
     @Override
     public Projectionist getProjectionist(Projection projection) {
-        String projectionistId = MockProjectionRepository.getProjectionDataList().stream()
+        var projectionistId = MockProjectionRepository.getProjectionDataList().stream()
                 .filter(d -> d.getId() == projection.getId())
                 .map(MockProjectionRepository.ProjectionData::getProjectionistId)
                 .collect(Collectors.toList())
@@ -61,7 +61,7 @@ public class MockProjectionistRepository implements ProjectionistRepository {
 
     @Override
     public Projectionist getProjectionist(ProjectionistShift projectionistShift) {
-        String projectionistShiftProjectionistId = MockShiftRepository.getShiftDataList().stream()
+        var projectionistShiftProjectionistId = MockShiftRepository.getShiftDataList().stream()
                 .filter(d -> d.getId() == projectionistShift.getId())
                 .map(MockShiftRepository.ShiftData::getEmployeeId)
                 .collect(Collectors.toList())

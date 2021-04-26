@@ -14,8 +14,8 @@ public class ViewPersonalScheduleActivity extends Activity {
 
     public ViewPersonalScheduleActivity() throws IOException {
         super(new ScheduleView());
-        ViewPersonalScheduleViewModel viewModel = new ViewPersonalScheduleViewModel();
-        ViewPersonalScheduleFxPresenter presenter = new ViewPersonalScheduleFxPresenter(viewModel);
+        var viewModel = new ViewPersonalScheduleViewModel();
+        var presenter = new ViewPersonalScheduleFxPresenter(viewModel);
         viewModelStore.put(ViewPersonalScheduleViewModel.class, viewModel);
         useCaseFactory.put(ViewPersonalScheduleUseCase.class, () -> new ViewPersonalScheduleHandler(presenter));
     }

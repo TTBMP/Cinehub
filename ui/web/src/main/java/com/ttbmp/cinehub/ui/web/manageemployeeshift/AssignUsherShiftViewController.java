@@ -40,10 +40,10 @@ public class AssignUsherShiftViewController {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
-        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
+        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
         model.addAttribute("now", LocalDate.now().plusDays(1));
-        NewShiftForm shiftRequest = new NewShiftForm();
+        var shiftRequest = new NewShiftForm();
         model.addAttribute(ASSIGN_REQUEST, shiftRequest);
         return "/assign_usher_shift";
     }
@@ -57,12 +57,12 @@ public class AssignUsherShiftViewController {
         model.addAttribute("selectedEmployeeId", request.getEmployeeId());
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
-        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
+        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
-        EmployeeDto selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
+        var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
         model.addAttribute("now", LocalDate.now().plusDays(1));
         useCase.createShift(new CreateShiftRequest(selectedEmployee, request.getDate(), request.getInizio(), request.getEnd()));
-        boolean error = (boolean) model.getAttribute(ERROR);
+        var error = (boolean) model.getAttribute(ERROR);
         if (!error) {
             return SHIFT_ASSIGNED;
         }

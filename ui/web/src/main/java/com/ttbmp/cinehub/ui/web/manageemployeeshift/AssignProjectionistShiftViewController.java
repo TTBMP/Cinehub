@@ -41,10 +41,10 @@ public class AssignProjectionistShiftViewController {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
-        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
+        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
         model.addAttribute("now", LocalDate.now().plusDays(1));
-        NewShiftForm shiftRequest = new NewShiftForm();
+        var shiftRequest = new NewShiftForm();
         model.addAttribute(ASSIGN_REQUEST, shiftRequest);
         return "/assign_projectionist_shift";
     }
@@ -58,13 +58,13 @@ public class AssignProjectionistShiftViewController {
         model.addAttribute("selectedEmployeeId", shiftRequest.getEmployeeId());
         model.addAttribute("selectedHallId", shiftRequest.getHallId());
         useCase.getCinemaList();
-        CinemaDto selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
+        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
         useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
         model.addAttribute("now", LocalDate.now().plusDays(1));
-        EmployeeDto selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
-        HallDto selectedHall = (HallDto) model.getAttribute("selectedHall");
+        var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
+        var selectedHall = (HallDto) model.getAttribute("selectedHall");
         useCase.createShift(new CreateShiftRequest(selectedEmployee, shiftRequest.getDate(), shiftRequest.getInizio(), shiftRequest.getEnd(), selectedHall));
-        boolean error = (boolean) model.getAttribute(ERROR);
+        var error = (boolean) model.getAttribute(ERROR);
         if (!error) {
             return SHIFT_ASSIGNED;
         }

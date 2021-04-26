@@ -10,7 +10,6 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.CreateShiftRe
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetCinemaListResponse;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetShiftListResponse;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.ShiftRepeatResponse;
-import com.ttbmp.cinehub.domain.Cinema;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +24,7 @@ class ManageEmployeesShiftControllerTest {
 
     @Test
     void getCinemaList() {
-        ManageEmployeesShiftController controller = new ManageEmployeesShiftController(
+        var controller = new ManageEmployeesShiftController(
                 serviceLocator,
                 new MockManageEmployeePresenter()
         );
@@ -34,18 +33,18 @@ class ManageEmployeesShiftControllerTest {
 
     @Test
     void getShiftList() {
-        ManageEmployeesShiftController controller = new ManageEmployeesShiftController(
+        var controller = new ManageEmployeesShiftController(
                 serviceLocator,
                 new MockManageEmployeePresenter()
         );
-        CinemaRepository cinemaRepository = serviceLocator.getService(CinemaRepository.class);
-        Cinema cinema = cinemaRepository.getAllCinema().get(0);
-        GetShiftListRequest getShiftListRequest = new GetShiftListRequest(LocalDate.now(), CinemaDataMapper.mapToDto(cinema));
+        var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
+        var cinema = cinemaRepository.getAllCinema().get(0);
+        var getShiftListRequest = new GetShiftListRequest(LocalDate.now(), CinemaDataMapper.mapToDto(cinema));
         controller.getShiftList(getShiftListRequest);
     }
 
 
-    class MockManageEmployeePresenter implements ManageEmployeesShiftPresenter {
+    static class MockManageEmployeePresenter implements ManageEmployeesShiftPresenter {
 
         @Override
         public void presentShiftList(GetShiftListResponse shiftList) {

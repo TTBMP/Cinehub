@@ -52,7 +52,7 @@ public interface BuyTicketPresenter {
 
     void presentInvalidGetListMovie(GetListMovieRequest request);
 
-    void presentAutenticationError();
+    void presentAuthenticationError();
 
     void presentInvalidGetCinema(GetCinemaRequest request);
 }

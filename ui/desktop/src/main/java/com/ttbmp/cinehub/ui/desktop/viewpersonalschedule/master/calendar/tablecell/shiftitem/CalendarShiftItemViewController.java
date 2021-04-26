@@ -34,7 +34,7 @@ public class CalendarShiftItemViewController extends ViewController {
 
     @Override
     protected void onLoad() {
-        ViewPersonalScheduleViewModel viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
+        var viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
         itemVBox.setOnMouseClicked(event -> {
             viewModel.selectedShiftProperty().setValue(shiftDto);
             try {
