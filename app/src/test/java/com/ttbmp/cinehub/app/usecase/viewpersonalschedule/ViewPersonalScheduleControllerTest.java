@@ -25,7 +25,7 @@ class ViewPersonalScheduleControllerTest {
                 LocalDate.now(),
                 LocalDate.now().plusDays(1)
         );
-        controller.getShiftList(request);
+        Assertions.assertDoesNotThrow(() -> controller.getShiftList(request));
     }
 
     @Test

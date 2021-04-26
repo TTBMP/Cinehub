@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.Objects;
 
 /**
  * @author Fabio Buracchi, Ivan Palmieri
@@ -22,7 +22,7 @@ public class FirebaseAuthenticationService {
             var settings = this.getClass().getResourceAsStream("/firebase_settings.json");
             var options = FirebaseOptions.builder()
                     .setDatabaseUrl("https://noreply@cinehub-d2abc.firebaseio.com/")
-                    .setCredentials(GoogleCredentials.fromStream(settings))
+                    .setCredentials(GoogleCredentials.fromStream(Objects.requireNonNull(settings)))
                     .build();
             FirebaseApp.initializeApp(options);
             firebaseAuth = FirebaseAuth.getInstance();
