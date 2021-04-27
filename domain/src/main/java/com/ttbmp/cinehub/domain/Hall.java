@@ -36,7 +36,7 @@ public class Hall {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        Hall other = (Hall) obj;
+        var other = (Hall) obj;
         return this.getId() == other.getId();
     }
 

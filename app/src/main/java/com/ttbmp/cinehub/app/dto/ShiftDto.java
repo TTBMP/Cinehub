@@ -67,7 +67,7 @@ public class ShiftDto {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        ShiftDto other = (ShiftDto) obj;
+        var other = (ShiftDto) obj;
         return employee.equals(other.employee)
                 && date.equals(other.date)
                 && start.equals(other.start)

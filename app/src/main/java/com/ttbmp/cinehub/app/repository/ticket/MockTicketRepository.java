@@ -20,7 +20,7 @@ public class MockTicketRepository implements TicketRepository {
     private static int counterTicketId = 0;
 
     static {
-        List<String> userIdList = MockUserRepository.getUserDataList().stream()
+        var userIdList = MockUserRepository.getUserDataList().stream()
                 .map(MockUserRepository.UserData::getId)
                 .collect(Collectors.toList());
         // TODO
@@ -37,17 +37,16 @@ public class MockTicketRepository implements TicketRepository {
     }
 
     @Override
-    public synchronized void saveTicket(Ticket ticket, int projectionId) {
+    public synchronized void saveTicket(Ticket ticket, Projection projection) {
         TICKET_DATA_LIST.add(new TicketData(
                 counterTicketId++,
                 ticket.getPrice(),
                 ticket.getOwner().getId(),
-                projectionId,
+                projection.getId(),
                 ticket.getSeat().getId()
 
         ));
     }
-
 
     @Override
     public List<Ticket> getTicketList(Projection projection) {

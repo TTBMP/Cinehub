@@ -22,7 +22,7 @@ public class ViewPersonalSchedulePresenterWeb implements ViewPersonalSchedulePre
 
     @Override
     public void presentGetShiftList(ShiftListReply result) {
-        LocalDate date = ((LocalDate) model.getAttribute("date"));
+        var date = ((LocalDate) model.getAttribute("date"));
         if (date == null) {
             model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
             return;
@@ -30,8 +30,8 @@ public class ViewPersonalSchedulePresenterWeb implements ViewPersonalSchedulePre
         date = date.with(TemporalAdjusters.firstDayOfMonth())
                 .with(TemporalAdjusters.previousOrSame(WeekFields.of(Locale.getDefault()).getFirstDayOfWeek()));
         List<CalendarDay> calendarDayList = new ArrayList<>();
-        for (int i = 0; i < 42; i++) {
-            LocalDate finalDate = date;
+        for (var i = 0; i < 42; i++) {
+            var finalDate = date;
             calendarDayList.add(new CalendarDay(
                     Integer.toString(date.getDayOfMonth()),
                     result.getShiftDtoList().stream()
@@ -55,7 +55,7 @@ public class ViewPersonalSchedulePresenterWeb implements ViewPersonalSchedulePre
 
     @Override
     public void presentGetProjectionList(ProjectionListReply result) {
-        ProjectionListDto projectionForm = new ProjectionListDto(result.getProjectionDtoList());
+        var projectionForm = new ProjectionListDto(result.getProjectionDtoList());
         model.addAttribute("form", projectionForm);
     }
 

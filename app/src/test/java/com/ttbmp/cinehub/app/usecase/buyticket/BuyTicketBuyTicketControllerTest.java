@@ -2,27 +2,24 @@ package com.ttbmp.cinehub.app.usecase.buyticket;
 
 import com.ttbmp.cinehub.app.datamapper.MovieDataMapper;
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
-import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
-import com.ttbmp.cinehub.domain.Movie;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
 
 
-class BuyTicketControllerTest {
+class BuyTicketBuyTicketControllerTest {
 
     private final MockServiceLocator serviceLocator = new MockServiceLocator();
 
     @Test
-    void getListMovie_whitCorrectRequest_notGenerateThrows() {
-        BuyTicketController buyTicketController = new BuyTicketController(
+    void getListMovie_whitCorrectRequest_notGenerateErrors() {
+        var buyTicketController = new BuyTicketController(
                 serviceLocator,
                 new MockBuyTicketPresenter()
         );
@@ -36,13 +33,20 @@ class BuyTicketControllerTest {
         @Override
         public void presentMovieApiList(GetListMovieResponse response) {
             try {
-                List<Movie> movieDtoList = serviceLocator.getService(MovieRepository.class)
+                var result = true;
+                var movieDtoList = serviceLocator.getService(MovieRepository.class)
                         .getMovieList(
                                 String.valueOf(LocalDate.now())
                         );
-                List<MovieDto> expected = MovieDataMapper.mapToDtoList(movieDtoList);
-                List<MovieDto> actual = response.getMovieList();
-                Assertions.assertEquals(expected, actual);
+                var expected = MovieDataMapper.mapToDtoList(movieDtoList);
+                var actual = response.getMovieList();
+                for (var i = 0; i < expected.size(); i++) {
+                    if (expected.get(i).getId() != actual.get(i).getId()) {
+                        result = false;
+                        break;
+                    }
+                }
+                Assertions.assertTrue(result);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -51,6 +55,11 @@ class BuyTicketControllerTest {
 
         @Override
         public void presentCinemaList(GetListCinemaResponse response) {
+
+        }
+
+        @Override
+        public void presentCinema(GetCinemaResponse response) {
 
         }
 
@@ -70,7 +79,7 @@ class BuyTicketControllerTest {
         }
 
         @Override
-        public void presentInvalidPay(PayRequest request) {
+        public void presentInvalidPay(PaymentRequest request) {
 
         }
 
@@ -100,7 +109,12 @@ class BuyTicketControllerTest {
         }
 
         @Override
-        public void presentInvalidGetTimeOfProjection(GetProjectionRequest request) {
+        public void presentInvalidGetTimeOfProjection(GetProjectionListRequest request) {
+
+        }
+
+        @Override
+        public void presentProjection(GetProjectionResponse request) {
 
         }
 
@@ -125,7 +139,7 @@ class BuyTicketControllerTest {
         }
 
         @Override
-        public void presentProjectionList(ProjectionListResponse projectionTimeList) {
+        public void presentProjectionList(GetProjectionListResponse projectionTimeList) {
 
         }
 
@@ -140,7 +154,12 @@ class BuyTicketControllerTest {
         }
 
         @Override
-        public void presentAutenticationError() {
+        public void presentAuthenticationError() {
+
+        }
+
+        @Override
+        public void presentInvalidGetCinema(GetCinemaRequest request) {
 
         }
     }

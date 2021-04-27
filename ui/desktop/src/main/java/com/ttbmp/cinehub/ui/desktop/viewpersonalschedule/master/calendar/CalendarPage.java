@@ -32,13 +32,13 @@ public class CalendarPage {
                 .collect(Collectors.toList());
         dateList.get(0).bind(ObjectBindings.map(date, localDate -> localDate.with(TemporalAdjusters.firstDayOfMonth())
                 .with(TemporalAdjusters.previousOrSame(WeekFields.of(Locale.getDefault()).getFirstDayOfWeek()))));
-        for (int i = 1; i < 42; i++) {
+        for (var i = 1; i < 42; i++) {
             dateList.get(i).bind(ObjectBindings.map(dateList.get(i - 1), localDate -> localDate.plusDays(1)));
         }
         Iterator<ObjectProperty<LocalDate>> dateIterator = dateList.listIterator();
-        for (int i = 0; i < 6; i++) {
+        for (var i = 0; i < 6; i++) {
             shiftWeekList.add(new EnumMap<>(DayOfWeek.class));
-            for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
+            for (var dayOfWeek : DayOfWeek.values()) {
                 shiftWeekList.get(i).put(dayOfWeek, new CalendarDay(dateIterator.next(), shiftList));
             }
         }

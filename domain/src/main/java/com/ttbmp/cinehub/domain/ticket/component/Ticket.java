@@ -8,12 +8,10 @@ import com.ttbmp.cinehub.domain.User;
  */
 public class Ticket {
 
-
     private int id;
     private long price;
     private Seat seat;
     private User owner;
-
 
     public Ticket(int id, long price, User owner, Seat seat) {
         this.id = id;
@@ -21,7 +19,6 @@ public class Ticket {
         this.owner = owner;
         this.seat = seat;
     }
-
 
     public Seat getSeat() {
         return seat;
@@ -46,7 +43,6 @@ public class Ticket {
     public void setPrice(long price) {
         this.price = price;
     }
-
 
     public User getOwner() {
         return owner;

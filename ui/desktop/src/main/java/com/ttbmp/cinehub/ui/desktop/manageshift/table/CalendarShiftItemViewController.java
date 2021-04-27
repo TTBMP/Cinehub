@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift.table;
 
-import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.ui.desktop.manageshift.ManageEmployeesShiftViewModel;
 import com.ttbmp.cinehub.ui.desktop.manageshift.assign.AssignShiftView;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
@@ -42,7 +41,7 @@ public class CalendarShiftItemViewController extends ViewController {
         ManageEmployeesShiftViewModel viewModel;
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
 
-        for (ShiftDto shift : dayWeek.getShiftList()) {
+        for (var shift : dayWeek.getShiftList()) {
             ShiftItemView item = null;
             try {
                 item = new ShiftItemView();

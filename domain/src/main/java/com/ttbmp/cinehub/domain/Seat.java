@@ -54,7 +54,7 @@ public class Seat {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        Seat other = (Seat) obj;
+        var other = (Seat) obj;
         return this.id == other.id;
     }
 

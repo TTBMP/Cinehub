@@ -18,7 +18,7 @@ public class SeatsMatrixView extends View {
 
     public SeatsMatrixView(ToggleGroup toggleGroup) throws IOException {
         super();
-        GridPane gridSeats = new GridPane();
+        var gridSeats = new GridPane();
         seatsMatrixController = new SeatsMatrixViewController(gridSeats, toggleGroup);
         this.root = gridSeats;
     }

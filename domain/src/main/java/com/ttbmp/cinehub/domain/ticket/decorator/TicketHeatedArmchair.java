@@ -16,5 +16,4 @@ public class TicketHeatedArmchair extends TicketDecorator {
         return ticket.getPrice() + 1;
     }
 
-
 }

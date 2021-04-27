@@ -22,7 +22,6 @@ public class TicketProxy extends Ticket {
         this.userRepository = userRepository;
     }
 
-
     @Override
     public User getOwner() {
         if (!isUserLoaded) {
@@ -50,4 +49,5 @@ public class TicketProxy extends Ticket {
         isSeatLoaded = true;
         super.setSeat(seat);
     }
+
 }

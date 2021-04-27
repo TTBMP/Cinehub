@@ -76,7 +76,7 @@ public class ChooseMovieViewController extends ViewController {
         confirmMovieButton.setOnAction(a -> {
             activity.getUseCase(BuyTicketUseCase.class).getListCinema(
                     new GetListCinemaRequest(
-                            viewModel.selectedMovieProperty().getValue(),
+                            viewModel.selectedMovieProperty().getValue().getId(),
                             viewModel.selectedDateProperty().getValue().toString()
                     )
             );

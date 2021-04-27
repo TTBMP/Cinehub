@@ -6,8 +6,6 @@ import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftRe
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationException;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
 import com.ttbmp.cinehub.app.usecase.Request;
-import com.ttbmp.cinehub.domain.employee.Employee;
-import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 
 /**
  * @author Fabio Buracchi
@@ -30,8 +28,8 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
     public void getShiftList(ShiftListRequest request) {
         try {
             Request.validate(request);
-            String userId = authenticationService.signIn("", "").getUserId();
-            Employee employee = employeeRepository.getEmployee(userId);
+            var userId = authenticationService.signIn("", "").getUserId();
+            var employee = employeeRepository.getEmployee(userId);
             presenter.presentGetShiftList(new ShiftListReply(
                     employee.getShiftListBetween(request.getStart(), request.getEnd())
             ));
@@ -48,7 +46,7 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
     public void getShiftProjectionList(ProjectionListRequest request) {
         try {
             Request.validate(request);
-            ProjectionistShift shift = projectionistShiftRepository.getProjectionistShift(request.getProjectionistShiftId());
+            var shift = projectionistShiftRepository.getProjectionistShift(request.getProjectionistShiftId());
             presenter.presentGetProjectionList(new ProjectionListReply(shift.getProjectionList()));
         } catch (Request.NullRequestException e) {
             presenter.presentProjectionListNullRequest();

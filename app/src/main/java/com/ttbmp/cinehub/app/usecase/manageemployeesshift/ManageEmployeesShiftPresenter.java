@@ -2,7 +2,10 @@ package com.ttbmp.cinehub.app.usecase.manageemployeesshift;
 
 
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.CreateShiftResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetCinemaListResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetShiftListResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.ShiftRepeatResponse;
 
 /**
  * @author Massimo Mazzetti
@@ -12,8 +15,6 @@ public interface ManageEmployeesShiftPresenter {
     void presentShiftList(GetShiftListResponse shiftList);
 
     void presentCinemaList(GetCinemaListResponse listCinema);
-
-    void presentHallList(GetHallListResponse listHall);
 
     void presentSaveShift();
 
@@ -49,8 +50,5 @@ public interface ManageEmployeesShiftPresenter {
 
     void presentGetShiftListNullRequest();
 
-    void presentInvalidHallListRequest(GetHallListRequest request);
-
-    void presentHallListNullRequest();
 
 }

@@ -15,7 +15,6 @@ public class CinemaDataMapper {
     }
 
     public static CinemaDto mapToDto(Cinema cinema) {
-
         return new CinemaDto(
                 cinema.getId(),
                 cinema.getName(),
@@ -26,7 +25,6 @@ public class CinemaDataMapper {
     }
 
     public static Cinema mapToEntity(CinemaDto cinemaDto) {
-
         return new Cinema(
                 cinemaDto.getId(),
                 cinemaDto.getName(),

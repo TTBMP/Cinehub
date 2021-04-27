@@ -46,7 +46,7 @@ public class CinemaDto {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        CinemaDto other = (CinemaDto) obj;
+        var other = (CinemaDto) obj;
         return this.id == other.id;
     }
 

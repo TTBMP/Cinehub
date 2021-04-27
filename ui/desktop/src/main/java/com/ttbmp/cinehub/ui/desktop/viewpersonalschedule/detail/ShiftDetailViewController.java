@@ -44,7 +44,7 @@ public class ShiftDetailViewController extends ViewController {
 
     @Override
     protected void onLoad() {
-        ViewPersonalScheduleViewModel viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
+        var viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
         dateLabel.textProperty().bind(viewModel.selectedShiftDateProperty());
         startLabel.textProperty().bind(viewModel.selectedShiftStartProperty());
         endLabel.textProperty().bind(viewModel.selectedShiftEndProperty());

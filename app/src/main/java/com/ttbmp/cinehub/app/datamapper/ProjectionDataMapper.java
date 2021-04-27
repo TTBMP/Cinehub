@@ -17,7 +17,6 @@ public class ProjectionDataMapper {
     public static ProjectionDto mapToDto(Projection projection) {
         return new ProjectionDto(
                 MovieDataMapper.mapToDto(projection.getMovie()),
-                CinemaDataMapper.mapToDto(projection.getCinema()),
                 HallDataMapper.mapToDto(projection.getHall()),
                 projection.getStartTime(),
                 projection.getDate(),
@@ -34,7 +33,6 @@ public class ProjectionDataMapper {
                 projectionDto.getStartTime(),
                 MovieDataMapper.mapToEntity(projectionDto.getMovieDto()),
                 HallDataMapper.mapToEntity(projectionDto.getHallDto()),
-                CinemaDataMapper.mapToEntity(projectionDto.getCinemaDto()),
                 projectionDto.getProjectionist(),
                 TicketDataMapper.mapToEntityList(projectionDto.getListTicket())
         );

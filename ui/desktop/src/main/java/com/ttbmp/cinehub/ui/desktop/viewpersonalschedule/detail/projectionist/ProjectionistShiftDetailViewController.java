@@ -43,7 +43,7 @@ public class ProjectionistShiftDetailViewController extends ViewController {
 
     @Override
     protected void onLoad() {
-        ViewPersonalScheduleViewModel viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
+        var viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
         projectionListView.itemsProperty().addListener(l -> projectionListView.refresh());
         projectionListView.setItems(viewModel.getProjectionList());
         projectionListView.setCellFactory(listView -> new ProjectionistListCell(activity, navController));

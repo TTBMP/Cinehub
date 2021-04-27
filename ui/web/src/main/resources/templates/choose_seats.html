@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link href="styleIvan.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -32,35 +33,84 @@
         <!--Checkbox-->
         <div class="col-12">
             <h3>Additional options: </h3>
-            <input id="c1" th:checked="${boolean1}" th:onchange="${boolean1}" type="checkbox">
+            <label for="c1"></label><input id="c1" th:checked="*{boolean1}" type="checkbox">
             <label> Skip line</label><br>
-            <input id="c2" th:checked="${boolean2}" type="checkbox">
+            <label for="c2"></label><input id="c2" th:checked="*{boolean2}" type="checkbox">
             <label> Folding armchair</label><br>
-            <input id="c3" th:checked="${boolean3}" type="checkbox">
+            <label for="c3"></label><input id="c3" th:checked="*{boolean3}" type="checkbox">
             <label> Heated armchair</label><br>
-            <p style="color: #ff0000">Each optional choice increases the cost of the ticket by one euro</p>
+            <p style="color: red">Each optional choice increases the cost of the ticket by one euro</p>
         </div>
         <div class="card m-5 p-2" style="background-color: #1b1b1b;border-color: #6d6d6d">
-            <div class="container col-5 mt-5 mb-5">
-
+            <div class="container mt-5 mb-5">
                 <div class="row">
                     <!--/Checkbox-->
                     <tr th:each="seat,inter : ${seatList}">
-                        <div class="form-check m-2">
-                            <div th:text="${valList.get((inter.index))}"></div>
+                        <div class="card p-2 m-2 justify-content-center"
+                             style="background-color: #000000;border-color: #6d6d6d">
+
                             <div th:if="${valList.get((inter.index))}==('SOLD')">
                                 <a id="urlDisable">
                                     <i class="" style="color: #6d6d6d" th:class="${classValue}">event_seat</i>
                                 </a>
                             </div>
                             <div th:if="!(${valList.get((inter.index))}==('SOLD'))">
-                                <a id="url"
-                                   onclick="href +='/'+ document.getElementById('c1').checked+'/'+ document.getElementById('c2').checked+'/'+ document.getElementById('c3').checked"
-                                   th:href="@{|/payment/${valList.get((inter.index))}/${inter.index}/${hallId}/${selectedDate}/${movieId}/${cinemaId}|}">
-                                    <i class="" th:class="${classValue}" th:style="${color}">event_seat</i>
-                                </a>
-                                <div th:text="${seat.price}+'€'"></div>
+                                <form action="#" method="post"
+                                      onclick="action +='/'+ document.getElementById('c1').checked+'/'+ document.getElementById('c2').checked+'/'+ document.getElementById('c3').checked"
+                                      th:action="@{/payment}"
+                                      th:object="${seat}">
+                                    <label>
+                                        <select style="display: none" th:field="*{position}">
+                                            <option style="display: none"
+                                                    th:value="${valList.get((inter.index))}"></option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <select style="display: none" th:field="*{number}">
+                                            <option style="display: none" th:value="${inter.index}"></option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <select style="display: none" th:field="*{hallId}">
+                                            <option style="display: none" th:value="${hallId}"></option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <select style="display: none" th:field="*{date}">
+                                            <option style="display: none" th:value="${selectedDate}"></option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <select style="display: none" th:field="*{movieId}">
+                                            <option style="display: none" th:value="${movieId}"></option>
+                                        </select>
+                                    </label>
+                                    <label>
+                                        <select style="display: none" th:field="*{cinemaId}">
+                                            <option style="display: none" th:value="${cinemaId}"></option>
+                                        </select>
+                                    </label>
+
+                                    <div class="col-12">
+                                        <p id="url">
+                                            <i class="" th:class="${classValue}"
+                                               th:style="${color}">event_seat</i>
+                                        </p>
+                                    </div>
+                                    <div class="col-12">
+                                        <div th:text="${valList.get((inter.index))}"></div>
+                                    </div>
+                                    <div class="col-12">
+                                        <p th:text="${seat.price}+'€'">
+                                        </p>
+                                    </div>
+                                    <button class="btn btn-primary" type="submit">Buy
+                                    </button>
+
+                                </form>
+
                             </div>
+
                         </div>
                     </tr>
                 </div>

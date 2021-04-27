@@ -41,7 +41,7 @@ public class AppBarViewController extends ViewController {
     @Override
     protected void onLoad() {
         loadActivityTabMap();
-        for (Map.Entry<Class<? extends Activity>, Tab> entry : activityTabMap.entrySet()) {
+        for (var entry : activityTabMap.entrySet()) {
             if (activity.getClass().equals(entry.getKey())) {
                 tabPane.getSelectionModel().select(entry.getValue());
             }

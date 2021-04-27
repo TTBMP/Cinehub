@@ -47,4 +47,5 @@ public class PayServiceRequest extends Request {
             addError(NEGATIVE_PRICE_ERROR);
         }
     }
+
 }

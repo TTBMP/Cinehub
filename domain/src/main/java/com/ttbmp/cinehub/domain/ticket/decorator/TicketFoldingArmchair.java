@@ -16,5 +16,4 @@ public class TicketFoldingArmchair extends TicketDecorator {
         return ticket.getPrice() + 1;
     }
 
-
 }
