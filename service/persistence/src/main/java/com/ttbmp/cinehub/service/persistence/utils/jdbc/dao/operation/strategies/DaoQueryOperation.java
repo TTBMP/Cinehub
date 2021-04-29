@@ -45,7 +45,7 @@ public class DaoQueryOperation extends DaoOperation {
     }
 
     @Override
-    public Object execute(Object[] args) throws DaoMethodException, InvocationTargetException, SQLException, InstantiationException, NoSuchMethodException, IllegalAccessException {
+    public Object execute(Object[] args) throws DaoMethodException{
         Object result;
         try (PreparedStatement statement = connection.prepareStatement(
                 queryTemplate,
@@ -60,6 +60,8 @@ public class DaoQueryOperation extends DaoOperation {
             ResultSet resultSet = statement.executeQuery();
             result = getResultObject(resultSet);
             resultSet.close();
+        } catch (SQLException | InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException |NoResultException e) {
+            throw new DaoMethodException();
         }
         return result;
     }
@@ -87,7 +89,7 @@ public class DaoQueryOperation extends DaoOperation {
         return result;
     }
 
-    private Object getResultObject(ResultSet resultSet) throws SQLException, InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException {
+    private Object getResultObject(ResultSet resultSet) throws SQLException, InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException, NoResultException {
         Object result;
         if (List.class.isAssignableFrom(objectType)) {
             result = objectType.cast(new ArrayList<>());

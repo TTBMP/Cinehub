@@ -11,7 +11,10 @@ import com.ttbmp.cinehub.domain.CreditCard;
 import com.ttbmp.cinehub.domain.User;
 import com.ttbmp.cinehub.domain.employee.Projectionist;
 import com.ttbmp.cinehub.domain.shift.Shift;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceClassException;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceMethodException;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -116,7 +119,11 @@ public class ProjectionistProxy extends Projectionist {
     @Override
     public List<Shift> getShiftList() {
         if (!isShiftListLoaded) {
-            setShiftList(shiftRepository.getShiftList(this));
+            try {
+                setShiftList(shiftRepository.getShiftList(this));
+            } catch (DataSourceClassException | ClassNotFoundException | DataSourceMethodException | RepositoryException | SQLException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
         return super.getShiftList();
     }

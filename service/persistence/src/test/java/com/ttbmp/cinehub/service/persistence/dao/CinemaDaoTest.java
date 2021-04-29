@@ -16,9 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CinemaDaoTest {
 
-    @Test
-    void getAllCinema() {
-    }
 
     @Test
     void getCinemaById() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
@@ -45,7 +42,4 @@ class CinemaDaoTest {
 
     }
 
-    @Test
-    void getCinema() {
-    }
 }

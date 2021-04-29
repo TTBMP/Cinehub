@@ -12,6 +12,7 @@ import com.ttbmp.cinehub.service.persistence.dao.CinemaDao;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourceProvider;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,8 +47,8 @@ public class JdbcCinemaRepository implements CinemaRepository{
             return cinemaList.stream()
                     .map(cinema -> new CinemaProxy(cinema.getId(), cinema.getName(),cinema.getCity(),cinema.getAddress(),serviceLocator.getService(HallRepository.class)))
                     .collect(Collectors.toList());
-        } catch (DaoMethodException e) {
-            throw new RepositoryException(e.getMessage());
+        } catch (Throwable e) {
+           return new ArrayList<>();
         }
 
     }

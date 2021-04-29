@@ -27,7 +27,7 @@ public interface ShiftDao {
 
     @Query("SELECT * FROM turno where id_dipendente= :idEmployee")
     List<Shift> getShiftListByEmployeeId(
-            @Parameter(name = "idEmployee") @NotNull Integer name
+            @Parameter(name = "idEmployee") @NotNull String name
     ) throws DaoMethodException;
 
 

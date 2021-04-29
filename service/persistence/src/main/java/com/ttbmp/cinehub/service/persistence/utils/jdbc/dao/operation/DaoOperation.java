@@ -26,6 +26,6 @@ public abstract class DaoOperation {
         this.dataSourceEntityList = dataSourceEntityList;
     }
 
-    public abstract Object execute(Object[] args) throws DaoMethodException, InvocationTargetException, SQLException, InstantiationException, NoSuchMethodException, IllegalAccessException;
+    public abstract Object execute(Object[] args) throws DaoMethodException;
 
 }

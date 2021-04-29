@@ -12,6 +12,7 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodExcep
 
 import java.io.IOException;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,14 +28,14 @@ public class JdbcMovieRepository implements MovieRepository {
     }
 
     @Override
-    public List<Movie> getMovieList(String localDate) throws RepositoryException {
+    public List<Movie> getMovieList(String localDate) {
         try {
             List<com.ttbmp.cinehub.service.persistence.entity.Movie> movieList = getMovieDao().getMovieByData(localDate);
             return movieList.stream()
                     .map(movie -> new MovieProxy(movie.getId(), serviceLocator.getService(MovieApiService.class)))
                     .collect(Collectors.toList());
-        } catch (DaoMethodException e) {
-            throw new RepositoryException(e.getMessage());
+        } catch (Throwable e) {
+            return new ArrayList<>();
         }
     }
 

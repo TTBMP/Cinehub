@@ -22,6 +22,11 @@ public interface EmployeeDao {
             @Parameter(name = "id") @NotNull String id
     ) throws DaoMethodException;
 
+    @Query("SELECT * FROM dipendente WHERE dipendente.id_utente in (" +
+            "SELECT turno.id_dipendente FROM turno WHERE turno.id = :id) ")
+    Employee getEmployeeByShiftId(
+            @Parameter(name = "id") @NotNull int id
+    ) throws DaoMethodException;
 
 
     @Insert
@@ -41,5 +46,6 @@ public interface EmployeeDao {
 
     @Delete
     void delete(@NotNull List<Employee> employee) throws DaoMethodException;
+
 
 }

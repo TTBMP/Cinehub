@@ -23,7 +23,11 @@ import com.ttbmp.cinehub.domain.shift.ModifyShiftException;
 import com.ttbmp.cinehub.domain.shift.Shift;
 import com.ttbmp.cinehub.domain.shift.factory.CreateShiftException;
 import com.ttbmp.cinehub.domain.shift.factory.ShiftFactory;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceClassException;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceMethodException;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,11 +89,23 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
     public void getShiftList(GetShiftListRequest request) {
         try {
             Request.validate(request);
-            manageEmployeesShiftPresenter.presentShiftList(new GetShiftListResponse(
-                    ShiftDataMapper.mapToDtoList(shiftRepository.getShiftList()),
-                    request.getStart(),
-                    request.getCinema())
-            );
+            try {
+                manageEmployeesShiftPresenter.presentShiftList(new GetShiftListResponse(
+                        ShiftDataMapper.mapToDtoList(shiftRepository.getShiftList()),
+                        request.getStart(),
+                        request.getCinema())
+                );
+            } catch (DataSourceClassException e) {
+                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (DataSourceMethodException e) {
+                e.printStackTrace();
+            } catch (RepositoryException e) {
+                e.printStackTrace();
+            }
         } catch (Request.NullRequestException e) {
             manageEmployeesShiftPresenter.presentGetShiftListNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -122,6 +138,18 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
            manageEmployeesShiftPresenter.presentCreateShiftError(e);
         } catch (ModifyShiftException e) {
             manageEmployeesShiftPresenter.presentModifyShiftError(e);
+        } catch (DataSourceClassException e) {
+            e.printStackTrace();
+        } catch (DataSourceMethodException e) {
+            e.printStackTrace();
+        } catch (RepositoryException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (DaoMethodException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
     }
@@ -142,6 +170,8 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             manageEmployeesShiftPresenter.presentInvalidDeleteShiftListRequest(request);
         } catch (ShiftSaveException e) {
             manageEmployeesShiftPresenter.presentDeleteShiftError(e);
+        } catch (DaoMethodException e) {
+            e.printStackTrace();
         }
     }
 
@@ -188,6 +218,10 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             manageEmployeesShiftPresenter.presentInvalidRepeatedShiftListRequest(request);
         } catch (CreateShiftException e) {
            manageEmployeesShiftPresenter.presentCreateShiftError(e);
+        } catch (RepositoryException e) {
+            e.printStackTrace();
+        } catch (DaoMethodException e) {
+            e.printStackTrace();
         }
     }
 
@@ -217,6 +251,10 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             manageEmployeesShiftPresenter.presentInvalidCreateShiftListRequest(request);
         } catch (CreateShiftException e) {
             manageEmployeesShiftPresenter.presentCreateShiftError(e);
+        } catch (RepositoryException e) {
+            e.printStackTrace();
+        } catch (DaoMethodException e) {
+            e.printStackTrace();
         }
     }
 

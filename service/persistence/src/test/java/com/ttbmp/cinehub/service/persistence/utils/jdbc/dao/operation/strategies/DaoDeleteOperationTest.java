@@ -34,13 +34,7 @@ class DaoDeleteOperationTest {
         assertDoesNotThrow(() -> dao.delete(finalDto));
     }
 
-    @Test
-    void prova() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, DaoMethodException, IOException {
-        MovieDao movieDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getMovieDao();
-        List<Movie> list = movieDao.getMovieList(Time.valueOf("12:00"));
-        System.out.println(list);
 
-    }
 
     @Test
     void execute_DeleteListDto_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, DaoMethodException {

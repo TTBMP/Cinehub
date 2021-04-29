@@ -1,6 +1,8 @@
 package com.ttbmp.cinehub.app.repository.shift;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.LazyLoadingException;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.MockEmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
@@ -72,7 +74,12 @@ public class MockShiftRepository implements ShiftRepository {
                 .filter(d -> d.id == shiftId)
                 .collect(Collectors.toList())
                 .get(0);
-        Employee employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(data.employeeId);
+        Employee employee = null;
+        try {
+            employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(data.employeeId);
+        } catch (RepositoryException e) {
+            throw new LazyLoadingException(e.getMessage());
+        }
         if (employee instanceof Projectionist) {
             return new ProjectionistShiftProxy(
                     data.id,

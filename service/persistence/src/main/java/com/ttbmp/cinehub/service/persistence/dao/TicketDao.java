@@ -16,7 +16,7 @@ import java.util.List;
 public interface TicketDao {
 
 
-    @Query("SELECT * FROM biglietto WHERE id_proiezione = :projectionId")
+    @Query("SELECT * FROM biglietto WHERE biglietto.id_proiezione = :projectionId")
     List<Ticket> getTicketList(
             @Parameter(name = "projectionId") @NotNull Integer projectionId
     )throws DaoMethodException;

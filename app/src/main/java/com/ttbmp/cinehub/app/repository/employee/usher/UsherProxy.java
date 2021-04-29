@@ -11,7 +11,10 @@ import com.ttbmp.cinehub.domain.CreditCard;
 import com.ttbmp.cinehub.domain.User;
 import com.ttbmp.cinehub.domain.employee.Usher;
 import com.ttbmp.cinehub.domain.shift.Shift;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceClassException;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceMethodException;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -116,10 +119,17 @@ public class UsherProxy extends Usher {
 
     @Override
     public List<Shift> getShiftList() {
-        if (!isShiftListLoaded) {
-            setShiftList(shiftRepository.getShiftList(this));
+        try {
+            if (!isShiftListLoaded) {
+                setShiftList(shiftRepository.getShiftList(this));
+                return super.getShiftList();
+            } else {
+                return null;
+            }
+        } catch (DataSourceClassException | RepositoryException | DataSourceMethodException | ClassNotFoundException | SQLException e) {
+            throw new LazyLoadingException(e.getMessage());
         }
-        return super.getShiftList();
+
     }
 
     @Override

@@ -15,6 +15,7 @@ import com.ttbmp.cinehub.service.persistence.dao.TicketDao;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourceProvider;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,7 @@ public class JdbcTicketRepository implements TicketRepository{
                     .map(ticket -> new TicketProxy(ticket.getId(),ticket.getPrice(),serviceLocator.getService(UserRepository.class),serviceLocator.getService(SeatRepository.class)))
                     .collect(Collectors.toList());
         } catch (DaoMethodException e) {
-            throw new RepositoryException(e.getMessage());
+            return new ArrayList<>();
         }
     }
 

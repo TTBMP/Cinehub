@@ -47,7 +47,7 @@ public class DaoUpdateOperation extends DaoOperation {
     }
 
     @Override
-    public Object execute(Object[] args) throws DaoMethodException, InvocationTargetException, SQLException, NoSuchMethodException, IllegalAccessException {
+    public Object execute(Object[] args) throws DaoMethodException{
         try (PreparedStatement statement = connection.prepareStatement(
                 queryTemplate,
                 ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -80,6 +80,9 @@ public class DaoUpdateOperation extends DaoOperation {
                 );
                 statement.executeUpdate();
             }
+        }
+        catch (SQLException | InvocationTargetException | IllegalAccessException | NoSuchMethodException throwables) {
+            throw new DaoMethodException();
         }
         return null;
     }

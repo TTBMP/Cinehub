@@ -35,10 +35,14 @@ public class DaoOperationProvider {
     );
 
     public DaoOperation getDaoOperation(@NotNull Method method, @NotNull Connection connection,
-                                        List<Class<?>> dataSourceEntityList) throws DaoMethodException, NoSuchMethodException {
-
-        operationInstanceMap.putIfAbsent(method, createDaoOperation(method, connection, dataSourceEntityList));
-        return operationInstanceMap.get(method);
+                                        List<Class<?>> dataSourceEntityList) throws DaoMethodException {
+        try {
+            operationInstanceMap.putIfAbsent(method, createDaoOperation(method, connection, dataSourceEntityList));
+            return operationInstanceMap.get(method);
+        }
+        catch (NoSuchMethodException e){
+            throw new DaoMethodException();
+        }
     }
 
     private DaoOperation createDaoOperation(@NotNull Method method, @NotNull Connection connection,

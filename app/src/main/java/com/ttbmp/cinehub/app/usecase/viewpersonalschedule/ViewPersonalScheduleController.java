@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftRepository;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationException;
@@ -40,6 +41,8 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
         } catch (Request.InvalidRequestException e) {
             presenter.presentInvalidShiftListRequest(request);
         } catch (AuthenticationException e) {
+            e.printStackTrace();
+        } catch (RepositoryException e) {
             e.printStackTrace();
         }
     }
