@@ -43,7 +43,7 @@ public class JdbcShiftRepository implements ShiftRepository {
     }
 
     @Override
-    public Shift getShift(int shiftId) throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, RepositoryException {
+    public Shift getShift(int shiftId) throws RepositoryException {
         try {
             com.ttbmp.cinehub.service.persistence.entity.Shift shift = getShiftDao().getShiftById(shiftId);
             EmployeeDao employeeDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
@@ -70,13 +70,13 @@ public class JdbcShiftRepository implements ShiftRepository {
             else{
                 return null;
             }
-        } catch (DaoMethodException e) {
+        } catch (DaoMethodException | DataSourceClassException | SQLException | ClassNotFoundException | DataSourceMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
     }
 
     @Override
-    public List<Shift> getShiftList() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, RepositoryException {
+    public List<Shift> getShiftList() throws RepositoryException {
         try {
             List<com.ttbmp.cinehub.service.persistence.entity.Shift> shiftList = getShiftDao().getShiftList();
             EmployeeDao employeeDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
@@ -105,13 +105,13 @@ public class JdbcShiftRepository implements ShiftRepository {
             else{
                 return null;
             }
-        } catch (DaoMethodException e) {
+        } catch (DaoMethodException | DataSourceClassException | SQLException | ClassNotFoundException | DataSourceMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
     }
 
     @Override
-    public List<Shift> getShiftList(Employee employee) throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, RepositoryException {
+    public List<Shift> getShiftList(Employee employee) throws RepositoryException {
         try {
             List<com.ttbmp.cinehub.service.persistence.entity.Shift> shiftList = getShiftDao().getShiftListByEmployeeId(employee.getId());
             EmployeeDao employeeDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
@@ -140,7 +140,7 @@ public class JdbcShiftRepository implements ShiftRepository {
             else{
                 return null;
             }
-        } catch (DaoMethodException e) {
+        } catch (DaoMethodException | DataSourceClassException | SQLException | ClassNotFoundException | DataSourceMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
     }

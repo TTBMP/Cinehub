@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * @author Ivan Palmieri, Massimo Mazzetti
+ * @author Ivan Palmieri
  */
 @Dao
 public interface ProjectionDao {

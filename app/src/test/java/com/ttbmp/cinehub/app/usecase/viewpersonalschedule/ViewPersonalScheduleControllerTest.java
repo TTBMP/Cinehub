@@ -3,6 +3,7 @@ package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
 import com.ttbmp.cinehub.app.dto.ShiftDto;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationException;
@@ -47,7 +48,12 @@ class ViewPersonalScheduleControllerTest {
             } catch (AuthenticationException e) {
                 e.printStackTrace();
             }
-            Employee employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(userId);
+            Employee employee = null;
+            try {
+                employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(userId);
+            } catch (RepositoryException e) {
+                e.printStackTrace();
+            }
             List<Shift> shiftList = serviceLocator.getService(ShiftRepository.class).getAllEmployeeShiftBetweenDate(
                     employee,
                     LocalDate.now(),

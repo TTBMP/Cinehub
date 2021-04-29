@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.app.repository.shift.projectionist;
 
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 
 /**
@@ -7,6 +8,6 @@ import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
  */
 public interface ProjectionistShiftRepository {
 
-    ProjectionistShift getProjectionistShift(int shiftId);
+    ProjectionistShift getProjectionistShift(int shiftId) throws RepositoryException;
 
 }

@@ -57,6 +57,8 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
             presenter.presentProjectionListNullRequest();
         } catch (Request.InvalidRequestException e) {
             presenter.presentInvalidProjectionListRequest(request);
+        } catch (RepositoryException e) {
+            e.printStackTrace();
         }
     }
 

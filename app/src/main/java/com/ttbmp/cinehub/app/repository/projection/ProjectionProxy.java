@@ -107,7 +107,11 @@ public class ProjectionProxy extends Projection {
     @Override
     public Projectionist getProjectionist() {
         if (!isProjectionistLoaded) {
-            setProjectionist(projectionistRepository.getProjectionist(this));
+            try {
+                setProjectionist(projectionistRepository.getProjectionist(this));
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
         return super.getProjectionist();
     }

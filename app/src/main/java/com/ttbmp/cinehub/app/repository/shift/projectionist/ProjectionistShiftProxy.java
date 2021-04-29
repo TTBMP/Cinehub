@@ -42,7 +42,12 @@ public class ProjectionistShiftProxy extends ProjectionistShift {
     @Override
     public Employee getEmployee() {
         if (!isEmployeeLoaded) {
-            setEmployee(projectionistRepository.getProjectionist(this));
+            try {
+                setEmployee(projectionistRepository.getProjectionist(this));
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+
+            }
         }
         return super.getEmployee();
     }
