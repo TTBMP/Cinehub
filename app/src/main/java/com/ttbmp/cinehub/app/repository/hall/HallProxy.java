@@ -24,14 +24,14 @@ public class HallProxy extends Hall {
 
     @Override
     public List<Seat> getSeatList() {
-            try {
-                if (!isSeatListLoaded) {
+        try {
+            if (!isSeatListLoaded) {
                 setSeatList(seatRepository.getSeatList(this));
-                }
-                return super.getSeatList();
-            } catch (RepositoryException e) {
-                throw new LazyLoadingException(e.getMessage());
             }
+            return super.getSeatList();
+        } catch (RepositoryException e) {
+            throw new LazyLoadingException(e.getMessage());
+        }
     }
 
     @Override

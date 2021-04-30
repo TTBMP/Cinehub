@@ -10,7 +10,6 @@ import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
-import com.ttbmp.cinehub.app.repository.shift.ShiftSaveException;
 import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.app.usecase.Request;
@@ -22,11 +21,7 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.ShiftRepeatRe
 import com.ttbmp.cinehub.domain.shift.ModifyShiftException;
 import com.ttbmp.cinehub.domain.shift.factory.CreateShiftException;
 import com.ttbmp.cinehub.domain.shift.factory.ShiftFactory;
-import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
-import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceClassException;
-import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceMethodException;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,17 +62,17 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
     public void getShiftList(GetShiftListRequest request) {
         try {
             Request.validate(request);
-                manageEmployeesShiftPresenter.presentShiftList(new GetShiftListResponse(
-                        ShiftDataMapper.mapToDtoList(shiftRepository.getShiftList()),
-                        request.getStart(),
-                        request.getCinema().getId()
-                ));
-          } catch (Request.NullRequestException e) {
+            manageEmployeesShiftPresenter.presentShiftList(new GetShiftListResponse(
+                    ShiftDataMapper.mapToDtoList(shiftRepository.getAllShift()),
+                    request.getStart(),
+                    request.getCinema().getId()
+            ));
+        } catch (Request.NullRequestException e) {
             manageEmployeesShiftPresenter.presentGetShiftListNullRequest();
         } catch (Request.InvalidRequestException e) {
             manageEmployeesShiftPresenter.presentInvalidGetShiftListRequest(request);
         } catch (RepositoryException e) {
-                e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -169,7 +164,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (Request.InvalidRequestException e) {
             manageEmployeesShiftPresenter.presentInvalidRepeatedShiftListRequest(request);
         } catch (CreateShiftException e) {
-           manageEmployeesShiftPresenter.presentCreateShiftError(e);
+            manageEmployeesShiftPresenter.presentCreateShiftError(e);
         } catch (RepositoryException e) {
             e.printStackTrace();
         }

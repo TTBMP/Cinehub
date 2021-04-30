@@ -5,9 +5,7 @@ import com.ttbmp.cinehub.app.repository.employee.MockEmployeeRepository;
 import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.app.repository.hall.MockHallRepository;
 import com.ttbmp.cinehub.app.repository.projection.MockProjectionRepository;
-import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.domain.Cinema;
-import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.employee.Employee;
@@ -68,7 +66,6 @@ public class MockCinemaRepository implements CinemaRepository {
     }
 
 
-
     @Override
     public Cinema getCinema(Projection projection) {
         int projectionHallId = MockProjectionRepository.getProjectionDataList().stream()
@@ -76,7 +73,7 @@ public class MockCinemaRepository implements CinemaRepository {
                 .map(MockProjectionRepository.ProjectionData::getHallId)
                 .collect(Collectors.toList())
                 .get(0);
-        int projectionCinemaId =MockHallRepository.getHallDataList().stream()
+        int projectionCinemaId = MockHallRepository.getHallDataList().stream()
                 .filter(d -> d.getId() == projectionHallId)
                 .map(MockHallRepository.HallData::getCinemaId)
                 .collect(Collectors.toList())

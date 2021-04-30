@@ -23,9 +23,6 @@ import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketFoldingArmchair;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketHeatedArmchair;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketSkipLine;
-import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
-
-import java.io.IOException;
 
 /**
  * @author Ivan Palmieri

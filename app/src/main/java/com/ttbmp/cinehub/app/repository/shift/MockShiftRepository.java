@@ -104,7 +104,7 @@ public class MockShiftRepository implements ShiftRepository {
     }
 
     @Override
-    public List<Shift> getShiftList() {
+    public List<Shift> getAllShift() {
         return SHIFT_DATA_LIST.stream()
                 .map(d -> new ShiftFactory().createShift(d))
                 .collect(Collectors.toList());

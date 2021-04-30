@@ -5,7 +5,6 @@ import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.Hall;
-import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class CinemaProxy extends Cinema {
         if (!isHallListLoaded) {
             try {
                 setHallList(hallRepository.getHallList(this));
-            }  catch (RepositoryException e) {
+            } catch (RepositoryException e) {
                 throw new LazyLoadingException(e.getMessage());
             }
         }

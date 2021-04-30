@@ -15,7 +15,7 @@ import com.ttbmp.cinehub.service.persistence.dao.EmployeeDao;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourceProvider;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
-public class JdbcEmployeeRepository implements EmployeeRepository{
+public class JdbcEmployeeRepository implements EmployeeRepository {
 
     private final ServiceLocator serviceLocator;
 
@@ -27,9 +27,9 @@ public class JdbcEmployeeRepository implements EmployeeRepository{
 
 
     @Override
-    public Employee getEmployee(String userId) throws RepositoryException {
+    public Employee getEmployee(String employeeId) throws RepositoryException {
         try {
-            com.ttbmp.cinehub.service.persistence.entity.Employee employee = getEmployeeDao().getEmployeeById(userId);
+            com.ttbmp.cinehub.service.persistence.entity.Employee employee = getEmployeeDao().getEmployeeById(employeeId);
             //employeeDao
             if (employee.getRole().equals("maschera")) {
                 return new UsherProxy(
@@ -47,8 +47,7 @@ public class JdbcEmployeeRepository implements EmployeeRepository{
                         serviceLocator.getService(CinemaRepository.class),
                         serviceLocator.getService(ShiftRepository.class)
                 );
-            }
-            else{
+            } else {
                 return null;
             }
         } catch (DaoMethodException e) {
@@ -76,8 +75,7 @@ public class JdbcEmployeeRepository implements EmployeeRepository{
                         serviceLocator.getService(CinemaRepository.class),
                         serviceLocator.getService(ShiftRepository.class)
                 );
-            }
-            else{
+            } else {
                 return null;
             }
         } catch (DaoMethodException e) {

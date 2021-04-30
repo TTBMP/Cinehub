@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.app.usecase.buyticket;
 
 import com.ttbmp.cinehub.app.datamapper.MovieDataMapper;
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
@@ -9,7 +10,6 @@ import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 
@@ -47,7 +47,7 @@ class BuyTicketBuyTicketControllerTest {
                     }
                 }
                 Assertions.assertTrue(result);
-            } catch (IOException e) {
+            } catch (RepositoryException e) {
                 e.printStackTrace();
             }
 

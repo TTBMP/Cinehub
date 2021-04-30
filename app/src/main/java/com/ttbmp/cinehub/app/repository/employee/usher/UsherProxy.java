@@ -10,10 +10,7 @@ import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.CreditCard;
 import com.ttbmp.cinehub.domain.employee.Usher;
 import com.ttbmp.cinehub.domain.shift.Shift;
-import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceClassException;
-import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceMethodException;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
