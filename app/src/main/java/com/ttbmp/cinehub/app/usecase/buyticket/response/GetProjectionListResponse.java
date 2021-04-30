@@ -13,7 +13,7 @@ public class GetProjectionListResponse {
 
     public GetProjectionListResponse(List<ProjectionDto> projectionDto) {
         this.projectionDto = projectionDto;
-        for (ProjectionDto projection : projectionDto) {
+        for (var projection : projectionDto) {
             addProjectionDtoTime(projection.getStartTime());
         }
 

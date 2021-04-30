@@ -15,7 +15,7 @@ public class CinehubApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        NavController navController = new NavController(primaryStage);
+        var navController = new NavController(primaryStage);
         navController.navigate(new NavActivityDestination(new BuyTicketActivity()));
         primaryStage.setTitle("Cinehub");
         primaryStage.show();

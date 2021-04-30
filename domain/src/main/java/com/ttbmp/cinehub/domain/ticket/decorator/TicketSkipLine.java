@@ -7,7 +7,6 @@ import com.ttbmp.cinehub.domain.ticket.component.Ticket;
  */
 public class TicketSkipLine extends TicketDecorator {
 
-
     public TicketSkipLine(Ticket ticket) {
         super(ticket);
     }
@@ -16,6 +15,5 @@ public class TicketSkipLine extends TicketDecorator {
     public long getPrice() {
         return ticket.getPrice() + 1;
     }
-
 
 }

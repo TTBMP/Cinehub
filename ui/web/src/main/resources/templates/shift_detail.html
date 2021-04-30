@@ -15,7 +15,7 @@
     <title>Shift Detail</title>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 </head>
-<body>
+<body style="background-color: black">
 <h1 align="center">Shift Detail</h1>
 
 <br/>
@@ -62,22 +62,37 @@
         <h1 align="center" th:text="${errorText}"></h1>
     </div>
 
-    <div>
-        <a href="/manage_employee_shift">
-            <button class="btn btn-outline-primary btn-sm" type="button">
-                Close
-            </button>
-        </a>
-        <div th:if="${shiftDetail.date.isAfter({now})}" th:value="${now}">
-            <button class="btn btn-warning" data-target="#modifyShift" data-toggle="modal" type="button">Modify changes
-            </button>
+    <a href="/manage_employee_shift">
+        <button class="btn btn-outline-primary btn-sm" type="button">
+            Close
+        </button>
+    </a>
 
-            <a href="/delete_shift">
-                <button class="btn btn-danger" type="button">Delete Shift</button>
-            </a>
+    <div th:if="${shiftDetail.date.isAfter({now.minusDays(1)})}" th:value="${now}">
+        <div class="container">
+            <div class="row">
+                <div class="col-6 col-sm-3"></div>
+                <div class="col-6 col-sm-3">
+                    <button class="btn btn-warning" data-target="#modifyShift" data-toggle="modal" type="button">Modify
+                        changes
+                    </button>
+                </div>
+                <div class="col-6 col-sm-3">
+                    <form action="/delete_shift" method="get">
+                        <input name="shiftDate" th:value="${shiftDetail.date}" type="hidden"/>
+                        <input name="idCinema" th:value="${employee.cinema.id}" type="hidden"/>
+                        <input name="shiftId" th:value="${shiftDetail.id}" type="hidden"/>
+                        <button class="btn btn-danger"
+                                type="submit">Delete Shift
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
+
 </div>
+
 <div class="modal it-dialog-scrollable fade" id="modifyShift" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-dialog-right" role="document">
         <div class="modal-content">
@@ -85,7 +100,7 @@
                 <h5 class="modal-title">Modify Shift</h5>
             </div>
             <div class="modal-body">
-                <form action="#" method="post" th:action="@{/shift_detail}" th:object="${modifyRequest}">
+                <form action="#" method="post" th:object="${modifyRequest}">
                     <div class="container">
                         <div class="row">
                             <div class="col-sm"> Name</div>
@@ -110,8 +125,8 @@
                         </div>
                         <div class="row">
                             <div class="col-sm"> Start Time</div>
-                            <input id="modifyStartTime" required th:field="*{start}" th:text="${shiftDetail.start}"
-                                   th:value="${start}" type="time">
+                            <input id="modifyStartTime" required th:field="*{inizio}" th:text="${shiftDetail.start}"
+                                   th:value="${inizio}" type="time">
                         </div>
                         <div class=" row">
                             <div class="col-sm"> End Time</div>
@@ -135,11 +150,7 @@
 
                     <br/>
                     <div class="modal-footer">
-
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Modify
-                            Shift
-                        </button>
-
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Modify Shift</button>
                         <button class="btn btn-secondary btn-lg btn-block" data-dismiss="modal" type="button">Close
                         </button>
                     </div>

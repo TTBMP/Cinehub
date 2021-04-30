@@ -29,19 +29,19 @@ public class MockProjectionRepository implements ProjectionRepository {
     private static int projectionIdCounter = 0;
 
     static {
-        for (LocalDate date = LocalDate.now().minusMonths(1); date.isBefore(LocalDate.now().plusMonths(1)); date = date.plusDays(1)) {
-            for (MockHallRepository.HallData hallData : MockHallRepository.getHallDataList()) {
-                for (MockMovieRepository.MovieData movieData : MockMovieRepository.getMovieDataList()) {
+        for (var date = LocalDate.now().minusMonths(1); date.isBefore(LocalDate.now().plusMonths(1)); date = date.plusDays(1)) {
+            for (var hallData : MockHallRepository.getHallDataList()) {
+                for (var movieData : MockMovieRepository.getMovieDataList()) {
                     if (movieData.getId() % 2 == date.getDayOfMonth() % 2) {
-                        LocalDate finalDate = date;
-                        List<Integer> shiftIdList = MockShiftRepository.getShiftDataList().stream()
+                        var finalDate = date;
+                        var shiftIdList = MockShiftRepository.getShiftDataList().stream()
                                 .filter(d -> LocalDate.parse(d.getDate()).equals(finalDate)
                                         && LocalTime.parse("16:00").isAfter(LocalTime.parse(d.getStart()))
                                         && LocalTime.parse("16:00").isBefore(LocalTime.parse(d.getEnd()))
                                 )
                                 .map(MockShiftRepository.ShiftData::getId)
                                 .collect(Collectors.toList());
-                        List<Integer> projectionistShiftIdList = MockProjectionistShiftRepository.getProjectionistShiftDataList().stream()
+                        var projectionistShiftIdList = MockProjectionistShiftRepository.getProjectionistShiftDataList().stream()
                                 .filter(d -> shiftIdList.contains(d.getShiftId()))
                                 .filter(d -> d.getHallId() == hallData.getId())
                                 .map(MockProjectionistShiftRepository.ProjectionistShiftData::getShiftId)
@@ -50,7 +50,7 @@ public class MockProjectionRepository implements ProjectionRepository {
                             break;
                         }
                         int projectionistShiftId = projectionistShiftIdList.get(0);
-                        String projectionistId = MockShiftRepository.getShiftDataList().stream()
+                        var projectionistId = MockShiftRepository.getShiftDataList().stream()
                                 .filter(d -> d.getId() == projectionistShiftId)
                                 .map(MockShiftRepository.ShiftData::getEmployeeId)
                                 .collect(Collectors.toList())
@@ -137,17 +137,17 @@ public class MockProjectionRepository implements ProjectionRepository {
     @Override
     public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date, Integer hallId) {
         return PROJECTION_DATA_LIST.stream()
-                    .filter(d -> d.cinemaId == cinema.getId() && d.movieId == movie.getId() && d.date.equals(date) && d.hallId == hallId)
-                    .map(d -> new ProjectionProxy(
-                            d.id,
-                            d.date,
-                            d.startTime,
-                            serviceLocator.getService(MovieRepository.class),
-                            serviceLocator.getService(HallRepository.class),
-                            serviceLocator.getService(ProjectionistRepository.class),
-                            serviceLocator.getService(TicketRepository.class)
-                    ))
-                    .collect(Collectors.toList());
+                .filter(d -> d.cinemaId == cinema.getId() && d.movieId == movie.getId() && d.date.equals(date) && d.hallId == hallId)
+                .map(d -> new ProjectionProxy(
+                        d.id,
+                        d.date,
+                        d.startTime,
+                        serviceLocator.getService(MovieRepository.class),
+                        serviceLocator.getService(HallRepository.class),
+                        serviceLocator.getService(ProjectionistRepository.class),
+                        serviceLocator.getService(TicketRepository.class)
+                ))
+                .collect(Collectors.toList());
     }
 
     public static class ProjectionData {
@@ -229,4 +229,5 @@ public class MockProjectionRepository implements ProjectionRepository {
         }
 
     }
+
 }

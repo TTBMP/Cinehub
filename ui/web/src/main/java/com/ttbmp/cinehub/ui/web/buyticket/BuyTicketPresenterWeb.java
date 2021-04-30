@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.ui.web.buyticket;
 
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketPresenter;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
@@ -16,8 +15,9 @@ import java.util.List;
  */
 public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
-    private static final String PAYMENT = "paymentError";
-    private static final String MOVIE = "movieError";
+    private static final String PAYMENT_ERROR_ATTRIBUTE = "paymentError";
+    private static final String MOVIE_ERROR_ATTRIBUTE = "movieError";
+    private static final String CINEMA_ERROR_ATTRIBUTE = "cinemaError";
     private final Model model;
 
 
@@ -44,21 +44,21 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     @Override
     public void presentSeatList(GetNumberOfSeatsResponse response) {
         model.addAttribute("seatList", response.getSeatDtoList());
-        ProjectionDto selectedProjection = ((ProjectionDto) model.getAttribute("projection"));
+        var selectedProjection = ((ProjectionDto) model.getAttribute("projection"));
         model.addAttribute("valList", getSeatsNameList(selectedProjection, response.getSeatDtoList().size()));
     }
 
     private List<String> getSeatsNameList(ProjectionDto selectedProjection, int size) {
         List<String> valList = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
+        for (var i = 0; i < size; i++) {
             valList.add(getName(selectedProjection, i));
         }
         return valList;
     }
 
     private String getName(ProjectionDto projection, int seatNumber) {
-        String position = projection.getHallDto().getSeatList().get(seatNumber).getPosition();
-        for (TicketDto ticket : projection.getListTicket()) {
+        var position = projection.getHallDto().getSeatList().get(seatNumber).getPosition();
+        for (var ticket : projection.getListTicket()) {
             if (ticket.getSeatDto().getPosition().equals(position)) {
                 return "SOLD";
             }
@@ -74,17 +74,17 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     @Override
     public void presentPayNullRequest() {
-        model.addAttribute(PAYMENT, "Error with operation Pay");
+        model.addAttribute(PAYMENT_ERROR_ATTRIBUTE, "Error with operation Pay");
 
     }
 
     @Override
     public void presentInvalidPay(PaymentRequest request) {
         if (request.getErrorList().contains(PaymentRequest.MISSING_TICKET_ERROR)) {
-            model.addAttribute(PAYMENT, PaymentRequest.MISSING_TICKET_ERROR.getMessage());
+            model.addAttribute(PAYMENT_ERROR_ATTRIBUTE, PaymentRequest.MISSING_TICKET_ERROR.getMessage());
         }
         if (request.getErrorList().contains(PaymentRequest.MISSING_PROJECTION_ERROR)) {
-            model.addAttribute(PAYMENT, PaymentRequest.MISSING_PROJECTION_ERROR.getMessage());
+            model.addAttribute(PAYMENT_ERROR_ATTRIBUTE, PaymentRequest.MISSING_PROJECTION_ERROR.getMessage());
         }
     }
 
@@ -101,13 +101,13 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     @Override
     public void presentGetListCinemaNullRequest() {
-        model.addAttribute("cinemaError", "Cinema can't be null");
+        model.addAttribute(CINEMA_ERROR_ATTRIBUTE, "Cinema can't be null");
 
     }
 
     @Override
     public void presentInvalidGetListCinema(GetListCinemaRequest request) {
-        model.addAttribute("cinemaError", request.getErrorList());
+        model.addAttribute(CINEMA_ERROR_ATTRIBUTE, request.getErrorList());
 
 
     }
@@ -146,12 +146,12 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     @Override
     public void presentGetListMovieError() {
-        model.addAttribute(MOVIE, "Unable to retrieve list of movie");
+        model.addAttribute(MOVIE_ERROR_ATTRIBUTE, "Unable to retrieve list of movie");
     }
 
     @Override
     public void presentErrorByStripe(PaymentServiceException error) {
-        model.addAttribute(PAYMENT, error.getMessage());
+        model.addAttribute(PAYMENT_ERROR_ATTRIBUTE, error.getMessage());
     }
 
     @Override
@@ -161,23 +161,23 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     @Override
     public void presentGetListMovieNullRequest() {
-        model.addAttribute(MOVIE, "Movie can't be null");
+        model.addAttribute(MOVIE_ERROR_ATTRIBUTE, "Movie can't be null");
     }
 
     @Override
     public void presentInvalidGetListMovie(GetListMovieRequest request) {
-        model.addAttribute(MOVIE, "Movie can't be null");
+        model.addAttribute(MOVIE_ERROR_ATTRIBUTE, "Movie can't be null");
     }
 
     @Override
-    public void presentAutenticationError() {
+    public void presentAuthenticationError() {
         model.addAttribute("autenticationError", "Error with the autentication");
 
     }
 
     @Override
     public void presentInvalidGetCinema(GetCinemaRequest request) {
-        model.addAttribute("cinemaError", "Error with the cinema retriving");
+        model.addAttribute(CINEMA_ERROR_ATTRIBUTE, "Error with the cinema retriving");
 
     }
 

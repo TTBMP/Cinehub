@@ -3,7 +3,6 @@ package com.ttbmp.cinehub.app.repository.ticket;
 import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Seat;
-import com.ttbmp.cinehub.domain.User;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 /**
@@ -19,8 +18,6 @@ public class TicketProxy extends Ticket {
         this.seatRepository = seatRepository;
     }
 
-
-
     @Override
     public Seat getSeat() {
         if (!isSeatLoaded) {
@@ -34,4 +31,5 @@ public class TicketProxy extends Ticket {
         isSeatLoaded = true;
         super.setSeat(seat);
     }
+
 }

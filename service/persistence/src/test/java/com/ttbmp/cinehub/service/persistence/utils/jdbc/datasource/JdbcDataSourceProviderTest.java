@@ -17,7 +17,7 @@ class JdbcDataSourceProviderTest {
 
     @Test
     void getDataSource_ReturnsValue_ValidDataSource() throws DataSourceClassException, SQLException, ClassNotFoundException {
-        JdbcDataSource dataSource = JdbcDataSourceProvider.getDataSource(dataSourceClass);
+        var dataSource = JdbcDataSourceProvider.getDataSource(dataSourceClass);
         assertNotNull(dataSource);
     }
 

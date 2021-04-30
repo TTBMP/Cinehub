@@ -20,14 +20,11 @@ import java.time.LocalDate;
 @Controller
 public class ChooseSeatsViewController {
 
-    private final String projectionList = "projectionList";
-
     @PostMapping("/choose_seat")
     public String chooseSeats(@ModelAttribute("projection") Projection projection,
                               Model model) {
 
         BuyTicketUseCase buyTicketUseCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
-
         buyTicketUseCase.getProjection(new GetProjectionRequest(
                 LocalDate.parse(projection.getDate()),
                 projection.getStartTime(),

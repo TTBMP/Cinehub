@@ -1,13 +1,11 @@
 package com.ttbmp.cinehub.domain.ticket.component;
 
 import com.ttbmp.cinehub.domain.Seat;
-import com.ttbmp.cinehub.domain.User;
 
 /**
  * @author Ivan Palmieri
  */
 public class Ticket {
-
 
     private int id;
     private long price;
@@ -18,7 +16,6 @@ public class Ticket {
         this.price = price;
         this.seat = seat;
     }
-
 
     public Seat getSeat() {
         return seat;

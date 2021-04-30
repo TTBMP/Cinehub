@@ -19,12 +19,12 @@
 <body>
 <h1 align="center">Assign Repeated Usher Shift</h1>
 <div>
-    <form action="#" method="post" th:action="@{/assign_repeated_usher_shift}" th:object="${assignRequest}">
+    <form action="#" method="post" th:object="${assignRequest}">
 
         <div class="col-sm"> Employee</div>
         <div class="col-sm"> Employee</div>
         <select id="employeeComboBox" th:field="*{employeeId}">
-            <option th:each="employee : ${employeeList}"
+            <option th:each="employee : ${usherList}"
                     th:text="${employee.name + ' '+ employee.surname}"
                     th:value="${employee.id}">1
             </option>

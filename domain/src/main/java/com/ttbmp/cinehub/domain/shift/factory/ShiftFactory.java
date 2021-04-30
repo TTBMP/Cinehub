@@ -10,7 +10,6 @@ import com.ttbmp.cinehub.domain.shift.Shift;
 import com.ttbmp.cinehub.domain.shift.UsherShift;
 
 import java.time.LocalTime;
-import java.util.List;
 
 public class ShiftFactory {
 
@@ -24,8 +23,8 @@ public class ShiftFactory {
     }
 
     private Shift createShiftProjectionist(Employee employee, String date, String start, String end, Hall hall) throws CreateShiftException {
-        List<Shift> shiftList = employee.getShiftList();
-        for (Shift shift : shiftList) {
+        var shiftList = employee.getShiftList();
+        for (var shift : shiftList) {
             if (shift.getDate().equals(date)
                     && LocalTime.parse(start).isBefore(LocalTime.parse(shift.getEnd()))
                     && LocalTime.parse(end).isAfter(LocalTime.parse(shift.getStart()))) {
@@ -36,8 +35,8 @@ public class ShiftFactory {
     }
 
     private Shift createShiftUsher(Employee employee, String date, String start, String end) throws CreateShiftException {
-        List<Shift> shiftList = employee.getShiftList();
-        for (Shift shift : shiftList) {
+        var shiftList = employee.getShiftList();
+        for (var shift : shiftList) {
             if (shift.getDate().equals(date)
                     && LocalTime.parse(start).isBefore(LocalTime.parse(shift.getEnd()))
                     && LocalTime.parse(end).isAfter(LocalTime.parse(shift.getStart()))) {

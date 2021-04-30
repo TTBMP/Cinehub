@@ -21,7 +21,7 @@ public class MockProjectionistShiftRepository implements ProjectionistShiftRepos
     private static final List<ProjectionistShiftData> PROJECTIONIST_SHIFT_DATA_LIST = new ArrayList<>();
 
     static {
-        List<String> projectionistIdList = MockProjectionistRepository.getProjectionistDataList().stream()
+        var projectionistIdList = MockProjectionistRepository.getProjectionistDataList().stream()
                 .map(MockProjectionistRepository.ProjectionistData::getId)
                 .collect(Collectors.toList());
         MockShiftRepository.getShiftDataList().stream()
@@ -44,7 +44,7 @@ public class MockProjectionistShiftRepository implements ProjectionistShiftRepos
 
     @Override
     public ProjectionistShift getProjectionistShift(int shiftId) {
-        MockShiftRepository.ShiftData shiftData = MockShiftRepository.getShiftDataList().stream()
+        var shiftData = MockShiftRepository.getShiftDataList().stream()
                 .filter(d -> d.getId() == shiftId)
                 .collect(Collectors.toList())
                 .get(0);

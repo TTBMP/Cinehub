@@ -10,4 +10,5 @@ public class MockEmailService implements EmailService {
     public void sendMail(EmailServiceRequest emailServiceRequest) {
         System.out.println("Email sent");
     }
+
 }

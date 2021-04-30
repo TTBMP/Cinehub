@@ -6,8 +6,10 @@ import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftController;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
-import com.ttbmp.cinehub.domain.Cinema;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.CreateShiftResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetCinemaListResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetShiftListResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.ShiftRepeatResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +24,7 @@ class ManageEmployeesShiftControllerTest {
 
     @Test
     void getCinemaList() {
-        ManageEmployeesShiftController controller = new ManageEmployeesShiftController(
+        var controller = new ManageEmployeesShiftController(
                 serviceLocator,
                 new MockManageEmployeePresenter()
         );
@@ -31,44 +33,29 @@ class ManageEmployeesShiftControllerTest {
 
     @Test
     void getShiftList() {
-        ManageEmployeesShiftController controller = new ManageEmployeesShiftController(
+        var controller = new ManageEmployeesShiftController(
                 serviceLocator,
                 new MockManageEmployeePresenter()
         );
-        CinemaRepository cinemaRepository = serviceLocator.getService(CinemaRepository.class);
-        Cinema cinema = cinemaRepository.getAllCinema().get(0);
-        GetShiftListRequest getShiftListRequest = new GetShiftListRequest(LocalDate.now(), CinemaDataMapper.mapToDto(cinema));
+        var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
+        var cinema = cinemaRepository.getAllCinema().get(0);
+        var getShiftListRequest = new GetShiftListRequest(LocalDate.now(), CinemaDataMapper.mapToDto(cinema));
         controller.getShiftList(getShiftListRequest);
     }
 
-    @Test
-    void getHallList() {
-        ManageEmployeesShiftController controller = new ManageEmployeesShiftController(
-                serviceLocator,
-                new MockManageEmployeePresenter()
-        );
-        CinemaRepository cinemaRepository = serviceLocator.getService(CinemaRepository.class);
-        Cinema cinema = cinemaRepository.getAllCinema().get(0);
-        GetHallListRequest getHallListRequest = new GetHallListRequest(CinemaDataMapper.mapToDto(cinema));
-        controller.getHallList(getHallListRequest);
-    }
 
-    class MockManageEmployeePresenter implements ManageEmployeesShiftPresenter {
+    static class MockManageEmployeePresenter implements ManageEmployeesShiftPresenter {
 
         @Override
         public void presentShiftList(GetShiftListResponse shiftList) {
-            Assertions.assertNotEquals(shiftList.getShiftDtoList().size(), 0);
+            Assertions.assertNotEquals(0, shiftList.getShiftDtoList().size());
         }
 
         @Override
         public void presentCinemaList(GetCinemaListResponse listCinema) {
-            Assertions.assertNotEquals(listCinema.getCinemaList().size(), 0);
+            Assertions.assertNotEquals(0, listCinema.getCinemaList().size());
         }
 
-        @Override
-        public void presentHallList(GetHallListResponse listHall) {
-            Assertions.assertNotEquals(listHall.getListHall().size(), 0);
-        }
 
         @Override
         public void presentSaveShift() {
@@ -155,14 +142,5 @@ class ManageEmployeesShiftControllerTest {
 
         }
 
-        @Override
-        public void presentInvalidHallListRequest(GetHallListRequest request) {
-
-        }
-
-        @Override
-        public void presentHallListNullRequest() {
-
-        }
     }
 }

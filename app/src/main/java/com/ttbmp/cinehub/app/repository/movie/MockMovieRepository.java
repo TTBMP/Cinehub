@@ -61,7 +61,7 @@ public class MockMovieRepository implements MovieRepository {
 
     @Override
     public List<Movie> getMovieList(String localDate) {
-        List<Integer> projectionMovieIdList = MockProjectionRepository.getProjectionDataList().stream()
+        var projectionMovieIdList = MockProjectionRepository.getProjectionDataList().stream()
                 .filter(d -> d.getDate().equals(localDate))
                 .map(MockProjectionRepository.ProjectionData::getMovieId)
                 .distinct()

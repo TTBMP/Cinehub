@@ -13,8 +13,8 @@ public class ManageShiftActivity extends Activity {
 
     public ManageShiftActivity() throws IOException {
         super(new ShowShiftView());
-        ManageEmployeesShiftViewModel viewModel = new ManageEmployeesShiftViewModel();
-        ManageEmployeesShiftFxPresenter presenter = new ManageEmployeesShiftFxPresenter(viewModel);
+        var viewModel = new ManageEmployeesShiftViewModel();
+        var presenter = new ManageEmployeesShiftFxPresenter(viewModel);
         viewModelStore.put(ManageEmployeesShiftViewModel.class, viewModel);
         useCaseFactory.put(ManageEmployeesShiftUseCase.class, () -> new ManageEmployeesShiftHandler(presenter));
     }

@@ -54,7 +54,7 @@ public class EmployeeDto {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        EmployeeDto other = (EmployeeDto) obj;
+        var other = (EmployeeDto) obj;
         return id.equals(other.getId());
     }
 

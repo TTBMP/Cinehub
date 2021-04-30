@@ -62,7 +62,6 @@ public class ProjectionDto {
         return startTime;
     }
 
-
     public HallDto getHallDto() {
         return hallDto;
     }

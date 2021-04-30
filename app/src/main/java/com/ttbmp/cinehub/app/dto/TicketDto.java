@@ -46,5 +46,4 @@ public class TicketDto {
         this.price = price;
     }
 
-
 }

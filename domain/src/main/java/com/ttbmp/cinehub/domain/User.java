@@ -78,7 +78,7 @@ public class User {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        Employee other = (Employee) obj;
+        var other = (Employee) obj;
         return id.equals(other.getId());
     }
 

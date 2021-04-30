@@ -2,10 +2,10 @@ package com.ttbmp.cinehub.ui.web.domain;
 
 public class Projection {
 
-    private  int hallId;
-    private  String date;
-    private  int movieId;
-    private  int cinemaId;
+    private int hallId;
+    private String date;
+    private int movieId;
+    private int cinemaId;
     private String startTime;
 
     public String getStartTime() {

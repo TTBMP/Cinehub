@@ -20,7 +20,7 @@ public class TheMovieDbApiService {
     public Movie getMovie(int movieId) throws TheMovieDbApiException {
         Movie result;
         try {
-            Reader reader = getJsonReader(new URL(URL_START + movieId + API_KEY));
+            var reader = getJsonReader(new URL(URL_START + movieId + API_KEY));
             result = new Gson().fromJson(reader, Movie.class);
             result.setImageUrl(IMAGE_URL + result.getImageUrl());
         } catch (Exception e) {
@@ -32,7 +32,7 @@ public class TheMovieDbApiService {
     private Reader getJsonReader(URL url) throws TheMovieDbApiException {
         Reader result;
         try {
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            var connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Content-Type", "application/json");

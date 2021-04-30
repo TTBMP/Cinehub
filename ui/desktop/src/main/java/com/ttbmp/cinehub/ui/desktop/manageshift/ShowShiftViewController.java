@@ -101,8 +101,8 @@ public class ShowShiftViewController extends ViewController {
         shiftEmployeeTableColumn.setCellFactory(tableColumn -> new EmployeeCalendarTableCell(activity, navController));
         shiftEmployeeTableColumn.setSortable(false);
         shiftEmployeeTableColumn.setReorderable(false);
-        for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
-            TableColumn<EmployeeShiftWeek, DayWeek> column = (TableColumn<EmployeeShiftWeek, DayWeek>) shiftTableView.getColumns().get(dayOfWeek.getValue());
+        for (var dayOfWeek : DayOfWeek.values()) {
+            var column = (TableColumn<EmployeeShiftWeek, DayWeek>) shiftTableView.getColumns().get(dayOfWeek.getValue());
             column.setCellValueFactory(cell -> new SimpleObjectProperty<>(cell.getValue().getDayOfWeek(dayOfWeek)));
             column.setCellFactory(tableColumn -> new ShiftCalendarTableCell(activity, navController));
             column.setReorderable(false);

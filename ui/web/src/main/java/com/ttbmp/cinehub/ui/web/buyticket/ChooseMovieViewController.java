@@ -18,7 +18,6 @@ import java.time.LocalDate;
 @Controller
 public class ChooseMovieViewController {
 
-
     @GetMapping("/choose_movie")
     public String getMoviePost(@RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, Model model) {
         if (date == null) {
