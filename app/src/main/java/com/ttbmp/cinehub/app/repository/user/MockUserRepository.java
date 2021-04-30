@@ -49,25 +49,7 @@ public class MockUserRepository implements UserRepository {
                 .get(0);
     }
 
-    @Override
-    public User getUser(Ticket ticket) {
-        var ticketUserId = MockTicketRepository.getTicketDataList().stream()
-                .filter(d -> d.getId() == ticket.getId())
-                .map(MockTicketRepository.TicketData::getUserId)
-                .collect(Collectors.toList())
-                .get(0);
-        return USER_DATA_LIST.stream()
-                .filter(d -> d.id.equals(ticketUserId))
-                .map(d -> new UserProxy(
-                        d.id,
-                        d.name,
-                        d.surname,
-                        d.email,
-                        serviceLocator.getService(CreditCardRepository.class)
-                ))
-                .collect(Collectors.toList())
-                .get(0);
-    }
+
 
     public static class UserData {
 

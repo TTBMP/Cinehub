@@ -115,7 +115,6 @@ public class BuyTicketController implements BuyTicketUseCase {
             var seats = SeatDataMapper.mapToEntityList(request.getSeatDtoList());
             var pos = request.getPos();
             var seat = seats.get(pos);
-            var user = userRepository.getUser(authenticationService.signIn("", "").getUserId());
             /*DECORATOR PATTERN GOF*/
             var ticket = new Ticket(0, seat.getPrice(), seat);
             if (Boolean.TRUE.equals(request.getHeatedArmchairOption())) {
@@ -136,8 +135,6 @@ public class BuyTicketController implements BuyTicketUseCase {
             buyTicketPresenter.presentGetTicketBySeatsNullRequest();
         } catch (Request.InvalidRequestException e) {
             buyTicketPresenter.presentInvalidGetTicketBySeats(request);
-        } catch (AuthenticationException e) {
-            buyTicketPresenter.presentAuthenticationError();
         }
     }
 

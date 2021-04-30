@@ -3,6 +3,7 @@ package com.ttbmp.cinehub.domain;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public class User {
     private String surname;
     private String email;
     private CreditCard creditCard;
-    private List<Ticket> ownedTicketList;
+    private List<Ticket> ticketList = new ArrayList<>();
 
     public User(String id, String name, String surname, String email, CreditCard creditCard) {
         this.id = id;
@@ -65,12 +66,16 @@ public class User {
         this.creditCard = creditCard;
     }
 
-    public List<Ticket> getOwnedTicketList() {
-        return ownedTicketList;
+    public List<Ticket> getTicketList() {
+        return ticketList;
     }
 
-    public void setOwnedTicketList(List<Ticket> ownedTicketList) {
-        this.ownedTicketList = ownedTicketList;
+    public void setTicketList(List<Ticket> ticketList) {
+        this.ticketList = ticketList;
+    }
+
+    public void addTicket(Ticket ticket){
+        ticketList.add(ticket);
     }
 
     @Override

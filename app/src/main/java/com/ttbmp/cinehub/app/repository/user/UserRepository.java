@@ -10,6 +10,4 @@ public interface UserRepository {
 
     User getUser(String userId);
 
-    User getUser(Ticket ticket);
-
 }

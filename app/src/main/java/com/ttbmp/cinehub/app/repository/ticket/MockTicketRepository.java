@@ -38,14 +38,12 @@ public class MockTicketRepository implements TicketRepository {
     }
 
     @Override
-    public synchronized void saveTicket(Ticket ticket, User user, Projection projection) {
+    public synchronized void saveTicket(Ticket ticket, Projection projection) {
         TICKET_DATA_LIST.add(new TicketData(
                 counterTicketId++,
                 ticket.getPrice(),
-                user.getId(),
                 projection.getId(),
                 ticket.getSeat().getId()
-
         ));
     }
 
@@ -65,14 +63,13 @@ public class MockTicketRepository implements TicketRepository {
 
         private int id;
         private long price;
-        private String userId;
+
         private int projectionId;
         private int seatId;
 
-        public TicketData(int id, long price, String userId, int projectionId, int seatId) {
+        public TicketData(int id, long price, int projectionId, int seatId) {
             this.id = id;
             this.price = price;
-            this.userId = userId;
             this.projectionId = projectionId;
             this.seatId = seatId;
         }
@@ -92,14 +89,6 @@ public class MockTicketRepository implements TicketRepository {
 
         public void setPrice(long price) {
             this.price = price;
-        }
-
-        public String getUserId() {
-            return userId;
-        }
-
-        public void setUserId(String userId) {
-            this.userId = userId;
         }
 
         public int getProjectionId() {
