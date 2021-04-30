@@ -100,7 +100,7 @@ public class BuyTicketController implements BuyTicketUseCase {
     public void getListCinema(GetListCinemaRequest request) {
         try {
             Request.validate(request);
-            var movie = movieRepository.getMovieById(request.getMovieId());
+            var movie = movieRepository.getMovie(request.getMovieId());
             var date = request.getData();
             var cinemaList = cinemaRepository.getListCinema(movie, date);
             buyTicketPresenter.presentCinemaList(new GetListCinemaResponse(CinemaDataMapper.mapToDtoList(cinemaList)));
@@ -152,7 +152,7 @@ public class BuyTicketController implements BuyTicketUseCase {
         try {
             Request.validate(request);
             var cinema = cinemaRepository.getCinema(request.getCinemaId());
-            var movie = movieRepository.getMovieById(request.getMovieId());
+            var movie = movieRepository.getMovie(request.getMovieId());
             var date = request.getLocalDate();
             var projectionList = projectionRepository.getProjectionList(cinema, movie, date);
             buyTicketPresenter.presentProjectionList(

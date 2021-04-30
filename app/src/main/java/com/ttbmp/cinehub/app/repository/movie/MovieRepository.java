@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface MovieRepository {
 
-    Movie getMovieById(Integer movieId) throws RepositoryException;
+    Movie getMovie(Integer movieId) throws RepositoryException;
 
     Movie getMovie(Projection projection) throws RepositoryException;
 

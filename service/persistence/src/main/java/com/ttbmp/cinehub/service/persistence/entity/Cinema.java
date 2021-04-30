@@ -10,7 +10,7 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.PrimaryKey;
 @Entity(tableName = "cinema")
 public class Cinema {
 
-    @PrimaryKey()
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int id;
 

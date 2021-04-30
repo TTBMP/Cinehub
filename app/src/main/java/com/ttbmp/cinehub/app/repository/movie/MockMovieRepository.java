@@ -37,6 +37,16 @@ public class MockMovieRepository implements MovieRepository {
     }
 
     @Override
+    public Movie getMovie(Integer movieId) {
+        return MOVIE_DATA_LIST.stream()
+                .filter(d -> d.id == movieId)
+                .map(d -> new MovieProxy(d.id, serviceLocator.getService(MovieApiService.class)
+                ))
+                .collect(Collectors.toList())
+                .get(0);
+    }
+
+    @Override
     public Movie getMovie(Projection projection) {
         int projectionMovieId = MockProjectionRepository.getProjectionDataList().stream()
                 .filter(d -> d.getId() == projection.getId())
@@ -45,15 +55,6 @@ public class MockMovieRepository implements MovieRepository {
                 .get(0);
         return MOVIE_DATA_LIST.stream()
                 .filter(d -> d.id == projectionMovieId)
-                .map(d -> new MovieProxy(d.id, serviceLocator.getService(MovieApiService.class)))
-                .collect(Collectors.toList())
-                .get(0);
-    }
-
-    @Override
-    public Movie getMovieById(Integer movieId) {
-        return MOVIE_DATA_LIST.stream()
-                .filter(d -> d.id == movieId)
                 .map(d -> new MovieProxy(d.id, serviceLocator.getService(MovieApiService.class)))
                 .collect(Collectors.toList())
                 .get(0);

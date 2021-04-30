@@ -5,8 +5,6 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.*;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
 import javax.validation.constraints.NotNull;
-import java.io.IOException;
-import java.sql.Time;
 import java.util.List;
 
 /**
@@ -15,24 +13,14 @@ import java.util.List;
 @Dao
 public interface MovieDao {
 
-
-    @Query("SELECT * FROM film" +
-            " WHERE film.id in ( SELECT proiezione.id_film FROM proiezione WHERE proiezione.id = :projectionId)")
-    Movie getMovieByProjection(
-            @Parameter(name = "projectionId") @NotNull Integer projectionId
-            ) throws DaoMethodException;
-
+    @Query("SELECT * FROM film WHERE film.id in ( SELECT proiezione.id_film FROM proiezione WHERE proiezione.id = :projectionId)")
+    Movie getMovieByProjection(@Parameter(name = "projectionId") @NotNull Integer projectionId) throws DaoMethodException;
 
     @Query("SELECT * FROM film WHERE film.id = :movieId")
-    Movie getMovieById(
-            @Parameter(name = "movieId") @NotNull Integer name
-    )  throws DaoMethodException;
+    Movie getMovieById(@Parameter(name = "movieId") @NotNull Integer name)  throws DaoMethodException;
 
-    @Query("SELECT * FROM film WHERE film.id in ( " +
-                "SELECT proiezione.id_film FROM proiezione WHERE proiezione.data = :data)")
-    List<Movie> getMovieByData(
-            @Parameter(name = "data") @NotNull String name
-    ) throws DaoMethodException;
+    @Query("SELECT * FROM film WHERE film.id in (SELECT proiezione.id_film FROM proiezione WHERE proiezione.data = :data)")
+    List<Movie> getMovieByData(@Parameter(name = "data") @NotNull String name) throws DaoMethodException;
 
     @Insert
     void insert(@NotNull Movie movie) ;

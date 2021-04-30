@@ -29,7 +29,7 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
     @Override
     public Employee getEmployee(String employeeId) throws RepositoryException {
         try {
-            com.ttbmp.cinehub.service.persistence.entity.Employee employee = getEmployeeDao().getEmployeeById(employeeId);
+            var employee = getEmployeeDao().getEmployeeById(employeeId);
             //employeeDao
             if (employee.getRole().equals("maschera")) {
                 return new UsherProxy(
@@ -58,7 +58,7 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
     @Override
     public Employee getEmployee(Shift shift) throws RepositoryException {
         try {
-            com.ttbmp.cinehub.service.persistence.entity.Employee employee = getEmployeeDao().getEmployeeByShiftId(shift.getId());
+            var employee = getEmployeeDao().getEmployeeByShiftId(shift.getId());
             if (employee.getRole().equals("maschera")) {
                 return new UsherProxy(
                         employee.getIdUser(),
@@ -83,14 +83,15 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
         }
     }
 
-    private EmployeeDao getEmployeeDao() {
+    private EmployeeDao getEmployeeDao() throws RepositoryException {
         if (employeeDao == null) {
             try {
                 this.employeeDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RepositoryException(e.getMessage());
             }
         }
         return employeeDao;
     }
+
 }

@@ -10,7 +10,6 @@ import com.ttbmp.cinehub.service.persistence.dao.MovieDao;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourceProvider;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,21 +25,14 @@ public class JdbcMovieRepository implements MovieRepository {
     }
 
     @Override
-    public List<Movie> getMovieList(String localDate) {
-        try {
-            List<com.ttbmp.cinehub.service.persistence.entity.Movie> movieList = getMovieDao().getMovieByData(localDate);
-            return movieList.stream()
-                    .map(movie -> new MovieProxy(movie.getId(), serviceLocator.getService(MovieApiService.class)))
-                    .collect(Collectors.toList());
-        } catch (Throwable e) {
-            return new ArrayList<>();
-        }
+    public Movie getMovie(Integer movieId) {
+        return new MovieProxy(movieId, serviceLocator.getService(MovieApiService.class));
     }
 
     @Override
     public Movie getMovie(Projection projection) throws RepositoryException {
         try {
-            com.ttbmp.cinehub.service.persistence.entity.Movie movie = getMovieDao().getMovieByProjection(projection.getId());
+            var movie = getMovieDao().getMovieByProjection(projection.getId());
             return new MovieProxy(movie.getId(), serviceLocator.getService(MovieApiService.class));
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
@@ -48,16 +40,23 @@ public class JdbcMovieRepository implements MovieRepository {
     }
 
     @Override
-    public Movie getMovieById(Integer movieId) {
-        return null;
+    public List<Movie> getMovieList(String localDate) throws RepositoryException {
+        try {
+            var movieList = getMovieDao().getMovieByData(localDate);
+            return movieList.stream()
+                    .map(movie -> new MovieProxy(movie.getId(), serviceLocator.getService(MovieApiService.class)))
+                    .collect(Collectors.toList());
+        } catch (DaoMethodException e) {
+            throw new RepositoryException(e.getMessage());
+        }
     }
 
-    private MovieDao getMovieDao() {
+    private MovieDao getMovieDao() throws RepositoryException {
         if (movieDao == null) {
             try {
                 this.movieDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getMovieDao();
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RepositoryException(e.getMessage());
             }
         }
         return movieDao;

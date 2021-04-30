@@ -27,7 +27,7 @@ class DaoDeleteOperationTest {
     @Test
     void execute_DeleteDto_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, DaoMethodException {
         var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
-        var dto = new CinemaDto(1, "pippo", "pluto", "paperino");
+        var dto = new Cinema(1, "pippo", "pluto", "paperino");
         dao.insert(dto);
         dto = dao.getCinema("pippo");
         var finalDto = dto;
@@ -40,8 +40,8 @@ class DaoDeleteOperationTest {
     void execute_DeleteListDto_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, DaoMethodException {
         var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
         var dtoList = Arrays.asList(
-                new CinemaDto(2, "qui", "quo", "qua"),
-                new CinemaDto(3, "paperino", "gastone", "paperoga")
+                new Cinema(2, "qui", "quo", "qua"),
+                new Cinema(3, "paperino", "gastone", "paperoga")
         );
         dao.insert(dtoList);
         dtoList = Arrays.asList(
