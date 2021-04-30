@@ -122,7 +122,7 @@ public class MockProjectionRepository implements ProjectionRepository {
     @Override
     public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date) {
         return PROJECTION_DATA_LIST.stream()
-                .filter(d -> d.cinemaId == cinema.getId() && d.movieId == movie.getId() && d.date.equals(date))
+                .filter(d -> d.movieId == movie.getId() && d.date.equals(date))
                 .map(d -> new ProjectionProxy(
                         d.id,
                         d.date,
@@ -138,7 +138,7 @@ public class MockProjectionRepository implements ProjectionRepository {
     @Override
     public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date, Integer hallId) {
         return PROJECTION_DATA_LIST.stream()
-                .filter(d -> d.cinemaId == cinema.getId() && d.movieId == movie.getId() && d.date.equals(date) && d.hallId == hallId)
+                .filter(d -> d.movieId == movie.getId() && d.date.equals(date) && d.hallId == hallId)
                 .map(d -> new ProjectionProxy(
                         d.id,
                         d.date,

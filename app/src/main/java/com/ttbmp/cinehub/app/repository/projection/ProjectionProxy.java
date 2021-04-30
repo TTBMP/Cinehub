@@ -82,24 +82,6 @@ public class ProjectionProxy extends Projection {
     }
 
     @Override
-    public Cinema getCinema() {
-        try {
-            if (!isCinemaLoaded) {
-                setCinema(cinemaRepository.getCinema(this));
-            }
-            return super.getCinema();
-        } catch (RepositoryException e) {
-            throw new LazyLoadingException(e.getMessage());
-        }
-    }
-
-    @Override
-    public void setCinema(Cinema cinema) {
-        isCinemaLoaded = true;
-        super.setCinema(cinema);
-    }
-
-    @Override
     public Projectionist getProjectionist() {
         if (!isProjectionistLoaded) {
             try {

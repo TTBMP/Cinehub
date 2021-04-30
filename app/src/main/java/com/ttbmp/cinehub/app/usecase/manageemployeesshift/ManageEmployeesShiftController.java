@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
-
 /**
  * @author Massimo Mazzetti
  */
@@ -71,23 +70,15 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                 manageEmployeesShiftPresenter.presentShiftList(new GetShiftListResponse(
                         ShiftDataMapper.mapToDtoList(shiftRepository.getShiftList()),
                         request.getStart(),
-                        request.getCinema())
-                );
+                        request.getCinema().getId()
+                ));
           } catch (Request.NullRequestException e) {
             manageEmployeesShiftPresenter.presentGetShiftListNullRequest();
         } catch (Request.InvalidRequestException e) {
             manageEmployeesShiftPresenter.presentInvalidGetShiftListRequest(request);
-        } catch (DataSourceClassException e) {
+        } catch (RepositoryException e) {
                 e.printStackTrace();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (DataSourceMethodException e) {
-                e.printStackTrace();
-            } catch (RepositoryException e) {
-                e.printStackTrace();
-            }
+        }
     }
 
     @Override
@@ -110,24 +101,11 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             manageEmployeesShiftPresenter.presentModifyShiftNullRequest();
         } catch (Request.InvalidRequestException e) {
             manageEmployeesShiftPresenter.presentInvalidModifyShiftListRequest(request);
-        } catch (ShiftSaveException e) {
-            manageEmployeesShiftPresenter.presentCreateShiftError(e);
         } catch (ModifyShiftException e) {
             manageEmployeesShiftPresenter.presentModifyShiftError(e);
-        } catch (DataSourceClassException e) {
-            e.printStackTrace();
-        } catch (DataSourceMethodException e) {
-            e.printStackTrace();
         } catch (RepositoryException e) {
             e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (DaoMethodException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
-
     }
 
     @Override
@@ -144,9 +122,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             manageEmployeesShiftPresenter.presentDeleteShiftNullRequest();
         } catch (Request.InvalidRequestException e) {
             manageEmployeesShiftPresenter.presentInvalidDeleteShiftListRequest(request);
-        } catch (ShiftSaveException e) {
-            manageEmployeesShiftPresenter.presentDeleteShiftError(e);
-        } catch (DaoMethodException e) {
+        } catch (RepositoryException e) {
             e.printStackTrace();
         }
     }
@@ -226,8 +202,6 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (CreateShiftException e) {
             manageEmployeesShiftPresenter.presentCreateShiftError(e);
         } catch (RepositoryException e) {
-            e.printStackTrace();
-        } catch (DaoMethodException e) {
             e.printStackTrace();
         }
     }

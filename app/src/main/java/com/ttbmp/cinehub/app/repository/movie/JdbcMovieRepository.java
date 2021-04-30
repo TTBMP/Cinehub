@@ -49,6 +49,11 @@ public class JdbcMovieRepository implements MovieRepository {
         }
     }
 
+    @Override
+    public Movie getMovieById(Integer movieId) {
+        return null;
+    }
+
     private MovieDao getMovieDao() {
         if (movieDao == null) {
             try {

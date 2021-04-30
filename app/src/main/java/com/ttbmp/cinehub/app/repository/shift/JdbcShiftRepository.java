@@ -150,36 +150,48 @@ public class JdbcShiftRepository implements ShiftRepository {
 
 
     @Override
-    public void saveShift(Shift shift) throws DaoMethodException {
-        getShiftDao().insert(new com.ttbmp.cinehub.service.persistence.entity.Shift(
-                shift.getId(),
-                shift.getStart(),
-                shift.getEnd(),
-                shift.getEmployee().getId(),
-                shift.getDate()
-                ));
+    public void saveShift(Shift shift) throws RepositoryException {
+        try {
+            getShiftDao().insert(new com.ttbmp.cinehub.service.persistence.entity.Shift(
+                    shift.getId(),
+                    shift.getStart(),
+                    shift.getEnd(),
+                    shift.getEmployee().getId(),
+                    shift.getDate()
+                    ));
+        } catch (DaoMethodException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void deletedShift(Shift shift) throws DaoMethodException {
-        getShiftDao().delete(new com.ttbmp.cinehub.service.persistence.entity.Shift(
-                shift.getId(),
-                shift.getStart(),
-                shift.getEnd(),
-                shift.getEmployee().getId(),
-                shift.getDate()
-        ));
+    public void deletedShift(Shift shift) throws RepositoryException {
+        try {
+            getShiftDao().delete(new com.ttbmp.cinehub.service.persistence.entity.Shift(
+                    shift.getId(),
+                    shift.getStart(),
+                    shift.getEnd(),
+                    shift.getEmployee().getId(),
+                    shift.getDate()
+            ));
+        } catch (DaoMethodException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void modifyShift(Shift shift) throws DaoMethodException {
-        getShiftDao().update(new com.ttbmp.cinehub.service.persistence.entity.Shift(
-                shift.getId(),
-                shift.getStart(),
-                shift.getEnd(),
-                shift.getEmployee().getId(),
-                shift.getDate()
-        ));
+    public void modifyShift(Shift shift) throws RepositoryException {
+        try {
+            getShiftDao().update(new com.ttbmp.cinehub.service.persistence.entity.Shift(
+                    shift.getId(),
+                    shift.getStart(),
+                    shift.getEnd(),
+                    shift.getEmployee().getId(),
+                    shift.getDate()
+            ));
+        } catch (DaoMethodException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

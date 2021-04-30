@@ -74,6 +74,11 @@ public class JdbcCinemaRepository implements CinemaRepository{
         }
     }
 
+    @Override
+    public Cinema getCinema(int cinemaId) {
+        return null;
+    }
+
     private CinemaDao getCinemaDao() {
         if (cinemaDao == null) {
             try {

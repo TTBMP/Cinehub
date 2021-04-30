@@ -119,7 +119,7 @@ public class ProjectionistProxy extends Projectionist {
         if (!isShiftListLoaded) {
             try {
                 setShiftList(shiftRepository.getShiftList(this));
-            } catch (DataSourceClassException | ClassNotFoundException | DataSourceMethodException | RepositoryException | SQLException e) {
+            } catch (RepositoryException e) {
                 throw new LazyLoadingException(e.getMessage());
             }
         }
@@ -134,7 +134,12 @@ public class ProjectionistProxy extends Projectionist {
 
     @Override
     public List<Shift> getShiftListBetween(LocalDate start, LocalDate end) {
-        return shiftRepository.getAllEmployeeShiftBetweenDate(this, start, end);
+        try {
+            return shiftRepository.getAllEmployeeShiftBetweenDate(this, start, end);
+        } catch (RepositoryException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

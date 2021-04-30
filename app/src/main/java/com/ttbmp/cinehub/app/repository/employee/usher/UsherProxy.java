@@ -123,7 +123,7 @@ public class UsherProxy extends Usher {
             } else {
                 return null;
             }
-        } catch (DataSourceClassException | RepositoryException | DataSourceMethodException | ClassNotFoundException | SQLException e) {
+        } catch (RepositoryException e) {
             throw new LazyLoadingException(e.getMessage());
         }
 
@@ -137,7 +137,12 @@ public class UsherProxy extends Usher {
 
     @Override
     public List<Shift> getShiftListBetween(LocalDate start, LocalDate end) {
-        return shiftRepository.getAllEmployeeShiftBetweenDate(this, start, end);
+        try {
+            return shiftRepository.getAllEmployeeShiftBetweenDate(this, start, end);
+        } catch (RepositoryException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

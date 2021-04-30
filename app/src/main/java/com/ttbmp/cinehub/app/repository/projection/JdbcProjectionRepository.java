@@ -24,8 +24,6 @@ public class JdbcProjectionRepository implements ProjectionRepository{
 
     private ProjectionDao projectionDao = null;
 
-
-
     public JdbcProjectionRepository(ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
     }
@@ -33,12 +31,14 @@ public class JdbcProjectionRepository implements ProjectionRepository{
     @Override
     public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date) throws RepositoryException {
         try {
-            List<com.ttbmp.cinehub.service.persistence.entity.Projection> projectionList = getProjectionDao().getProjectionListByCinemaAndMovieAndDate(cinema.getId(), movie.getId(), date);
+            var projectionList = getProjectionDao().getProjectionListByCinemaAndMovieAndDate(cinema.getId(), movie.getId(), date);
             return projectionList.stream()
-                    .map(projection -> new ProjectionProxy(projection.getId(), projection.getDate(), projection.getStartTime(),
+                    .map(projection -> new ProjectionProxy(
+                            projection.getId(),
+                            projection.getDate(),
+                            projection.getStartTime(),
                             serviceLocator.getService(MovieRepository.class),
                             serviceLocator.getService(HallRepository.class),
-                            serviceLocator.getService(CinemaRepository.class),
                             serviceLocator.getService(ProjectionistRepository.class),
                             serviceLocator.getService(TicketRepository.class)
                     )).collect(Collectors.toList());
@@ -48,14 +48,35 @@ public class JdbcProjectionRepository implements ProjectionRepository{
     }
 
     @Override
-    public List<Projection> getProjectionList(String date) throws RepositoryException {
+    public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date, Integer hallId) throws RepositoryException {
+        return null;
+    }
+
+    private List<Projection> getProjectionList(String date) throws RepositoryException {
         try {
-            List<com.ttbmp.cinehub.service.persistence.entity.Projection> projectionList = getProjectionDao().getProjectionListByDate(date);
+            var projectionList = getProjectionDao().getProjectionListByDate(date);
             return projectionList.stream()
                     .map(projection -> new ProjectionProxy(projection.getId(), projection.getDate(), projection.getStartTime(),
                             serviceLocator.getService(MovieRepository.class),
                             serviceLocator.getService(HallRepository.class),
-                            serviceLocator.getService(CinemaRepository.class),
+                            serviceLocator.getService(ProjectionistRepository.class),
+                            serviceLocator.getService(TicketRepository.class)
+                    )).collect(Collectors.toList());
+        } catch (DaoMethodException e) {
+            throw new RepositoryException(e.getMessage());
+        }
+    }
+
+    private List<Projection> getProjectionList(Movie movie, String date) throws RepositoryException {
+        try {
+            var projectionList = getProjectionDao().getProjectionListByDateAndMovie(movie.getId(), date);
+            return projectionList.stream()
+                    .map(projection -> new ProjectionProxy(
+                            projection.getId(),
+                            projection.getDate(),
+                            projection.getStartTime(),
+                            serviceLocator.getService(MovieRepository.class),
+                            serviceLocator.getService(HallRepository.class),
                             serviceLocator.getService(ProjectionistRepository.class),
                             serviceLocator.getService(TicketRepository.class)
                     )).collect(Collectors.toList());
@@ -65,31 +86,18 @@ public class JdbcProjectionRepository implements ProjectionRepository{
     }
 
     @Override
-    public List<Projection> getProjectionList(Movie movie, String date) throws RepositoryException {
-        try {
-            List<com.ttbmp.cinehub.service.persistence.entity.Projection> projectionList = getProjectionDao().getProjectionListByDateAndMovie(movie.getId(), date);
-            return projectionList.stream()
-                    .map(projection -> new ProjectionProxy(projection.getId(), projection.getDate(), projection.getStartTime(),
-                            serviceLocator.getService(MovieRepository.class),
-                            serviceLocator.getService(HallRepository.class),
-                            serviceLocator.getService(CinemaRepository.class),
-                            serviceLocator.getService(ProjectionistRepository.class),
-                            serviceLocator.getService(TicketRepository.class)
-                    )).collect(Collectors.toList());
-        } catch (DaoMethodException e) {
-            throw new RepositoryException(e.getMessage());
-        }
+    public Projection getProjection(String date, String time, Integer hallId) throws RepositoryException {
+        return null;
     }
 
     @Override
     public List<Projection> getProjectionList(ProjectionistShift shift) throws RepositoryException {
         try {
-            List<com.ttbmp.cinehub.service.persistence.entity.Projection> projectionList = getProjectionDao().getProjectionListByProjectionist(shift.getEmployee().getId());
+            var projectionList = getProjectionDao().getProjectionListByProjectionist(shift.getEmployee().getId());
             return projectionList.stream()
                     .map(projection -> new ProjectionProxy(projection.getId(), projection.getDate(), projection.getStartTime(),
                             serviceLocator.getService(MovieRepository.class),
                             serviceLocator.getService(HallRepository.class),
-                            serviceLocator.getService(CinemaRepository.class),
                             serviceLocator.getService(ProjectionistRepository.class),
                             serviceLocator.getService(TicketRepository.class)
                     )).collect(Collectors.toList());

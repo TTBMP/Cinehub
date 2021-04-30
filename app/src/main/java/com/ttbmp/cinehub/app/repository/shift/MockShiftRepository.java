@@ -147,10 +147,8 @@ public class MockShiftRepository implements ShiftRepository {
     }
 
     @Override
-    public void deletedShift(Shift shift) throws ShiftSaveException {
-        if (!SHIFT_DATA_LIST.removeIf(d -> d.id == shift.getId())) {
-            throw new ShiftSaveException(ShiftSaveException.NOT_EXIST_ERROR);
-        }
+    public void deletedShift(Shift shift) throws RepositoryException {
+        SHIFT_DATA_LIST.removeIf(d -> d.id == shift.getId());
     }
 
     @Override
@@ -173,9 +171,9 @@ public class MockShiftRepository implements ShiftRepository {
     }
 
     @Override
-    public void modifyShift(Shift shift) throws ShiftSaveException {
+    public void modifyShift(Shift shift) throws RepositoryException {
         if (SHIFT_DATA_LIST.stream().noneMatch(d -> d.id == shift.getId())) {
-            throw new ShiftSaveException(ShiftSaveException.NOT_EXIST_ERROR);
+            //throw new ShiftSaveException(ShiftSaveException.NOT_EXIST_ERROR);
         }
         var data = SHIFT_DATA_LIST.stream()
                 .filter(d -> d.id == shift.getId())

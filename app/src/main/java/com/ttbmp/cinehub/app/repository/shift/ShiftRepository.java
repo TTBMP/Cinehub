@@ -16,18 +16,18 @@ import java.util.List;
  */
 public interface ShiftRepository {
 
-    Shift getShift(int shiftId) throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, RepositoryException;
+    Shift getShift(int shiftId) throws RepositoryException;
 
-    List<Shift> getShiftList() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, RepositoryException;
+    List<Shift> getShiftList() throws RepositoryException;
 
-    List<Shift> getShiftList(Employee employee) throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, RepositoryException;
+    List<Shift> getShiftList(Employee employee) throws RepositoryException;
 
-    void saveShift(Shift shift) throws DaoMethodException;
+    void saveShift(Shift shift) throws RepositoryException;
 
-    void deletedShift(Shift shift) throws ShiftSaveException, DaoMethodException;
+    void deletedShift(Shift shift) throws RepositoryException;
 
-    void modifyShift(Shift shift) throws ShiftSaveException, DaoMethodException;
+    void modifyShift(Shift shift) throws RepositoryException;
 
-    List<Shift> getAllEmployeeShiftBetweenDate(Employee employee, LocalDate start, LocalDate end);
+    List<Shift> getAllEmployeeShiftBetweenDate(Employee employee, LocalDate start, LocalDate end) throws RepositoryException;
 
 }
