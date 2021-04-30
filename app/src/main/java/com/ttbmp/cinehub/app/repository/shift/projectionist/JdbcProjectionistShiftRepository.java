@@ -7,17 +7,11 @@ import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
-import com.ttbmp.cinehub.service.persistence.dao.EmployeeDao;
 import com.ttbmp.cinehub.service.persistence.dao.ProjectionistShiftDao;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourceProvider;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
-import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceClassException;
-import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceMethodException;
 
-import java.sql.SQLException;
-import java.time.LocalTime;
-
-public class JdbcProjectionistShiftRepository implements  ProjectionistShiftRepository{
+public class JdbcProjectionistShiftRepository implements ProjectionistShiftRepository {
 
     private final ServiceLocator serviceLocator;
 
@@ -31,15 +25,15 @@ public class JdbcProjectionistShiftRepository implements  ProjectionistShiftRepo
     public ProjectionistShift getProjectionistShift(int shiftId) throws RepositoryException {
         try {
             com.ttbmp.cinehub.service.persistence.entity.Shift shift = getProjectionistShiftDao().getProjectionistShiftByShiftId(shiftId);
-                return new ProjectionistShiftProxy(
-                        shift.getId(),
-                        shift.getDate(),
-                        shift.getStart(),
-                        LocalTime.parse(shift.getEnd()).minusHours(1).toString(),
-                        serviceLocator.getService(ProjectionistRepository.class),
-                        serviceLocator.getService(HallRepository.class),
-                        serviceLocator.getService(ProjectionRepository.class)
-                );
+            return new ProjectionistShiftProxy(
+                    shift.getId(),
+                    shift.getDate(),
+                    shift.getStart(),
+                    shift.getEnd(),
+                    serviceLocator.getService(ProjectionistRepository.class),
+                    serviceLocator.getService(HallRepository.class),
+                    serviceLocator.getService(ProjectionRepository.class)
+            );
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
@@ -56,4 +50,6 @@ public class JdbcProjectionistShiftRepository implements  ProjectionistShiftRepo
         }
         return projectionistShiftDao;
     }
+
 }
+

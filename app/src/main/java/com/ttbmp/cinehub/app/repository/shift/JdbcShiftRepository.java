@@ -52,7 +52,7 @@ public class JdbcShiftRepository implements ShiftRepository {
                         shift.getId(),
                         shift.getDate(),
                         shift.getStart(),
-                        LocalTime.parse(shift.getEnd()).minusHours(1).toString(),
+                        shift.getEnd(),
                         serviceLocator.getService(UsherRepository.class)
                 );
             }
@@ -61,7 +61,7 @@ public class JdbcShiftRepository implements ShiftRepository {
                         shift.getId(),
                         shift.getDate(),
                         shift.getStart(),
-                        LocalTime.parse(shift.getEnd()).minusHours(1).toString(),
+                        shift.getEnd(),
                         serviceLocator.getService(ProjectionistRepository.class),
                         serviceLocator.getService(HallRepository.class),
                         serviceLocator.getService(ProjectionRepository.class)
@@ -80,13 +80,14 @@ public class JdbcShiftRepository implements ShiftRepository {
         try {
             List<com.ttbmp.cinehub.service.persistence.entity.Shift> shiftList = getShiftDao().getShiftList();
             EmployeeDao employeeDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
+            
             if(employeeDao.getEmployeeByShiftId(shiftList.get(0).getId()).getRole().equals("maschera")){
                 return shiftList.stream()
                         .map(shift ->  new UsherShiftProxy(
                                 shift.getId(),
                                 shift.getDate(),
                                 shift.getStart(),
-                                LocalTime.parse(shift.getEnd()).minusHours(1).toString(),
+                                shift.getEnd(),
                                 serviceLocator.getService(UsherRepository.class)))
                         .collect(Collectors.toList());
             }
@@ -96,7 +97,7 @@ public class JdbcShiftRepository implements ShiftRepository {
                                 shift.getId(),
                                 shift.getDate(),
                                 shift.getStart(),
-                                LocalTime.parse(shift.getEnd()).minusHours(1).toString(),
+                                shift.getEnd(),
                                 serviceLocator.getService(ProjectionistRepository.class),
                                 serviceLocator.getService(HallRepository.class),
                                 serviceLocator.getService(ProjectionRepository.class)))

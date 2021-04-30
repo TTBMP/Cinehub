@@ -2,12 +2,10 @@ package com.ttbmp.cinehub.app.repository.employee;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.repository.cinema.CinemaProxy;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistProxy;
 import com.ttbmp.cinehub.app.repository.employee.usher.UsherProxy;
-import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.employee.Employee;
@@ -87,7 +85,6 @@ public class JdbcEmployeeRepository implements EmployeeRepository{
         }
     }
 
-
     private EmployeeDao getEmployeeDao() {
         if (employeeDao == null) {
             try {
@@ -95,8 +92,6 @@ public class JdbcEmployeeRepository implements EmployeeRepository{
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
         }
         return employeeDao;
     }

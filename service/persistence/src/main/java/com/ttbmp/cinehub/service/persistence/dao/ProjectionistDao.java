@@ -26,7 +26,6 @@ public interface ProjectionistDao {
             @Parameter(name = "id") @NotNull int id
     ) throws DaoMethodException;
 
-
     @Insert
     void insert(@NotNull Employee employee) throws DaoMethodException;
 

@@ -32,6 +32,7 @@ import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.JdbcProjectionistShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.MockProjectionistShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftRepository;
+import com.ttbmp.cinehub.app.repository.shift.usher.JdbcUsherShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.usher.MockUsherShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.usher.UsherShiftRepository;
 import com.ttbmp.cinehub.app.repository.ticket.JdbcTicketRepository;
@@ -77,7 +78,7 @@ public class ServiceLocator {
         serviceFactoryMap.put(SeatRepository.class,()-> new  JdbcSeatRepository(this));
         serviceFactoryMap.put(ShiftRepository.class, () -> new JdbcShiftRepository(this));
         serviceFactoryMap.put(ProjectionistShiftRepository.class, () -> new JdbcProjectionistShiftRepository(this));
-        serviceFactoryMap.put(UsherShiftRepository.class, MockUsherShiftRepository::new);
+        serviceFactoryMap.put(UsherShiftRepository.class, () -> new JdbcUsherShiftRepository(this));
         serviceFactoryMap.put(TicketRepository.class, () -> new JdbcTicketRepository(this));
         serviceFactoryMap.put(UserRepository.class, () -> new JdbcUserRepository(this));
     }

@@ -13,7 +13,7 @@ import com.ttbmp.cinehub.service.persistence.dao.UsherDao;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourceProvider;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
-public class JdbcUsherRepository implements UsherRepository{
+public class JdbcUsherRepository implements UsherRepository {
 
     private final ServiceLocator serviceLocator;
 
@@ -25,8 +25,9 @@ public class JdbcUsherRepository implements UsherRepository{
 
     @Override
     public Usher getUsher(UsherShift usherShift) throws RepositoryException {
-        try{
+        try {
             com.ttbmp.cinehub.service.persistence.entity.Employee employee = getUsherDao().getUsherByUsherShift(usherShift.getId());
+
             return new UsherProxy(
                     employee.getIdUser(),
                     serviceLocator.getService(UserRepository.class),
@@ -50,4 +51,6 @@ public class JdbcUsherRepository implements UsherRepository{
         }
         return usherDao;
     }
+
 }
+
