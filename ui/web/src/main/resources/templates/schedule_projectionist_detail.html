@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View personal schedule</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
+    <link href="../static/css/schedule.css" rel="stylesheet" th:href="@{/css/schedule.css}" type="text/css">
+</head>
+<body>
+<div class="container w-50 mb-5">
+    <div class="row pt-5 pb-4">
+        <div class="col">
+            <span class="h3 pr-3" th:text="${shift.date}">Date</span>
+            <span class="h4" th:text="${shift.start + ' ' + shift.end}">Start - End</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <span class="h5"
+                  th:text="${shift.employee.cinema.city + ' as ' + shift.employee.getRole()}">City as role</span>
+        </div>
+    </div>
+    <hr/>
+    <div class="row pb-3">
+        <div class="col">
+            <span class="h5" th:text="${'Working in the hall ' + form.projections[0].hallDto.id}">Working in the hall hall</span>
+        </div>
+    </div>
+    <table class="table table-striped pt-4 pb-4">
+        <tbody>
+        <tr th:each="projection : ${form.projections}">
+            <td class="align-middle h5 pr-3" style="width: 120px;" th:text="${projection.startTime}">Start time</td>
+            <td class="align-middle" style="width: 220px;">
+                <img class="img-thumbnail movie-thumbnail" src="../static/images/ttbmpLogo.png"
+                     th:src="${projection.movieDto.movieUrl}"/>
+            </td>
+            <td>
+                <div class="h5 font-weight-bold" th:text="${projection.movieDto.name}">Title</div>
+                <div th:text="${'Duration: ' + projection.movieDto.duration + ' minutes'}">Duration</div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <hr/>
+    <div class="row pt-3">
+        <div align="center" class="col">
+            <form action="schedule_projectionist_detail.html" method="POST" th:action="@{/schedule/detail}"
+                  th:object="${shift}">
+                <input th:name="id" th:value="${shift.id}" type="hidden"/>
+                <input th:name="date" th:value="${shift.date}" type="hidden"/>
+                <input th:name="start" th:value="${shift.start}" type="hidden"/>
+                <input th:name="end" th:value="${shift.end}" type="hidden"/>
+                <input th:name="employee.role" th:value="${shift.employee.role}" type="hidden"/>
+                <input th:name="employee.cinema.address" th:value="${shift.employee.cinema.address}" type="hidden"/>
+                <input th:name="employee.cinema.city" th:value="${shift.employee.cinema.city}" type="hidden"/>
+                <input class="btn btn-primary" type="submit" value="BACK"/>
+            </form>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+<script crossorigin="anonymous"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

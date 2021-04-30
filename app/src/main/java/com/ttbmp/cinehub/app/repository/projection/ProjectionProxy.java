@@ -7,7 +7,6 @@ import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepo
 import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
-import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
@@ -23,13 +22,11 @@ public class ProjectionProxy extends Projection {
 
     private final MovieRepository movieRepository;
     private final HallRepository hallRepository;
-    private final CinemaRepository cinemaRepository;
     private final ProjectionistRepository projectionistRepository;
     private final TicketRepository ticketRepository;
 
     private boolean isMovieLoaded = false;
     private boolean isHallLoaded = false;
-    private boolean isCinemaLoaded = false;
     private boolean isProjectionistLoaded = false;
     private boolean isTicketListLoaded = false;
 
@@ -39,13 +36,11 @@ public class ProjectionProxy extends Projection {
             String startTime,
             MovieRepository movieRepository,
             HallRepository hallRepository,
-            CinemaRepository cinemaRepository,
             ProjectionistRepository projectionistRepository,
             TicketRepository ticketRepository) {
-        super(id, date, startTime, null, null, null, null, null);
+        super(id, date, startTime, null, null, null, null);
         this.movieRepository = movieRepository;
         this.hallRepository = hallRepository;
-        this.cinemaRepository = cinemaRepository;
         this.projectionistRepository = projectionistRepository;
         this.ticketRepository = ticketRepository;
     }

@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.ui.desktop.buyticket.payment;
 
 
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.PayRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.PaymentRequest;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.desktop.buyticket.CustomDateCell;
@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class PaymentViewController extends ViewController {
 
@@ -95,19 +95,19 @@ public class PaymentViewController extends ViewController {
 
 
     private void startPayment(ActionEvent actionEvent) {
-        activity.getUseCase(BuyTicketUseCase.class).pay(new PayRequest(
+        activity.getUseCase(BuyTicketUseCase.class).pay(new PaymentRequest(
                 viewModel.selectedTicketProperty().getValue(),
                 viewModel.selectedProjectionProperty().getValue(),
                 viewModel.seatSelectedPosition().getValue(),
                 viewModel.selectedCinemaProperty().getValue(),
                 viewModel.selectedMovieProperty().getValue(),
                 String.valueOf(viewModel.selectedDateProperty().getValue())
-        )) ;
-            try {
-                navController.navigate(new NavDestination(new ConfirmEmailView()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        ));
+        try {
+            navController.navigate(new NavDestination(new ConfirmEmailView()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

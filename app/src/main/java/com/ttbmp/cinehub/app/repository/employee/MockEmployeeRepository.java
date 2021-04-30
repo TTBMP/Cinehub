@@ -62,7 +62,7 @@ public class MockEmployeeRepository implements EmployeeRepository {
 
     @Override
     public Employee getEmployee(Shift shift) {
-        String shiftEmployeeId = MockShiftRepository.getShiftDataList().stream()
+        var shiftEmployeeId = MockShiftRepository.getShiftDataList().stream()
                 .filter(d -> d.getId() == shift.getId())
                 .map(MockShiftRepository.ShiftData::getEmployeeId)
                 .collect(Collectors.toList())

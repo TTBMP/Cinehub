@@ -18,7 +18,7 @@ public class ObjectBindings {
 
     public static <S, R> ObjectBinding<R> map(ObservableValue<S> source, Function<? super S, ? extends R> function, R defaultValue) {
         return Bindings.createObjectBinding(() -> {
-                    S sourceValue = source.getValue();
+                    var sourceValue = source.getValue();
                     return sourceValue == null ? defaultValue : function.apply(sourceValue);
                 },
                 source);

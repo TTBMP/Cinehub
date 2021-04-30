@@ -39,7 +39,7 @@ public class MockUsherRepository implements UsherRepository {
 
     @Override
     public Usher getUsher(UsherShift usherShift) {
-        String usherShiftUsherId = MockShiftRepository.getShiftDataList().stream()
+        var usherShiftUsherId = MockShiftRepository.getShiftDataList().stream()
                 .filter(d -> d.getId() == usherShift.getId())
                 .map(MockShiftRepository.ShiftData::getEmployeeId)
                 .collect(Collectors.toList())

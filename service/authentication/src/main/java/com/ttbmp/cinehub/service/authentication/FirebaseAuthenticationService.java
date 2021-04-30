@@ -3,10 +3,12 @@ package com.ttbmp.cinehub.service.authentication;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.auth.*;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.Objects;
 
 /**
  * @author Fabio Buracchi, Ivan Palmieri
@@ -17,10 +19,10 @@ public class FirebaseAuthenticationService {
 
     public FirebaseAuthenticationService() throws FirebaseException {
         try {
-            InputStream settings = this.getClass().getResourceAsStream("/firebase_settings.json");
-            FirebaseOptions options = FirebaseOptions.builder()
+            var settings = this.getClass().getResourceAsStream("/firebase_settings.json");
+            var options = FirebaseOptions.builder()
                     .setDatabaseUrl("https://noreply@cinehub-d2abc.firebaseio.com/")
-                    .setCredentials(GoogleCredentials.fromStream(settings))
+                    .setCredentials(GoogleCredentials.fromStream(Objects.requireNonNull(settings)))
                     .build();
             FirebaseApp.initializeApp(options);
             firebaseAuth = FirebaseAuth.getInstance();
@@ -31,12 +33,12 @@ public class FirebaseAuthenticationService {
 
     public FirebaseSession createUser(String email, String password) throws FirebaseException {
         try {
-            UserRecord.CreateRequest request = new UserRecord.CreateRequest()
+            var request = new UserRecord.CreateRequest()
                     .setEmail(email)
                     .setEmailVerified(false)
                     .setPassword(password)
                     .setDisabled(false);
-            UserRecord userRecord = firebaseAuth.createUser(request);
+            var userRecord = firebaseAuth.createUser(request);
             return new FirebaseSession(userRecord);
         } catch (FirebaseAuthException e) {
             throw new FirebaseException(e.getMessage());
@@ -46,7 +48,7 @@ public class FirebaseAuthenticationService {
     @SuppressWarnings("unused")
     public FirebaseSession authenticateUser(String email, String password) throws FirebaseException {
         try {
-            UserRecord userRecord = firebaseAuth.getUserByEmail(email);
+            var userRecord = firebaseAuth.getUserByEmail(email);
             return new FirebaseSession(userRecord);
         } catch (FirebaseAuthException e) {
             throw new FirebaseException(e.getMessage());
@@ -55,8 +57,8 @@ public class FirebaseAuthenticationService {
 
     public FirebaseSession verifySessionCookie(String sessionCookie) throws FirebaseException {
         try {
-            String email = sessionCookie;
-            UserRecord userRecord = firebaseAuth.getUserByEmail(email);
+            var email = sessionCookie;
+            var userRecord = firebaseAuth.getUserByEmail(email);
             return new FirebaseSession(userRecord);
         } catch (FirebaseAuthException e) {
             throw new FirebaseException(e.getMessage());

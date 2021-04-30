@@ -8,7 +8,7 @@ import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class TicketDataMapper {
 

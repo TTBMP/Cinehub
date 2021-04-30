@@ -9,13 +9,13 @@ import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import java.io.IOException;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class BuyTicketActivity extends Activity {
 
     public BuyTicketActivity() throws IOException {
         super(new ChooseMovieView());
-        BuyTicketViewModel viewModel = new BuyTicketViewModel();
+        var viewModel = new BuyTicketViewModel();
         BuyTicketPresenter presenter = new BuyTicketPresenterFx(viewModel);
         viewModelStore.put(BuyTicketViewModel.class, viewModel);
         useCaseFactory.put(BuyTicketUseCase.class, () -> new BuyTicketHandler(presenter));

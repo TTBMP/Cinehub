@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.app.service.payment;
 import com.ttbmp.cinehub.app.usecase.Request;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class PayServiceRequest extends Request {
 
@@ -47,4 +47,5 @@ public class PayServiceRequest extends Request {
             addError(NEGATIVE_PRICE_ERROR);
         }
     }
+
 }

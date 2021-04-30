@@ -10,25 +10,24 @@ import com.ttbmp.cinehub.domain.shift.Shift;
 import com.ttbmp.cinehub.domain.shift.UsherShift;
 
 import java.time.LocalTime;
-import java.util.List;
 
 public class ShiftFactory {
 
     public Shift createConcreteShift(Employee employee, String date, String start, String end, Hall hall) throws CreateShiftException {
         if (employee instanceof Projectionist) {
             return createShiftProjectionist(employee, date, start, end, hall);
-        } else if(employee instanceof Usher) {
+        } else if (employee instanceof Usher) {
             return createShiftUsher(employee, date, start, end);
         }
         throw new IllegalStateException("Unexpected value: " + employee.getClass());
     }
 
     private Shift createShiftProjectionist(Employee employee, String date, String start, String end, Hall hall) throws CreateShiftException {
-        List<Shift> shiftList = employee.getShiftList();
-        for(Shift shift : shiftList){
-            if(shift.getDate().equals(date)
-            && LocalTime.parse(start).isBefore(LocalTime.parse(shift.getEnd()))
-            && LocalTime.parse(end).isAfter(LocalTime.parse(shift.getStart()))){
+        var shiftList = employee.getShiftList();
+        for (var shift : shiftList) {
+            if (shift.getDate().equals(date)
+                    && LocalTime.parse(start).isBefore(LocalTime.parse(shift.getEnd()))
+                    && LocalTime.parse(end).isAfter(LocalTime.parse(shift.getStart()))) {
                 throw new CreateShiftException(CreateShiftException.ALREADY_EXIST_ERROR);
             }
         }
@@ -36,11 +35,11 @@ public class ShiftFactory {
     }
 
     private Shift createShiftUsher(Employee employee, String date, String start, String end) throws CreateShiftException {
-        List<Shift> shiftList = employee.getShiftList();
-        for(Shift shift : shiftList){
-            if(shift.getDate().equals(date)
+        var shiftList = employee.getShiftList();
+        for (var shift : shiftList) {
+            if (shift.getDate().equals(date)
                     && LocalTime.parse(start).isBefore(LocalTime.parse(shift.getEnd()))
-                    && LocalTime.parse(end).isAfter(LocalTime.parse(shift.getStart()))){
+                    && LocalTime.parse(end).isAfter(LocalTime.parse(shift.getStart()))) {
                 throw new CreateShiftException(CreateShiftException.ALREADY_EXIST_ERROR);
             }
         }

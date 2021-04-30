@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.domain;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan, Fabio Buracchi
+ * @author Ivan Palmieri, Fabio Buracchi
  */
 public class Hall {
 
@@ -36,7 +36,7 @@ public class Hall {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        Hall other = (Hall) obj;
+        var other = (Hall) obj;
         return this.getId() == other.getId();
     }
 

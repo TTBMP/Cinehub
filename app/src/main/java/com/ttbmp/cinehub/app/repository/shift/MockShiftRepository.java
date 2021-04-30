@@ -34,8 +34,8 @@ public class MockShiftRepository implements ShiftRepository {
     private static int shiftIdCounter = 0;
 
     static {
-        for (MockEmployeeRepository.EmployeeData employeeData : MockEmployeeRepository.getEmployeeDataList()) {
-            for (LocalDate date = LocalDate.now().minusMonths(1); date.isBefore(LocalDate.now().plusMonths(1)); date = date.plusDays(1)) {
+        for (var employeeData : MockEmployeeRepository.getEmployeeDataList()) {
+            for (var date = LocalDate.now().minusMonths(1); date.isBefore(LocalDate.now().plusMonths(1)); date = date.plusDays(1)) {
                 if (date.getDayOfWeek() != DayOfWeek.MONDAY && date.getDayOfWeek() != DayOfWeek.TUESDAY) {
                     SHIFT_DATA_LIST.add(new ShiftData(
                             shiftIdCounter++,
@@ -70,7 +70,7 @@ public class MockShiftRepository implements ShiftRepository {
 
     @Override
     public Shift getShift(int shiftId) {
-        ShiftData data = SHIFT_DATA_LIST.stream()
+        var data = SHIFT_DATA_LIST.stream()
                 .filter(d -> d.id == shiftId)
                 .collect(Collectors.toList())
                 .get(0);
@@ -112,7 +112,7 @@ public class MockShiftRepository implements ShiftRepository {
 
     @Override
     public List<Shift> getShiftList(Employee employee) {
-        List<ShiftData> employeeShiftData = SHIFT_DATA_LIST.stream()
+        var employeeShiftData = SHIFT_DATA_LIST.stream()
                 .filter(d -> d.employeeId.equals(employee.getId()))
                 .collect(Collectors.toList());
         if (employee instanceof Projectionist) {
@@ -154,7 +154,7 @@ public class MockShiftRepository implements ShiftRepository {
     }
 
     @Override
-    public synchronized void saveShift(Shift shift){
+    public synchronized void saveShift(Shift shift) {
         SHIFT_DATA_LIST.add(new ShiftData(
                 shiftIdCounter,
                 shift.getDate(),
@@ -177,7 +177,7 @@ public class MockShiftRepository implements ShiftRepository {
         if (SHIFT_DATA_LIST.stream().noneMatch(d -> d.id == shift.getId())) {
             throw new ShiftSaveException(ShiftSaveException.NOT_EXIST_ERROR);
         }
-        ShiftData data = SHIFT_DATA_LIST.stream()
+        var data = SHIFT_DATA_LIST.stream()
                 .filter(d -> d.id == shift.getId())
                 .collect(Collectors.toList())
                 .get(0);
@@ -255,7 +255,7 @@ public class MockShiftRepository implements ShiftRepository {
 
     class ShiftFactory {
         Shift createShift(ShiftData shiftData) {
-            MockEmployeeRepository.EmployeeData.Role employeeRole = MockEmployeeRepository.getEmployeeDataList().stream()
+            var employeeRole = MockEmployeeRepository.getEmployeeDataList().stream()
                     .filter(d -> d.getUserId().equals(shiftData.employeeId))
                     .map(MockEmployeeRepository.EmployeeData::getRole)
                     .collect(Collectors.toList())

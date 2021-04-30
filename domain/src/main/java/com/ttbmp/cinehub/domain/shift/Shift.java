@@ -5,7 +5,6 @@ import com.ttbmp.cinehub.domain.employee.Employee;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 /**
  * @author Fabio Buracchi, Massimo Mazzetti
@@ -73,7 +72,7 @@ public abstract class Shift {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        Shift other = (Shift) obj;
+        var other = (Shift) obj;
         return id == other.getId();
     }
 

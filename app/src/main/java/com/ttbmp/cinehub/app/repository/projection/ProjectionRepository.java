@@ -10,16 +10,16 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodExcep
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public interface ProjectionRepository {
 
-    List<Projection> getProjectionList(Cinema cinema, Movie movie, String date) throws  RepositoryException;
-
-    List<Projection> getProjectionList(String localDate) throws  RepositoryException;
-
-    List<Projection> getProjectionList(Movie movie, String date) throws  RepositoryException;
+    Projection getProjection(String date, String time, Integer hallId) throws  RepositoryException;
 
     List<Projection> getProjectionList(ProjectionistShift shift) throws  RepositoryException;
+
+    List<Projection> getProjectionList(Cinema cinema, Movie movie, String date) throws  RepositoryException;
+
+    List<Projection> getProjectionList(Cinema cinema, Movie movie, String date, Integer hallId) throws  RepositoryException;
 
 }

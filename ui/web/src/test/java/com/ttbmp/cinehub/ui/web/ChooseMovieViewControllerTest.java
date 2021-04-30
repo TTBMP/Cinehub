@@ -11,14 +11,17 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class HomeControllerTest {
+class ChooseMovieViewControllerTest {
 
     public WebElement welcomeMessage;
+    public WebElement datePicker;
     private WebDriver driver;
 
     @BeforeAll
@@ -30,10 +33,11 @@ class HomeControllerTest {
     void setUp() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("http://localhost:8080/home");
-        welcomeMessage = driver.findElement(By.xpath("//p"));
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.get("http://localhost:8080/choose_movie");
+        datePicker = driver.findElement(By.id("date-picker"));
     }
+
 
     @AfterEach
     void tearDown() {
@@ -42,7 +46,6 @@ class HomeControllerTest {
 
     @Test
     void search() {
-        assertEquals("Hello world", welcomeMessage.getText());
+        assertEquals(LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE), datePicker.getAttribute("value"));
     }
-
 }

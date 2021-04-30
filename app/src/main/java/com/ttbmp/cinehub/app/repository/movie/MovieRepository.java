@@ -9,12 +9,14 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public interface MovieRepository {
 
     List<Movie> getMovieList(String localDate) throws  RepositoryException;
 
     Movie getMovie(Projection projection) throws RepositoryException;
+
+    Movie getMovieById(Integer movieId);
 
 }

@@ -7,11 +7,9 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.dao.operation.DaoOperati
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
 import javax.persistence.NoResultException;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -29,7 +27,7 @@ public class DaoQueryOperation extends DaoOperation {
 
     public DaoQueryOperation(Method method, Connection connection, List<Class<?>> dataSourceEntityList) throws DaoMethodException, NoSuchMethodException {
         super(method, connection, dataSourceEntityList);
-        Query queryAnnotation = method.getAnnotation(Query.class);
+        var queryAnnotation = method.getAnnotation(Query.class);
         objectType = method.getReturnType();
         dtoType = DaoOperationHelper.getDtoType(objectType, method.getGenericReturnType(), dataSourceEntityList);
         queryTemplate = queryAnnotation.value().replaceAll(":[a-zA-Z_$][a-zA-Z_$0-9]*", "?");
@@ -47,7 +45,7 @@ public class DaoQueryOperation extends DaoOperation {
     @Override
     public Object execute(Object[] args) throws DaoMethodException{
         Object result;
-        try (PreparedStatement statement = connection.prepareStatement(
+        try (var statement = connection.prepareStatement(
                 queryTemplate,
                 ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE
@@ -57,7 +55,7 @@ public class DaoQueryOperation extends DaoOperation {
                     getQueryTemplateParameterNameValueMap(args),
                     queryTemplateParameterNameList
             );
-            ResultSet resultSet = statement.executeQuery();
+            var resultSet = statement.executeQuery();
             result = getResultObject(resultSet);
             resultSet.close();
         } catch (SQLException | InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException |NoResultException e) {
@@ -69,10 +67,10 @@ public class DaoQueryOperation extends DaoOperation {
     private Map<String, Object> getQueryTemplateParameterNameValueMap(Object[] args) throws DaoMethodException {
         Map<String, Object> result = new HashMap<>();
         if (args != null) {
-            Iterator<Object> parameterIterator = Arrays.stream(args).iterator();
-            for (Annotation[] parameterAnnotation : method.getParameterAnnotations()) {
-                boolean firstParameterAnnotation = true;
-                for (Annotation annotation : parameterAnnotation) {
+            var parameterIterator = Arrays.stream(args).iterator();
+            for (var parameterAnnotation : method.getParameterAnnotations()) {
+                var firstParameterAnnotation = true;
+                for (var annotation : parameterAnnotation) {
                     if (annotation instanceof Parameter) {
                         if (!firstParameterAnnotation) {
                             throw new DaoMethodException();
@@ -99,19 +97,19 @@ public class DaoQueryOperation extends DaoOperation {
         if (!resultSet.first()) {
             throw new NoResultException();
         }
-        List<Method> resultSetGetterList = DaoOperationHelper.getResultSetGetterList(dtoType, dtoColumnNameList);
+        var resultSetGetterList = DaoOperationHelper.getResultSetGetterList(dtoType, dtoColumnNameList);
         dtoColumnNameList.removeIf(Objects::isNull);
         do {
             Iterator<String> columnNameIterator = dtoColumnNameList.listIterator();
             Iterator<Method> resultSetGetterIterator = resultSetGetterList.listIterator();
             if (List.class.isAssignableFrom(objectType)) {
-                Object dto = dtoType.getConstructors()[0].newInstance();
-                for (Method dtoSetter : dtoSetterList) {
+                var dto = dtoType.getConstructors()[0].newInstance();
+                for (var dtoSetter : dtoSetterList) {
                     dtoSetter.invoke(dto, resultSetGetterIterator.next().invoke(resultSet, columnNameIterator.next()));
                 }
                 List.class.getMethod("add", Object.class).invoke(result, dto);
             } else {
-                for (Method dtoSetter : dtoSetterList) {
+                for (var dtoSetter : dtoSetterList) {
                     dtoSetter.invoke(result, resultSetGetterIterator.next().invoke(resultSet, columnNameIterator.next()));
                 }
             }

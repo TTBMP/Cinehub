@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.domain;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class Payment {
 

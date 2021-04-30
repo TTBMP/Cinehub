@@ -22,28 +22,28 @@ class DaoUpdateOperationTest {
 
     @Test
     void execute_UpdateDto_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, DaoMethodException {
-        CinemaDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
-        Cinema dto = new Cinema(1, "pippo", "pluto", "paperino");
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
+        var dto = new CinemaDto(1, "pippo", "pluto", "paperino");
         dao.insert(dto);
         dto = dao.getCinema("pippo");
         dto.setName("pluto");
-        Cinema finalDto = dto;
+        var finalDto = dto;
         assertDoesNotThrow(() -> dao.update(finalDto));
     }
 
     @Test
     void execute_UpdateListDto_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, DaoMethodException {
-        CinemaDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
-        List<Cinema> dtoList = Arrays.asList(
-                new Cinema(2, "qui", "quo", "qua"),
-                new Cinema(3, "paperino", "gastone", "paperoga")
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
+        var dtoList = Arrays.asList(
+                new CinemaDto(2, "qui", "quo", "qua"),
+                new CinemaDto(3, "paperino", "gastone", "paperoga")
         );
         dao.insert(dtoList);
         dtoList = Arrays.asList(
                 dao.getCinema("qui"),
                 dao.getCinema("paperino")
         );
-        List<Cinema> finalDtoList = dtoList;
+        var finalDtoList = dtoList;
         assertDoesNotThrow(() -> dao.update(finalDtoList));
     }
 

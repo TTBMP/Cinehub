@@ -1,0 +1,363 @@
+.containers {
+    position: relative;
+    width: 50%;
+}
+
+.containers {
+    position: relative;
+    width: 50%;
+}
+
+div.box {
+    background: transparent;
+    padding: 1px;
+    font-size: 11px
+}
+
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 3px;
+}
+
+::-webkit-scrollbar-button {
+    background-color: #000;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #000;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #000;
+}
+
+::-webkit-scrollbar-thumb {
+    height: 50px;
+    background-color: #666;
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: #000;
+}
+
+::-webkit-resizer {
+    background-color: #000;
+}
+
+
+.containers:hover .overlay {
+    bottom: 0;
+    height: 100%;
+}
+
+.flip-card-container {
+    width: 100%;
+    padding: 50px 0;
+    text-align: center;
+    -webkit-perspective: 800px;
+    -moz-perspective: 800px;
+    -o-perspective: 800px;
+    -ms-perspective: 800px;
+    perspective: 800px;
+}
+
+.flip-card {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    display: inline-block;
+    margin: 0 10px 20px 10px;
+    border: 1px solid #000;
+    cursor: default;
+    -webkit-transition: all 0.8s ease-in-out;
+    -moz-transition: all 0.8s ease-in-out;
+    -o-transition: all 0.8s ease-in-out;
+    -ms-transition: all 0.8s ease-in-out;
+    transition: all 0.8s ease-in-out;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.flip-card:hover {
+    -webkit-transform: rotate3d(0, 1, 0, -180deg);
+    -moz-transform: rotate3d(0, 1, 0, -180deg);
+    -o-transform: rotate3d(0, 1, 0, -180deg);
+    -ms-transform: rotate3d(0, 1, 0, -180deg);
+    transform: rotate3d(0, 1, 0, -180deg);
+}
+
+.flip-card-front {
+    position: absolute;
+    width: auto;
+    height: auto;
+}
+
+
+.flip-card-back {
+    background-color: black;
+    width: auto;
+    height: auto;
+    -webkit-transform: rotate3d(0, 1, 0, 180deg);
+    -moz-transform: rotate3d(0, 1, 0, 180deg);
+    -o-transform: rotate3d(0, 1, 0, 180deg);
+    -ms-transform: rotate3d(0, 1, 0, 180deg);
+    transform: rotate3d(0, 1, 0, 180deg);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.flip-card-back h3 {
+    color: #555;
+    margin: 0 15px;
+    padding: 40px 0 20px 0;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 1px #fff, 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.flip-card-back p {
+    color: #555;
+    margin: 0 10px;
+    padding: 10px 5px;
+
+    font-size: 12px;
+    font-style: italic;
+}
+
+.flip-card-back a {
+    display: block;
+    color: rgba(85, 85, 85, 0.8);
+    padding-top: 5px;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.flip-card-back a:hover {
+    color: rgba(158, 8, 36, 0.7);
+}
+
+div.scroll {
+    background-color: black;
+    border: black;
+    width: auto;
+    height: 500px;
+    overflow: auto;
+    overflow-style: revert;
+}
+
+
+.cc-number.identified {
+    background-repeat: no-repeat;
+    background-position-y: 3px;
+    background-position-x: 99%;
+}
+
+
+.one-card > div {
+    height: 150px;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.two-card > div {
+    height: 80px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 48%;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    background-color: black;
+    overflow: hidden;
+    width: 100%;
+    height: 0;
+    transition: .6s ease;
+    font-size: 11px;
+}
+
+.containers:hover .overlay {
+    bottom: 0;
+    height: 100%;
+}
+
+div.box {
+    background: transparent;
+    padding: 1px;
+    font-size: 11px
+}
+
+body {
+    background: #333;
+}
+
+html {
+    scrollbar-face-color: #000;
+    scrollbar-base-color: #000;
+    scrollbar-3dlight-color: #000;
+    scrollbar-highlight-color: #000;
+    scrollbar-track-color: #000;
+    scrollbar-arrow-color: #000;
+    scrollbar-shadow-color: #000;
+    scrollbar-dark-shadow-color: #000;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 3px;
+}
+
+::-webkit-scrollbar-button {
+    background-color: #000;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #000;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #000;
+}
+
+::-webkit-scrollbar-thumb {
+    height: 50px;
+    background-color: #666;
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: #000;
+}
+
+::-webkit-resizer {
+    background-color: #000;
+}
+
+
+.containers:hover .overlay {
+    bottom: 0;
+    height: 100%;
+}
+
+.flip-card-container {
+    width: 100%;
+    padding: 50px 0;
+    text-align: center;
+    -webkit-perspective: 800px;
+    -moz-perspective: 800px;
+    -o-perspective: 800px;
+    -ms-perspective: 800px;
+    perspective: 800px;
+}
+
+.flip-card {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    display: inline-block;
+    margin: 0 10px 20px 10px;
+    border: 1px solid #000;
+    cursor: default;
+    -webkit-transition: all 0.8s ease-in-out;
+    -moz-transition: all 0.8s ease-in-out;
+    -o-transition: all 0.8s ease-in-out;
+    -ms-transition: all 0.8s ease-in-out;
+    transition: all 0.8s ease-in-out;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.flip-card:hover {
+    -webkit-transform: rotate3d(0, 1, 0, -180deg);
+    -moz-transform: rotate3d(0, 1, 0, -180deg);
+    -o-transform: rotate3d(0, 1, 0, -180deg);
+    -ms-transform: rotate3d(0, 1, 0, -180deg);
+    transform: rotate3d(0, 1, 0, -180deg);
+}
+
+.flip-card-front {
+    position: absolute;
+    width: auto;
+    height: auto;
+}
+
+
+.flip-card-back {
+    background-color: black;
+    width: auto;
+    height: auto;
+    -webkit-transform: rotate3d(0, 1, 0, 180deg);
+    -moz-transform: rotate3d(0, 1, 0, 180deg);
+    -o-transform: rotate3d(0, 1, 0, 180deg);
+    -ms-transform: rotate3d(0, 1, 0, 180deg);
+    transform: rotate3d(0, 1, 0, 180deg);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.flip-card-back h3 {
+    color: #555;
+    margin: 0 15px;
+    padding: 40px 0 20px 0;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 1px #fff, 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.flip-card-back p {
+    color: #555;
+    margin: 0 10px;
+    padding: 10px 5px;
+
+    font-size: 12px;
+    font-style: italic;
+}
+
+.flip-card-back a {
+    display: block;
+    color: rgba(85, 85, 85, 0.8);
+    padding-top: 5px;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.flip-card-back a:hover {
+    color: rgba(158, 8, 36, 0.7);
+}
+
+div.scroll {
+    background-color: black;
+    border: black;
+    width: auto;
+    height: 500px;
+    overflow: auto;
+    overflow-style: revert;
+}

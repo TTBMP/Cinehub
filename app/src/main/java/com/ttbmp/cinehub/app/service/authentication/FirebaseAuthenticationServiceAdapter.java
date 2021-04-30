@@ -2,7 +2,6 @@ package com.ttbmp.cinehub.app.service.authentication;
 
 import com.ttbmp.cinehub.service.authentication.FirebaseAuthenticationService;
 import com.ttbmp.cinehub.service.authentication.FirebaseException;
-import com.ttbmp.cinehub.service.authentication.FirebaseSession;
 
 /**
  * @author Fabio Buracchi
@@ -22,7 +21,7 @@ public class FirebaseAuthenticationServiceAdapter implements AuthenticationServi
     @Override
     public Session signIn(String email, String password) throws AuthenticationException {
         try {
-            FirebaseSession session = authenticationService.createUser(email, password);
+            var session = authenticationService.createUser(email, password);
             return new Session(session.getUid(), session.getSessionCookie());
         } catch (FirebaseException e) {
             throw new AuthenticationException(e.getMessage());
@@ -32,7 +31,7 @@ public class FirebaseAuthenticationServiceAdapter implements AuthenticationServi
     @Override
     public Session logIn(String email, String password) throws AuthenticationException {
         try {
-            FirebaseSession session = authenticationService.authenticateUser(email, password);
+            var session = authenticationService.authenticateUser(email, password);
             return new Session(session.getUid(), session.getSessionCookie());
         } catch (FirebaseException e) {
             throw new AuthenticationException(e.getMessage());
@@ -42,7 +41,7 @@ public class FirebaseAuthenticationServiceAdapter implements AuthenticationServi
     @Override
     public Session verifySessionCookie(String sessionCookie) throws AuthenticationException {
         try {
-            FirebaseSession session = authenticationService.verifySessionCookie(sessionCookie);
+            var session = authenticationService.verifySessionCookie(sessionCookie);
             return new Session(session.getUid(), session.getSessionCookie());
         } catch (FirebaseException e) {
             throw new AuthenticationException(e.getMessage());

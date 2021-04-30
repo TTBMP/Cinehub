@@ -23,16 +23,16 @@ class DaoInsertOperationTest {
 
     @Test
     void execute_InsertDto_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        CinemaDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
-        assertDoesNotThrow(() -> dao.insert(new Cinema(0, "pippo", "pluto", "paperino")));
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
+        assertDoesNotThrow(() -> dao.insert(new CinemaDto(0, "pippo", "pluto", "paperino")));
     }
 
     @Test
     void execute_InsertListDto_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        CinemaDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
-        List<Cinema> dtoList = Arrays.asList(
-                new Cinema(0, "pippo", "pluto", "paperino"),
-                new Cinema(0, "qui", "quo", "qua")
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
+        var dtoList = Arrays.asList(
+                new CinemaDto(0, "pippo", "pluto", "paperino"),
+                new CinemaDto(0, "qui", "quo", "qua")
         );
         assertDoesNotThrow(() -> dao.insert(dtoList));
     }

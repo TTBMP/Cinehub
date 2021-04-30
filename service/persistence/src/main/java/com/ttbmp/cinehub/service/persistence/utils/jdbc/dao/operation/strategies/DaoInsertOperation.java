@@ -8,7 +8,6 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodExcep
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -40,7 +39,7 @@ public class DaoInsertOperation extends DaoOperation {
 
     @Override
     public Object execute(Object[] args) throws DaoMethodException{
-        try (PreparedStatement statement = connection.prepareStatement(
+        try (var statement = connection.prepareStatement(
                 queryTemplate,
                 ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE
@@ -56,7 +55,7 @@ public class DaoInsertOperation extends DaoOperation {
                 }
                 statement.executeBatch();
             } else {
-                Object dto = args[0];
+                var dto = args[0];
                 DaoOperationHelper.bindPreparedStatement(
                         statement,
                         DaoOperationHelper.getParameterMap(dto, dtoColumnNameList),
@@ -72,8 +71,8 @@ public class DaoInsertOperation extends DaoOperation {
     }
 
     private String getQueryTemplate() throws DaoMethodException {
-        String dtoTableName = dtoType.getAnnotation(Entity.class).tableName();
-        int insertStrategy = method.getAnnotation(Insert.class).onConflict();
+        var dtoTableName = dtoType.getAnnotation(Entity.class).tableName();
+        var insertStrategy = method.getAnnotation(Insert.class).onConflict();
         String expression;
         switch (insertStrategy) {
             case OnConflictStrategy.REPLACE:

@@ -7,7 +7,7 @@ import com.ttbmp.cinehub.domain.Movie;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class MovieDataMapper {
 

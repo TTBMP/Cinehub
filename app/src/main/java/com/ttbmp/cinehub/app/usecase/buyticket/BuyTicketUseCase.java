@@ -4,11 +4,11 @@ import com.ttbmp.cinehub.app.usecase.UseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public interface BuyTicketUseCase extends UseCase {
 
-    void pay(PayRequest request);
+    void pay(PaymentRequest request);
 
     void getListMovie(GetListMovieRequest request);
 
@@ -16,7 +16,11 @@ public interface BuyTicketUseCase extends UseCase {
 
     void getListCinema(GetListCinemaRequest request);
 
-    void getProjectionList(GetProjectionRequest request);
+    void getProjectionList(GetProjectionListRequest request);
 
     void getListOfSeat(GetNumberOfSeatsRequest request);
+
+    void getProjection(GetProjectionRequest request);
+
+    void getCinema(GetCinemaRequest getCinemaRequest);
 }

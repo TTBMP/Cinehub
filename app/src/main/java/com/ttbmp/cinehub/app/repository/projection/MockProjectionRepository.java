@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author Fabio Buracchi
+ * @author Fabio Buracchi, Ivan Palmieri
  */
 public class MockProjectionRepository implements ProjectionRepository {
 
@@ -32,19 +32,19 @@ public class MockProjectionRepository implements ProjectionRepository {
     private static int projectionIdCounter = 0;
 
     static {
-        for (LocalDate date = LocalDate.now().minusMonths(1); date.isBefore(LocalDate.now().plusMonths(1)); date = date.plusDays(1)) {
-            for (MockHallRepository.HallData hallData : MockHallRepository.getHallDataList()) {
-                for (MockMovieRepository.MovieData movieData : MockMovieRepository.getMovieDataList()) {
+        for (var date = LocalDate.now().minusMonths(1); date.isBefore(LocalDate.now().plusMonths(1)); date = date.plusDays(1)) {
+            for (var hallData : MockHallRepository.getHallDataList()) {
+                for (var movieData : MockMovieRepository.getMovieDataList()) {
                     if (movieData.getId() % 2 == date.getDayOfMonth() % 2) {
-                        LocalDate finalDate = date;
-                        List<Integer> shiftIdList = MockShiftRepository.getShiftDataList().stream()
+                        var finalDate = date;
+                        var shiftIdList = MockShiftRepository.getShiftDataList().stream()
                                 .filter(d -> LocalDate.parse(d.getDate()).equals(finalDate)
                                         && LocalTime.parse("16:00").isAfter(LocalTime.parse(d.getStart()))
                                         && LocalTime.parse("16:00").isBefore(LocalTime.parse(d.getEnd()))
                                 )
                                 .map(MockShiftRepository.ShiftData::getId)
                                 .collect(Collectors.toList());
-                        List<Integer> projectionistShiftIdList = MockProjectionistShiftRepository.getProjectionistShiftDataList().stream()
+                        var projectionistShiftIdList = MockProjectionistShiftRepository.getProjectionistShiftDataList().stream()
                                 .filter(d -> shiftIdList.contains(d.getShiftId()))
                                 .filter(d -> d.getHallId() == hallData.getId())
                                 .map(MockProjectionistShiftRepository.ProjectionistShiftData::getShiftId)
@@ -53,7 +53,7 @@ public class MockProjectionRepository implements ProjectionRepository {
                             break;
                         }
                         int projectionistShiftId = projectionistShiftIdList.get(0);
-                        String projectionistId = MockShiftRepository.getShiftDataList().stream()
+                        var projectionistId = MockShiftRepository.getShiftDataList().stream()
                                 .filter(d -> d.getId() == projectionistShiftId)
                                 .map(MockShiftRepository.ShiftData::getEmployeeId)
                                 .collect(Collectors.toList())
@@ -83,57 +83,19 @@ public class MockProjectionRepository implements ProjectionRepository {
         return PROJECTION_DATA_LIST;
     }
 
-    @Override
-    public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date) {
-        return getProjectionList(movie, date).stream()
-                .filter(p -> cinema.getId() == p.getCinema().getId())
-                .distinct()
-                .map(p -> new ProjectionProxy(
-                        p.getId(),
-                        p.getDate(),
-                        p.getStartTime(),
-                        serviceLocator.getService(MovieRepository.class),
-                        serviceLocator.getService(HallRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
-                        serviceLocator.getService(ProjectionistRepository.class),
-                        serviceLocator.getService(TicketRepository.class)
-                ))
-                .collect(Collectors.toList());
-    }
-
-
-    @Override
-    public List<Projection> getProjectionList(String localDate) {
+    public Projection getProjection(String date, String time, Integer hallId) {
         return PROJECTION_DATA_LIST.stream()
-                .filter(d -> d.date.equals(localDate))
+                .filter(d -> d.date.equals(date) && d.startTime.equals(time) && d.hallId == hallId)
                 .map(d -> new ProjectionProxy(
                         d.id,
                         d.date,
                         d.startTime,
                         serviceLocator.getService(MovieRepository.class),
                         serviceLocator.getService(HallRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
                         serviceLocator.getService(ProjectionistRepository.class),
                         serviceLocator.getService(TicketRepository.class)
                 ))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Projection> getProjectionList(Movie movie, String date) {
-        return PROJECTION_DATA_LIST.stream()
-                .filter(d -> d.movieId == movie.getId() && d.date.equals(date))
-                .map(d -> new ProjectionProxy(
-                        d.id,
-                        d.date,
-                        d.startTime,
-                        serviceLocator.getService(MovieRepository.class),
-                        serviceLocator.getService(HallRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
-                        serviceLocator.getService(ProjectionistRepository.class),
-                        serviceLocator.getService(TicketRepository.class)
-                ))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()).get(0);
     }
 
     @Override
@@ -151,7 +113,38 @@ public class MockProjectionRepository implements ProjectionRepository {
                         d.startTime,
                         serviceLocator.getService(MovieRepository.class),
                         serviceLocator.getService(HallRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
+                        serviceLocator.getService(ProjectionistRepository.class),
+                        serviceLocator.getService(TicketRepository.class)
+                ))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date) {
+        return PROJECTION_DATA_LIST.stream()
+                .filter(d -> d.cinemaId == cinema.getId() && d.movieId == movie.getId() && d.date.equals(date))
+                .map(d -> new ProjectionProxy(
+                        d.id,
+                        d.date,
+                        d.startTime,
+                        serviceLocator.getService(MovieRepository.class),
+                        serviceLocator.getService(HallRepository.class),
+                        serviceLocator.getService(ProjectionistRepository.class),
+                        serviceLocator.getService(TicketRepository.class)
+                ))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date, Integer hallId) {
+        return PROJECTION_DATA_LIST.stream()
+                .filter(d -> d.cinemaId == cinema.getId() && d.movieId == movie.getId() && d.date.equals(date) && d.hallId == hallId)
+                .map(d -> new ProjectionProxy(
+                        d.id,
+                        d.date,
+                        d.startTime,
+                        serviceLocator.getService(MovieRepository.class),
+                        serviceLocator.getService(HallRepository.class),
                         serviceLocator.getService(ProjectionistRepository.class),
                         serviceLocator.getService(TicketRepository.class)
                 ))
@@ -227,4 +220,5 @@ public class MockProjectionRepository implements ProjectionRepository {
         }
 
     }
+
 }

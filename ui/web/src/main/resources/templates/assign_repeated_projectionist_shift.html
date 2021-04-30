@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <script crossorigin="anonymous"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Manage Employee Shift</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+
+<h1 align="center">Assign Repeated Projectionist Shift</h1>
+
+<div>
+    <form action="#" method="post" th:object="${assignRequest}">
+
+        <div class="col-sm"> Employee</div>
+        <div class="col-sm"> Employee</div>
+        <select id="employeeComboBox" th:field="*{employeeId}">
+            <option th:each="employee : ${projectionistList}"
+                    th:text="${employee.name + ' '+ employee.surname}"
+                    th:value="${employee.id}">1
+            </option>
+        </select>
+
+        <label>Date</label>
+        <input id="date" required th:attr="min=${now}" th:field="*{date}" type="date"/>
+        <br/>
+
+        <div class="form-group row">
+            <div class="col-md-3 mb-3">
+                <label for="start_time">Start Shift</label>
+                <input aria-describedby="inputGroupPrepend2" class="form-control" id="start_time"
+                       required th:field="*{start}" type="time">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-3 mb-3">
+                <label for="end_time">End Shift</label>
+                <input class="form-control" id="end_time" required th:field="*{end}" type="time">
+            </div>
+        </div>
+
+        <div class="col-sm"> Hall</div>
+        <select id="modifyHallComboBox" th:field="*{hallId}" th:value="${hall}">
+            <option th:each="hall : ${hallList}"
+                    th:text="${hall.id}"
+                    th:value="${hall.id}">1
+            </option>
+        </select>
+        <div>Preference</div>
+        <select th:field="*{preference}" th:value="${preference}">
+            <option th:each="preference : ${preferenceList}"
+                    th:text="${preference.value}"
+                    th:value="${preference}">1
+            </option>
+
+        </select>
+
+        <label class="my-1 mr-2" for="repeateDate">to</label>
+        <input id="repeateDate" th:attr="min=${now}" th:field="*{dateRepeated}" type="date">
+        <br/>
+        <div th:if="${error}">
+            <h1 align="center" th:text="${errorText}"></h1>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Save Shift</button>
+        <br/>
+        <a href="/manage_employee_shift">
+            <button class="btn btn-secondary btn-lg btn-block" type="button">
+                Close
+            </button>
+        </a>
+
+    </form>
+</div>
+
+
+</body>
+</html>

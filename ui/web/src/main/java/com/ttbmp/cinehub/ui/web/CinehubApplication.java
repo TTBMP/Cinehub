@@ -9,4 +9,5 @@ public class CinehubApplication {
     public static void main(String[] args) {
         SpringApplication.run(CinehubApplication.class, args);
     }
+
 }

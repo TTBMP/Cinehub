@@ -15,6 +15,8 @@ public class GetShiftListRequest extends Request {
     private CinemaDto cinema;
     private LocalDate start;
 
+    public GetShiftListRequest() {
+    }
 
     public GetShiftListRequest(LocalDate start, CinemaDto cinema) {
         this.start = start;

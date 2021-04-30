@@ -46,7 +46,7 @@ public class CalendarTableCellViewController extends ViewController {
 
     private void updateShiftVBox(CalendarDay calendarDay) {
         shiftVBox.getChildren().clear();
-        for (ShiftDto shiftDto : calendarDay.getDateShiftList()) {
+        for (var shiftDto : calendarDay.getDateShiftList()) {
             CalendarShiftItemView itemView = null;
             try {
                 itemView = new CalendarShiftItemView();

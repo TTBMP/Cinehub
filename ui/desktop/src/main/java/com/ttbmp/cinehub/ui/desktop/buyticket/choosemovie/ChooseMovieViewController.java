@@ -24,7 +24,7 @@ import java.time.LocalDate;
 
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class ChooseMovieViewController extends ViewController {
 
@@ -76,7 +76,7 @@ public class ChooseMovieViewController extends ViewController {
         confirmMovieButton.setOnAction(a -> {
             activity.getUseCase(BuyTicketUseCase.class).getListCinema(
                     new GetListCinemaRequest(
-                            viewModel.selectedMovieProperty().getValue(),
+                            viewModel.selectedMovieProperty().getValue().getId(),
                             viewModel.selectedDateProperty().getValue().toString()
                     )
             );

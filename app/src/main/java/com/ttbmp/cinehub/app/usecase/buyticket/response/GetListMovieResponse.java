@@ -5,7 +5,7 @@ import com.ttbmp.cinehub.app.dto.MovieDto;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class GetListMovieResponse {
 

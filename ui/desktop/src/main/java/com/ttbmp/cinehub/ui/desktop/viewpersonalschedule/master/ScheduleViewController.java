@@ -54,7 +54,7 @@ public class ScheduleViewController extends ViewController {
     @Override
     protected void onLoad() {
         appBarController.load(activity, navController);
-        ViewPersonalScheduleViewModel viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
+        var viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
         viewModel.errorMessageProperty().addListener(l -> {
             try {
                 navController.openInDialog(new NavDestination(new ErrorDialogView()), "Error");
@@ -78,7 +78,7 @@ public class ScheduleViewController extends ViewController {
         calendarTableView.setSelectionModel(null);
         calendarTableView.itemsProperty().addListener(l -> calendarTableView.refresh());
         calendarTableView.setItems(viewModel.getShiftWeekList());
-        for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
+        for (var dayOfWeek : DayOfWeek.values()) {
             TableColumn<Map<DayOfWeek, CalendarDay>, CalendarDay> dayTableColumn;
             dayTableColumn = (TableColumn<Map<DayOfWeek, CalendarDay>, CalendarDay>)
                     calendarTableView.getColumns().get(dayOfWeek.getValue() - 1);

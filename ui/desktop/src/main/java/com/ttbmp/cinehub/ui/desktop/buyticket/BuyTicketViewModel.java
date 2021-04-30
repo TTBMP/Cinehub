@@ -14,7 +14,7 @@ import java.util.List;
 
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class BuyTicketViewModel implements ViewModel {
 
@@ -49,7 +49,7 @@ public class BuyTicketViewModel implements ViewModel {
     private final StringProperty cinemaError = new SimpleStringProperty();
     private final StringProperty seatError = new SimpleStringProperty();
     private final StringProperty paymentError = new SimpleStringProperty();
-    private final StringProperty autenticationError = new SimpleStringProperty();
+    private final StringProperty authenticationError = new SimpleStringProperty();
 
     private final StringProperty selectedSeatPrice = new SimpleStringProperty();
 
@@ -76,7 +76,7 @@ public class BuyTicketViewModel implements ViewModel {
         selectedCinemaCity.bind(ObjectBindings.map(selectedCinema, CinemaDto::getCity));
         selectedCinemaName.bind(ObjectBindings.map(selectedCinema, CinemaDto::getName));
         selectedTicketPrice.bind(ObjectBindings.map(selectedTicket, TicketDto::getPrice));
-        selectedTicketPosition.bind(ObjectBindings.map(selectedTicket,ticket-> ticket.getSeatDto().getPosition()));
+        selectedTicketPosition.bind(ObjectBindings.map(selectedTicket, ticket -> ticket.getSeatDto().getPosition()));
         StringProperty selectedMovieRating = new SimpleStringProperty();
         selectedMovieRating.bind(ObjectBindings.map(selectedMovie, MovieDto::getVote));
         StringProperty selectedMovieOverview = new SimpleStringProperty();
@@ -243,7 +243,7 @@ public class BuyTicketViewModel implements ViewModel {
     }
 
 
-    public StringProperty autenticationErrorProperty() {
-        return autenticationError;
+    public StringProperty authenticationErrorProperty() {
+        return authenticationError;
     }
 }

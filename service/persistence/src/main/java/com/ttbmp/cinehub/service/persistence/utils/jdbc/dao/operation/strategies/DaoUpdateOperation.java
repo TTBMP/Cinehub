@@ -8,7 +8,6 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodExcep
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -30,7 +29,7 @@ public class DaoUpdateOperation extends DaoOperation {
         if (!method.getReturnType().equals(Void.TYPE) || method.getParameterCount() != 1) {
             throw new DaoMethodException();
         }
-        Update updateAnnotation = method.getAnnotation(Update.class);
+        var updateAnnotation = method.getAnnotation(Update.class);
         updateStrategy = updateAnnotation.onConflict();
         objectType = method.getParameterTypes()[0];
         dtoType = DaoOperationHelper.getDtoType(objectType, method.getGenericParameterTypes()[0], dataSourceEntityList);
@@ -48,7 +47,7 @@ public class DaoUpdateOperation extends DaoOperation {
 
     @Override
     public Object execute(Object[] args) throws DaoMethodException{
-        try (PreparedStatement statement = connection.prepareStatement(
+        try (var statement = connection.prepareStatement(
                 queryTemplate,
                 ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE
@@ -69,7 +68,7 @@ public class DaoUpdateOperation extends DaoOperation {
                 }
                 statement.executeBatch();
             } else {
-                Object dto = args[0];
+                var dto = args[0];
                 if (updateStrategy == OnConflictStrategy.ABORT || updateStrategy == OnConflictStrategy.IGNORE) {
                     dtoColumnNameList.addAll(dtoPrimaryKeyColumnNameList);
                 }
@@ -88,7 +87,7 @@ public class DaoUpdateOperation extends DaoOperation {
     }
 
     private String getQueryTemplate() throws DaoMethodException {
-        String dtoTableName = dtoType.getAnnotation(Entity.class).tableName();
+        var dtoTableName = dtoType.getAnnotation(Entity.class).tableName();
         String query;
         switch (updateStrategy) {
             case OnConflictStrategy.ABORT:

@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.app.dto;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan, Fabio Buracchi
+ * @author Ivan Palmieri, Fabio Buracchi
  */
 public class CinemaDto {
 
@@ -46,7 +46,7 @@ public class CinemaDto {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        CinemaDto other = (CinemaDto) obj;
+        var other = (CinemaDto) obj;
         return this.id == other.id;
     }
 

@@ -7,7 +7,7 @@ import com.ttbmp.cinehub.domain.Seat;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class SeatDataMapper {
     private SeatDataMapper() {

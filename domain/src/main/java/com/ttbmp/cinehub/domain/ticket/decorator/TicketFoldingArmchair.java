@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.domain.ticket.decorator;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class TicketFoldingArmchair extends TicketDecorator {
 
@@ -12,12 +12,8 @@ public class TicketFoldingArmchair extends TicketDecorator {
     }
 
     @Override
-    public long increasePrice() {
-        return this.addPrice(super.increasePrice());
-    }
-
-    private long addPrice(long price) {
-        return price + 1;
+    public long getPrice() {
+        return ticket.getPrice() + 1;
     }
 
 }

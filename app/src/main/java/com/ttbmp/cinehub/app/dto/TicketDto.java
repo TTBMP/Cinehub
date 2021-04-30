@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.app.dto;
 import com.ttbmp.cinehub.domain.User;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class TicketDto {
 
@@ -54,6 +54,5 @@ public class TicketDto {
     public void setPrice(Long price) {
         this.price = price;
     }
-
 
 }

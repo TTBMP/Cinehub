@@ -8,7 +8,7 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodExcep
 import java.util.List;
 
 /**
- * @author Fabio Buracchi, Palmieri Ivan
+ * @author Fabio Buracchi, Ivan Palmieri
  */
 public interface TicketRepository {
 

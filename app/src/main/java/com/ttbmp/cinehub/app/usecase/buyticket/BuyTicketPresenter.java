@@ -5,7 +5,7 @@ import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public interface BuyTicketPresenter {
 
@@ -14,13 +14,15 @@ public interface BuyTicketPresenter {
 
     void presentCinemaList(GetListCinemaResponse response);
 
+    void presentCinema(GetCinemaResponse response);
+
     void presentSeatList(GetNumberOfSeatsResponse response);
 
     void setSelectedTicket(GetTicketBySeatsResponse response);
 
     void presentPayNullRequest();
 
-    void presentInvalidPay(PayRequest request);
+    void presentInvalidPay(PaymentRequest request);
 
     void presentGetTicketBySeatsNullRequest();
 
@@ -32,7 +34,9 @@ public interface BuyTicketPresenter {
 
     void presentGetTimeOfProjectionNullRequest();
 
-    void presentInvalidGetTimeOfProjection(GetProjectionRequest request);
+    void presentInvalidGetTimeOfProjection(GetProjectionListRequest request);
+
+    void presentProjection(GetProjectionResponse request);
 
     void presentGetNumberOfSeatsNullRequest();
 
@@ -42,11 +46,13 @@ public interface BuyTicketPresenter {
 
     void presentErrorByStripe(PaymentServiceException error);
 
-    void presentProjectionList(ProjectionListResponse projectionTimeList);
+    void presentProjectionList(GetProjectionListResponse projectionTimeList);
 
     void presentGetListMovieNullRequest();
 
     void presentInvalidGetListMovie(GetListMovieRequest request);
 
-    void presentAutenticationError();
+    void presentAuthenticationError();
+
+    void presentInvalidGetCinema(GetCinemaRequest request);
 }

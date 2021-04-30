@@ -15,7 +15,7 @@ public class TheMovieDbApiServiceAdapter implements MovieApiService {
     public Movie getMovie(int movieId) throws MovieApiServiceException {
         Movie result;
         try {
-            com.ttbmp.cinehub.service.movieapi.Movie movie = service.getMovie(movieId);
+            var movie = service.getMovie(movieId);
             result = new Movie(
                     movie.getId(),
                     movie.getName(),

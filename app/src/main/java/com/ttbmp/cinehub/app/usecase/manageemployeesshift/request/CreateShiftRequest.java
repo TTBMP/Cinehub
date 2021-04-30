@@ -15,6 +15,7 @@ public class CreateShiftRequest extends Request {
     public static final Request.Error MISSING_START = new Request.Error("inizio non valido");
     public static final Request.Error MISSING_END = new Request.Error("fine non valida");
     public static final Request.Error MISSING_HALL = new Request.Error("sala non valida");
+    public static final Request.Error DATE_ERROR = new Request.Error("ora non valida");
 
     EmployeeDto employee;
     LocalDate date;
@@ -93,6 +94,9 @@ public class CreateShiftRequest extends Request {
         }
         if (hall == null && employee instanceof ProjectionistDto) {
             addError(MISSING_HALL);
+        }
+        if (start.isAfter(end)) {
+            addError(DATE_ERROR);
         }
     }
 }

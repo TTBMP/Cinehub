@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.domain;
 import java.util.List;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class Cinema {
 
@@ -66,7 +66,7 @@ public class Cinema {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        Cinema other = (Cinema) obj;
+        var other = (Cinema) obj;
         return this.id == other.id;
     }
 

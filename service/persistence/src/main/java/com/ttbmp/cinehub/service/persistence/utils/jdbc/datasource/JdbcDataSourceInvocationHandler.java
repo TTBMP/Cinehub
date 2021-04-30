@@ -26,7 +26,7 @@ public class JdbcDataSourceInvocationHandler implements InvocationHandler {
     public JdbcDataSourceInvocationHandler(@NotNull Database databaseAnnotation) throws SQLException, ClassNotFoundException, DataSourceClassException {
         this.databaseAnnotation = databaseAnnotation;
         this.connection = getConnection();
-        for (Class<?> entityClass : databaseAnnotation.entities()) {
+        for (var entityClass : databaseAnnotation.entities()) {
             if (entityClass.getAnnotation(Entity.class) == null) {
                 throw new DataSourceClassException();
             }
@@ -35,7 +35,7 @@ public class JdbcDataSourceInvocationHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws DataSourceMethodException {
-        Class<?> daoClass = method.getReturnType();
+        var daoClass = method.getReturnType();
         if (daoClass.getAnnotation(Dao.class) == null) {
             throw new DataSourceMethodException();
         }
@@ -48,7 +48,7 @@ public class JdbcDataSourceInvocationHandler implements InvocationHandler {
 
     private Connection getConnection() throws SQLException, ClassNotFoundException {
         loadDriver();
-        String url = String.format(
+        var url = String.format(
                 "jdbc:%s?user=%s&password=%s&serverTimezone=%s",
                 databaseAnnotation.url(),
                 databaseAnnotation.user(),

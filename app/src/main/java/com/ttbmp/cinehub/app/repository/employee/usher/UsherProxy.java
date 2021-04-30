@@ -8,7 +8,6 @@ import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.CreditCard;
-import com.ttbmp.cinehub.domain.User;
 import com.ttbmp.cinehub.domain.employee.Usher;
 import com.ttbmp.cinehub.domain.shift.Shift;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceClassException;
@@ -71,9 +70,8 @@ public class UsherProxy extends Usher {
     }
 
     private void loadUser() {
-
         try {
-            User user = userRepository.getUser(getId());
+            var user = userRepository.getUser(getId());
             setName(user.getName());
             setSurname(user.getSurname());
             setEmail(user.getEmail());
@@ -81,7 +79,6 @@ public class UsherProxy extends Usher {
         } catch (RepositoryException e) {
             throw new LazyLoadingException(e.getMessage());
         }
-
     }
 
     @Override

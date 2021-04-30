@@ -6,7 +6,7 @@ import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import java.util.List;
 
 /**
- * @author Fabio Buracchi, Palmieri Ivan
+ * @author Fabio Buracchi, Ivan Palmieri
  */
 public class User {
 
@@ -78,7 +78,7 @@ public class User {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        Employee other = (Employee) obj;
+        var other = (Employee) obj;
         return id.equals(other.getId());
     }
 

@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class ConfirmEmailViewController extends ViewController {
 

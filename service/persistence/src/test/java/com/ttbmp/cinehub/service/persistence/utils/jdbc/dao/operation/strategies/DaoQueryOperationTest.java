@@ -19,13 +19,13 @@ class DaoQueryOperationTest {
 
     @Test
     void execute_ReturnsDto_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        CinemaDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
-        assertDoesNotThrow(() -> dao.getCinema("MultiPlex"));
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
+        assertDoesNotThrow(() -> dao.getCinema("multisala"));
     }
 
     @Test
     void execute_ReturnsListDto_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        CinemaDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
         assertDoesNotThrow(dao::getAllCinema);
     }
 

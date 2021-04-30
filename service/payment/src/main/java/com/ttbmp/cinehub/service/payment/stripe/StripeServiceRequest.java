@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class StripeServiceRequest {
 
@@ -54,11 +54,11 @@ public class StripeServiceRequest {
 
     //Given an email retrieves the customer if it exists
     public Customer getCustomer(String nome, String numberOfCard, String email) throws StripeException {
-        CustomerCollection customers = getListCustomer();
+        var customers = getListCustomer();
         if (customers == null) {
             return null;
         }
-        for (int i = 0; i < customers.getData().size(); i++) {
+        for (var i = 0; i < customers.getData().size(); i++) {
             if (customers.getData().get(i).getEmail().compareTo(email) == 0) {
                 return customers.getData().get(i);
             }
@@ -83,7 +83,7 @@ public class StripeServiceRequest {
 
     //Given a customer, it retrieves the (0) card of the associated user
     public PaymentMethod getCard(Customer customer) throws StripeException {
-        PaymentMethodCollection paymentMethods = getPaymentMethod(customer);
+        var paymentMethods = getPaymentMethod(customer);
         if (paymentMethods == null) {
             return null;
         }
@@ -107,11 +107,11 @@ public class StripeServiceRequest {
     //Function to update a customer's account
     public boolean setBalance(Customer customer, long price, PaymentMethod paymentMethod) throws StripeException {
         Map<String, Object> params = new HashMap<>();
-        long s = price * 100;
+        var s = price * 100;
         params.put(AMOUNT, s);
         params.put("currency", "eur");
         params.put(CUSTOMER, customer.getId());
-        PaymentIntent paymentIntent = PaymentIntent.create(params);
+        var paymentIntent = PaymentIntent.create(params);
         Map<String, Object> param = new HashMap<>();
         param.put("payment_method", paymentMethod.getId());
         paymentIntent.confirm(param);

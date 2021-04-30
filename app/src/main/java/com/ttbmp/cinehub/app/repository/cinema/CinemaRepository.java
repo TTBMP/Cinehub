@@ -23,4 +23,6 @@ public interface CinemaRepository {
 
     Cinema getCinema(Employee employee) throws RepositoryException;
 
+    Cinema getCinema(int cinemaId);
+
 }

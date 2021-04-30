@@ -15,12 +15,13 @@ public class ShiftModifyRequest extends Request {
     public static final Request.Error MISSING_END = new Request.Error("Fine non valida");
     public static final Request.Error MISSING_HALL = new Request.Error("Hall non valida");
     public static final Request.Error MISSING_EMPLOYEE = new Request.Error("Dipendente non valido");
+    public static final Request.Error ERROR_TIME = new Request.Error("Orario non Valido");
 
     private EmployeeDto employeeDto;
     private int shiftId;
     private LocalDate date;
     private LocalTime start;
-    private  LocalTime end;
+    private LocalTime end;
     private HallDto hall;
 
     public ShiftModifyRequest(EmployeeDto employeeDto, int shiftId, LocalDate date, LocalTime start, LocalTime end, HallDto hall) {
@@ -97,8 +98,11 @@ public class ShiftModifyRequest extends Request {
         if (hall == null && employeeDto instanceof ProjectionistDto) {
             addError(MISSING_HALL);
         }
-        if(employeeDto == null){
+        if (employeeDto == null) {
             addError(MISSING_EMPLOYEE);
+        }
+        if (start.isAfter(end)) {
+            addError(ERROR_TIME);
         }
 
     }

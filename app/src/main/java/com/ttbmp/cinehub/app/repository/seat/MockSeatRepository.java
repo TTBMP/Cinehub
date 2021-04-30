@@ -19,12 +19,12 @@ public class MockSeatRepository implements SeatRepository {
     private static int seatIdCounter = 0;
 
     static {
-        List<Integer> hallIdList = MockHallRepository.getHallDataList().stream()
+        var hallIdList = MockHallRepository.getHallDataList().stream()
                 .map(MockHallRepository.HallData::getId)
                 .collect(Collectors.toList());
         for (int hallId : hallIdList) {
-            for (char c : new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'L'}) {
-                for (int i = 0; i < 7; i++) {
+            for (var c : new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'L'}) {
+                for (var i = 0; i < 7; i++) {
                     SEAT_DATA_LIST.add(new SeatData(seatIdCounter++, 5L + seatIdCounter % 3, seatIdCounter % 2 == 0, hallId, c + String.valueOf(i)));
                 }
             }

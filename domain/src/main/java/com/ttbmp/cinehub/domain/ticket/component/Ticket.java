@@ -4,24 +4,21 @@ import com.ttbmp.cinehub.domain.Seat;
 import com.ttbmp.cinehub.domain.User;
 
 /**
- * @author Palmieri Ivan
+ * @author Ivan Palmieri
  */
 public class Ticket {
-
 
     private int id;
     private long price;
     private Seat seat;
     private User owner;
 
-
-    public Ticket(int id, long price, User owner,Seat seat) {
+    public Ticket(int id, long price, User owner, Seat seat) {
         this.id = id;
         this.price = price;
         this.owner = owner;
         this.seat = seat;
     }
-
 
     public Seat getSeat() {
         return seat;
@@ -47,7 +44,6 @@ public class Ticket {
         this.price = price;
     }
 
-
     public User getOwner() {
         return owner;
     }
@@ -55,11 +51,5 @@ public class Ticket {
     public void setOwner(User owner) {
         this.owner = owner;
     }
-
-    public long increasePrice() {
-        return this.price;
-    }
-
-
 
 }

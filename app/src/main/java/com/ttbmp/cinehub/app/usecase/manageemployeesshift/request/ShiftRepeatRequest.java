@@ -17,6 +17,7 @@ public class ShiftRepeatRequest extends Request {
     public static final Request.Error MISSING_START_SHIFT = new Request.Error("Ora inizio non valido");
     public static final Request.Error MISSING_END_SHIFT = new Request.Error("Ora fine non valida");
     public static final Request.Error MISSING_HALL = new Request.Error("Sala non valida");
+    public static final Request.Error PERIOD_ERROR = new Request.Error("Periodo non valido");
 
 
     private LocalDate start;
@@ -107,13 +108,17 @@ public class ShiftRepeatRequest extends Request {
         if (end == null) {
             addError(MISSING_END);
         }
-        if(startShift == null){
+        if (startShift == null) {
             addError(MISSING_START_SHIFT);
-        }if(endShift == null){
+        }
+        if (endShift == null) {
             addError(MISSING_END_SHIFT);
         }
-        if(hall == null && employeeDto instanceof ProjectionistDto){
+        if (hall == null && employeeDto instanceof ProjectionistDto) {
             addError(MISSING_HALL);
+        }
+        if (start.isAfter(end)) {
+            addError(PERIOD_ERROR);
         }
     }
 
