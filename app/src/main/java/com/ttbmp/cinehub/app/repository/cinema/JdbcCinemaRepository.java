@@ -12,7 +12,6 @@ import com.ttbmp.cinehub.service.persistence.dao.CinemaDao;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourceProvider;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,12 +26,54 @@ public class JdbcCinemaRepository implements CinemaRepository {
     }
 
     @Override
-    public List<Cinema> getAllCinema() throws RepositoryException {
-        List<com.ttbmp.cinehub.service.persistence.entity.Cinema> cinemaList = null;
+    public Cinema getCinema(int cinemaId) {
+        return null;
+    }
+
+    @Override
+    public Cinema getCinema(Employee employee) throws RepositoryException {
         try {
-            cinemaList = getCinemaDao().getAllCinema();
+            var cinema = getCinemaDao().getCinemaByEmployee(employee.getId());
+            return new CinemaProxy(
+                    cinema.getId(),
+                    cinema.getName(),
+                    cinema.getCity(),
+                    cinema.getAddress(),
+                    serviceLocator.getService(HallRepository.class)
+            );
+        } catch (DaoMethodException e) {
+            throw new RepositoryException(e.getMessage());
+        }
+    }
+
+    @Override
+    public Cinema getCinema(Projection projection) throws RepositoryException {
+        try {
+            var cinema = getCinemaDao().getCinemaByProjection(projection.getId());
+            return new CinemaProxy(
+                    cinema.getId(),
+                    cinema.getName(),
+                    cinema.getCity(),
+                    cinema.getAddress(),
+                    serviceLocator.getService(HallRepository.class)
+            );
+        } catch (DaoMethodException e) {
+            throw new RepositoryException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Cinema> getAllCinema() throws RepositoryException {
+        try {
+            var cinemaList = getCinemaDao().getAllCinema();
             return cinemaList.stream()
-                    .map(cinema -> new CinemaProxy(cinema.getId(), cinema.getName(), cinema.getCity(), cinema.getAddress(), serviceLocator.getService(HallRepository.class)))
+                    .map(cinema -> new CinemaProxy(
+                            cinema.getId(),
+                            cinema.getName(),
+                            cinema.getCity(),
+                            cinema.getAddress(),
+                            serviceLocator.getService(HallRepository.class)
+                    ))
                     .collect(Collectors.toList());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
@@ -43,50 +84,30 @@ public class JdbcCinemaRepository implements CinemaRepository {
     @Override
     public List<Cinema> getListCinema(Movie movie, String date) throws RepositoryException {
         try {
-            List<com.ttbmp.cinehub.service.persistence.entity.Cinema> cinemaList = getCinemaDao().getCinemaByMovieIdAndDate(movie.getId(), date);
+            var cinemaList = getCinemaDao().getCinemaByMovieIdAndDate(movie.getId(), date);
             return cinemaList.stream()
-                    .map(cinema -> new CinemaProxy(cinema.getId(), cinema.getName(), cinema.getCity(), cinema.getAddress(), serviceLocator.getService(HallRepository.class)))
+                    .map(cinema -> new CinemaProxy(
+                            cinema.getId(),
+                            cinema.getName(),
+                            cinema.getCity(),
+                            cinema.getAddress(),
+                            serviceLocator.getService(HallRepository.class)
+                    ))
                     .collect(Collectors.toList());
-        } catch (Throwable e) {
-            return new ArrayList<>();
-        }
-
-    }
-
-
-    @Override
-    public Cinema getCinema(Projection projection) throws RepositoryException {
-        try {
-            com.ttbmp.cinehub.service.persistence.entity.Cinema cinema = getCinemaDao().getCinemaByProjection(projection.getId());
-            return new CinemaProxy(cinema.getId(), cinema.getName(), cinema.getCity(), cinema.getAddress(), serviceLocator.getService(HallRepository.class));
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
     }
 
-    @Override
-    public Cinema getCinema(Employee employee) throws RepositoryException {
-        try {
-            com.ttbmp.cinehub.service.persistence.entity.Cinema cinema = getCinemaDao().getCinemaByEmployee(employee.getId());
-            return new CinemaProxy(cinema.getId(), cinema.getName(), cinema.getCity(), cinema.getAddress(), serviceLocator.getService(HallRepository.class));
-        } catch (DaoMethodException e) {
-            throw new RepositoryException(e.getMessage());
-        }
-    }
-
-    @Override
-    public Cinema getCinema(int cinemaId) {
-        return null;
-    }
-
-    private CinemaDao getCinemaDao() {
+    private CinemaDao getCinemaDao() throws RepositoryException {
         if (cinemaDao == null) {
             try {
                 this.cinemaDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RepositoryException(e.getMessage());
             }
         }
         return cinemaDao;
     }
+
 }

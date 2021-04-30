@@ -40,7 +40,13 @@ public class MockCinemaRepository implements CinemaRepository {
     public Cinema getCinema(int cinemaId) {
         return CINEMA_DATA_LIST.stream()
                 .filter(d -> d.id == cinemaId)
-                .map(d -> new CinemaProxy(d.id, d.name, d.city, d.address, serviceLocator.getService(HallRepository.class)))
+                .map(d -> new CinemaProxy(
+                        d.id,
+                        d.name,
+                        d.city,
+                        d.address,
+                        serviceLocator.getService(HallRepository.class)
+                ))
                 .collect(Collectors.toList())
                 .get(0);
     }
@@ -80,7 +86,13 @@ public class MockCinemaRepository implements CinemaRepository {
                 .get(0);
         return CINEMA_DATA_LIST.stream()
                 .filter(d -> d.id == projectionCinemaId)
-                .map(d -> new CinemaProxy(d.id, d.name, d.city, d.address, serviceLocator.getService(HallRepository.class)))
+                .map(d -> new CinemaProxy(
+                        d.id,
+                        d.name,
+                        d.city,
+                        d.address,
+                        serviceLocator.getService(HallRepository.class)
+                ))
                 .collect(Collectors.toList())
                 .get(0);
     }
@@ -88,19 +100,38 @@ public class MockCinemaRepository implements CinemaRepository {
     @Override
     public List<Cinema> getAllCinema() {
         return CINEMA_DATA_LIST.stream()
-                .map(d -> new CinemaProxy(d.id, d.name, d.city, d.address, serviceLocator.getService(HallRepository.class)))
+                .map(d -> new CinemaProxy(
+                        d.id,
+                        d.name,
+                        d.city,
+                        d.address,
+                        serviceLocator.getService(HallRepository.class)
+                ))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Cinema> getListCinema(Movie movie, String date) {
-        /*var projectionCinemaIdList = MockProjectionRepository.getProjectionDataList().stream()
+        var projectionHallIdList = MockProjectionRepository.getProjectionDataList().stream()
                 .filter(d -> d.getMovieId() == movie.getId() && d.getDate().equals(date))
-                .map(MockProjectionRepository.ProjectionData::getCinemaId)
+                .map(MockProjectionRepository.ProjectionData::getHallId)
                 .distinct()
                 .collect(Collectors.toList());
-         */
-        return null;
+        var hallCinemaIdList = MockHallRepository.getHallDataList().stream()
+                .filter(d -> projectionHallIdList.contains(d.getCinemaId()))
+                .map(MockHallRepository.HallData::getCinemaId)
+                .distinct()
+                .collect(Collectors.toList());
+        return CINEMA_DATA_LIST.stream()
+                .filter(d -> hallCinemaIdList.contains(d.id))
+                .map(d -> new CinemaProxy(
+                        d.id,
+                        d.name,
+                        d.city,
+                        d.address,
+                        serviceLocator.getService(HallRepository.class)
+                ))
+                .collect(Collectors.toList());
     }
 
     public static class CinemaData {

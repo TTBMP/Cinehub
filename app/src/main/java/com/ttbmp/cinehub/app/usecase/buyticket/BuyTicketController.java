@@ -198,7 +198,6 @@ public class BuyTicketController implements BuyTicketUseCase {
         }
     }
 
-
     @Override
     public void getListOfSeat(GetNumberOfSeatsRequest request) {
         try {
