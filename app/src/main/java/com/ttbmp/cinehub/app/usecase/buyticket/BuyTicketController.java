@@ -64,7 +64,6 @@ public class BuyTicketController implements BuyTicketUseCase {
                     user.getCreditCard().getNumber(),
                     ticket.getPrice()
             ));
-            ticket.setOwner(user);
             ticketRepository.saveTicket(ticket, ProjectionDataMapper.mapToEntity(request.getProjection()));
             emailService.sendMail(new EmailServiceRequest(user.getEmail(), "Payment receipt"));
         } catch (Request.NullRequestException e) {

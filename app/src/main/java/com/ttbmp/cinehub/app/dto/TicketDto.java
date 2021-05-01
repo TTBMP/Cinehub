@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.app.dto;
 
-import com.ttbmp.cinehub.domain.User;
 
 /**
  * @author Ivan Palmieri
@@ -9,10 +8,10 @@ public class TicketDto {
 
     private long price;
     private int id;
-    private User owner;
+    private UserDto owner;
     private SeatDto seatDto;
 
-    public TicketDto(int id, long price, User owner, SeatDto seatDto) {
+    public TicketDto(int id, long price, UserDto owner, SeatDto seatDto) {
         this.id = id;
         this.owner = owner;
         this.price = price;
@@ -35,11 +34,11 @@ public class TicketDto {
         this.id = id;
     }
 
-    public User getOwner() {
+    public UserDto getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(UserDto owner) {
         this.owner = owner;
     }
 
