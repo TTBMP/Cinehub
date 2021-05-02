@@ -34,13 +34,18 @@ public class ProjectionProxy extends Projection {
             MovieRepository movieRepository,
             HallRepository hallRepository,
             ProjectionistRepository projectionistRepository,
-            TicketRepository ticketRepository) {
-        super(id, date, startTime, null, null, null, null);
+            TicketRepository ticketRepository,
+            long basePrice
+    ) {
+        super(id, date, startTime, null, null, null, null,basePrice);
         this.movieRepository = movieRepository;
         this.hallRepository = hallRepository;
         this.projectionistRepository = projectionistRepository;
         this.ticketRepository = ticketRepository;
+
     }
+
+
 
     @Override
     public Movie getMovie() {

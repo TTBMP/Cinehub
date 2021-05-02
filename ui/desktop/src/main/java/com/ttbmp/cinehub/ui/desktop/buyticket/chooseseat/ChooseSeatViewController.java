@@ -136,7 +136,8 @@ public class ChooseSeatViewController extends ViewController {
                         viewModel.seatSelectedPosition().getValue(),
                         viewModel.foldingArmchairOptionProperty().getValue(),
                         viewModel.heatedArmchairOptionProperty().getValue(),
-                        viewModel.skipLineOptionProperty().getValue()
+                        viewModel.skipLineOptionProperty().getValue(),
+                        viewModel.selectedProjectionProperty().getValue().getId()
                 )
         );
         navController.navigate(new NavDestination(new PaymentView()));
@@ -152,7 +153,8 @@ public class ChooseSeatViewController extends ViewController {
                         viewModel.seatSelectedPosition().getValue(),
                         viewModel.foldingArmchairOptionProperty().getValue(),
                         viewModel.heatedArmchairOptionProperty().getValue(),
-                        viewModel.skipLineOptionProperty().getValue()
+                        viewModel.skipLineOptionProperty().getValue(),
+                        viewModel.selectedProjectionProperty().getValue().getId()
                 )
         );
         navController.navigate(new NavDestination(new PaymentView()));

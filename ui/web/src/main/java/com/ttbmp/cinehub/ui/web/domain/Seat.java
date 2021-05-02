@@ -1,9 +1,9 @@
 package com.ttbmp.cinehub.ui.web.domain;
 
 public class Seat {
+
     private String position;
     private Integer number;
-
     private int hallId;
     private String date;
     private int movieId;

@@ -17,9 +17,10 @@ import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.Request;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
+import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
-import com.ttbmp.cinehub.domain.ticket.decorator.TicketFoldingArmchair;
-import com.ttbmp.cinehub.domain.ticket.decorator.TicketHeatedArmchair;
+import com.ttbmp.cinehub.domain.ticket.decorator.TicketMagicBox;
+import com.ttbmp.cinehub.domain.ticket.decorator.TicketOpenBar;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketSkipLine;
 
 import java.io.IOException;
@@ -115,19 +116,20 @@ public class BuyTicketController implements BuyTicketUseCase {
             var seats = SeatDataMapper.mapToEntityList(request.getSeatDtoList());
             var pos = request.getPos();
             var seat = seats.get(pos);
+            Projection projection = projectionRepository.getProjection(request.getProjectionId());
             var user = userRepository.getUser(authenticationService.signIn("", "").getUserId());
             /*DECORATOR PATTERN GOF*/
-            var ticket = new Ticket(0, seat.getPrice(), user, seat);
+            var ticket = new Ticket(0, projection.getBasePrice(), user, seat);
             if (Boolean.TRUE.equals(request.getHeatedArmchairOption())) {
                 ticket = new TicketSkipLine(ticket);
                 ticket.setPrice(ticket.getPrice());
             }
             if (Boolean.TRUE.equals(request.getFoldingArmchairOption())) {
-                ticket = new TicketFoldingArmchair(ticket);
+                ticket = new TicketMagicBox(ticket);
                 ticket.setPrice(ticket.getPrice());
             }
             if (Boolean.TRUE.equals(request.getSkipLineRadioOption())) {
-                ticket = new TicketHeatedArmchair(ticket);
+                ticket = new TicketOpenBar(ticket);
                 ticket.setPrice(ticket.getPrice());
             }
             /*-----------------------------------------*/

@@ -16,6 +16,8 @@ public class ProjectionDto {
     private MovieDto movieDto;
     private Projectionist projectionist;
     private List<TicketDto> listTicket;
+    private long basePrice;
+
 
     public ProjectionDto(MovieDto movie,
                          HallDto hall,
@@ -23,8 +25,10 @@ public class ProjectionDto {
                          String date,
                          List<TicketDto> listTicket,
                          int id,
-                         Projectionist projectionist
+                         Projectionist projectionist,
+                         long basePrice
     ) {
+        this.basePrice = basePrice;
         this.id = id;
         this.projectionist = projectionist;
         this.movieDto = movie;
@@ -32,6 +36,14 @@ public class ProjectionDto {
         this.startTime = startTime;
         this.date = date;
         this.listTicket = listTicket;
+    }
+
+    public long getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(long basePrice) {
+        this.basePrice = basePrice;
     }
 
     public int getId() {

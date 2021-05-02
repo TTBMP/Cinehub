@@ -14,6 +14,8 @@ public interface ProjectionRepository {
 
     Projection getProjection(String date, String time, Integer hallId);
 
+    Projection getProjection(Integer projectionId);
+
     List<Projection> getProjectionList(ProjectionistShift shift);
 
     List<Projection> getProjectionList(Cinema cinema, Movie movie, String date);

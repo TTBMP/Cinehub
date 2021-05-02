@@ -7,6 +7,15 @@ public class Projection {
     private int movieId;
     private int cinemaId;
     private String startTime;
+    private long basePrice;
+
+    public long getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(long basePrice) {
+        this.basePrice = basePrice;
+    }
 
     public String getStartTime() {
         return startTime;

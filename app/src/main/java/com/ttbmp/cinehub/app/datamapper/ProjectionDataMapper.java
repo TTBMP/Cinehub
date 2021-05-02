@@ -22,7 +22,8 @@ public class ProjectionDataMapper {
                 projection.getDate(),
                 TicketDataMapper.mapToDtoList(projection.getTicketList()),
                 projection.getId(),
-                projection.getProjectionist()
+                projection.getProjectionist(),
+                projection.getBasePrice()
         );
     }
 
@@ -34,7 +35,8 @@ public class ProjectionDataMapper {
                 MovieDataMapper.mapToEntity(projectionDto.getMovieDto()),
                 HallDataMapper.mapToEntity(projectionDto.getHallDto()),
                 projectionDto.getProjectionist(),
-                TicketDataMapper.mapToEntityList(projectionDto.getListTicket())
+                TicketDataMapper.mapToEntityList(projectionDto.getListTicket()),
+                projectionDto.getBasePrice()
         );
     }
 

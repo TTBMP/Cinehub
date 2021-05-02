@@ -5,15 +5,15 @@ import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 /**
  * @author Ivan Palmieri
  */
-public class TicketHeatedArmchair extends TicketDecorator {
+public class TicketMagicBox extends TicketDecorator {
 
-    public TicketHeatedArmchair(Ticket ticket) {
+    public TicketMagicBox(Ticket ticket) {
         super(ticket);
     }
 
     @Override
     public long getPrice() {
-        return ticket.getPrice() + 1;
+        return ticket.getPrice() + 15;
     }
 
 }
