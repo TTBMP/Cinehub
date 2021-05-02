@@ -4,7 +4,6 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.ColumnInfo;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Entity;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.PrimaryKey;
 
-import java.sql.Time;
 /**
  * @author Ivan Palmieri
  */

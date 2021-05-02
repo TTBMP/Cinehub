@@ -17,8 +17,9 @@ public class Projection {
     private Hall hall;
     private Projectionist projectionist;
     private List<Ticket> ticketList;
+    private long basePrice;
 
-    public Projection(int id, String date, String startTime, Movie movie, Hall hall, Projectionist projectionist, List<Ticket> ticketList) {
+    public Projection(int id, String date, String startTime, Movie movie, Hall hall, Projectionist projectionist, List<Ticket> ticketList, long basePrice) {
         this.id = id;
         this.date = date;
         this.startTime = startTime;
@@ -86,6 +87,14 @@ public class Projection {
 
     public void addTicket(Ticket ticket) {
         this.ticketList.add(ticket);
+    }
+
+    public long getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(long basePrice) {
+        this.basePrice = basePrice;
     }
 
 }

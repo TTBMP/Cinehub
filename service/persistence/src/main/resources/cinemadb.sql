@@ -87,11 +87,12 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`film`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinemadb`.`proiezione`
 (
-    `id`      INT         NOT NULL AUTO_INCREMENT,
-    `id_sala` INT         NOT NULL,
-    `id_film` INT         NOT NULL,
-    `data`    VARCHAR(12) NOT NULL,
-    `inizio`  VARCHAR(45) NOT NULL,
+    `id`          INT         NOT NULL AUTO_INCREMENT,
+    `id_sala`     INT         NOT NULL,
+    `id_film`     INT         NOT NULL,
+    `data`        VARCHAR(12) NOT NULL,
+    `inizio`      VARCHAR(45) NOT NULL,
+    `prezzo_base` DOUBLE      NOT NULL,
     PRIMARY KEY (`id`),
     INDEX `fk_Proiezione_Film1_idx` (`id_film` ASC) VISIBLE,
     INDEX `fk_Proiezione_Sala1_idx` (`id_sala` ASC) VISIBLE,
@@ -300,34 +301,34 @@ BEGIN
     DECLARE ora INT;
     SET anno = '2021';
     SET mese = '05';
-    SET giorno = 15;
+    SET giorno = 10;
     SET ora = 12;
     WHILE giorno < 29
         DO
-            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`)
-            VALUES ('1', '3', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'));
-            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`)
-            VALUES ('2', '5', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'));
-            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`)
-            VALUES ('3', '6', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'));
-            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`)
-            VALUES ('4', '8', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'));
-            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`)
-            VALUES ('5', '11', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'));
-            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`)
-            VALUES ('6', '15', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'));
-            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`)
-            VALUES ('7', '3', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'));
-            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`)
-            VALUES ('8', '5', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'));
-            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`)
-            VALUES ('9', '6', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'));
-            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`)
-            VALUES ('10', '8', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'));
-            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`)
-            VALUES ('11', '11', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'));
-            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`)
-            VALUES ('12', '15', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'));
+            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
+            VALUES ('1', '3', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'), 5);
+            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
+            VALUES ('2', '5', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'), 5);
+            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
+            VALUES ('3', '6', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'), 5);
+            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
+            VALUES ('4', '8', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'), 5);
+            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
+            VALUES ('5', '11', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'), 5);
+            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
+            VALUES ('6', '15', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'), 5);
+            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
+            VALUES ('7', '3', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'), 5);
+            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
+            VALUES ('8', '5', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'), 5);
+            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
+            VALUES ('9', '6', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'), 5);
+            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
+            VALUES ('10', '8', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'), 5);
+            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
+            VALUES ('11', '11', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'), 5);
+            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
+            VALUES ('12', '15', concat(anno, '-', mese, '-', giorno), concat(ora, ':00'), 5);
             IF ora > 22 THEN
                 SET ora = 12;
             END IF;

@@ -62,7 +62,8 @@ public class MockProjectionRepository implements ProjectionRepository {
                                 LocalTime.parse("16:00").toString(),
                                 movieData.getId(),
                                 hallData.getId(),
-                                projectionistId
+                                projectionistId,
+                                5L
                         ));
                     }
                 }
@@ -80,6 +81,24 @@ public class MockProjectionRepository implements ProjectionRepository {
         return PROJECTION_DATA_LIST;
     }
 
+    @Override
+    public Projection getProjection(int projectionId) {
+        return PROJECTION_DATA_LIST.stream()
+                .filter(d -> d.id == projectionId)
+                .map(d -> new ProjectionProxy(
+                        d.id,
+                        d.date,
+                        d.startTime,
+                        serviceLocator.getService(MovieRepository.class),
+                        serviceLocator.getService(HallRepository.class),
+                        serviceLocator.getService(ProjectionistRepository.class),
+                        serviceLocator.getService(TicketRepository.class),
+                        d.basePrice
+                ))
+                .collect(Collectors.toList()).get(0);
+    }
+
+    @Override
     public Projection getProjection(String date, String time, Integer hallId) {
         return PROJECTION_DATA_LIST.stream()
                 .filter(d -> d.date.equals(date) && d.startTime.equals(time) && d.hallId == hallId)
@@ -90,7 +109,8 @@ public class MockProjectionRepository implements ProjectionRepository {
                         serviceLocator.getService(MovieRepository.class),
                         serviceLocator.getService(HallRepository.class),
                         serviceLocator.getService(ProjectionistRepository.class),
-                        serviceLocator.getService(TicketRepository.class)
+                        serviceLocator.getService(TicketRepository.class),
+                        d.basePrice
                 ))
                 .collect(Collectors.toList()).get(0);
     }
@@ -111,7 +131,8 @@ public class MockProjectionRepository implements ProjectionRepository {
                         serviceLocator.getService(MovieRepository.class),
                         serviceLocator.getService(HallRepository.class),
                         serviceLocator.getService(ProjectionistRepository.class),
-                        serviceLocator.getService(TicketRepository.class)
+                        serviceLocator.getService(TicketRepository.class),
+                        d.basePrice
                 ))
                 .collect(Collectors.toList());
     }
@@ -127,7 +148,8 @@ public class MockProjectionRepository implements ProjectionRepository {
                         serviceLocator.getService(MovieRepository.class),
                         serviceLocator.getService(HallRepository.class),
                         serviceLocator.getService(ProjectionistRepository.class),
-                        serviceLocator.getService(TicketRepository.class)
+                        serviceLocator.getService(TicketRepository.class),
+                        d.basePrice
                 ))
                 .collect(Collectors.toList());
     }
@@ -143,7 +165,8 @@ public class MockProjectionRepository implements ProjectionRepository {
                         serviceLocator.getService(MovieRepository.class),
                         serviceLocator.getService(HallRepository.class),
                         serviceLocator.getService(ProjectionistRepository.class),
-                        serviceLocator.getService(TicketRepository.class)
+                        serviceLocator.getService(TicketRepository.class),
+                        d.basePrice
                 ))
                 .collect(Collectors.toList());
     }
@@ -156,16 +179,16 @@ public class MockProjectionRepository implements ProjectionRepository {
         private int movieId;
         private int hallId;
         private String projectionistId;
+        private long basePrice;
 
-
-        public ProjectionData(int id, String date, String startTime, int movieId, int hallId, String projectionistId) {
+        public ProjectionData(int id, String date, String startTime, int movieId, int hallId, String projectionistId, long basePrice) {
             this.id = id;
             this.date = date;
             this.startTime = startTime;
             this.movieId = movieId;
             this.hallId = hallId;
             this.projectionistId = projectionistId;
-
+            this.basePrice = basePrice;
         }
 
         public int getId() {
@@ -214,6 +237,14 @@ public class MockProjectionRepository implements ProjectionRepository {
 
         public void setProjectionistId(String projectionistId) {
             this.projectionistId = projectionistId;
+        }
+
+        public long getBasePrice() {
+            return basePrice;
+        }
+
+        public void setBasePrice(long basePrice) {
+            this.basePrice = basePrice;
         }
 
     }

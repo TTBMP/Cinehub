@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface ProjectionRepository {
 
+    Projection getProjection(int projectionId) throws RepositoryException;
+
     Projection getProjection(String date, String time, Integer hallId) throws RepositoryException; //TODO: replace hallId with entity
 
     List<Projection> getProjectionList(ProjectionistShift shift) throws RepositoryException;

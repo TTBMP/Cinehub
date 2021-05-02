@@ -28,6 +28,12 @@ public class JdbcProjectionRepository implements ProjectionRepository {
         this.serviceLocator = serviceLocator;
     }
 
+
+    @Override
+    public Projection getProjection(int projectionId) throws RepositoryException {
+        return null;
+    }
+
     @Override
     public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date) throws RepositoryException {
         try {
@@ -40,7 +46,8 @@ public class JdbcProjectionRepository implements ProjectionRepository {
                             serviceLocator.getService(MovieRepository.class),
                             serviceLocator.getService(HallRepository.class),
                             serviceLocator.getService(ProjectionistRepository.class),
-                            serviceLocator.getService(TicketRepository.class)
+                            serviceLocator.getService(TicketRepository.class),
+                            (long) projection.getBasePrice()
                     )).collect(Collectors.toList());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
@@ -60,7 +67,8 @@ public class JdbcProjectionRepository implements ProjectionRepository {
                             serviceLocator.getService(MovieRepository.class),
                             serviceLocator.getService(HallRepository.class),
                             serviceLocator.getService(ProjectionistRepository.class),
-                            serviceLocator.getService(TicketRepository.class)
+                            serviceLocator.getService(TicketRepository.class),
+                            (long) projection.getBasePrice()
                     )).collect(Collectors.toList());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
@@ -78,7 +86,8 @@ public class JdbcProjectionRepository implements ProjectionRepository {
                             serviceLocator.getService(MovieRepository.class),
                             serviceLocator.getService(HallRepository.class),
                             serviceLocator.getService(ProjectionistRepository.class),
-                            serviceLocator.getService(TicketRepository.class)
+                            serviceLocator.getService(TicketRepository.class),
+                            (long) projection.getBasePrice()
                     )).collect(Collectors.toList());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
@@ -99,7 +108,8 @@ public class JdbcProjectionRepository implements ProjectionRepository {
                             serviceLocator.getService(MovieRepository.class),
                             serviceLocator.getService(HallRepository.class),
                             serviceLocator.getService(ProjectionistRepository.class),
-                            serviceLocator.getService(TicketRepository.class)
+                            serviceLocator.getService(TicketRepository.class),
+                            (long) projection.getBasePrice()
                     )).collect(Collectors.toList());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
@@ -114,8 +124,6 @@ public class JdbcProjectionRepository implements ProjectionRepository {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
         }
         return projectionDao;
     }

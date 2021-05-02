@@ -3,7 +3,6 @@ package com.ttbmp.cinehub.service.persistence.entity;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.ColumnInfo;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Entity;
 
-
 /**
  * @author Palmieri Ivan
  */
@@ -12,12 +11,6 @@ public class Seat {
 
     @ColumnInfo(name = "id")
     private int id;
-
-    @ColumnInfo(name = "prezzo")
-    private long price;
-
-    @ColumnInfo(name = "stato")
-    private boolean state;
 
     @ColumnInfo(name = "id_sala")
     private int hallId;
@@ -28,10 +21,8 @@ public class Seat {
     public Seat() {
     }
 
-    public Seat(int id, long price, boolean state, int hallId, String position) {
+    public Seat(int id, int hallId, String position) {
         this.id = id;
-        this.price = price;
-        this.state = state;
         this.hallId = hallId;
         this.position = position;
     }
@@ -43,22 +34,6 @@ public class Seat {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public long getPrice() {
-        return price;
-    }
-
-    public void setPrice(long price) {
-        this.price = price;
-    }
-
-    public boolean getState() {
-        return state;
-    }
-
-    public void setState(boolean state) {
-        this.state = state;
     }
 
     public int getHallId() {
@@ -76,4 +51,5 @@ public class Seat {
     public void setPosition(String position) {
         this.position = position;
     }
+
 }

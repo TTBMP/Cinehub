@@ -44,17 +44,17 @@
                         <Insets bottom="16.0"/>
                     </VBox.margin>
                 </Label>
-                <CheckBox fx:id="foldingArmchairRadioButton" mnemonicParsing="false" text="Heated armchair">
+                <CheckBox fx:id="skipLineRadioButton" mnemonicParsing="false" text="Skip line, with this option you can skip the initial waiting line +1€">
                     <VBox.margin>
                         <Insets top="5.0"/>
                     </VBox.margin>
                 </CheckBox>
-                <CheckBox fx:id="heatedArmchairRadioButton" mnemonicParsing="false" text="Folding armchair">
+                <CheckBox fx:id="heatedArmchairRadioButton" mnemonicParsing="false" text="Open bar, with this option you will get a full meal (food, drinks) for one person +10€">
                     <VBox.margin>
                         <Insets top="5.0"/>
                     </VBox.margin>
                 </CheckBox>
-                <CheckBox fx:id="skipLineRadioButton" mnemonicParsing="false" text="Skip line">
+                <CheckBox fx:id="foldingArmchairRadioButton" mnemonicParsing="false" text="Magic Box, with this option you will get a gadget of the typical objects of the film +15€">
                     <VBox.margin>
                         <Insets top="5.0"/>
                     </VBox.margin>

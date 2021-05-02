@@ -25,7 +25,7 @@ public class MockSeatRepository implements SeatRepository {
         for (int hallId : hallIdList) {
             for (var c : new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'L'}) {
                 for (var i = 0; i < 7; i++) {
-                    SEAT_DATA_LIST.add(new SeatData(seatIdCounter++, 5L + seatIdCounter % 3, seatIdCounter % 2 == 0, hallId, c + String.valueOf(i)));
+                    SEAT_DATA_LIST.add(new SeatData(seatIdCounter++, hallId, c + String.valueOf(i)));
                 }
             }
         }
@@ -39,7 +39,7 @@ public class MockSeatRepository implements SeatRepository {
     public List<Seat> getSeatList(Hall hall) {
         return SEAT_DATA_LIST.stream()
                 .filter(d -> d.hallId == hall.getId())
-                .map(d -> new SeatProxy(d.id, d.price, d.state, d.position))
+                .map(d -> new SeatProxy(d.id, d.position))
                 .collect(Collectors.toList());
     }
 
@@ -52,7 +52,7 @@ public class MockSeatRepository implements SeatRepository {
                 .get(0);
         return SEAT_DATA_LIST.stream()
                 .filter(d -> d.id == ticketSeatId)
-                .map(d -> new SeatProxy(d.id, d.price, d.state, d.position))
+                .map(d -> new SeatProxy(d.id, d.position))
                 .collect(Collectors.toList())
                 .get(0);
     }
@@ -60,15 +60,11 @@ public class MockSeatRepository implements SeatRepository {
     public static class SeatData {
 
         private int id;
-        private long price;
-        private boolean state;
         private int hallId;
         private String position;
 
-        public SeatData(int id, long price, boolean state, int hallId, String position) {
+        public SeatData(int id, int hallId, String position) {
             this.id = id;
-            this.price = price;
-            this.state = state;
             this.hallId = hallId;
             this.position = position;
         }
@@ -87,22 +83,6 @@ public class MockSeatRepository implements SeatRepository {
 
         public void setId(int id) {
             this.id = id;
-        }
-
-        public long getPrice() {
-            return price;
-        }
-
-        public void setPrice(long price) {
-            this.price = price;
-        }
-
-        public boolean isState() {
-            return state;
-        }
-
-        public void setState(boolean state) {
-            this.state = state;
         }
 
         public int getHallId() {

@@ -25,8 +25,6 @@ public class Ticket {
     @ColumnInfo(name = "prezzo")
     private long price;
 
-
-
     public Ticket() {
     }
 

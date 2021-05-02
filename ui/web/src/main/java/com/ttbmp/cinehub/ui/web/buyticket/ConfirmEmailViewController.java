@@ -43,7 +43,8 @@ public class ConfirmEmailViewController {
                 ticket.getNumber(),
                 ticket.getOption1(),
                 ticket.getOption2(),
-                ticket.getOption3()
+                ticket.getOption3(),
+                projection.getId()
         ));
         buyTicketUseCase.getCinema(new GetCinemaRequest(projection));
         var cinemaDto = (CinemaDto) model.getAttribute("cinema");

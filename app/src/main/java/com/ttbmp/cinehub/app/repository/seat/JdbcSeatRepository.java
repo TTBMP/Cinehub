@@ -27,9 +27,9 @@ public class JdbcSeatRepository implements SeatRepository {
     public List<Seat> getSeatList(Hall hall) throws RepositoryException {
 
         try {
-            List<com.ttbmp.cinehub.service.persistence.entity.Seat> seatList = getSeatDao().getSeatList(hall.getId());
+            var seatList = getSeatDao().getSeatList(hall.getId());
             return seatList.stream()
-                    .map(seat -> new SeatProxy(seat.getId(), seat.getPrice(), seat.getState(), seat.getPosition()))
+                    .map(seat -> new SeatProxy(seat.getId(), seat.getPosition()))
                     .collect(Collectors.toList());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
@@ -39,11 +39,9 @@ public class JdbcSeatRepository implements SeatRepository {
 
     @Override
     public Seat getSeat(Ticket ticket) throws RepositoryException {
-
         try {
-            com.ttbmp.cinehub.service.persistence.entity.Seat seat = getSeatDao().getSeatByTicketId(ticket.getId());
-            return new SeatProxy(seat.getId(), seat.getPrice(), seat.getState(), seat.getPosition());
-
+            var seat = getSeatDao().getSeatByTicketId(ticket.getId());
+            return new SeatProxy(seat.getId(), seat.getPosition());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }

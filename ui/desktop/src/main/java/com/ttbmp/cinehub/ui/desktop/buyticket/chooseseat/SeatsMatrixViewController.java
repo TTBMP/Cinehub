@@ -47,7 +47,7 @@ public class SeatsMatrixViewController extends ViewController {
             for (var j = 0; j < columns; j++) {
                 var radioButton = new RadioButton();
                 radioButton.setPadding(new Insets(5, 5, 5, 5));
-                radioButton.setText(seatDtoList.get(count).getPosition() + "\n" + seatDtoList.get(count).getPrice() + "\u20ac");
+                radioButton.setText(seatDtoList.get(count).getPosition() + "\n" + viewModel.selectedProjectionProperty().getValue().getBasePrice() + "\u20ac");
                 radioButton.setToggleGroup(toggleGroup);
                 var imageView = new ImageView(new Image(String.valueOf(this.getClass().getResource("/drawables/office-chair.png"))));
                 imageView.setFitWidth(25);
@@ -77,7 +77,7 @@ public class SeatsMatrixViewController extends ViewController {
     private void addOtherButton(List<SeatDto> seatDtoList, int columns, int rest, int count, int buy, BuyTicketViewModel viewModel) {
         for (var k = 0; k < rest; k++) {
             var radioButton = new RadioButton();
-            radioButton.setText(seatDtoList.get(count).getPosition() + "\n" + seatDtoList.get(count).getPrice() + "\u20ac");
+            radioButton.setText(seatDtoList.get(count).getPosition() + "\n" + viewModel.selectedProjectionProperty().getValue().getBasePrice() + "\u20ac");
             radioButton.setToggleGroup(toggleGroup);
             radioButton.setPadding(new Insets(5, 5, 5, 5));
             if (!viewModel.selectedProjectionProperty().getValue().getListTicket().isEmpty()) {

@@ -4,7 +4,6 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.ColumnInfo;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Entity;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.PrimaryKey;
 
-import java.sql.Time;
 /**
  * @author Ivan Palmieri
  */
@@ -18,9 +17,6 @@ public class Projection {
     @ColumnInfo(name = "id_sala")
     private int hallId;
 
-    @ColumnInfo(name = "id_proiezionista")
-    private String employeeId;
-
     @ColumnInfo(name = "id_film")
     private int movieId;
 
@@ -30,16 +26,19 @@ public class Projection {
     @ColumnInfo(name = "inizio")
     private String startTime;
 
+    @ColumnInfo(name= "prezzo_base")
+    private double basePrice;
+
     public Projection() {
     }
 
-    public Projection(int id, int hallId, String employeeId, int movieId, String date, String startTime) {
+    public Projection(int id, int hallId, int movieId, String date, String startTime, double basePrice) {
         this.id = id;
         this.hallId = hallId;
-        this.employeeId = employeeId;
         this.movieId = movieId;
         this.date = date;
         this.startTime = startTime;
+        this.basePrice = basePrice;
     }
 
     public int getId() {
@@ -56,14 +55,6 @@ public class Projection {
 
     public void setHallId(int hallId) {
         this.hallId = hallId;
-    }
-
-    public String getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
     }
 
     public int getMovieId() {
@@ -89,4 +80,13 @@ public class Projection {
     public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
+
+    public double getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(double basePrice) {
+        this.basePrice = basePrice;
+    }
+
 }
