@@ -20,7 +20,7 @@ class DaoQueryOperationTest {
     @Test
     void execute_ReturnsDto_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
         var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
-        assertDoesNotThrow(() -> dao.getCinema("multisala"));
+        assertDoesNotThrow(() -> dao.getCinema("Comunale"));
     }
 
     @Test
