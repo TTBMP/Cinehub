@@ -60,8 +60,6 @@ public class DaoQueryOperation extends DaoOperation {
             resultSet.close();
         } catch (SQLException | InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
             throw new DaoMethodException();
-        } catch (NoResultException e) {
-            return null;
         }
         return result;
     }
@@ -97,7 +95,7 @@ public class DaoQueryOperation extends DaoOperation {
             result = objectType.cast(objectType.getConstructors()[0].newInstance());
         }
         if (!resultSet.first()) {
-            // choose if throw an NoResultException if the Single<T> class will be implemented
+            // throw a NoResultException if the Single<T> class is used if it will be implemented
             return List.class.isAssignableFrom(objectType) ? result : null;
         }
         var resultSetGetterList = DaoOperationHelper.getResultSetGetterList(dtoType, dtoColumnNameList);

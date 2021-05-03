@@ -14,11 +14,11 @@ public class UserDataMapper {
     }
 
     public static UserDto mapToDto(User user) {
-        return new UserDto(user.getId(), user.getName(),user.getSurname(),user.getEmail(),CreditCardDataMapper.mapToDto(user.getCreditCard()));
+        return new UserDto(user.getId(), user.getName(),user.getSurname(),user.getEmail());
     }
 
     public static User mapToEntity(UserDto userDto) {
-        return new User(userDto.getId(), userDto.getName(),userDto.getSurname(),userDto.getEmail(),CreditCardDataMapper.mapToEntity(userDto.getCreditCardDto()) );
+        return new User(userDto.getId(), userDto.getName(),userDto.getSurname(),userDto.getEmail());
     }
 
     public static List<UserDto> mapToDtoList(List<User> userList) {

@@ -2,7 +2,6 @@ package com.ttbmp.cinehub.app.repository.employee;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
-import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistProxy;
 import com.ttbmp.cinehub.app.repository.employee.usher.UsherProxy;
 import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
@@ -114,18 +113,15 @@ public class MockEmployeeRepository implements EmployeeRepository {
             PROJECTIONIST,
             USHER
         }
-
     }
 
     class EmployeeFactory {
-
         Employee createEmployee(EmployeeData employeeData) {
             switch (employeeData.role) {
                 case PROJECTIONIST:
                     return new ProjectionistProxy(
                             employeeData.userId,
                             serviceLocator.getService(UserRepository.class),
-                            serviceLocator.getService(CreditCardRepository.class),
                             serviceLocator.getService(CinemaRepository.class),
                             serviceLocator.getService(ShiftRepository.class)
                     );
@@ -133,7 +129,6 @@ public class MockEmployeeRepository implements EmployeeRepository {
                     return new UsherProxy(
                             employeeData.userId,
                             serviceLocator.getService(UserRepository.class),
-                            serviceLocator.getService(CreditCardRepository.class),
                             serviceLocator.getService(CinemaRepository.class),
                             serviceLocator.getService(ShiftRepository.class)
                     );
@@ -141,7 +136,6 @@ public class MockEmployeeRepository implements EmployeeRepository {
                     throw new IllegalStateException("Unexpected value: " + employeeData.role);
             }
         }
-
     }
 
 }

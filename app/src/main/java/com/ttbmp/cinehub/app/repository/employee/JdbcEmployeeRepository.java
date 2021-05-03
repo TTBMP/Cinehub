@@ -3,7 +3,6 @@ package com.ttbmp.cinehub.app.repository.employee;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
-import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistProxy;
 import com.ttbmp.cinehub.app.repository.employee.usher.UsherProxy;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
@@ -35,7 +34,6 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
                 return new UsherProxy(
                         employee.getIdUser(),
                         serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(CreditCardRepository.class),
                         serviceLocator.getService(CinemaRepository.class),
                         serviceLocator.getService(ShiftRepository.class)
                 );
@@ -43,7 +41,6 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
                 return new ProjectionistProxy(
                         employee.getIdUser(),
                         serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(CreditCardRepository.class),
                         serviceLocator.getService(CinemaRepository.class),
                         serviceLocator.getService(ShiftRepository.class)
                 );
@@ -63,7 +60,6 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
                 return new UsherProxy(
                         employee.getIdUser(),
                         serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(CreditCardRepository.class),
                         serviceLocator.getService(CinemaRepository.class),
                         serviceLocator.getService(ShiftRepository.class)
                 );
@@ -71,7 +67,6 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
                 return new ProjectionistProxy(
                         employee.getIdUser(),
                         serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(CreditCardRepository.class),
                         serviceLocator.getService(CinemaRepository.class),
                         serviceLocator.getService(ShiftRepository.class)
                 );

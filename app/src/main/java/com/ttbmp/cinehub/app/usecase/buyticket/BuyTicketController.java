@@ -61,7 +61,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             paymentService.pay(new PayServiceRequest(
                     user.getEmail(),
                     user.getName(),
-                    user.getCreditCard().getNumber(),
+                    request.getCreditCard().getNumber(),
                     ticket.getPrice()
             ));
             ticket.setOwner(user);

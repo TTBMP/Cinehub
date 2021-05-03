@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.ui.web.buyticket;
 
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
+import com.ttbmp.cinehub.app.dto.CreditCardDto;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
@@ -55,7 +56,8 @@ public class ConfirmEmailViewController {
                 ticket.getNumber(),
                 cinemaDto,
                 projection.getMovieDto(),
-                ticket.getDate()
+                ticket.getDate(),
+                new CreditCardDto(0, "", 0, "")
         ));
         model.addAttribute("ticketId", ticket.getPosition());
         model.addAttribute("cinemaName", cinemaDto.getName());

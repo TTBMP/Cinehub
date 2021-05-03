@@ -6,8 +6,8 @@ import com.ttbmp.cinehub.domain.CreditCard;
 
 public class Projectionist extends Employee {
 
-    public Projectionist(String id, String name, String surname, String email, CreditCard creditCard, Cinema cinema) {
-        super(id, name, surname, email, creditCard, cinema);
+    public Projectionist(String id, String name, String surname, String email, Cinema cinema) {
+        super(id, name, surname, email, cinema);
     }
 
 }

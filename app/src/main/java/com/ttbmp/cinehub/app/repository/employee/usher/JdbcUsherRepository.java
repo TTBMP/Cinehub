@@ -3,7 +3,6 @@ package com.ttbmp.cinehub.app.repository.employee.usher;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
-import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.employee.Usher;
@@ -26,12 +25,11 @@ public class JdbcUsherRepository implements UsherRepository {
     @Override
     public Usher getUsher(UsherShift usherShift) throws RepositoryException {
         try {
-            com.ttbmp.cinehub.service.persistence.entity.Employee employee = getUsherDao().getUsherByUsherShift(usherShift.getId());
+            var employee = getUsherDao().getUsherByUsherShift(usherShift.getId());
 
             return new UsherProxy(
                     employee.getIdUser(),
                     serviceLocator.getService(UserRepository.class),
-                    serviceLocator.getService(CreditCardRepository.class),
                     serviceLocator.getService(CinemaRepository.class),
                     serviceLocator.getService(ShiftRepository.class)
             );

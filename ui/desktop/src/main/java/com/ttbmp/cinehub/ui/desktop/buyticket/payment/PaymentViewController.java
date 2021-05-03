@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.buyticket.payment;
 
 
+import com.ttbmp.cinehub.app.dto.CreditCardDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.PaymentRequest;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
@@ -101,7 +102,8 @@ public class PaymentViewController extends ViewController {
                 viewModel.seatSelectedPosition().getValue(),
                 viewModel.selectedCinemaProperty().getValue(),
                 viewModel.selectedMovieProperty().getValue(),
-                String.valueOf(viewModel.selectedDateProperty().getValue())
+                String.valueOf(viewModel.selectedDateProperty().getValue()),
+                new CreditCardDto(0, "", 0, "")
         ));
         try {
             navController.navigate(new NavDestination(new ConfirmEmailView()));

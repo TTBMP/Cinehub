@@ -1,7 +1,5 @@
 package com.ttbmp.cinehub.app.dto;
 
-import com.ttbmp.cinehub.domain.CreditCard;
-
 import java.util.List;
 
 public class UserDto {
@@ -10,23 +8,13 @@ public class UserDto {
     private String name;
     private String surname;
     private String email;
-    private CreditCardDto creditCardDto;
     private List<TicketDto> ownedTicketDtoList;
 
-    public UserDto(String id, String name, String surname, String email, CreditCardDto creditCardDto) {
+    public UserDto(String id, String name, String surname, String email) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
-        this.creditCardDto = creditCardDto;
-    }
-
-    public CreditCardDto getCreditCardDto() {
-        return creditCardDto;
-    }
-
-    public void setCreditCardDto(CreditCardDto creditCardDto) {
-        this.creditCardDto = creditCardDto;
     }
 
     public String getId() {

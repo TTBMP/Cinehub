@@ -2,7 +2,6 @@ package com.ttbmp.cinehub.app.repository.employee.projectionist;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
-import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
 import com.ttbmp.cinehub.app.repository.employee.MockEmployeeRepository;
 import com.ttbmp.cinehub.app.repository.projection.MockProjectionRepository;
 import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
@@ -51,7 +50,6 @@ public class MockProjectionistRepository implements ProjectionistRepository {
                 .map(d -> new ProjectionistProxy(
                         d.id,
                         serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(CreditCardRepository.class),
                         serviceLocator.getService(CinemaRepository.class),
                         serviceLocator.getService(ShiftRepository.class)
                 ))
@@ -71,7 +69,6 @@ public class MockProjectionistRepository implements ProjectionistRepository {
                 .map(d -> new ProjectionistProxy(
                         d.id,
                         serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(CreditCardRepository.class),
                         serviceLocator.getService(CinemaRepository.class),
                         serviceLocator.getService(ShiftRepository.class)
                 ))

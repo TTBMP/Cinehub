@@ -17,8 +17,8 @@ public abstract class Employee extends User {
     private Cinema cinema;
     private List<Shift> shiftList;
 
-    protected Employee(String id, String name, String surname, String email, CreditCard creditCard, Cinema cinema) {
-        super(id, name, surname, email, creditCard);
+    protected Employee(String id, String name, String surname, String email, Cinema cinema) {
+        super(id, name, surname, email);
         this.cinema = cinema;
     }
 

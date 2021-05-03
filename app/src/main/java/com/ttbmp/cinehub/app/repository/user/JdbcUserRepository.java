@@ -2,7 +2,6 @@ package com.ttbmp.cinehub.app.repository.user;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
 import com.ttbmp.cinehub.domain.User;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
@@ -24,7 +23,7 @@ public class JdbcUserRepository implements UserRepository {
         try {
             com.ttbmp.cinehub.service.persistence.entity.User user = null;
             user = getUserDao().getUserById(userId);
-            return new UserProxy(user.getId(), user.getName(), user.getSurname(), user.getEmail(), serviceLocator.getService(CreditCardRepository.class));
+            return new UserProxy(user.getId(), user.getName(), user.getSurname(), user.getEmail());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
@@ -33,14 +32,13 @@ public class JdbcUserRepository implements UserRepository {
     @Override
     public User getUser(Ticket ticket) throws RepositoryException {
         try {
-            com.ttbmp.cinehub.service.persistence.entity.User user = getUserDao().getUserByTicket(ticket.getId());
-            return new UserProxy(user.getId(), user.getName(), user.getSurname(), user.getEmail(), serviceLocator.getService(CreditCardRepository.class));
+            var user = getUserDao().getUserByTicket(ticket.getId());
+            return new UserProxy(user.getId(), user.getName(), user.getSurname(), user.getEmail());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
 
     }
-
 
     private UserDao getUserDao() {
         if (userDao == null) {
@@ -52,4 +50,5 @@ public class JdbcUserRepository implements UserRepository {
         }
         return userDao;
     }
+
 }

@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.app.repository.user;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
-import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
 import com.ttbmp.cinehub.app.repository.ticket.MockTicketRepository;
 import com.ttbmp.cinehub.domain.User;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
@@ -55,8 +54,7 @@ public class MockUserRepository implements UserRepository {
                         d.id,
                         d.name,
                         d.surname,
-                        d.email,
-                        serviceLocator.getService(CreditCardRepository.class)
+                        d.email
                 ))
                 .collect(Collectors.toList())
                 .get(0);
@@ -75,8 +73,7 @@ public class MockUserRepository implements UserRepository {
                         d.id,
                         d.name,
                         d.surname,
-                        d.email,
-                        serviceLocator.getService(CreditCardRepository.class)
+                        d.email
                 ))
                 .collect(Collectors.toList())
                 .get(0);

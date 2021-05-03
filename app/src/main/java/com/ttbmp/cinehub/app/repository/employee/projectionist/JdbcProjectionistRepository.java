@@ -3,7 +3,6 @@ package com.ttbmp.cinehub.app.repository.employee.projectionist;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
-import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Projection;
@@ -28,11 +27,10 @@ public class JdbcProjectionistRepository implements ProjectionistRepository {
     @Override
     public Projectionist getProjectionist(Projection projection) throws RepositoryException {
         try {
-            com.ttbmp.cinehub.service.persistence.entity.Employee employee = getProjectionistDao().getProjectionistByProjectionId(projection.getId());
+            var employee = getProjectionistDao().getProjectionistByProjectionId(projection.getId());
             return new ProjectionistProxy(
                     employee.getIdUser(),
                     serviceLocator.getService(UserRepository.class),
-                    serviceLocator.getService(CreditCardRepository.class),
                     serviceLocator.getService(CinemaRepository.class),
                     serviceLocator.getService(ShiftRepository.class)
             );
@@ -44,12 +42,10 @@ public class JdbcProjectionistRepository implements ProjectionistRepository {
     @Override
     public Projectionist getProjectionist(ProjectionistShift projectionistShift) throws RepositoryException {
         try {
-            com.ttbmp.cinehub.service.persistence.entity.Employee employee = getProjectionistDao().getProjectionistByProjectionistShift(projectionistShift.getId());
-
+            var employee = getProjectionistDao().getProjectionistByProjectionistShift(projectionistShift.getId());
             return new ProjectionistProxy(
                     employee.getIdUser(),
                     serviceLocator.getService(UserRepository.class),
-                    serviceLocator.getService(CreditCardRepository.class),
                     serviceLocator.getService(CinemaRepository.class),
                     serviceLocator.getService(ShiftRepository.class)
             );
