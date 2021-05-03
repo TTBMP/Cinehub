@@ -271,35 +271,30 @@ BEGIN
 	DECLARE mese VARCHAR(5);
 	DECLARE giorno INT;
 	DECLARE ora INT;
+    declare film int;
+    declare nfilm int;
+    declare sala int;
+    declare nsale int;
+    set nfilm = (select count(*) from film);
+	set nsale = (select count(*) from sala);
+
 	SET anno = '2021';
 	SET mese = '05';
 	SET giorno = 10;
 	SET ora = 12;
+
 	WHILE giorno < 29 DO
-		INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
-		VALUES ('1', '3', concat(anno, '-',  mese, '-', giorno), concat(ora, ':00'), 5);
-		INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
-		VALUES ('2','5', concat(anno, '-',  mese, '-', giorno), concat(ora, ':00'), 5);
-		INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
-		VALUES ('3', '6', concat(anno, '-',  mese, '-', giorno), concat(ora, ':00'), 5);
-		INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
-		VALUES ('4', '8', concat(anno, '-',  mese, '-', giorno), concat(ora, ':00'), 5);
-		INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
-		VALUES ('5', '11', concat(anno, '-',  mese, '-', giorno), concat(ora, ':00'), 5);
-		INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
-		VALUES ('6', '15', concat(anno, '-',  mese, '-', giorno), concat(ora, ':00'), 5);
-		INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
-		VALUES ('7', '3', concat(anno, '-',  mese, '-', giorno), concat(ora, ':00'), 5);
-		INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
-		VALUES ('8', '5', concat(anno, '-',  mese, '-', giorno), concat(ora, ':00'), 5);
-		INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
-		VALUES ('9', '6', concat(anno, '-',  mese, '-', giorno), concat(ora, ':00'), 5);
-		INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
-		VALUES ('10', '8', concat(anno, '-',  mese, '-', giorno), concat(ora, ':00'), 5);
-		INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
-		VALUES ('11', '11', concat(anno, '-',  mese, '-', giorno), concat(ora, ':00'), 5);
-		INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
-		VALUES ('12', '15', concat(anno, '-',  mese, '-', giorno), concat(ora, ':00'), 5);
+        set sala = 1;
+         set film = 15;
+		while sala < (nsale+1) do
+			INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
+			VALUES (sala, film, concat(anno, '-',  mese, '-', giorno), concat(ora, ':00'), 5);
+            set sala = sala +1;
+            	set film = film +1;
+            if(film<15 or film>22) then
+				set film = 15;
+            end if;
+		end while;
 		IF ora > 22 THEN
 			SET ora = 12;
 		END IF;
@@ -401,7 +396,7 @@ BEGIN
 	SET sala = 1;
 	SET turno = nmaschere + 1;
 	WHILE (turno < nturni) DO
-		WHILE (turno % (ndipendenti + 1) AND turno < nturni) DO
+		WHILE ((turno-1) % ndipendenti   AND turno < nturni) DO
 			INSERT INTO `cinemadb`.`turno_proiezionista` (`turno_id`, `sala_id`)
 			VALUES(turno, sala);
 			SET turno = turno + 1;
@@ -421,12 +416,14 @@ DELIMITER $$
 USE `cinemadb`$$
 CREATE PROCEDURE `popola_film` ()
 BEGIN
-	INSERT INTO `cinemadb`.`film` (`id`) VALUES ('3');
-    INSERT INTO `cinemadb`.`film` (`id`) VALUES ('5');
-    INSERT INTO `cinemadb`.`film` (`id`) VALUES ('6');
-    INSERT INTO `cinemadb`.`film` (`id`) VALUES ('8');
-    INSERT INTO `cinemadb`.`film` (`id`) VALUES ('11');
-    INSERT INTO `cinemadb`.`film` (`id`) VALUES ('15');
+declare film int;
+declare ultimo int;
+set film=15;
+set ultimo =22;
+while film < (ultimo+1) do
+	INSERT INTO `cinemadb`.`film` (`id`) VALUES (film);
+	set film = film+1;
+    end while;
 END$$
 
 DELIMITER ;

@@ -32,9 +32,11 @@ import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.service.email.MockEmailService;
 import com.ttbmp.cinehub.app.service.movieapi.MockMovieApiService;
 import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
+import com.ttbmp.cinehub.app.service.movieapi.TheMovieDbApiServiceAdapter;
 import com.ttbmp.cinehub.app.service.payment.MockPaymentService;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
 import com.ttbmp.cinehub.app.utilities.FactoryMap;
+import com.ttbmp.cinehub.service.movieapi.TheMovieDbApiService;
 
 /**
  * @author Fabio Buracchi
@@ -50,7 +52,7 @@ public class ServiceLocator {
     protected void addServicesFactory() {
         serviceFactoryMap.put(AuthenticationService.class, MockAuthenticationService::new);
         serviceFactoryMap.put(EmailService.class, MockEmailService::new);
-        serviceFactoryMap.put(MovieApiService.class, MockMovieApiService::new);
+        serviceFactoryMap.put(MovieApiService.class, TheMovieDbApiServiceAdapter::new);
         serviceFactoryMap.put(PaymentService.class, MockPaymentService::new);
         serviceFactoryMap.put(CinemaRepository.class, () -> new JdbcCinemaRepository(this));
         serviceFactoryMap.put(EmployeeRepository.class, () -> new JdbcEmployeeRepository(this));
