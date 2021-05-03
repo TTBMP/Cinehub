@@ -39,8 +39,7 @@ public class DaoOperationProvider {
         try {
             operationInstanceMap.putIfAbsent(method, createDaoOperation(method, connection, dataSourceEntityList));
             return operationInstanceMap.get(method);
-        }
-        catch (NoSuchMethodException e){
+        } catch (NoSuchMethodException e) {
             throw new DaoMethodException();
         }
     }

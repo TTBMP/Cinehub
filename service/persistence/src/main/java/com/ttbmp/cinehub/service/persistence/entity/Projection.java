@@ -26,7 +26,7 @@ public class Projection {
     @ColumnInfo(name = "inizio")
     private String startTime;
 
-    @ColumnInfo(name= "prezzo_base")
+    @ColumnInfo(name = "prezzo_base")
     private double basePrice;
 
     public Projection() {

@@ -116,15 +116,15 @@ public class JdbcProjectionRepository implements ProjectionRepository {
         }
     }
 
-
-    private ProjectionDao getProjectionDao() {
+    private ProjectionDao getProjectionDao() throws RepositoryException {
         if (projectionDao == null) {
             try {
                 this.projectionDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getProjectionDao();
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RepositoryException(e.getMessage());
             }
         }
         return projectionDao;
     }
+
 }

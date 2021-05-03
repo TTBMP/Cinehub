@@ -31,7 +31,7 @@ public class ChooseSeatsViewController {
                 projection.getHallId()
         ));
         buyTicketUseCase.getListOfSeat(new GetNumberOfSeatsRequest(((ProjectionDto) model.getAttribute("projection"))));
-        model.addAttribute("price",((ProjectionDto) model.getAttribute("projection")).getBasePrice());
+        model.addAttribute("price", ((ProjectionDto) model.getAttribute("projection")).getBasePrice());
         model.addAttribute("boolean1", false);
         model.addAttribute("boolean2", false);
         model.addAttribute("boolean3", false);

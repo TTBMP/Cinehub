@@ -12,7 +12,6 @@ import java.util.List;
 public interface ProjectionistDao {
 
 
-
     @Query("SELECT * FROM proiezionista WHERE proiezionista.id_dipendente in (" +
             "SELECT proiezione.id_proiezionista FROM proiezione WHERE proiezione.id = : id)")
     Employee getProjectionistByProjectionId(

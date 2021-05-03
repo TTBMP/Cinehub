@@ -29,7 +29,7 @@ public class Shift {
     public Shift() {
     }
 
-    public Shift(int id, String start,String end, String userId, String date) {
+    public Shift(int id, String start, String end, String userId, String date) {
         this.id = id;
         this.start = start;
         this.end = end;

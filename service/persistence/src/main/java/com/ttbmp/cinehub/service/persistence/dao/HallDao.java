@@ -1,17 +1,14 @@
 package com.ttbmp.cinehub.service.persistence.dao;
 
 import com.ttbmp.cinehub.service.persistence.entity.Hall;
-import com.ttbmp.cinehub.service.persistence.entity.Movie;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.*;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
 import javax.validation.constraints.NotNull;
-import java.io.IOException;
-import java.sql.Time;
 import java.util.List;
 
 /**
- *  @author Ivan Palmieri, Massimo Mazzetti
+ * @author Ivan Palmieri, Massimo Mazzetti
  */
 @Dao
 public interface HallDao {
@@ -22,7 +19,7 @@ public interface HallDao {
     ) throws DaoMethodException;
 
     @Query("SELECT * FROM sala WHERE sala.id in ( SELECT proiezione.id_sala FROM proiezione WHERE proiezione.id = :projectionId) ")
-   Hall getHallByProjectionId(
+    Hall getHallByProjectionId(
             @Parameter(name = "projectionId") @NotNull Integer projectionId
     ) throws DaoMethodException;
 

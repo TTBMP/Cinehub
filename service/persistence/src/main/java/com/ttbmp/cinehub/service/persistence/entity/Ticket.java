@@ -3,6 +3,7 @@ package com.ttbmp.cinehub.service.persistence.entity;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.ColumnInfo;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Entity;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.PrimaryKey;
+
 /**
  * @author Ivan Palmieri
  */
@@ -28,7 +29,7 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(int id, int seatId, int projectionId, String userId, long price ) {
+    public Ticket(int id, int seatId, int projectionId, String userId, long price) {
         this.id = id;
         this.seatId = seatId;
         this.projectionId = projectionId;

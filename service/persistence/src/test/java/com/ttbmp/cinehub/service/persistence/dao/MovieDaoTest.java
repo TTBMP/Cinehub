@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author Ivan Palmieri, Massimo Mazzetti
@@ -31,18 +31,19 @@ class MovieDaoTest {
     @Test
     void getMovieById() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
         MovieDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getMovieDao();
-        assertDoesNotThrow(()->dao.getMovieById(3));
+        assertDoesNotThrow(() -> dao.getMovieById(3));
     }
 
     @Test
     void getMovieByData() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
         MovieDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getMovieDao();
-        assertDoesNotThrow(()->dao.getMovieByData("2020-02-15"));
+        assertDoesNotThrow(() -> dao.getMovieByData("2020-02-15"));
     }
 
     @Test
     void getMovieByProjection() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
         MovieDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getMovieDao();
-        assertDoesNotThrow(()->dao.getMovieByProjection(1));
+        assertDoesNotThrow(() -> dao.getMovieByProjection(1));
     }
+
 }

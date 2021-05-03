@@ -37,7 +37,7 @@ public class JdbcTicketRepository implements TicketRepository {
     @Override
     public List<Ticket> getTicketList(Projection projection) throws RepositoryException {
         try {
-            List<com.ttbmp.cinehub.service.persistence.entity.Ticket> ticketList = getTicketDao().getTicketList(projection.getId());
+            var ticketList = getTicketDao().getTicketList(projection.getId());
             return ticketList.stream()
                     .map(ticket -> new TicketProxy(ticket.getId(), ticket.getPrice(), serviceLocator.getService(UserRepository.class), serviceLocator.getService(SeatRepository.class)))
                     .collect(Collectors.toList());
@@ -46,16 +46,15 @@ public class JdbcTicketRepository implements TicketRepository {
         }
     }
 
-    private TicketDao getTicketDao() {
+    private TicketDao getTicketDao() throws RepositoryException {
         if (ticketDao == null) {
             try {
                 this.ticketDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getTicketDao();
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RepositoryException(e.getMessage());
             }
-
-
         }
         return ticketDao;
     }
+
 }

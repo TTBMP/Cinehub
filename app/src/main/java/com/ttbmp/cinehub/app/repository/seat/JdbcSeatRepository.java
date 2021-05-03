@@ -47,15 +47,15 @@ public class JdbcSeatRepository implements SeatRepository {
         }
     }
 
-
-    private SeatDao getSeatDao() {
+    private SeatDao getSeatDao() throws RepositoryException {
         if (seatDao == null) {
             try {
                 this.seatDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getSeatDao();
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RepositoryException(e.getMessage());
             }
         }
         return seatDao;
     }
+
 }

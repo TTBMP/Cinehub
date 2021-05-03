@@ -1,13 +1,10 @@
 package com.ttbmp.cinehub.service.persistence.dao;
 
-import com.ttbmp.cinehub.service.persistence.entity.Movie;
 import com.ttbmp.cinehub.service.persistence.entity.Shift;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.*;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
 import javax.validation.constraints.NotNull;
-import java.io.IOException;
-import java.sql.Time;
 import java.util.List;
 
 /**
@@ -29,7 +26,6 @@ public interface ShiftDao {
     List<Shift> getShiftListByEmployeeId(
             @Parameter(name = "idEmployee") @NotNull String name
     ) throws DaoMethodException;
-
 
 
     @Insert

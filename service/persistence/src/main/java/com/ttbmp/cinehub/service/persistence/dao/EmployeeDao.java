@@ -1,18 +1,14 @@
 package com.ttbmp.cinehub.service.persistence.dao;
 
 import com.ttbmp.cinehub.service.persistence.entity.Employee;
-import com.ttbmp.cinehub.service.persistence.entity.Hall;
-import com.ttbmp.cinehub.service.persistence.entity.Movie;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.*;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
 import javax.validation.constraints.NotNull;
-import java.io.IOException;
-import java.sql.Time;
 import java.util.List;
 
 /**
- *  @author Ivan Palmieri, Massimo Mazzetti
+ * @author Ivan Palmieri, Massimo Mazzetti
  */
 @Dao
 public interface EmployeeDao {

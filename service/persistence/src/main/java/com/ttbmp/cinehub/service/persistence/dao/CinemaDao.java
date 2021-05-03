@@ -19,21 +19,21 @@ public interface CinemaDao {
     @Query("SELECT * FROM cinema WHERE cinema.id = :id")
     Cinema getCinemaById(
             @Parameter(name = "id") @NotNull Integer id
-    )throws DaoMethodException;
+    ) throws DaoMethodException;
 
 
     @Query("SELECT * FROM cinema WHERE cinema.id in (" +
             " SELECT dipendente.id_cinema FROM dipendente WHERE dipendente.id_utente = :id) ")
     Cinema getCinemaByEmployee(
             @Parameter(name = "id") @NotNull String id
-    )throws DaoMethodException;
+    ) throws DaoMethodException;
 
     @Query("SELECT * FROM cinema WHERE cinema.id in ( " +
             "SELECT sala.id_cinema FROM sala WHERE sala.id in ( " +
             "SELECT proiezione.id_sala FROM proiezione WHERE proiezione.id = :id)) ")
     Cinema getCinemaByProjection(
             @Parameter(name = "id") @NotNull Integer projectionId
-    )throws DaoMethodException;
+    ) throws DaoMethodException;
 
     @Query("SELECT * FROM cinema " +
             "WHERE cinema.id in (" +
@@ -46,14 +46,13 @@ public interface CinemaDao {
     List<Cinema> getCinemaByMovieIdAndDate(
             @Parameter(name = "movieId") @NotNull Integer movieId,
             @Parameter(name = "data") @NotNull String data
-    )throws DaoMethodException;
+    ) throws DaoMethodException;
 
 
     @Query("SELECT * FROM cinema WHERE nome = :n")
     Cinema getCinema(
             @Parameter(name = "n") @NotNull String name
     ) throws DaoMethodException;
-
 
 
     @Insert

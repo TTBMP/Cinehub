@@ -11,7 +11,6 @@ import com.ttbmp.cinehub.app.repository.shift.usher.UsherShiftProxy;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.shift.Shift;
 import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
-import com.ttbmp.cinehub.service.persistence.dao.EmployeeDao;
 import com.ttbmp.cinehub.service.persistence.dao.ShiftDao;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourceProvider;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
@@ -37,8 +36,8 @@ public class JdbcShiftRepository implements ShiftRepository {
     @Override
     public Shift getShift(int shiftId) throws RepositoryException {
         try {
-            com.ttbmp.cinehub.service.persistence.entity.Shift shift = getShiftDao().getShiftById(shiftId);
-            EmployeeDao employeeDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
+            var shift = getShiftDao().getShiftById(shiftId);
+            var employeeDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
             if (employeeDao.getEmployeeByShiftId(shiftId).getRole().equals("maschera")) {
                 return new UsherShiftProxy(
                         shift.getId(),
@@ -68,8 +67,8 @@ public class JdbcShiftRepository implements ShiftRepository {
     @Override
     public List<Shift> getAllShift() throws RepositoryException {
         try {
-            List<com.ttbmp.cinehub.service.persistence.entity.Shift> shiftList = getShiftDao().getShiftList();
-            EmployeeDao employeeDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
+            var shiftList = getShiftDao().getShiftList();
+            var employeeDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
 
             if (employeeDao.getEmployeeByShiftId(shiftList.get(0).getId()).getRole().equals("maschera")) {
                 return shiftList.stream()
@@ -102,8 +101,8 @@ public class JdbcShiftRepository implements ShiftRepository {
     @Override
     public List<Shift> getShiftList(Employee employee) throws RepositoryException {
         try {
-            List<com.ttbmp.cinehub.service.persistence.entity.Shift> shiftList = getShiftDao().getShiftListByEmployeeId(employee.getId());
-            EmployeeDao employeeDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
+            var shiftList = getShiftDao().getShiftListByEmployeeId(employee.getId());
+            var employeeDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
             if (employeeDao.getEmployeeByShiftId(shiftList.get(0).getId()).getRole().equals("maschera")) {
                 return shiftList.stream()
                         .map(shift -> new UsherShiftProxy(
@@ -183,14 +182,15 @@ public class JdbcShiftRepository implements ShiftRepository {
         return null;
     }
 
-    private ShiftDao getShiftDao() {
+    private ShiftDao getShiftDao() throws RepositoryException {
         if (shiftDao == null) {
             try {
                 this.shiftDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getShiftDao();
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RepositoryException(e.getMessage());
             }
         }
         return shiftDao;
     }
+
 }

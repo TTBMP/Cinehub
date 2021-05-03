@@ -43,7 +43,7 @@ public class DaoQueryOperation extends DaoOperation {
     }
 
     @Override
-    public Object execute(Object[] args) throws DaoMethodException{
+    public Object execute(Object[] args) throws DaoMethodException {
         Object result;
         try (var statement = connection.prepareStatement(
                 queryTemplate,

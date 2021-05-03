@@ -1,10 +1,8 @@
 package com.ttbmp.cinehub.app.datamapper;
 
-import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.dto.UserDto;
 import com.ttbmp.cinehub.app.utilities.DataMapperHelper;
 import com.ttbmp.cinehub.domain.User;
-import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 import java.util.List;
 
@@ -14,11 +12,11 @@ public class UserDataMapper {
     }
 
     public static UserDto mapToDto(User user) {
-        return new UserDto(user.getId(), user.getName(),user.getSurname(),user.getEmail());
+        return new UserDto(user.getId(), user.getName(), user.getSurname(), user.getEmail());
     }
 
     public static User mapToEntity(UserDto userDto) {
-        return new User(userDto.getId(), userDto.getName(),userDto.getSurname(),userDto.getEmail());
+        return new User(userDto.getId(), userDto.getName(), userDto.getSurname(), userDto.getEmail());
     }
 
     public static List<UserDto> mapToDtoList(List<User> userList) {

@@ -2,12 +2,10 @@ package com.ttbmp.cinehub.service.persistence.dao;
 
 
 import com.ttbmp.cinehub.service.persistence.entity.Seat;
-import com.ttbmp.cinehub.service.persistence.entity.User;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.*;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
 import javax.validation.constraints.NotNull;
-
 import java.util.List;
 
 /**
@@ -21,13 +19,13 @@ public interface SeatDao {
     @Query("SELECT * FROM posto WHERE id_sala = :hallId ")
     List<Seat> getSeatList(
             @Parameter(name = "hallId") @NotNull Integer hallId
-    )throws DaoMethodException;
+    ) throws DaoMethodException;
 
     @Query("SELECT * FROM posto WHERE posto.id in (" +
             " SELECT biglietto.id_posto FROM biglietto WHERE biglietto.id = :idTicket) ")
     Seat getSeatByTicketId(
             @Parameter(name = "idTicket") @NotNull Integer idTicket
-    )throws DaoMethodException;
+    ) throws DaoMethodException;
 
 
     @Insert

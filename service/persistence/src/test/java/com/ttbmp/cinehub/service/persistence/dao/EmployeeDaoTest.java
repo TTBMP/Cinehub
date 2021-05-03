@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 /**
  * @author Ivan Palmieri
  */
@@ -18,12 +19,13 @@ class EmployeeDaoTest {
     @Test
     void getEmployeeById() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
         EmployeeDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
-        assertDoesNotThrow(()->dao.getEmployeeById("1"));
+        assertDoesNotThrow(() -> dao.getEmployeeById("1"));
     }
+
     @Test
     void getEmployeeByShiftId() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
         EmployeeDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
-        assertDoesNotThrow(()->dao.getEmployeeByShiftId(1));
+        assertDoesNotThrow(() -> dao.getEmployeeByShiftId(1));
     }
 
 

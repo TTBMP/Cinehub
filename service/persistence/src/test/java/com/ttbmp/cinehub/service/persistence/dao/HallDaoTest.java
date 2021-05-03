@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author Ivan Palmieri, Massimo Mazzetti
@@ -19,24 +19,25 @@ class HallDaoTest {
     @Test
     void getHallByCinemaId() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
         HallDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getHallDao();
-        assertDoesNotThrow(()->dao.getHallByCinemaId(1));
+        assertDoesNotThrow(() -> dao.getHallByCinemaId(1));
     }
 
     @Test
     void getHallByProjectionId() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
         HallDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getHallDao();
-        assertDoesNotThrow(()->dao.getHallByProjectionId(1));
+        assertDoesNotThrow(() -> dao.getHallByProjectionId(1));
     }
 
     @Test
     void getHallByProjectionistShift() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
         HallDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getHallDao();
-        assertDoesNotThrow(()->dao.getHallByProjectionistShift(1));
+        assertDoesNotThrow(() -> dao.getHallByProjectionistShift(1));
     }
 
     @Test
     void getHallById() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
         HallDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getHallDao();
-        assertDoesNotThrow(()->dao.getHallById(1));
+        assertDoesNotThrow(() -> dao.getHallById(1));
     }
+
 }

@@ -1,21 +1,15 @@
 package com.ttbmp.cinehub.service.persistence.utils.jdbc.dao.operation.strategies;
 
-import com.ttbmp.cinehub.service.persistence.dao.CinemaDao;
 import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
-import com.ttbmp.cinehub.service.persistence.dao.MovieDao;
 import com.ttbmp.cinehub.service.persistence.entity.Cinema;
-import com.ttbmp.cinehub.service.persistence.entity.Movie;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourceProvider;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceClassException;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceMethodException;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -35,7 +29,6 @@ class DaoDeleteOperationTest {
     }
 
 
-
     @Test
     void execute_DeleteListDto_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, DaoMethodException {
         var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
@@ -51,7 +44,5 @@ class DaoDeleteOperationTest {
         var finalDtoList = dtoList;
         assertDoesNotThrow(() -> dao.delete(finalDtoList));
     }
-
-
-
+    
 }

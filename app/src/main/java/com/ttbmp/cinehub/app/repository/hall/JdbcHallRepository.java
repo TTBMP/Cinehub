@@ -35,7 +35,6 @@ public class JdbcHallRepository implements HallRepository {
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
-
     }
 
     @Override
