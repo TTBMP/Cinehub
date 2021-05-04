@@ -15,12 +15,24 @@ public class Hall {
     @ColumnInfo(name = "id_cinema")
     private int cinemaId;
 
+    @ColumnInfo(name = "numero")
+    private String number;
+
     public Hall() {
     }
 
-    public Hall(int id, int cinemaId) {
+    public Hall(int id, int cinemaId, String number) {
         this.id = id;
         this.cinemaId = cinemaId;
+        this.number = number;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public int getCinemaId() {

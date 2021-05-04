@@ -21,8 +21,6 @@ public interface CinemaDao {
             @Parameter(name = "id") @NotNull Integer id
     ) throws DaoMethodException;
 
-
-
     @Query("SELECT * FROM cinema WHERE cinema.id in (" +
             " SELECT dipendente.id_cinema FROM dipendente WHERE dipendente.id_utente = :id) ")
     Cinema getCinemaByEmployee(
@@ -53,7 +51,7 @@ public interface CinemaDao {
     @Query("SELECT * FROM cinema WHERE nome = :n")
     Cinema getCinema(
             @Parameter(name = "n") @NotNull String name
-    ) throws DaoMethodException;
+    ) throws DaoMethodException; //TODO: serve solo per test
 
 
     @Insert

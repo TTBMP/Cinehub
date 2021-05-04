@@ -37,7 +37,7 @@ class ProjectionDaoTest {
     @Test
     void getProjectionListByProjectionist() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
         ProjectionDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getProjectionDao();
-        assertDoesNotThrow(() -> dao.getProjectionListByProjectionist("1"));
+        assertDoesNotThrow(() -> dao.getProjectionListByProjectionistShift(3));
     }
 
 

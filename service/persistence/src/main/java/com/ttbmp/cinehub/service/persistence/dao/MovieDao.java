@@ -13,11 +13,11 @@ import java.util.List;
 @Dao
 public interface MovieDao {
 
-    @Query("SELECT * FROM film WHERE film.id in ( SELECT proiezione.id_film FROM proiezione WHERE proiezione.id = :projectionId)")
-    Movie getMovieByProjection(@Parameter(name = "projectionId") @NotNull Integer projectionId) throws DaoMethodException;
-
     @Query("SELECT * FROM film WHERE film.id = :movieId")
     Movie getMovieById(@Parameter(name = "movieId") @NotNull Integer name) throws DaoMethodException;
+
+    @Query("SELECT * FROM film WHERE film.id in ( SELECT proiezione.id_film FROM proiezione WHERE proiezione.id = :projectionId)")
+    Movie getMovieByProjection(@Parameter(name = "projectionId") @NotNull Integer projectionId) throws DaoMethodException;
 
     @Query("SELECT * FROM film WHERE film.id in (SELECT proiezione.id_film FROM proiezione WHERE proiezione.data = :data)")
     List<Movie> getMovieByData(@Parameter(name = "data") @NotNull String name) throws DaoMethodException;

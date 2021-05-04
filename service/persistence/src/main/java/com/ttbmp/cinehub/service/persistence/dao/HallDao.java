@@ -13,6 +13,11 @@ import java.util.List;
 @Dao
 public interface HallDao {
 
+    @Query("SELECT * FROM sala WHERE sala.id = :id;")
+    Hall getHallById(
+            @Parameter(name = "id") @NotNull Integer id
+    ) throws DaoMethodException;
+
     @Query("SELECT * FROM sala WHERE sala.id_cinema = :cinemaId;")
     List<Hall> getHallByCinemaId(
             @Parameter(name = "cinemaId") @NotNull Integer id
@@ -27,12 +32,6 @@ public interface HallDao {
     Hall getHallByProjectionistShift(
             @Parameter(name = "projectionistShift") @NotNull Integer projectionistShift
     ) throws DaoMethodException;
-
-    @Query("SELECT * FROM sala WHERE sala.id = :id;")
-    Hall getHallById(
-            @Parameter(name = "id") @NotNull Integer id
-    ) throws DaoMethodException;
-
 
     @Insert
     void insert(@NotNull Hall hall) throws DaoMethodException;

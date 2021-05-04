@@ -18,30 +18,12 @@ public interface ShiftDao {
     List<Shift> getShiftList(
     ) throws DaoMethodException;
 
-    @Query("SELECT  turno.*   " +
-            "from cinemadb.proiezione ,cinemadb.sala , cinemadb.turno_proiezionista , cinemadb.dipendente, cinemadb.turno    " +
-            "where dipendente.id_utente = turno.id_dipendente  " +
-            "and proiezione.id_sala = sala.id  " +
-            "and sala.id = turno_proiezionista.sala_id  " +
-            "and turno_proiezionista.turno_id = turno.id  " +
-            "and dipendente.id_utente = turno.id_dipendente " +
-            "and proiezione.inizio between turno.inizio and turno.fine " +
-            "and turno.data = proiezione.data " +
-            "and turno.id = :id ")
+    @Query("SELECT turno.* from cinemadb.turno where turno.id = :id ")
     Shift getShiftById(
             @Parameter(name = "id") @NotNull Integer name
     ) throws DaoMethodException;
 
-    @Query("SELECT  turno.*   " +
-            "from cinemadb.proiezione ,cinemadb.sala , cinemadb.turno_proiezionista , cinemadb.dipendente, cinemadb.turno    " +
-            "where dipendente.id_utente = turno.id_dipendente  " +
-            "and proiezione.id_sala = sala.id  " +
-            "and sala.id = turno_proiezionista.sala_id  " +
-            "and turno_proiezionista.turno_id = turno.id  " +
-            "and dipendente.id_utente = turno.id_dipendente " +
-            "and proiezione.inizio between turno.inizio and turno.fine " +
-            "and turno.data = proiezione.data " +
-            "and dipendente.id_utente = :idEmployee ")
+    @Query("SELECT turno.* from cinemadb.turno where turno.id_dipendente = :idEmployee ")
     List<Shift> getShiftListByEmployeeId(
             @Parameter(name = "idEmployee") @NotNull String name
     ) throws DaoMethodException;

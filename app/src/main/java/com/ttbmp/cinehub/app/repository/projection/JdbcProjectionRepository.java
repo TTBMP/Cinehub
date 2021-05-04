@@ -92,7 +92,7 @@ public class JdbcProjectionRepository implements ProjectionRepository {
     @Override
     public List<Projection> getProjectionList(ProjectionistShift shift) throws RepositoryException {
         try {
-            var projectionList = getProjectionDao().getProjectionListByProjectionist(shift.getEmployee().getId());
+            var projectionList = getProjectionDao().getProjectionListByProjectionistShift(shift.getId());
             return projectionList.stream()
                     .map(projection -> new ProjectionProxy(projection.getId(), projection.getDate(), projection.getStartTime(),
                             serviceLocator.getService(MovieRepository.class),

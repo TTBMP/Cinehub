@@ -10,15 +10,10 @@ import java.util.List;
 @Dao
 public interface UsherDao {
 
-    @Query("SELECT  distinct dipendente.*  " +
-            "from cinemadb.proiezione ,cinemadb.sala , cinemadb.dipendente, cinemadb.turno   " +
-            "where dipendente.id_utente = turno.id_dipendente " +
-            "and turno.id = :idShift " +
-            "and proiezione.id_sala = sala.id " +
-            "and dipendente.id_utente = turno.id_dipendente " +
-            "and proiezione.inizio between turno.inizio and turno.fine " +
-            "and turno.data = proiezione.data  " +
-            "and dipendente.ruolo = 'maschera'")
+    @Query("SELECT dipendente.*  " +
+            "from cinemadb.dipendente, cinemadb.turno  " +
+            " where dipendente.id_utente = turno.id_dipendente " +
+            "and turno.id = :idShift ")
     Employee getUsherByUsherShift(
             @Parameter(name = "idShift") @NotNull int idShift
     ) throws DaoMethodException;

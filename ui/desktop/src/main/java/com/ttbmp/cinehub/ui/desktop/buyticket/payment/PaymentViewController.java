@@ -43,7 +43,6 @@ public class PaymentViewController extends ViewController {
     @FXML
     private Button confirmButton;
 
-
     @FXML
     private TextField emailTextField;
 
@@ -107,4 +106,3 @@ public class PaymentViewController extends ViewController {
 
 
 }
-

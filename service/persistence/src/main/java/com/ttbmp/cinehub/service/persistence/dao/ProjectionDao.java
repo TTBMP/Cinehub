@@ -13,6 +13,16 @@ import java.util.List;
 @Dao
 public interface ProjectionDao {
 
+    @Query("SELECT * FROM proiezione WHERE proiezione.id = :id")
+    Projection getProjectionById(
+            @Parameter(name = "id") @NotNull int id
+    ) throws DaoMethodException;
+
+    @Query("SELECT * FROM proiezione WHERE proiezione.data = :date")
+    List<Projection> getProjectionListByDate(
+            @Parameter(name = "date") @NotNull String date
+    ) throws DaoMethodException;
+
     @Query("SELECT * FROM proiezione WHERE proiezione.id_film = :movieId AND " +
             " proiezione.data = :date AND ( proiezione.id_sala in ( " +
             " SELECT sala.id FROM sala WHERE sala.id_cinema = :cinemaId )) ")
@@ -22,25 +32,21 @@ public interface ProjectionDao {
             @Parameter(name = "date") @NotNull String date
     ) throws DaoMethodException;
 
-
-    @Query("SELECT * FROM proiezione WHERE proiezione.data = :date")
-    List<Projection> getProjectionListByDate(
-            @Parameter(name = "date") @NotNull String date
-    ) throws DaoMethodException;
-
     @Query("SELECT * FROM proiezione WHERE proiezione.id_film = :movieId AND proiezione.data = :date")
     List<Projection> getProjectionListByDateAndMovie(
             @Parameter(name = "movieId") @NotNull Integer movieId,
             @Parameter(name = "date") @NotNull String date
     ) throws DaoMethodException;
 
-
-    @Query("SELECT * FROM cinemadb.proiezione WHERE proiezione.id_sala IN " +
-            "(SELECT sala.id FROM cinemadb.sala WHERE sala.id IN " +
-            "(SELECT turno_proiezionista.sala_id FROM cinemadb.turno_proiezionista WHERE turno_proiezionista.turno_id IN " +
-            "(SELECT turno.id FROM cinemadb.turno WHERE turno.id_dipendente = :id )));")
-    List<Projection> getProjectionListByProjectionist(
-            @Parameter(name = "id") @NotNull String id
+    @Query("SELECT  proiezione.* " +
+            "from cinemadb.turno , cinemadb.turno_proiezionista, cinemadb.proiezione " +
+            "where turno.id = 3" +
+            " and turno.id = turno_proiezionista.turno_id" +
+            " and turno_proiezionista.sala_id = proiezione.id_sala" +
+            " and proiezione.data = turno.data" +
+            " and proiezione.inizio between turno.inizio and turno.fine;")
+    List<Projection> getProjectionListByProjectionistShift(
+            @Parameter(name = "id") @NotNull int id
     ) throws DaoMethodException;
 
     @Query("SELECT * FROM proiezione WHERE proiezione.id_sala = :hallId AND proiezione.data = :date AND proiezione.inizio = :startingTime")
@@ -48,11 +54,6 @@ public interface ProjectionDao {
             @Parameter(name = "date") @NotNull String date,
             @Parameter(name = "startingTime") @NotNull String startingTime,
             @Parameter(name = "hallId") @NotNull int hallId
-    ) throws DaoMethodException;
-
-    @Query("SELECT * FROM proiezione WHERE proiezione.id = :id")
-    Projection getProjectionById(
-            @Parameter(name = "id") @NotNull int id
     ) throws DaoMethodException;
 
     @Insert
