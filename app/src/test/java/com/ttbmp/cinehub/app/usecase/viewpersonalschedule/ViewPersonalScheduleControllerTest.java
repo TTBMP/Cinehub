@@ -2,14 +2,18 @@ package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationException;
 import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
+import com.ttbmp.cinehub.domain.employee.Employee;
+import com.ttbmp.cinehub.domain.shift.Shift;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.List;
 
 class ViewPersonalScheduleControllerTest {
 
@@ -49,11 +53,16 @@ class ViewPersonalScheduleControllerTest {
             } catch (RepositoryException e) {
                 e.printStackTrace();
             }
-            var shiftList = serviceLocator.getService(ShiftRepository.class).getAllEmployeeShiftBetweenDate(
-                    employee,
-                    LocalDate.now(),
-                    LocalDate.now().plusDays(1)
-            );
+            List<Shift> shiftList = null;
+            try {
+                shiftList = serviceLocator.getService(ShiftRepository.class).getAllEmployeeShiftBetweenDate(
+                        employee,
+                        LocalDate.now(),
+                        LocalDate.now().plusDays(1)
+                );
+            } catch (RepositoryException e) {
+                e.printStackTrace();
+            }
             var expected = ShiftDataMapper.mapToDtoList(shiftList);
             var actual = result.getShiftDtoList();
             Assertions.assertEquals(expected, result.getShiftDtoList());

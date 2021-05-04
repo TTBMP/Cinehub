@@ -114,8 +114,7 @@ public class ProjectionistProxy extends Projectionist {
         try {
             return shiftRepository.getAllEmployeeShiftBetweenDate(this, start, end);
         } catch (RepositoryException e) {
-            e.printStackTrace();
-            return null;
+            throw new LazyLoadingException(e.getMessage());
         }
     }
 

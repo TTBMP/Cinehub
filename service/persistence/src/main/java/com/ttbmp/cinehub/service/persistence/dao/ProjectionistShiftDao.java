@@ -11,8 +11,17 @@ import java.util.List;
 public interface ProjectionistShiftDao {
 
 
-    @Query("SELECT * FROM turno_proiezionista WHERE turno_proiezionista.turno.id in (" +
-            "SELECT turno.id FROM turno WHERE turno.id = :id ) ")
+    @Query("SELECT  turno.*  " +
+            "from proiezione ,sala , turno_proiezionista , dipendente, turno   " +
+            "where dipendente.id_utente = turno.id_dipendente  " +
+            "and turno.id = :id " +
+            "and proiezione.id_sala = sala.id  " +
+            "and sala.id = turno_proiezionista.sala_id  " +
+            "and turno_proiezionista.turno_id = turno.id  " +
+            "and dipendente.id_utente = turno.id_dipendente " +
+            "and proiezione.inizio between turno.inizio and turno.fine " +
+            "and turno.data = proiezione.data  " +
+            "and dipendente.ruolo = 'proiezionista'")
     Shift getProjectionistShiftByShiftId(
             @Parameter(name = "id") @NotNull Integer id
     ) throws DaoMethodException;

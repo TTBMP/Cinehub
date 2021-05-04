@@ -49,7 +49,6 @@ public class JdbcProjectionistRepository implements ProjectionistRepository {
                     serviceLocator.getService(CinemaRepository.class),
                     serviceLocator.getService(ShiftRepository.class)
             );
-
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }

@@ -29,24 +29,7 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
     public Employee getEmployee(String employeeId) throws RepositoryException {
         try {
             var employee = getEmployeeDao().getEmployeeById(employeeId);
-            //employeeDao
-            if (employee.getRole().equals("maschera")) {
-                return new UsherProxy(
-                        employee.getIdUser(),
-                        serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
-                        serviceLocator.getService(ShiftRepository.class)
-                );
-            } else if (employee.getRole().equals("proiezionista")) {
-                return new ProjectionistProxy(
-                        employee.getIdUser(),
-                        serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
-                        serviceLocator.getService(ShiftRepository.class)
-                );
-            } else {
-                return null;
-            }
+            return getEmployee(employee);
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
@@ -56,25 +39,30 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
     public Employee getEmployee(Shift shift) throws RepositoryException {
         try {
             var employee = getEmployeeDao().getEmployeeByShiftId(shift.getId());
-            if (employee.getRole().equals("maschera")) {
-                return new UsherProxy(
-                        employee.getIdUser(),
-                        serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
-                        serviceLocator.getService(ShiftRepository.class)
-                );
-            } else if (employee.getRole().equals("proiezionista")) {
-                return new ProjectionistProxy(
-                        employee.getIdUser(),
-                        serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
-                        serviceLocator.getService(ShiftRepository.class)
-                );
-            } else {
-                return null;
-            }
+            return getEmployee(employee);
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
+        }
+    }
+
+
+    private Employee getEmployee(com.ttbmp.cinehub.service.persistence.entity.Employee employee) {
+        if (employee.getRole().equals("maschera")) {
+            return new UsherProxy(
+                    employee.getIdUser(),
+                    serviceLocator.getService(UserRepository.class),
+                    serviceLocator.getService(CinemaRepository.class),
+                    serviceLocator.getService(ShiftRepository.class)
+            );
+        } else if (employee.getRole().equals("proiezionista")) {
+            return new ProjectionistProxy(
+                    employee.getIdUser(),
+                    serviceLocator.getService(UserRepository.class),
+                    serviceLocator.getService(CinemaRepository.class),
+                    serviceLocator.getService(ShiftRepository.class)
+            );
+        } else {
+            return null;
         }
     }
 

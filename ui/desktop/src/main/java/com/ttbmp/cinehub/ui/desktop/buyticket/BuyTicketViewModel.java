@@ -7,6 +7,9 @@ import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewModel;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
+import javafx.util.Callback;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -246,4 +249,6 @@ public class BuyTicketViewModel implements ViewModel {
     public StringProperty authenticationErrorProperty() {
         return authenticationError;
     }
+
+
 }

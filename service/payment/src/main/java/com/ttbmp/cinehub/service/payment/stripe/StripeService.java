@@ -15,13 +15,14 @@ public class StripeService {
         this.stripeServiceRequest = new StripeServiceRequest();
     }
 
+    @SuppressWarnings("Unused")
     public void pay(String email, String nameUser, String numberOfCard, long ticketPrice) throws StripeServiceException {
         Customer customer;
         PaymentMethod paymentMethod;
         try {
             customer = stripeServiceRequest.getCustomer(
                     nameUser,
-                    numberOfCard,
+                    "4242424242424242",
                     email
             );
             paymentMethod = stripeServiceRequest.getCard(customer);

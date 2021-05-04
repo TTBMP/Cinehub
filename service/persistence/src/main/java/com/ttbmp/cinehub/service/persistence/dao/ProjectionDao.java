@@ -35,9 +35,10 @@ public interface ProjectionDao {
     ) throws DaoMethodException;
 
 
-    @Query("SELECT distinct proiezione.* " +
-            "FROM proiezione " +
-            "WHERE id_proiezionista= :id ")
+    @Query("SELECT * FROM cinemadb.proiezione WHERE proiezione.id_sala IN " +
+            "(SELECT sala.id FROM cinemadb.sala WHERE sala.id IN " +
+            "(SELECT turno_proiezionista.sala_id FROM cinemadb.turno_proiezionista WHERE turno_proiezionista.turno_id IN " +
+            "(SELECT turno.id FROM cinemadb.turno WHERE turno.id_dipendente = :id )));")
     List<Projection> getProjectionListByProjectionist(
             @Parameter(name = "id") @NotNull String id
     ) throws DaoMethodException;
@@ -47,6 +48,11 @@ public interface ProjectionDao {
             @Parameter(name = "date") @NotNull String date,
             @Parameter(name = "startingTime") @NotNull String startingTime,
             @Parameter(name = "hallId") @NotNull int hallId
+    ) throws DaoMethodException;
+
+    @Query("SELECT * FROM proiezione WHERE proiezione.id = :id")
+    Projection getProjectionById(
+            @Parameter(name = "id") @NotNull int id
     ) throws DaoMethodException;
 
     @Insert
@@ -66,5 +72,6 @@ public interface ProjectionDao {
 
     @Delete
     void delete(@NotNull List<Projection> projection) throws DaoMethodException;
+
 
 }

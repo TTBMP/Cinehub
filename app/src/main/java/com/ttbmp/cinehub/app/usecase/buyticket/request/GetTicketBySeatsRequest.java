@@ -13,40 +13,41 @@ public class GetTicketBySeatsRequest extends Request {
     public static final Request.Error MISSING_LIST_SEATS_ERROR = new Request.Error("List seats can't be null");
     public static final Request.Error MISSING_POSITION_ERROR = new Request.Error("Position can't be null");
     public static final Request.Error MISSING_INDEX_ERROR = new Request.Error("Index can't be null");
+
     private final List<SeatDto> seatDtoList;
     private final String position;
-    private final Integer pos;
-    private final Boolean foldingArmchairOption;
-    private final Boolean heatedArmchairOption;
-    private final Boolean skipLineRadioOption;
+    private final Integer number;
+    private final Boolean magicBoxOption;
+    private final Boolean openBarOption;
+    private final Boolean skipLineOption;
     private final int projectionId;
 
     public GetTicketBySeatsRequest(List<SeatDto> seatDtoList,
                                    String position,
-                                   Integer pos,
-                                   Boolean foldingArmchairOption,
-                                   Boolean heatedArmchairOption,
-                                   Boolean skipLineRadioOption,
+                                   Integer number,
+                                   Boolean magicBoxOption,
+                                   Boolean openBarOption,
+                                   Boolean skipLineOption,
                                    int projectionId) {
         this.seatDtoList = seatDtoList;
         this.position = position;
-        this.pos = pos;
-        this.foldingArmchairOption = foldingArmchairOption;
-        this.heatedArmchairOption = heatedArmchairOption;
-        this.skipLineRadioOption = skipLineRadioOption;
+        this.number = number;
+        this.magicBoxOption = magicBoxOption;
+        this.openBarOption = openBarOption;
+        this.skipLineOption = skipLineOption;
         this.projectionId = projectionId;
     }
 
-    public Boolean getFoldingArmchairOption() {
-        return foldingArmchairOption;
+    public Boolean getMagicBoxOption() {
+        return magicBoxOption;
     }
 
-    public Boolean getHeatedArmchairOption() {
-        return heatedArmchairOption;
+    public Boolean getOpenBarOption() {
+        return openBarOption;
     }
 
-    public Boolean getSkipLineRadioOption() {
-        return skipLineRadioOption;
+    public Boolean getSkipLineOption() {
+        return skipLineOption;
     }
 
     public List<SeatDto> getSeatDtoList() {
@@ -57,8 +58,8 @@ public class GetTicketBySeatsRequest extends Request {
         return position;
     }
 
-    public Integer getPos() {
-        return pos;
+    public Integer getNumber() {
+        return number;
     }
 
     public int getProjectionId() {
@@ -73,7 +74,7 @@ public class GetTicketBySeatsRequest extends Request {
         if (position == null) {
             addError(MISSING_POSITION_ERROR);
         }
-        if (pos == null) {
+        if (number == null) {
             addError(MISSING_INDEX_ERROR);
         }
     }

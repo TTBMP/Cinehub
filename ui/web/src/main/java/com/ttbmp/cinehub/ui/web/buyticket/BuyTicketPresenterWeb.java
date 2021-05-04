@@ -175,9 +175,45 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     }
 
+
     @Override
     public void presentInvalidGetCinema(GetCinemaRequest request) {
         model.addAttribute(CINEMA_ERROR_ATTRIBUTE, "Error with the cinema retriving");
+
+    }
+
+    @Override
+    public void presentPayRepositoryException(String message) {
+
+    }
+
+    @Override
+    public void presentGetListMovieRepositoryException(String message) {
+
+    }
+
+    @Override
+    public void presentGetCinemaListRepositoryException(String message) {
+
+    }
+
+    @Override
+    public void presentCreateTicketRepositoryException(String message) {
+
+    }
+
+    @Override
+    public void presentGetProjectionListRepositoryException(String message) {
+
+    }
+
+    @Override
+    public void presentGetProjectionRepositoryException(String message) {
+
+    }
+
+    @Override
+    public void presentGetCinemaRepositoryException(String message) {
 
     }
 

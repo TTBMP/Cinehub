@@ -1,7 +1,11 @@
 package com.ttbmp.cinehub.ui.web.domain;
 
-public class Ticket {
+public class PaymentForm {
 
+    private String email;
+    private String cvv;
+    private String expirationDate;
+    private String numberCard;
     private Boolean option1;
     private Boolean option2;
     private Boolean option3;
@@ -12,6 +16,37 @@ public class Ticket {
     private int hallId;
     private String date;
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCvv() {
+        return cvv;
+    }
+
+    public void setCvv(String cvv) {
+        this.cvv = cvv;
+    }
+
+    public String getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public String getNumberCard() {
+        return numberCard;
+    }
+
+    public void setNumberCard(String numberCard) {
+        this.numberCard = numberCard;
+    }
 
     public Boolean getOption1() {
         return option1;
@@ -84,5 +119,4 @@ public class Ticket {
     public void setDate(String date) {
         this.date = date;
     }
-
 }

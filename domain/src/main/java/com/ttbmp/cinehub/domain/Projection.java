@@ -27,6 +27,7 @@ public class Projection {
         this.hall = hall;
         this.projectionist = projectionist;
         this.ticketList = ticketList;
+        this.basePrice = basePrice;
     }
 
     public int getId() {

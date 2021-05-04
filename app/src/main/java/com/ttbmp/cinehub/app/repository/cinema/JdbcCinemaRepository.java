@@ -26,8 +26,19 @@ public class JdbcCinemaRepository implements CinemaRepository {
     }
 
     @Override
-    public Cinema getCinema(int cinemaId) {
-        return null;
+    public Cinema getCinema(int cinemaId) throws RepositoryException {
+        try {
+            var cinema = getCinemaDao().getCinemaById(cinemaId);
+            return new CinemaProxy(
+                    cinema.getId(),
+                    cinema.getName(),
+                    cinema.getCity(),
+                    cinema.getAddress(),
+                    serviceLocator.getService(HallRepository.class)
+            );
+        } catch (DaoMethodException e) {
+            throw new RepositoryException(e.getMessage());
+        }
     }
 
     @Override

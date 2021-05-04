@@ -43,11 +43,6 @@ public class PaymentViewController extends ViewController {
     @FXML
     private Button confirmButton;
 
-    @FXML
-    private TextField surnameTextField;
-
-    @FXML
-    private TextField nameTextField;
 
     @FXML
     private TextField emailTextField;
@@ -80,15 +75,11 @@ public class PaymentViewController extends ViewController {
     private void bind() {
         confirmButton.disableProperty().bind(
                 viewModel.emailUserProperty().isNull().
-                        or(viewModel.nameUserProperty().isNull().
-                                or(viewModel.surnameUserProperty().isNull().
                                         or(viewModel.txtCvvProperty().isNull().
                                                 or(viewModel.numberOfCardUserProperty().isNull()
-                                                )))));
+                                                )));
         errorSectionLabel.textProperty().bind(viewModel.paymentErrorProperty());
         emailTextField.textProperty().bindBidirectional(viewModel.emailUserProperty());
-        nameTextField.textProperty().bindBidirectional(viewModel.nameUserProperty());
-        surnameTextField.textProperty().bindBidirectional(viewModel.surnameUserProperty());
         numberOfCreditCardTextField.textProperty().bindBidirectional(viewModel.numberOfCardUserProperty());
         cvvTextField.textProperty().bindBidirectional(viewModel.txtCvvProperty());
         fieldExpirationDatePicker.setDayCellFactory(CustomDateCell::new);
@@ -103,7 +94,8 @@ public class PaymentViewController extends ViewController {
                 viewModel.selectedCinemaProperty().getValue(),
                 viewModel.selectedMovieProperty().getValue(),
                 String.valueOf(viewModel.selectedDateProperty().getValue()),
-                new CreditCardDto(0, "", 0, "")
+                new CreditCardDto(0, viewModel.numberOfCardUserProperty().getValue(),viewModel.txtCvvProperty().getValue(), String.valueOf(fieldExpirationDatePicker.getValue())),
+                viewModel.emailUserProperty().getValue()
         ));
         try {
             navController.navigate(new NavDestination(new ConfirmEmailView()));

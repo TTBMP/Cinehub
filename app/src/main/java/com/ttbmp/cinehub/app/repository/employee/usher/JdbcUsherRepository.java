@@ -26,7 +26,6 @@ public class JdbcUsherRepository implements UsherRepository {
     public Usher getUsher(UsherShift usherShift) throws RepositoryException {
         try {
             var employee = getUsherDao().getUsherByUsherShift(usherShift.getId());
-
             return new UsherProxy(
                     employee.getIdUser(),
                     serviceLocator.getService(UserRepository.class),

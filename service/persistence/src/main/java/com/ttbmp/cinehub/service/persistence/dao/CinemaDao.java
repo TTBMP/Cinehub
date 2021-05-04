@@ -22,6 +22,7 @@ public interface CinemaDao {
     ) throws DaoMethodException;
 
 
+
     @Query("SELECT * FROM cinema WHERE cinema.id in (" +
             " SELECT dipendente.id_cinema FROM dipendente WHERE dipendente.id_utente = :id) ")
     Cinema getCinemaByEmployee(

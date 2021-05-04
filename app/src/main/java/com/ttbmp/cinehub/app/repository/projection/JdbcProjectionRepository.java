@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
 import com.ttbmp.cinehub.domain.Cinema;
+import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
@@ -30,8 +31,22 @@ public class JdbcProjectionRepository implements ProjectionRepository {
 
 
     @Override
-    public Projection getProjection(int projectionId) throws RepositoryException {
-        return null;
+    public Projection getProjection(int id) throws RepositoryException {
+        try {
+            var projection = getProjectionDao().getProjectionById(id);
+            return new ProjectionProxy(
+                    projection.getId(),
+                    projection.getDate(),
+                    projection.getStartTime(),
+                    serviceLocator.getService(MovieRepository.class),
+                    serviceLocator.getService(HallRepository.class),
+                    serviceLocator.getService(ProjectionistRepository.class),
+                    serviceLocator.getService(TicketRepository.class),
+                    (long) projection.getBasePrice()
+            );
+        } catch (DaoMethodException e) {
+            throw new RepositoryException(e.getMessage());
+        }
     }
 
     @Override
@@ -54,32 +69,12 @@ public class JdbcProjectionRepository implements ProjectionRepository {
         }
     }
 
+
     @Override
-    public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date, Integer hallId) throws RepositoryException {
-        return null;
-    }
-
-    private List<Projection> getProjectionList(String date) throws RepositoryException {
+    public Projection getProjection(String date, String time, Hall hall) throws RepositoryException {
         try {
-            var projectionList = getProjectionDao().getProjectionListByDate(date);
-            return projectionList.stream()
-                    .map(projection -> new ProjectionProxy(projection.getId(), projection.getDate(), projection.getStartTime(),
-                            serviceLocator.getService(MovieRepository.class),
-                            serviceLocator.getService(HallRepository.class),
-                            serviceLocator.getService(ProjectionistRepository.class),
-                            serviceLocator.getService(TicketRepository.class),
-                            (long) projection.getBasePrice()
-                    )).collect(Collectors.toList());
-        } catch (DaoMethodException e) {
-            throw new RepositoryException(e.getMessage());
-        }
-    }
-
-    private List<Projection> getProjectionList(Movie movie, String date) throws RepositoryException {
-        try {
-            var projectionList = getProjectionDao().getProjectionListByDateAndMovie(movie.getId(), date);
-            return projectionList.stream()
-                    .map(projection -> new ProjectionProxy(
+            var projection = getProjectionDao().getProjectionByDateAndTimeAndHallId(date,time,hall.getId());
+            return new ProjectionProxy(
                             projection.getId(),
                             projection.getDate(),
                             projection.getStartTime(),
@@ -88,15 +83,10 @@ public class JdbcProjectionRepository implements ProjectionRepository {
                             serviceLocator.getService(ProjectionistRepository.class),
                             serviceLocator.getService(TicketRepository.class),
                             (long) projection.getBasePrice()
-                    )).collect(Collectors.toList());
+                    );
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
-    }
-
-    @Override
-    public Projection getProjection(String date, String time, Integer hallId) throws RepositoryException {
-        return null;
     }
 
     @Override

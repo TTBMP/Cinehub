@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.app.repository.shift;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
 import com.ttbmp.cinehub.app.repository.employee.usher.UsherRepository;
 import com.ttbmp.cinehub.app.repository.hall.HallRepository;
@@ -11,6 +12,7 @@ import com.ttbmp.cinehub.app.repository.shift.usher.UsherShiftProxy;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.shift.Shift;
 import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
+import com.ttbmp.cinehub.service.persistence.dao.EmployeeDao;
 import com.ttbmp.cinehub.service.persistence.dao.ShiftDao;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourceProvider;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
@@ -19,9 +21,8 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceMeth
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class JdbcShiftRepository implements ShiftRepository {
 
@@ -68,32 +69,8 @@ public class JdbcShiftRepository implements ShiftRepository {
     public List<Shift> getAllShift() throws RepositoryException {
         try {
             var shiftList = getShiftDao().getShiftList();
-            var employeeDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
-
-            if (employeeDao.getEmployeeByShiftId(shiftList.get(0).getId()).getRole().equals("maschera")) {
-                return shiftList.stream()
-                        .map(shift -> new UsherShiftProxy(
-                                shift.getId(),
-                                shift.getDate(),
-                                shift.getStart(),
-                                shift.getEnd(),
-                                serviceLocator.getService(UsherRepository.class)))
-                        .collect(Collectors.toList());
-            } else if (employeeDao.getEmployeeByShiftId(shiftList.get(0).getId()).getRole().equals("proiezionista")) {
-                return shiftList.stream()
-                        .map(shift -> new ProjectionistShiftProxy(
-                                shift.getId(),
-                                shift.getDate(),
-                                shift.getStart(),
-                                shift.getEnd(),
-                                serviceLocator.getService(ProjectionistRepository.class),
-                                serviceLocator.getService(HallRepository.class),
-                                serviceLocator.getService(ProjectionRepository.class)))
-                        .collect(Collectors.toList());
-            } else {
-                return null;
-            }
-        } catch (DaoMethodException | DataSourceClassException | SQLException | ClassNotFoundException | DataSourceMethodException e) {
+            return getListShift(shiftList);
+        } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
     }
@@ -102,31 +79,18 @@ public class JdbcShiftRepository implements ShiftRepository {
     public List<Shift> getShiftList(Employee employee) throws RepositoryException {
         try {
             var shiftList = getShiftDao().getShiftListByEmployeeId(employee.getId());
-            var employeeDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
-            if (employeeDao.getEmployeeByShiftId(shiftList.get(0).getId()).getRole().equals("maschera")) {
-                return shiftList.stream()
-                        .map(shift -> new UsherShiftProxy(
-                                shift.getId(),
-                                shift.getDate(),
-                                shift.getStart(),
-                                LocalTime.parse(shift.getEnd()).minusHours(1).toString(),
-                                serviceLocator.getService(UsherRepository.class)))
-                        .collect(Collectors.toList());
-            } else if (employeeDao.getEmployeeByShiftId(shiftList.get(0).getId()).getRole().equals("proiezionista")) {
-                return shiftList.stream()
-                        .map(shift -> new ProjectionistShiftProxy(
-                                shift.getId(),
-                                shift.getDate(),
-                                shift.getStart(),
-                                LocalTime.parse(shift.getEnd()).minusHours(1).toString(),
-                                serviceLocator.getService(ProjectionistRepository.class),
-                                serviceLocator.getService(HallRepository.class),
-                                serviceLocator.getService(ProjectionRepository.class)))
-                        .collect(Collectors.toList());
-            } else {
-                return null;
-            }
-        } catch (DaoMethodException | DataSourceClassException | SQLException | ClassNotFoundException | DataSourceMethodException e) {
+            return getListShift(shiftList);
+        } catch (DaoMethodException e) {
+            throw new RepositoryException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Shift> getAllEmployeeShiftBetweenDate(Employee employee, LocalDate start, LocalDate end) throws RepositoryException {
+        try {
+            var shiftList = getShiftDao().getShiftBetweenDate(employee.getId(),String.valueOf(start) ,String.valueOf(end));
+            return getListShift(shiftList);
+        } catch (DaoMethodException | RepositoryException e) {
             throw new RepositoryException(e.getMessage());
         }
     }
@@ -177,10 +141,7 @@ public class JdbcShiftRepository implements ShiftRepository {
         }
     }
 
-    @Override
-    public List<Shift> getAllEmployeeShiftBetweenDate(Employee employee, LocalDate start, LocalDate end) {
-        return null;
-    }
+
 
     private ShiftDao getShiftDao() throws RepositoryException {
         if (shiftDao == null) {
@@ -191,6 +152,35 @@ public class JdbcShiftRepository implements ShiftRepository {
             }
         }
         return shiftDao;
+    }
+
+    private List<Shift> getListShift(List<com.ttbmp.cinehub.service.persistence.entity.Shift> shiftList) throws RepositoryException {
+        try {
+            EmployeeDao employeeDao =  JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
+            List<Shift> allShiftList = new ArrayList<>();
+            for (var shift : shiftList) {
+                if (employeeDao.getEmployeeByShiftId(shift.getId()).getRole().equals("maschera")) {
+                    allShiftList.add(new UsherShiftProxy(
+                            shift.getId(),
+                            shift.getDate(),
+                            shift.getStart(),
+                            shift.getEnd(),
+                            serviceLocator.getService(UsherRepository.class)));
+                } else if (employeeDao.getEmployeeByShiftId(shift.getId()).getRole().equals("proiezionista")) {
+                    allShiftList.add(new ProjectionistShiftProxy(
+                            shift.getId(),
+                            shift.getDate(),
+                            shift.getStart(),
+                            shift.getEnd(),
+                            serviceLocator.getService(ProjectionistRepository.class),
+                            serviceLocator.getService(HallRepository.class),
+                            serviceLocator.getService(ProjectionRepository.class)));
+                }
+            }
+            return allShiftList;
+        } catch (DataSourceMethodException | DataSourceClassException | SQLException | ClassNotFoundException | DaoMethodException e) {
+            throw new RepositoryException(e.getMessage());
+        }
     }
 
 }

@@ -14,13 +14,14 @@ public class PaymentRequest extends Request {
 
     private final Integer index;
     private ProjectionDto projection;
+    private String receiptEmail;
     private TicketDto ticket;
     private CinemaDto cinemaDto;
     private MovieDto movieDto;
     private String selectedDate;
     private CreditCardDto creditCard;
 
-    public PaymentRequest(TicketDto ticket, ProjectionDto projection, int index, CinemaDto cinemaDto, MovieDto movieDto, String selectedDate, CreditCardDto creditCard) {
+    public PaymentRequest(TicketDto ticket, ProjectionDto projection, int index, CinemaDto cinemaDto, MovieDto movieDto, String selectedDate, CreditCardDto creditCard, String receiptEmail) {
         this.index = index;
         this.projection = projection;
         this.ticket = ticket;
@@ -28,6 +29,16 @@ public class PaymentRequest extends Request {
         this.movieDto = movieDto;
         this.selectedDate = selectedDate;
         this.creditCard = creditCard;
+        this.receiptEmail = receiptEmail;
+
+    }
+
+    public String getReceiptEmail() {
+        return receiptEmail;
+    }
+
+    public void setReceiptEmail(String receiptEmail) {
+        this.receiptEmail = receiptEmail;
     }
 
     public MovieDto getMovieDto() {

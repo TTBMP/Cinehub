@@ -4,10 +4,10 @@ public class CreditCardDto {
 
     private int id;
     private String number;
-    private Integer cvv;
+    private String cvv;
     private String expirationDate;
 
-    public CreditCardDto(int id, String number, int cvv, String expirationDate) {
+    public CreditCardDto(int id, String number, String cvv, String expirationDate) {
         this.id = id;
         this.number = number;
         this.cvv = cvv;
@@ -30,11 +30,11 @@ public class CreditCardDto {
         this.number = number;
     }
 
-    public Integer getCvv() {
+    public String getCvv() {
         return cvv;
     }
 
-    public void setCvv(Integer cvv) {
+    public void setCvv(String cvv) {
         this.cvv = cvv;
     }
 

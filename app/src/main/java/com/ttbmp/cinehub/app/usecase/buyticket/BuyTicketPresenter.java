@@ -54,5 +54,20 @@ public interface BuyTicketPresenter {
 
     void presentAuthenticationError();
 
+
     void presentInvalidGetCinema(GetCinemaRequest request);
+
+    void presentPayRepositoryException(String message);
+
+    void presentGetListMovieRepositoryException(String message);
+
+    void presentGetCinemaListRepositoryException(String message);
+
+    void presentCreateTicketRepositoryException(String message);
+
+    void presentGetProjectionListRepositoryException(String message);
+
+    void presentGetProjectionRepositoryException(String message);
+
+    void presentGetCinemaRepositoryException(String message);
 }

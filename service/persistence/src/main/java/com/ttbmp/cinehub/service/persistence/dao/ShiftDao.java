@@ -5,6 +5,7 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.*;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -17,14 +18,44 @@ public interface ShiftDao {
     List<Shift> getShiftList(
     ) throws DaoMethodException;
 
-    @Query("SELECT * FROM turno where id = :id;")
+    @Query("SELECT  turno.*   " +
+            "from cinemadb.proiezione ,cinemadb.sala , cinemadb.turno_proiezionista , cinemadb.dipendente, cinemadb.turno    " +
+            "where dipendente.id_utente = turno.id_dipendente  " +
+            "and proiezione.id_sala = sala.id  " +
+            "and sala.id = turno_proiezionista.sala_id  " +
+            "and turno_proiezionista.turno_id = turno.id  " +
+            "and dipendente.id_utente = turno.id_dipendente " +
+            "and proiezione.inizio between turno.inizio and turno.fine " +
+            "and turno.data = proiezione.data " +
+            "and turno.id = :id ")
     Shift getShiftById(
             @Parameter(name = "id") @NotNull Integer name
     ) throws DaoMethodException;
 
-    @Query("SELECT * FROM turno where id_dipendente= :idEmployee")
+    @Query("SELECT  turno.*   " +
+            "from cinemadb.proiezione ,cinemadb.sala , cinemadb.turno_proiezionista , cinemadb.dipendente, cinemadb.turno    " +
+            "where dipendente.id_utente = turno.id_dipendente  " +
+            "and proiezione.id_sala = sala.id  " +
+            "and sala.id = turno_proiezionista.sala_id  " +
+            "and turno_proiezionista.turno_id = turno.id  " +
+            "and dipendente.id_utente = turno.id_dipendente " +
+            "and proiezione.inizio between turno.inizio and turno.fine " +
+            "and turno.data = proiezione.data " +
+            "and dipendente.id_utente = :idEmployee ")
     List<Shift> getShiftListByEmployeeId(
             @Parameter(name = "idEmployee") @NotNull String name
+    ) throws DaoMethodException;
+
+    @Query("SELECT  turno.*  " +
+            "from cinemadb.dipendente, cinemadb.turno " +
+            "where dipendente.id_utente = turno.id_dipendente "+
+            "and dipendente.id_utente = turno.id_dipendente " +
+            "and dipendente.id_utente = :idEmployee " +
+            "and turno.data between :start  and  :end ")
+    List<Shift> getShiftBetweenDate(
+            @Parameter(name = "idEmployee") @NotNull String id,
+            @Parameter(name = "start") String start,
+            @Parameter(name = "end") String end
     ) throws DaoMethodException;
 
 
