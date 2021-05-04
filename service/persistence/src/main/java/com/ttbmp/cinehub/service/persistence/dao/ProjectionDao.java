@@ -40,7 +40,7 @@ public interface ProjectionDao {
 
     @Query("SELECT  proiezione.* " +
             "from cinemadb.turno , cinemadb.turno_proiezionista, cinemadb.proiezione " +
-            "where turno.id = 3" +
+            "where turno.id = :id" +
             " and turno.id = turno_proiezionista.turno_id" +
             " and turno_proiezionista.sala_id = proiezione.id_sala" +
             " and proiezione.data = turno.data" +
