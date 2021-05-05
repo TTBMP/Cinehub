@@ -11,50 +11,31 @@ public class PaymentRequest extends Request {
 
     public static final Request.Error MISSING_TICKET_ERROR = new Request.Error("Ticket can't be null");
     public static final Request.Error MISSING_PROJECTION_ERROR = new Request.Error("Projection can't be null");
+    public static final Request.Error MISSING_EMAIL_ERROR = new Request.Error("Email can't be null");
+    public static final Request.Error MISSING_CINEMA_ERROR = new Request.Error("Cinema can't be null");
+    public static final Request.Error MISSING_CREDIT_CARD_ERROR = new Request.Error("Credit card can't be null");
 
-    private final Integer index;
     private ProjectionDto projection;
-    private String receiptEmail;
-    private TicketDto ticket;
+    private String email;
+    private TicketDto ticketDto;
     private CinemaDto cinemaDto;
-    private MovieDto movieDto;
-    private String selectedDate;
     private CreditCardDto creditCard;
 
-    public PaymentRequest(TicketDto ticket, ProjectionDto projection, int index, CinemaDto cinemaDto, MovieDto movieDto, String selectedDate, CreditCardDto creditCard, String receiptEmail) {
-        this.index = index;
+    public PaymentRequest(TicketDto ticketDto, ProjectionDto projection,  CinemaDto cinemaDto,   CreditCardDto creditCard, String email) {
         this.projection = projection;
-        this.ticket = ticket;
+        this.ticketDto = ticketDto;
         this.cinemaDto = cinemaDto;
-        this.movieDto = movieDto;
-        this.selectedDate = selectedDate;
         this.creditCard = creditCard;
-        this.receiptEmail = receiptEmail;
+        this.email = email;
 
     }
 
-    public String getReceiptEmail() {
-        return receiptEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setReceiptEmail(String receiptEmail) {
-        this.receiptEmail = receiptEmail;
-    }
-
-    public MovieDto getMovieDto() {
-        return movieDto;
-    }
-
-    public void setMovieDto(MovieDto movieDto) {
-        this.movieDto = movieDto;
-    }
-
-    public String getSelectedDate() {
-        return selectedDate;
-    }
-
-    public void setSelectedDate(String selectedDate) {
-        this.selectedDate = selectedDate;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public CinemaDto getCinemaDto() {
@@ -73,16 +54,13 @@ public class PaymentRequest extends Request {
         this.projection = projection;
     }
 
-    public Integer getIndex() {
-        return index;
+
+    public TicketDto getTicketDto() {
+        return ticketDto;
     }
 
-    public TicketDto getTicket() {
-        return ticket;
-    }
-
-    public void setTicket(TicketDto ticket) {
-        this.ticket = ticket;
+    public void setTicketDto(TicketDto ticketDto) {
+        this.ticketDto = ticketDto;
     }
 
     public CreditCardDto getCreditCard() {
@@ -95,12 +73,24 @@ public class PaymentRequest extends Request {
 
     @Override
     public void onValidate() {
+
         if (projection == null) {
             addError(MISSING_PROJECTION_ERROR);
+        }
+        if (ticketDto == null) {
+            addError(MISSING_TICKET_ERROR);
 
         }
-        if (ticket == null) {
-            addError(MISSING_TICKET_ERROR);
+        if (cinemaDto == null) {
+            addError(MISSING_CINEMA_ERROR);
         }
+        if (creditCard == null) {
+            addError(MISSING_CREDIT_CARD_ERROR);
+
+        }
+        if (email == null) {
+            addError(MISSING_EMAIL_ERROR);
+        }
+
     }
 }

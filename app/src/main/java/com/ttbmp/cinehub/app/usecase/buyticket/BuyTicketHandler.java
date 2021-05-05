@@ -20,37 +20,37 @@ public class BuyTicketHandler implements BuyTicketUseCase {
     }
 
     @Override
-    public void getListMovie(GetListMovieRequest request) {
+    public void getListMovie(MovieListRequest request) {
         buyTicketController.getListMovie(request);
     }
 
     @Override
-    public void createTicket(GetTicketBySeatsRequest request) {
+    public void createTicket(TicketRequest request) {
         buyTicketController.createTicket(request);
     }
 
     @Override
-    public void getListCinema(GetListCinemaRequest request) {
+    public void getListCinema(CinemaListRequest request) {
         buyTicketController.getListCinema(request);
     }
 
     @Override
-    public void getCinema(GetCinemaRequest request) {
+    public void getCinema(CinemaInformationRequest request) {
         buyTicketController.getCinema(request);
     }
 
     @Override
-    public void getProjectionList(GetProjectionListRequest request) {
+    public void getProjectionList(ProjectionListRequest request) {
         buyTicketController.getProjectionList(request);
     }
 
     @Override
-    public void getListOfSeat(GetNumberOfSeatsRequest request) {
+    public void getListOfSeat(CinemaInformationRequest request) {
         buyTicketController.getListOfSeat(request);
     }
 
     @Override
-    public void getProjection(GetProjectionRequest request) {
+    public void getProjection(ProjectionRequest request) {
         buyTicketController.getProjection(request);
     }
 

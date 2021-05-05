@@ -10,17 +10,17 @@ public interface BuyTicketUseCase extends UseCase {
 
     void pay(PaymentRequest request);
 
-    void getListMovie(GetListMovieRequest request);
+    void getListMovie(MovieListRequest request);
 
-    void createTicket(GetTicketBySeatsRequest request);
+    void createTicket(TicketRequest request);
 
-    void getListCinema(GetListCinemaRequest request);
+    void getListCinema(CinemaListRequest request);
 
-    void getProjectionList(GetProjectionListRequest request);
+    void getProjectionList(ProjectionListRequest request);
 
-    void getListOfSeat(GetNumberOfSeatsRequest request);
+    void getListOfSeat(CinemaInformationRequest request);
 
-    void getProjection(GetProjectionRequest request);
+    void getProjection(ProjectionRequest request);
 
-    void getCinema(GetCinemaRequest getCinemaRequest);
+    void getCinema(CinemaInformationRequest request);
 }

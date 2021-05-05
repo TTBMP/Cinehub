@@ -2,8 +2,8 @@ package com.ttbmp.cinehub.ui.desktop.buyticket.chooseseat;
 
 
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.GetNumberOfSeatsRequest;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.GetTicketBySeatsRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.CinemaInformationRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.TicketRequest;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.desktop.buyticket.choosecinema.ChooseCinemaView;
@@ -70,7 +70,7 @@ public class ChooseSeatViewController extends ViewController {
         appBarController.load(activity, navController);
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
         activity.getUseCase(BuyTicketUseCase.class).getListOfSeat(
-                new GetNumberOfSeatsRequest(
+                new CinemaInformationRequest(
                         viewModel.selectedProjectionProperty().getValue()
                 ));
         confirmSeatButton.setDisable(true);
@@ -130,10 +130,9 @@ public class ChooseSeatViewController extends ViewController {
         viewModel.counterForToggle().setValue(0);
         toggleGroup.getToggles().forEach(toggle -> findRandomPlace());
         activity.getUseCase(BuyTicketUseCase.class).createTicket(
-                new GetTicketBySeatsRequest(
+                new TicketRequest(
                         viewModel.getSeatList(),
-                        viewModel.selectedSeatsProperty().getValue(),
-                        viewModel.seatSelectedPosition().getValue(),
+                        viewModel.seatSelectedPositionNumber().getValue(),
                         viewModel.foldingArmchairOptionProperty().getValue(),
                         viewModel.heatedArmchairOptionProperty().getValue(),
                         viewModel.skipLineOptionProperty().getValue(),
@@ -147,10 +146,9 @@ public class ChooseSeatViewController extends ViewController {
         viewModel.counterForToggle().setValue(0);
         toggleGroup.getToggles().forEach(toggle -> findChosenPlace());
         activity.getUseCase(BuyTicketUseCase.class).createTicket(
-                new GetTicketBySeatsRequest(
+                new TicketRequest(
                         viewModel.getSeatList(),
-                        viewModel.selectedSeatsProperty().getValue(),
-                        viewModel.seatSelectedPosition().getValue(),
+                        viewModel.seatSelectedPositionNumber().getValue(),
                         viewModel.foldingArmchairOptionProperty().getValue(),
                         viewModel.heatedArmchairOptionProperty().getValue(),
                         viewModel.skipLineOptionProperty().getValue(),
@@ -176,7 +174,7 @@ public class ChooseSeatViewController extends ViewController {
                     toggleGroup.getToggles().get(j).toString().substring(
                             toggleGroup.getToggles().get(j).toString().length() - 6,
                             toggleGroup.getToggles().get(j).toString().length() - 4));
-            viewModel.seatSelectedPosition().setValue(viewModel.indexToggleSelected().getValue());
+            viewModel.seatSelectedPositionNumber().setValue(viewModel.indexToggleSelected().getValue());
         }
         viewModel.counterForToggle().setValue(viewModel.counterForToggle().getValue() + 1);
 
@@ -195,7 +193,7 @@ public class ChooseSeatViewController extends ViewController {
                             toggleGroup.getToggles().get(i).toString().length() - 4
                     )
             );
-            viewModel.seatSelectedPosition().setValue(viewModel.indexToggleSelected().getValue());
+            viewModel.seatSelectedPositionNumber().setValue(viewModel.indexToggleSelected().getValue());
         }
         viewModel.counterForToggle().setValue(viewModel.counterForToggle().getValue() + 1);
 

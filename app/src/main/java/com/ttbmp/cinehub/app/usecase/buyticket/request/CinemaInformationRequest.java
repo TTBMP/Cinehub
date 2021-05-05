@@ -7,12 +7,13 @@ import com.ttbmp.cinehub.app.usecase.Request;
 /**
  * @author Ivan Palmieri
  */
-public class GetNumberOfSeatsRequest extends Request {
+public class CinemaInformationRequest extends Request {
 
     public static final Request.Error MISSING_PROJECTION_ERROR = new Request.Error("Projection can't be null");
+
     private ProjectionDto projectionDto;
 
-    public GetNumberOfSeatsRequest(ProjectionDto projectionDto) {
+    public CinemaInformationRequest(ProjectionDto projectionDto) {
         this.projectionDto = projectionDto;
     }
 

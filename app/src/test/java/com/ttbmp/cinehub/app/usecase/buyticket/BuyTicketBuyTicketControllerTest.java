@@ -24,14 +24,14 @@ class BuyTicketBuyTicketControllerTest {
                 new MockBuyTicketPresenter()
         );
         buyTicketController.getListMovie(
-                new GetListMovieRequest(LocalDate.now())
+                new MovieListRequest(LocalDate.now())
         );
     }
 
     class MockBuyTicketPresenter implements BuyTicketPresenter {
 
         @Override
-        public void presentMovieApiList(GetListMovieResponse response) {
+        public void presentMovieApiList(MovieListResponse response) {
             try {
                 var result = true;
                 var movieDtoList = serviceLocator.getService(MovieRepository.class)
@@ -54,22 +54,22 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentCinemaList(GetListCinemaResponse response) {
+        public void presentCinemaList(CinemaListResponse response) {
 
         }
 
         @Override
-        public void presentCinema(GetCinemaResponse response) {
+        public void presentCinema(CinemaResponse response) {
 
         }
 
         @Override
-        public void presentSeatList(GetNumberOfSeatsResponse response) {
+        public void presentSeatList(NumberOfSeatsResponse response) {
 
         }
 
         @Override
-        public void setSelectedTicket(GetTicketBySeatsResponse response) {
+        public void setSelectedTicket(TicketResponse response) {
 
         }
 
@@ -89,7 +89,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentInvalidGetTicketBySeats(GetTicketBySeatsRequest request) {
+        public void presentInvalidGetTicketBySeats(TicketRequest request) {
 
         }
 
@@ -99,7 +99,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentInvalidGetListCinema(GetListCinemaRequest request) {
+        public void presentInvalidGetListCinema(CinemaListRequest request) {
 
         }
 
@@ -109,12 +109,12 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentInvalidGetTimeOfProjection(GetProjectionListRequest request) {
+        public void presentInvalidGetTimeOfProjection(ProjectionListRequest request) {
 
         }
 
         @Override
-        public void presentProjection(GetProjectionResponse request) {
+        public void presentProjection(ProjectionResponse request) {
 
         }
 
@@ -124,7 +124,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentInvalidGetNumberOfSeats(GetNumberOfSeatsRequest request) {
+        public void presentInvalidGetNumberOfSeats(CinemaInformationRequest request) {
 
         }
 
@@ -139,7 +139,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentProjectionList(GetProjectionListResponse projectionTimeList) {
+        public void presentProjectionList(ProjectionListResponse projectionTimeList) {
 
         }
 
@@ -149,7 +149,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentInvalidGetListMovie(GetListMovieRequest request) {
+        public void presentInvalidGetListMovie(MovieListRequest request) {
 
         }
 
@@ -160,7 +160,7 @@ class BuyTicketBuyTicketControllerTest {
 
 
         @Override
-        public void presentInvalidGetCinema(GetCinemaRequest request) {
+        public void presentInvalidGetCinema(CinemaInformationRequest request) {
 
         }
 

@@ -8,29 +8,30 @@ import java.util.List;
 /**
  * @author Ivan Palmieri
  */
-public class GetTicketBySeatsRequest extends Request {
+public class TicketRequest extends Request {
 
     public static final Request.Error MISSING_LIST_SEATS_ERROR = new Request.Error("List seats can't be null");
-    public static final Request.Error MISSING_POSITION_ERROR = new Request.Error("Position can't be null");
-    public static final Request.Error MISSING_INDEX_ERROR = new Request.Error("Index can't be null");
+    public static final Request.Error MISSING_OPTION_ONE_ERROR = new Request.Error("Option one can't be null");
+    public static final Request.Error MISSING_OPTION_TWO_ERROR = new Request.Error("Option two can't be null");
+    public static final Request.Error MISSING_OPTION_THREE_ERROR = new Request.Error("Option three can't be null");
+    public static final Request.Error MISSING_PROJECTION_ERROR = new Request.Error("Projection id can't be NEGATIVE");
+    public static final Request.Error MISSING_NUMBER_ERROR = new Request.Error("Number can't be null");
 
     private final List<SeatDto> seatDtoList;
-    private final String position;
     private final Integer number;
-    private final Boolean magicBoxOption;
     private final Boolean openBarOption;
+    private final Boolean magicBoxOption;
     private final Boolean skipLineOption;
     private final int projectionId;
 
-    public GetTicketBySeatsRequest(List<SeatDto> seatDtoList,
-                                   String position,
-                                   Integer number,
-                                   Boolean magicBoxOption,
-                                   Boolean openBarOption,
-                                   Boolean skipLineOption,
-                                   int projectionId) {
+
+    public TicketRequest(List<SeatDto> seatDtoList,
+                         Integer number,
+                         Boolean magicBoxOption,
+                         Boolean openBarOption,
+                         Boolean skipLineOption,
+                         int projectionId) {
         this.seatDtoList = seatDtoList;
-        this.position = position;
         this.number = number;
         this.magicBoxOption = magicBoxOption;
         this.openBarOption = openBarOption;
@@ -54,9 +55,7 @@ public class GetTicketBySeatsRequest extends Request {
         return seatDtoList;
     }
 
-    public String getPosition() {
-        return position;
-    }
+
 
     public Integer getNumber() {
         return number;
@@ -71,11 +70,21 @@ public class GetTicketBySeatsRequest extends Request {
         if (seatDtoList == null) {
             addError(MISSING_LIST_SEATS_ERROR);
         }
-        if (position == null) {
-            addError(MISSING_POSITION_ERROR);
-        }
+
         if (number == null) {
-            addError(MISSING_INDEX_ERROR);
+            addError(MISSING_NUMBER_ERROR);
+        }
+        if (magicBoxOption == null) {
+            addError(MISSING_OPTION_ONE_ERROR);
+        }
+        if (openBarOption == null) {
+            addError(MISSING_OPTION_TWO_ERROR);
+        }
+        if (skipLineOption == null) {
+            addError(MISSING_OPTION_THREE_ERROR);
+        }
+        if (projectionId < 0) {
+            addError(MISSING_PROJECTION_ERROR);
         }
     }
 }

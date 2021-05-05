@@ -20,30 +20,30 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
 
     @Override
-    public void presentMovieApiList(GetListMovieResponse response) {
+    public void presentMovieApiList(MovieListResponse response) {
         viewModel.getMovieList().clear();
         viewModel.getMovieList().addAll(response.getMovieList());
     }
 
     @Override
-    public void presentCinemaList(GetListCinemaResponse response) {
+    public void presentCinemaList(CinemaListResponse response) {
         viewModel.getCinemaList().setAll(response.getCinemaList());
     }
 
     @Override
-    public void presentCinema(GetCinemaResponse response) {
+    public void presentCinema(CinemaResponse response) {
         viewModel.selectedCinemaNameProperty();
     }
 
 
     @Override
-    public void presentSeatList(GetNumberOfSeatsResponse response) {
+    public void presentSeatList(NumberOfSeatsResponse response) {
         viewModel.getSeatList().setAll(response.getSeatDtoList());
     }
 
 
     @Override
-    public void setSelectedTicket(GetTicketBySeatsResponse response) {
+    public void setSelectedTicket(TicketResponse response) {
         viewModel.selectedTicketProperty().setValue(response.getTicketDto());
         viewModel.selectedSeatPriceProperty().setValue(response.getTicketDto().getPrice().toString());
     }
@@ -62,6 +62,17 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
         if (request.getErrorList().contains(PaymentRequest.MISSING_PROJECTION_ERROR)) {
             viewModel.paymentErrorProperty().setValue(PaymentRequest.MISSING_PROJECTION_ERROR.getMessage());
         }
+        if (request.getErrorList().contains(PaymentRequest.MISSING_CINEMA_ERROR)) {
+            viewModel.paymentErrorProperty().setValue(PaymentRequest.MISSING_CINEMA_ERROR.getMessage());
+        }
+        if (request.getErrorList().contains(PaymentRequest.MISSING_CREDIT_CARD_ERROR)) {
+            viewModel.paymentErrorProperty().setValue(PaymentRequest.MISSING_CREDIT_CARD_ERROR.getMessage());
+        }
+
+
+        if (request.getErrorList().contains(PaymentRequest.MISSING_EMAIL_ERROR)) {
+            viewModel.paymentErrorProperty().setValue(PaymentRequest.MISSING_EMAIL_ERROR.getMessage());
+        }
 
     }
 
@@ -71,16 +82,26 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentInvalidGetTicketBySeats(GetTicketBySeatsRequest request) {
-        if (request.getErrorList().contains(GetTicketBySeatsRequest.MISSING_LIST_SEATS_ERROR)) {
-            viewModel.seatErrorProperty().setValue(GetTicketBySeatsRequest.MISSING_LIST_SEATS_ERROR.getMessage());
+    public void presentInvalidGetTicketBySeats(TicketRequest request) {
+        if (request.getErrorList().contains(TicketRequest.MISSING_LIST_SEATS_ERROR)) {
+            viewModel.seatErrorProperty().setValue(TicketRequest.MISSING_LIST_SEATS_ERROR.getMessage());
         }
-        if (request.getErrorList().contains(GetTicketBySeatsRequest.MISSING_POSITION_ERROR)) {
-            viewModel.seatErrorProperty().setValue(GetTicketBySeatsRequest.MISSING_POSITION_ERROR.getMessage());
+        if (request.getErrorList().contains(TicketRequest.MISSING_OPTION_ONE_ERROR)) {
+            viewModel.seatErrorProperty().setValue(TicketRequest.MISSING_OPTION_ONE_ERROR.getMessage());
         }
-        if (request.getErrorList().contains(GetTicketBySeatsRequest.MISSING_INDEX_ERROR)) {
-            viewModel.seatErrorProperty().setValue(GetTicketBySeatsRequest.MISSING_INDEX_ERROR.getMessage());
+        if (request.getErrorList().contains(TicketRequest.MISSING_OPTION_TWO_ERROR)) {
+            viewModel.seatErrorProperty().setValue(TicketRequest.MISSING_OPTION_TWO_ERROR.getMessage());
         }
+        if (request.getErrorList().contains(TicketRequest.MISSING_OPTION_THREE_ERROR)) {
+            viewModel.seatErrorProperty().setValue(TicketRequest.MISSING_OPTION_THREE_ERROR.getMessage());
+        }
+        if (request.getErrorList().contains(TicketRequest.MISSING_PROJECTION_ERROR)) {
+            viewModel.seatErrorProperty().setValue(TicketRequest.MISSING_PROJECTION_ERROR.getMessage());
+        }
+        if (request.getErrorList().contains(TicketRequest.MISSING_NUMBER_ERROR)) {
+            viewModel.seatErrorProperty().setValue(TicketRequest.MISSING_NUMBER_ERROR.getMessage());
+        }
+
     }
 
     @Override
@@ -89,8 +110,8 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentInvalidGetListCinema(GetListCinemaRequest request) {
-        viewModel.cinemaErrorProperty().setValue(GetListCinemaRequest.MISSING_MOVIE_ERROR.getMessage());
+    public void presentInvalidGetListCinema(CinemaListRequest request) {
+        viewModel.cinemaErrorProperty().setValue(CinemaListRequest.MISSING_MOVIE_ERROR.getMessage());
     }
 
     @Override
@@ -100,17 +121,21 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentInvalidGetTimeOfProjection(GetProjectionListRequest request) {
-        if (request.getErrorList().contains(GetProjectionListRequest.MISSING_MOVIE_ERROR)) {
-            viewModel.cinemaErrorProperty().setValue(GetProjectionListRequest.MISSING_MOVIE_ERROR.getMessage());
+    public void presentInvalidGetTimeOfProjection(ProjectionListRequest request) {
+        if (request.getErrorList().contains(ProjectionListRequest.MISSING_MOVIE_ERROR)) {
+            viewModel.cinemaErrorProperty().setValue(ProjectionListRequest.MISSING_MOVIE_ERROR.getMessage());
         }
-        if (request.getErrorList().contains(GetProjectionListRequest.MISSING_DATE_ERROR)) {
-            viewModel.cinemaErrorProperty().setValue(GetProjectionListRequest.MISSING_DATE_ERROR.getMessage());
+        if (request.getErrorList().contains(ProjectionListRequest.MISSING_DATE_ERROR)) {
+            viewModel.cinemaErrorProperty().setValue(ProjectionListRequest.MISSING_DATE_ERROR.getMessage());
         }
+        if (request.getErrorList().contains(ProjectionListRequest.MISSING_CINEMA_ERROR)) {
+            viewModel.cinemaErrorProperty().setValue(ProjectionListRequest.MISSING_CINEMA_ERROR.getMessage());
+        }
+
     }
 
     @Override
-    public void presentProjection(GetProjectionResponse request) {
+    public void presentProjection(ProjectionResponse request) {
         viewModel.seatErrorProperty().setValue("Error with projection presenting");
     }
 
@@ -121,8 +146,8 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentInvalidGetNumberOfSeats(GetNumberOfSeatsRequest request) {
-        viewModel.seatErrorProperty().setValue(GetNumberOfSeatsRequest.MISSING_PROJECTION_ERROR.getMessage());
+    public void presentInvalidGetNumberOfSeats(CinemaInformationRequest request) {
+        viewModel.seatErrorProperty().setValue(CinemaInformationRequest.MISSING_PROJECTION_ERROR.getMessage());
     }
 
     @Override
@@ -136,8 +161,8 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentProjectionList(GetProjectionListResponse response) {
-        viewModel.getProjectionOfProjectionTimeList().setAll(response.getProjectionDto());
+    public void presentProjectionList(ProjectionListResponse response) {
+        viewModel.getProjectionOfProjectionTimeList().setAll(response.getProjectionDtoList());
     }
 
     @Override
@@ -147,8 +172,8 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentInvalidGetListMovie(GetListMovieRequest request) {
-        viewModel.movieErrorProperty().setValue(GetListCinemaRequest.MISSING_MOVIE_ERROR.getMessage());
+    public void presentInvalidGetListMovie(MovieListRequest request) {
+        viewModel.movieErrorProperty().setValue(CinemaListRequest.MISSING_MOVIE_ERROR.getMessage());
     }
 
     @Override
@@ -160,42 +185,48 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
 
     @Override
-    public void presentInvalidGetCinema(GetCinemaRequest request) {
+    public void presentInvalidGetCinema(CinemaInformationRequest request) {
         viewModel.cinemaErrorProperty().setValue("Problems with retrieve the cinema ");
     }
 
     @Override
     public void presentPayRepositoryException(String message) {
-
+        viewModel.payRepositoryExceptionProperty().setValue(message);
     }
 
     @Override
     public void presentGetListMovieRepositoryException(String message) {
+        viewModel.listMovieRepositoryExceptionProperty().setValue(message);
 
     }
 
     @Override
     public void presentGetCinemaListRepositoryException(String message) {
+        viewModel.cinemaListRepositoryExceptionProperty().setValue(message);
 
     }
 
     @Override
     public void presentCreateTicketRepositoryException(String message) {
+        viewModel.ticketRepositoryExceptionProperty().setValue(message);
 
     }
 
     @Override
     public void presentGetProjectionListRepositoryException(String message) {
+        viewModel.projectionListRepositoryExceptionProperty().setValue(message);
 
     }
 
     @Override
     public void presentGetProjectionRepositoryException(String message) {
+        viewModel.projectionRepositoryExceptionProperty().setValue(message);
 
     }
 
     @Override
     public void presentGetCinemaRepositoryException(String message) {
+        viewModel.cinemaRepositoryExceptionProperty().setValue(message);
 
     }
 

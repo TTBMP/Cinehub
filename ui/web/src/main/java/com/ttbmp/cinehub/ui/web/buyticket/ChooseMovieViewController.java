@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.ui.web.buyticket;
 
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.GetListMovieRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.MovieListRequest;
 import com.ttbmp.cinehub.ui.web.domain.Projection;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -24,7 +24,7 @@ public class ChooseMovieViewController {
             date = LocalDate.now();
         }
         BuyTicketUseCase buyTicketUseCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
-        buyTicketUseCase.getListMovie(new GetListMovieRequest(date));
+        buyTicketUseCase.getListMovie(new MovieListRequest(date));
         model.addAttribute("choose_date", date);
         model.addAttribute("projection", new Projection());
         return "choose_movie";

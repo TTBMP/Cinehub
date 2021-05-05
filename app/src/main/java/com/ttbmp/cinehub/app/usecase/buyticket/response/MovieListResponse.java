@@ -7,11 +7,11 @@ import java.util.List;
 /**
  * @author Ivan Palmieri
  */
-public class GetListMovieResponse {
+public class MovieListResponse {
 
     private final List<MovieDto> movieList;
 
-    public GetListMovieResponse(List<MovieDto> movieList) {
+    public MovieListResponse(List<MovieDto> movieList) {
         this.movieList = movieList;
     }
 

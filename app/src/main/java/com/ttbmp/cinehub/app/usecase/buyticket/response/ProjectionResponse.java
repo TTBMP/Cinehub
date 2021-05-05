@@ -5,13 +5,13 @@ import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetProjectionResponse {
+public class ProjectionResponse {
 
 
     private final ProjectionDto projectionDto;
     private final List<String> projectionDtoTime = new ArrayList<>();
 
-    public GetProjectionResponse(ProjectionDto projectionDto) {
+    public ProjectionResponse(ProjectionDto projectionDto) {
         this.projectionDto = projectionDto;
         addProjectionDtoTime(projectionDto.getStartTime());
     }

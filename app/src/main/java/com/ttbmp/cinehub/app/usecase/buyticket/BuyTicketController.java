@@ -19,7 +19,6 @@ import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.Request;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
-import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketMagicBox;
@@ -60,7 +59,7 @@ public class BuyTicketController implements BuyTicketUseCase {
         try {
             Request.validate(request);
             var user = userRepository.getUser(authenticationService.signIn("", "").getUserId());
-            var ticket = TicketDataMapper.mapToEntity(request.getTicket());
+            var ticket = TicketDataMapper.mapToEntity(request.getTicketDto());
             paymentService.pay(new PayServiceRequest(
                     user.getEmail(),
                     user.getName(),
@@ -68,7 +67,7 @@ public class BuyTicketController implements BuyTicketUseCase {
                     ticket.getPrice()
             ));
             ticketRepository.saveTicket(ticket, request.getProjection().getId());
-            emailService.sendMail(new EmailServiceRequest(request.getReceiptEmail(), "Payment receipt"));
+            emailService.sendMail(new EmailServiceRequest(request.getEmail(), "Payment receipt"));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentPayNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -83,12 +82,12 @@ public class BuyTicketController implements BuyTicketUseCase {
     }
 
     @Override
-    public void getListMovie(GetListMovieRequest request) {
+    public void getListMovie(MovieListRequest request) {
         try {
             Request.validate(request);
             var localDate = request.getDate().toString();
             var movieList = movieRepository.getMovieList(localDate);
-            buyTicketPresenter.presentMovieApiList(new GetListMovieResponse(MovieDataMapper.mapToDtoList(movieList)));
+            buyTicketPresenter.presentMovieApiList(new MovieListResponse(MovieDataMapper.mapToDtoList(movieList)));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetListMovieNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -99,13 +98,13 @@ public class BuyTicketController implements BuyTicketUseCase {
     }
 
     @Override
-    public void getListCinema(GetListCinemaRequest request) {
+    public void getListCinema(CinemaListRequest request) {
         try {
             Request.validate(request);
             var movie = movieRepository.getMovie(request.getMovieId());
             var date = request.getData();
             var cinemaList = cinemaRepository.getListCinema(movie, date);
-            buyTicketPresenter.presentCinemaList(new GetListCinemaResponse(CinemaDataMapper.mapToDtoList(cinemaList)));
+            buyTicketPresenter.presentCinemaList(new CinemaListResponse(CinemaDataMapper.mapToDtoList(cinemaList)));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetListCinemaNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -116,12 +115,12 @@ public class BuyTicketController implements BuyTicketUseCase {
     }
 
     @Override
-    public void createTicket(GetTicketBySeatsRequest request) {
+    public void createTicket(TicketRequest request) {
         try {
             Request.validate(request);
             var seats = SeatDataMapper.mapToEntityList(request.getSeatDtoList());
-            var pos = request.getNumber();
-            var seat = seats.get(pos);
+            var position = request.getNumber();
+            var seat = seats.get(position);
             var user = userRepository.getUser(authenticationService.signIn("", "").getUserId());
             var projection = projectionRepository.getProjection(request.getProjectionId());
 
@@ -137,7 +136,7 @@ public class BuyTicketController implements BuyTicketUseCase {
                 ticket = new TicketSkipLine(ticket);
             }
             /*-----------------------------------------*/
-            buyTicketPresenter.setSelectedTicket(new GetTicketBySeatsResponse(TicketDataMapper.mapToDto(ticket)));
+            buyTicketPresenter.setSelectedTicket(new TicketResponse(TicketDataMapper.mapToDto(ticket)));
 
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetTicketBySeatsNullRequest();
@@ -151,7 +150,7 @@ public class BuyTicketController implements BuyTicketUseCase {
     }
 
     @Override
-    public void getProjectionList(GetProjectionListRequest request) {
+    public void getProjectionList(ProjectionListRequest request) {
         try {
             Request.validate(request);
             var cinema = cinemaRepository.getCinema(request.getCinemaId());
@@ -159,7 +158,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             var date = request.getLocalDate();
             var projectionList = projectionRepository.getProjectionList(cinema, movie, date);
             buyTicketPresenter.presentProjectionList(
-                    new GetProjectionListResponse(ProjectionDataMapper.mapToDtoList(projectionList))
+                    new ProjectionListResponse(ProjectionDataMapper.mapToDtoList(projectionList))
             );
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetTimeOfProjectionNullRequest();
@@ -172,15 +171,15 @@ public class BuyTicketController implements BuyTicketUseCase {
 
 
     @Override
-    public void getProjection(GetProjectionRequest request) {
+    public void getProjection(ProjectionRequest request) {
         try {
-            Hall hall = hallRepository.getHall(request.getHallId());
+            var hall = hallRepository.getHall(request.getHallId());
             Projection projection = projectionRepository.getProjection(
                     request.getLocalDate(),
                     request.getStartTime(),
                     hall
             );
-            buyTicketPresenter.presentProjection(new GetProjectionResponse(ProjectionDataMapper.mapToDto(projection)));
+            buyTicketPresenter.presentProjection(new ProjectionResponse(ProjectionDataMapper.mapToDto(projection)));
         } catch (RepositoryException e) {
             buyTicketPresenter.presentGetProjectionRepositoryException(e.getMessage());
         }
@@ -188,13 +187,13 @@ public class BuyTicketController implements BuyTicketUseCase {
     }
 
     @Override
-    public void getCinema(GetCinemaRequest request) {
+    public void getCinema(CinemaInformationRequest request) {
         try {
             Request.validate(request);
             var cinema = cinemaRepository.getCinema(
                     ProjectionDataMapper.mapToEntity(request.getProjectionDto())
             );
-            buyTicketPresenter.presentCinema(new GetCinemaResponse(CinemaDataMapper.mapToDto(cinema)));
+            buyTicketPresenter.presentCinema(new CinemaResponse(CinemaDataMapper.mapToDto(cinema)));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetListCinemaNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -205,13 +204,13 @@ public class BuyTicketController implements BuyTicketUseCase {
     }
 
     @Override
-    public void getListOfSeat(GetNumberOfSeatsRequest request) {
+    public void getListOfSeat(CinemaInformationRequest request) {
         try {
             Request.validate(request);
             var projection = ProjectionDataMapper.mapToEntity(request.getProjectionDto());
             var hall = projection.getHall();
             var seatList = hall.getSeatList();
-            buyTicketPresenter.presentSeatList(new GetNumberOfSeatsResponse(SeatDataMapper.mapToDtoList(seatList)));
+            buyTicketPresenter.presentSeatList(new NumberOfSeatsResponse(SeatDataMapper.mapToDtoList(seatList)));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetNumberOfSeatsNullRequest();
         } catch (Request.InvalidRequestException e) {

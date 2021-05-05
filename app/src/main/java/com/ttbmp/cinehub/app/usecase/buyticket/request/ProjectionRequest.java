@@ -8,16 +8,17 @@ import java.time.LocalDate;
 /**
  * @author Ivan Palmieri
  */
-public class GetProjectionRequest extends Request {
+public class ProjectionRequest extends Request {
 
-    public static final Request.Error MISSING_MOVIE_ERROR = new Request.Error("Movie can't be null");
+    public static final Request.Error MISSING_HALL_ERROR = new Request.Error("Hall can't be null");
+    public static final Request.Error MISSING_TIME_ERROR = new Request.Error("Start time can't be null");
     public static final Request.Error MISSING_DATE_ERROR = new Request.Error("Date can't be null");
 
     private String localDate;
     private String startTime;
     private Integer hallId;
 
-    public GetProjectionRequest(LocalDate localDate, String startTime, Integer hallId) {
+    public ProjectionRequest(LocalDate localDate, String startTime, Integer hallId) {
 
         this.localDate = localDate.toString();
         this.startTime = startTime;
@@ -54,6 +55,12 @@ public class GetProjectionRequest extends Request {
 
         if (localDate == null) {
             addError(MISSING_DATE_ERROR);
+        }
+        if (startTime == null) {
+            addError(MISSING_TIME_ERROR);
+        }
+        if (hallId < 0) {
+            addError(MISSING_HALL_ERROR);
         }
 
     }

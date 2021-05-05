@@ -89,10 +89,7 @@ public class PaymentViewController extends ViewController {
         activity.getUseCase(BuyTicketUseCase.class).pay(new PaymentRequest(
                 viewModel.selectedTicketProperty().getValue(),
                 viewModel.selectedProjectionProperty().getValue(),
-                viewModel.seatSelectedPosition().getValue(),
                 viewModel.selectedCinemaProperty().getValue(),
-                viewModel.selectedMovieProperty().getValue(),
-                String.valueOf(viewModel.selectedDateProperty().getValue()),
                 new CreditCardDto(0, viewModel.numberOfCardUserProperty().getValue(),viewModel.txtCvvProperty().getValue(), String.valueOf(fieldExpirationDatePicker.getValue())),
                 viewModel.emailUserProperty().getValue()
         ));

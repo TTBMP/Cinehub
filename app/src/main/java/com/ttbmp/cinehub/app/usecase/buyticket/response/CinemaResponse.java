@@ -2,12 +2,12 @@ package com.ttbmp.cinehub.app.usecase.buyticket.response;
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 
-public class GetCinemaResponse {
+public class CinemaResponse {
 
 
     private final CinemaDto cinemaDto;
 
-    public GetCinemaResponse(CinemaDto cinemaDto) {
+    public CinemaResponse(CinemaDto cinemaDto) {
         this.cinemaDto = cinemaDto;
 
     }

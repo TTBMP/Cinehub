@@ -4,12 +4,13 @@ import com.ttbmp.cinehub.app.usecase.Request;
 
 import java.time.LocalDate;
 
-public class GetListMovieRequest extends Request {
+public class MovieListRequest extends Request {
 
     public static final Request.Error MISSING_DATE_ERROR = new Request.Error("Date can't be null");
+
     private LocalDate date;
 
-    public GetListMovieRequest(LocalDate date) {
+    public MovieListRequest(LocalDate date) {
         this.date = date;
 
     }

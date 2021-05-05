@@ -7,12 +7,8 @@ import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.GetCinemaRequest;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.GetProjectionListRequest;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.GetTicketBySeatsRequest;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.PaymentRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.ui.web.domain.PaymentForm;
-import com.ttbmp.cinehub.ui.web.domain.Ticket;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,32 +30,27 @@ public class ConfirmEmailViewController {
             Model model) {
         BuyTicketUseCase buyTicketUseCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
         model.addAttribute("paymentError", "");
-        buyTicketUseCase.getProjectionList(new GetProjectionListRequest(
+        buyTicketUseCase.getProjectionList(new ProjectionListRequest(
                 paymentForm.getMovieId(),
                 paymentForm.getCinemaId(),
-                LocalDate.parse(paymentForm.getDate()),
-                paymentForm.getHallId()
+                LocalDate.parse(paymentForm.getDate())
         ));
         var projection = ((List<ProjectionDto>) model.getAttribute("projectionList")).get(0);
-        buyTicketUseCase.createTicket(new GetTicketBySeatsRequest(
+        buyTicketUseCase.createTicket(new TicketRequest(
                 projection.getHallDto().getSeatList(),
-                paymentForm.getPosition(),
                 paymentForm.getNumber(),
                 paymentForm.getOption1(),
                 paymentForm.getOption2(),
                 paymentForm.getOption3(),
                 projection.getId()
         ));
-        buyTicketUseCase.getCinema(new GetCinemaRequest(projection));
+        buyTicketUseCase.getCinema(new CinemaInformationRequest(projection));
         var cinemaDto = (CinemaDto) model.getAttribute("cinema");
         var ticketDto = (TicketDto) model.getAttribute("selectedTicket");
         buyTicketUseCase.pay(new PaymentRequest(
                 ticketDto,
                 projection,
-                paymentForm.getNumber(),
                 cinemaDto,
-                projection.getMovieDto(),
-                paymentForm.getDate(),
                 new CreditCardDto(0, paymentForm.getNumberCard(), paymentForm.getCvv(), paymentForm.getDate()),
                 paymentForm.getEmail()
         ));
