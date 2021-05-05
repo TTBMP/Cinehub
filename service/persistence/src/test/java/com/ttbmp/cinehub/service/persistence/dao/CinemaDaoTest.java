@@ -19,25 +19,25 @@ class CinemaDaoTest {
 
     @Test
     void getCinemaById() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        CinemaDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
         assertDoesNotThrow(() -> dao.getCinemaById(1));
     }
 
     @Test
     void getCinemaByEmployee() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        CinemaDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
         assertDoesNotThrow(() -> dao.getCinemaByEmployee("0"));
     }
 
     @Test
     void getCinemaByMovieIdAndDate() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        CinemaDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
         assertDoesNotThrow(() -> dao.getCinemaByMovieIdAndDate(3, "2020-02-15"));
     }
 
     @Test
     void getCinemaByProjection() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        CinemaDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
         assertDoesNotThrow(() -> dao.getCinemaByProjection(1));
 
     }

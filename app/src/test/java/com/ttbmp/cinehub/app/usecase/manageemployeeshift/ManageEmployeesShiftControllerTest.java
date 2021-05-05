@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.app.usecase.manageemployeeshift;
 
 import com.ttbmp.cinehub.app.datamapper.CinemaDataMapper;
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftController;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
@@ -10,6 +11,7 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.CreateShiftRe
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetCinemaListResponse;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetShiftListResponse;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.ShiftRepeatResponse;
+import com.ttbmp.cinehub.domain.Cinema;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -32,13 +34,13 @@ class ManageEmployeesShiftControllerTest {
     }
 
     @Test
-    void getShiftList() {
+    void getShiftList() throws RepositoryException {
         var controller = new ManageEmployeesShiftController(
                 serviceLocator,
                 new MockManageEmployeePresenter()
         );
         var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
-        var cinema = cinemaRepository.getAllCinema().get(0);
+        var cinema = cinemaRepository.getCinema(0);
         var getShiftListRequest = new GetShiftListRequest(LocalDate.now(), CinemaDataMapper.mapToDto(cinema));
         controller.getShiftList(getShiftListRequest);
     }

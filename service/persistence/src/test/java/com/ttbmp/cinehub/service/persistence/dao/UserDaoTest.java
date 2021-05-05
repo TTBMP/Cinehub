@@ -17,13 +17,13 @@ class UserDaoTest {
 
     @Test
     void getUserById() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        UserDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getUserDao();
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getUserDao();
         assertDoesNotThrow(() -> dao.getUserById("1"));
     }
 
     @Test
     void getUserByTicket() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        UserDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getUserDao();
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getUserDao();
         assertDoesNotThrow(() -> dao.getUserByTicket(5));
     }
 

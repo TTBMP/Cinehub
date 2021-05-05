@@ -30,19 +30,19 @@ class MovieDaoTest {
 
     @Test
     void getMovieById() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        MovieDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getMovieDao();
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getMovieDao();
         assertDoesNotThrow(() -> dao.getMovieById(3));
     }
 
     @Test
     void getMovieByData() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        MovieDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getMovieDao();
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getMovieDao();
         assertDoesNotThrow(() -> dao.getMovieByData("2020-02-15"));
     }
 
     @Test
     void getMovieByProjection() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        MovieDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getMovieDao();
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getMovieDao();
         assertDoesNotThrow(() -> dao.getMovieByProjection(1));
     }
 
