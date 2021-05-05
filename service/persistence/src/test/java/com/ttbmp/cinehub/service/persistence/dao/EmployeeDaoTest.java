@@ -18,13 +18,13 @@ class EmployeeDaoTest {
 
     @Test
     void getEmployeeById() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        EmployeeDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
         assertDoesNotThrow(() -> dao.getEmployeeById("1"));
     }
 
     @Test
     void getEmployeeByShiftId() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        EmployeeDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getEmployeeDao();
         assertDoesNotThrow(() -> dao.getEmployeeByShiftId(1));
     }
 

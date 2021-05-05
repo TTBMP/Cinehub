@@ -17,14 +17,14 @@ class SeatDaoTest {
 
     @Test
     void getSeatListByHallId() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        SeatDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getSeatDao();
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getSeatDao();
         assertDoesNotThrow(() -> dao.getSeatList(0));
 
     }
 
     @Test
     void getSeatByTicketId() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        SeatDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getSeatDao();
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getSeatDao();
         assertDoesNotThrow(() -> dao.getSeatByTicketId(5));
 
     }

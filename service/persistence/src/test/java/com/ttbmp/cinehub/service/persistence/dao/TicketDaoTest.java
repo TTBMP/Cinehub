@@ -18,13 +18,13 @@ class TicketDaoTest {
 
     @Test
     void getTicketList() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        TicketDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getTicketDao();
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getTicketDao();
         assertDoesNotThrow(() -> dao.getTicketList(1));
     }
 
     @Test
     void execute_SaveTicket_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        TicketDao dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getTicketDao();
+        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getTicketDao();
         assertDoesNotThrow(() -> dao.insert(new Ticket(0, 1, 1, "0", 2)));
     }
 
