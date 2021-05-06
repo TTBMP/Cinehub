@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.app.repository.seat;
 
-import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Seat;
@@ -15,13 +14,7 @@ import java.util.stream.Collectors;
 
 public class JdbcSeatRepository implements SeatRepository {
 
-    private final ServiceLocator serviceLocator;
-
     private SeatDao seatDao = null;
-
-    public JdbcSeatRepository(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
-    }
 
     @Override
     public List<Seat> getSeatList(Hall hall) throws RepositoryException {

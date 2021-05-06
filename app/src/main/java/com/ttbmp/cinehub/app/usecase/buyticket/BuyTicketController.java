@@ -19,7 +19,6 @@ import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.Request;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
-import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketMagicBox;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketOpenBar;
@@ -104,7 +103,9 @@ public class BuyTicketController implements BuyTicketUseCase {
             var movie = movieRepository.getMovie(request.getMovieId());
             var date = request.getData();
             var cinemaList = cinemaRepository.getListCinema(movie, date);
-            buyTicketPresenter.presentCinemaList(new CinemaListResponse(CinemaDataMapper.mapToDtoList(cinemaList)));
+            buyTicketPresenter.presentCinemaList(
+                    new CinemaListResponse(CinemaDataMapper.mapToDtoList(cinemaList))
+            );
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetListCinemaNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -118,10 +119,12 @@ public class BuyTicketController implements BuyTicketUseCase {
     public void createTicket(TicketRequest request) {
         try {
             Request.validate(request);
-            var seats = SeatDataMapper.mapToEntityList(request.getSeatDtoList());
-            var position = request.getNumber();
-            var seat = seats.get(position);
-            var user = userRepository.getUser(authenticationService.signIn("", "").getUserId());
+            var seatList = SeatDataMapper.mapToEntityList(request.getSeatDtoList());
+            var position = request.getPosition();
+            var seat = seatList.get(position);
+            var user = userRepository.getUser(
+                    authenticationService.signIn("", "").getUserId()
+            );
             var projection = projectionRepository.getProjection(request.getProjectionId());
 
             /*-----------DECORATOR PATTERN GOF---------*/
@@ -136,7 +139,9 @@ public class BuyTicketController implements BuyTicketUseCase {
                 ticket = new TicketSkipLine(ticket);
             }
             /*-----------------------------------------*/
-            buyTicketPresenter.setSelectedTicket(new TicketResponse(TicketDataMapper.mapToDto(ticket)));
+            buyTicketPresenter.setSelectedTicket(
+                    new TicketResponse(TicketDataMapper.mapToDto(ticket))
+            );
 
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetTicketBySeatsNullRequest();
@@ -174,12 +179,14 @@ public class BuyTicketController implements BuyTicketUseCase {
     public void getProjection(ProjectionRequest request) {
         try {
             var hall = hallRepository.getHall(request.getHallId());
-            Projection projection = projectionRepository.getProjection(
+            var projection = projectionRepository.getProjection(
                     request.getLocalDate(),
                     request.getStartTime(),
                     hall
             );
-            buyTicketPresenter.presentProjection(new ProjectionResponse(ProjectionDataMapper.mapToDto(projection)));
+            buyTicketPresenter.presentProjection(
+                    new ProjectionResponse(ProjectionDataMapper.mapToDto(projection))
+            );
         } catch (RepositoryException e) {
             buyTicketPresenter.presentGetProjectionRepositoryException(e.getMessage());
         }
@@ -207,10 +214,14 @@ public class BuyTicketController implements BuyTicketUseCase {
     public void getListOfSeat(CinemaInformationRequest request) {
         try {
             Request.validate(request);
-            var projection = ProjectionDataMapper.mapToEntity(request.getProjectionDto());
+            var projection = ProjectionDataMapper.mapToEntity(
+                    request.getProjectionDto()
+            );
             var hall = projection.getHall();
             var seatList = hall.getSeatList();
-            buyTicketPresenter.presentSeatList(new NumberOfSeatsResponse(SeatDataMapper.mapToDtoList(seatList)));
+            buyTicketPresenter.presentSeatList(
+                    new NumberOfSeatsResponse(SeatDataMapper.mapToDtoList(seatList))
+            );
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentGetNumberOfSeatsNullRequest();
         } catch (Request.InvalidRequestException e) {

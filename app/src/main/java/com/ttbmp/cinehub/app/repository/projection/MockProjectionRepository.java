@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
  */
 public class MockProjectionRepository implements ProjectionRepository {
 
+    private static final String TIME ="16:00";
     private static final List<ProjectionData> PROJECTION_DATA_LIST = new ArrayList<>();
     private static int projectionIdCounter = 0;
 
@@ -37,8 +38,8 @@ public class MockProjectionRepository implements ProjectionRepository {
                         var finalDate = date;
                         var shiftIdList = MockShiftRepository.getShiftDataList().stream()
                                 .filter(d -> LocalDate.parse(d.getDate()).equals(finalDate)
-                                        && LocalTime.parse("16:00").isAfter(LocalTime.parse(d.getStart()))
-                                        && LocalTime.parse("16:00").isBefore(LocalTime.parse(d.getEnd()))
+                                        && LocalTime.parse(TIME).isAfter(LocalTime.parse(d.getStart()))
+                                        && LocalTime.parse(TIME).isBefore(LocalTime.parse(d.getEnd()))
                                 )
                                 .map(MockShiftRepository.ShiftData::getId)
                                 .collect(Collectors.toList());
@@ -60,7 +61,7 @@ public class MockProjectionRepository implements ProjectionRepository {
                         PROJECTION_DATA_LIST.add(new ProjectionData(
                                 projectionIdCounter++,
                                 date.toString(),
-                                LocalTime.parse("16:00").toString(),
+                                LocalTime.parse(TIME).toString(),
                                 movieData.getId(),
                                 hallData.getId(),
                                 projectionistId,

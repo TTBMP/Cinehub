@@ -18,7 +18,7 @@ public class TicketRequest extends Request {
     public static final Request.Error MISSING_NUMBER_ERROR = new Request.Error("Number can't be null");
 
     private final List<SeatDto> seatDtoList;
-    private final Integer number;
+    private final Integer position;
     private final Boolean openBarOption;
     private final Boolean magicBoxOption;
     private final Boolean skipLineOption;
@@ -26,13 +26,13 @@ public class TicketRequest extends Request {
 
 
     public TicketRequest(List<SeatDto> seatDtoList,
-                         Integer number,
+                         Integer position,
                          Boolean magicBoxOption,
                          Boolean openBarOption,
                          Boolean skipLineOption,
                          int projectionId) {
         this.seatDtoList = seatDtoList;
-        this.number = number;
+        this.position = position;
         this.magicBoxOption = magicBoxOption;
         this.openBarOption = openBarOption;
         this.skipLineOption = skipLineOption;
@@ -57,8 +57,8 @@ public class TicketRequest extends Request {
 
 
 
-    public Integer getNumber() {
-        return number;
+    public Integer getPosition() {
+        return position;
     }
 
     public int getProjectionId() {
@@ -71,7 +71,7 @@ public class TicketRequest extends Request {
             addError(MISSING_LIST_SEATS_ERROR);
         }
 
-        if (number == null) {
+        if (position == null) {
             addError(MISSING_NUMBER_ERROR);
         }
         if (magicBoxOption == null) {

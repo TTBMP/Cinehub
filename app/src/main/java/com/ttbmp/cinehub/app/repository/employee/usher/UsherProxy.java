@@ -10,6 +10,7 @@ import com.ttbmp.cinehub.domain.employee.Usher;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -98,7 +99,7 @@ public class UsherProxy extends Usher {
                 setShiftList(shiftRepository.getShiftList(this));
                 return super.getShiftList();
             } else {
-                return null;
+               return new ArrayList<>();
             }
         } catch (RepositoryException e) {
             throw new LazyLoadingException(e.getMessage());
@@ -117,8 +118,8 @@ public class UsherProxy extends Usher {
         try {
             return shiftRepository.getAllEmployeeShiftBetweenDate(this, start, end);
         } catch (RepositoryException e) {
-            e.printStackTrace();
-            return null;
+            throw new LazyLoadingException(e.getMessage());
+
         }
     }
 
