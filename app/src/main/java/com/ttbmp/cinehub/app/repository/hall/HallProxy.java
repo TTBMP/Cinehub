@@ -17,8 +17,8 @@ public class HallProxy extends Hall {
 
     private boolean isSeatListLoaded = false;
 
-    public HallProxy(int id, SeatRepository seatRepository) {
-        super(id, null);
+    public HallProxy(int id, SeatRepository seatRepository, String name) {
+        super(id, null, name);
         this.seatRepository = seatRepository;
     }
 

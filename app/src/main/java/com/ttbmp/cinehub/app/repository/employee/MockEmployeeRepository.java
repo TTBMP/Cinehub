@@ -1,12 +1,14 @@
 package com.ttbmp.cinehub.app.repository.employee;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistProxy;
 import com.ttbmp.cinehub.app.repository.employee.usher.UsherProxy;
 import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
+import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
@@ -71,6 +73,14 @@ public class MockEmployeeRepository implements EmployeeRepository {
                 .map(d -> new EmployeeFactory().createEmployee(d))
                 .collect(Collectors.toList())
                 .get(0);
+    }
+
+    @Override
+    public List<Employee> getEmployeeList(Cinema cinema) throws RepositoryException {
+        return  EMPLOYEE_DATA_LIST.stream()
+                .filter(d->d.getCinemaId() == cinema.getId())
+                .map(d -> new EmployeeFactory().createEmployee(d))
+                .collect(Collectors.toList());
     }
 
     public static class EmployeeData {

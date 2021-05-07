@@ -17,20 +17,20 @@ public interface ProjectionistShiftDao {
     ) throws DaoMethodException;
 
     @Insert
-    void insert(@NotNull Shift shift) throws DaoMethodException;
+    void insert(ProjectionistShift shift) throws DaoMethodException;
 
     @Insert
-    void insert(@NotNull List<Shift> shift) throws DaoMethodException;
+    void insert(@NotNull List<ProjectionistShift> shift) throws DaoMethodException;
 
     @Update
-    void update(@NotNull Shift shift) throws DaoMethodException;
+    void update(@NotNull ProjectionistShift shift) throws DaoMethodException;
 
     @Update
-    void update(@NotNull List<Shift> shift) throws DaoMethodException;
+    void update(@NotNull List<ProjectionistShift> shift) throws DaoMethodException;
 
     @Delete
-    void delete(@NotNull Shift shift) throws DaoMethodException;
+    void delete(@NotNull ProjectionistShift shift) throws DaoMethodException;
 
     @Delete
-    void delete(@NotNull List<Shift> shift) throws DaoMethodException;
+    void delete(@NotNull List<ProjectionistShift> shift) throws DaoMethodException;
 }

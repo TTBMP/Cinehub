@@ -131,11 +131,11 @@ public class AssignShiftViewController extends ViewController {
 
         if (!viewModel.isRepeatVisibility()) {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(
-                    viewModel.getSelectedDayWeek().getEmployee(),
+                    viewModel.getSelectedDayWeek().getEmployee().getId(),
                     viewModel.getSelectedDayWeek().getDate(),
                     viewModel.getStartSpinnerTime().withNano(0),
                     viewModel.getEndSpinnerTime().withNano(0),
-                    viewModel.getSelectedHall()));
+                    viewModel.getSelectedHall().getId()));
         } else {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).saveRepeatedShift(
                     new ShiftRepeatRequest(

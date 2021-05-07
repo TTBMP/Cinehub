@@ -9,12 +9,12 @@ import java.util.List;
 /**
  * @author Massimo Mazzetti
  */
-public class DayWeek {
+public class Day {
     private LocalDate date;
     private List<ShiftDto> shiftList;
     private EmployeeDto employee;
 
-    public DayWeek(LocalDate date, List<ShiftDto> shiftList, EmployeeDto employee) {
+    public Day(LocalDate date, List<ShiftDto> shiftList, EmployeeDto employee) {
         this.date = date;
         this.shiftList = shiftList;
         this.employee = employee;

@@ -7,12 +7,16 @@ import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistProx
 import com.ttbmp.cinehub.app.repository.employee.usher.UsherProxy;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
+import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.shift.Shift;
 import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
 import com.ttbmp.cinehub.service.persistence.dao.EmployeeDao;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourceProvider;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class JdbcEmployeeRepository implements EmployeeRepository {
 
@@ -40,6 +44,16 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
         try {
             var employee = getEmployeeDao().getEmployeeByShiftId(shift.getId());
             return getEmployee(employee);
+        } catch (DaoMethodException e) {
+            throw new RepositoryException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Employee> getEmployeeList(Cinema cinema) throws RepositoryException {
+        try {
+            var employeeList = getEmployeeDao().getEmployeeList(cinema.getId());
+            return getEmployeeList(employeeList);
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
@@ -75,6 +89,30 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
             }
         }
         return employeeDao;
+    }
+
+    private List<Employee> getEmployeeList(List<com.ttbmp.cinehub.service.persistence.entity.Employee> employeeList) throws RepositoryException {
+
+        List<Employee> allEmployeeList = new ArrayList<>();
+        for (var employee : employeeList) {
+            if (employee.getRole().equals("maschera")) {
+                allEmployeeList.add(new UsherProxy(
+                        employee.getIdUser(),
+                        serviceLocator.getService(UserRepository.class),
+                        serviceLocator.getService(CinemaRepository.class),
+                        serviceLocator.getService(ShiftRepository.class)
+                ));
+            } else if (employee.getRole().equals("proiezionista")) {
+                allEmployeeList.add(new ProjectionistProxy(
+                        employee.getIdUser(),
+                        serviceLocator.getService(UserRepository.class),
+                        serviceLocator.getService(CinemaRepository.class),
+                        serviceLocator.getService(ShiftRepository.class)
+                ));
+            }
+        }
+        return allEmployeeList;
+
     }
 
 }

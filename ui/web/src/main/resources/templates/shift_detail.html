@@ -19,21 +19,22 @@
 <h1 align="center">Shift Detail</h1>
 
 <br/>
-<div class="container" th:value="${employee} + ${shiftDetail} + ${projection}">
+<!--<div class="container" th:value="${employee} + ${shiftDetail} + ${projection}">-->
+<div class="container"}>
     <div class="row">
         <div class="col-sm"> Name</div>
-        <div class="col-sm" th:text="${employee.name}"> Pippo</div>
+        <div class="col-sm" th:text="${shiftDetail.employee.name}"> Pippo</div>
     </div>
     <div class="row">
         <div class="col-sm"> Surname</div>
-        <div class="col-sm" th:text="${employee.surname}"> Pluto</div>
+        <div class="col-sm" th:text="${shiftDetail.employee.surname}"> Pluto</div>
     </div>
 
     <div class="row">
         <div class="col-sm"> Role</div>
-        <div class="col-sm" th:if="${projection}">Projectionist</div>
+        <div class="col-sm" th:if="${shiftDetail.employee.role == 'usher'}">Usher</div>
         <!-- ELSE -->
-        <div class="col-sm" th:unless="${projection}">Usher</div>
+        <div class="col-sm" th:unless="${shiftDetail.employee.role == 'usher'}">Projectionist</div>
     </div>
 
     <div class="row">
@@ -50,11 +51,11 @@
     </div>
     <div class="row">
         <div class="col-sm"> Cinema</div>
-        <div class="col-sm" th:text="${employee.cinema.name}"> Comunale</div>
+        <div class="col-sm" th:text="${shiftDetail.employee.cinema.name}"> </div>
     </div>
-    <div class="row" th:if="${projection}">
+    <div class="row" th:if="${shiftDetail.employee.role == 'projectionist'}">
         <div class="col-sm"> Hall</div>
-        <div class="col-sm" th:text="${shiftDetail.hallDto.id}"> 1</div>
+        <div class="col-sm" th:text="${shiftDetail.hall.name}"> 1</div>
     </div>
 
 
@@ -67,21 +68,18 @@
             Close
         </button>
     </a>
-
-    <div th:if="${shiftDetail.date.isAfter({now.minusDays(1)})}" th:value="${now}">
+    <div th:if="${data.isAfter({now.minusDays(1)})}" th:value="${now} + ${data}">
         <div class="container">
             <div class="row">
                 <div class="col-6 col-sm-3"></div>
                 <div class="col-6 col-sm-3">
                     <button class="btn btn-warning" data-target="#modifyShift" data-toggle="modal" type="button">Modify
-                        changes
+                        Shift
                     </button>
                 </div>
                 <div class="col-6 col-sm-3">
                     <form action="/delete_shift" method="get">
-                        <input name="shiftDate" th:value="${shiftDetail.date}" type="hidden"/>
-                        <input name="idCinema" th:value="${employee.cinema.id}" type="hidden"/>
-                        <input name="shiftId" th:value="${shiftDetail.id}" type="hidden"/>
+                        <input th:name="shiftId" th:value="${shiftDetail.shiftId}" type="hidden"/>
                         <button class="btn btn-danger"
                                 type="submit">Delete Shift
                         </button>
@@ -100,22 +98,21 @@
                 <h5 class="modal-title">Modify Shift</h5>
             </div>
             <div class="modal-body">
-                <form action="#" method="post" th:object="${modifyRequest}">
+                <form action="#" method="post" th:object="${modifyRequest} " >
                     <div class="container">
                         <div class="row">
                             <div class="col-sm"> Name</div>
-                            <div class="col-sm" th:text="${employee.name}"> Pippo</div>
+                            <div class="col-sm" th:text="${shiftDetail.employee.name}"> Pippo</div>
                         </div>
                         <div class="row">
                             <div class="col-sm"> Surname</div>
-                            <div class="col-sm" th:text="${employee.surname}"> Pluto</div>
+                            <div class="col-sm" th:text="${shiftDetail.employee.surname}"> Pluto</div>
                         </div>
 
                         <div class="row">
                             <div class="col-sm"> Role</div>
-                            <div class="col-sm" th:if="${projection}">Projectionist</div>
-                            <!-- ELSE -->
-                            <div class="col-sm" th:unless="${projection}">Usher</div>
+                            <div class="col-sm" th:if="${shiftDetail.employee.role == 'usher'}">Usher</div>
+                            <div class="col-sm" th:unless="${shiftDetail.employee.role == 'usher'}">Projectionist</div>
                         </div>
 
                         <div class="row">
@@ -125,8 +122,8 @@
                         </div>
                         <div class="row">
                             <div class="col-sm"> Start Time</div>
-                            <input id="modifyStartTime" required th:field="*{inizio}" th:text="${shiftDetail.start}"
-                                   th:value="${inizio}" type="time">
+                            <input id="modifyStartTime" required th:field="*{start}" th:text="${shiftDetail.start}"
+                                   th:value="${start}" type="time">
                         </div>
                         <div class=" row">
                             <div class="col-sm"> End Time</div>
@@ -135,18 +132,27 @@
                         </div>
                         <div class=" row">
                             <div class="col-sm"> Cinema</div>
-                            <div class="col-sm" th:text="${employee.cinema.name}"></div>
+                            <div class="col-sm" th:text="${shiftDetail.employee.cinema.name}"></div>
                         </div>
-                        <div class="row" th:if="${projection}">
+                        <div class="row" th:if="${shiftDetail.employee.role == 'projectionist'}">
                             <div class="col-sm"> Hall</div>
-                            <select id="modifyHallComboBox" th:field="*{hallId}" th:value="${hall}">
+                            <select id="modifyHallComboBox" th:field="*{hall.id}" th:value="${hall}">
                                 <option th:each="hall : ${hallList}"
-                                        th:text="${hall.id}"
+                                        th:text="${hall.name}"
                                         th:value="${hall.id}">1
                                 </option>
                             </select>
                         </div>
                     </div>
+
+                    <input th:name="shiftId" th:value="${shiftDetail.shiftId}" type="hidden"/>
+                    <input th:name="employee.id" th:value="${shiftDetail.employee.id}" type="hidden"/>
+                    <input th:name="employee.role" th:value="${shiftDetail.employee.toString()}" type="hidden"/>
+                    <input th:name="employee.name" th:value="${shiftDetail.employee.name}" type="hidden"/>
+                    <input th:name="employee.surname" th:value="${shiftDetail.employee.surname}" type="hidden"/>
+                    <input th:name="employee.cinema.id" th:value="${shiftDetail.employee.cinema.id}" type="hidden"/>
+                    <input th:name="employee.cinema.name" th:value="${shiftDetail.employee.cinema.name}" type="hidden"/>
+                    <input th:name="change" th:value="true" type="hidden"/>
 
                     <br/>
                     <div class="modal-footer">

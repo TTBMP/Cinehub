@@ -20,7 +20,7 @@ class ShiftDaoTest {
     @Test
     void getShiftList() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
         var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getShiftDao();
-        assertDoesNotThrow(dao::getShiftList);
+        assertDoesNotThrow(()->dao.getCinemaShiftListBetween(1, "2021-05-10", "2021-05-15"));
     }
 
     @Test

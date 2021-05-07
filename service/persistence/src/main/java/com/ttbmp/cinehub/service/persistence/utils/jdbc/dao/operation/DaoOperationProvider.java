@@ -34,7 +34,7 @@ public class DaoOperationProvider {
             Delete.class
     );
 
-    public DaoOperation getDaoOperation(@NotNull Method method, @NotNull Connection connection,
+    public DaoOperation  getDaoOperation(@NotNull Method method, @NotNull Connection connection,
                                         List<Class<?>> dataSourceEntityList) throws DaoMethodException {
         try {
             operationInstanceMap.putIfAbsent(method, createDaoOperation(method, connection, dataSourceEntityList));

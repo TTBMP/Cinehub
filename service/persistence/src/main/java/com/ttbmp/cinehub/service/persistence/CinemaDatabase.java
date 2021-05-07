@@ -25,7 +25,8 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceMeth
                 Ticket.class,
                 User.class,
                 Seat.class,
-                Employee.class
+                Employee.class,
+                ProjectionistShift.class
         }
 )
 

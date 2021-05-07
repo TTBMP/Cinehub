@@ -11,7 +11,7 @@ import java.util.Objects;
  * @author Massimo Mazzetti
  */
 @SuppressWarnings("java:S110")
-public class ShiftCalendarTableCell extends TableCell<EmployeeShiftWeek, DayWeek> {
+public class ShiftCalendarTableCell extends TableCell<EmployeeShiftWeek, Day> {
     private final Activity activity;
     private final NavController navController;
 
@@ -22,9 +22,9 @@ public class ShiftCalendarTableCell extends TableCell<EmployeeShiftWeek, DayWeek
     }
 
     @Override
-    protected void updateItem(DayWeek dayWeek, boolean empty) {
-        super.updateItem(dayWeek, empty);
-        if (dayWeek != null) {
+    protected void updateItem(Day day, boolean empty) {
+        super.updateItem(day, empty);
+        if (day != null) {
             CalendarShiftItemView item = null;
             try {
                 item = new CalendarShiftItemView();
@@ -33,7 +33,7 @@ public class ShiftCalendarTableCell extends TableCell<EmployeeShiftWeek, DayWeek
                 e.printStackTrace();
             }
             Objects.requireNonNull(item);
-            item.getController().load(activity, navController, dayWeek);
+            item.getController().load(activity, navController, day);
             setGraphic(item.getRoot());
         }
     }

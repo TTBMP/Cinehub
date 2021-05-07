@@ -2,13 +2,15 @@ package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class ModifyShiftViewController {
 
-    @GetMapping("/shift_modify")
+    @PostMapping("/shift_modify")
     public String shiftModify(Model model) {
-        return "/shift_modify";
+
+
+        return "/shift_detail";
     }
 }

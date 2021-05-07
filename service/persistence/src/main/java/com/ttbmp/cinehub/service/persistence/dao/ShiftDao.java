@@ -5,7 +5,6 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.*;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -14,8 +13,15 @@ import java.util.List;
 @Dao
 public interface ShiftDao {
 
-    @Query("SELECT * FROM turno")
-    List<Shift> getShiftList(
+    @Query("SELECT turno.* " +
+            "FROM cinemadb.turno, cinemadb.dipendente " +
+            "where dipendente.id_cinema = :idCinema " +
+            "and dipendente.id_utente = turno.id_dipendente " +
+            "and turno.data between :start and :end;")
+    List<Shift> getCinemaShiftListBetween(
+            @Parameter(name = "idCinema") @NotNull Integer idCinema,
+            @Parameter(name = "start") @NotNull String start,
+            @Parameter(name = "end") @NotNull String end
     ) throws DaoMethodException;
 
     @Query("SELECT turno.* from cinemadb.turno where turno.id = :id ")
@@ -30,7 +36,7 @@ public interface ShiftDao {
 
     @Query("SELECT  turno.*  " +
             "from cinemadb.dipendente, cinemadb.turno " +
-            "where dipendente.id_utente = turno.id_dipendente "+
+            "where dipendente.id_utente = turno.id_dipendente " +
             "and dipendente.id_utente = turno.id_dipendente " +
             "and dipendente.id_utente = :idEmployee " +
             "and turno.data between :start  and  :end ")
@@ -40,6 +46,11 @@ public interface ShiftDao {
             @Parameter(name = "end") String end
     ) throws DaoMethodException;
 
+    @Query("SELECT turno.* from cinemadb.turno where turno.id_dipendente = :employeeId and data = :date and inizio = :start and fine = :end")
+    Shift getShift(@Parameter(name = "employeeId") @NotNull String employeeId,
+                   @Parameter(name = "date") @NotNull String date,
+                   @Parameter(name = "start") @NotNull String start,
+                   @Parameter(name = "end") @NotNull String end) throws DaoMethodException;
 
     @Insert
     void insert(@NotNull Shift shift) throws DaoMethodException;

@@ -77,7 +77,7 @@ public class ShowShiftDetailViewController extends ViewController {
         }
 
         deleteShiftButton.setOnAction(a -> {
-            activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(viewModel.getSelectedShift()));
+            activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(viewModel.getSelectedShift().getId()));
             try {
                 navController.popBackStack();
             } catch (IOException e) {

@@ -1,12 +1,10 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.dto.EmployeeDto;
-import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.CreateShiftRequest;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetShiftListRequest;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetEmployeeListRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewShiftForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,7 +40,7 @@ public class AssignProjectionistShiftViewController {
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema, LocalDate.now()));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var shiftRequest = new NewShiftForm();
         model.addAttribute(ASSIGN_REQUEST, shiftRequest);
@@ -55,15 +53,16 @@ public class AssignProjectionistShiftViewController {
                                   Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
-        model.addAttribute("selectedEmployeeId", shiftRequest.getEmployeeId());
-        model.addAttribute("selectedHallId", shiftRequest.getHallId());
         useCase.getCinemaList();
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
-        model.addAttribute("now", LocalDate.now().plusDays(1));
-        var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
-        var selectedHall = (HallDto) model.getAttribute("selectedHall");
-        useCase.createShift(new CreateShiftRequest(selectedEmployee, shiftRequest.getDate(), shiftRequest.getInizio(), shiftRequest.getEnd(), selectedHall));
+        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema, LocalDate.now()));
+        useCase.createShift(new CreateShiftRequest(
+                shiftRequest.getEmployee().getId(),
+                LocalDate.parse(shiftRequest.getDate()),
+                shiftRequest.getStart(),
+                shiftRequest.getEnd(),
+                shiftRequest.getHall().getId())
+        );
         var error = (boolean) model.getAttribute(ERROR);
         if (!error) {
             return SHIFT_ASSIGNED;

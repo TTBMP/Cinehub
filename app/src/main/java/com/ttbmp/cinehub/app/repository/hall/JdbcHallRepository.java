@@ -30,7 +30,7 @@ public class JdbcHallRepository implements HallRepository {
         try {
             var hallList = getHallDao().getHallByCinemaId(cinema.getId());
             return hallList.stream()
-                    .map(movie -> new HallProxy(movie.getId(), serviceLocator.getService(SeatRepository.class)))
+                    .map(hall -> new HallProxy(hall.getId(), serviceLocator.getService(SeatRepository.class), hall.getNumber()))
                     .collect(Collectors.toList());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
@@ -41,7 +41,7 @@ public class JdbcHallRepository implements HallRepository {
     public Hall getHall(Projection projection) throws RepositoryException {
         try {
             var hall = getHallDao().getHallByProjectionId(projection.getId());
-            return new HallProxy(hall.getId(), serviceLocator.getService(SeatRepository.class));
+            return new HallProxy(hall.getId(), serviceLocator.getService(SeatRepository.class), hall.getNumber());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
@@ -53,7 +53,7 @@ public class JdbcHallRepository implements HallRepository {
     public Hall getHall(ProjectionistShift projectionistShift) throws RepositoryException {
         try {
             var hall = getHallDao().getHallByProjectionistShift(projectionistShift.getId());
-            return new HallProxy(hall.getId(), serviceLocator.getService(SeatRepository.class));
+            return new HallProxy(hall.getId(), serviceLocator.getService(SeatRepository.class), hall.getNumber());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
@@ -65,7 +65,10 @@ public class JdbcHallRepository implements HallRepository {
     public Hall getHall(int hallId) throws RepositoryException {
         try {
             var hall = getHallDao().getHallById(hallId);
-            return new HallProxy(hall.getId(), serviceLocator.getService(SeatRepository.class));
+            if( hall == null){
+                return null;
+            }
+            return new HallProxy(hall.getId(), serviceLocator.getService(SeatRepository.class), hall.getNumber());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }

@@ -5,7 +5,7 @@ import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.CreateShiftRequest;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetShiftListRequest;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetEmployeeListRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewShiftForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +41,7 @@ public class AssignUsherShiftViewController {
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema, LocalDate.now()));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var shiftRequest = new NewShiftForm();
         model.addAttribute(ASSIGN_REQUEST, shiftRequest);
@@ -54,14 +54,17 @@ public class AssignUsherShiftViewController {
                                  Model model) {
 
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-        model.addAttribute("selectedEmployeeId", request.getEmployeeId());
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
-        var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
+        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema, LocalDate.now()));
         model.addAttribute("now", LocalDate.now().plusDays(1));
-        useCase.createShift(new CreateShiftRequest(selectedEmployee, request.getDate(), request.getInizio(), request.getEnd()));
+        useCase.createShift(new CreateShiftRequest(
+                request.getEmployee().getId(),
+                LocalDate.parse(request.getDate()),
+                request.getStart(),
+                request.getEnd())
+        );
         var error = (boolean) model.getAttribute(ERROR);
         if (!error) {
             return SHIFT_ASSIGNED;

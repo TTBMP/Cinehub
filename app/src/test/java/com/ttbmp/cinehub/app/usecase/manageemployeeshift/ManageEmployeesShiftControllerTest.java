@@ -7,10 +7,7 @@ import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftController;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.CreateShiftResponse;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetCinemaListResponse;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetShiftListResponse;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.ShiftRepeatResponse;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
 import com.ttbmp.cinehub.domain.Cinema;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -41,7 +38,7 @@ class ManageEmployeesShiftControllerTest {
         );
         var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
         var cinema = cinemaRepository.getCinema(0);
-        var getShiftListRequest = new GetShiftListRequest(LocalDate.now(), CinemaDataMapper.mapToDto(cinema));
+        var getShiftListRequest = new GetShiftListRequest(CinemaDataMapper.mapToDto(cinema), LocalDate.now(), LocalDate.now());
         controller.getShiftList(getShiftListRequest);
     }
 
@@ -51,6 +48,11 @@ class ManageEmployeesShiftControllerTest {
         @Override
         public void presentShiftList(GetShiftListResponse shiftList) {
             Assertions.assertNotEquals(0, shiftList.getShiftDtoList().size());
+        }
+
+        @Override
+        public void presentEmployeeList(GetEmployeeListResponse employeeList) {
+
         }
 
         @Override
@@ -81,6 +83,16 @@ class ManageEmployeesShiftControllerTest {
 
         @Override
         public void presentCreateShiftError(Throwable error) {
+
+        }
+
+        @Override
+        public void presentInvalidEmployeeListRequest(GetEmployeeListRequest request) {
+
+        }
+
+        @Override
+        public void presentEmployeeListNullRequest() {
 
         }
 

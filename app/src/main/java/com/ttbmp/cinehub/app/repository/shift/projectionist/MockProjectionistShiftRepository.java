@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.repository.shift.projectionist;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.MockProjectionistRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
 import com.ttbmp.cinehub.app.repository.hall.HallRepository;
@@ -57,6 +58,22 @@ public class MockProjectionistShiftRepository implements ProjectionistShiftRepos
                 serviceLocator.getService(HallRepository.class),
                 serviceLocator.getService(ProjectionRepository.class)
         );
+    }
+
+    @Override
+    public void saveShift(ProjectionistShift shift) throws RepositoryException {
+        PROJECTIONIST_SHIFT_DATA_LIST.add(new ProjectionistShiftData(shift.getId(), shift.getHall().getId()));
+    }
+
+    @Override
+    public void modifyShift(ProjectionistShift shift) throws RepositoryException {
+        var data = PROJECTIONIST_SHIFT_DATA_LIST.stream()
+                .filter(d -> d.shiftId == shift.getId())
+                .collect(Collectors.toList())
+                .get(0);
+        data.shiftId = shift.getId();
+        data.hallId = shift.getHall().getId();
+
     }
 
     public static class ProjectionistShiftData {

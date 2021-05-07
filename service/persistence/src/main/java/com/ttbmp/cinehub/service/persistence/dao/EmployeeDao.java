@@ -24,6 +24,11 @@ public interface EmployeeDao {
             @Parameter(name = "id") @NotNull int id
     ) throws DaoMethodException;
 
+    @Query("SELECT * FROM dipendente WHERE dipendente.id_cinema = :idCinema ")
+    List<Employee> getEmployeeList(
+            @Parameter(name = "idCinema") @NotNull int cinemaId
+    ) throws DaoMethodException;
+
     @Insert
     void insert(@NotNull Employee employee) throws DaoMethodException;
 

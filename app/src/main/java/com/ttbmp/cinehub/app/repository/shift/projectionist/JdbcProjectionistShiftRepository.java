@@ -10,6 +10,7 @@ import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
 import com.ttbmp.cinehub.service.persistence.dao.ProjectionistShiftDao;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourceProvider;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
 public class JdbcProjectionistShiftRepository implements ProjectionistShiftRepository {
 
@@ -35,13 +36,34 @@ public class JdbcProjectionistShiftRepository implements ProjectionistShiftRepos
         );
     }
 
+    @Override
+    public void saveShift(ProjectionistShift shift) throws RepositoryException {
+        try {
+            var shiftDto = new com.ttbmp.cinehub.service.persistence.entity.ProjectionistShift(shift.getId(), shift.getHall().getId());
+            getProjectionistShiftDao().insert(shiftDto);
+        } catch (DaoMethodException e) {
+           throw  new RepositoryException(e.getMessage());
+        }
+    }
 
-    private ProjectionistShiftDao getProjectionistShiftDao() {
+    @Override
+    public void modifyShift(ProjectionistShift shift) throws RepositoryException {
+        try {
+            serviceLocator.getService(ShiftRepository.class).modifyShift(shift);
+            var shiftDto = new com.ttbmp.cinehub.service.persistence.entity.ProjectionistShift(shift.getId(), shift.getHall().getId());
+            getProjectionistShiftDao().update(shiftDto);
+        } catch (DaoMethodException e) {
+            throw  new RepositoryException(e.getMessage());
+        }
+    }
+
+
+    private ProjectionistShiftDao getProjectionistShiftDao() throws RepositoryException {
         if (projectionistShiftDao == null) {
             try {
                 this.projectionistShiftDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getProjectionistShiftDao();
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RepositoryException(e.getMessage());
             }
         }
         return projectionistShiftDao;

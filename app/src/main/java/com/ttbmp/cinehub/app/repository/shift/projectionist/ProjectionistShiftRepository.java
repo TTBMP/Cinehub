@@ -10,4 +10,7 @@ public interface ProjectionistShiftRepository {
 
     ProjectionistShift getProjectionistShift(int shiftId) throws RepositoryException;
 
+    void saveShift(ProjectionistShift shift) throws RepositoryException;
+
+    void modifyShift(ProjectionistShift shift) throws RepositoryException;
 }
