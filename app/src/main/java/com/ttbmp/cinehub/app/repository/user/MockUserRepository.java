@@ -43,7 +43,7 @@ public class MockUserRepository implements UserRepository {
                         d.name,
                         d.surname,
                         d.email,
-                        d.role)
+                        d.roles)
                 )
                 .collect(Collectors.toList())
                 .get(0);
@@ -55,14 +55,14 @@ public class MockUserRepository implements UserRepository {
         private String name;
         private String surname;
         private String email;
-        private String role;
+        private String roles;
 
-        public UserData(String id, String name, String surname, String email, String role) {
+        public UserData(String id, String name, String surname, String email, String roles) {
             this.id = id;
             this.name = name;
             this.surname = surname;
             this.email = email;
-            this.role = role;
+            this.roles = roles;
         }
 
         public String getId() {
@@ -97,12 +97,12 @@ public class MockUserRepository implements UserRepository {
             this.email = email;
         }
 
-        public String getRole() {
-            return role;
+        public String getRoles() {
+            return roles;
         }
 
-        public void setRole(String role) {
-            this.role = role;
+        public void setRoles(String role) {
+            this.roles = role;
         }
 
     }

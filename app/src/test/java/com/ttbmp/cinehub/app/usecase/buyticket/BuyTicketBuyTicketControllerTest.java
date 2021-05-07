@@ -38,8 +38,8 @@ class BuyTicketBuyTicketControllerTest {
                         .getMovieList(String.valueOf(LocalDate.now()));
                 var expected = MovieDataMapper.mapToDtoList(movieDtoList);
                 var actual = response.getMovieList();
-                for(var i = 0; i<expected.size();i++){
-                    if (expected.get(i).equals(actual.get(i))){
+                for (var i = 0; i < expected.size(); i++) {
+                    if (expected.get(i).equals(actual.get(i))) {
                         result = false;
                         break;
                     }

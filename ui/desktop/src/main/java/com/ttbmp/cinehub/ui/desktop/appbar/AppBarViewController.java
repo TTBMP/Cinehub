@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.ui.desktop.appbar;
 
-import com.ttbmp.cinehub.app.usecase.getuserrole.RoleRequest;
 import com.ttbmp.cinehub.app.usecase.getuserrole.GetUserRoleHandler;
 import com.ttbmp.cinehub.app.usecase.getuserrole.GetUserRoleUseCase;
+import com.ttbmp.cinehub.app.usecase.getuserrole.RoleRequest;
 import com.ttbmp.cinehub.app.usecase.logout.LogoutHandler;
 import com.ttbmp.cinehub.app.usecase.logout.LogoutRequest;
 import com.ttbmp.cinehub.app.usecase.logout.LogoutUseCase;
