@@ -1,14 +1,11 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift;
 
-import com.ttbmp.cinehub.app.datamapper.EmployeeDataMapper;
-import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
-import com.ttbmp.cinehub.domain.shift.Shift;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.DayWeek;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.EmployeeShiftWeek;
 
@@ -56,16 +53,16 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
 
     @Override
     public void presentSaveShift() {
-        Shift savedShift = ShiftDataMapper.mapToEntity(viewModel.getShiftCreated());
+        ShiftDto savedShift = viewModel.getShiftCreated();
         TemporalField temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
         List<EmployeeShiftWeek> employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
         employeeShiftWeeks.forEach(e -> {
-            if (EmployeeDataMapper.matToEntity(e.getEmployeeDto()).equals(savedShift.getEmployee())
-                    && LocalDate.parse(savedShift.getDate()).get(temporalField) == viewModel.getSelectedWeek().get(temporalField)
-                    && LocalDate.parse(savedShift.getDate()).getYear() == viewModel.getSelectedWeek().getYear()) {
-                e.getWeekMap().get(LocalDate.parse(savedShift.getDate()).getDayOfWeek())
+            if (e.getEmployeeDto().equals(savedShift.getEmployee())
+                    && savedShift.getDate().get(temporalField) == viewModel.getSelectedWeek().get(temporalField)
+                    && savedShift.getDate().getYear() == viewModel.getSelectedWeek().getYear()) {
+                e.getWeekMap().get(savedShift.getDate().getDayOfWeek())
                         .getShiftList()
-                        .add(ShiftDataMapper.mapToDto(savedShift));
+                        .add(savedShift);
             }
         });
         viewModel.getEmployeeShiftWeekList().setAll(employeeShiftWeeks);
@@ -73,13 +70,13 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
 
     @Override
     public void presentDeleteShift() {
-        Shift deleteShift = ShiftDataMapper.mapToEntity(viewModel.getSelectedShift());
+        ShiftDto deleteShift = viewModel.getSelectedShift();
         List<EmployeeShiftWeek> employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
         employeeShiftWeeks.forEach(e -> {
-            if (EmployeeDataMapper.matToEntity(e.getEmployeeDto()).equals(deleteShift.getEmployee())) {
-                e.getWeekMap().get(LocalDate.parse(deleteShift.getDate()).getDayOfWeek())
+            if (e.getEmployeeDto().equals(deleteShift.getEmployee())) {
+                e.getWeekMap().get(deleteShift.getDate().getDayOfWeek())
                         .getShiftList()
-                        .removeIf(s -> ShiftDataMapper.mapToEntity(s).equals(deleteShift));
+                        .removeIf(s -> s.equals(deleteShift));
             }
         });
         viewModel.getEmployeeShiftWeekList().setAll(employeeShiftWeeks);

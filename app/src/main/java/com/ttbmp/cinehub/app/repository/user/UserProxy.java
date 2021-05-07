@@ -1,45 +1,43 @@
 package com.ttbmp.cinehub.app.repository.user;
 
-import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
-import com.ttbmp.cinehub.domain.CreditCard;
-import com.ttbmp.cinehub.domain.User;
+import com.ttbmp.cinehub.app.service.security.Role;
+import com.ttbmp.cinehub.app.service.security.User;
 
-/**
- * @author Fabio Buracchi
- */
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class UserProxy extends User {
 
-    private final CreditCardRepository creditCardRepository;
-
-    private boolean isCreditCardLoaded = false;
-
-    public UserProxy(String id, String name, String surname, String email, CreditCardRepository creditCardRepository) {
-        super(id, name, surname, email, null);
-        this.creditCardRepository = creditCardRepository;
+    public UserProxy(String id, String roles) {
+        super(id, getRoles(roles));
     }
 
-    @Override
-    public CreditCard getCreditCard() {
-        if (!isCreditCardLoaded) {
-            setCreditCard(creditCardRepository.getCreditCard(this));
+    private static Role[] getRoles(String rolesString) {
+        List<Role> roleList = new ArrayList<>();
+        Arrays.stream(rolesString.split(";"))
+                .map(UserProxy::getRole)
+                .forEach(roleList::add);
+        return roleList.toArray(new Role[0]);
+    }
+
+    private static Role getRole(String roleString) {
+        switch (roleString) {
+            case "guest":
+                return Role.GUEST_ROLE;
+            case "customer":
+                return Role.CUSTOMER_ROLE;
+            case "employee":
+                return Role.EMPLOYEE_ROLE;
+            case "projectionist":
+                return Role.PROJECTIONIST_ROLE;
+            case "usher":
+                return Role.USHER_ROLE;
+            case "manager":
+                return Role.MANAGER_ROLE;
+            default:
+                throw new IllegalStateException("Unexpected value: " + roleString);
         }
-        return super.getCreditCard();
-    }
-
-    @Override
-    public void setCreditCard(CreditCard creditCard) {
-        isCreditCardLoaded = true;
-        super.setCreditCard(creditCard);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 
 }

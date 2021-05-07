@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.app.repository.creditcard;
 
 import com.ttbmp.cinehub.domain.CreditCard;
-import com.ttbmp.cinehub.domain.User;
+import com.ttbmp.cinehub.domain.Customer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +27,9 @@ public class MockCreditCardRepository implements CreditCardRepository {
     }
 
     @Override
-    public CreditCard getCreditCard(User user) {
+    public CreditCard getCreditCard(Customer customer) {
         return CREDIT_CARD_DATA_LIST.stream()
-                .filter(d -> d.userId.equals(user.getId()))
+                .filter(d -> d.userId.equals(customer.getId()))
                 .map(d -> new CreditCardProxy(d.id, d.number, d.cvv, d.expirationDate))
                 .collect(Collectors.toList())
                 .get(0);

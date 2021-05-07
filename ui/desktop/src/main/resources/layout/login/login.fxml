@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox alignment="CENTER" minHeight="730.0" minWidth="1156.0" stylesheets="@../../styles/stylesLogin.css"
-      xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" minHeight="730.0" minWidth="1156.0"
+      stylesheets="@../../styles/stylesLogin.css" xmlns="http://javafx.com/javafx/11.0.1"
       fx:controller="com.ttbmp.cinehub.ui.desktop.login.LoginViewController">
     <children>
         <fx:include fx:id="appBar" source="../app_bar/app_bar.fxml"/>
@@ -32,14 +32,16 @@
                         <Insets bottom="224.0" left="350.0" right="350.0" top="224.0"/>
                     </padding>
                 </GridPane>
+                <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                    <Label fx:id="errorSectionLabel" textFill="#f80000">
+                        <HBox.margin>
+                            <Insets left="10.0" top="5.0"/>
+                        </HBox.margin>
+                    </Label>
+                </HBox>
                 <HBox alignment="BOTTOM_RIGHT" VBox.vgrow="ALWAYS">
                     <children>
-                        <Button fx:id="loginButton" text="Login" />
-                        <Label fx:id="errorSectionLabel" textFill="#f80000">
-                            <HBox.margin>
-                                <Insets left="10.0" top="5.0"/>
-                            </HBox.margin>
-                        </Label>
+                        <Button fx:id="loginButton" text="Login"/>
                     </children>
                 </HBox>
             </children>

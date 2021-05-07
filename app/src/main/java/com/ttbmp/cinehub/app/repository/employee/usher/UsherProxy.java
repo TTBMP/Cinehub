@@ -2,11 +2,11 @@ package com.ttbmp.cinehub.app.repository.employee.usher;
 
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
+import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
-import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.CreditCard;
-import com.ttbmp.cinehub.domain.User;
+import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.employee.Usher;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class UsherProxy extends Usher {
 
-    private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
     private final CreditCardRepository creditCardRepository;
     private final CinemaRepository cinemaRepository;
     private final ShiftRepository shiftRepository;
@@ -30,12 +30,12 @@ public class UsherProxy extends Usher {
 
     public UsherProxy(
             String id,
-            UserRepository userRepository,
+            CustomerRepository customerRepository,
             CreditCardRepository creditCardRepository,
             CinemaRepository cinemaRepository,
             ShiftRepository shiftRepository) {
         super(id, null, null, null, null, null);
-        this.userRepository = userRepository;
+        this.customerRepository = customerRepository;
         this.creditCardRepository = creditCardRepository;
         this.cinemaRepository = cinemaRepository;
         this.shiftRepository = shiftRepository;
@@ -66,10 +66,10 @@ public class UsherProxy extends Usher {
     }
 
     private void loadUser() {
-        User user = userRepository.getUser(getId());
-        setName(user.getName());
-        setSurname(user.getSurname());
-        setEmail(user.getEmail());
+        Customer customer = customerRepository.getCustomer(getId());
+        setName(customer.getName());
+        setSurname(customer.getSurname());
+        setEmail(customer.getEmail());
         isUserLoaded = true;
     }
 

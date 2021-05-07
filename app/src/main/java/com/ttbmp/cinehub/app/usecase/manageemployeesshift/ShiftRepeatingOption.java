@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.domain.shift;
+package com.ttbmp.cinehub.app.usecase.manageemployeesshift;
 
 /**
  * @author Massimo Mazzetti

@@ -3,10 +3,10 @@ package com.ttbmp.cinehub.ui.desktop.manageshift.assign;
 import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.app.dto.UsherDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ShiftRepeatingOption;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.CreateShiftRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetHallListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftRepeatRequest;
-import com.ttbmp.cinehub.domain.shift.ShiftRepeatingOption;
 import com.ttbmp.cinehub.ui.desktop.manageshift.ManageEmployeesShiftViewModel;
 import com.ttbmp.cinehub.ui.desktop.manageshift.components.ComboBoxOptionValueFactory;
 import com.ttbmp.cinehub.ui.desktop.manageshift.components.HallFactory;
@@ -121,7 +121,7 @@ public class AssignShiftViewController extends ViewController {
                     viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());
                 }
                 viewModel.setSelectedOption(null);
-                navController.popBackStack();
+                navController.navBack();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -153,7 +153,7 @@ public class AssignShiftViewController extends ViewController {
         if (!viewModel.isErrorAssignVisibility()) {
             try {
                 viewModel.setSelectedOption(null);
-                navController.popBackStack();
+                navController.navBack();
             } catch (IOException e) {
                 e.printStackTrace();
             }

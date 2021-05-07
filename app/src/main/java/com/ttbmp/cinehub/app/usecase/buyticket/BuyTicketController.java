@@ -3,22 +3,21 @@ package com.ttbmp.cinehub.app.usecase.buyticket;
 import com.ttbmp.cinehub.app.datamapper.*;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
+import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
-import com.ttbmp.cinehub.app.repository.user.UserRepository;
-import com.ttbmp.cinehub.app.service.security.SecurityException;
-import com.ttbmp.cinehub.app.service.security.SecurityService;
 import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.app.service.payment.PayServiceRequest;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
-import com.ttbmp.cinehub.app.utilities.request.Request;
+import com.ttbmp.cinehub.app.service.security.SecurityException;
+import com.ttbmp.cinehub.app.service.security.SecurityService;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.domain.*;
-import com.ttbmp.cinehub.domain.User;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketFoldingArmchair;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketHeatedArmchair;
@@ -40,7 +39,7 @@ public class BuyTicketController implements BuyTicketUseCase {
     private final MovieRepository movieRepository;
     private final CinemaRepository cinemaRepository;
     private final ProjectionRepository projectionRepository;
-    private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
     private final TicketRepository ticketRepository;
 
     public BuyTicketController(ServiceLocator serviceLocator, BuyTicketPresenter buyTicketPresenter) {
@@ -51,7 +50,7 @@ public class BuyTicketController implements BuyTicketUseCase {
         this.movieRepository = serviceLocator.getService(MovieRepository.class);
         this.cinemaRepository = serviceLocator.getService(CinemaRepository.class);
         this.projectionRepository = serviceLocator.getService(ProjectionRepository.class);
-        this.userRepository = serviceLocator.getService(UserRepository.class);
+        this.customerRepository = serviceLocator.getService(CustomerRepository.class);
         this.ticketRepository = serviceLocator.getService(TicketRepository.class);
     }
 
@@ -59,18 +58,18 @@ public class BuyTicketController implements BuyTicketUseCase {
     public void pay(PayRequest request) {
         try {
             Request.validate(request);
-            User user = userRepository.getUser(securityService.authenticate("").getId());
+            Customer customer = customerRepository.getCustomer(securityService.authenticate("").getId());
             Ticket ticket = TicketDataMapper.mapToEntity(request.getTicket());
             paymentService.pay(new PayServiceRequest(
-                    user.getEmail(),
-                    user.getName(),
-                    user.getCreditCard().getNumber(),
+                    customer.getEmail(),
+                    customer.getName(),
+                    customer.getCreditCard().getNumber(),
                     ticket.getPrice()
             ));
-            ticket.setOwner(user);
+            ticket.setOwner(customer);
             ticketRepository.saveTicket(ticket, request.getProjection().getId());
             emailService.sendMail(new EmailServiceRequest(
-                    user.getEmail(),
+                    customer.getEmail(),
                     "Payment receipt"
             ));
         } catch (Request.NullRequestException e) {
@@ -122,9 +121,9 @@ public class BuyTicketController implements BuyTicketUseCase {
             List<Seat> seats = SeatDataMapper.mapToEntityList(request.getSeatDtoList());
             Integer pos = request.getPos();
             Seat seat = seats.get(pos);
-            User user = userRepository.getUser(securityService.authenticate("").getId());
+            Customer customer = customerRepository.getCustomer(securityService.authenticate("").getId());
             /*DECORATOR PATTERN GOF*/
-            Ticket ticket = new Ticket(0, seat.getPrice(), user, seat);
+            Ticket ticket = new Ticket(0, seat.getPrice(), customer, seat);
             if (Boolean.TRUE.equals(request.getHeatedArmchairOption())) {
                 ticket = new TicketSkipLine(ticket);
                 ticket.setPrice(ticket.getPrice());

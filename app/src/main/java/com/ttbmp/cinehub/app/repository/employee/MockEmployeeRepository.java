@@ -3,11 +3,11 @@ package com.ttbmp.cinehub.app.repository.employee;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
+import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistProxy;
 import com.ttbmp.cinehub.app.repository.employee.usher.UsherProxy;
 import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
-import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
@@ -112,7 +112,7 @@ public class MockEmployeeRepository implements EmployeeRepository {
                 case PROJECTIONIST:
                     return new ProjectionistProxy(
                             employeeData.userId,
-                            serviceLocator.getService(UserRepository.class),
+                            serviceLocator.getService(CustomerRepository.class),
                             serviceLocator.getService(CreditCardRepository.class),
                             serviceLocator.getService(CinemaRepository.class),
                             serviceLocator.getService(ShiftRepository.class)
@@ -120,7 +120,7 @@ public class MockEmployeeRepository implements EmployeeRepository {
                 case USHER:
                     return new UsherProxy(
                             employeeData.userId,
-                            serviceLocator.getService(UserRepository.class),
+                            serviceLocator.getService(CustomerRepository.class),
                             serviceLocator.getService(CreditCardRepository.class),
                             serviceLocator.getService(CinemaRepository.class),
                             serviceLocator.getService(ShiftRepository.class)

@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 import com.ttbmp.cinehub.app.dto.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
-import com.ttbmp.cinehub.domain.shift.ShiftRepeatingOption;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ShiftRepeatingOption;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;

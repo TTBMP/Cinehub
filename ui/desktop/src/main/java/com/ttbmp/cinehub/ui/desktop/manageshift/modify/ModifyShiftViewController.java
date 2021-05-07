@@ -111,7 +111,7 @@ public class ModifyShiftViewController extends ViewController {
 
         cancelButton.setOnAction(a -> {
             try {
-                navController.popBackStack();
+                navController.navBack();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -133,7 +133,7 @@ public class ModifyShiftViewController extends ViewController {
         if (!viewModel.isErrorAssignVisibility()) {
             try {
                 viewModel.setSelectedShift(viewModel.getShiftCreated());
-                navController.popBackStack();
+                navController.navBack();
             } catch (IOException e) {
                 e.printStackTrace();
 

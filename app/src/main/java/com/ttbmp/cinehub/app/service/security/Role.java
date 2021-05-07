@@ -7,6 +7,18 @@ import static com.ttbmp.cinehub.app.service.security.Permission.*;
  */
 public class Role {
 
+    public static final Role GUEST_ROLE = new Role(
+            new Permission[]{
+
+            }
+    );
+
+    public static final Role CUSTOMER_ROLE = new Role(
+            new Permission[]{
+
+            }
+    );
+
     public static final Role EMPLOYEE_ROLE = new Role(
             new Permission[]{
                     SHOW_PERSONAL_SCHEDULE_TAB,
@@ -17,6 +29,18 @@ public class Role {
     public static final Role PROJECTIONIST_ROLE = new Role(
             new Permission[]{
                     GET_OWN_SHIFT_PROJECTION_LIST
+            }
+    );
+
+    public static final Role USHER_ROLE = new Role(
+            new Permission[]{
+
+            }
+    );
+
+    public static final Role MANAGER_ROLE = new Role(
+            new Permission[]{
+                    SHOW_MANAGE_EMPLOYEE_SHIFT_TAB
             }
     );
 

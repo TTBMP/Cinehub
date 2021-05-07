@@ -4,7 +4,9 @@ package com.ttbmp.cinehub.ui.desktop.login;
 import com.ttbmp.cinehub.app.usecase.login.LoginRequest;
 import com.ttbmp.cinehub.app.usecase.login.LoginUseCase;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
+import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
+import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavActivityDestination;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 
 public class LoginViewController extends ViewController {
@@ -26,7 +29,6 @@ public class LoginViewController extends ViewController {
 
     @FXML
     private Button loginButton;
-
 
     @FXML
     private VBox appBar;
@@ -49,17 +51,21 @@ public class LoginViewController extends ViewController {
         viewModel.usernameUserProperty().bind(passwordLabel.textProperty());
         errorSectionLabel.textProperty().bind(viewModel.accessErrorProperty());
         loginButton.disableProperty().bind(
-                viewModel.passwordUserProperty().isEmpty().or(viewModel.usernameUserProperty().isEmpty())
+                viewModel.passwordUserProperty().isEmpty()
+                        .or(viewModel.usernameUserProperty().isEmpty())
         );
         loginButton.setOnAction(a -> {
                     useCase.login(new LoginRequest(
                             viewModel.passwordUserProperty().getValue(),
                             viewModel.usernameUserProperty().getValue()
                     ));
-                    try {
-                        navController.popBackStack();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if (viewModel.accessErrorProperty().getValue().isEmpty()) {
+                        try {
+                            Activity prevActivity = navController.getPreviousDestinationActivityClass().getConstructor().newInstance();
+                            navController.open(new NavActivityDestination(prevActivity));
+                        } catch (IOException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
         );

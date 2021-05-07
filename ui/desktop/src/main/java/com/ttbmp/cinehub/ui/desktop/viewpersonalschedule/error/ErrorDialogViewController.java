@@ -22,7 +22,7 @@ public class ErrorDialogViewController extends ViewController {
         messageLabel.setText(viewModel.getErrorMessage());
         closeButton.setOnAction(e -> {
             try {
-                navController.popBackStack();
+                navController.navBack();
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }

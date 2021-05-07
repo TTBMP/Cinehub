@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.app.repository.user;
 
-import com.ttbmp.cinehub.domain.User;
-import com.ttbmp.cinehub.domain.ticket.component.Ticket;
+import com.ttbmp.cinehub.app.service.security.User;
 
 /**
  * @author Fabio Buracchi
@@ -9,7 +8,5 @@ import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 public interface UserRepository {
 
     User getUser(String userId);
-
-    User getUser(Ticket ticket);
 
 }

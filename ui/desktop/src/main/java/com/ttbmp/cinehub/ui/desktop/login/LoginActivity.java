@@ -16,4 +16,5 @@ public class LoginActivity extends Activity {
         viewModelStore.put(LoginViewModel.class, viewModel);
         useCaseFactory.put(LoginUseCase.class, () -> new LoginHandler(presenter));
     }
+
 }

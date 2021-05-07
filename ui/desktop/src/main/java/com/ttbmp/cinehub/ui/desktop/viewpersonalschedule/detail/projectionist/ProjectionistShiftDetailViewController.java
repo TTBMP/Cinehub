@@ -56,7 +56,7 @@ public class ProjectionistShiftDetailViewController extends ViewController {
         hallLabel.textProperty().bind(viewModel.selectedProjectionistShiftHallProperty());
         backButton.setOnAction(a -> {
             try {
-                navController.popBackStack();
+                navController.navBack();
             } catch (IOException e) {
                 e.printStackTrace();
             }

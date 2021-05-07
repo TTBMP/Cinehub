@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author Fabio Buracchi, Ivan Palmieri
  */
-public class User {
+public class Customer {
 
     private String id;
     private String name;
@@ -16,7 +16,7 @@ public class User {
     private CreditCard creditCard;
     private List<Ticket> ownedTicketList;
 
-    public User(String id, String name, String surname, String email, CreditCard creditCard) {
+    public Customer(String id, String name, String surname, String email, CreditCard creditCard) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -77,7 +77,7 @@ public class User {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        User other = (User) obj;
+        Customer other = (Customer) obj;
         return id.equals(other.getId());
     }
 
