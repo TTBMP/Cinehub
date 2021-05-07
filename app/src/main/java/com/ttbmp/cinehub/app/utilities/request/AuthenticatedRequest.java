@@ -1,9 +1,9 @@
 package com.ttbmp.cinehub.app.utilities.request;
 
-import com.ttbmp.cinehub.app.service.security.Permission;
 import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.service.security.SecurityService;
-import com.ttbmp.cinehub.app.service.security.User;
+import com.ttbmp.cinehub.domain.User;
+import com.ttbmp.cinehub.domain.security.Permission;
 
 public abstract class AuthenticatedRequest extends Request {
 

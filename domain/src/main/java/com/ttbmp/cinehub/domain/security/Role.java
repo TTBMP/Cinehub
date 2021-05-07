@@ -1,6 +1,6 @@
-package com.ttbmp.cinehub.app.service.security;
+package com.ttbmp.cinehub.domain.security;
 
-import static com.ttbmp.cinehub.app.service.security.Permission.*;
+import static com.ttbmp.cinehub.domain.security.Permission.*;
 
 /**
  * @author Fabio Buracchi

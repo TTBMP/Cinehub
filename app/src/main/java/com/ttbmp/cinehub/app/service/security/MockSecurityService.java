@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.app.service.security;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
+import com.ttbmp.cinehub.domain.User;
 
 /**
  * @author Fabio Buracchi

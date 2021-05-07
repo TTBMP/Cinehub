@@ -3,7 +3,9 @@ package com.ttbmp.cinehub.app.repository.customer;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
 import com.ttbmp.cinehub.app.repository.ticket.MockTicketRepository;
+import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
 import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
+import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
@@ -41,10 +43,9 @@ public class MockCustomerRepository implements CustomerRepository {
                 .filter(d -> d.getId().equals(userId))
                 .map(d -> new CustomerProxy(
                         d.getId(),
-                        d.getName(),
-                        d.getSurname(),
-                        d.getEmail(),
-                        serviceLocator.getService(CreditCardRepository.class)
+                        serviceLocator.getService(UserRepository.class),
+                        serviceLocator.getService(CreditCardRepository.class),
+                        serviceLocator.getService(TicketRepository.class)
                 ))
                 .collect(Collectors.toList())
                 .get(0);
@@ -61,10 +62,9 @@ public class MockCustomerRepository implements CustomerRepository {
                 .filter(d -> d.getId().equals(ticketUserId))
                 .map(d -> new CustomerProxy(
                         d.getId(),
-                        d.getName(),
-                        d.getSurname(),
-                        d.getEmail(),
-                        serviceLocator.getService(CreditCardRepository.class)
+                        serviceLocator.getService(UserRepository.class),
+                        serviceLocator.getService(CreditCardRepository.class),
+                        serviceLocator.getService(TicketRepository.class)
                 ))
                 .collect(Collectors.toList())
                 .get(0);

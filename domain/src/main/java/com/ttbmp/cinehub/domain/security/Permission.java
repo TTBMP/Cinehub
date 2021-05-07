@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.app.service.security;
+package com.ttbmp.cinehub.domain.security;
 
 /**
  * @author Fabio Buracchi

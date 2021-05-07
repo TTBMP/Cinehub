@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.app.repository.user;
 
-import com.ttbmp.cinehub.app.service.security.Role;
-import com.ttbmp.cinehub.app.service.security.User;
+import com.ttbmp.cinehub.domain.User;
+import com.ttbmp.cinehub.domain.security.Role;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,8 +9,8 @@ import java.util.List;
 
 public class UserProxy extends User {
 
-    public UserProxy(String id, String roles) {
-        super(id, getRoles(roles));
+    public UserProxy(String id, String name, String surname, String email, String roles) {
+        super(id, name, surname, email, getRoles(roles));
     }
 
     private static Role[] getRoles(String rolesString) {

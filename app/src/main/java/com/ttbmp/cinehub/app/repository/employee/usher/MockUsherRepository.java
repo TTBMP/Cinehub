@@ -2,8 +2,6 @@ package com.ttbmp.cinehub.app.repository.employee.usher;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
-import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
-import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
 import com.ttbmp.cinehub.app.repository.employee.MockEmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
@@ -50,7 +48,6 @@ public class MockUsherRepository implements UsherRepository {
                 .map(d -> new UsherProxy(
                         d.id,
                         serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(CreditCardRepository.class),
                         serviceLocator.getService(CinemaRepository.class),
                         serviceLocator.getService(ShiftRepository.class)
                 ))

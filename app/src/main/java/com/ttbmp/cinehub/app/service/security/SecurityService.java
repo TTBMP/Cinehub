@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.app.service.security;
 
+import com.ttbmp.cinehub.domain.User;
+
 /**
  * @author Fabio Buracchi
  */

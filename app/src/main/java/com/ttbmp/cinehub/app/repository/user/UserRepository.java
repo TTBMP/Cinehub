@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.app.repository.user;
 
-import com.ttbmp.cinehub.app.service.security.User;
+import com.ttbmp.cinehub.domain.User;
 
 /**
  * @author Fabio Buracchi

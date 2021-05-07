@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.appbar;
 
-import com.ttbmp.cinehub.app.usecase.getuserrole.GetRoleRequest;
+import com.ttbmp.cinehub.app.usecase.getuserrole.RoleRequest;
 import com.ttbmp.cinehub.app.usecase.getuserrole.GetUserRoleHandler;
 import com.ttbmp.cinehub.app.usecase.getuserrole.GetUserRoleUseCase;
 import com.ttbmp.cinehub.app.usecase.logout.LogoutHandler;
@@ -61,7 +61,7 @@ public class AppBarViewController extends ViewController {
     protected void onLoad() {
         loadActivityTabMap();
         BindingHelper.bind(tabPane.getTabs(), viewModel.getTabList());
-        getUserRoleUseCase.getUserRoles(new GetRoleRequest(CinehubApplication.getSessionToken()));
+        getUserRoleUseCase.getUserRoles(new RoleRequest(CinehubApplication.getSessionToken()));
         tabPane.getSelectionModel().select(viewModel.getActivityTabMap().get(activity.getClass()));
         viewModel.getActivityTabMap().forEach((key, value) -> value.setOnSelectionChanged(handleTabSelection(key, value)));
     }

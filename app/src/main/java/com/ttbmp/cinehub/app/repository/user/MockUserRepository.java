@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.app.repository.user;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
-import com.ttbmp.cinehub.app.service.security.User;
+import com.ttbmp.cinehub.domain.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,13 @@ public class MockUserRepository implements UserRepository {
     public User getUser(String userId) {
         return USER_DATA_LIST.stream()
                 .filter(d -> d.id.equals(userId))
-                .map(d -> new UserProxy(d.id, d.role))
+                .map(d -> new UserProxy(
+                        d.id,
+                        d.name,
+                        d.surname,
+                        d.email,
+                        d.role)
+                )
                 .collect(Collectors.toList())
                 .get(0);
     }

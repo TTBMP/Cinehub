@@ -11,7 +11,7 @@ public class GetUserRoleHandler implements GetUserRoleUseCase {
     }
 
     @Override
-    public void getUserRoles(GetRoleRequest request) {
+    public void getUserRoles(RoleRequest request) {
         controller.getUserRoles(request);
     }
 

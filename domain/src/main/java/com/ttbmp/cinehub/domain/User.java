@@ -1,4 +1,7 @@
-package com.ttbmp.cinehub.app.service.security;
+package com.ttbmp.cinehub.domain;
+
+import com.ttbmp.cinehub.domain.security.Permission;
+import com.ttbmp.cinehub.domain.security.Role;
 
 /**
  * @author Fabio Buracchi
@@ -6,10 +9,16 @@ package com.ttbmp.cinehub.app.service.security;
 public class User {
 
     private String id;
+    private String name;
+    private String surname;
+    private String email;
     private Role[] roles;
 
-    public User(String id, Role[] roles) {
+    public User(String id, String name, String surname, String email, Role[] roles) {
         this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
         this.roles = roles;
     }
 
@@ -21,6 +30,30 @@ public class User {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Role[] getRoles() {
         return roles;
     }
@@ -30,8 +63,8 @@ public class User {
     }
 
     public boolean hasPermission(Permission requiredPermission) {
-        for (Role role : roles) {
-            for (Permission permission : role.getPermissions()) {
+        for (var role : roles) {
+            for (var permission : role.getPermissions()) {
                 if (permission.equals(requiredPermission)) {
                     return true;
                 }
@@ -45,7 +78,7 @@ public class User {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        User other = (User) obj;
+        var other = (User) obj;
         return id.equals(other.getId());
     }
 

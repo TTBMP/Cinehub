@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.domain.employee;
 
 import com.ttbmp.cinehub.domain.Cinema;
-import com.ttbmp.cinehub.domain.CreditCard;
-import com.ttbmp.cinehub.domain.Customer;
+import com.ttbmp.cinehub.domain.User;
+import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
 import java.time.LocalDate;
@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
 /**
  * @author Fabio Buracchi, Massimo Mazzetti
  */
-public abstract class Employee extends Customer {
+public abstract class Employee extends User {
 
     private Cinema cinema;
     private List<Shift> shiftList;
 
-    protected Employee(String id, String name, String surname, String email, CreditCard creditCard, Cinema cinema) {
-        super(id, name, surname, email, creditCard);
+    protected Employee(String id, String name, String surname, String email, Role[] roles, Cinema cinema) {
+        super(id, name, surname, email, roles);
         this.cinema = cinema;
     }
 

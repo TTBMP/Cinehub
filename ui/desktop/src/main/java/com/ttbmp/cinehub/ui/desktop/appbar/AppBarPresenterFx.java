@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.appbar;
 
-import com.ttbmp.cinehub.app.service.security.Role;
 import com.ttbmp.cinehub.app.usecase.getuserrole.GetUserRolePresenter;
+import com.ttbmp.cinehub.app.usecase.getuserrole.RoleResponse;
 import com.ttbmp.cinehub.app.usecase.logout.LogoutPresenter;
 import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.about.AboutActivity;
@@ -11,7 +11,7 @@ import com.ttbmp.cinehub.ui.desktop.logout.LogoutActivity;
 import com.ttbmp.cinehub.ui.desktop.manageshift.ManageShiftActivity;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.ViewPersonalScheduleActivity;
 
-import java.util.Arrays;
+import static com.ttbmp.cinehub.app.usecase.getuserrole.RoleResponse.Role.*;
 
 public class AppBarPresenterFx implements GetUserRolePresenter, LogoutPresenter {
 
@@ -22,17 +22,17 @@ public class AppBarPresenterFx implements GetUserRolePresenter, LogoutPresenter 
     }
 
     @Override
-    public void present(Role[] roles) {
+    public void present(RoleResponse response) {
         viewModel.getTabList().clear();
         viewModel.getTabList().add(viewModel.getActivityTabMap().get(AboutActivity.class));
-        if (Arrays.equals(roles, new Role[]{Role.GUEST_ROLE})) {
+        if (response.getRoleList().contains(GUEST)) {
             viewModel.getTabList().add(viewModel.getActivityTabMap().get(LoginActivity.class));
         } else {
             viewModel.getTabList().add(viewModel.getActivityTabMap().get(LogoutActivity.class));
-            if (Arrays.asList(roles).contains(Role.EMPLOYEE_ROLE)) {
+            if (response.getRoleList().contains(EMPLOYEE)) {
                 viewModel.getTabList().add(viewModel.getActivityTabMap().get(ViewPersonalScheduleActivity.class));
             }
-            if (Arrays.asList(roles).contains(Role.MANAGER_ROLE)) {
+            if (response.getRoleList().contains(MANAGER)) {
                 viewModel.getTabList().add(viewModel.getActivityTabMap().get(ManageShiftActivity.class));
             }
         }

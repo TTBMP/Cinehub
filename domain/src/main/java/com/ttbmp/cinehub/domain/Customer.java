@@ -1,26 +1,21 @@
 package com.ttbmp.cinehub.domain;
 
+import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 import java.util.List;
 
 /**
- * @author Fabio Buracchi, Ivan Palmieri
+ * @author Fabio Buracchi
  */
-public class Customer {
+public class Customer extends User {
 
     private String id;
-    private String name;
-    private String surname;
-    private String email;
     private CreditCard creditCard;
     private List<Ticket> ownedTicketList;
 
-    public Customer(String id, String name, String surname, String email, CreditCard creditCard) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
+    public Customer(String id, String name, String surname, String email, Role[] roles, CreditCard creditCard) {
+        super(id, name, surname, email, roles);
         this.creditCard = creditCard;
     }
 
@@ -30,30 +25,6 @@ public class Customer {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public CreditCard getCreditCard() {

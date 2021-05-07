@@ -4,6 +4,9 @@ import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.service.security.SecurityService;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class GetUserRoleController implements GetUserRoleUseCase {
 
     private final GetUserRolePresenter presenter;
@@ -15,10 +18,13 @@ public class GetUserRoleController implements GetUserRoleUseCase {
     }
 
     @Override
-    public void getUserRoles(GetRoleRequest request) {
+    public void getUserRoles(RoleRequest request) {
         try {
             var user = securityService.authenticate(request.getSessionToken());
-            presenter.present(user.getRoles());
+            var roleList = Arrays.stream(user.getRoles())
+                    .map(RoleResponse.Role::getRole)
+                    .collect(Collectors.toList());
+            presenter.present(new RoleResponse(roleList));
         } catch (SecurityException e) {
             e.printStackTrace();
         }
