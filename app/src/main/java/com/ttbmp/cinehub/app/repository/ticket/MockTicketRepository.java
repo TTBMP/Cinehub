@@ -1,9 +1,9 @@
 package com.ttbmp.cinehub.app.repository.ticket;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
+import com.ttbmp.cinehub.app.repository.customer.MockCustomerRepository;
 import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
-import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
-import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
@@ -20,8 +20,8 @@ public class MockTicketRepository implements TicketRepository {
     private static int counterTicketId = 0;
 
     static {
-        var userIdList = MockUserRepository.getUserDataList().stream()
-                .map(MockUserRepository.UserData::getId)
+        var userIdList = MockCustomerRepository.getUserDataList().stream()
+                .map(MockCustomerRepository.CustomerData::getUserId)
                 .collect(Collectors.toList());
         // TODO
     }
@@ -55,7 +55,7 @@ public class MockTicketRepository implements TicketRepository {
                 .map(d -> new TicketProxy(
                         d.id,
                         d.price,
-                        serviceLocator.getService(UserRepository.class),
+                        serviceLocator.getService(CustomerRepository.class),
                         serviceLocator.getService(SeatRepository.class)
                 ))
                 .collect(Collectors.toList());

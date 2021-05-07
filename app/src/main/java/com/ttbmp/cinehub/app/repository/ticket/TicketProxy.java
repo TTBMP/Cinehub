@@ -1,9 +1,9 @@
 package com.ttbmp.cinehub.app.repository.ticket;
 
+import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
 import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
-import com.ttbmp.cinehub.app.repository.user.UserRepository;
+import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.Seat;
-import com.ttbmp.cinehub.domain.User;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 /**
@@ -11,27 +11,27 @@ import com.ttbmp.cinehub.domain.ticket.component.Ticket;
  */
 public class TicketProxy extends Ticket {
 
-    private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
     private final SeatRepository seatRepository;
     private boolean isUserLoaded = false;
     private boolean isSeatLoaded = false;
 
-    public TicketProxy(int id, long price, UserRepository userRepository, SeatRepository seatRepository) {
+    public TicketProxy(int id, long price, CustomerRepository customerRepository, SeatRepository seatRepository) {
         super(id, price, null, null);
         this.seatRepository = seatRepository;
-        this.userRepository = userRepository;
+        this.customerRepository = customerRepository;
     }
 
     @Override
-    public User getOwner() {
+    public Customer getOwner() {
         if (!isUserLoaded) {
-            setOwner(userRepository.getUser(this));
+            setOwner(customerRepository.getCustomer(this));
         }
         return super.getOwner();
     }
 
     @Override
-    public void setOwner(User owner) {
+    public void setOwner(Customer owner) {
         isUserLoaded = true;
         super.setOwner(owner);
     }

@@ -1,7 +1,9 @@
 package com.ttbmp.cinehub.ui.desktop.login;
 
+import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.usecase.login.LoginPresenter;
 import com.ttbmp.cinehub.app.usecase.login.LoginRequest;
+import com.ttbmp.cinehub.app.usecase.login.LoginResponse;
 import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 
 public class LoginPresenterFx implements LoginPresenter {
@@ -13,8 +15,14 @@ public class LoginPresenterFx implements LoginPresenter {
     }
 
     @Override
-    public void presentSessionToken(String sessionToken) {
-        CinehubApplication.setSessionToken(sessionToken);
+    public void presentSessionToken(LoginResponse response) {
+        CinehubApplication.setSessionToken(response.getSessionCookie());
+        viewModel.accessErrorProperty().setValue("");
+    }
+
+    @Override
+    public void presentAuthenticationError(SecurityException e) {
+        viewModel.accessErrorProperty().setValue(e.getMessage());
     }
 
     @Override
@@ -24,12 +32,13 @@ public class LoginPresenterFx implements LoginPresenter {
 
     @Override
     public void presentInvalidRequestException(LoginRequest request) {
-        if(request.getErrorList().contains(LoginRequest.MISSING_PASSWORD_ERROR)){
+        if (request.getErrorList().contains(LoginRequest.MISSING_PASSWORD_ERROR)) {
             viewModel.accessErrorProperty().setValue(LoginRequest.MISSING_PASSWORD_ERROR.getMessage());
         }
-        if(request.getErrorList().contains(LoginRequest.MISSING_USERNAME_ERROR)){
+        if (request.getErrorList().contains(LoginRequest.MISSING_USERNAME_ERROR)) {
             viewModel.accessErrorProperty().setValue(LoginRequest.MISSING_USERNAME_ERROR.getMessage());
         }
 
     }
+
 }

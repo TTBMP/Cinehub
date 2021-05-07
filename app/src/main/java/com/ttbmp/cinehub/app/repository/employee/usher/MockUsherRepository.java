@@ -3,6 +3,7 @@ package com.ttbmp.cinehub.app.repository.employee.usher;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
+import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
 import com.ttbmp.cinehub.app.repository.employee.MockEmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;

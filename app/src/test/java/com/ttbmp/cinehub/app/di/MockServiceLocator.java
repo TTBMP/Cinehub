@@ -44,7 +44,7 @@ public class MockServiceLocator extends ServiceLocator {
         serviceFactoryMap.put(EmailService.class, MockEmailService::new);
         serviceFactoryMap.put(MovieApiService.class, MockMovieApiService::new);
         serviceFactoryMap.put(PaymentService.class, MockPaymentService::new);
-        serviceFactoryMap.put(SecurityService.class, MockSecurityService::new);
+        serviceFactoryMap.put(SecurityService.class, () -> new MockSecurityService(this));
         serviceFactoryMap.put(CinemaRepository.class, () -> new MockCinemaRepository(this));
         serviceFactoryMap.put(CreditCardRepository.class, MockCreditCardRepository::new);
         serviceFactoryMap.put(EmployeeRepository.class, () -> new MockEmployeeRepository(this));

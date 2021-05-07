@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    api(project(":domain"))
+    implementation(project(":domain"))
     implementation(project(":service:security"))
     implementation(project(":service:email"))
     implementation(project(":service:movie-api"))

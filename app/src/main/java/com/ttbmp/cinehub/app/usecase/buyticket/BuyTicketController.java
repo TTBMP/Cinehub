@@ -3,20 +3,20 @@ package com.ttbmp.cinehub.app.usecase.buyticket;
 import com.ttbmp.cinehub.app.datamapper.*;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
+import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
-import com.ttbmp.cinehub.app.repository.user.UserRepository;
-import com.ttbmp.cinehub.app.service.security.SecurityException;
-import com.ttbmp.cinehub.app.service.security.SecurityService;
 import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.app.service.payment.PayServiceRequest;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
-import com.ttbmp.cinehub.app.utilities.request.Request;
+import com.ttbmp.cinehub.app.service.security.SecurityException;
+import com.ttbmp.cinehub.app.service.security.SecurityService;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketFoldingArmchair;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketHeatedArmchair;
@@ -37,7 +37,7 @@ public class BuyTicketController implements BuyTicketUseCase {
     private final MovieRepository movieRepository;
     private final CinemaRepository cinemaRepository;
     private final ProjectionRepository projectionRepository;
-    private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
     private final TicketRepository ticketRepository;
 
     public BuyTicketController(ServiceLocator serviceLocator, BuyTicketPresenter buyTicketPresenter) {
@@ -48,7 +48,7 @@ public class BuyTicketController implements BuyTicketUseCase {
         this.movieRepository = serviceLocator.getService(MovieRepository.class);
         this.cinemaRepository = serviceLocator.getService(CinemaRepository.class);
         this.projectionRepository = serviceLocator.getService(ProjectionRepository.class);
-        this.userRepository = serviceLocator.getService(UserRepository.class);
+        this.customerRepository = serviceLocator.getService(CustomerRepository.class);
         this.ticketRepository = serviceLocator.getService(TicketRepository.class);
     }
 
@@ -56,17 +56,17 @@ public class BuyTicketController implements BuyTicketUseCase {
     public void pay(PaymentRequest request) {
         try {
             Request.validate(request);
-            var user = userRepository.getUser(securityService.authenticate("").getId());
+            var customer = customerRepository.getCustomer(securityService.authenticate("").getId());
             var ticket = TicketDataMapper.mapToEntity(request.getTicket());
             paymentService.pay(new PayServiceRequest(
-                    user.getEmail(),
-                    user.getName(),
-                    user.getCreditCard().getNumber(),
+                    customer.getEmail(),
+                    customer.getName(),
+                    customer.getCreditCard().getNumber(),
                     ticket.getPrice()
             ));
-            ticket.setOwner(user);
+            ticket.setOwner(customer);
             ticketRepository.saveTicket(ticket, ProjectionDataMapper.mapToEntity(request.getProjection()));
-            emailService.sendMail(new EmailServiceRequest(user.getEmail(), "Payment receipt"));
+            emailService.sendMail(new EmailServiceRequest(customer.getEmail(), "Payment receipt"));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentPayNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -116,9 +116,9 @@ public class BuyTicketController implements BuyTicketUseCase {
             var seats = SeatDataMapper.mapToEntityList(request.getSeatDtoList());
             var pos = request.getPos();
             var seat = seats.get(pos);
-            var user = userRepository.getUser(securityService.authenticate("").getId());
+            var customer = customerRepository.getCustomer(securityService.authenticate("").getId());
             /*DECORATOR PATTERN GOF*/
-            var ticket = new Ticket(0, seat.getPrice(), user, seat);
+            var ticket = new Ticket(0, seat.getPrice(), customer, seat);
             if (Boolean.TRUE.equals(request.getHeatedArmchairOption())) {
                 ticket = new TicketSkipLine(ticket);
                 ticket.setPrice(ticket.getPrice());

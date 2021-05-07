@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.domain.employee;
 
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.CreditCard;
-import com.ttbmp.cinehub.domain.User;
+import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
 import java.time.LocalDate;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * @author Fabio Buracchi, Massimo Mazzetti
  */
-public abstract class Employee extends User {
+public abstract class Employee extends Customer {
 
     private Cinema cinema;
     private List<Shift> shiftList;

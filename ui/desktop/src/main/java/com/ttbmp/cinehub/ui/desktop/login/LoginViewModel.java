@@ -11,12 +11,9 @@ public class LoginViewModel implements ViewModel {
 
     private final StringProperty accessError = new SimpleStringProperty();
 
-
     public StringProperty accessErrorProperty() {
         return accessError;
     }
-
-
 
     public StringProperty usernameUserProperty() {
         return emailUser;

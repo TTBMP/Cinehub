@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.app.usecase.login;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 
-public class LoginHandler  implements LoginUseCase {
+public class LoginHandler implements LoginUseCase {
 
     private final LoginController controller;
 

@@ -3,8 +3,8 @@ package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftRepository;
-import com.ttbmp.cinehub.app.service.security.SecurityService;
 import com.ttbmp.cinehub.app.service.security.Permission;
+import com.ttbmp.cinehub.app.service.security.SecurityService;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 
@@ -27,12 +27,9 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
     }
 
     public void getShiftList(ShiftListRequest request) {
+        var permissions = new Permission[]{Permission.GET_OWN_SHIFT_LIST};
         try {
-            AuthenticatedRequest.validate(
-                    request,
-                    securityService,
-                    new Permission[]{Permission.GET_OWN_SHIFT_LIST}
-            );
+            AuthenticatedRequest.validate(request, securityService, permissions);
             var employee = employeeRepository.getEmployee(request.getUserId());
             presenter.presentGetShiftList(new ShiftListReply(
                     employee.getShiftListBetween(request.getStart(), request.getEnd())
@@ -50,8 +47,9 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
 
     @Override
     public void getShiftProjectionList(ProjectionListRequest request) {
+        var permissions = new Permission[]{Permission.GET_OWN_SHIFT_PROJECTION_LIST};
         try {
-            AuthenticatedRequest.validate(request, securityService, new Permission[]{Permission.GET_OWN_SHIFT_PROJECTION_LIST});
+            AuthenticatedRequest.validate(request, securityService, permissions);
             var shift = projectionistShiftRepository.getProjectionistShift(request.getProjectionistShiftId());
             presenter.presentGetProjectionList(new ProjectionListReply(shift.getProjectionList()));
         } catch (Request.NullRequestException e) {
