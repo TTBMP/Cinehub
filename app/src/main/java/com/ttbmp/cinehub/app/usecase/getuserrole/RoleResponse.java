@@ -1,7 +1,5 @@
 package com.ttbmp.cinehub.app.usecase.getuserrole;
 
-import com.ttbmp.cinehub.domain.security.Role;
-
 import java.util.List;
 
 import static com.ttbmp.cinehub.domain.security.Role.*;

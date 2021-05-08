@@ -5,6 +5,7 @@ import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.employee.Projectionist;
+import com.ttbmp.cinehub.domain.security.Permission;
 import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
@@ -20,7 +21,9 @@ public class ProjectionistProxy extends Projectionist {
     private final CinemaRepository cinemaRepository;
     private final ShiftRepository shiftRepository;
 
-    private boolean isUserLoaded = false;
+    private boolean isNameLoaded = false;
+    private boolean isSurnameLoaded = false;
+    private boolean isEmailLoaded = false;
     private boolean isRoleArrayLoaded = false;
     private boolean isCinemaLoaded = false;
     private boolean isShiftListLoaded = false;
@@ -38,32 +41,50 @@ public class ProjectionistProxy extends Projectionist {
 
     @Override
     public String getName() {
-        if (!isUserLoaded) {
-            loadUser();
+        if (!isNameLoaded) {
+            setName(userRepository.getUser(getId()).getName());
         }
         return super.getName();
     }
 
     @Override
+    public void setName(String name) {
+        isNameLoaded = true;
+        super.setName(name);
+    }
+
+    @Override
     public String getSurname() {
-        if (!isUserLoaded) {
-            loadUser();
+        if (!isSurnameLoaded) {
+            setSurname(userRepository.getUser(getId()).getSurname());
         }
         return super.getSurname();
     }
 
     @Override
+    public void setSurname(String surname) {
+        isSurnameLoaded = true;
+        super.setSurname(surname);
+    }
+
+    @Override
     public String getEmail() {
-        if (!isUserLoaded) {
-            loadUser();
+        if (!isEmailLoaded) {
+            setEmail(userRepository.getUser(getId()).getEmail());
         }
         return super.getEmail();
     }
 
     @Override
+    public void setEmail(String email) {
+        isEmailLoaded = true;
+        super.setEmail(email);
+    }
+
+    @Override
     public Role[] getRoles() {
         if (!isRoleArrayLoaded) {
-            loadUser();
+            setRoles(userRepository.getUser(getId()).getRoles());
         }
         return super.getRoles();
     }
@@ -74,12 +95,12 @@ public class ProjectionistProxy extends Projectionist {
         super.setRoles(roles);
     }
 
-    private void loadUser() {
-        var user = userRepository.getUser(getId());
-        setName(user.getName());
-        setSurname(user.getSurname());
-        setEmail(user.getEmail());
-        isUserLoaded = true;
+    @Override
+    public boolean hasPermission(Permission requiredPermission) {
+        if (!isRoleArrayLoaded) {
+            setRoles(userRepository.getUser(getId()).getRoles());
+        }
+        return super.hasPermission(requiredPermission);
     }
 
     @Override

@@ -14,9 +14,10 @@ public class Customer extends User {
     private CreditCard creditCard;
     private List<Ticket> ownedTicketList;
 
-    public Customer(String id, String name, String surname, String email, Role[] roles, CreditCard creditCard) {
+    public Customer(String id, String name, String surname, String email, Role[] roles, CreditCard creditCard, List<Ticket> ownedTicketList) {
         super(id, name, surname, email, roles);
         this.creditCard = creditCard;
+        this.ownedTicketList = ownedTicketList;
     }
 
     public String getId() {
