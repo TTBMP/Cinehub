@@ -374,9 +374,6 @@ DELIMITER $$
 USE `cinemadb`$$
 CREATE PROCEDURE `popola_proiezioni`()
 BEGIN
-    DECLARE anno VARCHAR(5);
-    DECLARE mese VARCHAR(5);
-    DECLARE giorno INT;
     DECLARE ora INT;
     DECLARE film INT;
     DECLARE nfilm INT;
@@ -384,42 +381,43 @@ BEGIN
     DECLARE last_film INT;
     DECLARE sala INT;
     DECLARE nsale INT;
+    DECLARE _data DATE;
 
     SET nsale = (SELECT count(*) FROM sala);
     SET nfilm = (SELECT count(*) FROM film);
     SET first_film = (SELECT id FROM film ORDER BY id ASC LIMIT 1);
     SET last_film = (SELECT id FROM film ORDER BY id DESC LIMIT 1);
-    SET anno = '2021';
-    SET mese = '05';
-    SET giorno = 10;
+    SET film = first_film;
+    SET _data = CURDATE();
     SET ora = 15;
 
-    SET film = first_film;
-    WHILE giorno < 29
+    WHILE DATEDIFF(_data, CURDATE()) < 60
         DO
-            SET ora = 15;
-            WHILE ora < 22
-                DO
-                    SET sala = 1;
-                    WHILE sala < (nsale + 1)
-                        DO
-                            IF (giorno < 20) THEN
-                                IF (film > (last_film - (nfilm / 2))) THEN
-                                    SET film = first_film;
+            IF (WEEKDAY(_data) != 0 AND WEEKDAY(_data) != 1) THEN
+                SET ora = 15;
+                WHILE ora < 22
+                    DO
+                        SET sala = 1;
+                        WHILE sala < (nsale + 1)
+                            DO
+                                IF (DATEDIFF(_data, CURDATE()) < 30) THEN
+                                    IF (film > (last_film - (nfilm / 2))) THEN
+                                        SET film = first_film;
+                                    END IF;
+                                ELSE
+                                    IF ((film < (last_film - (nfilm / 2)) + 1) OR film > last_film) THEN
+                                        SET film = first_film + (nfilm / 2);
+                                    END IF;
                                 END IF;
-                            ELSE
-                                IF ((film < (last_film - (nfilm / 2)) + 1) OR film > last_film) THEN
-                                    SET film = first_film + (nfilm / 2);
-                                END IF;
-                            END IF;
-                            INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
-                            VALUES (sala, film, concat(anno, '-', mese, '-', giorno), concat(ora, ':00'), 5);
-                            SET sala = sala + 1;
-                            SET film = film + 1;
-                        END WHILE;
-                    SET ora = ora + 2;
-                END WHILE;
-            SET giorno = giorno + 1;
+                                INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
+                                VALUES (sala, film, _data, concat(ora, ':00'), 5);
+                                SET sala = sala + 1;
+                                SET film = film + 1;
+                            END WHILE;
+                        SET ora = ora + 2;
+                    END WHILE;
+            END IF;
+            SET _data = DATE_ADD(_data, INTERVAL 1 DAY);
         END WHILE;
 END$$
 
@@ -465,35 +463,35 @@ DELIMITER $$
 USE `cinemadb`$$
 CREATE PROCEDURE `popola_turni`()
 BEGIN
-    DECLARE anno VARCHAR(7);
-    DECLARE mese VARCHAR(7);
-    DECLARE giorno INT;
     DECLARE inizio VARCHAR(7);
     DECLARE fine VARCHAR(7);
     DECLARE nmaschera INT;
     DECLARE nproiezionisti INT;
     DECLARE dipendente INT;
+    DECLARE _data DATE;
+
     SET nproiezionisti = (select count(*) from dipendente where ruolo = 'proiezionista');
     SET nmaschera = (select count(*) from dipendente where ruolo = 'maschera');
-    SET anno = '2021';
-    SET mese = '05';
-    SET fine = '23:30';
+    SET _data = CURDATE();
     SET inizio = '14:30';
-    SET giorno = 10;
-    WHILE giorno < 28
+    SET fine = '23:30';
+
+    WHILE DATEDIFF(_data, CURDATE()) < 60
         DO
-            INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `id_dipendente`, `data`)
-            VALUES (inizio, fine, '0', concat(anno, '-', mese, '-', giorno));
-            INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `id_dipendente`, `data`)
-            VALUES (inizio, fine, '2', concat(anno, '-', mese, '-', giorno));
-            SET dipendente = 1;
-            WHILE dipendente < 2 * nproiezionisti
-                DO
-                    INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `id_dipendente`, `data`)
-                    VALUES (inizio, fine, dipendente, concat(anno, '-', mese, '-', giorno));
-                    SET dipendente = dipendente + 2;
-                END WHILE;
-            SET giorno = giorno + 1;
+            IF (WEEKDAY(_data) != 0 AND WEEKDAY(_data) != 1) THEN
+                INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `id_dipendente`, `data`)
+                VALUES (inizio, fine, '0', _data);
+                INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `id_dipendente`, `data`)
+                VALUES (inizio, fine, '2', _data);
+                SET dipendente = 1;
+                WHILE dipendente < 2 * nproiezionisti
+                    DO
+                        INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `id_dipendente`, `data`)
+                        VALUES (inizio, fine, dipendente, _data);
+                        SET dipendente = dipendente + 2;
+                    END WHILE;
+            END IF;
+            SET _data = DATE_ADD(_data, INTERVAL 1 DAY);
         END WHILE;
 END$$
 
