@@ -5,7 +5,6 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.UserRecord;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -15,33 +14,25 @@ import java.util.Objects;
  */
 public class FirebaseAuthenticationService {
 
-    private final FirebaseAuth firebaseAuth;
+    private static FirebaseAuth firebaseAuth;
 
     public FirebaseAuthenticationService() throws FirebaseException {
         try {
-            var settings = this.getClass().getResourceAsStream("/firebase_settings.json");
+            init();
+        } catch (IOException e) {
+            throw new FirebaseException(e.getMessage());
+        }
+    }
+
+    private synchronized void init() throws IOException {
+        if (firebaseAuth == null) {
+            var settings = FirebaseAuthenticationService.class.getResourceAsStream("/firebase_settings.json");
             var options = FirebaseOptions.builder()
                     .setDatabaseUrl("https://noreply@cinehub-d2abc.firebaseio.com/")
                     .setCredentials(GoogleCredentials.fromStream(Objects.requireNonNull(settings)))
                     .build();
             FirebaseApp.initializeApp(options);
             firebaseAuth = FirebaseAuth.getInstance();
-        } catch (IOException e) {
-            throw new FirebaseException(e.getMessage());
-        }
-    }
-
-    public FirebaseSession createUser(String email, String password) throws FirebaseException {
-        try {
-            var request = new UserRecord.CreateRequest()
-                    .setEmail(email)
-                    .setEmailVerified(false)
-                    .setPassword(password)
-                    .setDisabled(false);
-            var userRecord = firebaseAuth.createUser(request);
-            return new FirebaseSession(userRecord);
-        } catch (FirebaseAuthException e) {
-            throw new FirebaseException(e.getMessage());
         }
     }
 
@@ -55,13 +46,15 @@ public class FirebaseAuthenticationService {
         }
     }
 
-    public FirebaseSession verifySessionCookie(String sessionCookie) throws FirebaseException {
+    public FirebaseSession verifySessionToken(String sessionToken) throws FirebaseException {
         try {
-            var email = sessionCookie;
+            var email = sessionToken;
             var userRecord = firebaseAuth.getUserByEmail(email);
             return new FirebaseSession(userRecord);
         } catch (FirebaseAuthException e) {
             throw new FirebaseException(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            throw new FirebaseException("Invalid session token");
         }
     }
 

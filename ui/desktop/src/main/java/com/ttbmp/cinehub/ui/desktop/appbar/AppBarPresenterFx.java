@@ -41,7 +41,7 @@ public class AppBarPresenterFx implements GetUserRolePresenter, LogoutPresenter 
 
     @Override
     public void logout() {
-        CinehubApplication.setSessionToken("");
+        CinehubApplication.setSessionToken(null);
     }
 
 }

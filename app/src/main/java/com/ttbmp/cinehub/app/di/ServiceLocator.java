@@ -36,6 +36,7 @@ import com.ttbmp.cinehub.app.service.movieapi.MockMovieApiService;
 import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
 import com.ttbmp.cinehub.app.service.payment.MockPaymentService;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
+import com.ttbmp.cinehub.app.service.security.FirebaseAuthSecurityServiceAdapter;
 import com.ttbmp.cinehub.app.service.security.MockSecurityService;
 import com.ttbmp.cinehub.app.service.security.SecurityService;
 import com.ttbmp.cinehub.app.utilities.FactoryMap;

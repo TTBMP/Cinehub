@@ -16,11 +16,6 @@ public class MockSecurityService implements SecurityService {
     }
 
     @Override
-    public String addAuthenticatedUser(String email, String password) {
-        return "";
-    }
-
-    @Override
     public String authenticate(String email, String password) throws SecurityException {
         switch (email) {
             case "customer":
@@ -38,20 +33,21 @@ public class MockSecurityService implements SecurityService {
 
     @Override
     public User authenticate(String sessionToken) throws SecurityException {
-        if (sessionToken == null) {
-            sessionToken = "";
-        }
-        switch (sessionToken) {
-            case "CUSTOMER":
-                return userRepository.getUser("4");
-            case "PROJECTIONIST":
-                return userRepository.getUser("1");
-            case "USHER":
-                return userRepository.getUser("2");
-            case "MANAGER":
-                return userRepository.getUser("5");
-            default:
-                return userRepository.getUser("");
+        try {
+            switch (sessionToken) {
+                case "CUSTOMER":
+                    return userRepository.getUser("4");
+                case "PROJECTIONIST":
+                    return userRepository.getUser("1");
+                case "USHER":
+                    return userRepository.getUser("2");
+                case "MANAGER":
+                    return userRepository.getUser("5");
+                default:
+                    throw new IllegalStateException("Unexpected value: " + sessionToken);
+            }
+        } catch (NullPointerException e) {
+            return userRepository.getUser("");
         }
     }
 

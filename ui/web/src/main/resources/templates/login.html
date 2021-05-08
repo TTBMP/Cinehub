@@ -11,8 +11,8 @@
 <div class="container mt-5">
     <h1>Login</h1>
     <form action="#" method="POST" th:action="@{/login}" th:object="${loginForm}">
-        <label><input placeholder="email" th:field="*{email}" th:name="email" type="text"/></label>
-        <label><input placeholder="password" th:field="*{password}" th:name="password" type="password"/></label>
+        <label><input placeholder="Email" th:field="*{email}" th:name="email" type="email"/></label>
+        <label><input placeholder="Password" th:field="*{password}" th:name="password" type="password"/></label>
         <p><input class="btn btn-primary" type="submit" value="Login"/></p>
     </form>
 </div>

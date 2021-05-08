@@ -9,12 +9,12 @@ public class FirebaseSession {
 
     private String uid;
     private String email;
-    private String sessionCookie;
+    private String sessionToken;
 
     public FirebaseSession(UserRecord loggedUserRecord) {
         this.uid = loggedUserRecord.getUid();
         this.email = loggedUserRecord.getEmail();
-        this.sessionCookie = loggedUserRecord.getEmail();
+        this.sessionToken = loggedUserRecord.getUid();
     }
 
     public String getUid() {
@@ -33,12 +33,12 @@ public class FirebaseSession {
         this.email = email;
     }
 
-    public String getSessionCookie() {
-        return sessionCookie;
+    public String getSessionToken() {
+        return sessionToken;
     }
 
-    public void setSessionCookie(String sessionCookie) {
-        this.sessionCookie = sessionCookie;
+    public void setSessionToken(String sessionToken) {
+        this.sessionToken = sessionToken;
     }
 
 }
