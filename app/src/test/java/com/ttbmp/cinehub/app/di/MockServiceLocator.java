@@ -4,6 +4,8 @@ import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.cinema.MockCinemaRepository;
 import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
 import com.ttbmp.cinehub.app.repository.creditcard.MockCreditCardRepository;
+import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
+import com.ttbmp.cinehub.app.repository.customer.MockCustomerRepository;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.MockEmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.MockProjectionistRepository;
@@ -47,6 +49,7 @@ public class MockServiceLocator extends ServiceLocator {
         serviceFactoryMap.put(SecurityService.class, () -> new MockSecurityService(this));
         serviceFactoryMap.put(CinemaRepository.class, () -> new MockCinemaRepository(this));
         serviceFactoryMap.put(CreditCardRepository.class, MockCreditCardRepository::new);
+        serviceFactoryMap.put(CustomerRepository.class, () -> new MockCustomerRepository(this));
         serviceFactoryMap.put(EmployeeRepository.class, () -> new MockEmployeeRepository(this));
         serviceFactoryMap.put(ProjectionistRepository.class, () -> new MockProjectionistRepository(this));
         serviceFactoryMap.put(UsherRepository.class, () -> new MockUsherRepository(this));
