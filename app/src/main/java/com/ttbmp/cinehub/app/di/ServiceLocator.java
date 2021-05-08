@@ -35,6 +35,7 @@ import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
 import com.ttbmp.cinehub.app.service.movieapi.TheMovieDbApiServiceAdapter;
 import com.ttbmp.cinehub.app.service.payment.MockPaymentService;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
+import com.ttbmp.cinehub.app.service.payment.StripeServiceAdapter;
 import com.ttbmp.cinehub.app.utilities.FactoryMap;
 import com.ttbmp.cinehub.service.movieapi.TheMovieDbApiService;
 
@@ -61,7 +62,7 @@ public class ServiceLocator {
         serviceFactoryMap.put(HallRepository.class, () -> new JdbcHallRepository(this));
         serviceFactoryMap.put(MovieRepository.class, () -> new JdbcMovieRepository(this));
         serviceFactoryMap.put(ProjectionRepository.class, () -> new JdbcProjectionRepository(this));
-        serviceFactoryMap.put(SeatRepository.class, () -> new JdbcSeatRepository());
+        serviceFactoryMap.put(SeatRepository.class, JdbcSeatRepository::new);
         serviceFactoryMap.put(ShiftRepository.class, () -> new JdbcShiftRepository(this));
         serviceFactoryMap.put(ProjectionistShiftRepository.class, () -> new JdbcProjectionistShiftRepository(this));
         serviceFactoryMap.put(UsherShiftRepository.class, () -> new JdbcUsherShiftRepository(this));

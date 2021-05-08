@@ -105,7 +105,7 @@ public class StripeServiceRequest {
     }
 
     //Function to update a customer's account
-    public boolean setBalance(Customer customer, long price, PaymentMethod paymentMethod) throws StripeException {
+    public void setBalance(Customer customer, long price, PaymentMethod paymentMethod) throws StripeException {
         Map<String, Object> params = new HashMap<>();
         var s = price * 100;
         params.put(AMOUNT, s);
@@ -115,8 +115,6 @@ public class StripeServiceRequest {
         Map<String, Object> param = new HashMap<>();
         param.put("payment_method", paymentMethod.getId());
         paymentIntent.confirm(param);
-        return true;
-
     }
 
 

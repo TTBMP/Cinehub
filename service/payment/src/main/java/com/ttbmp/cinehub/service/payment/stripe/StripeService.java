@@ -10,22 +10,20 @@ import com.stripe.model.PaymentMethod;
 public class StripeService {
 
     private final StripeServiceRequest stripeServiceRequest;
-
+    private static final String CARD_NUMBER = "4242424242424242";
     public StripeService() {
         this.stripeServiceRequest = new StripeServiceRequest();
     }
 
     @SuppressWarnings("Unused")
     public void pay(String email, String nameUser, String numberOfCard, long ticketPrice) throws StripeServiceException {
-        Customer customer;
-        PaymentMethod paymentMethod;
         try {
-            customer = stripeServiceRequest.getCustomer(
+            Customer customer = stripeServiceRequest.getCustomer(
                     nameUser,
-                    "4242424242424242",
+                    CARD_NUMBER,
                     email
             );
-            paymentMethod = stripeServiceRequest.getCard(customer);
+            PaymentMethod paymentMethod = stripeServiceRequest.getCard(customer);
             if (stripeServiceRequest.updateBalance(customer, ticketPrice)) {
                 stripeServiceRequest.setBalance(customer, ticketPrice, paymentMethod);
             }
