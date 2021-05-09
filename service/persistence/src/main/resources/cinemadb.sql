@@ -388,10 +388,9 @@ BEGIN
     SET first_film = (SELECT id FROM film ORDER BY id ASC LIMIT 1);
     SET last_film = (SELECT id FROM film ORDER BY id DESC LIMIT 1);
     SET film = first_film;
-    SET _data = CURDATE();
-    SET ora = 15;
+    SET _data = DATE_SUB(CURDATE(), INTERVAL 15 DAY);
 
-    WHILE DATEDIFF(_data, CURDATE()) < 60
+    WHILE DATEDIFF(_data, CURDATE()) < 45
         DO
             IF (WEEKDAY(_data) != 0 AND WEEKDAY(_data) != 1) THEN
                 SET ora = 15;
@@ -400,7 +399,7 @@ BEGIN
                         SET sala = 1;
                         WHILE sala < (nsale + 1)
                             DO
-                                IF (DATEDIFF(_data, CURDATE()) < 30) THEN
+                                IF (DATEDIFF(_data, CURDATE()) < 15) THEN
                                     IF (film > (last_film - (nfilm / 2))) THEN
                                         SET film = first_film;
                                     END IF;
@@ -465,24 +464,27 @@ CREATE PROCEDURE `popola_turni`()
 BEGIN
     DECLARE inizio VARCHAR(7);
     DECLARE fine VARCHAR(7);
-    DECLARE nmaschera INT;
+    DECLARE nmaschere INT;
     DECLARE nproiezionisti INT;
     DECLARE dipendente INT;
     DECLARE _data DATE;
 
     SET nproiezionisti = (select count(*) from dipendente where ruolo = 'proiezionista');
-    SET nmaschera = (select count(*) from dipendente where ruolo = 'maschera');
-    SET _data = CURDATE();
+    SET nmaschere = (select count(*) from dipendente where ruolo = 'maschera');
+    SET _data = DATE_SUB(CURDATE(), INTERVAL 15 DAY);
     SET inizio = '14:30';
     SET fine = '23:30';
 
-    WHILE DATEDIFF(_data, CURDATE()) < 60
+    WHILE DATEDIFF(_data, CURDATE()) < 45
         DO
             IF (WEEKDAY(_data) != 0 AND WEEKDAY(_data) != 1) THEN
-                INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `id_dipendente`, `data`)
-                VALUES (inizio, fine, '0', _data);
-                INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `id_dipendente`, `data`)
-                VALUES (inizio, fine, '2', _data);
+                SET dipendente = 0;
+                WHILE dipendente < 2 * nmaschere
+                    DO
+                        INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `id_dipendente`, `data`)
+                        VALUES (inizio, fine, dipendente, _data);
+                        SET dipendente = dipendente + 2;
+                    END WHILE;
                 SET dipendente = 1;
                 WHILE dipendente < 2 * nproiezionisti
                     DO
@@ -527,6 +529,13 @@ BEGIN
                     SET sala = (sala % nsale) + 1;
                 END WHILE;
             SET turno = turno + nmaschere;
+            IF sala = (nsale / 2) THEN
+                SET sala = 0;
+            END IF;
+            IF sala = nsale THEN
+                SET sala = (nsale / 2);
+            END IF;
+            SET sala = (sala % nsale) + 1;
         END WHILE;
 END$$
 

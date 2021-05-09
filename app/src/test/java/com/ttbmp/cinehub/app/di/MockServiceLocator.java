@@ -55,7 +55,7 @@ public class MockServiceLocator extends ServiceLocator {
         serviceFactoryMap.put(ProjectionistShiftRepository.class, () -> new MockProjectionistShiftRepository(this));
         serviceFactoryMap.put(UsherShiftRepository.class, MockUsherShiftRepository::new);
         serviceFactoryMap.put(TicketRepository.class, () -> new MockTicketRepository(this));
-        serviceFactoryMap.put(UserRepository.class, () -> new MockUserRepository(this));
+        serviceFactoryMap.put(UserRepository.class, MockUserRepository::new);
     }
 
 }
