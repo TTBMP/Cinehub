@@ -6,7 +6,6 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.dao.operation.DaoOperati
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.dao.operation.DaoOperationHelper;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
-import javax.persistence.NoResultException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
@@ -44,7 +43,6 @@ public class DaoQueryOperation extends DaoOperation {
 
     @Override
     public Object execute(Object[] args) throws DaoMethodException {
-        Object result;
         try (var statement = connection.prepareStatement(
                 queryTemplate,
                 ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -55,13 +53,10 @@ public class DaoQueryOperation extends DaoOperation {
                     getQueryTemplateParameterNameValueMap(args),
                     queryTemplateParameterNameList
             );
-            var resultSet = statement.executeQuery();
-            result = getResultObject(resultSet);
-            resultSet.close();
-        } catch (SQLException | InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
+            return getResult(statement.executeQuery());
+        } catch (SQLException | InvocationTargetException | IllegalAccessException | NoSuchMethodException | InstantiationException e) {
             throw new DaoMethodException();
         }
-        return result;
     }
 
     private Map<String, Object> getQueryTemplateParameterNameValueMap(Object[] args) throws DaoMethodException {
@@ -87,34 +82,39 @@ public class DaoQueryOperation extends DaoOperation {
         return result;
     }
 
-    private Object getResultObject(ResultSet resultSet) throws SQLException, InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException, NoResultException {
+    private Object getResult(ResultSet resultSet) throws NoSuchMethodException, SQLException, InvocationTargetException, InstantiationException, IllegalAccessException {
         Object result;
-        if (List.class.isAssignableFrom(objectType)) {
-            result = objectType.cast(new ArrayList<>());
-        } else {
-            result = objectType.cast(objectType.getConstructors()[0].newInstance());
-        }
-        if (!resultSet.first()) {
-            // throw a NoResultException if the Single<T> class is used if it will be implemented
-            return List.class.isAssignableFrom(objectType) ? result : null;
-        }
         var resultSetGetterList = DaoOperationHelper.getResultSetGetterList(dtoType, dtoColumnNameList);
         dtoColumnNameList.removeIf(Objects::isNull);
-        do {
-            Iterator<String> columnNameIterator = dtoColumnNameList.listIterator();
-            Iterator<Method> resultSetGetterIterator = resultSetGetterList.listIterator();
-            if (List.class.isAssignableFrom(objectType)) {
-                var dto = dtoType.getConstructors()[0].newInstance();
-                for (var dtoSetter : dtoSetterList) {
-                    dtoSetter.invoke(dto, resultSetGetterIterator.next().invoke(resultSet, columnNameIterator.next()));
-                }
-                List.class.getMethod("add", Object.class).invoke(result, dto);
-            } else {
-                for (var dtoSetter : dtoSetterList) {
-                    dtoSetter.invoke(result, resultSetGetterIterator.next().invoke(resultSet, columnNameIterator.next()));
-                }
-            }
-        } while (resultSet.next());
+        if (List.class.isAssignableFrom(objectType)) {
+            result = getResultList(resultSet, resultSetGetterList);
+        } else {
+            result = getResultObject(resultSet, resultSetGetterList);
+        }
+        resultSet.close();
         return result;
     }
+
+    private List<Object> getResultList(ResultSet resultSet, List<Method> resultSetGetterList) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        List<Object> result = new ArrayList<>();
+        while (DaoOperationHelper.resultSetHasNext(resultSet)) {
+            result.add(getResultObject(resultSet, resultSetGetterList));
+        }
+        return result;
+    }
+
+    private Object getResultObject(ResultSet resultSet, List<Method> resultSetGetterList) throws SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        Object result = null;
+        if (resultSet.next()) {
+            result = dtoType.getConstructor().newInstance();
+            for (var i = 0; i < dtoSetterList.size(); i++) {
+                var value = resultSetGetterList.get(i).invoke(resultSet, dtoColumnNameList.get(i));
+                var setter = dtoSetterList.get(i);
+                setter.invoke(result, value);
+            }
+        }
+        // throw a NoResultException if the Single<T> class is used in an else branch
+        return result;
+    }
+
 }

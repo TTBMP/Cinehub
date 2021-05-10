@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.lang.reflect.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -134,4 +135,9 @@ public class DaoOperationHelper {
         }
     }
 
+    public static boolean resultSetHasNext(ResultSet resultSet) throws SQLException {
+        var result = resultSet.next();
+        resultSet.previous();
+        return result;
+    }
 }
