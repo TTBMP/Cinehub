@@ -22,17 +22,17 @@ public class MockHallRepository implements HallRepository {
 
     static {
         HALL_DATA_LIST.add(new HallData(0, 0, "A1"));
-        HALL_DATA_LIST.add(new HallData(1, 0,"B1"));
-        HALL_DATA_LIST.add(new HallData(2, 0,"C1"));
-        HALL_DATA_LIST.add(new HallData(3, 0,"A2"));
-        HALL_DATA_LIST.add(new HallData(4, 0,"B2"));
-        HALL_DATA_LIST.add(new HallData(5, 0,"C2"));
-        HALL_DATA_LIST.add(new HallData(6, 1,"A1"));
-        HALL_DATA_LIST.add(new HallData(7, 1,"B1"));
-        HALL_DATA_LIST.add(new HallData(8, 1,"C1"));
-        HALL_DATA_LIST.add(new HallData(9, 1,"A2"));
-        HALL_DATA_LIST.add(new HallData(10, 1,"B2"));
-        HALL_DATA_LIST.add(new HallData(11, 1,"C2"));
+        HALL_DATA_LIST.add(new HallData(1, 0, "B1"));
+        HALL_DATA_LIST.add(new HallData(2, 0, "C1"));
+        HALL_DATA_LIST.add(new HallData(3, 0, "A2"));
+        HALL_DATA_LIST.add(new HallData(4, 0, "B2"));
+        HALL_DATA_LIST.add(new HallData(5, 0, "C2"));
+        HALL_DATA_LIST.add(new HallData(6, 1, "A1"));
+        HALL_DATA_LIST.add(new HallData(7, 1, "B1"));
+        HALL_DATA_LIST.add(new HallData(8, 1, "C1"));
+        HALL_DATA_LIST.add(new HallData(9, 1, "A2"));
+        HALL_DATA_LIST.add(new HallData(10, 1, "B2"));
+        HALL_DATA_LIST.add(new HallData(11, 1, "C2"));
     }
 
     private final ServiceLocator serviceLocator;
@@ -85,7 +85,7 @@ public class MockHallRepository implements HallRepository {
     public Hall getHall(int hallId) {
         return HALL_DATA_LIST.stream()
                 .filter(d -> d.id == hallId)
-                .map(d -> new HallProxy(d.id, serviceLocator.getService(SeatRepository.class),d.name))
+                .map(d -> new HallProxy(d.id, serviceLocator.getService(SeatRepository.class), d.name))
                 .collect(Collectors.toList())
                 .get(0);
     }

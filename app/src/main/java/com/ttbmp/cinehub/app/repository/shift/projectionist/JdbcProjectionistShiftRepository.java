@@ -42,7 +42,7 @@ public class JdbcProjectionistShiftRepository implements ProjectionistShiftRepos
             var shiftDto = new com.ttbmp.cinehub.service.persistence.entity.ProjectionistShift(shift.getId(), shift.getHall().getId());
             getProjectionistShiftDao().insert(shiftDto);
         } catch (DaoMethodException e) {
-           throw  new RepositoryException(e.getMessage());
+            throw new RepositoryException(e.getMessage());
         }
     }
 
@@ -53,7 +53,7 @@ public class JdbcProjectionistShiftRepository implements ProjectionistShiftRepos
             var shiftDto = new com.ttbmp.cinehub.service.persistence.entity.ProjectionistShift(shift.getId(), shift.getHall().getId());
             getProjectionistShiftDao().update(shiftDto);
         } catch (DaoMethodException e) {
-            throw  new RepositoryException(e.getMessage());
+            throw new RepositoryException(e.getMessage());
         }
     }
 

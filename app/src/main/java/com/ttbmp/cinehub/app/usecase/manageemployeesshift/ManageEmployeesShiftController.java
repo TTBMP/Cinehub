@@ -40,7 +40,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
     private final CinemaRepository cinemaRepository;
     private final EmailService emailService;
     private final EmployeeRepository employeeRepository;
-    private  final HallRepository hallRepository;
+    private final HallRepository hallRepository;
     private final ProjectionistShiftRepository projectionistShiftRepository;
 
     public ManageEmployeesShiftController(ServiceLocator serviceLocator, ManageEmployeesShiftPresenter manageEmployeesShiftPresenter) {
@@ -71,8 +71,8 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             var cinema = cinemaRepository.getCinema(request.getCinema().getId());
             var employeeList = employeeRepository.getEmployeeList(cinema);
             manageEmployeesShiftPresenter.presentEmployeeList(new GetEmployeeListResponse(
-                            EmployeeDataMapper.mapToDtoList(employeeList),
-                            request.getDate())
+                    EmployeeDataMapper.mapToDtoList(employeeList),
+                    request.getDate())
             );
         } catch (RepositoryException e) {
             e.printStackTrace();
@@ -108,11 +108,11 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             Request.validate(request);
             var shift = shiftRepository.getShift(request.getShiftId());
             var employee = employeeRepository.getEmployee(request.getEmployeeDto().getId());
-            if(employee instanceof Projectionist) {
+            if (employee instanceof Projectionist) {
                 var hall = hallRepository.getHall(request.getHall().getId());
                 shift.modifyShift(shift, request.getDate(), request.getStart(), request.getEnd(), hall);
                 projectionistShiftRepository.modifyShift((ProjectionistShift) shift);
-            }else {
+            } else {
                 shift.modifyShift(shift, request.getDate(), request.getStart(), request.getEnd(), null);
             }
             shiftRepository.modifyShift(shift);
@@ -236,9 +236,10 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             e.printStackTrace();
         }
     }
+
     private void saveShift(Shift shift) throws RepositoryException {
         shiftRepository.saveShift(shift);
-        if(shift.getEmployee() instanceof Projectionist){
+        if (shift.getEmployee() instanceof Projectionist) {
             var tmpShift = shiftRepository.getShift(shift.getEmployee(), shift.getDate(), shift.getStart(), shift.getEnd());
             shift.setId(tmpShift.getId());
             projectionistShiftRepository.saveShift((ProjectionistShift) shift);

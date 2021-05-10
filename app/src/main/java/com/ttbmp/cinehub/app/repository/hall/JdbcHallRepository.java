@@ -65,7 +65,7 @@ public class JdbcHallRepository implements HallRepository {
     public Hall getHall(int hallId) throws RepositoryException {
         try {
             var hall = getHallDao().getHallById(hallId);
-            if( hall == null){
+            if (hall == null) {
                 return null;
             }
             return new HallProxy(hall.getId(), serviceLocator.getService(SeatRepository.class), hall.getNumber());

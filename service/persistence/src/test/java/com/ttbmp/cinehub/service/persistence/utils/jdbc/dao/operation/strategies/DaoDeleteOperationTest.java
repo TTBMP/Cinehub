@@ -44,5 +44,5 @@ class DaoDeleteOperationTest {
         var finalDtoList = dtoList;
         assertDoesNotThrow(() -> dao.delete(finalDtoList));
     }
-    
+
 }

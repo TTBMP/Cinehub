@@ -91,7 +91,7 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
         return employeeDao;
     }
 
-    private List<Employee> getEmployeeList(List<com.ttbmp.cinehub.service.persistence.entity.Employee> employeeList) throws RepositoryException {
+    private List<Employee> getEmployeeList(List<com.ttbmp.cinehub.service.persistence.entity.Employee> employeeList) {
 
         List<Employee> allEmployeeList = new ArrayList<>();
         for (var employee : employeeList) {

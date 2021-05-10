@@ -73,17 +73,17 @@ public class JdbcProjectionRepository implements ProjectionRepository {
     @Override
     public Projection getProjection(String date, String time, Hall hall) throws RepositoryException {
         try {
-            var projection = getProjectionDao().getProjectionByDateAndTimeAndHallId(date,time,hall.getId());
+            var projection = getProjectionDao().getProjectionByDateAndTimeAndHallId(date, time, hall.getId());
             return new ProjectionProxy(
-                            projection.getId(),
-                            projection.getDate(),
-                            projection.getStartTime(),
-                            serviceLocator.getService(MovieRepository.class),
-                            serviceLocator.getService(HallRepository.class),
-                            serviceLocator.getService(ProjectionistRepository.class),
-                            serviceLocator.getService(TicketRepository.class),
-                            (long) projection.getBasePrice()
-                    );
+                    projection.getId(),
+                    projection.getDate(),
+                    projection.getStartTime(),
+                    serviceLocator.getService(MovieRepository.class),
+                    serviceLocator.getService(HallRepository.class),
+                    serviceLocator.getService(ProjectionistRepository.class),
+                    serviceLocator.getService(TicketRepository.class),
+                    (long) projection.getBasePrice()
+            );
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }

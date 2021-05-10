@@ -77,8 +77,8 @@ public class MockEmployeeRepository implements EmployeeRepository {
 
     @Override
     public List<Employee> getEmployeeList(Cinema cinema) throws RepositoryException {
-        return  EMPLOYEE_DATA_LIST.stream()
-                .filter(d->d.getCinemaId() == cinema.getId())
+        return EMPLOYEE_DATA_LIST.stream()
+                .filter(d -> d.getCinemaId() == cinema.getId())
                 .map(d -> new EmployeeFactory().createEmployee(d))
                 .collect(Collectors.toList());
     }

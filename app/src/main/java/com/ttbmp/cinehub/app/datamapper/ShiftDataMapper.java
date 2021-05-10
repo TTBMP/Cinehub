@@ -27,7 +27,7 @@ public class ShiftDataMapper {
 
     public static ShiftDto mapToDto(Shift shift) {
         Objects.requireNonNull(shift);
-        Employee employee = shift.getEmployee();
+        var employee = shift.getEmployee();
         if (employee instanceof Usher) {
             return new ShiftUsherDto(
                     shift.getId(),

@@ -99,7 +99,7 @@ public class UsherProxy extends Usher {
                 setShiftList(shiftRepository.getShiftList(this));
                 return super.getShiftList();
             } else {
-               return new ArrayList<>();
+                return new ArrayList<>();
             }
         } catch (RepositoryException e) {
             throw new LazyLoadingException(e.getMessage());

@@ -36,8 +36,6 @@ public class MockUserRepository implements UserRepository {
     }
 
 
-
-
     public static List<UserData> getUserDataList() {
         return USER_DATA_LIST;
     }

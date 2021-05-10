@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  */
 public class MockProjectionRepository implements ProjectionRepository {
 
-    private static final String TIME ="16:00";
+    private static final String TIME = "16:00";
     private static final List<ProjectionData> PROJECTION_DATA_LIST = new ArrayList<>();
     private static int projectionIdCounter = 0;
 

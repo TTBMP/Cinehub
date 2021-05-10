@@ -56,7 +56,6 @@ public class TicketRequest extends Request {
     }
 
 
-
     public Integer getPosition() {
         return position;
     }

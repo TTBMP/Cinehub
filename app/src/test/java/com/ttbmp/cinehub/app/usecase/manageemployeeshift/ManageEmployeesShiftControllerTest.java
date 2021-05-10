@@ -40,7 +40,7 @@ class ManageEmployeesShiftControllerTest {
         );
         var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
         var cinema = cinemaRepository.getCinema(0);
-        var getShiftListRequest = new GetShiftListRequest(CinemaDataMapper.mapToDto(cinema), start,  end);
+        var getShiftListRequest = new GetShiftListRequest(CinemaDataMapper.mapToDto(cinema), start, end);
         controller.getShiftList(getShiftListRequest);
     }
 

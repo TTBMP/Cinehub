@@ -1,13 +1,11 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
-import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.app.usecase.Request;
 
 /**
  * @author Massimo Mazzetti
  */
 public class ShiftRequest extends Request {
-
 
 
     private int shiftId;

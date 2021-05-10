@@ -3,7 +3,6 @@ package com.ttbmp.cinehub.app.repository.shift;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.LazyLoadingException;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.MockEmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
@@ -72,12 +71,12 @@ public class MockShiftRepository implements ShiftRepository {
     @Override
     public Shift getShift(Employee employee, String date, String start, String end) throws RepositoryException {
         var shift = SHIFT_DATA_LIST.stream()
-                .filter(d-> d.employeeId.equals(employee.getId())
-                && d.date.equals(date)
-                && d.start.equals(start)
-                && d.end.equals(end))
+                .filter(d -> d.employeeId.equals(employee.getId())
+                        && d.date.equals(date)
+                        && d.start.equals(start)
+                        && d.end.equals(end))
                 .collect(Collectors.toList()).get(0);
-        if(employee instanceof Projectionist){
+        if (employee instanceof Projectionist) {
             return new ProjectionistShiftProxy(
                     shift.id,
                     shift.date,
@@ -87,7 +86,7 @@ public class MockShiftRepository implements ShiftRepository {
                     serviceLocator.getService(HallRepository.class),
                     serviceLocator.getService(ProjectionRepository.class)
             );
-        }else if(employee instanceof  Usher){
+        } else if (employee instanceof Usher) {
             return new UsherShiftProxy(
                     shift.id,
                     shift.date,
@@ -137,17 +136,14 @@ public class MockShiftRepository implements ShiftRepository {
     @Override
     public List<Shift> getCinemaShiftListBetween(int cinemaId, LocalDate start, LocalDate end) throws RepositoryException {
         return SHIFT_DATA_LIST.stream()
-                .filter(d ->{
+                .filter(d -> {
                     Employee employee = null;
                     try {
                         employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(d.employeeId);
                     } catch (RepositoryException e) {
                         e.printStackTrace();
                     }
-                    if(employee.getCinema().getId() == cinemaId){
-                        return true;
-                    }
-                    return false;
+                    return employee.getCinema().getId() == cinemaId;
                 })
                 .filter(d -> LocalDate.parse(d.date).isAfter(start) && LocalDate.parse(d.date).isBefore(end))
                 .map(d -> new ShiftFactory().createShift(d))

@@ -1,6 +1,9 @@
 package com.ttbmp.cinehub.app.usecase.buyticket.request;
 
-import com.ttbmp.cinehub.app.dto.*;
+import com.ttbmp.cinehub.app.dto.CinemaDto;
+import com.ttbmp.cinehub.app.dto.CreditCardDto;
+import com.ttbmp.cinehub.app.dto.ProjectionDto;
+import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.usecase.Request;
 
 
@@ -21,7 +24,7 @@ public class PaymentRequest extends Request {
     private CinemaDto cinemaDto;
     private CreditCardDto creditCard;
 
-    public PaymentRequest(TicketDto ticketDto, ProjectionDto projection,  CinemaDto cinemaDto,   CreditCardDto creditCard, String email) {
+    public PaymentRequest(TicketDto ticketDto, ProjectionDto projection, CinemaDto cinemaDto, CreditCardDto creditCard, String email) {
         this.projection = projection;
         this.ticketDto = ticketDto;
         this.cinemaDto = cinemaDto;

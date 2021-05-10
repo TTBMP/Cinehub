@@ -5,7 +5,7 @@ import com.ttbmp.cinehub.app.usecase.Request;
 
 import java.time.LocalDate;
 
-public class GetEmployeeListRequest extends Request{
+public class GetEmployeeListRequest extends Request {
 
     public static final Request.Error MISSING_CINEMA = new Request.Error("Cinema non valido");
 

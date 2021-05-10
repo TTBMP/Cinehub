@@ -109,7 +109,7 @@ public class JdbcShiftRepository implements ShiftRepository {
                         serviceLocator.getService(ProjectionistRepository.class),
                         serviceLocator.getService(HallRepository.class),
                         serviceLocator.getService(ProjectionRepository.class));
-            }else if(employee instanceof Usher){
+            } else if (employee instanceof Usher) {
                 return new UsherShiftProxy(
                         shift.getId(),
                         shift.getDate(),
@@ -117,7 +117,7 @@ public class JdbcShiftRepository implements ShiftRepository {
                         shift.getEnd(),
                         serviceLocator.getService(UsherRepository.class)
                 );
-            }else {
+            } else {
                 return null;
             }
         } catch (DaoMethodException e) {
