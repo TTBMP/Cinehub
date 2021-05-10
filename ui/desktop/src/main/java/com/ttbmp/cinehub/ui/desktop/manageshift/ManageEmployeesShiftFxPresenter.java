@@ -29,7 +29,6 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     @Override
     public void presentEmployeeList(GetEmployeeListResponse response) {
         List<EmployeeShiftWeek> employeeShiftWeekList = new ArrayList<>();
-
         for (var employeeDto : response.getEmployeeDtoList()) {
             var weekMap = new EnumMap<DayOfWeek, Day>(DayOfWeek.class);
             initializeWeekMap(weekMap, employeeDto);
@@ -76,7 +75,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     public void presentSaveShift() {
         var savedShift = ShiftDataMapper.mapToEntity(viewModel.getShiftCreated());
         var temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
-        List<EmployeeShiftWeek> employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
+        var employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
         employeeShiftWeeks.forEach(e -> {
             if (EmployeeDataMapper.matToEntity(e.getEmployeeDto()).equals(savedShift.getEmployee())
                     && LocalDate.parse(savedShift.getDate()).get(temporalField) == viewModel.getSelectedWeek().get(temporalField)
@@ -92,7 +91,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     @Override
     public void presentDeleteShift() {
         var deleteShift = ShiftDataMapper.mapToEntity(viewModel.getSelectedShift());
-        List<EmployeeShiftWeek> employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
+        var employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
         employeeShiftWeeks.forEach(e -> {
             if (EmployeeDataMapper.matToEntity(e.getEmployeeDto()).equals(deleteShift.getEmployee())) {
                 e.getWeekMap().get(LocalDate.parse(deleteShift.getDate()).getDayOfWeek())
@@ -108,7 +107,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     public void presentRepeatShift(ShiftRepeatResponse response) {
         var shiftList = response.getShiftDto();
         var temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
-        List<EmployeeShiftWeek> employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
+        var employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
         for (var savedShift : shiftList) {
             employeeShiftWeeks.forEach(employeeShiftWeek -> {
                 if (employeeShiftWeek.getEmployeeDto().equals(savedShift.getEmployee()) &&

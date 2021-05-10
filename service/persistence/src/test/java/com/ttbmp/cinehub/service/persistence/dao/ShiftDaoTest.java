@@ -35,22 +35,4 @@ class ShiftDaoTest {
         assertDoesNotThrow(() -> dao.getShiftListByEmployeeId("0"));
     }
 
-    @Test
-    void saveShift() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, DaoMethodException {
-        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getShiftDao();
-        assertDoesNotThrow(() -> dao.insert(new Shift(0, "12:00", "16:00", "0", "2020-02-15")));
-    }
-
-    @Test
-    void deleteShift() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, DaoMethodException {
-        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getShiftDao();
-        assertDoesNotThrow(() -> dao.delete(dao.getShiftById(2)));
-    }
-
-    @Test
-    void modifyShift() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, DaoMethodException {
-        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getShiftDao();
-        assertDoesNotThrow(() -> dao.update(new Shift(2, "12:00", "16:00", "0", "2010-02-10")));
-    }
-
 }

@@ -8,11 +8,11 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftCo
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
-import com.ttbmp.cinehub.domain.Cinema;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 
 /**
  * @author Massimo Mazzetti
@@ -32,13 +32,15 @@ class ManageEmployeesShiftControllerTest {
 
     @Test
     void getShiftList() throws RepositoryException {
+        var start = LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());
+        var end = LocalDate.now().with(TemporalAdjusters.lastDayOfMonth());
         var controller = new ManageEmployeesShiftController(
                 serviceLocator,
                 new MockManageEmployeePresenter()
         );
         var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
         var cinema = cinemaRepository.getCinema(0);
-        var getShiftListRequest = new GetShiftListRequest(CinemaDataMapper.mapToDto(cinema), LocalDate.parse("2021-05-10"),  LocalDate.parse("2021-05-20"));
+        var getShiftListRequest = new GetShiftListRequest(CinemaDataMapper.mapToDto(cinema), start,  end);
         controller.getShiftList(getShiftListRequest);
     }
 
