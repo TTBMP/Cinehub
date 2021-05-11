@@ -7,24 +7,15 @@ import java.util.List;
 
 public class GetEmployeeListResponse {
 
-    List<EmployeeDto> employeeDtoList;
-    LocalDate date;
+    private List<EmployeeDto> employeeDtoList;
 
     public GetEmployeeListResponse() {
     }
 
-    public GetEmployeeListResponse(List<EmployeeDto> employeeDtoList, LocalDate date) {
+    public GetEmployeeListResponse(List<EmployeeDto> employeeDtoList) {
         this.employeeDtoList = employeeDtoList;
-        this.date = date;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
 
     public List<EmployeeDto> getEmployeeDtoList() {
         return employeeDtoList;

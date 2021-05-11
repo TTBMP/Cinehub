@@ -77,8 +77,7 @@ public class ShowShiftViewController extends ViewController {
 
         activity.getUseCase((ManageEmployeesShiftUseCase.class)).getEmployeeList(
                 new GetEmployeeListRequest(
-                        viewModel.getSelectedCinema(),
-                        viewModel.getSelectedWeek()
+                        viewModel.getSelectedCinema()
                 ));
 
         activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
@@ -104,8 +103,7 @@ public class ShowShiftViewController extends ViewController {
         cinemaComboBox.setOnAction(a -> {
             activity.getUseCase((ManageEmployeesShiftUseCase.class)).getEmployeeList(
                     new GetEmployeeListRequest(
-                            viewModel.getSelectedCinema(),
-                            viewModel.getSelectedWeek()
+                            viewModel.getSelectedCinema()
                     ));
 
             activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(

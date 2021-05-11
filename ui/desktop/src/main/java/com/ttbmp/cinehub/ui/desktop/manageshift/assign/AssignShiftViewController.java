@@ -78,7 +78,9 @@ public class AssignShiftViewController extends ViewController {
         }
         viewModel.setRepeatVisibility(false);
         viewModel.setErrorAssignVisibility(false);
+
         viewModel.getHallList().setAll(viewModel.getSelectedDayWeek().getEmployee().getCinema().getHalList());
+
         hallComboBox.setItems(viewModel.getHallList());
         viewModel.selectedHallProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
 

@@ -71,8 +71,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             var cinema = cinemaRepository.getCinema(request.getCinema().getId());
             var employeeList = employeeRepository.getEmployeeList(cinema);
             manageEmployeesShiftPresenter.presentEmployeeList(new GetEmployeeListResponse(
-                    EmployeeDataMapper.mapToDtoList(employeeList),
-                    request.getDate())
+                    EmployeeDataMapper.mapToDtoList(employeeList))
             );
         } catch (RepositoryException e) {
             e.printStackTrace();

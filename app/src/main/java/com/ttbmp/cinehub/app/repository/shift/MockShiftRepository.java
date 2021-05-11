@@ -17,6 +17,7 @@ import com.ttbmp.cinehub.domain.employee.Projectionist;
 import com.ttbmp.cinehub.domain.employee.Usher;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 import com.ttbmp.cinehub.domain.shift.Shift;
+import com.ttbmp.cinehub.domain.shift.UsherShift;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -71,11 +72,12 @@ public class MockShiftRepository implements ShiftRepository {
     @Override
     public Shift getShift(Employee employee, String date, String start, String end) throws RepositoryException {
         var shift = SHIFT_DATA_LIST.stream()
-                .filter(d -> d.employeeId.equals(employee.getId())
-                        && d.date.equals(date)
+                .filter(d -> d.employeeId.equals(employee.getId()))
+                .filter(d-> d.date.equals(date)
                         && d.start.equals(start)
                         && d.end.equals(end))
-                .collect(Collectors.toList()).get(0);
+                .collect(Collectors.toList())
+                .get(0);
         if (employee instanceof Projectionist) {
             return new ProjectionistShiftProxy(
                     shift.id,
@@ -100,6 +102,9 @@ public class MockShiftRepository implements ShiftRepository {
 
     @Override
     public Shift getShift(int shiftId) {
+        if(SHIFT_DATA_LIST.stream().noneMatch(d->d.id == shiftId)){
+            return null;  //TODO: Far controllare a fabio
+        }
         var data = SHIFT_DATA_LIST.stream()
                 .filter(d -> d.id == shiftId)
                 .collect(Collectors.toList())
