@@ -40,7 +40,7 @@ public class AssignProjectionistShiftViewController {
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema, LocalDate.now()));
+        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var shiftRequest = new NewShiftForm();
         model.addAttribute(ASSIGN_REQUEST, shiftRequest);
@@ -55,7 +55,7 @@ public class AssignProjectionistShiftViewController {
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema, LocalDate.now()));
+        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema));
         useCase.createShift(new CreateShiftRequest(
                 shiftRequest.getEmployee().getId(),
                 LocalDate.parse(shiftRequest.getDate()),

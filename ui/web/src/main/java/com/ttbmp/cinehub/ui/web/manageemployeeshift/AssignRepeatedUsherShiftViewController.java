@@ -44,7 +44,7 @@ public class AssignRepeatedUsherShiftViewController {
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema, LocalDate.now()));
+        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
         var request = new NewRepeatedShiftForm();
@@ -61,7 +61,7 @@ public class AssignRepeatedUsherShiftViewController {
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema, LocalDate.now()));
+        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());

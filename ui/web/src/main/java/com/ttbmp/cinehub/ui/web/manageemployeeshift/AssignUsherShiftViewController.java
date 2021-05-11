@@ -41,7 +41,7 @@ public class AssignUsherShiftViewController {
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema, LocalDate.now()));
+        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var shiftRequest = new NewShiftForm();
         model.addAttribute(ASSIGN_REQUEST, shiftRequest);
@@ -57,7 +57,7 @@ public class AssignUsherShiftViewController {
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema, LocalDate.now()));
+        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         useCase.createShift(new CreateShiftRequest(
                 request.getEmployee().getId(),

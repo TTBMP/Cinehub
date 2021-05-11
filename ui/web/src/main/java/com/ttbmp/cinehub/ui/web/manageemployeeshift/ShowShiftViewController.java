@@ -52,7 +52,7 @@ public class ShowShiftViewController {
         useCase.getCinemaList();
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
         model.addAttribute("cinemaSelected", true);
-        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema, LocalDate.now()));
+        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema));
         useCase.getShiftList(new GetShiftListRequest(selectedCinema,
                 form.getStart().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
                 form.getStart().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
