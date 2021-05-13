@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.app.usecase.buyticket.request;
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.dto.CreditCardDto;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.usecase.Request;
@@ -22,15 +21,35 @@ public class PaymentRequest extends Request {
     private String email;
     private TicketDto ticketDto;
     private CinemaDto cinemaDto;
-    private CreditCardDto creditCard;
+    private String creditCardNumber;
+    private String creditCardCvv;
+    private String creditCardExpirationDate;
 
-    public PaymentRequest(TicketDto ticketDto, ProjectionDto projection, CinemaDto cinemaDto, CreditCardDto creditCard, String email) {
+    public PaymentRequest(TicketDto ticketDto, ProjectionDto projection, CinemaDto cinemaDto, String creditCardNumber, String creditCardCvv, String creditCardExpirationDate, String email) {
         this.projection = projection;
         this.ticketDto = ticketDto;
         this.cinemaDto = cinemaDto;
-        this.creditCard = creditCard;
+        this.creditCardNumber = creditCardNumber;
         this.email = email;
+        this.creditCardCvv = creditCardCvv;
+        this.creditCardExpirationDate = creditCardExpirationDate;
 
+    }
+
+    public String getCreditCardCvv() {
+        return creditCardCvv;
+    }
+
+    public void setCreditCardCvv(String creditCardCvv) {
+        this.creditCardCvv = creditCardCvv;
+    }
+
+    public String getCreditCardExpirationDate() {
+        return creditCardExpirationDate;
+    }
+
+    public void setCreditCardExpirationDate(String creditCardExpirationDate) {
+        this.creditCardExpirationDate = creditCardExpirationDate;
     }
 
     public String getEmail() {
@@ -66,12 +85,12 @@ public class PaymentRequest extends Request {
         this.ticketDto = ticketDto;
     }
 
-    public CreditCardDto getCreditCard() {
-        return creditCard;
+    public String getCreditCardNumber() {
+        return creditCardNumber;
     }
 
-    public void setCreditCard(CreditCardDto creditCard) {
-        this.creditCard = creditCard;
+    public void setCreditCardNumber(String creditCardNumber) {
+        this.creditCardNumber = creditCardNumber;
     }
 
     @Override
@@ -87,7 +106,7 @@ public class PaymentRequest extends Request {
         if (cinemaDto == null) {
             addError(MISSING_CINEMA_ERROR);
         }
-        if (creditCard == null) {
+        if (creditCardNumber == null) {
             addError(MISSING_CREDIT_CARD_ERROR);
 
         }

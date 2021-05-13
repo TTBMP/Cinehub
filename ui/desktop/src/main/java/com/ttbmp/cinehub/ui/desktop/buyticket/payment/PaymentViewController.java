@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.buyticket.payment;
 
 
-import com.ttbmp.cinehub.app.dto.CreditCardDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.PaymentRequest;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
@@ -90,7 +89,9 @@ public class PaymentViewController extends ViewController {
                 viewModel.selectedTicketProperty().getValue(),
                 viewModel.selectedProjectionProperty().getValue(),
                 viewModel.selectedCinemaProperty().getValue(),
-                new CreditCardDto(0, viewModel.numberOfCardUserProperty().getValue(),viewModel.txtCvvProperty().getValue(), String.valueOf(fieldExpirationDatePicker.getValue())),
+                viewModel.numberOfCardUserProperty().getValue(),
+                viewModel.txtCvvProperty().getValue(),
+                String.valueOf(fieldExpirationDatePicker.getValue()),
                 viewModel.emailUserProperty().getValue()
         ));
         try {
