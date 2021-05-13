@@ -3,6 +3,7 @@ package com.ttbmp.cinehub.ui.desktop.manageshift;
 import com.ttbmp.cinehub.app.datamapper.EmployeeDataMapper;
 import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
@@ -139,28 +140,24 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
 
     @Override
     public void presentInvalidEmployeeListRequest(GetEmployeeListRequest request) {
-
+        if (request.getErrorList().contains(GetEmployeeListRequest.MISSING_CINEMA)) {
+            viewModel.errorDaoProperty().setValue(GetEmployeeListRequest.MISSING_CINEMA.getMessage());
+        }
     }
 
     @Override
     public void presentEmployeeListNullRequest() {
-
+        viewModel.errorDaoProperty().setValue("Error with operation get employee list");
     }
 
     @Override
     public void presentInvalidDeleteShiftListRequest(ShiftRequest request) {
-
+        viewModel.errorDaoProperty().setValue("Error with operation delete shift");
     }
 
     @Override
     public void presentDeleteShiftNullRequest() {
         viewModel.errorProperty().setValue("Error with operation delete shift");
-    }
-
-    @Override
-    public void presentDeleteShiftError(Throwable error) {
-        viewModel.errorProperty().setValue("IMPOSSIBLE DELETE SHIFT");
-        viewModel.setErrorAssignVisibility(true);
     }
 
     @Override
@@ -263,6 +260,11 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     @Override
     public void presentGetShiftListNullRequest() {
         viewModel.errorProperty().setValue("Error with operation get shift List");
+    }
+
+    @Override
+    public void presentRepositoryError(RepositoryException e) {
+        viewModel.errorDaoProperty().setValue(e.getMessage());
     }
 
 }

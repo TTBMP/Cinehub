@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
 import com.ttbmp.cinehub.app.dto.*;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
@@ -56,8 +57,6 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
         }
         model.addAttribute("shiftList", employeeShiftListMap);
     }
-
-
 
     @Override
     public void presentCinemaList(GetCinemaListResponse listCinema) {
@@ -134,11 +133,6 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     public void presentDeleteShiftNullRequest() {
         model.addAttribute(ERROR, true);
         model.addAttribute(ERROR_TEXT, "Error with operation delete shift");
-    }
-
-    @Override
-    public void presentDeleteShiftError(Throwable error) {
-        presentError(error);
     }
 
     @Override
@@ -265,6 +259,11 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     public void presentGetShiftListNullRequest() {
         model.addAttribute(ERROR_TEXT, "Error with operation get Shift List");
         model.addAttribute(ERROR, true);
+    }
+
+    @Override
+    public void presentRepositoryError(RepositoryException e) {
+        presentError(e);
     }
 
     private void presentError(Throwable error) {

@@ -24,6 +24,9 @@
 </div>
 <div class="row justify-content-center">
     <div class="bg-black col-md-8 order-md-1 text-body">
+        <div th:if="${error}">
+            <h1 align="center" th:text="${errorText}"></h1>
+        </div>
 
         <form action="#" method="post" th:action="@{/manage_employee_shift}" th:object="${getShiftListRequest}">
             <label>Select Cinema</label>

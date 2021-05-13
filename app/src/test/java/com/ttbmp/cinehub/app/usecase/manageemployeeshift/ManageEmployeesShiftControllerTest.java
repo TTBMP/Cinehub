@@ -18,7 +18,6 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.shift.Shift;
-import com.ttbmp.cinehub.domain.shift.ShiftRepeatingOption;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -310,11 +309,6 @@ class ManageEmployeesShiftControllerTest {
         }
 
         @Override
-        public void presentDeleteShiftError(Throwable error) {
-
-        }
-
-        @Override
         public void presentInvalidModifyShiftListRequest(ShiftModifyRequest request) {
 
         }
@@ -356,6 +350,11 @@ class ManageEmployeesShiftControllerTest {
 
         @Override
         public void presentGetShiftListNullRequest() {
+
+        }
+
+        @Override
+        public void presentRepositoryError(RepositoryException e) {
 
         }
 

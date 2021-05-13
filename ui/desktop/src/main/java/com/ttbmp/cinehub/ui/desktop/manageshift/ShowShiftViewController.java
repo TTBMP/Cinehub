@@ -17,6 +17,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.time.DayOfWeek;
@@ -34,6 +35,9 @@ public class ShowShiftViewController extends ViewController {
 
     @FXML
     private AppBarViewController appBarController;
+
+    @FXML
+    private Label errorLabel;
 
     @FXML
     private ComboBox<CinemaDto> cinemaComboBox;
@@ -61,6 +65,9 @@ public class ShowShiftViewController extends ViewController {
     protected void onLoad() {
         appBarController.load(activity, navController);
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
+
+        errorLabel.textProperty().bind(viewModel.errorDaoProperty());
+
         activity.getUseCase(ManageEmployeesShiftUseCase.class).getCinemaList();
         cinemaComboBox.setItems(viewModel.getCinemaList());
 

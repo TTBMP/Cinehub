@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift;
 
 
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
 
@@ -33,8 +34,6 @@ public interface ManageEmployeesShiftPresenter {
 
     void presentDeleteShiftNullRequest();
 
-    void presentDeleteShiftError(Throwable error);
-
     void presentInvalidModifyShiftListRequest(ShiftModifyRequest request);
 
     void presentModifyShiftNullRequest();
@@ -53,5 +52,6 @@ public interface ManageEmployeesShiftPresenter {
 
     void presentGetShiftListNullRequest();
 
+    void presentRepositoryError(RepositoryException e);
 
 }

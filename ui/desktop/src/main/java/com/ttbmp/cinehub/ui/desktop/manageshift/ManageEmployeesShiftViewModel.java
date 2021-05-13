@@ -30,6 +30,7 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
     private final BooleanProperty errorAssignVisibility = new SimpleBooleanProperty();
     private final BooleanProperty errorModifyVisibility = new SimpleBooleanProperty();
     private final StringProperty error = new SimpleStringProperty();
+    private final StringProperty errorDao = new SimpleStringProperty();
 
     private final BooleanProperty repeatVisibility = new SimpleBooleanProperty();
     private final ObjectProperty<LocalTime> startSpinnerTime = new SimpleObjectProperty<>();
@@ -77,6 +78,18 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
             }
             return null;
         }));
+    }
+
+    public String getErrorDao() {
+        return errorDao.get();
+    }
+
+    public StringProperty errorDaoProperty() {
+        return errorDao;
+    }
+
+    public void setErrorDao(String errorDao) {
+        this.errorDao.set(errorDao);
     }
 
     public CinemaDto getSelectedCinema() {

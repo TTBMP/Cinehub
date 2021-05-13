@@ -60,7 +60,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                     CinemaDataMapper.mapToDtoList(cinemaRepository.getAllCinema())
             ));
         } catch (RepositoryException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentRepositoryError(e);
         }
     }
 
@@ -74,7 +74,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                     EmployeeDataMapper.mapToDtoList(employeeList))
             );
         } catch (RepositoryException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentRepositoryError(e);
         } catch (Request.NullRequestException e) {
             manageEmployeesShiftPresenter.presentEmployeeListNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -97,7 +97,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (Request.InvalidRequestException e) {
             manageEmployeesShiftPresenter.presentInvalidGetShiftListRequest(request);
         } catch (RepositoryException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentRepositoryError(e);
         }
     }
 
@@ -130,7 +130,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (ModifyShiftException e) {
             manageEmployeesShiftPresenter.presentModifyShiftError(e);
         } catch (RepositoryException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentRepositoryError(e);
         }
     }
 
@@ -151,7 +151,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (Request.InvalidRequestException e) {
             manageEmployeesShiftPresenter.presentInvalidDeleteShiftListRequest(request);
         } catch (RepositoryException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentRepositoryError(e);
         }
     }
 
@@ -199,7 +199,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (CreateShiftException e) {
             manageEmployeesShiftPresenter.presentCreateShiftError(e);
         } catch (RepositoryException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentRepositoryError(e);
         }
     }
 
@@ -232,7 +232,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (CreateShiftException e) {
             manageEmployeesShiftPresenter.presentCreateShiftError(e);
         } catch (RepositoryException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentRepositoryError(e);
         }
     }
 

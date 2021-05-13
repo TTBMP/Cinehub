@@ -37,7 +37,6 @@ public interface ShiftDao {
     @Query("SELECT  turno.*  " +
             "from cinemadb.dipendente, cinemadb.turno " +
             "where dipendente.id_utente = turno.id_dipendente " +
-            "and dipendente.id_utente = turno.id_dipendente " +
             "and dipendente.id_utente = :idEmployee " +
             "and turno.data between :start  and  :end ")
     List<Shift> getShiftBetweenDate(
