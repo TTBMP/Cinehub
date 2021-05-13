@@ -26,26 +26,24 @@ public class JdbcUsherRepository implements UsherRepository {
     public Usher getUsher(UsherShift usherShift) throws RepositoryException {
         try {
             var employee = getUsherDao().getUsherByUsherShift(usherShift.getId());
-
             return new UsherProxy(
                     employee.getIdUser(),
                     serviceLocator.getService(UserRepository.class),
                     serviceLocator.getService(CinemaRepository.class),
                     serviceLocator.getService(ShiftRepository.class)
             );
-
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
     }
 
 
-    private UsherDao getUsherDao() {
+    private UsherDao getUsherDao() throws RepositoryException {
         if (usherDao == null) {
             try {
                 this.usherDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getUsherDao();
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RepositoryException(e.getMessage());
             }
         }
         return usherDao;

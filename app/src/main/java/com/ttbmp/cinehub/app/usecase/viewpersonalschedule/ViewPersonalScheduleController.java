@@ -39,9 +39,9 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
         } catch (Request.InvalidRequestException e) {
             presenter.presentInvalidShiftListRequest(request);
         } catch (AuthenticationException e) {
-            e.printStackTrace();
+            presenter.presentAuthenticationError(e);
         } catch (RepositoryException e) {
-            e.printStackTrace();
+            presenter.presentRepositoryError(e);
         }
     }
 
@@ -56,7 +56,7 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
         } catch (Request.InvalidRequestException e) {
             presenter.presentInvalidProjectionListRequest(request);
         } catch (RepositoryException e) {
-            e.printStackTrace();
+            presenter.presentRepositoryError(e);
         }
     }
 

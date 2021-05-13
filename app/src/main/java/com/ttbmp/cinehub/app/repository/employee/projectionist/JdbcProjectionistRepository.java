@@ -52,19 +52,17 @@ public class JdbcProjectionistRepository implements ProjectionistRepository {
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
-
     }
 
 
-    private ProjectionistDao getProjectionistDao() {
+    private ProjectionistDao getProjectionistDao() throws RepositoryException {
         if (projectionistDao == null) {
             try {
                 this.projectionistDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getProjectionistDao();
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RepositoryException(e.getMessage());
             }
         }
         return projectionistDao;
-
     }
 }

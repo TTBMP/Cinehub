@@ -99,7 +99,7 @@ public class DaoOperationHelper {
     public static void bindPreparedStatement(@NotNull PreparedStatement statement, @NotNull Map<String, Object> parameterMap, @NotNull List<String> columnNameList) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         if (!columnNameList.isEmpty()) {
             Iterator<String> columnNameIterator = columnNameList.listIterator();
-            for (int i = 0; i < columnNameList.size(); i++) {
+            for (var i = 0; i < columnNameList.size(); i++) {
                 var parameter = parameterMap.get(columnNameIterator.next());
                 var typeClass = parameter.getClass();
                 switch (typeClass.getName()) {

@@ -50,7 +50,7 @@ public class DaoQueryOperation extends DaoOperation {
         )) {
             DaoOperationHelper.bindPreparedStatement(
                     statement,
-                    getQueryTemplateParameterNameValueMap(args),
+                    getStatementParameterNameValueMap(args),
                     queryTemplateParameterNameList
             );
             return getResult(statement.executeQuery());
@@ -59,22 +59,19 @@ public class DaoQueryOperation extends DaoOperation {
         }
     }
 
-    private Map<String, Object> getQueryTemplateParameterNameValueMap(Object[] args) throws DaoMethodException {
+    private Map<String, Object> getStatementParameterNameValueMap(Object[] args) throws DaoMethodException {
         Map<String, Object> result = new HashMap<>();
         if (args != null) {
             var parameterIterator = Arrays.stream(args).iterator();
-            for (var parameterAnnotation : method.getParameterAnnotations()) {
-                var firstParameterAnnotation = true;
-                for (var annotation : parameterAnnotation) {
+            for (var annotations : method.getParameterAnnotations()) {
+                var parameterInstanceCounter = 0;
+                for (var annotation : annotations) {
                     if (annotation instanceof Parameter) {
-                        if (!firstParameterAnnotation) {
-                            throw new DaoMethodException();
-                        }
                         result.put(((Parameter) annotation).name(), parameterIterator.next());
-                        firstParameterAnnotation = false;
+                        parameterInstanceCounter++;
                     }
                 }
-                if (firstParameterAnnotation) {
+                if (parameterInstanceCounter != 1) {
                     throw new DaoMethodException();
                 }
             }

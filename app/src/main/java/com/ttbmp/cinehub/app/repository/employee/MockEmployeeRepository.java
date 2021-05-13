@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.app.repository.employee;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
-import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistProxy;
 import com.ttbmp.cinehub.app.repository.employee.usher.UsherProxy;
@@ -76,7 +75,7 @@ public class MockEmployeeRepository implements EmployeeRepository {
     }
 
     @Override
-    public List<Employee> getEmployeeList(Cinema cinema) throws RepositoryException {
+    public List<Employee> getEmployeeList(Cinema cinema) {
         return EMPLOYEE_DATA_LIST.stream()
                 .filter(d -> d.getCinemaId() == cinema.getId())
                 .map(d -> new EmployeeFactory().createEmployee(d))

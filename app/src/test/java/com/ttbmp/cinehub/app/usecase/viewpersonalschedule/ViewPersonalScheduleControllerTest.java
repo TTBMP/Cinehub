@@ -93,6 +93,16 @@ class ViewPersonalScheduleControllerTest {
 
         }
 
+        @Override
+        public void presentAuthenticationError(AuthenticationException e) {
+
+        }
+
+        @Override
+        public void presentRepositoryError(RepositoryException e) {
+
+        }
+
     }
 
 }

@@ -2,7 +2,6 @@ package com.ttbmp.cinehub.app.usecase.manageemployeesshift.response;
 
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class GetEmployeeListResponse {

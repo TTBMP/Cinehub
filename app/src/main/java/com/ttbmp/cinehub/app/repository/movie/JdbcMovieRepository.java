@@ -21,7 +21,6 @@ public class JdbcMovieRepository implements MovieRepository {
 
     public JdbcMovieRepository(ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
-
     }
 
     @Override

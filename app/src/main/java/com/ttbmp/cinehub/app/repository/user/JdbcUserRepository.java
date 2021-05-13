@@ -21,8 +21,7 @@ public class JdbcUserRepository implements UserRepository {
     @Override
     public User getUser(String userId) throws RepositoryException {
         try {
-            com.ttbmp.cinehub.service.persistence.entity.User user = null;
-            user = getUserDao().getUserById(userId);
+            var user = getUserDao().getUserById(userId);
             return new UserProxy(user.getId(), user.getName(), user.getSurname(), user.getEmail());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
@@ -40,12 +39,12 @@ public class JdbcUserRepository implements UserRepository {
 
     }
 
-    private UserDao getUserDao() {
+    private UserDao getUserDao() throws RepositoryException {
         if (userDao == null) {
             try {
                 this.userDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getUserDao();
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RepositoryException(e.getMessage());
             }
         }
         return userDao;

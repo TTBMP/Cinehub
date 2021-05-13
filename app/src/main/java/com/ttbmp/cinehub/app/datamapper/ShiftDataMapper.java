@@ -5,7 +5,6 @@ import com.ttbmp.cinehub.app.dto.ShiftProjectionistDto;
 import com.ttbmp.cinehub.app.dto.ShiftUsherDto;
 import com.ttbmp.cinehub.app.dto.UsherDto;
 import com.ttbmp.cinehub.app.utilities.DataMapperHelper;
-import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.employee.Usher;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 import com.ttbmp.cinehub.domain.shift.Shift;

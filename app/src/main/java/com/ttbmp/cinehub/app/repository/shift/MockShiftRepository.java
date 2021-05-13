@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.app.repository.shift;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
-import com.ttbmp.cinehub.app.repository.LazyLoadingException;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.MockEmployeeRepository;
@@ -17,7 +16,6 @@ import com.ttbmp.cinehub.domain.employee.Projectionist;
 import com.ttbmp.cinehub.domain.employee.Usher;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 import com.ttbmp.cinehub.domain.shift.Shift;
-import com.ttbmp.cinehub.domain.shift.UsherShift;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -70,10 +68,10 @@ public class MockShiftRepository implements ShiftRepository {
     }
 
     @Override
-    public Shift getShift(Employee employee, String date, String start, String end) throws RepositoryException {
+    public Shift getShift(Employee employee, String date, String start, String end) {
         var shift = SHIFT_DATA_LIST.stream()
                 .filter(d -> d.employeeId.equals(employee.getId()))
-                .filter(d-> d.date.equals(date)
+                .filter(d -> d.date.equals(date)
                         && d.start.equals(start)
                         && d.end.equals(end))
                 .collect(Collectors.toList())
@@ -101,58 +99,51 @@ public class MockShiftRepository implements ShiftRepository {
     }
 
     @Override
-    public Shift getShift(int shiftId) {
-        if(SHIFT_DATA_LIST.stream().noneMatch(d->d.id == shiftId)){
-            return null;  //TODO: Far controllare a fabio
-        }
+    public Shift getShift(int shiftId) throws RepositoryException {
+        var employeeRepository = serviceLocator.getService(EmployeeRepository.class);
         var data = SHIFT_DATA_LIST.stream()
-                .filter(d -> d.id == shiftId)
-                .collect(Collectors.toList())
-                .get(0);
-        Employee employee = null;
-        try {
-            employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(data.employeeId);
-        } catch (RepositoryException e) {
-            throw new LazyLoadingException(e.getMessage());
-        }
-        if (employee instanceof Projectionist) {
-            return new ProjectionistShiftProxy(
-                    data.id,
-                    data.date,
-                    data.start,
-                    data.end,
-                    serviceLocator.getService(ProjectionistRepository.class),
-                    serviceLocator.getService(HallRepository.class),
-                    serviceLocator.getService(ProjectionRepository.class)
-            );
-        }
-        if (employee instanceof Usher) {
-            return new UsherShiftProxy(
-                    data.id,
-                    data.date,
-                    data.start,
-                    data.end,
-                    serviceLocator.getService(UsherRepository.class)
-            );
+                .filter(d -> d.getId() == shiftId)
+                .findAny()
+                .orElse(null);
+        if (data != null) {
+            var employee = employeeRepository.getEmployee(data.getEmployeeId());
+            if (employee instanceof Projectionist) {
+                return new ProjectionistShiftProxy(
+                        data.getId(),
+                        data.getDate(),
+                        data.getStart(),
+                        data.getEnd(),
+                        serviceLocator.getService(ProjectionistRepository.class),
+                        serviceLocator.getService(HallRepository.class),
+                        serviceLocator.getService(ProjectionRepository.class)
+                );
+            }
+            if (employee instanceof Usher) {
+                return new UsherShiftProxy(
+                        data.getId(),
+                        data.getDate(),
+                        data.getStart(),
+                        data.getEnd(),
+                        serviceLocator.getService(UsherRepository.class)
+                );
+            }
         }
         return null;
     }
 
     @Override
     public List<Shift> getCinemaShiftListBetween(int cinemaId, LocalDate start, LocalDate end) throws RepositoryException {
-        return SHIFT_DATA_LIST.stream()
-                .filter(d -> {
-                    Employee employee = null;
-                    try {
-                        employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(d.employeeId);
-                    } catch (RepositoryException e) {
-                        e.printStackTrace();
-                    }
-                    return employee.getCinema().getId() == cinemaId;
-                })
-                .filter(d -> LocalDate.parse(d.date).isAfter(start) && LocalDate.parse(d.date).isBefore(end))
-                .map(d -> new ShiftFactory().createShift(d))
-                .collect(Collectors.toList());
+        var employeeRepository = serviceLocator.getService(EmployeeRepository.class);
+        List<Shift> list = new ArrayList<>();
+        for (var d : SHIFT_DATA_LIST) {
+            if (employeeRepository.getEmployee(d.employeeId).getCinema().getId() == cinemaId &&
+                    LocalDate.parse(d.date).isAfter(start) &&
+                    LocalDate.parse(d.date).isBefore(end)) {
+                var shift = new ShiftFactory().createShift(d);
+                list.add(shift);
+            }
+        }
+        return list;
     }
 
     @Override
@@ -192,7 +183,7 @@ public class MockShiftRepository implements ShiftRepository {
     }
 
     @Override
-    public void deletedShift(Shift shift) throws RepositoryException {
+    public void deletedShift(Shift shift) {
         SHIFT_DATA_LIST.removeIf(d -> d.id == shift.getId());
     }
 
@@ -216,7 +207,7 @@ public class MockShiftRepository implements ShiftRepository {
     }
 
     @Override
-    public void modifyShift(Shift shift) throws RepositoryException {
+    public void modifyShift(Shift shift) {
         if (SHIFT_DATA_LIST.stream().noneMatch(d -> d.id == shift.getId())) {
             //throw new ShiftSaveException(ShiftSaveException.NOT_EXIST_ERROR);
         }
@@ -238,94 +229,94 @@ public class MockShiftRepository implements ShiftRepository {
         }
     }
 
-    public static class ShiftData {
+public static class ShiftData {
 
-        private int id;
-        private String date;
-        private String start;
-        private String end;
-        private String employeeId;
+    private int id;
+    private String date;
+    private String start;
+    private String end;
+    private String employeeId;
 
-        public ShiftData(int id, String date, String start, String end, String employeeId) {
-            this.id = id;
-            this.date = date;
-            this.start = start;
-            this.end = end;
-            this.employeeId = employeeId;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getDate() {
-            return date;
-        }
-
-        public void setDate(String date) {
-            this.date = date;
-        }
-
-        public String getStart() {
-            return start;
-        }
-
-        public void setStart(String start) {
-            this.start = start;
-        }
-
-        public String getEnd() {
-            return end;
-        }
-
-        public void setEnd(String end) {
-            this.end = end;
-        }
-
-        public String getEmployeeId() {
-            return employeeId;
-        }
-
-        public void setEmployeeId(String employeeId) {
-            this.employeeId = employeeId;
-        }
-
+    public ShiftData(int id, String date, String start, String end, String employeeId) {
+        this.id = id;
+        this.date = date;
+        this.start = start;
+        this.end = end;
+        this.employeeId = employeeId;
     }
 
-    class ShiftFactory {
-        Shift createShift(ShiftData shiftData) {
-            var employeeRole = MockEmployeeRepository.getEmployeeDataList().stream()
-                    .filter(d -> d.getUserId().equals(shiftData.employeeId))
-                    .map(MockEmployeeRepository.EmployeeData::getRole)
-                    .collect(Collectors.toList())
-                    .get(0);
-            switch (employeeRole) {
-                case PROJECTIONIST:
-                    return new ProjectionistShiftProxy(
-                            shiftData.id,
-                            shiftData.date,
-                            shiftData.start,
-                            shiftData.end,
-                            serviceLocator.getService(ProjectionistRepository.class),
-                            serviceLocator.getService(HallRepository.class),
-                            serviceLocator.getService(ProjectionRepository.class)
-                    );
-                case USHER:
-                    return new UsherShiftProxy(
-                            shiftData.id,
-                            shiftData.date,
-                            shiftData.start,
-                            shiftData.end,
-                            serviceLocator.getService(UsherRepository.class)
-                    );
-                default:
-                    throw new IllegalStateException("Unexpected value: " + employeeRole);
-            }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
+    }
+
+    public String getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
+    }
+
+}
+
+class ShiftFactory {
+    Shift createShift(ShiftData shiftData) {
+        var employeeRole = MockEmployeeRepository.getEmployeeDataList().stream()
+                .filter(d -> d.getUserId().equals(shiftData.employeeId))
+                .map(MockEmployeeRepository.EmployeeData::getRole)
+                .collect(Collectors.toList())
+                .get(0);
+        switch (employeeRole) {
+            case PROJECTIONIST:
+                return new ProjectionistShiftProxy(
+                        shiftData.id,
+                        shiftData.date,
+                        shiftData.start,
+                        shiftData.end,
+                        serviceLocator.getService(ProjectionistRepository.class),
+                        serviceLocator.getService(HallRepository.class),
+                        serviceLocator.getService(ProjectionRepository.class)
+                );
+            case USHER:
+                return new UsherShiftProxy(
+                        shiftData.id,
+                        shiftData.date,
+                        shiftData.start,
+                        shiftData.end,
+                        serviceLocator.getService(UsherRepository.class)
+                );
+            default:
+                throw new IllegalStateException("Unexpected value: " + employeeRole);
         }
     }
+}
 
 }
