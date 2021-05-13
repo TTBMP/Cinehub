@@ -59,13 +59,15 @@ public class BuyTicketController implements BuyTicketUseCase {
             Request.validate(request);
             var user = userRepository.getUser(authenticationService.signIn("", "").getUserId());
             var ticket = TicketDataMapper.mapToEntity(request.getTicketDto());
+            var creditCard = CreditCardDataMapper.mapToEntity(request.getCreditCard());
+            var projection = ProjectionDataMapper.mapToEntity(request.getProjection());
             paymentService.pay(new PayServiceRequest(
                     user.getEmail(),
                     user.getName(),
-                    request.getCreditCard().getNumber(),
+                    creditCard.getNumber(),
                     ticket.getPrice()
             ));
-            ticketRepository.saveTicket(ticket, request.getProjection().getId());
+            ticketRepository.saveTicket(ticket, projection.getId());
             emailService.sendMail(new EmailServiceRequest(request.getEmail(), "Payment receipt"));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentPayNullRequest();
@@ -101,8 +103,7 @@ public class BuyTicketController implements BuyTicketUseCase {
         try {
             Request.validate(request);
             var movie = movieRepository.getMovie(request.getMovieId());
-            var date = request.getData();
-            var cinemaList = cinemaRepository.getListCinema(movie, date);
+            var cinemaList = cinemaRepository.getListCinema(movie, request.getData());
             buyTicketPresenter.presentCinemaList(
                     new CinemaListResponse(CinemaDataMapper.mapToDtoList(cinemaList))
             );
@@ -120,11 +121,8 @@ public class BuyTicketController implements BuyTicketUseCase {
         try {
             Request.validate(request);
             var seatList = SeatDataMapper.mapToEntityList(request.getSeatDtoList());
-            var position = request.getPosition();
-            var seat = seatList.get(position);
-            var user = userRepository.getUser(
-                    authenticationService.signIn("", "").getUserId()
-            );
+            var seat = seatList.get(request.getPosition());
+            var user = userRepository.getUser(authenticationService.signIn("", "").getUserId());
             var projection = projectionRepository.getProjection(request.getProjectionId());
 
             /*-----------DECORATOR PATTERN GOF---------*/
@@ -160,8 +158,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             Request.validate(request);
             var cinema = cinemaRepository.getCinema(request.getCinemaId());
             var movie = movieRepository.getMovie(request.getMovieId());
-            var date = request.getLocalDate();
-            var projectionList = projectionRepository.getProjectionList(cinema, movie, date);
+            var projectionList = projectionRepository.getProjectionList(cinema, movie, request.getLocalDate());
             buyTicketPresenter.presentProjectionList(
                     new ProjectionListResponse(ProjectionDataMapper.mapToDtoList(projectionList))
             );
