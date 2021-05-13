@@ -17,7 +17,9 @@ public class StripeServiceAdapter implements PaymentService {
                     payServiceRequest.getEmail(),
                     payServiceRequest.getNameUser(),
                     payServiceRequest.getNumberOfCard(),
-                    payServiceRequest.getTicketPrice()
+                    payServiceRequest.getTicketPrice(),
+                    payServiceRequest.getCvv(),
+                    payServiceRequest.getExpiredDate()
             );
         } catch (StripeServiceException exception) {
             throw new PaymentServiceException(exception.getMessage());

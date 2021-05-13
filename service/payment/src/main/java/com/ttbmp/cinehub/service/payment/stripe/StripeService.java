@@ -15,7 +15,7 @@ public class StripeService {
     }
 
     @SuppressWarnings("Unused")
-    public void pay(String email, String nameUser, String numberOfCard, long ticketPrice) throws StripeServiceException {
+    public void pay(String email, String nameUser, String numberOfCard, long ticketPrice,String cvv,String expiredDate) throws StripeServiceException {
         try {
             var customer = stripeServiceRequest.getCustomer(
                     nameUser,

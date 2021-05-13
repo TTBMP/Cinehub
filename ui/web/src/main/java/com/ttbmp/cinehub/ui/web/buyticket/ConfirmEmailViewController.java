@@ -2,7 +2,6 @@ package com.ttbmp.cinehub.ui.web.buyticket;
 
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.dto.CreditCardDto;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
@@ -51,7 +50,9 @@ public class ConfirmEmailViewController {
                 ticketDto,
                 projection,
                 cinemaDto,
-                new CreditCardDto(0, paymentForm.getNumberCard(), paymentForm.getCvv(), paymentForm.getDate()),
+                paymentForm.getNumberCard(),
+                paymentForm.getCvv(),
+                paymentForm.getDate(),
                 paymentForm.getEmail()
         ));
         assert cinemaDto != null;

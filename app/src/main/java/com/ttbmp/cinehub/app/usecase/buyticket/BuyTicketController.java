@@ -59,13 +59,14 @@ public class BuyTicketController implements BuyTicketUseCase {
             Request.validate(request);
             var user = userRepository.getUser(authenticationService.signIn("", "").getUserId());
             var ticket = TicketDataMapper.mapToEntity(request.getTicketDto());
-            var creditCard = CreditCardDataMapper.mapToEntity(request.getCreditCard());
             var projection = ProjectionDataMapper.mapToEntity(request.getProjection());
             paymentService.pay(new PayServiceRequest(
                     user.getEmail(),
                     user.getName(),
-                    creditCard.getNumber(),
-                    ticket.getPrice()
+                    request.getCreditCardNumber(),
+                    ticket.getPrice(),
+                    request.getCreditCardCvv(),
+                    request.getCreditCardExpirationDate()
             ));
             ticketRepository.saveTicket(ticket, projection.getId());
             emailService.sendMail(new EmailServiceRequest(request.getEmail(), "Payment receipt"));
