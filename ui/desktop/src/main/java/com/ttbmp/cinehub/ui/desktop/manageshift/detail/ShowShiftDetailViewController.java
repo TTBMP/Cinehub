@@ -65,7 +65,6 @@ public class ShowShiftDetailViewController extends ViewController {
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
         new ManageEmployeesShiftViewModel();
         errorLabel.textProperty().bind(viewModel.errorDaoProperty());
-        errorVBox.visibleProperty().bind(viewModel.errorAssignVisibilityProperty());
         if (viewModel.getSelectedShift().getEmployee() instanceof UsherDto) {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
             hallLabelText.visibleProperty().bind(viewModel.hallVisibilityProperty());

@@ -41,7 +41,6 @@ public class CalendarShiftItemViewController extends ViewController {
         ManageEmployeesShiftViewModel viewModel;
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
 
-
         for (var shift : day.getShiftList()) {
             ShiftItemView item = null;
             try {
@@ -55,12 +54,12 @@ public class CalendarShiftItemViewController extends ViewController {
             shiftVBox.getChildren().add(item.getRoot());
         }
 
-
         if (day.getDate().isBefore(LocalDate.now().plusDays(1))) {
             addButton.setVisible(false);
         }
         addButton.setOnAction(a -> {
             viewModel.setSelectedDayWeek(day);
+            viewModel.getHallList().setAll(day.getEmployee().getCinema().getHalList());
             try {
                 navController.openInDialog(new NavDestination(new AssignShiftView()), "Assign shift");
             } catch (IOException e) {

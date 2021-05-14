@@ -72,6 +72,7 @@ public class AssignShiftViewController extends ViewController {
 
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
 
+
         if (viewModel.getSelectedDayWeek().getEmployee() instanceof UsherDto) {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
             hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
@@ -79,17 +80,15 @@ public class AssignShiftViewController extends ViewController {
         viewModel.setRepeatVisibility(false);
         viewModel.setErrorAssignVisibility(false);
 
-        viewModel.getHallList().setAll(viewModel.getSelectedDayWeek().getEmployee().getCinema().getHalList());
-
         hallComboBox.setItems(viewModel.getHallList());
-        viewModel.selectedHallProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
-
+        
+        hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
         viewModel.setSelectedEndRepeatDay(null);
         hallComboBox.setButtonCell(new HallFactory(null));
         hallComboBox.setCellFactory(HallFactory::new);
         hallComboBox.getSelectionModel().selectFirst();
 
-        hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
+
 
         errorVBox.visibleProperty().bind(viewModel.errorAssignVisibilityProperty());
 
