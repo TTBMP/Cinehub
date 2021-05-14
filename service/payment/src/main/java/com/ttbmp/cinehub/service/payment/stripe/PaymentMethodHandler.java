@@ -8,8 +8,17 @@ import com.stripe.model.PaymentMethodCollection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StripeServicePayment {
+public class PaymentMethodHandler {
 
+    //Given a customer, it retrieves the (0) card of the associated user
+    public PaymentMethod getCreditCard(Customer customer) throws StripeException {
+        var paymentMethods = getPaymentMethod(customer);
+        if (paymentMethods == null) {
+            return null;
+        }
+        return paymentMethods.getData().get(0);
+
+    }
 
     //Given a customer, the list of his cards returns
     private PaymentMethodCollection getPaymentMethod(Customer customer) throws StripeException {
@@ -19,13 +28,4 @@ public class StripeServicePayment {
         return PaymentMethod.list(params);
     }
 
-    //Given a customer, it retrieves the (0) card of the associated user
-    public PaymentMethod getCard(Customer customer) throws StripeException {
-        var paymentMethods = getPaymentMethod(customer);
-        if (paymentMethods == null) {
-            return null;
-        }
-        return paymentMethods.getData().get(0);
-
-    }
 }

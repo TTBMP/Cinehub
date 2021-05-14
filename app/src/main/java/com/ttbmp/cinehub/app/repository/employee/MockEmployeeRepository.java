@@ -14,6 +14,7 @@ import com.ttbmp.cinehub.domain.shift.Shift;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @author Fabio Buracchi
@@ -23,22 +24,20 @@ public class MockEmployeeRepository implements EmployeeRepository {
     private static final List<EmployeeData> EMPLOYEE_DATA_LIST = new ArrayList<>();
 
     static {
-        EMPLOYEE_DATA_LIST.add(new EmployeeData("0", 0, EmployeeData.Role.USHER));
-        EMPLOYEE_DATA_LIST.add(new EmployeeData("1", 0, EmployeeData.Role.PROJECTIONIST));
-        EMPLOYEE_DATA_LIST.add(new EmployeeData("2", 1, EmployeeData.Role.USHER));
-        EMPLOYEE_DATA_LIST.add(new EmployeeData("3", 1, EmployeeData.Role.PROJECTIONIST));
-
-        EMPLOYEE_DATA_LIST.add(new EmployeeData("5", 0, EmployeeData.Role.PROJECTIONIST));
-        EMPLOYEE_DATA_LIST.add(new EmployeeData("7", 0, EmployeeData.Role.PROJECTIONIST));
-        EMPLOYEE_DATA_LIST.add(new EmployeeData("9", 0, EmployeeData.Role.PROJECTIONIST));
-        EMPLOYEE_DATA_LIST.add(new EmployeeData("11", 0, EmployeeData.Role.PROJECTIONIST));
-        EMPLOYEE_DATA_LIST.add(new EmployeeData("13", 0, EmployeeData.Role.PROJECTIONIST));
-        EMPLOYEE_DATA_LIST.add(new EmployeeData("15", 1, EmployeeData.Role.PROJECTIONIST));
-        EMPLOYEE_DATA_LIST.add(new EmployeeData("17", 1, EmployeeData.Role.PROJECTIONIST));
-        EMPLOYEE_DATA_LIST.add(new EmployeeData("19", 1, EmployeeData.Role.PROJECTIONIST));
-        EMPLOYEE_DATA_LIST.add(new EmployeeData("21", 1, EmployeeData.Role.PROJECTIONIST));
-        EMPLOYEE_DATA_LIST.add(new EmployeeData("23", 1, EmployeeData.Role.PROJECTIONIST));
-
+        var usherNumber = 2;
+        var projectionistNumber = 12;
+        IntStream.range(0, usherNumber).forEach(i -> EMPLOYEE_DATA_LIST.add(
+                new EmployeeData(
+                        Integer.toString(i * 2),
+                        (i < usherNumber / 2) ? 1 : 2,
+                        EmployeeData.Role.USHER)
+        ));
+        IntStream.range(0, projectionistNumber).forEach(i -> EMPLOYEE_DATA_LIST.add(
+                new EmployeeData(
+                        Integer.toString(i * 2 + 1),
+                        (i < projectionistNumber / 2) ? 1 : 2,
+                        EmployeeData.Role.PROJECTIONIST)
+        ));
     }
 
     private final ServiceLocator serviceLocator;
@@ -55,23 +54,23 @@ public class MockEmployeeRepository implements EmployeeRepository {
     public Employee getEmployee(String userId) {
         return EMPLOYEE_DATA_LIST.stream()
                 .filter(d -> d.getUserId().equals(userId))
+                .findAny()
                 .map(d -> new EmployeeFactory().createEmployee(d))
-                .collect(Collectors.toList())
-                .get(0);
+                .orElse(null);
     }
 
     @Override
     public Employee getEmployee(Shift shift) {
-        var shiftEmployeeId = MockShiftRepository.getShiftDataList().stream()
+        return MockShiftRepository.getShiftDataList().stream()
                 .filter(d -> d.getId() == shift.getId())
+                .findAny()
                 .map(MockShiftRepository.ShiftData::getEmployeeId)
-                .collect(Collectors.toList())
-                .get(0);
-        return EMPLOYEE_DATA_LIST.stream()
-                .filter(d -> d.userId.equals(shiftEmployeeId))
-                .map(d -> new EmployeeFactory().createEmployee(d))
-                .collect(Collectors.toList())
-                .get(0);
+                .flatMap(shiftEmployeeId -> EMPLOYEE_DATA_LIST.stream()
+                        .filter(d -> d.userId.equals(shiftEmployeeId))
+                        .findAny()
+                        .map(d -> new EmployeeFactory().createEmployee(d))
+                )
+                .orElse(null);
     }
 
     @Override

@@ -8,12 +8,29 @@ import com.stripe.model.PaymentMethod;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StripeServiceCustomer {
+public class CustomerHandler {
 
+    //Given an email retrieves the customer if it exists
+    public Customer getCustomer(String nome, String numberOfCard, String email) throws StripeException {
+        var customers = getListCustomer();
+        if (customers == null) {
+            return null;
+        }
+        for (var i = 0; i < customers.getData().size(); i++) {
+            if (customers.getData().get(i).getEmail().compareTo(email) == 0) {
+                return customers.getData().get(i);
+            }
+        }
+        return registerCustomer(email, numberOfCard, nome);
+    }
 
+    //Returns a list of users on Stripe
+    public CustomerCollection getListCustomer() throws StripeException {
+        Map<String, Object> params = new HashMap<>();
+        return Customer.list(params);
+    }
 
-
-    private Customer register(String email, String number, String name) throws StripeException {
+    private Customer registerCustomer(String email, String number, String name) throws StripeException {
         Map<String, Object> card = new HashMap<>();
         card.put("number", number);
         card.put("exp_month", 11);
@@ -37,25 +54,4 @@ public class StripeServiceCustomer {
 
     }
 
-
-    //Given an email retrieves the customer if it exists
-    public Customer getCustomer(String nome, String numberOfCard, String email) throws StripeException {
-        var customers = getListCustomer();
-        if (customers == null) {
-            return null;
-        }
-        for (var i = 0; i < customers.getData().size(); i++) {
-            if (customers.getData().get(i).getEmail().compareTo(email) == 0) {
-                return customers.getData().get(i);
-            }
-        }
-        return register(email, numberOfCard, nome);
-    }
-
-
-    //Returns a list of users on Stripe
-    public CustomerCollection getListCustomer() throws StripeException {
-        Map<String, Object> params = new HashMap<>();
-        return Customer.list(params);
-    }
 }

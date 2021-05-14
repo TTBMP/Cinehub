@@ -16,17 +16,15 @@ import java.util.stream.Collectors;
 public class MockSeatRepository implements SeatRepository {
 
     private static final List<SeatData> SEAT_DATA_LIST = new ArrayList<>();
-    private static int seatIdCounter = 0;
+    private static int seatIdCounter = 1;
 
     static {
         var hallIdList = MockHallRepository.getHallDataList().stream()
                 .map(MockHallRepository.HallData::getId)
                 .collect(Collectors.toList());
         for (int hallId : hallIdList) {
-            for (var c : new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'L'}) {
-                for (var i = 0; i < 7; i++) {
-                    SEAT_DATA_LIST.add(new SeatData(seatIdCounter++, hallId, c + String.valueOf(i)));
-                }
+            for (var c : new char[]{'A', 'B', 'C', 'D', 'E', 'F'}) {
+                SEAT_DATA_LIST.add(new SeatData(seatIdCounter++, hallId, c + Integer.toString(hallId % 7)));
             }
         }
     }
@@ -36,25 +34,25 @@ public class MockSeatRepository implements SeatRepository {
     }
 
     @Override
+    public Seat getSeat(Ticket ticket) {
+        return MockTicketRepository.getTicketDataList().stream()
+                .filter(d -> d.getId() == ticket.getId())
+                .map(MockTicketRepository.TicketData::getSeatId)
+                .findAny()
+                .flatMap(ticketSeatId -> SEAT_DATA_LIST.stream()
+                        .filter(d -> d.id == ticketSeatId)
+                        .findAny()
+                        .map(d -> new SeatProxy(d.id, d.position))
+                )
+                .orElse(null);
+    }
+
+    @Override
     public List<Seat> getSeatList(Hall hall) {
         return SEAT_DATA_LIST.stream()
                 .filter(d -> d.hallId == hall.getId())
                 .map(d -> new SeatProxy(d.id, d.position))
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public Seat getSeat(Ticket ticket) {
-        int ticketSeatId = MockTicketRepository.getTicketDataList().stream()
-                .filter(d -> d.getId() == ticket.getId())
-                .map(MockTicketRepository.TicketData::getSeatId)
-                .collect(Collectors.toList())
-                .get(0);
-        return SEAT_DATA_LIST.stream()
-                .filter(d -> d.id == ticketSeatId)
-                .map(d -> new SeatProxy(d.id, d.position))
-                .collect(Collectors.toList())
-                .get(0);
     }
 
     public static class SeatData {

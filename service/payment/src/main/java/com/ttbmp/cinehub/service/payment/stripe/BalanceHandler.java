@@ -8,11 +8,7 @@ import com.stripe.model.PaymentMethod;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StripeServiceBilance {
-
-
-
-
+public class BalanceHandler {
 
     //Function to carry out transactions on a customer
     public boolean updateBalance(Customer customer, long price) throws StripeException {
@@ -39,4 +35,5 @@ public class StripeServiceBilance {
         param.put("payment_method", paymentMethod.getId());
         paymentIntent.confirm(param);
     }
+
 }

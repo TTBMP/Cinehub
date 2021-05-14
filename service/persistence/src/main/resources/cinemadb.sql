@@ -343,24 +343,24 @@ USE `cinemadb`$$
 CREATE PROCEDURE `popola_posti`()
 BEGIN
     DECLARE nsala INT;
-    DECLARE counter INT;
+    DECLARE sala INT;
     SET nsala = (select count(*) from sala);
-    SET counter = 0;
-    WHILE counter < nsala * 7
+    SET sala = 0;
+    WHILE sala < nsala * 7
         DO
             INSERT INTO `cinemadb`.`posto` (`id_sala`, `posizione`)
-            VALUES ((counter % nsala) + 1, concat('A', counter % 7));
+            VALUES ((sala % nsala) + 1, concat('A', sala % 7));
             INSERT INTO `cinemadb`.`posto` (`id_sala`, `posizione`)
-            VALUES ((counter % nsala) + 1, concat('B', counter % 7));
+            VALUES ((sala % nsala) + 1, concat('B', sala % 7));
             INSERT INTO `cinemadb`.`posto` (`id_sala`, `posizione`)
-            VALUES ((counter % nsala) + 1, concat('C', counter % 7));
+            VALUES ((sala % nsala) + 1, concat('C', sala % 7));
             INSERT INTO `cinemadb`.`posto` (`id_sala`, `posizione`)
-            VALUES ((counter % nsala) + 1, concat('D', counter % 7));
+            VALUES ((sala % nsala) + 1, concat('D', sala % 7));
             INSERT INTO `cinemadb`.`posto` (`id_sala`, `posizione`)
-            VALUES ((counter % nsala) + 1, concat('E', counter % 7));
+            VALUES ((sala % nsala) + 1, concat('E', sala % 7));
             INSERT INTO `cinemadb`.`posto` (`id_sala`, `posizione`)
-            VALUES ((counter % nsala) + 1, concat('F', counter % 7));
-            set counter = counter + 1;
+            VALUES ((sala % nsala) + 1, concat('F', sala % 7));
+            set sala = sala + 1;
         END WHILE;
 END$$
 

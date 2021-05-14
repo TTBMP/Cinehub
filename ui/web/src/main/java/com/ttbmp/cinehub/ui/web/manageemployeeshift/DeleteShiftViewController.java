@@ -1,10 +1,7 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
-import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetShiftListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

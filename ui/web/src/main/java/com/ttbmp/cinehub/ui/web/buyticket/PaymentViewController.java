@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.ui.web.buyticket;
 
 import com.ttbmp.cinehub.ui.web.domain.PaymentForm;
-import com.ttbmp.cinehub.ui.web.domain.Ticket;
 import com.ttbmp.cinehub.ui.web.domain.Seat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -6,7 +6,6 @@ import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Fabio Buracchi
@@ -20,17 +19,14 @@ public class MockUserRepository implements UserRepository {
         USER_DATA_LIST.add(new UserData("1", "Massimo", "Mazzetti", "mm@cinehub.com"));
         USER_DATA_LIST.add(new UserData("2", "Ivan", "Palmieri", "ip@cinehub.com"));
         USER_DATA_LIST.add(new UserData("3", "Mario", "Rossi", "mr@cinehub.com"));
-
         USER_DATA_LIST.add(new UserData("5", "Luigi", "Bianchi", "lb@cinehub.com"));
         USER_DATA_LIST.add(new UserData("7", "Steve", "Jobs", "sj@cinehub.com"));
         USER_DATA_LIST.add(new UserData("9", "Bill", "Gates", "bg@cinehub.com"));
         USER_DATA_LIST.add(new UserData("11", "Elon", "Musk", "em@cinehub.com"));
-
         USER_DATA_LIST.add(new UserData("13", "Alan", "Turing", "at@cinehub.com"));
         USER_DATA_LIST.add(new UserData("15", "James", "Gosling", "jg@cinehub.com"));
         USER_DATA_LIST.add(new UserData("17", "Dennis", "Ritchie", "dr@cinehub.com"));
         USER_DATA_LIST.add(new UserData("19", "Larry", "Page", "lp@cinehub.com"));
-
         USER_DATA_LIST.add(new UserData("21", "Mark", "Zuckerberg", "mz@cinehub.com"));
         USER_DATA_LIST.add(new UserData("23", "Jeff", "Bezos", "jb@cinehub.com"));
     }
@@ -50,27 +46,26 @@ public class MockUserRepository implements UserRepository {
                         d.surname,
                         d.email
                 ))
-                .collect(Collectors.toList())
-                .get(0);
+                .findAny()
+                .orElse(null);
     }
 
     @Override
     public User getUser(Ticket ticket) {
-        var ticketUserId = MockTicketRepository.getTicketDataList().stream()
+        return MockTicketRepository.getTicketDataList().stream()
                 .filter(d -> d.getId() == ticket.getId())
                 .map(MockTicketRepository.TicketData::getUserId)
-                .collect(Collectors.toList())
-                .get(0);
-        return USER_DATA_LIST.stream()
-                .filter(d -> d.id.equals(ticketUserId))
-                .map(d -> new UserProxy(
-                        d.id,
-                        d.name,
-                        d.surname,
-                        d.email
-                ))
-                .collect(Collectors.toList())
-                .get(0);
+                .findAny()
+                .flatMap(ticketUserId -> USER_DATA_LIST.stream()
+                        .filter(d -> d.id.equals(ticketUserId))
+                        .findAny()
+                        .map(d -> new UserProxy(
+                                d.id,
+                                d.name,
+                                d.surname,
+                                d.email
+                        )))
+                .orElse(null);
     }
 
     public static class UserData {

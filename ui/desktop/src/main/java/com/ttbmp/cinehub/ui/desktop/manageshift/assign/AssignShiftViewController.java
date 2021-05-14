@@ -81,13 +81,12 @@ public class AssignShiftViewController extends ViewController {
         viewModel.setErrorAssignVisibility(false);
 
         hallComboBox.setItems(viewModel.getHallList());
-        
+
         hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
         viewModel.setSelectedEndRepeatDay(null);
         hallComboBox.setButtonCell(new HallFactory(null));
         hallComboBox.setCellFactory(HallFactory::new);
         hallComboBox.getSelectionModel().selectFirst();
-
 
 
         errorVBox.visibleProperty().bind(viewModel.errorAssignVisibilityProperty());

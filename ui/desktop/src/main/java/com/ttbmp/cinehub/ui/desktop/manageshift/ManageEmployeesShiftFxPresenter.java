@@ -42,7 +42,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     public void presentShiftList(GetShiftListResponse response) {
         var temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
         for (var employeeShiftWeek : viewModel.getEmployeeShiftWeekList()) {
-            initializeWeekMap(employeeShiftWeek.getWeekMap(),employeeShiftWeek.getEmployeeDto());
+            initializeWeekMap(employeeShiftWeek.getWeekMap(), employeeShiftWeek.getEmployeeDto());
             var index = viewModel.getEmployeeShiftWeekList().indexOf(employeeShiftWeek);
             viewModel.getEmployeeShiftWeekList().set(index, employeeShiftWeek);
         }
@@ -59,7 +59,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         }
     }
 
-    private void initializeWeekMap(Map<DayOfWeek, Day> weekMap, EmployeeDto employeeDto){
+    private void initializeWeekMap(Map<DayOfWeek, Day> weekMap, EmployeeDto employeeDto) {
         var firstDayOfWeek = viewModel.getSelectedWeek().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         for (var dayOfWeek : DayOfWeek.values()) {
             var date = firstDayOfWeek.plusDays((long) dayOfWeek.getValue() - 1);

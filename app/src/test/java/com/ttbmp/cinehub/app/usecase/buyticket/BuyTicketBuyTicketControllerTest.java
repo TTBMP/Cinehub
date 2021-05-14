@@ -129,11 +129,6 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentGetListMovieError() {
-
-        }
-
-        @Override
         public void presentErrorByStripe(PaymentServiceException error) {
 
         }

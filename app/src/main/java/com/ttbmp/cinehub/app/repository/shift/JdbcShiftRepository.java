@@ -138,7 +138,7 @@ public class JdbcShiftRepository implements ShiftRepository {
                     shift.getDate()
             ));
         } catch (DaoMethodException e) {
-            e.printStackTrace();
+            throw new RepositoryException(e.getMessage());
         }
     }
 
@@ -147,7 +147,7 @@ public class JdbcShiftRepository implements ShiftRepository {
         try {
             getShiftDao().delete(getShiftDao().getShiftById(shift.getId()));
         } catch (DaoMethodException e) {
-            e.printStackTrace();
+            throw new RepositoryException(e.getMessage());
         }
     }
 
@@ -162,7 +162,7 @@ public class JdbcShiftRepository implements ShiftRepository {
                     shift.getDate()
             ));
         } catch (DaoMethodException e) {
-            e.printStackTrace();
+            throw new RepositoryException(e.getMessage());
         }
     }
 

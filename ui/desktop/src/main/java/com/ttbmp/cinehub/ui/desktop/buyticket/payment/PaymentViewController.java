@@ -73,9 +73,9 @@ public class PaymentViewController extends ViewController {
     private void bind() {
         confirmButton.disableProperty().bind(
                 viewModel.emailUserProperty().isNull().
-                                        or(viewModel.txtCvvProperty().isNull().
-                                                or(viewModel.numberOfCardUserProperty().isNull()
-                                                )));
+                        or(viewModel.txtCvvProperty().isNull().
+                                or(viewModel.numberOfCardUserProperty().isNull()
+                                )));
         errorSectionLabel.textProperty().bind(viewModel.paymentErrorProperty());
         emailTextField.textProperty().bindBidirectional(viewModel.emailUserProperty());
         numberOfCreditCardTextField.textProperty().bindBidirectional(viewModel.numberOfCardUserProperty());

@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewModel;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +89,6 @@ public class BuyTicketViewModel implements ViewModel {
     }
 
 
-
     public StringProperty listMovieRepositoryExceptionProperty() {
         return listMovieRepositoryException;
     }
@@ -104,7 +104,6 @@ public class BuyTicketViewModel implements ViewModel {
     }
 
 
-
     public StringProperty projectionListRepositoryExceptionProperty() {
         return projectionListRepositoryException;
     }
@@ -114,11 +113,9 @@ public class BuyTicketViewModel implements ViewModel {
     }
 
 
-
     public StringProperty cinemaRepositoryExceptionProperty() {
         return cinemaRepositoryException;
     }
-
 
 
     public ObservableList<ProjectionDto> getProjectionOfProjectionTimeList() {

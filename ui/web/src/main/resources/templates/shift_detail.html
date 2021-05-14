@@ -20,7 +20,7 @@
 
 <br/>
 <!--<div class="container" th:value="${employee} + ${shiftDetail} + ${projection}">-->
-<div class="container"}>
+<div class="container" }>
     <div class="row">
         <div class="col-sm"> Name</div>
         <div class="col-sm" th:text="${shiftDetail.employee.name}"> Pippo</div>
@@ -51,7 +51,7 @@
     </div>
     <div class="row">
         <div class="col-sm"> Cinema</div>
-        <div class="col-sm" th:text="${shiftDetail.employee.cinema.name}"> </div>
+        <div class="col-sm" th:text="${shiftDetail.employee.cinema.name}"></div>
     </div>
     <div class="row" th:if="${shiftDetail.employee.role == 'projectionist'}">
         <div class="col-sm"> Hall</div>
@@ -98,7 +98,7 @@
                 <h5 class="modal-title">Modify Shift</h5>
             </div>
             <div class="modal-body">
-                <form action="#" method="post" th:object="${modifyRequest} " >
+                <form action="#" method="post" th:object="${modifyRequest} ">
                     <div class="container">
                         <div class="row">
                             <div class="col-sm"> Name</div>

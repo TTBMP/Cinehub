@@ -179,7 +179,6 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
 
-
     @Override
     public void presentInvalidGetCinema(CinemaInformationRequest request) {
         viewModel.cinemaErrorProperty().setValue("Problems with retrieve the cinema ");

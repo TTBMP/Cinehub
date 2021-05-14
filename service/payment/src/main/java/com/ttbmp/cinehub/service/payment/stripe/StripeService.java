@@ -8,41 +8,27 @@ import com.stripe.exception.StripeException;
  */
 public class StripeService {
 
+    private static final String API_KEY = "sk_test_51HMsilCjyigVX8MsGwDmh3NZkTOsGj5D5ZQDkhepyBzB6nWCnejZAJskSlxP3WySswONDdN2CIC5aSbdmbIpfS0e00IgegI2Yz";
     private static final String CARD_NUMBER = "4242424242424242";
-    private final StripeServiceBilance stripeServiceBilance;
-    private final StripeServiceCustomer stripeServiceCustomer;
-    private final StripeServicePayment stripeServicePayment;
-    private static boolean connected = false;
 
+    private static final CustomerHandler CUSTOMER_HANDLER = new CustomerHandler();
+    private static final PaymentMethodHandler PAYMENT_METHOD_HANDLER = new PaymentMethodHandler();
+    private static final BalanceHandler BALANCE_HANDLER = new BalanceHandler();
 
-    public StripeService() {
-        this.stripeServiceBilance = new StripeServiceBilance();
-        this.stripeServiceCustomer = new StripeServiceCustomer();
-        this.stripeServicePayment = new StripeServicePayment();
+    static {
+        Stripe.apiKey = API_KEY;
     }
 
     @SuppressWarnings("Unused")
-    public void stripeService(String email, String nameUser, String numberOfCard, long ticketPrice, String cvv, String expiredDate) throws StripeServiceException {
+    public void requestPayment(String email, String nameUser, String numberOfCard, long ticketPrice) throws StripeServiceException {
         try {
-            connected();
-            var customer = stripeServiceCustomer.getCustomer(
-                    nameUser,
-                    CARD_NUMBER,
-                    email
-            );
-            var paymentMethod = stripeServicePayment.getCard(customer);
-            if (stripeServiceBilance.updateBalance(customer, ticketPrice)) {
-                stripeServiceBilance.setBalance(customer, ticketPrice, paymentMethod);
+            var customer = CUSTOMER_HANDLER.getCustomer(nameUser, CARD_NUMBER, email);
+            var paymentMethod = PAYMENT_METHOD_HANDLER.getCreditCard(customer);
+            if (BALANCE_HANDLER.updateBalance(customer, ticketPrice)) {
+                BALANCE_HANDLER.setBalance(customer, ticketPrice, paymentMethod);
             }
         } catch (StripeException exception) {
             throw new StripeServiceException(exception.getMessage());
-        }
-    }
-
-    private void connected() {
-        if (!connected) {
-            Stripe.apiKey = "sk_test_51HMsilCjyigVX8MsGwDmh3NZkTOsGj5D5ZQDkhepyBzB6nWCnejZAJskSlxP3WySswONDdN2CIC5aSbdmbIpfS0e00IgegI2Yz";
-            connected = true;
         }
     }
 

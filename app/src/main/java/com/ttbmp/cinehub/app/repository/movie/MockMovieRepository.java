@@ -9,6 +9,7 @@ import com.ttbmp.cinehub.domain.Projection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @author Fabio Buracchi
@@ -18,12 +19,7 @@ public class MockMovieRepository implements MovieRepository {
     private static final List<MovieData> MOVIE_DATA_LIST = new ArrayList<>();
 
     static {
-        MOVIE_DATA_LIST.add(new MovieData(3));
-        MOVIE_DATA_LIST.add(new MovieData(5));
-        MOVIE_DATA_LIST.add(new MovieData(6));
-        MOVIE_DATA_LIST.add(new MovieData(8));
-        MOVIE_DATA_LIST.add(new MovieData(11));
-        MOVIE_DATA_LIST.add(new MovieData(15));
+        IntStream.range(15, 23).forEach(i -> MOVIE_DATA_LIST.add(new MovieData(i)));
     }
 
     private final ServiceLocator serviceLocator;
@@ -40,24 +36,22 @@ public class MockMovieRepository implements MovieRepository {
     public Movie getMovie(Integer movieId) {
         return MOVIE_DATA_LIST.stream()
                 .filter(d -> d.id == movieId)
-                .map(d -> new MovieProxy(d.id, serviceLocator.getService(MovieApiService.class)
-                ))
-                .collect(Collectors.toList())
-                .get(0);
+                .findAny()
+                .map(d -> new MovieProxy(d.id, serviceLocator.getService(MovieApiService.class)))
+                .orElse(null);
     }
 
     @Override
     public Movie getMovie(Projection projection) {
-        int projectionMovieId = MockProjectionRepository.getProjectionDataList().stream()
+        return MockProjectionRepository.getProjectionDataList().stream()
                 .filter(d -> d.getId() == projection.getId())
+                .findAny()
                 .map(MockProjectionRepository.ProjectionData::getMovieId)
-                .collect(Collectors.toList())
-                .get(0);
-        return MOVIE_DATA_LIST.stream()
-                .filter(d -> d.id == projectionMovieId)
-                .map(d -> new MovieProxy(d.id, serviceLocator.getService(MovieApiService.class)))
-                .collect(Collectors.toList())
-                .get(0);
+                .flatMap(projectionMovieId -> MOVIE_DATA_LIST.stream()
+                        .filter(d -> d.getId() == projectionMovieId)
+                        .findAny()
+                        .map(d -> new MovieProxy(d.id, serviceLocator.getService(MovieApiService.class))))
+                .orElse(null);
     }
 
     @Override

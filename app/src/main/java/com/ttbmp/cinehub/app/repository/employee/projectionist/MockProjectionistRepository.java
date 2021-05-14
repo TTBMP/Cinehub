@@ -6,11 +6,13 @@ import com.ttbmp.cinehub.app.repository.employee.MockEmployeeRepository;
 import com.ttbmp.cinehub.app.repository.projection.MockProjectionRepository;
 import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
+import com.ttbmp.cinehub.app.repository.shift.projectionist.MockProjectionistShiftRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.employee.Projectionist;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,40 +42,49 @@ public class MockProjectionistRepository implements ProjectionistRepository {
 
     @Override
     public Projectionist getProjectionist(Projection projection) {
-        var projectionistId = MockProjectionRepository.getProjectionDataList().stream()
+        return MockProjectionRepository.getProjectionDataList().stream()
                 .filter(d -> d.getId() == projection.getId())
-                .map(MockProjectionRepository.ProjectionData::getProjectionistId)
-                .collect(Collectors.toList())
-                .get(0);
-        return PROJECTIONIST_DATA_LIST.stream()
-                .filter(d -> d.id.equals(projectionistId))
-                .map(d -> new ProjectionistProxy(
-                        d.id,
-                        serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
-                        serviceLocator.getService(ShiftRepository.class)
-                ))
-                .collect(Collectors.toList())
-                .get(0);
+                .findAny()
+                .flatMap(projectionData -> {
+                    var projectionistShiftIdList = MockProjectionistShiftRepository.getProjectionistShiftDataList().stream()
+                            .filter(projectionistShiftData -> projectionData.getHallId() == projectionistShiftData.getHallId())
+                            .map(MockProjectionistShiftRepository.ProjectionistShiftData::getShiftId)
+                            .collect(Collectors.toList());
+                    var shiftList = MockShiftRepository.getShiftDataList().stream()
+                            .filter(shiftData -> projectionData.getDate().equals(shiftData.getDate()))
+                            .filter(shiftData -> LocalTime.parse(projectionData.getStartTime()).isAfter(LocalTime.parse(shiftData.getStart())))
+                            .filter(shiftData -> LocalTime.parse(projectionData.getStartTime()).isBefore(LocalTime.parse(shiftData.getEnd())))
+                            .collect(Collectors.toList());
+                    shiftList.removeIf(shiftData -> !projectionistShiftIdList.contains(shiftData.getId()));
+                    return shiftList.stream()
+                            .findAny()
+                            .map(MockShiftRepository.ShiftData::getEmployeeId)
+                            .map(projectionistId -> new ProjectionistProxy(
+                                    projectionistId,
+                                    serviceLocator.getService(UserRepository.class),
+                                    serviceLocator.getService(CinemaRepository.class),
+                                    serviceLocator.getService(ShiftRepository.class)
+                            ));
+                })
+                .orElse(null);
     }
 
     @Override
     public Projectionist getProjectionist(ProjectionistShift projectionistShift) {
-        var projectionistShiftProjectionistId = MockShiftRepository.getShiftDataList().stream()
+        return MockShiftRepository.getShiftDataList().stream()
                 .filter(d -> d.getId() == projectionistShift.getId())
+                .findAny()
                 .map(MockShiftRepository.ShiftData::getEmployeeId)
-                .collect(Collectors.toList())
-                .get(0);
-        return PROJECTIONIST_DATA_LIST.stream()
-                .filter(d -> d.id.equals(projectionistShiftProjectionistId))
-                .map(d -> new ProjectionistProxy(
-                        d.id,
-                        serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
-                        serviceLocator.getService(ShiftRepository.class)
-                ))
-                .collect(Collectors.toList())
-                .get(0);
+                .flatMap(projectionistShiftProjectionistId -> PROJECTIONIST_DATA_LIST.stream()
+                        .filter(d -> d.id.equals(projectionistShiftProjectionistId))
+                        .findAny()
+                        .map(d -> new ProjectionistProxy(
+                                d.id,
+                                serviceLocator.getService(UserRepository.class),
+                                serviceLocator.getService(CinemaRepository.class),
+                                serviceLocator.getService(ShiftRepository.class)
+                        )))
+                .orElse(null);
     }
 
     public static class ProjectionistData {

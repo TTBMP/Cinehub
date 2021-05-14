@@ -84,12 +84,12 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
         return errorDao.get();
     }
 
-    public StringProperty errorDaoProperty() {
-        return errorDao;
-    }
-
     public void setErrorDao(String errorDao) {
         this.errorDao.set(errorDao);
+    }
+
+    public StringProperty errorDaoProperty() {
+        return errorDao;
     }
 
     public CinemaDto getSelectedCinema() {

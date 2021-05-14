@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.repository.shift.projectionist;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.MockProjectionistRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
 import com.ttbmp.cinehub.app.repository.hall.HallRepository;
@@ -44,19 +45,19 @@ public class MockProjectionistShiftRepository implements ProjectionistShiftRepos
 
     @Override
     public ProjectionistShift getProjectionistShift(int shiftId) {
-        var shiftData = MockShiftRepository.getShiftDataList().stream()
+        return MockShiftRepository.getShiftDataList().stream()
                 .filter(d -> d.getId() == shiftId)
-                .collect(Collectors.toList())
-                .get(0);
-        return new ProjectionistShiftProxy(
-                shiftData.getId(),
-                shiftData.getDate(),
-                shiftData.getStart(),
-                shiftData.getEnd(),
-                serviceLocator.getService(ProjectionistRepository.class),
-                serviceLocator.getService(HallRepository.class),
-                serviceLocator.getService(ProjectionRepository.class)
-        );
+                .findAny()
+                .map(shiftData -> new ProjectionistShiftProxy(
+                        shiftData.getId(),
+                        shiftData.getDate(),
+                        shiftData.getStart(),
+                        shiftData.getEnd(),
+                        serviceLocator.getService(ProjectionistRepository.class),
+                        serviceLocator.getService(HallRepository.class),
+                        serviceLocator.getService(ProjectionRepository.class)
+                ))
+                .orElse(null);
     }
 
     @Override
@@ -65,14 +66,13 @@ public class MockProjectionistShiftRepository implements ProjectionistShiftRepos
     }
 
     @Override
-    public void modifyShift(ProjectionistShift shift) {
+    public void modifyShift(ProjectionistShift shift) throws RepositoryException {
         var data = PROJECTIONIST_SHIFT_DATA_LIST.stream()
                 .filter(d -> d.shiftId == shift.getId())
-                .collect(Collectors.toList())
-                .get(0);
+                .findAny()
+                .orElseThrow(() -> new RepositoryException("Shift does not exists."));
         data.shiftId = shift.getId();
         data.hallId = shift.getHall().getId();
-
     }
 
     public static class ProjectionistShiftData {

@@ -146,7 +146,7 @@ class ManageEmployeesShiftControllerTest {
                 LocalTime.now().withNano(0).withSecond(0).plusHours(2),
                 null
         );
-        Assertions.assertDoesNotThrow(()-> controller.saveRepeatedShift(request));
+        Assertions.assertDoesNotThrow(() -> controller.saveRepeatedShift(request));
     }
 
     @Test
