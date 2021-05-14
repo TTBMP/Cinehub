@@ -175,11 +175,6 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentGetListMovieError() {
-        model.addAttribute(MOVIE_ERROR_ATTRIBUTE, "Unable to retrieve list of movie");
-    }
-
-    @Override
     public void presentErrorByStripe(PaymentServiceException error) {
         model.addAttribute(PAYMENT_ERROR_ATTRIBUTE, error.getMessage());
     }

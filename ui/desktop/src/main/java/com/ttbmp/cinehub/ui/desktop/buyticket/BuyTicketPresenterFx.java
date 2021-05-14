@@ -150,10 +150,6 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
         viewModel.seatErrorProperty().setValue(CinemaInformationRequest.MISSING_PROJECTION_ERROR.getMessage());
     }
 
-    @Override
-    public void presentGetListMovieError() {
-        viewModel.movieErrorProperty().setValue("Unable to recover movies by service");
-    }
 
     @Override
     public void presentErrorByStripe(PaymentServiceException error) {

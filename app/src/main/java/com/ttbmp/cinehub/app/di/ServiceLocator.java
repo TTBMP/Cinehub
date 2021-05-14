@@ -34,6 +34,7 @@ import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
 import com.ttbmp.cinehub.app.service.movieapi.TheMovieDbApiServiceAdapter;
 import com.ttbmp.cinehub.app.service.payment.MockPaymentService;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
+import com.ttbmp.cinehub.app.service.payment.StripeServiceAdapter;
 import com.ttbmp.cinehub.app.utilities.FactoryMap;
 
 /**
@@ -51,7 +52,7 @@ public class ServiceLocator {
         serviceFactoryMap.put(AuthenticationService.class, MockAuthenticationService::new);
         serviceFactoryMap.put(EmailService.class, MockEmailService::new);
         serviceFactoryMap.put(MovieApiService.class, TheMovieDbApiServiceAdapter::new);
-        serviceFactoryMap.put(PaymentService.class, MockPaymentService::new);
+        serviceFactoryMap.put(PaymentService.class, StripeServiceAdapter::new);
         serviceFactoryMap.put(CinemaRepository.class, () -> new JdbcCinemaRepository(this));
         serviceFactoryMap.put(EmployeeRepository.class, () -> new JdbcEmployeeRepository(this));
         serviceFactoryMap.put(ProjectionistRepository.class, () -> new JdbcProjectionistRepository(this));

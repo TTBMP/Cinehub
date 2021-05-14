@@ -42,8 +42,6 @@ public interface BuyTicketPresenter {
 
     void presentInvalidGetNumberOfSeats(CinemaInformationRequest request);
 
-    void presentGetListMovieError();
-
     void presentErrorByStripe(PaymentServiceException error);
 
     void presentProjectionList(ProjectionListResponse projectionTimeList);

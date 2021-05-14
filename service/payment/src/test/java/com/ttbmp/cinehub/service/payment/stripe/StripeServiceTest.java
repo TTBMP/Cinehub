@@ -11,7 +11,7 @@ class StripeServiceTest {
     @Test
     void pay_whitCorrectValue_notGenerateThrows() {
         var stripeService = new StripeService();
-        Assertions.assertDoesNotThrow(() -> stripeService.pay("prova@perojhs.ds", "Mario", "4242424242424242", 12L,"214","2024/10/10")
+        Assertions.assertDoesNotThrow(() -> stripeService.stripeService("prova@perojhs.ds", "Mario", "4242424242424242", 12L,"214","2024/10/10")
         );
     }
 
