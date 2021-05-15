@@ -22,6 +22,7 @@ public class MockProjectionistShiftRepository implements ProjectionistShiftRepos
     private static final List<ProjectionistShiftData> PROJECTIONIST_SHIFT_DATA_LIST = new ArrayList<>();
 
     static {
+        var hallNumber = MockHallRepository.getHallDataList().size();
         var projectionistIdList = MockProjectionistRepository.getProjectionistDataList().stream()
                 .map(MockProjectionistRepository.ProjectionistData::getId)
                 .collect(Collectors.toList());
@@ -29,7 +30,7 @@ public class MockProjectionistShiftRepository implements ProjectionistShiftRepos
                 .filter(d -> projectionistIdList.contains(d.getEmployeeId()))
                 .forEach(d -> PROJECTIONIST_SHIFT_DATA_LIST.add(new ProjectionistShiftData(
                         d.getId(),
-                        (d.getId() + d.getDate().hashCode()) % MockHallRepository.getHallDataList().size()
+                        (int) (d.getId() - 3 - Math.floor((d.getId() - 3) / 14.0) + 6 * Math.floor((d.getId() - 3) / 84.0)) % hallNumber + 1
                 )));
     }
 
