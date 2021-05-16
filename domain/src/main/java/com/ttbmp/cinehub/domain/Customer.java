@@ -11,12 +11,10 @@ import java.util.List;
 public class Customer extends User {
 
     private String id;
-    private CreditCard creditCard;
     private List<Ticket> ownedTicketList;
 
-    public Customer(String id, String name, String surname, String email, Role[] roles, CreditCard creditCard, List<Ticket> ownedTicketList) {
+    public Customer(String id, String name, String surname, String email, Role[] roles, List<Ticket> ownedTicketList) {
         super(id, name, surname, email, roles);
-        this.creditCard = creditCard;
         this.ownedTicketList = ownedTicketList;
     }
 
@@ -26,14 +24,6 @@ public class Customer extends User {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public CreditCard getCreditCard() {
-        return creditCard;
-    }
-
-    public void setCreditCard(CreditCard creditCard) {
-        this.creditCard = creditCard;
     }
 
     public List<Ticket> getOwnedTicketList() {

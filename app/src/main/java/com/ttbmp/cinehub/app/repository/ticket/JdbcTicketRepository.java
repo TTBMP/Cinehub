@@ -2,8 +2,9 @@ package com.ttbmp.cinehub.app.repository.ticket;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
 import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
-import com.ttbmp.cinehub.app.repository.user.UserRepository;
+import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
@@ -26,12 +27,23 @@ public class JdbcTicketRepository implements TicketRepository {
     }
 
     @Override
-    public void saveTicket(Ticket ticket, int projectionId) throws RepositoryException {
+    public void saveTicket(Ticket ticket, Projection projection) throws RepositoryException {
         try {
-            getTicketDao().insert(new com.ttbmp.cinehub.service.persistence.entity.Ticket(ticket.getId(), ticket.getSeat().getId(), projectionId, ticket.getOwner().getId(), ticket.getPrice()));
+            getTicketDao().insert(new com.ttbmp.cinehub.service.persistence.entity.Ticket(
+                    ticket.getId(),
+                    ticket.getSeat().getId(),
+                    projection.getId(),
+                    ticket.getOwner().getId(),
+                    ticket.getPrice()
+            ));
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
+    }
+
+    @Override
+    public List<Ticket> getTicketList(Customer customer) {
+        return null;
     }
 
     @Override
@@ -39,7 +51,7 @@ public class JdbcTicketRepository implements TicketRepository {
         try {
             var ticketList = getTicketDao().getTicketList(projection.getId());
             return ticketList.stream()
-                    .map(ticket -> new TicketProxy(ticket.getId(), ticket.getPrice(), serviceLocator.getService(UserRepository.class), serviceLocator.getService(SeatRepository.class)))
+                    .map(ticket -> new TicketProxy(ticket.getId(), ticket.getPrice(), serviceLocator.getService(CustomerRepository.class), serviceLocator.getService(SeatRepository.class)))
                     .collect(Collectors.toList());
         } catch (DaoMethodException e) {
             return new ArrayList<>();

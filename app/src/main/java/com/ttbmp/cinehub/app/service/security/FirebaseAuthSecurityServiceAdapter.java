@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.service.security;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.User;
 import com.ttbmp.cinehub.service.authentication.FirebaseAuthenticationService;
@@ -33,7 +34,13 @@ public class FirebaseAuthSecurityServiceAdapter implements SecurityService {
             var session = new FirebaseAuthenticationService().verifySessionToken(sessionToken);
             return userRepository.getUser(session.getUid());
         } catch (FirebaseException e) {
-            return userRepository.getUser("");
+            try {
+                return userRepository.getUser("");
+            } catch (RepositoryException repositoryException) {
+                throw new SecurityException(e.getMessage());
+            }
+        } catch (RepositoryException e) {
+            throw new SecurityException(e.getMessage());
         }
     }
 

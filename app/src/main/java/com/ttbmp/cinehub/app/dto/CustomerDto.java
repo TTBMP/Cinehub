@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.app.dto;
 
 import java.util.List;
 
-public class UserDto {
+public class CustomerDto {
 
     private String id;
     private String name;
@@ -10,7 +10,7 @@ public class UserDto {
     private String email;
     private List<TicketDto> ownedTicketDtoList;
 
-    public UserDto(String id, String name, String surname, String email) {
+    public CustomerDto(String id, String name, String surname, String email) {
         this.id = id;
         this.name = name;
         this.surname = surname;

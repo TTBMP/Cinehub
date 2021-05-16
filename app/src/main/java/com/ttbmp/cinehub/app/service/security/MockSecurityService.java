@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.service.security;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.User;
 
@@ -47,7 +48,13 @@ public class MockSecurityService implements SecurityService {
                     throw new IllegalStateException("Unexpected value: " + sessionToken);
             }
         } catch (NullPointerException e) {
-            return userRepository.getUser("");
+            try {
+                return userRepository.getUser("");
+            } catch (RepositoryException repositoryException) {
+                throw new SecurityException(e.getMessage());
+            }
+        } catch (RepositoryException e) {
+            throw new SecurityException(e.getMessage());
         }
     }
 

@@ -1,9 +1,9 @@
 package com.ttbmp.cinehub.app.repository.customer;
 
-import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
+import com.ttbmp.cinehub.app.repository.LazyLoadingException;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
-import com.ttbmp.cinehub.domain.CreditCard;
 import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.security.Permission;
 import com.ttbmp.cinehub.domain.security.Role;
@@ -16,7 +16,6 @@ import java.util.List;
  */
 public class CustomerProxy extends Customer {
 
-    private final CreditCardRepository creditCardRepository;
     private final TicketRepository ticketRepository;
     private final UserRepository userRepository;
 
@@ -27,17 +26,20 @@ public class CustomerProxy extends Customer {
     private boolean isCreditCardLoaded = false;
     private boolean isTicketListLoaded = false;
 
-    public CustomerProxy(String id, UserRepository userRepository, CreditCardRepository creditCardRepository, TicketRepository ticketRepository) {
-        super(id, null, null, null, null, null, null);
+    public CustomerProxy(String id, UserRepository userRepository, TicketRepository ticketRepository) {
+        super(id, null, null, null, null, null);
         this.userRepository = userRepository;
-        this.creditCardRepository = creditCardRepository;
         this.ticketRepository = ticketRepository;
     }
 
     @Override
     public String getName() {
         if (!isNameLoaded) {
-            setName(userRepository.getUser(getId()).getName());
+            try {
+                setName(userRepository.getUser(getId()).getName());
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
         return super.getName();
     }
@@ -51,7 +53,11 @@ public class CustomerProxy extends Customer {
     @Override
     public String getSurname() {
         if (!isSurnameLoaded) {
-            setSurname(userRepository.getUser(getId()).getSurname());
+            try {
+                setSurname(userRepository.getUser(getId()).getSurname());
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
         return super.getSurname();
     }
@@ -65,7 +71,11 @@ public class CustomerProxy extends Customer {
     @Override
     public String getEmail() {
         if (!isEmailLoaded) {
-            setEmail(userRepository.getUser(getId()).getEmail());
+            try {
+                setEmail(userRepository.getUser(getId()).getEmail());
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
         return super.getEmail();
     }
@@ -79,7 +89,11 @@ public class CustomerProxy extends Customer {
     @Override
     public Role[] getRoles() {
         if (!isRoleArrayLoaded) {
-            setRoles(userRepository.getUser(getId()).getRoles());
+            try {
+                setRoles(userRepository.getUser(getId()).getRoles());
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
         return super.getRoles();
     }
@@ -93,23 +107,13 @@ public class CustomerProxy extends Customer {
     @Override
     public boolean hasPermission(Permission requiredPermission) {
         if (!isRoleArrayLoaded) {
-            setRoles(userRepository.getUser(getId()).getRoles());
+            try {
+                setRoles(userRepository.getUser(getId()).getRoles());
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
         return super.hasPermission(requiredPermission);
-    }
-
-    @Override
-    public CreditCard getCreditCard() {
-        if (!isCreditCardLoaded) {
-            setCreditCard(creditCardRepository.getCreditCard(this));
-        }
-        return super.getCreditCard();
-    }
-
-    @Override
-    public void setCreditCard(CreditCard creditCard) {
-        isCreditCardLoaded = true;
-        super.setCreditCard(creditCard);
     }
 
     @Override

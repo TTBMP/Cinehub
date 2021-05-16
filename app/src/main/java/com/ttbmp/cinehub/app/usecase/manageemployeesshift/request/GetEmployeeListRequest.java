@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.usecase.Request;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 
 
 public class GetEmployeeListRequest extends Request {

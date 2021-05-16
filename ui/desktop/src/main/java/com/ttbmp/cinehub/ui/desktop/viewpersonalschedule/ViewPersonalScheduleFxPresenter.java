@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.service.authentication.AuthenticationException;
+import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.*;
 
 /**
@@ -60,7 +60,7 @@ public class ViewPersonalScheduleFxPresenter implements ViewPersonalSchedulePres
     }
 
     @Override
-    public void presentAuthenticationError(AuthenticationException e) {
+    public void presentSecurityError(SecurityException e) {
         viewModel.setErrorMessage(e.getMessage());
     }
 

@@ -2,29 +2,29 @@ package com.ttbmp.cinehub.app.datamapper;
 
 import com.ttbmp.cinehub.app.dto.CustomerDto;
 import com.ttbmp.cinehub.app.utilities.DataMapperHelper;
-import com.ttbmp.cinehub.domain.User;
+import com.ttbmp.cinehub.domain.Customer;
 
 import java.util.List;
 
-public class UserDataMapper {
+public class CustomerDataMapper {
 
-    private UserDataMapper() {
+    private CustomerDataMapper() {
     }
 
-    public static CustomerDto mapToDto(User user) {
-        return new CustomerDto(user.getId(), user.getName(), user.getSurname(), user.getEmail());
+    public static CustomerDto mapToDto(Customer customer) {
+        return new CustomerDto(customer.getId(), customer.getName(), customer.getSurname(), customer.getEmail());
     }
 
-    public static User mapToEntity(CustomerDto customerDto) {
-        return new User(customerDto.getId(), customerDto.getName(), customerDto.getSurname(), customerDto.getEmail());
+    public static Customer mapToEntity(CustomerDto customerDto) {
+        return new Customer(customerDto.getId(), customerDto.getName(), customerDto.getSurname(), customerDto.getEmail(), null, null);
     }
 
-    public static List<CustomerDto> mapToDtoList(List<User> userList) {
-        return DataMapperHelper.mapList(userList, UserDataMapper::mapToDto);
+    public static List<CustomerDto> mapToDtoList(List<Customer> customerList) {
+        return DataMapperHelper.mapList(customerList, CustomerDataMapper::mapToDto);
     }
 
-    public static List<User> mapToEntityList(List<CustomerDto> customerDtoList) {
-        return DataMapperHelper.mapList(customerDtoList, UserDataMapper::mapToEntity);
+    public static List<Customer> mapToEntityList(List<CustomerDto> customerDtoList) {
+        return DataMapperHelper.mapList(customerDtoList, CustomerDataMapper::mapToEntity);
     }
 
 }
