@@ -17,18 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 class MovieDaoTest {
 
     @Test
-    void getAllMovie() {
-    }
-
-    @Test
-    void getMovieList() {
-    }
-
-    @Test
-    void getMovie() {
-    }
-
-    @Test
     void getMovieById() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
         var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getMovieDao();
         assertDoesNotThrow(() -> dao.getMovieById(3));

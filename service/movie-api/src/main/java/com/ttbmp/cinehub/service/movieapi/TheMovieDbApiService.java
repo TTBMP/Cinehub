@@ -13,7 +13,7 @@ import java.net.URL;
  */
 public class TheMovieDbApiService {
 
-    private static final String URL_START = "http://api.themoviedb.org/3/movie/";
+    private static final String URL_START = "https://api.themoviedb.org/3/movie/";
     private static final String API_KEY = "?api_key=ee1cbb18100612b10051a3a6ab051d6f";
     private static final String IMAGE_URL = "https://image.tmdb.org/t/p/w300";
 

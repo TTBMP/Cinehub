@@ -1,5 +1,8 @@
 package com.ttbmp.cinehub.ui.web.domain;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class Shift {
 
     private int id;

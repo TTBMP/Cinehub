@@ -158,8 +158,9 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentProjection(ProjectionResponse request) {
-        model.addAttribute("projection", request.getProjectionDto());
+    public void presentProjection(ProjectionResponse response) {
+        model.addAttribute("projection", response.getProjectionDto());
+        model.addAttribute("price", response.getProjectionDto().getBasePrice());
     }
 
 

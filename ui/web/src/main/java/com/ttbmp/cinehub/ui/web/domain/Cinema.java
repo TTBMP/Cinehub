@@ -1,13 +1,14 @@
 package com.ttbmp.cinehub.ui.web.domain;
 
-
+/**
+ * @author Fabio Buracchi, Ivan Palmieri
+ */
 public class Cinema {
 
     private Integer id;
     private String name;
     private String address;
     private String city;
-
 
     public String getName() {
         return name;

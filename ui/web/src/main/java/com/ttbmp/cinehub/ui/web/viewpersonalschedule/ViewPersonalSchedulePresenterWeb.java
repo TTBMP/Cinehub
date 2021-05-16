@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class ViewPersonalSchedulePresenterWeb implements ViewPersonalSchedulePresenter {
 
     private final Model model;
