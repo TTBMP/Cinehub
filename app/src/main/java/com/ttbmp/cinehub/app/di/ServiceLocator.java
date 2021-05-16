@@ -1,9 +1,9 @@
 package com.ttbmp.cinehub.app.di;
 
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
+import com.ttbmp.cinehub.app.repository.cinema.JdbcCinemaRepository;
 import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
 import com.ttbmp.cinehub.app.repository.customer.MockCustomerRepository;
-import com.ttbmp.cinehub.app.repository.cinema.JdbcCinemaRepository;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.JdbcEmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.JdbcProjectionistRepository;
@@ -26,16 +26,16 @@ import com.ttbmp.cinehub.app.repository.shift.usher.JdbcUsherShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.usher.UsherShiftRepository;
 import com.ttbmp.cinehub.app.repository.ticket.JdbcTicketRepository;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
-import com.ttbmp.cinehub.app.repository.user.JdbcUserRepository;
+import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.service.email.MockEmailService;
 import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
 import com.ttbmp.cinehub.app.service.movieapi.TheMovieDbApiServiceAdapter;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
+import com.ttbmp.cinehub.app.service.payment.StripeServiceAdapter;
 import com.ttbmp.cinehub.app.service.security.MockSecurityService;
 import com.ttbmp.cinehub.app.service.security.SecurityService;
-import com.ttbmp.cinehub.app.service.payment.StripeServiceAdapter;
 import com.ttbmp.cinehub.app.utilities.FactoryMap;
 
 /**
@@ -67,7 +67,7 @@ public class ServiceLocator {
         serviceFactoryMap.put(ProjectionistShiftRepository.class, () -> new JdbcProjectionistShiftRepository(this));
         serviceFactoryMap.put(UsherShiftRepository.class, () -> new JdbcUsherShiftRepository(this));
         serviceFactoryMap.put(TicketRepository.class, () -> new JdbcTicketRepository(this));
-        serviceFactoryMap.put(UserRepository.class, () -> new JdbcUserRepository(this));
+        serviceFactoryMap.put(UserRepository.class, MockUserRepository::new);
     }
 
     public <T> T getService(Class<T> serviceClass) {

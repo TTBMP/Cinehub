@@ -40,31 +40,30 @@ public class MockCustomerRepository implements CustomerRepository {
     public Customer getCustomer(String userId) {
         return MockUserRepository.getUserDataList().stream()
                 .filter(d -> d.getId().equals(userId))
+                .findAny()
                 .map(d -> new CustomerProxy(
                         d.getId(),
                         serviceLocator.getService(UserRepository.class),
                         serviceLocator.getService(TicketRepository.class)
                 ))
-                .collect(Collectors.toList())
-                .get(0);
+                .orElse(null);
     }
 
     @Override
     public Customer getCustomer(Ticket ticket) {
-        String ticketUserId = MockTicketRepository.getTicketDataList().stream()
+        return MockTicketRepository.getTicketDataList().stream()
                 .filter(d -> d.getId() == ticket.getId())
                 .map(MockTicketRepository.TicketData::getUserId)
-                .collect(Collectors.toList())
-                .get(0);
-        return MockUserRepository.getUserDataList().stream()
-                .filter(d -> d.getId().equals(ticketUserId))
-                .map(d -> new CustomerProxy(
-                        d.getId(),
-                        serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(TicketRepository.class)
-                ))
-                .collect(Collectors.toList())
-                .get(0);
+                .findAny()
+                .flatMap(ticketUserId -> MockUserRepository.getUserDataList().stream()
+                        .filter(d -> d.getId().equals(ticketUserId))
+                        .findAny()
+                        .map(d -> new CustomerProxy(
+                                d.getId(),
+                                serviceLocator.getService(UserRepository.class),
+                                serviceLocator.getService(TicketRepository.class)
+                        )))
+                .orElse(null);
     }
 
     public static class CustomerData {

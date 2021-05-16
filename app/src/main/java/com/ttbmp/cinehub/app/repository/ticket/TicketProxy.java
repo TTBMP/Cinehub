@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.app.repository.ticket;
 
-import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
 import com.ttbmp.cinehub.app.repository.LazyLoadingException;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
 import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
 import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.Seat;

@@ -15,12 +15,8 @@ import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftRe
 import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.CreateShiftResponse;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetCinemaListResponse;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.GetShiftListResponse;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.ShiftRepeatResponse;
-import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.domain.employee.Projectionist;
 import com.ttbmp.cinehub.domain.shift.ModifyShiftException;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
