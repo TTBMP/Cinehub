@@ -20,12 +20,9 @@ public class BuyTicketViewModel implements ViewModel {
 
 
     private final StringProperty emailUser = new SimpleStringProperty();
-    private final StringProperty nameUser = new SimpleStringProperty();
-    private final StringProperty surnameUser = new SimpleStringProperty();
     private final StringProperty numberOfCardUser = new SimpleStringProperty();
     private final StringProperty txtCvv = new SimpleStringProperty();
     private final StringProperty freeSeats = new SimpleStringProperty();
-
     private final StringProperty totalSeats = new SimpleStringProperty();
     private final StringProperty buysSeats = new SimpleStringProperty();
     private final ObservableList<SeatDto> seatList = FXCollections.observableArrayList();
@@ -43,28 +40,28 @@ public class BuyTicketViewModel implements ViewModel {
     private final StringProperty selectedCinemaName = new SimpleStringProperty();
     private final LongProperty selectedTicketPrice = new SimpleLongProperty();
     private final IntegerProperty selectedPositionSeatInteger = new SimpleIntegerProperty();
-
     private final StringProperty emailError = new SimpleStringProperty();
     private final StringProperty movieError = new SimpleStringProperty();
     private final StringProperty cinemaError = new SimpleStringProperty();
     private final StringProperty seatError = new SimpleStringProperty();
     private final StringProperty paymentError = new SimpleStringProperty();
     private final StringProperty authenticationError = new SimpleStringProperty();
-
+    private final StringProperty payRepositoryException = new SimpleStringProperty();
+    private final StringProperty listMovieRepositoryException = new SimpleStringProperty();
+    private final StringProperty cinemaListRepositoryException = new SimpleStringProperty();
+    private final StringProperty ticketRepositoryException = new SimpleStringProperty();
+    private final StringProperty projectionListRepositoryException = new SimpleStringProperty();
+    private final StringProperty projectionRepositoryException = new SimpleStringProperty();
+    private final StringProperty cinemaRepositoryException = new SimpleStringProperty();
     private final StringProperty selectedSeatPrice = new SimpleStringProperty();
-
-
     private final BooleanProperty skipLineOption = new SimpleBooleanProperty();
     private final BooleanProperty heatedArmchairOption = new SimpleBooleanProperty();
     private final BooleanProperty foldingArmchairOption = new SimpleBooleanProperty();
-
-
     private final IntegerProperty numberOfSeats = new SimpleIntegerProperty(0);
     private final List<BooleanProperty> seatsState = new ArrayList<>(60);
     private final IntegerProperty positionSelectedSeat = new SimpleIntegerProperty();
     private final BooleanProperty valueFalseForSeatState = new SimpleBooleanProperty(false);
     private final BooleanProperty valueTrueForSeatState = new SimpleBooleanProperty(true);
-
     private final ObservableList<ProjectionDto> projectionOfProjectionTimeList = FXCollections.observableArrayList();
 
 
@@ -84,8 +81,40 @@ public class BuyTicketViewModel implements ViewModel {
         StringProperty selectedMovieReleased = new SimpleStringProperty();
         selectedMovieReleased.bind(ObjectBindings.map(selectedMovie, MovieDto::getReleases));
         selectedDateProperty().setValue(LocalDate.now());
+    }
 
 
+    public StringProperty payRepositoryExceptionProperty() {
+        return payRepositoryException;
+    }
+
+
+    public StringProperty listMovieRepositoryExceptionProperty() {
+        return listMovieRepositoryException;
+    }
+
+
+    public StringProperty cinemaListRepositoryExceptionProperty() {
+        return cinemaListRepositoryException;
+    }
+
+
+    public StringProperty ticketRepositoryExceptionProperty() {
+        return ticketRepositoryException;
+    }
+
+
+    public StringProperty projectionListRepositoryExceptionProperty() {
+        return projectionListRepositoryException;
+    }
+
+    public StringProperty projectionRepositoryExceptionProperty() {
+        return projectionRepositoryException;
+    }
+
+
+    public StringProperty cinemaRepositoryExceptionProperty() {
+        return cinemaRepositoryException;
     }
 
 
@@ -153,7 +182,7 @@ public class BuyTicketViewModel implements ViewModel {
         return selectedProjection;
     }
 
-    public IntegerProperty seatSelectedPosition() {
+    public IntegerProperty seatSelectedPositionNumber() {
         return selectedPositionSeatInteger;
     }
 
@@ -218,14 +247,6 @@ public class BuyTicketViewModel implements ViewModel {
         return emailUser;
     }
 
-    public StringProperty nameUserProperty() {
-        return nameUser;
-    }
-
-    public StringProperty surnameUserProperty() {
-        return surnameUser;
-    }
-
     public StringProperty numberOfCardUserProperty() {
         return numberOfCardUser;
     }
@@ -246,4 +267,6 @@ public class BuyTicketViewModel implements ViewModel {
     public StringProperty authenticationErrorProperty() {
         return authenticationError;
     }
+
+
 }

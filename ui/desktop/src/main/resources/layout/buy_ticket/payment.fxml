@@ -38,29 +38,20 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <Label text="Name you will find on the ticket:" GridPane.columnIndex="3"/>
                         <Label text="Enter the email where the invoice arrives:" GridPane.columnIndex="3"
-                               GridPane.rowIndex="1"/>
-                        <Label text="Credit card expiration date:" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
-                        <TextField fx:id="nameTextField" alignment="TOP_LEFT" promptText="Insert name"
-                                   GridPane.columnIndex="4"/>
+                               GridPane.rowIndex="0"/>
+                        <Label text="Credit card expiration date:" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
                         <TextField fx:id="emailTextField" alignment="TOP_LEFT" promptText="Insert email"
-                                   GridPane.columnIndex="4" GridPane.rowIndex="1">
-                            <opaqueInsets>
-                                <Insets/>
-                            </opaqueInsets>
+                                   GridPane.columnIndex="4" GridPane.rowIndex="0">
                         </TextField>
                         <DatePicker fx:id="fieldExpirationDatePicker" prefHeight="31.0" prefWidth="181.0"
-                                    promptText="Insert date" GridPane.columnIndex="4" GridPane.rowIndex="2"/>
-                        <Label text="Surname you will find on the ticket:"/>
-                        <Label text="Credit card number:" GridPane.rowIndex="1"/>
-                        <Label text="CVV:" GridPane.rowIndex="2"/>
-                        <TextField fx:id="surnameTextField" alignment="TOP_LEFT" promptText="Insert surname"
-                                   GridPane.columnIndex="1"/>
+                                    promptText="Insert date" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+                        <Label text="Credit card number:" GridPane.rowIndex="0"/>
+                        <Label text="CVV:" GridPane.rowIndex="1"/>
                         <TextField fx:id="numberOfCreditCardTextField" alignment="TOP_LEFT" promptText="Insert card"
-                                   GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                   GridPane.columnIndex="1" GridPane.rowIndex="0"/>
                         <TextField fx:id="cvvTextField" promptText="Insert cvv" GridPane.columnIndex="1"
-                                   GridPane.rowIndex="2"/>
+                                   GridPane.rowIndex="1"/>
                     </children>
                     <VBox.margin>
                         <Insets left="32.0" right="32.0"/>

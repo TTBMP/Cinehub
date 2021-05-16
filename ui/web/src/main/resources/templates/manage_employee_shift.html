@@ -24,6 +24,9 @@
 </div>
 <div class="row justify-content-center">
     <div class="bg-black col-md-8 order-md-1 text-body">
+        <div th:if="${error}">
+            <h1 align="center" th:text="${errorText}"></h1>
+        </div>
 
         <form action="#" method="post" th:action="@{/manage_employee_shift}" th:object="${getShiftListRequest}">
             <label>Select Cinema</label>
@@ -87,12 +90,28 @@
                 <td>
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("MONDAY")}>
-                            <form action="/shift_detail" method="get">
-                                <input name="idCinema" th:value="${idCinema}" type="hidden"/>
-                                <input name="shiftId" th:value="${shift.id}" type="hidden"/>
-                                <button class="btn btn-outline-primary"
-                                        th:text="${shift.start} + '-' + ${shift.end} " type="submit"></button>
-                            </form>
+                           <form action="shift_detail.html" method="POST" th:action="@{/shift_detail}"
+                                 th:object="${selectedShift}">
+                              <input th:name="shiftId" th:value="${shift.id}" type="hidden"/>
+                                <input th:name="date" th:value="${shift.date}" type="hidden"/>
+                                <input th:name="start" th:value="${shift.start}" type="hidden"/>
+                                <input th:name="end" th:value="${shift.end}" type="hidden"/>
+                                <input th:name="employee.id" th:value="${shift.employee.id}" type="hidden"/>
+                                <input th:name="employee.role" th:value="${shift.employee.toString()}" type="hidden"/>
+                                <input th:name="employee.name" th:value="${shift.employee.name}" type="hidden"/>
+                                <input th:name="employee.surname" th:value="${shift.employee.surname}" type="hidden"/>
+                                <input th:name="employee.cinema.id" th:value="${shift.employee.cinema.id}"
+                                       type="hidden"/>
+                                <input th:name="employee.cinema.name" th:value="${shift.employee.cinema.name}"
+                                       type="hidden"/>
+                                <div class="row" th:if="${shift.employee.toString() == 'projectionist'}">
+                                    <input th:name="hall.id" th:value="${shift.hallDto.id}" type="hidden"/>
+                                     <input th:name="hall.name" th:value="${shift.hallDto.name}" type="hidden"/>
+                                </div>
+                                <input class="btn btn-outline-primary" th:value="${shift.start + ' - ' + shift.end}"
+                                       type="submit" value="start - end"/>
+
+                         </form>
                         </span>
                     </span>
                 </td>
@@ -100,12 +119,28 @@
                 <td>
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("TUESDAY")}>
-                            <form action="/shift_detail" method="get">
-                                <input name="idCinema" th:value="${idCinema}" type="hidden"/>
-                                <input name="shiftId" th:value="${shift.id}" type="hidden"/>
-                                <button class="btn btn-outline-primary"
-                                        th:text="${shift.start} + '-' + ${shift.end} " type="submit">k</button>
-                            </form>
+                          <form action="shift_detail.html" method="POST" th:action="@{/shift_detail}"
+                                th:object="${selectedShift}">
+                             <input th:name="shiftId" th:value="${shift.id}" type="hidden"/>
+                                <input th:name="date" th:value="${shift.date}" type="hidden"/>
+                                <input th:name="start" th:value="${shift.start}" type="hidden"/>
+                                <input th:name="end" th:value="${shift.end}" type="hidden"/>
+                                <input th:name="employee.id" th:value="${shift.employee.id}" type="hidden"/>
+                                <input th:name="employee.role" th:value="${shift.employee.toString()}" type="hidden"/>
+                                <input th:name="employee.name" th:value="${shift.employee.name}" type="hidden"/>
+                                <input th:name="employee.surname" th:value="${shift.employee.surname}" type="hidden"/>
+                                <input th:name="employee.cinema.id" th:value="${shift.employee.cinema.id}"
+                                       type="hidden"/>
+                                <input th:name="employee.cinema.name" th:value="${shift.employee.cinema.name}"
+                                       type="hidden"/>
+                                <div class="row" th:if="${shift.employee.toString() == 'projectionist'}">
+                                    <input th:name="hall.id" th:value="${shift.hallDto.id}" type="hidden"/>
+                                     <input th:name="hall.name" th:value="${shift.hallDto.name}" type="hidden"/>
+                                </div>
+                                <input class="btn btn-outline-primary" th:value="${shift.start + ' - ' + shift.end}"
+                                       type="submit" value="start - end"/>
+
+                         </form>
                         </span>
                     </span>
                 </td>
@@ -113,60 +148,137 @@
                 <td>
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("WEDNESDAY")}>
-                            <form action="/shift_detail" method="get">
-                                <input name="idCinema" th:value="${idCinema}" type="hidden"/>
-                                <input name="shiftId" th:value="${shift.id}" type="hidden"/>
-                                <button class="btn btn-outline-primary"
-                                        th:text="${shift.start} + '-' + ${shift.end} " type="submit">k</button>
-                            </form>
+                       <form action="shift_detail.html" method="POST" th:action="@{/shift_detail}"
+                             th:object="${selectedShift}">
+                               <input th:name="shiftId" th:value="${shift.id}" type="hidden"/>
+                                <input th:name="date" th:value="${shift.date}" type="hidden"/>
+                                <input th:name="start" th:value="${shift.start}" type="hidden"/>
+                                <input th:name="end" th:value="${shift.end}" type="hidden"/>
+                                <input th:name="employee.id" th:value="${shift.employee.id}" type="hidden"/>
+                                <input th:name="employee.role" th:value="${shift.employee.toString()}" type="hidden"/>
+                                <input th:name="employee.name" th:value="${shift.employee.name}" type="hidden"/>
+                                <input th:name="employee.surname" th:value="${shift.employee.surname}" type="hidden"/>
+                                <input th:name="employee.cinema.id" th:value="${shift.employee.cinema.id}"
+                                       type="hidden"/>
+                                <input th:name="employee.cinema.name" th:value="${shift.employee.cinema.name}"
+                                       type="hidden"/>
+                                <div class="row" th:if="${shift.employee.toString() == 'projectionist'}">
+                                    <input th:name="hall.id" th:value="${shift.hallDto.id}" type="hidden"/>
+                                    <input th:name="hall.name" th:value="${shift.hallDto.name}" type="hidden"/>
+                                </div>
+                                <input class="btn btn-outline-primary" th:value="${shift.start + ' - ' + shift.end}"
+                                       type="submit" value="start - end"/>
+
+                         </form>
                         </span>
                     </span>
                 </td>
                 <td>
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("THURSDAY")}>
-                            <form action="/shift_detail" method="get">
-                                <input name="idCinema" th:value="${idCinema}" type="hidden"/>
-                                <input name="shiftId" th:value="${shift.id}" type="hidden"/>
-                                <button class="btn btn-outline-primary"
-                                        th:text="${shift.start} + '-' + ${shift.end} " type="submit">k</button>
-                            </form>
+                     <form action="shift_detail.html" method="POST" th:action="@{/shift_detail}"
+                           th:object="${selectedShift}">
+                               <input th:name="shiftId" th:value="${shift.id}" type="hidden"/>
+                                <input th:name="date" th:value="${shift.date}" type="hidden"/>
+                                <input th:name="start" th:value="${shift.start}" type="hidden"/>
+                                <input th:name="end" th:value="${shift.end}" type="hidden"/>
+                                <input th:name="employee.id" th:value="${shift.employee.id}" type="hidden"/>
+                                <input th:name="employee.role" th:value="${shift.employee.toString()}" type="hidden"/>
+                                <input th:name="employee.name" th:value="${shift.employee.name}" type="hidden"/>
+                                <input th:name="employee.surname" th:value="${shift.employee.surname}" type="hidden"/>
+                                <input th:name="employee.cinema.id" th:value="${shift.employee.cinema.id}"
+                                       type="hidden"/>
+                                <input th:name="employee.cinema.name" th:value="${shift.employee.cinema.name}"
+                                       type="hidden"/>
+                                <div class="row" th:if="${shift.employee.toString() == 'projectionist'}">
+                                    <input th:name="hall.id" th:value="${shift.hallDto.id}" type="hidden"/>
+                                     <input th:name="hall.name" th:value="${shift.hallDto.name}" type="hidden"/>
+                                </div>
+                                <input class="btn btn-outline-primary" th:value="${shift.start + ' - ' + shift.end}"
+                                       type="submit" value="start - end"/>
+
+                         </form>
                         </span>
                     </span>
                 </td>
                 <td>
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("FRIDAY")}>
-                            <form action="/shift_detail" method="get">
-                                <input name="idCinema" th:value="${idCinema}" type="hidden"/>
-                                <input name="shiftId" th:value="${shift.id}" type="hidden"/>
-                                <button class="btn btn-outline-primary"
-                                        th:text="${shift.start} + '-' + ${shift.end} " type="submit">k</button>
-                            </form>
+                        <form action="shift_detail.html" method="POST" th:action="@{/shift_detail}"
+                              th:object="${selectedShift}">
+                               <input th:name="shiftId" th:value="${shift.id}" type="hidden"/>
+                                <input th:name="date" th:value="${shift.date}" type="hidden"/>
+                                <input th:name="start" th:value="${shift.start}" type="hidden"/>
+                                <input th:name="end" th:value="${shift.end}" type="hidden"/>
+                                <input th:name="employee.id" th:value="${shift.employee.id}" type="hidden"/>
+                                <input th:name="employee.role" th:value="${shift.employee.toString()}" type="hidden"/>
+                                <input th:name="employee.name" th:value="${shift.employee.name}" type="hidden"/>
+                                <input th:name="employee.surname" th:value="${shift.employee.surname}" type="hidden"/>
+                                <input th:name="employee.cinema.id" th:value="${shift.employee.cinema.id}"
+                                       type="hidden"/>
+                                <input th:name="employee.cinema.name" th:value="${shift.employee.cinema.name}"
+                                       type="hidden"/>
+                                <div class="row" th:if="${shift.employee.toString() == 'projectionist'}">
+                                    <input th:name="hall.id" th:value="${shift.hallDto.id}" type="hidden"/>
+                                     <input th:name="hall.name" th:value="${shift.hallDto.name}" type="hidden"/>
+                                </div>
+                                <input class="btn btn-outline-primary" th:value="${shift.start + ' - ' + shift.end}"
+                                       type="submit" value="start - end"/>
+                         </form>
                         </span>
                     </span>
                 </td>
                 <td>
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("SATURDAY")}>
-                            <form action="/shift_detail" method="get">
-                                <input name="idCinema" th:value="${idCinema}" type="hidden"/>
-                                <input name="shiftId" th:value="${shift.id}" type="hidden"/>
-                                <button class="btn btn-outline-primary"
-                                        th:text="${shift.start} + '-' + ${shift.end} " type="submit">k</button>
-                            </form>
+                     <form action="shift_detail.html" method="POST" th:action="@{/shift_detail}"
+                           th:object="${selectedShift}">
+                                <input th:name="shiftId" th:value="${shift.id}" type="hidden"/>
+                                <input th:name="date" th:value="${shift.date}" type="hidden"/>
+                                <input th:name="start" th:value="${shift.start}" type="hidden"/>
+                                <input th:name="end" th:value="${shift.end}" type="hidden"/>
+                                <input th:name="employee.id" th:value="${shift.employee.id}" type="hidden"/>
+                                <input th:name="employee.role" th:value="${shift.employee.toString()}" type="hidden"/>
+                                <input th:name="employee.name" th:value="${shift.employee.name}" type="hidden"/>
+                                <input th:name="employee.surname" th:value="${shift.employee.surname}" type="hidden"/>
+                                <input th:name="employee.cinema.id" th:value="${shift.employee.cinema.id}"
+                                       type="hidden"/>
+                                <input th:name="employee.cinema.name" th:value="${shift.employee.cinema.name}"
+                                       type="hidden"/>
+                                <div class="row" th:if="${shift.employee.toString() == 'projectionist'}">
+                                    <input th:name="hall.id" th:value="${shift.hallDto.id}" type="hidden"/>
+                                     <input th:name="hall.name" th:value="${shift.hallDto.name}" type="hidden"/>
+                                </div>
+                                <input class="btn btn-outline-primary" th:value="${shift.start + ' - ' + shift.end}"
+                                       type="submit" value="start - end"/>
+                         </form>
                         </span>
                     </span>
                 </td>
                 <td>
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("SUNDAY")}>
-                            <form action="/shift_detail" method="get">
-                                <input name="idCinema" th:value="${idCinema}" type="hidden"/>
-                                <input name="shiftId" th:value="${shift.id}" type="hidden"/>
-                                <button class="btn btn-outline-primary"
-                                        th:text="${shift.start} + '-' + ${shift.end} " type="submit">k</button>
-                            </form>
+                        <form action="shift_detail.html" method="POST" th:action="@{/shift_detail}"
+                              th:object="${selectedShift}">
+                                <input th:name="shiftId" th:value="${shift.id}" type="hidden"/>
+                                <input th:name="date" th:value="${shift.date}" type="hidden"/>
+                                <input th:name="start" th:value="${shift.start}" type="hidden"/>
+                                <input th:name="end" th:value="${shift.end}" type="hidden"/>
+                                <input th:name="employee.id" th:value="${shift.employee.id}" type="hidden"/>
+                                <input th:name="employee.role" th:value="${shift.employee.toString()}" type="hidden"/>
+                                <input th:name="employee.name" th:value="${shift.employee.name}" type="hidden"/>
+                                <input th:name="employee.surname" th:value="${shift.employee.surname}" type="hidden"/>
+                                <input th:name="employee.cinema.id" th:value="${shift.employee.cinema.id}"
+                                       type="hidden"/>
+                                <input th:name="employee.cinema.name" th:value="${shift.employee.cinema.name}"
+                                       type="hidden"/>
+                                <div class="row" th:if="${shift.employee.toString() == 'projectionist'}">
+                                    <input th:name="hall.id" th:value="${shift.hallDto.id}" type="hidden"/>
+                                     <input th:name="hall.name" th:value="${shift.hallDto.name}" type="hidden"/>
+                                </div>
+                                <input class="btn btn-outline-primary" th:value="${shift.start + ' - ' + shift.end}"
+                                       type="submit" value="start - end"/>
+                         </form>
                         </span>
                     </span>
                 </td>

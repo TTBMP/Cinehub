@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class JdbcDataSourceInvocationHandlerTest {
 
     @Test
-    void JdbcDataSourceInvocationHandler_instantiateClassWithInvalidEntities_ThrowsException() {
+    void getDataSourceWithInvalidEntities_ThrowsException() {
         assertThrows(
                 DataSourceClassException.class,
                 () -> JdbcDataSourceProvider.getDataSource(DataSourceWithInvalidEntities.class)
@@ -21,10 +21,10 @@ class JdbcDataSourceInvocationHandlerTest {
     }
 
     @Test
-    void invoke_instantiateDaoWithoutAnnotation_ThrowsException() {
+    void getDataSourceInvalidDao_ThrowsException() {
         assertThrows(
                 DataSourceMethodException.class,
-                () -> JdbcDataSourceProvider.getDataSource(DataSourceWithInvalidDaoMethod.class).InvalidDao()
+                () -> JdbcDataSourceProvider.getDataSource(DataSourceWithInvalidDaoMethod.class).getInvalidDao()
         );
     }
 
@@ -35,11 +35,11 @@ class JdbcDataSourceInvocationHandlerTest {
             password = "admin",
             timezone = "Europe/Rome",
             driverClassName = "com.mysql.cj.jdbc.Driver",
-            entities = {
-                    Object.class
-            }
+            entities = {DataSourceWithInvalidEntities.InvalidEntity.class}
     )
     private interface DataSourceWithInvalidEntities extends JdbcDataSource {
+        class InvalidEntity {
+        }
     }
 
     @Database(
@@ -49,14 +49,13 @@ class JdbcDataSourceInvocationHandlerTest {
             password = "admin",
             timezone = "Europe/Rome",
             driverClassName = "com.mysql.cj.jdbc.Driver",
-            entities = {
-
-            }
+            entities = {}
     )
     private interface DataSourceWithInvalidDaoMethod extends JdbcDataSource {
-        InvalidDao InvalidDao() throws DataSourceMethodException;
+        InvalidDao getInvalidDao() throws DataSourceMethodException;
+
+        interface InvalidDao {
+        }
     }
 
-    private interface InvalidDao {
-    }
 }

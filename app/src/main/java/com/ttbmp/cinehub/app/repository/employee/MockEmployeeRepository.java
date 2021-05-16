@@ -2,18 +2,19 @@ package com.ttbmp.cinehub.app.repository.employee;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
-import com.ttbmp.cinehub.app.repository.creditcard.CreditCardRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistProxy;
 import com.ttbmp.cinehub.app.repository.employee.usher.UsherProxy;
 import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
+import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @author Fabio Buracchi
@@ -23,10 +24,20 @@ public class MockEmployeeRepository implements EmployeeRepository {
     private static final List<EmployeeData> EMPLOYEE_DATA_LIST = new ArrayList<>();
 
     static {
-        EMPLOYEE_DATA_LIST.add(new EmployeeData("0", 0, EmployeeData.Role.USHER));
-        EMPLOYEE_DATA_LIST.add(new EmployeeData("1", 0, EmployeeData.Role.PROJECTIONIST));
-        EMPLOYEE_DATA_LIST.add(new EmployeeData("2", 1, EmployeeData.Role.USHER));
-        EMPLOYEE_DATA_LIST.add(new EmployeeData("3", 1, EmployeeData.Role.PROJECTIONIST));
+        var usherNumber = 2;
+        var projectionistNumber = 12;
+        IntStream.range(0, usherNumber).forEach(i -> EMPLOYEE_DATA_LIST.add(
+                new EmployeeData(
+                        Integer.toString(i * 2),
+                        (i < usherNumber / 2) ? 1 : 2,
+                        EmployeeData.Role.USHER)
+        ));
+        IntStream.range(0, projectionistNumber).forEach(i -> EMPLOYEE_DATA_LIST.add(
+                new EmployeeData(
+                        Integer.toString(i * 2 + 1),
+                        (i < projectionistNumber / 2) ? 1 : 2,
+                        EmployeeData.Role.PROJECTIONIST)
+        ));
     }
 
     private final ServiceLocator serviceLocator;
@@ -43,23 +54,31 @@ public class MockEmployeeRepository implements EmployeeRepository {
     public Employee getEmployee(String userId) {
         return EMPLOYEE_DATA_LIST.stream()
                 .filter(d -> d.getUserId().equals(userId))
+                .findAny()
                 .map(d -> new EmployeeFactory().createEmployee(d))
-                .collect(Collectors.toList())
-                .get(0);
+                .orElse(null);
     }
 
     @Override
     public Employee getEmployee(Shift shift) {
-        var shiftEmployeeId = MockShiftRepository.getShiftDataList().stream()
+        return MockShiftRepository.getShiftDataList().stream()
                 .filter(d -> d.getId() == shift.getId())
+                .findAny()
                 .map(MockShiftRepository.ShiftData::getEmployeeId)
-                .collect(Collectors.toList())
-                .get(0);
+                .flatMap(shiftEmployeeId -> EMPLOYEE_DATA_LIST.stream()
+                        .filter(d -> d.userId.equals(shiftEmployeeId))
+                        .findAny()
+                        .map(d -> new EmployeeFactory().createEmployee(d))
+                )
+                .orElse(null);
+    }
+
+    @Override
+    public List<Employee> getEmployeeList(Cinema cinema) {
         return EMPLOYEE_DATA_LIST.stream()
-                .filter(d -> d.userId.equals(shiftEmployeeId))
+                .filter(d -> d.getCinemaId() == cinema.getId())
                 .map(d -> new EmployeeFactory().createEmployee(d))
-                .collect(Collectors.toList())
-                .get(0);
+                .collect(Collectors.toList());
     }
 
     public static class EmployeeData {
@@ -102,18 +121,15 @@ public class MockEmployeeRepository implements EmployeeRepository {
             PROJECTIONIST,
             USHER
         }
-
     }
 
     class EmployeeFactory {
-
         Employee createEmployee(EmployeeData employeeData) {
             switch (employeeData.role) {
                 case PROJECTIONIST:
                     return new ProjectionistProxy(
                             employeeData.userId,
                             serviceLocator.getService(UserRepository.class),
-                            serviceLocator.getService(CreditCardRepository.class),
                             serviceLocator.getService(CinemaRepository.class),
                             serviceLocator.getService(ShiftRepository.class)
                     );
@@ -121,7 +137,6 @@ public class MockEmployeeRepository implements EmployeeRepository {
                     return new UsherProxy(
                             employeeData.userId,
                             serviceLocator.getService(UserRepository.class),
-                            serviceLocator.getService(CreditCardRepository.class),
                             serviceLocator.getService(CinemaRepository.class),
                             serviceLocator.getService(ShiftRepository.class)
                     );
@@ -129,7 +144,6 @@ public class MockEmployeeRepository implements EmployeeRepository {
                     throw new IllegalStateException("Unexpected value: " + employeeData.role);
             }
         }
-
     }
 
 }

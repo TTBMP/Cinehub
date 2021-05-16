@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.app.repository.employee.usher;
 
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.domain.employee.Usher;
 import com.ttbmp.cinehub.domain.shift.UsherShift;
 
@@ -8,6 +9,6 @@ import com.ttbmp.cinehub.domain.shift.UsherShift;
  */
 public interface UsherRepository {
 
-    Usher getUsher(UsherShift usherShift);
+    Usher getUsher(UsherShift usherShift) throws RepositoryException;
 
 }

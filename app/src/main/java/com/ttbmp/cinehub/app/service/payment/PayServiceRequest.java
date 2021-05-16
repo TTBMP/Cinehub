@@ -13,13 +13,26 @@ public class PayServiceRequest extends Request {
     private final String email;
     private final String nameUser;
     private final String numberOfCard;
+    private final String cvv;
+    private final String expiredDate;
     private final long ticketPrice;
 
-    public PayServiceRequest(String email, String nameUser, String numberOfCard, long ticketPrice) {
+
+    public PayServiceRequest(String email, String nameUser, String numberOfCard, long ticketPrice, String cvv, String expiredDate) {
         this.email = email;
         this.nameUser = nameUser;
         this.numberOfCard = numberOfCard;
         this.ticketPrice = ticketPrice;
+        this.cvv = cvv;
+        this.expiredDate = expiredDate;
+    }
+
+    public String getCvv() {
+        return cvv;
+    }
+
+    public String getExpiredDate() {
+        return expiredDate;
     }
 
     public String getEmail() {

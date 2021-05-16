@@ -4,6 +4,9 @@ import com.ttbmp.cinehub.app.dto.ProjectionDto;
 
 import java.util.List;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class ProjectionListDto {
 
     private List<ProjectionDto> projections;

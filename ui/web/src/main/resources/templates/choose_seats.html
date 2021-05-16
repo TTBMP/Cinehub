@@ -33,13 +33,44 @@
         <!--Checkbox-->
         <div class="col-12">
             <h3>Additional options: </h3>
-            <label for="c1"></label><input id="c1" th:checked="*{boolean1}" type="checkbox">
-            <label> Skip line</label><br>
-            <label for="c2"></label><input id="c2" th:checked="*{boolean2}" type="checkbox">
-            <label> Folding armchair</label><br>
-            <label for="c3"></label><input id="c3" th:checked="*{boolean3}" type="checkbox">
-            <label> Heated armchair</label><br>
-            <p style="color: red">Each optional choice increases the cost of the ticket by one euro</p>
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-7">
+                            <label for="c1"></label><input id="c2" th:checked="*{boolean1}" type="checkbox">
+                            Skip line, with this option you can skip the initial waiting line
+                        </div>
+                        <div class="col-1">
+                            <p style="color: red"> + 1€</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-7">
+                            <label for="c1"></label><input id="c3" th:checked="*{boolean1}" type="checkbox">
+                            Open bar, with this option you will get a full meal (food, drinks) for one person
+
+                        </div>
+                        <div class="col-1">
+                            <p style="color: red">
+                                + 10€</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-7">
+                            <label for="c1"></label><input id="c1" th:checked="*{boolean1}" type="checkbox">
+                            Magic Box, with this option you will get a gadget of the typical objects of the film
+
+                        </div>
+                        <div class="col-1">
+                            <p style="color: red"> + 15€</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card m-5 p-2" style="background-color: #1b1b1b;border-color: #6d6d6d">
             <div class="container mt-5 mb-5">
@@ -101,7 +132,7 @@
                                         <div th:text="${valList.get((inter.index))}"></div>
                                     </div>
                                     <div class="col-12">
-                                        <p th:text="${seat.price}+'€'">
+                                        <p th:text="${price}+'€'">
                                         </p>
                                     </div>
                                     <button class="btn btn-primary" type="submit">Buy

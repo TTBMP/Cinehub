@@ -1,5 +1,8 @@
 package com.ttbmp.cinehub.ui.web.domain;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class Shift {
 
     private int id;
@@ -7,6 +10,15 @@ public class Shift {
     private String start;
     private String end;
     private Employee employee;
+    private Hall hall;
+
+    public Hall getHall() {
+        return hall;
+    }
+
+    public void setHall(Hall hall) {
+        this.hall = hall;
+    }
 
     public int getId() {
         return id;

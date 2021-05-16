@@ -42,7 +42,7 @@ public class DaoDeleteOperation extends DaoOperation {
     }
 
     @Override
-    public Object execute(Object[] args) throws InvocationTargetException, SQLException, NoSuchMethodException, IllegalAccessException {
+    public Object execute(Object[] args) throws DaoMethodException {
         // TODO: Handle foreign key delete behaviour
         try (var statement = connection.prepareStatement(
                 queryTemplate,
@@ -68,6 +68,8 @@ public class DaoDeleteOperation extends DaoOperation {
                 );
                 statement.executeUpdate();
             }
+        } catch (SQLException | InvocationTargetException | IllegalAccessException | NoSuchMethodException throwables) {
+            throw new DaoMethodException();
         }
         return null;
     }

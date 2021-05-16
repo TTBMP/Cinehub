@@ -15,12 +15,12 @@ public class HallDataMapper {
     }
 
     public static HallDto mapToDto(Hall hall) {
-        return new HallDto(hall.getId(), SeatDataMapper.mapToDtoList(hall.getSeatList()));
+        return new HallDto(hall.getId(), SeatDataMapper.mapToDtoList(hall.getSeatList()), hall.getName());
     }
 
     public static Hall mapToEntity(HallDto hallDto) {
         if (hallDto != null) {
-            return new Hall(hallDto.getId(), SeatDataMapper.mapToEntityList(hallDto.getSeatList()));
+            return new Hall(hallDto.getId(), SeatDataMapper.mapToEntityList(hallDto.getSeatList()), hallDto.getName());
         }
         return null;
     }

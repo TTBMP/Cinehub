@@ -43,7 +43,6 @@ public class EmployeeDataMapper {
                     employeeDto.getName(),
                     employeeDto.getSurname(),
                     null,
-                    null,
                     CinemaDataMapper.mapToEntity(employeeDto.getCinema())
             );
         } else {
@@ -51,7 +50,6 @@ public class EmployeeDataMapper {
                     employeeDto.getId(),
                     employeeDto.getName(),
                     employeeDto.getSurname(),
-                    null,
                     null,
                     CinemaDataMapper.mapToEntity(employeeDto.getCinema())
             );

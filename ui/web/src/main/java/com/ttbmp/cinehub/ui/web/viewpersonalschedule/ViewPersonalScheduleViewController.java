@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 
+/**
+ * @author Fabio Buracchi
+ */
 @Controller
 public class ViewPersonalScheduleViewController {
 

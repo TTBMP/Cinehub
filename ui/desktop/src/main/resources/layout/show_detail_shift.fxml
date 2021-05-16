@@ -17,6 +17,11 @@
                     </font>
                 </Label>
                 <Separator prefWidth="200.0"/>
+                <VBox fx:id="errorVBox" alignment="CENTER">
+                    <children>
+                        <Label fx:id="errorLabel" textFill="RED"/>
+                    </children>
+                </VBox>
             </children>
         </VBox>
     </top>
