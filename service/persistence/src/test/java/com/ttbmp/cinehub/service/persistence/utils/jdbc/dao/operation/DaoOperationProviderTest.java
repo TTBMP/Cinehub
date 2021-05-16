@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.service.persistence.utils.jdbc.dao.operation;
 
-import com.ttbmp.cinehub.service.persistence.CinemaDao;
-import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.TestDatabase;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Dao;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Database;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSource;
@@ -13,8 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Fabio Buracchi
@@ -22,15 +20,18 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class DaoOperationProviderTest {
 
     @Test
-    void getDaoOperation_ReturnsValidOperation_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, NoSuchMethodException, DataSourceMethodException, DaoMethodException {
-        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
-        assertDoesNotThrow(dao::getAllCinema);
+    void getDaoOperation_ReturnsValidOperation() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException, DaoMethodException {
+        assertNotNull(JdbcDataSourceProvider.getDataSource(TestDatabase.class).getTestDao().getAll());
     }
 
     @Test
-    void getDaoOperation_getOperationWithoutRequiredAnnotation_ThrowException() throws DataSourceClassException, SQLException, ClassNotFoundException, NoSuchMethodException, DataSourceMethodException, DaoMethodException {
-        DaoWithInvalidDaoMethod dao;
-        dao = JdbcDataSourceProvider.getDataSource(DataSourceWithInvalidDaoMethod.class).DaoWithInvalidDaoMethod();
+    void getDaoOperation_DoesNotThrowException() {
+        assertDoesNotThrow(() -> JdbcDataSourceProvider.getDataSource(TestDatabase.class).getTestDao().getAll());
+    }
+
+    @Test
+    void getDaoOperationWithoutRequiredAnnotations_ThrowsException() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
+        var dao = JdbcDataSourceProvider.getDataSource(DataSourceWithInvalidDaoMethod.class).getDaoWithInvalidMethod();
         assertThrows(DaoMethodException.class, dao::invalidMethod);
     }
 
@@ -41,17 +42,15 @@ class DaoOperationProviderTest {
             password = "admin",
             timezone = "Europe/Rome",
             driverClassName = "com.mysql.cj.jdbc.Driver",
-            entities = {
-
-            }
+            entities = {}
     )
     private interface DataSourceWithInvalidDaoMethod extends JdbcDataSource {
-        DaoWithInvalidDaoMethod DaoWithInvalidDaoMethod() throws DataSourceMethodException;
-    }
+        DaoWithInvalidMethod getDaoWithInvalidMethod() throws DataSourceMethodException;
 
-    @Dao
-    private interface DaoWithInvalidDaoMethod {
-        Object invalidMethod() throws DaoMethodException;
+        @Dao
+        interface DaoWithInvalidMethod {
+            Object invalidMethod() throws DaoMethodException;
+        }
     }
 
 }

@@ -1,5 +1,8 @@
 package com.ttbmp.cinehub.ui.web.domain;
 
+/**
+ * @author Fabio Buracchi, Ivan Palmieri
+ */
 public class Projection {
 
     private int hallId;
@@ -7,6 +10,7 @@ public class Projection {
     private int movieId;
     private int cinemaId;
     private String startTime;
+    private long basePrice;
 
     public String getStartTime() {
         return startTime;
@@ -47,4 +51,13 @@ public class Projection {
     public void setDate(String date) {
         this.date = date;
     }
+
+    public long getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(long basePrice) {
+        this.basePrice = basePrice;
+    }
+
 }

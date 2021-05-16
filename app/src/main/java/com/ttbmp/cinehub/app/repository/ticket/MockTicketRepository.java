@@ -2,7 +2,6 @@ package com.ttbmp.cinehub.app.repository.ticket;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
-import com.ttbmp.cinehub.app.repository.customer.MockCustomerRepository;
 import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
 import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.Projection;
@@ -18,14 +17,7 @@ import java.util.stream.Collectors;
 public class MockTicketRepository implements TicketRepository {
 
     private static final List<TicketData> TICKET_DATA_LIST = new ArrayList<>();
-    private static int counterTicketId = 0;
-
-    static {
-        var userIdList = MockCustomerRepository.getUserDataList().stream()
-                .map(MockCustomerRepository.CustomerData::getUserId)
-                .collect(Collectors.toList());
-        // TODO
-    }
+    private static int counterTicketId = 1;
 
     private final ServiceLocator serviceLocator;
 
@@ -35,6 +27,18 @@ public class MockTicketRepository implements TicketRepository {
 
     public static List<TicketData> getTicketDataList() {
         return TICKET_DATA_LIST;
+    }
+
+    @Override
+    public synchronized void saveTicket(Ticket ticket, Projection projection) {
+        TICKET_DATA_LIST.add(new TicketData(
+                counterTicketId++,
+                ticket.getPrice(),
+                ticket.getOwner().getId(),
+                projection.getId(),
+                ticket.getSeat().getId()
+
+        ));
     }
 
     @Override
@@ -53,18 +57,6 @@ public class MockTicketRepository implements TicketRepository {
                         serviceLocator.getService(SeatRepository.class)
                 ))
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public synchronized void saveTicket(Ticket ticket, Projection projection) {
-        TICKET_DATA_LIST.add(new TicketData(
-                counterTicketId++,
-                ticket.getPrice(),
-                ticket.getOwner().getId(),
-                projection.getId(),
-                ticket.getSeat().getId()
-
-        ));
     }
 
     public static class TicketData {

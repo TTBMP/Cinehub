@@ -20,6 +20,11 @@ public class ManageEmployeesShiftHandler implements ManageEmployeesShiftUseCase 
     }
 
     @Override
+    public void getEmployeeList(GetEmployeeListRequest request) {
+        controller.getEmployeeList(request);
+    }
+
+    @Override
     public void getShiftList(GetShiftListRequest request) {
         controller.getShiftList(request);
     }

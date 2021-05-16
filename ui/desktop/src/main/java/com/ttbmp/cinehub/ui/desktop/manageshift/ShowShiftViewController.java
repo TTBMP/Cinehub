@@ -3,10 +3,11 @@ package com.ttbmp.cinehub.ui.desktop.manageshift;
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetEmployeeListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetShiftListRequest;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.manageshift.components.ComboBoxCinemaValueFactory;
-import com.ttbmp.cinehub.ui.desktop.manageshift.table.DayWeek;
+import com.ttbmp.cinehub.ui.desktop.manageshift.table.Day;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.EmployeeCalendarTableCell;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.EmployeeShiftWeek;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.ShiftCalendarTableCell;
@@ -20,6 +21,7 @@ import javafx.scene.layout.VBox;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 
 /**
  * @author Massimo Mazzetti
@@ -32,6 +34,9 @@ public class ShowShiftViewController extends ViewController {
 
     @FXML
     private AppBarViewController appBarController;
+
+    @FXML
+    private Label errorLabel;
 
     @FXML
     private ComboBox<CinemaDto> cinemaComboBox;
@@ -59,6 +64,9 @@ public class ShowShiftViewController extends ViewController {
     protected void onLoad() {
         appBarController.load(activity, navController);
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
+
+        errorLabel.textProperty().bind(viewModel.errorDaoProperty());
+
         activity.getUseCase(ManageEmployeesShiftUseCase.class).getCinemaList();
         cinemaComboBox.setItems(viewModel.getCinemaList());
 
@@ -73,11 +81,16 @@ public class ShowShiftViewController extends ViewController {
 
         periodDatePicker.setValue(LocalDate.now());
 
+        activity.getUseCase((ManageEmployeesShiftUseCase.class)).getEmployeeList(
+                new GetEmployeeListRequest(
+                        viewModel.getSelectedCinema()
+                ));
 
         activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
                 new GetShiftListRequest(
-                        viewModel.getSelectedWeek(),
-                        viewModel.getSelectedCinema()
+                        viewModel.getSelectedCinema(),
+                        viewModel.getSelectedWeek().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
+                        viewModel.getSelectedWeek().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
                 )
         );
 
@@ -85,24 +98,34 @@ public class ShowShiftViewController extends ViewController {
         nextButton.setOnAction(a -> periodDatePicker.setValue(viewModel.getSelectedWeek().plusWeeks(1)));
         todayButton.setOnAction(a -> periodDatePicker.setValue(LocalDate.now()));
 
+
         periodDatePicker.setOnAction(a -> activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
                 new GetShiftListRequest(
-                        viewModel.getSelectedWeek(),
-                        viewModel.getSelectedCinema()
+                        viewModel.getSelectedCinema(),
+                        viewModel.getSelectedWeek().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
+                        viewModel.getSelectedWeek().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
                 )
         ));
-        cinemaComboBox.setOnAction(a -> activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
-                new GetShiftListRequest(
-                        viewModel.getSelectedWeek(),
-                        viewModel.getSelectedCinema()
-                )
-        ));
+        cinemaComboBox.setOnAction(a -> {
+            activity.getUseCase((ManageEmployeesShiftUseCase.class)).getEmployeeList(
+                    new GetEmployeeListRequest(
+                            viewModel.getSelectedCinema()
+                    ));
+
+            activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
+                    new GetShiftListRequest(
+                            viewModel.getSelectedCinema(),
+                            viewModel.getSelectedWeek().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
+                            viewModel.getSelectedWeek().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
+                    ));
+
+        });
         shiftEmployeeTableColumn.setCellValueFactory(new PropertyValueFactory<>("employeeDto"));
         shiftEmployeeTableColumn.setCellFactory(tableColumn -> new EmployeeCalendarTableCell(activity, navController));
         shiftEmployeeTableColumn.setSortable(false);
         shiftEmployeeTableColumn.setReorderable(false);
         for (var dayOfWeek : DayOfWeek.values()) {
-            var column = (TableColumn<EmployeeShiftWeek, DayWeek>) shiftTableView.getColumns().get(dayOfWeek.getValue());
+            var column = (TableColumn<EmployeeShiftWeek, Day>) shiftTableView.getColumns().get(dayOfWeek.getValue());
             column.setCellValueFactory(cell -> new SimpleObjectProperty<>(cell.getValue().getDayOfWeek(dayOfWeek)));
             column.setCellFactory(tableColumn -> new ShiftCalendarTableCell(activity, navController));
             column.setReorderable(false);
@@ -110,5 +133,7 @@ public class ShowShiftViewController extends ViewController {
         }
         shiftTableView.setItems(viewModel.getEmployeeShiftWeekList());
         viewModel.getEmployeeShiftWeekList().addListener((InvalidationListener) l -> shiftTableView.refresh());
+
+
     }
 }

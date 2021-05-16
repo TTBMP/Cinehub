@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.app.repository.hall;
 
+import com.ttbmp.cinehub.app.repository.LazyLoadingException;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
 import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Seat;
@@ -15,17 +17,21 @@ public class HallProxy extends Hall {
 
     private boolean isSeatListLoaded = false;
 
-    public HallProxy(int id, SeatRepository seatRepository) {
-        super(id, null);
+    public HallProxy(int id, SeatRepository seatRepository, String name) {
+        super(id, null, name);
         this.seatRepository = seatRepository;
     }
 
     @Override
     public List<Seat> getSeatList() {
-        if (!isSeatListLoaded) {
-            setSeatList(seatRepository.getSeatList(this));
+        try {
+            if (!isSeatListLoaded) {
+                setSeatList(seatRepository.getSeatList(this));
+            }
+            return super.getSeatList();
+        } catch (RepositoryException e) {
+            throw new LazyLoadingException(e.getMessage());
         }
-        return super.getSeatList();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.app.usecase.buyticket.request;
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.utilities.request.Request;
@@ -14,40 +13,51 @@ public class PaymentRequest extends Request {
 
     public static final Request.Error MISSING_TICKET_ERROR = new Request.Error("Ticket can't be null");
     public static final Request.Error MISSING_PROJECTION_ERROR = new Request.Error("Projection can't be null");
+    public static final Request.Error MISSING_EMAIL_ERROR = new Request.Error("Email can't be null");
+    public static final Request.Error MISSING_CINEMA_ERROR = new Request.Error("Cinema can't be null");
+    public static final Request.Error MISSING_CREDIT_CARD_ERROR = new Request.Error("Credit card can't be null");
 
-
-    private final Integer index;
     private ProjectionDto projection;
-    private TicketDto ticket;
+    private String email;
+    private TicketDto ticketDto;
     private CinemaDto cinemaDto;
-    private MovieDto movieDto;
-    private String selectedDate;
+    private String creditCardNumber;
+    private String creditCardCvv;
+    private String creditCardExpirationDate;
 
-
-    public PaymentRequest(TicketDto ticket, ProjectionDto projection, int index, CinemaDto cinemaDto, MovieDto movieDto, String selectedDate) {
-        this.index = index;
+    public PaymentRequest(TicketDto ticketDto, ProjectionDto projection, CinemaDto cinemaDto, String creditCardNumber, String creditCardCvv, String creditCardExpirationDate, String email) {
         this.projection = projection;
-        this.ticket = ticket;
+        this.ticketDto = ticketDto;
         this.cinemaDto = cinemaDto;
-        this.movieDto = movieDto;
-        this.selectedDate = selectedDate;
+        this.creditCardNumber = creditCardNumber;
+        this.email = email;
+        this.creditCardCvv = creditCardCvv;
+        this.creditCardExpirationDate = creditCardExpirationDate;
 
     }
 
-    public MovieDto getMovieDto() {
-        return movieDto;
+    public String getCreditCardCvv() {
+        return creditCardCvv;
     }
 
-    public void setMovieDto(MovieDto movieDto) {
-        this.movieDto = movieDto;
+    public void setCreditCardCvv(String creditCardCvv) {
+        this.creditCardCvv = creditCardCvv;
     }
 
-    public String getSelectedDate() {
-        return selectedDate;
+    public String getCreditCardExpirationDate() {
+        return creditCardExpirationDate;
     }
 
-    public void setSelectedDate(String selectedDate) {
-        this.selectedDate = selectedDate;
+    public void setCreditCardExpirationDate(String creditCardExpirationDate) {
+        this.creditCardExpirationDate = creditCardExpirationDate;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public CinemaDto getCinemaDto() {
@@ -66,26 +76,43 @@ public class PaymentRequest extends Request {
         this.projection = projection;
     }
 
-    public Integer getIndex() {
-        return index;
+
+    public TicketDto getTicketDto() {
+        return ticketDto;
     }
 
-    public TicketDto getTicket() {
-        return ticket;
+    public void setTicketDto(TicketDto ticketDto) {
+        this.ticketDto = ticketDto;
     }
 
-    public void setTicket(TicketDto ticket) {
-        this.ticket = ticket;
+    public String getCreditCardNumber() {
+        return creditCardNumber;
+    }
+
+    public void setCreditCardNumber(String creditCardNumber) {
+        this.creditCardNumber = creditCardNumber;
     }
 
     @Override
     public void onValidate() {
+
         if (projection == null) {
             addError(MISSING_PROJECTION_ERROR);
+        }
+        if (ticketDto == null) {
+            addError(MISSING_TICKET_ERROR);
 
         }
-        if (ticket == null) {
-            addError(MISSING_TICKET_ERROR);
+        if (cinemaDto == null) {
+            addError(MISSING_CINEMA_ERROR);
         }
+        if (creditCardNumber == null) {
+            addError(MISSING_CREDIT_CARD_ERROR);
+
+        }
+        if (email == null) {
+            addError(MISSING_EMAIL_ERROR);
+        }
+
     }
 }

@@ -1,8 +1,5 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
-import com.ttbmp.cinehub.app.dto.EmployeeDto;
-import com.ttbmp.cinehub.app.dto.HallDto;
-import com.ttbmp.cinehub.app.dto.ProjectionistDto;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 
 import java.time.LocalDate;
@@ -14,36 +11,35 @@ public class CreateShiftRequest extends Request {
     public static final Request.Error MISSING_DATE = new Request.Error("data non valida");
     public static final Request.Error MISSING_START = new Request.Error("inizio non valido");
     public static final Request.Error MISSING_END = new Request.Error("fine non valida");
-    public static final Request.Error MISSING_HALL = new Request.Error("sala non valida");
     public static final Request.Error DATE_ERROR = new Request.Error("ora non valida");
 
-    EmployeeDto employee;
-    LocalDate date;
-    LocalTime start;
-    LocalTime end;
-    HallDto hall;
+    private String employeeId;
+    private LocalDate date;
+    private LocalTime start;
+    private LocalTime end;
+    private int hallId;
 
-    public CreateShiftRequest(EmployeeDto employee, LocalDate date, LocalTime start, LocalTime end) {
-        this.employee = employee;
+    public CreateShiftRequest(String employeeId, LocalDate date, LocalTime start, LocalTime end) {
+        this.employeeId = employeeId;
         this.date = date;
         this.start = start;
         this.end = end;
     }
 
-    public CreateShiftRequest(EmployeeDto employee, LocalDate date, LocalTime start, LocalTime end, HallDto hall) {
-        this.employee = employee;
+    public CreateShiftRequest(String employeeId, LocalDate date, LocalTime start, LocalTime end, int hallId) {
+        this.employeeId = employeeId;
         this.date = date;
         this.start = start;
         this.end = end;
-        this.hall = hall;
+        this.hallId = hallId;
     }
 
-    public EmployeeDto getEmployee() {
-        return employee;
+    public String getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployee(EmployeeDto employee) {
-        this.employee = employee;
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
     }
 
     public LocalDate getDate() {
@@ -70,17 +66,17 @@ public class CreateShiftRequest extends Request {
         this.end = end;
     }
 
-    public HallDto getHall() {
-        return hall;
+    public int getHallId() {
+        return hallId;
     }
 
-    public void setHall(HallDto hall) {
-        this.hall = hall;
+    public void setHallId(int hallId) {
+        this.hallId = hallId;
     }
 
     @Override
     protected void onValidate() {
-        if (employee == null) {
+        if (employeeId == null) {
             addError(MISSING_EMPLOYEE);
         }
         if (date == null) {
@@ -91,9 +87,6 @@ public class CreateShiftRequest extends Request {
         }
         if (end == null) {
             addError(MISSING_END);
-        }
-        if (hall == null && employee instanceof ProjectionistDto) {
-            addError(MISSING_HALL);
         }
         if (start.isAfter(end)) {
             addError(DATE_ERROR);

@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class UserProxy extends User {
 
     public UserProxy(String id, String name, String surname, String email, String roles) {

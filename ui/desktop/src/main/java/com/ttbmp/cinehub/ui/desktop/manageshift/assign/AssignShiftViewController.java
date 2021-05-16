@@ -72,22 +72,22 @@ public class AssignShiftViewController extends ViewController {
 
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
 
+
         if (viewModel.getSelectedDayWeek().getEmployee() instanceof UsherDto) {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
             hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
         }
         viewModel.setRepeatVisibility(false);
         viewModel.setErrorAssignVisibility(false);
-        viewModel.getHallList().setAll(viewModel.getSelectedDayWeek().getEmployee().getCinema().getHalList());
-        hallComboBox.setItems(viewModel.getHallList());
-        viewModel.selectedHallProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
 
+        hallComboBox.setItems(viewModel.getHallList());
+
+        hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
         viewModel.setSelectedEndRepeatDay(null);
         hallComboBox.setButtonCell(new HallFactory(null));
         hallComboBox.setCellFactory(HallFactory::new);
         hallComboBox.getSelectionModel().selectFirst();
 
-        hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
 
         errorVBox.visibleProperty().bind(viewModel.errorAssignVisibilityProperty());
 
@@ -131,11 +131,11 @@ public class AssignShiftViewController extends ViewController {
 
         if (!viewModel.isRepeatVisibility()) {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(
-                    viewModel.getSelectedDayWeek().getEmployee(),
+                    viewModel.getSelectedDayWeek().getEmployee().getId(),
                     viewModel.getSelectedDayWeek().getDate(),
                     viewModel.getStartSpinnerTime().withNano(0),
                     viewModel.getEndSpinnerTime().withNano(0),
-                    viewModel.getSelectedHall()));
+                    viewModel.getSelectedHall().getId()));
         } else {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).saveRepeatedShift(
                     new ShiftRepeatRequest(

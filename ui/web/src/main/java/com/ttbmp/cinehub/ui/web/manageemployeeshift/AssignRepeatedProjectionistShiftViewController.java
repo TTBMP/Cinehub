@@ -7,7 +7,7 @@ import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ShiftRepeatingOption;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetShiftListRequest;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetEmployeeListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftRepeatRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewRepeatedShiftForm;
 import org.springframework.stereotype.Controller;
@@ -44,7 +44,7 @@ public class AssignRepeatedProjectionistShiftViewController {
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList();
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema));
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var request = new NewRepeatedShiftForm();
@@ -63,7 +63,7 @@ public class AssignRepeatedProjectionistShiftViewController {
         model.addAttribute("selectedHallId", request.getHallId());
         useCase.getCinemaList();
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema));
         var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
         var selectedHall = (HallDto) model.getAttribute("selectedHall");
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());

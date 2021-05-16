@@ -6,14 +6,10 @@ package com.ttbmp.cinehub.domain;
 public class Seat {
 
     private int id;
-    private long price;
-    private boolean state;
     private String position;
 
-    public Seat(int id, long price, boolean state, String position) {
+    public Seat(int id, String position) {
         this.id = id;
-        this.price = price;
-        this.state = state;
         this.position = position;
     }
 
@@ -31,22 +27,6 @@ public class Seat {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public long getPrice() {
-        return price;
-    }
-
-    public void setPrice(long price) {
-        this.price = price;
-    }
-
-    public boolean isState() {
-        return state;
-    }
-
-    public void setState(boolean state) {
-        this.state = state;
     }
 
     @Override

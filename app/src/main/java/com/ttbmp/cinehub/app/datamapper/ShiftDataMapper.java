@@ -26,18 +26,19 @@ public class ShiftDataMapper {
 
     public static ShiftDto mapToDto(Shift shift) {
         Objects.requireNonNull(shift);
-        if (shift.getEmployee() instanceof Usher) {
+        var employee = shift.getEmployee();
+        if (employee instanceof Usher) {
             return new ShiftUsherDto(
                     shift.getId(),
-                    EmployeeDataMapper.mapToDto(shift.getEmployee()),
+                    EmployeeDataMapper.mapToDto(employee),
                     LocalDate.parse(shift.getDate()),
                     LocalTime.parse(shift.getStart()),
                     LocalTime.parse(shift.getEnd())
             );
         } else {
-            return new ShiftProjectionistDto(
+            return new ShiftProjectionistDto( //TODO: troppo lenta
                     shift.getId(),
-                    EmployeeDataMapper.mapToDto(shift.getEmployee()),
+                    EmployeeDataMapper.mapToDto(employee),
                     LocalDate.parse(shift.getDate()),
                     LocalTime.parse(shift.getStart()),
                     LocalTime.parse(shift.getEnd()),

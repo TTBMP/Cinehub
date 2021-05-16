@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftRepository;
 import com.ttbmp.cinehub.app.service.security.SecurityService;
@@ -42,6 +43,8 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
             e.printStackTrace();
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
             e.printStackTrace();
+        } catch (RepositoryException e) {
+            presenter.presentRepositoryError(e);
         }
     }
 
@@ -60,6 +63,8 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
             e.printStackTrace();
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
             e.printStackTrace();
+        } catch (RepositoryException e) {
+            presenter.presentRepositoryError(e);
         }
     }
 

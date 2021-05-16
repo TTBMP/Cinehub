@@ -11,7 +11,6 @@ import com.ttbmp.cinehub.domain.shift.UsherShift;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Fabio Buracchi
@@ -38,21 +37,21 @@ public class MockUsherRepository implements UsherRepository {
 
     @Override
     public Usher getUsher(UsherShift usherShift) {
-        var usherShiftUsherId = MockShiftRepository.getShiftDataList().stream()
+        return MockShiftRepository.getShiftDataList().stream()
                 .filter(d -> d.getId() == usherShift.getId())
                 .map(MockShiftRepository.ShiftData::getEmployeeId)
-                .collect(Collectors.toList())
-                .get(0);
-        return USHER_DATA_LIST.stream()
-                .filter(d -> d.id.equals(usherShiftUsherId))
-                .map(d -> new UsherProxy(
-                        d.id,
-                        serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
-                        serviceLocator.getService(ShiftRepository.class)
-                ))
-                .collect(Collectors.toList())
-                .get(0);
+                .findAny()
+                .flatMap(usherShiftUsherId -> USHER_DATA_LIST.stream()
+                        .filter(d -> d.id.equals(usherShiftUsherId))
+                        .findAny()
+                        .map(d -> new UsherProxy(
+                                d.id,
+                                serviceLocator.getService(UserRepository.class),
+                                serviceLocator.getService(CinemaRepository.class),
+                                serviceLocator.getService(ShiftRepository.class)
+                        ))
+                )
+                .orElse(null);
     }
 
     public static class UsherData {

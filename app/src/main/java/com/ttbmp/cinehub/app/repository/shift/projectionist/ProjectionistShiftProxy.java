@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.app.repository.shift.projectionist;
 
+import com.ttbmp.cinehub.app.repository.LazyLoadingException;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
 import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
@@ -40,7 +42,12 @@ public class ProjectionistShiftProxy extends ProjectionistShift {
     @Override
     public Employee getEmployee() {
         if (!isEmployeeLoaded) {
-            setEmployee(projectionistRepository.getProjectionist(this));
+            try {
+                setEmployee(projectionistRepository.getProjectionist(this));
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+
+            }
         }
         return super.getEmployee();
     }
@@ -53,10 +60,14 @@ public class ProjectionistShiftProxy extends ProjectionistShift {
 
     @Override
     public Hall getHall() {
-        if (!isHallLoaded) {
-            setHall(hallRepository.getHall(this));
+        try {
+            if (!isHallLoaded) {
+                setHall(hallRepository.getHall(this));
+            }
+            return super.getHall();
+        } catch (RepositoryException e) {
+            throw new LazyLoadingException(e.getMessage());
         }
-        return super.getHall();
     }
 
     @Override
@@ -67,10 +78,14 @@ public class ProjectionistShiftProxy extends ProjectionistShift {
 
     @Override
     public List<Projection> getProjectionList() {
-        if (!isProjectionListLoaded) {
-            setProjectionList(projectionRepository.getProjectionList(this));
+        try {
+            if (!isProjectionListLoaded) {
+                setProjectionList(projectionRepository.getProjectionList(this));
+            }
+            return super.getProjectionList();
+        } catch (RepositoryException e) {
+            throw new LazyLoadingException(e.getMessage());
         }
-        return super.getProjectionList();
     }
 
     @Override

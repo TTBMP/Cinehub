@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.lang.reflect.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -101,8 +102,30 @@ public class DaoOperationHelper {
             for (var i = 0; i < columnNameList.size(); i++) {
                 var parameter = parameterMap.get(columnNameIterator.next());
                 var typeClass = parameter.getClass();
-                if (typeClass.equals(Integer.class)) {
-                    typeClass = int.class;
+                switch (typeClass.getName()) {
+                    case "java.lang.Boolean":
+                        typeClass = boolean.class;
+                        break;
+                    case "java.lang.Byte":
+                        typeClass = byte.class;
+                        break;
+                    case "java.lang.Short":
+                        typeClass = short.class;
+                        break;
+                    case "java.lang.Integer":
+                        typeClass = int.class;
+                        break;
+                    case "java.lang.Long":
+                        typeClass = long.class;
+                        break;
+                    case "java.lang.Float":
+                        typeClass = float.class;
+                        break;
+                    case "java.lang.Double":
+                        typeClass = double.class;
+                        break;
+                    default:
+                        break;
                 }
                 var typeName = typeClass.getSimpleName();
                 var methodName = "set" + typeName.substring(0, 1).toUpperCase() + typeName.substring(1);
@@ -112,4 +135,9 @@ public class DaoOperationHelper {
         }
     }
 
+    public static boolean resultSetHasNext(ResultSet resultSet) throws SQLException {
+        var result = resultSet.next();
+        resultSet.previous();
+        return result;
+    }
 }

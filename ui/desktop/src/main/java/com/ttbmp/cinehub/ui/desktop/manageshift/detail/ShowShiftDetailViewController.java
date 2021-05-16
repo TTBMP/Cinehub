@@ -10,6 +10,7 @@ import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavDestination;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -18,6 +19,12 @@ import java.time.LocalDate;
  * @author Massimo Mazzetti
  */
 public class ShowShiftDetailViewController extends ViewController {
+
+    @FXML
+    private Label errorLabel;
+
+    @FXML
+    private VBox errorVBox;
 
     @FXML
     private Label nameLabel;
@@ -57,6 +64,7 @@ public class ShowShiftDetailViewController extends ViewController {
         ManageEmployeesShiftViewModel viewModel;
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
         new ManageEmployeesShiftViewModel();
+        errorLabel.textProperty().bind(viewModel.errorDaoProperty());
         if (viewModel.getSelectedShift().getEmployee() instanceof UsherDto) {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
             hallLabelText.visibleProperty().bind(viewModel.hallVisibilityProperty());
@@ -77,7 +85,7 @@ public class ShowShiftDetailViewController extends ViewController {
         }
 
         deleteShiftButton.setOnAction(a -> {
-            activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(viewModel.getSelectedShift()));
+            activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(viewModel.getSelectedShift().getId()));
             try {
                 navController.navBack();
             } catch (IOException e) {

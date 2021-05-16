@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.app.usecase.buyticket;
 
 import com.ttbmp.cinehub.app.datamapper.MovieDataMapper;
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
@@ -9,7 +10,6 @@ import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 
@@ -20,13 +20,13 @@ class BuyTicketBuyTicketControllerTest {
     @Test
     void getListMovie_whitCorrectRequest_notGenerateErrors() {
         var buyTicketController = new BuyTicketController(serviceLocator, new MockBuyTicketPresenter());
-        buyTicketController.getListMovie(new GetListMovieRequest(LocalDate.now()));
+        buyTicketController.getListMovie(new MovieListRequest(LocalDate.now()));
     }
 
     class MockBuyTicketPresenter implements BuyTicketPresenter {
 
         @Override
-        public void presentMovieApiList(GetListMovieResponse response) {
+        public void presentMovieApiList(MovieListResponse response) {
             try {
                 var result = true;
                 var movieDtoList = serviceLocator.getService(MovieRepository.class)
@@ -40,29 +40,29 @@ class BuyTicketBuyTicketControllerTest {
                     }
                 }
                 Assertions.assertTrue(result);
-            } catch (IOException e) {
+            } catch (RepositoryException e) {
                 e.printStackTrace();
             }
 
         }
 
         @Override
-        public void presentCinemaList(GetListCinemaResponse response) {
+        public void presentCinemaList(CinemaListResponse response) {
 
         }
 
         @Override
-        public void presentCinema(GetCinemaResponse response) {
+        public void presentCinema(CinemaResponse response) {
 
         }
 
         @Override
-        public void presentSeatList(GetNumberOfSeatsResponse response) {
+        public void presentSeatList(NumberOfSeatsResponse response) {
 
         }
 
         @Override
-        public void setSelectedTicket(GetTicketBySeatsResponse response) {
+        public void setSelectedTicket(TicketResponse response) {
 
         }
 
@@ -82,7 +82,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentInvalidGetTicketBySeats(GetTicketBySeatsRequest request) {
+        public void presentInvalidGetTicketBySeats(TicketRequest request) {
 
         }
 
@@ -92,7 +92,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentInvalidGetListCinema(GetListCinemaRequest request) {
+        public void presentInvalidGetListCinema(CinemaListRequest request) {
 
         }
 
@@ -102,12 +102,12 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentInvalidGetTimeOfProjection(GetProjectionListRequest request) {
+        public void presentInvalidGetTimeOfProjection(ProjectionListRequest request) {
 
         }
 
         @Override
-        public void presentProjection(GetProjectionResponse request) {
+        public void presentProjection(ProjectionResponse request) {
 
         }
 
@@ -117,12 +117,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentInvalidGetNumberOfSeats(GetNumberOfSeatsRequest request) {
-
-        }
-
-        @Override
-        public void presentGetListMovieError() {
+        public void presentInvalidGetNumberOfSeats(CinemaInformationRequest request) {
 
         }
 
@@ -132,7 +127,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentProjectionList(GetProjectionListResponse projectionTimeList) {
+        public void presentProjectionList(ProjectionListResponse projectionTimeList) {
 
         }
 
@@ -142,7 +137,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentInvalidGetListMovie(GetListMovieRequest request) {
+        public void presentInvalidGetListMovie(MovieListRequest request) {
 
         }
 
@@ -151,8 +146,44 @@ class BuyTicketBuyTicketControllerTest {
 
         }
 
+
         @Override
-        public void presentInvalidGetCinema(GetCinemaRequest request) {
+        public void presentInvalidGetCinema(CinemaInformationRequest request) {
+
+        }
+
+        @Override
+        public void presentPayRepositoryException(String message) {
+
+        }
+
+        @Override
+        public void presentGetListMovieRepositoryException(String message) {
+
+        }
+
+        @Override
+        public void presentGetCinemaListRepositoryException(String message) {
+
+        }
+
+        @Override
+        public void presentCreateTicketRepositoryException(String message) {
+
+        }
+
+        @Override
+        public void presentGetProjectionListRepositoryException(String message) {
+
+        }
+
+        @Override
+        public void presentGetProjectionRepositoryException(String message) {
+
+        }
+
+        @Override
+        public void presentGetCinemaRepositoryException(String message) {
 
         }
     }

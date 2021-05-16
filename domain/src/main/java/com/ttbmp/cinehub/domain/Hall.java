@@ -9,10 +9,20 @@ public class Hall {
 
     private int id;
     private List<Seat> seatList;
+    private String name;
 
-    public Hall(int id, List<Seat> seatList) {
+    public Hall(int id, List<Seat> seatList, String name) {
         this.id = id;
         this.seatList = seatList;
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {

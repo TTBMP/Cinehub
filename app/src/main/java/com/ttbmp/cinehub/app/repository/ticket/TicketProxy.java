@@ -1,6 +1,8 @@
 package com.ttbmp.cinehub.app.repository.ticket;
 
 import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
+import com.ttbmp.cinehub.app.repository.LazyLoadingException;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
 import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.Seat;
@@ -38,10 +40,14 @@ public class TicketProxy extends Ticket {
 
     @Override
     public Seat getSeat() {
-        if (!isSeatLoaded) {
-            setSeat(seatRepository.getSeat(this));
+        try {
+            if (!isSeatLoaded) {
+                setSeat(seatRepository.getSeat(this));
+            }
+            return super.getSeat();
+        } catch (RepositoryException e) {
+            throw new LazyLoadingException(e.getMessage());
         }
-        return super.getSeat();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource;
 
-import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.TestDatabase;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceClassException;
 import org.junit.jupiter.api.Test;
 
@@ -13,21 +13,24 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class JdbcDataSourceProviderTest {
 
-    Class<? extends JdbcDataSource> dataSourceClass = CinemaDatabase.class;
+    Class<? extends JdbcDataSource> dataSourceClass = TestDatabase.class;
 
     @Test
-    void getDataSource_ReturnsValue_ValidDataSource() throws DataSourceClassException, SQLException, ClassNotFoundException {
+    void getDataSource_ReturnsNotNull() throws DataSourceClassException, SQLException, ClassNotFoundException {
         var dataSource = JdbcDataSourceProvider.getDataSource(dataSourceClass);
         assertNotNull(dataSource);
     }
 
     @Test
-    void getDataSource_ImplementsMultiton_ReturnSameInstance() throws DataSourceClassException, SQLException, ClassNotFoundException {
-        assertSame(JdbcDataSourceProvider.getDataSource(dataSourceClass), JdbcDataSourceProvider.getDataSource(dataSourceClass));
+    void getDataSource_ReturnSameInstance() throws DataSourceClassException, SQLException, ClassNotFoundException {
+        assertSame(
+                JdbcDataSourceProvider.getDataSource(dataSourceClass),
+                JdbcDataSourceProvider.getDataSource(dataSourceClass)
+        );
     }
 
     @Test
-    void getDataSource_GetClassWithoutAnnotation_ThrowsException() {
+    void getDataSourceInterfaceWithoutDatabaseAnnotation_ThrowsException() {
         assertThrows(
                 DataSourceClassException.class,
                 () -> JdbcDataSourceProvider.getDataSource(DataSourceWithoutDatabaseAnnotation.class)

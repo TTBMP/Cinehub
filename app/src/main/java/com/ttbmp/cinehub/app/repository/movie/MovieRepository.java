@@ -1,9 +1,9 @@
 package com.ttbmp.cinehub.app.repository.movie;
 
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -11,10 +11,10 @@ import java.util.List;
  */
 public interface MovieRepository {
 
-    List<Movie> getMovieList(String localDate) throws IOException;
+    Movie getMovie(Integer movieId) throws RepositoryException;
 
-    Movie getMovie(Projection projection);
+    Movie getMovie(Projection projection) throws RepositoryException;
 
-    Movie getMovieById(Integer movieId);
+    List<Movie> getMovieList(String localDate) throws RepositoryException;
 
 }

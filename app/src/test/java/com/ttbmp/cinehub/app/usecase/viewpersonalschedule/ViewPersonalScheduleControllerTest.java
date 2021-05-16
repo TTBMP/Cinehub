@@ -2,14 +2,18 @@ package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.service.security.SecurityService;
+import com.ttbmp.cinehub.domain.employee.Employee;
+import com.ttbmp.cinehub.domain.shift.Shift;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @author Fabio Buracchi
@@ -47,12 +51,22 @@ class ViewPersonalScheduleControllerTest {
             } catch (SecurityException e) {
                 e.printStackTrace();
             }
-            var employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(userId);
-            var shiftList = serviceLocator.getService(ShiftRepository.class).getAllEmployeeShiftBetweenDate(
-                    employee,
-                    LocalDate.now(),
-                    LocalDate.now().plusDays(1)
-            );
+            Employee employee = null;
+            try {
+                employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(userId);
+            } catch (RepositoryException e) {
+                e.printStackTrace();
+            }
+            List<Shift> shiftList = null;
+            try {
+                shiftList = serviceLocator.getService(ShiftRepository.class).getAllEmployeeShiftBetweenDate(
+                        employee,
+                        LocalDate.now(),
+                        LocalDate.now().plusDays(1)
+                );
+            } catch (RepositoryException e) {
+                e.printStackTrace();
+            }
             var expected = ShiftDataMapper.mapToDtoList(shiftList);
             var actual = result.getShiftDtoList();
             Assertions.assertEquals(expected, result.getShiftDtoList());
@@ -80,6 +94,16 @@ class ViewPersonalScheduleControllerTest {
 
         @Override
         public void presentInvalidProjectionListRequest(ProjectionListRequest request) {
+
+        }
+
+        @Override
+        public void presentSecurityError(SecurityException e) {
+
+        }
+
+        @Override
+        public void presentRepositoryError(RepositoryException e) {
 
         }
 

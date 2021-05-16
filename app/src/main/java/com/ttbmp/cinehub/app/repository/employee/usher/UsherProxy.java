@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.app.repository.employee.usher;
 
+import com.ttbmp.cinehub.app.repository.LazyLoadingException;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
@@ -10,6 +12,7 @@ import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,7 +45,11 @@ public class UsherProxy extends Usher {
     @Override
     public String getName() {
         if (!isNameLoaded) {
-            setName(userRepository.getUser(getId()).getName());
+            try {
+                setName(userRepository.getUser(getId()).getName());
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
         return super.getName();
     }
@@ -56,7 +63,11 @@ public class UsherProxy extends Usher {
     @Override
     public String getSurname() {
         if (!isSurnameLoaded) {
-            setSurname(userRepository.getUser(getId()).getSurname());
+            try {
+                setSurname(userRepository.getUser(getId()).getSurname());
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
         return super.getSurname();
     }
@@ -70,7 +81,11 @@ public class UsherProxy extends Usher {
     @Override
     public String getEmail() {
         if (!isEmailLoaded) {
-            setEmail(userRepository.getUser(getId()).getEmail());
+            try {
+                setEmail(userRepository.getUser(getId()).getEmail());
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
         return super.getEmail();
     }
@@ -84,7 +99,11 @@ public class UsherProxy extends Usher {
     @Override
     public Role[] getRoles() {
         if (!isRoleArrayLoaded) {
-            setRoles(userRepository.getUser(getId()).getRoles());
+            try {
+                setRoles(userRepository.getUser(getId()).getRoles());
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
         return super.getRoles();
     }
@@ -98,17 +117,26 @@ public class UsherProxy extends Usher {
     @Override
     public boolean hasPermission(Permission requiredPermission) {
         if (!isRoleArrayLoaded) {
-            setRoles(userRepository.getUser(getId()).getRoles());
+            try {
+                setRoles(userRepository.getUser(getId()).getRoles());
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
         return super.hasPermission(requiredPermission);
     }
 
     @Override
     public Cinema getCinema() {
-        if (!isCinemaLoaded) {
-            setCinema(cinemaRepository.getCinema(this));
+
+        try {
+            if (!isCinemaLoaded) {
+                setCinema(cinemaRepository.getCinema(this));
+            }
+            return super.getCinema();
+        } catch (RepositoryException e) {
+            throw new LazyLoadingException(e.getMessage());
         }
-        return super.getCinema();
     }
 
     @Override
@@ -119,10 +147,17 @@ public class UsherProxy extends Usher {
 
     @Override
     public List<Shift> getShiftList() {
-        if (!isShiftListLoaded) {
-            setShiftList(shiftRepository.getShiftList(this));
+        try {
+            if (!isShiftListLoaded) {
+                setShiftList(shiftRepository.getShiftList(this));
+                return super.getShiftList();
+            } else {
+                return new ArrayList<>();
+            }
+        } catch (RepositoryException e) {
+            throw new LazyLoadingException(e.getMessage());
         }
-        return super.getShiftList();
+
     }
 
     @Override
@@ -133,7 +168,12 @@ public class UsherProxy extends Usher {
 
     @Override
     public List<Shift> getShiftListBetween(LocalDate start, LocalDate end) {
-        return shiftRepository.getAllEmployeeShiftBetweenDate(this, start, end);
+        try {
+            return shiftRepository.getAllEmployeeShiftBetweenDate(this, start, end);
+        } catch (RepositoryException e) {
+            throw new LazyLoadingException(e.getMessage());
+
+        }
     }
 
     @Override

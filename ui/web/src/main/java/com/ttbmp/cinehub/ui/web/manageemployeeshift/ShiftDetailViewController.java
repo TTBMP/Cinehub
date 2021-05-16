@@ -1,15 +1,19 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
-import com.ttbmp.cinehub.app.dto.*;
+import com.ttbmp.cinehub.app.dto.CinemaDto;
+import com.ttbmp.cinehub.app.dto.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetShiftListRequest;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetEmployeeListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftModifyRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewShiftForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.beans.PropertyEditorSupport;
 import java.time.LocalDate;
@@ -31,63 +35,50 @@ public class ShiftDetailViewController {
         });
     }
 
-    @GetMapping("/shift_detail")
-    public String shiftDetail(@RequestParam("idCinema") int cinemaId,
-                              @RequestParam("shiftId") int shiftId,
-                              Model model) {
-
-        ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-        model.addAttribute("shiftId", shiftId);
-        model.addAttribute("idCinema", cinemaId);
-        useCase.getCinemaList();
-        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
-        var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
-        var selectedShift = (ShiftDto) model.getAttribute("selectedShift");
-        var projection = selectedShift instanceof ShiftProjectionistDto;
-        model.addAttribute("projection", projection);
-        model.addAttribute("shiftDetail", selectedShift);
-        model.addAttribute("employee", selectedEmployee);
-        model.addAttribute("now", LocalDate.now().plusDays(1));
-        var request = new NewShiftForm();
-        model.addAttribute("modifyRequest", request);
-        return "/shift_detail";
-    }
-
     @PostMapping("/shift_detail")
-    public String modifyShift(@RequestParam("idCinema") int cinemaId,
-                              @RequestParam("shiftId") int shiftId,
-                              @ModelAttribute("modifyRequest") NewShiftForm request,
+    public String shiftDetail(@ModelAttribute("selectedShift") NewShiftForm shift,
                               Model model) {
 
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-        model.addAttribute("shiftId", shiftId);
-        model.addAttribute("idCinema", cinemaId);
-        model.addAttribute("selectedHallId", request.getHallId());
-        useCase.getCinemaList();
-        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        var selectedHall = (HallDto) model.getAttribute("selectedHall");
-        useCase.getShiftList(new GetShiftListRequest(LocalDate.now(), selectedCinema));
-        var selectedShift = (ShiftDto) model.getAttribute("selectedShift");
-        var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
-        var projection = selectedShift instanceof ShiftProjectionistDto;
-        model.addAttribute("projection", projection);
-        model.addAttribute("shiftDetail", selectedShift);
-        model.addAttribute("employee", selectedEmployee);
+
+        model.addAttribute("shiftDetail", shift);
+        model.addAttribute("data", LocalDate.parse(shift.getDate()));
         model.addAttribute("now", LocalDate.now().plusDays(1));
-        useCase.modifyShift(new ShiftModifyRequest(
-                selectedEmployee,
-                shiftId,
-                request.getDate(),
-                request.getInizio(),
-                request.getEnd(),
-                selectedHall
-        ));
-        var error = (boolean) model.getAttribute(ERROR);
-        if (!error) {
-            return "shift_modify";
+        model.addAttribute("idCinema", shift.getEmployee().getCinema().getId());
+        useCase.getCinemaList();
+
+        if (shift.isChange()) {
+
+            if (shift.getHall() != null) {
+                model.addAttribute("selectedHallId", shift.getHall().getId());
+            }
+            useCase.getCinemaList();
+            var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
+            var selectedHall = (HallDto) model.getAttribute("selectedHall");
+            model.addAttribute("selectedEmployeeId", shift.getEmployee().getId());
+            useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema));
+            var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
+
+            useCase.modifyShift(new ShiftModifyRequest(
+                    selectedEmployee,
+                    shift.getShiftId(),
+                    LocalDate.parse(shift.getDate()),
+                    shift.getStart(),
+                    shift.getEnd(),
+                    selectedHall
+            ));
+            var error = (boolean) model.getAttribute(ERROR);
+
+            if (!error) {
+                return "shift_modify";
+            }
+
         }
+        model.addAttribute("modifyRequest", new NewShiftForm());
+
         return "/shift_detail";
+
     }
+
 
 }

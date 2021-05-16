@@ -11,16 +11,27 @@ import java.time.LocalDate;
 public class GetShiftListRequest extends Request {
     public static final Request.Error MISSING_CINEMA = new Request.Error("Cinema non valido");
     public static final Request.Error MISSING_START = new Request.Error("Inizio non valido");
+    public static final Request.Error MISSING_END = new Request.Error("Fine non valido");
 
     private CinemaDto cinema;
     private LocalDate start;
+    private LocalDate end;
 
     public GetShiftListRequest() {
     }
 
-    public GetShiftListRequest(LocalDate start, CinemaDto cinema) {
-        this.start = start;
+    public GetShiftListRequest(CinemaDto cinema, LocalDate start, LocalDate end) {
         this.cinema = cinema;
+        this.start = start;
+        this.end = end;
+    }
+
+    public LocalDate getEnd() {
+        return end;
+    }
+
+    public void setEnd(LocalDate end) {
+        this.end = end;
     }
 
     public CinemaDto getCinema() {
@@ -46,6 +57,9 @@ public class GetShiftListRequest extends Request {
         }
         if (start == null) {
             addError(MISSING_START);
+        }
+        if (end == null) {
+            addError(MISSING_END);
         }
     }
 

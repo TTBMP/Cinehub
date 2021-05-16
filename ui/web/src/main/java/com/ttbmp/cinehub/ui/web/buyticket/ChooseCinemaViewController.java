@@ -3,9 +3,9 @@ package com.ttbmp.cinehub.ui.web.buyticket;
 
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.GetListCinemaRequest;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.GetListMovieRequest;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.GetProjectionListRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.CinemaListRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.MovieListRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.ProjectionListRequest;
 import com.ttbmp.cinehub.ui.web.domain.Projection;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,8 +26,8 @@ public class ChooseCinemaViewController {
             @ModelAttribute("projection") Projection projection,
             Model model) {
         BuyTicketUseCase useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
-        useCase.getListMovie(new GetListMovieRequest(LocalDate.parse(projection.getDate())));
-        useCase.getListCinema(new GetListCinemaRequest(projection.getMovieId(), projection.getDate()));
+        useCase.getListMovie(new MovieListRequest(LocalDate.parse(projection.getDate())));
+        useCase.getListCinema(new CinemaListRequest(projection.getMovieId(), projection.getDate()));
         model.addAttribute("idMovie", projection.getMovieId());
         model.addAttribute("dateProjection", projection.getDate());
         model.addAttribute("projection", projection);
@@ -39,11 +39,10 @@ public class ChooseCinemaViewController {
             @ModelAttribute("projection") Projection projection,
             Model model) {
         BuyTicketUseCase useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
-        useCase.getProjectionList(new GetProjectionListRequest(
+        useCase.getProjectionList(new ProjectionListRequest(
                 projection.getMovieId(),
                 projection.getCinemaId(),
-                LocalDate.parse(projection.getDate()),
-                0
+                LocalDate.parse(projection.getDate())
         ));
         model.addAttribute("cinemaDtoId", projection.getCinemaId());
         model.addAttribute("projection", new Projection());

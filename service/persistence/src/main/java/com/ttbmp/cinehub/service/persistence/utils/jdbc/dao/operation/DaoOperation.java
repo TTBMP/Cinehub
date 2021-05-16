@@ -2,10 +2,8 @@ package com.ttbmp.cinehub.service.persistence.utils.jdbc.dao.operation;
 
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -26,6 +24,6 @@ public abstract class DaoOperation {
         this.dataSourceEntityList = dataSourceEntityList;
     }
 
-    public abstract Object execute(Object[] args) throws DaoMethodException, InvocationTargetException, SQLException, InstantiationException, NoSuchMethodException, IllegalAccessException;
+    public abstract Object execute(Object[] args) throws DaoMethodException;
 
 }

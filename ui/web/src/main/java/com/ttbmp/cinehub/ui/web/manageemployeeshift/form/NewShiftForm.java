@@ -1,50 +1,80 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift.form;
 
-import java.time.LocalDate;
+import com.ttbmp.cinehub.ui.web.domain.Employee;
+import com.ttbmp.cinehub.ui.web.domain.Hall;
+
 import java.time.LocalTime;
 
 public class NewShiftForm {
 
-    int hallId;
-    private String employeeId;
-    private LocalDate date;
-    private LocalTime inizio;
+    private int shiftId;
+    private Hall hall;
+    private Employee employee;
+    private String date;
+    private LocalTime start;
     private LocalTime end;
+    private boolean change;
 
     public NewShiftForm() {
 
     }
 
-    public NewShiftForm(String employeeId, LocalDate date, LocalTime inizio, LocalTime end, int hallId) {
-        this.employeeId = employeeId;
+    public NewShiftForm(int shiftId, Hall hall, Employee employee, String date, LocalTime start, LocalTime end, boolean change) {
+        this.shiftId = shiftId;
+        this.hall = hall;
+        this.employee = employee;
         this.date = date;
-        this.inizio = inizio;
+        this.start = start;
         this.end = end;
-        this.hallId = hallId;
+        this.change = change;
     }
 
-    public String getEmployeeId() {
-        return employeeId;
+    public boolean isChange() {
+        return change;
     }
 
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
+    public void setChange(boolean change) {
+        this.change = change;
     }
 
-    public LocalDate getDate() {
+    public int getShiftId() {
+        return shiftId;
+    }
+
+    public void setShiftId(int shiftId) {
+        this.shiftId = shiftId;
+    }
+
+    public Hall getHall() {
+        return hall;
+    }
+
+    public void setHall(Hall hall) {
+        this.hall = hall;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public LocalTime getInizio() {
-        return inizio;
+    public LocalTime getStart() {
+        return start;
     }
 
-    public void setInizio(LocalTime inizio) {
-        this.inizio = inizio;
+    public void setStart(LocalTime start) {
+        this.start = start;
     }
 
     public LocalTime getEnd() {
@@ -54,13 +84,4 @@ public class NewShiftForm {
     public void setEnd(LocalTime end) {
         this.end = end;
     }
-
-    public int getHallId() {
-        return hallId;
-    }
-
-    public void setHallId(int hallId) {
-        this.hallId = hallId;
-    }
-
 }

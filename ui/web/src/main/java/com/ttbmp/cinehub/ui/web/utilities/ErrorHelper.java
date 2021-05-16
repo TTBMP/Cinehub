@@ -6,6 +6,9 @@ import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class ErrorHelper {
 
     public static final String ERROR_VIEW_PATH = "error";

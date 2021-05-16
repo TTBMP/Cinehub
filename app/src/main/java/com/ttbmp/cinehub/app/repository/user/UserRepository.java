@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.app.repository.user;
 
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.domain.User;
 
 /**
@@ -7,6 +8,6 @@ import com.ttbmp.cinehub.domain.User;
  */
 public interface UserRepository {
 
-    User getUser(String userId);
+    User getUser(String userId) throws RepositoryException;
 
 }

@@ -11,14 +11,14 @@ import java.util.Map;
 public class EmployeeShiftWeek {
 
     private EmployeeDto employeeDto;
-    private Map<DayOfWeek, DayWeek> weekMap;
+    private Map<DayOfWeek, Day> weekMap;
 
-    public EmployeeShiftWeek(EmployeeDto employeeDto, Map<DayOfWeek, DayWeek> weekMap) {
+    public EmployeeShiftWeek(EmployeeDto employeeDto, Map<DayOfWeek, Day> weekMap) {
         this.employeeDto = employeeDto;
         this.weekMap = weekMap;
     }
 
-    public DayWeek getDayOfWeek(DayOfWeek dayOfWeek) {
+    public Day getDayOfWeek(DayOfWeek dayOfWeek) {
         return weekMap.get(dayOfWeek);
     }
 
@@ -30,11 +30,11 @@ public class EmployeeShiftWeek {
         this.employeeDto = employeeDto;
     }
 
-    public Map<DayOfWeek, DayWeek> getWeekMap() {
+    public Map<DayOfWeek, Day> getWeekMap() {
         return weekMap;
     }
 
-    public void setWeekMap(Map<DayOfWeek, DayWeek> weekMap) {
+    public void setWeekMap(Map<DayOfWeek, Day> weekMap) {
         this.weekMap = weekMap;
     }
 }

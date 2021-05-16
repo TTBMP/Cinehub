@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift.assign;
 
-import com.ttbmp.cinehub.ui.desktop.manageshift.table.DayWeek;
+import com.ttbmp.cinehub.ui.desktop.manageshift.table.Day;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.DateCell;
@@ -13,9 +13,9 @@ import java.time.LocalDate;
 @SuppressWarnings("java:S110")
 public class RepeatDateCell extends DateCell {
 
-    private final ObjectProperty<DayWeek> selectedDate = new SimpleObjectProperty<>();
+    private final ObjectProperty<Day> selectedDate = new SimpleObjectProperty<>();
 
-    public RepeatDateCell(ObjectProperty<DayWeek> selectedDate) {
+    public RepeatDateCell(ObjectProperty<Day> selectedDate) {
         super();
         this.selectedDate.bind(selectedDate);
     }

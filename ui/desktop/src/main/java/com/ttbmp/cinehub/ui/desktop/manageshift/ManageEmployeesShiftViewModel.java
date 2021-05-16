@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.ui.desktop.manageshift;
 
 import com.ttbmp.cinehub.app.dto.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ShiftRepeatingOption;
-import com.ttbmp.cinehub.ui.desktop.manageshift.table.DayWeek;
+import com.ttbmp.cinehub.ui.desktop.manageshift.table.Day;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.EmployeeShiftWeek;
 import com.ttbmp.cinehub.ui.desktop.utilities.ObjectBindings;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewModel;
@@ -30,6 +30,7 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
     private final BooleanProperty errorAssignVisibility = new SimpleBooleanProperty();
     private final BooleanProperty errorModifyVisibility = new SimpleBooleanProperty();
     private final StringProperty error = new SimpleStringProperty();
+    private final StringProperty errorDao = new SimpleStringProperty();
 
     private final BooleanProperty repeatVisibility = new SimpleBooleanProperty();
     private final ObjectProperty<LocalTime> startSpinnerTime = new SimpleObjectProperty<>();
@@ -37,7 +38,7 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
     private final ObjectProperty<LocalDate> selectedEndRepeatDay = new SimpleObjectProperty<>();
     private final ObservableList<ShiftDto> shiftList = FXCollections.observableArrayList();
     private final ObjectProperty<ShiftDto> selectedShift = new SimpleObjectProperty<>();
-    private final ObjectProperty<DayWeek> selectedDayWeek = new SimpleObjectProperty<>();
+    private final ObjectProperty<Day> selectedDayWeek = new SimpleObjectProperty<>();
     private final ObjectProperty<LocalDate> selectedWeek = new SimpleObjectProperty<>();
     private final ObservableList<EmployeeShiftWeek> employeeShiftWeekList = FXCollections.observableArrayList();
     private final ObjectProperty<ShiftRepeatingOption> selectedOption = new SimpleObjectProperty<>(ShiftRepeatingOption.EVERY_DAY);
@@ -73,10 +74,22 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
         }));
         selectedShiftHall.bind(ObjectBindings.map(selectedShift, shiftDto -> {
             if (shiftDto instanceof ShiftProjectionistDto) {
-                return ((ShiftProjectionistDto) shiftDto).getHallDto().getId().toString();
+                return ((ShiftProjectionistDto) shiftDto).getHallDto().getName();
             }
             return null;
         }));
+    }
+
+    public String getErrorDao() {
+        return errorDao.get();
+    }
+
+    public void setErrorDao(String errorDao) {
+        this.errorDao.set(errorDao);
+    }
+
+    public StringProperty errorDaoProperty() {
+        return errorDao;
     }
 
     public CinemaDto getSelectedCinema() {
@@ -223,15 +236,15 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
         return selectedShift;
     }
 
-    public DayWeek getSelectedDayWeek() {
+    public Day getSelectedDayWeek() {
         return selectedDayWeek.get();
     }
 
-    public void setSelectedDayWeek(DayWeek selectedDayWeek) {
-        this.selectedDayWeek.set(selectedDayWeek);
+    public void setSelectedDayWeek(Day selectedDay) {
+        this.selectedDayWeek.set(selectedDay);
     }
 
-    public ObjectProperty<DayWeek> selectedDayWeekProperty() {
+    public ObjectProperty<Day> selectedDayWeekProperty() {
         return selectedDayWeek;
     }
 

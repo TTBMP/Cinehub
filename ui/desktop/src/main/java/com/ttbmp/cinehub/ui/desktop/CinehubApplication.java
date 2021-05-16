@@ -6,6 +6,9 @@ import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class CinehubApplication extends Application {
 
     private static String sessionToken;
