@@ -30,7 +30,7 @@ public class MockTicketRepository implements TicketRepository {
 
 
     @Override
-    public void saveTicket(Ticket ticket, int projectionId) {
+    public synchronized void saveTicket(Ticket ticket, int projectionId) {
         TICKET_DATA_LIST.add(new TicketData(
                 counterTicketId++,
                 ticket.getPrice(),
