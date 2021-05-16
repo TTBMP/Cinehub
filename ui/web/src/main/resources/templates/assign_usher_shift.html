@@ -22,7 +22,7 @@
     <form action="#" method="post" th:object="${assignRequest}">
 
         <div class="col-sm"> Employee</div>
-        <select id="employeeComboBox" th:field="*{employeeId}">
+        <select id="employeeComboBox" th:field="*{employee.id}">
             <option th:each="employee : ${usherList}"
                     th:text="${employee.name + ' '+ employee.surname}"
                     th:value="${employee.id}">1
@@ -37,7 +37,7 @@
             <div class="col-md-3 mb-3">
                 <label for="start_time">Start Shift</label>
                 <input aria-describedby="inputGroupPrepend2" class="form-control" id="start_time"
-                       required th:field="*{inizio}" type="time">
+                       required th:field="*{start}" type="time">
             </div>
         </div>
 

@@ -1,10 +1,21 @@
 package com.ttbmp.cinehub.ui.web.domain;
 
+
 public class Cinema {
 
     private Integer id;
+    private String name;
     private String address;
     private String city;
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;

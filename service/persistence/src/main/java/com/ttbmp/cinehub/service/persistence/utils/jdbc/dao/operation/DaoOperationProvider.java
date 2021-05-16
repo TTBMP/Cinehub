@@ -26,19 +26,22 @@ import java.util.stream.Collectors;
  */
 public class DaoOperationProvider {
 
-    private final Map<Method, DaoOperation> operationInstanceMap = new HashMap<>();
-    private final List<Class<?>> requiredTypeList = Arrays.asList(
+    private static final List<Class<?>> requiredTypeList = Arrays.asList(
             Query.class,
             Insert.class,
             Update.class,
             Delete.class
     );
+    private final Map<Method, DaoOperation> operationInstanceMap = new HashMap<>();
 
     public DaoOperation getDaoOperation(@NotNull Method method, @NotNull Connection connection,
-                                        List<Class<?>> dataSourceEntityList) throws DaoMethodException, NoSuchMethodException {
-
-        operationInstanceMap.putIfAbsent(method, createDaoOperation(method, connection, dataSourceEntityList));
-        return operationInstanceMap.get(method);
+                                        List<Class<?>> dataSourceEntityList) throws DaoMethodException {
+        try {
+            operationInstanceMap.putIfAbsent(method, createDaoOperation(method, connection, dataSourceEntityList));
+            return operationInstanceMap.get(method);
+        } catch (NoSuchMethodException e) {
+            throw new DaoMethodException();
+        }
     }
 
     private DaoOperation createDaoOperation(@NotNull Method method, @NotNull Connection connection,

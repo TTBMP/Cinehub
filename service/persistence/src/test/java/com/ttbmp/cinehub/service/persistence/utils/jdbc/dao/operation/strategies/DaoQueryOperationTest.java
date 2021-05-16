@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.service.persistence.utils.jdbc.dao.operation.strategies;
 
-import com.ttbmp.cinehub.service.persistence.CinemaDao;
-import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.TestDatabase;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourceProvider;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceClassException;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceMethodException;
@@ -17,15 +16,15 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 class DaoQueryOperationTest {
 
     @Test
-    void execute_ReturnsDto_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
-        assertDoesNotThrow(() -> dao.getCinema("multisala"));
+    void queryOperation_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
+        var dao = JdbcDataSourceProvider.getDataSource(TestDatabase.class).getTestDao();
+        assertDoesNotThrow(() -> dao.getByField("pippo"));
     }
 
     @Test
-    void execute_ReturnsListDto_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
-        assertDoesNotThrow(dao::getAllCinema);
+    void queryListOperation_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
+        var dao = JdbcDataSourceProvider.getDataSource(TestDatabase.class).getTestDao();
+        assertDoesNotThrow(dao::getAll);
     }
 
 }

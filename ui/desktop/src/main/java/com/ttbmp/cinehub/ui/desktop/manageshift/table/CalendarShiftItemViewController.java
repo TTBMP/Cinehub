@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  */
 public class CalendarShiftItemViewController extends ViewController {
 
-    DayWeek dayWeek;
+    Day day;
     @FXML
     private ResourceBundle resources;
     @FXML
@@ -31,8 +31,8 @@ public class CalendarShiftItemViewController extends ViewController {
     @FXML
     private Button addButton;
 
-    public void load(Activity activity, NavController navController, DayWeek dayWeek) {
-        this.dayWeek = dayWeek;
+    public void load(Activity activity, NavController navController, Day day) {
+        this.day = day;
         load(activity, navController);
     }
 
@@ -41,7 +41,7 @@ public class CalendarShiftItemViewController extends ViewController {
         ManageEmployeesShiftViewModel viewModel;
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
 
-        for (var shift : dayWeek.getShiftList()) {
+        for (var shift : day.getShiftList()) {
             ShiftItemView item = null;
             try {
                 item = new ShiftItemView();
@@ -54,11 +54,12 @@ public class CalendarShiftItemViewController extends ViewController {
             shiftVBox.getChildren().add(item.getRoot());
         }
 
-        if (dayWeek.getDate().isBefore(LocalDate.now().plusDays(1))) {
+        if (day.getDate().isBefore(LocalDate.now().plusDays(1))) {
             addButton.setVisible(false);
         }
         addButton.setOnAction(a -> {
-            viewModel.setSelectedDayWeek(dayWeek);
+            viewModel.setSelectedDayWeek(day);
+            viewModel.getHallList().setAll(day.getEmployee().getCinema().getHalList());
             try {
                 navController.openInDialog(new NavDestination(new AssignShiftView()), "Assign shift");
             } catch (IOException e) {

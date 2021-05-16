@@ -13,7 +13,7 @@ public class StripeServiceAdapter implements PaymentService {
     @Override
     public void pay(PayServiceRequest payServiceRequest) throws PaymentServiceException {
         try {
-            stripeService.pay(
+            stripeService.requestPayment(
                     payServiceRequest.getEmail(),
                     payServiceRequest.getNameUser(),
                     payServiceRequest.getNumberOfCard(),

@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
-import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.app.usecase.Request;
 
 /**
@@ -8,27 +7,24 @@ import com.ttbmp.cinehub.app.usecase.Request;
  */
 public class ShiftRequest extends Request {
 
-    public static final Request.Error MISSING_SHIFT = new Request.Error("Shift non valido");
 
-    private ShiftDto shift;
+    private int shiftId;
 
-    public ShiftRequest(ShiftDto shift) {
-        this.shift = shift;
+    public ShiftRequest(int shiftId) {
+        this.shiftId = shiftId;
     }
 
-    public ShiftDto getShift() {
-        return shift;
+    public int getShiftId() {
+        return shiftId;
     }
 
-    public void setShift(ShiftDto shift) {
-        this.shift = shift;
+    public void setShiftId(int shiftId) {
+        this.shiftId = shiftId;
     }
 
     @Override
     protected void onValidate() {
-        if (shift == null) {
-            addError(MISSING_SHIFT);
-        }
+
     }
 
 }

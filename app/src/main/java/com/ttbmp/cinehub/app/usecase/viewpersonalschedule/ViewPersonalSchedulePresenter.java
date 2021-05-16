@@ -1,5 +1,8 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
+import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.service.authentication.AuthenticationException;
+
 /**
  * @author Fabio Buracchi
  */
@@ -16,5 +19,9 @@ public interface ViewPersonalSchedulePresenter {
     void presentProjectionListNullRequest();
 
     void presentInvalidProjectionListRequest(ProjectionListRequest request);
+
+    void presentAuthenticationError(AuthenticationException e);
+
+    void presentRepositoryError(RepositoryException e);
 
 }

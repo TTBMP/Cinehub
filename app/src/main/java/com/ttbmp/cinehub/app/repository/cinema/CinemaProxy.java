@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.app.repository.cinema;
 
+import com.ttbmp.cinehub.app.repository.LazyLoadingException;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.Hall;
@@ -23,7 +25,11 @@ public class CinemaProxy extends Cinema {
     @Override
     public List<Hall> getHallList() {
         if (!isHallListLoaded) {
-            setHallList(hallRepository.getHallList(this));
+            try {
+                setHallList(hallRepository.getHallList(this));
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
         return super.getHallList();
     }

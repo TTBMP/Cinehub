@@ -10,15 +10,15 @@ import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 public interface BuyTicketPresenter {
 
 
-    void presentMovieApiList(GetListMovieResponse response);
+    void presentMovieApiList(MovieListResponse response);
 
-    void presentCinemaList(GetListCinemaResponse response);
+    void presentCinemaList(CinemaListResponse response);
 
-    void presentCinema(GetCinemaResponse response);
+    void presentCinema(CinemaResponse response);
 
-    void presentSeatList(GetNumberOfSeatsResponse response);
+    void presentSeatList(NumberOfSeatsResponse response);
 
-    void setSelectedTicket(GetTicketBySeatsResponse response);
+    void setSelectedTicket(TicketResponse response);
 
     void presentPayNullRequest();
 
@@ -26,33 +26,46 @@ public interface BuyTicketPresenter {
 
     void presentGetTicketBySeatsNullRequest();
 
-    void presentInvalidGetTicketBySeats(GetTicketBySeatsRequest request);
+    void presentInvalidGetTicketBySeats(TicketRequest request);
 
     void presentGetListCinemaNullRequest();
 
-    void presentInvalidGetListCinema(GetListCinemaRequest request);
+    void presentInvalidGetListCinema(CinemaListRequest request);
 
     void presentGetTimeOfProjectionNullRequest();
 
-    void presentInvalidGetTimeOfProjection(GetProjectionListRequest request);
+    void presentInvalidGetTimeOfProjection(ProjectionListRequest request);
 
-    void presentProjection(GetProjectionResponse request);
+    void presentProjection(ProjectionResponse request);
 
     void presentGetNumberOfSeatsNullRequest();
 
-    void presentInvalidGetNumberOfSeats(GetNumberOfSeatsRequest request);
-
-    void presentGetListMovieError();
+    void presentInvalidGetNumberOfSeats(CinemaInformationRequest request);
 
     void presentErrorByStripe(PaymentServiceException error);
 
-    void presentProjectionList(GetProjectionListResponse projectionTimeList);
+    void presentProjectionList(ProjectionListResponse projectionTimeList);
 
     void presentGetListMovieNullRequest();
 
-    void presentInvalidGetListMovie(GetListMovieRequest request);
+    void presentInvalidGetListMovie(MovieListRequest request);
 
     void presentAuthenticationError();
 
-    void presentInvalidGetCinema(GetCinemaRequest request);
+
+    void presentInvalidGetCinema(CinemaInformationRequest request);
+
+    void presentPayRepositoryException(String message);
+
+    void presentGetListMovieRepositoryException(String message);
+
+    void presentGetCinemaListRepositoryException(String message);
+
+    void presentCreateTicketRepositoryException(String message);
+
+    void presentGetProjectionListRepositoryException(String message);
+
+    void presentGetProjectionRepositoryException(String message);
+
+    void presentGetCinemaRepositoryException(String message);
 }

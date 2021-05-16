@@ -7,6 +7,15 @@ public class Shift {
     private String start;
     private String end;
     private Employee employee;
+    private Hall hall;
+
+    public Hall getHall() {
+        return hall;
+    }
+
+    public void setHall(Hall hall) {
+        this.hall = hall;
+    }
 
     public int getId() {
         return id;

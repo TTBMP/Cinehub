@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.viewpersonalschedule;
 
+import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.service.authentication.AuthenticationException;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.*;
 
 /**
@@ -55,6 +57,16 @@ public class ViewPersonalScheduleFxPresenter implements ViewPersonalSchedulePres
             message += ProjectionListRequest.INVALID_SHIFT_ID_ERROR.getMessage() + "\n";
         }
         viewModel.setErrorMessage(message);
+    }
+
+    @Override
+    public void presentAuthenticationError(AuthenticationException e) {
+        viewModel.setErrorMessage(e.getMessage());
+    }
+
+    @Override
+    public void presentRepositoryError(RepositoryException e) {
+        viewModel.setErrorMessage(e.getMessage());
     }
 
 }

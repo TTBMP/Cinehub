@@ -22,7 +22,7 @@
     <form action="#" method="post" th:object="${assignRequest}">
 
         <div class="col-sm"> Employee</div>
-        <select id="employeeComboBox" required th:field="*{employeeId}">
+        <select id="employeeComboBox" required th:field="*{employee.id}">
             <option th:each="employee : ${projectionistList}"
                     th:text="${employee.name + ' '+ employee.surname}"
                     th:value="${employee.id}">1
@@ -37,7 +37,7 @@
             <div class="col-md-3 mb-3">
                 <label for="start_time">Start Shift</label>
                 <input class="form-control" id="start_time"
-                       required th:field="*{inizio}" type="time">
+                       required th:field="*{start}" type="time">
             </div>
         </div>
 
@@ -49,9 +49,9 @@
         </div>
 
         <div class="col-sm"> Hall</div>
-        <select id="modifyHallComboBox" required th:field="*{hallId}" th:value="${hall}">
+        <select id="modifyHallComboBox" required th:field="*{hall.id}" th:value="${hall}">
             <option th:each="hall : ${hallList}"
-                    th:text="${hall.id}"
+                    th:text="${hall.name}"
                     th:value="${hall.id}">1
             </option>
         </select>

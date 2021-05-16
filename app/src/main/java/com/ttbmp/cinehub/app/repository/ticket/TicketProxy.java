@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.app.repository.ticket;
 
+import com.ttbmp.cinehub.app.repository.LazyLoadingException;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Seat;
@@ -24,10 +26,16 @@ public class TicketProxy extends Ticket {
 
     @Override
     public User getOwner() {
-        if (!isUserLoaded) {
-            setOwner(userRepository.getUser(this));
+
+        try {
+            if (!isUserLoaded) {
+                setOwner(userRepository.getUser(this));
+            }
+            return super.getOwner();
+        } catch (RepositoryException e) {
+            throw new LazyLoadingException(e.getMessage());
         }
-        return super.getOwner();
+
     }
 
     @Override
@@ -38,10 +46,14 @@ public class TicketProxy extends Ticket {
 
     @Override
     public Seat getSeat() {
-        if (!isSeatLoaded) {
-            setSeat(seatRepository.getSeat(this));
+        try {
+            if (!isSeatLoaded) {
+                setSeat(seatRepository.getSeat(this));
+            }
+            return super.getSeat();
+        } catch (RepositoryException e) {
+            throw new LazyLoadingException(e.getMessage());
         }
-        return super.getSeat();
     }
 
     @Override

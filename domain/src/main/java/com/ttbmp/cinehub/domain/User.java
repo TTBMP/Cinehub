@@ -14,15 +14,13 @@ public class User {
     private String name;
     private String surname;
     private String email;
-    private CreditCard creditCard;
     private List<Ticket> ownedTicketList;
 
-    public User(String id, String name, String surname, String email, CreditCard creditCard) {
+    public User(String id, String name, String surname, String email) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
-        this.creditCard = creditCard;
     }
 
     public String getId() {
@@ -55,14 +53,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public CreditCard getCreditCard() {
-        return creditCard;
-    }
-
-    public void setCreditCard(CreditCard creditCard) {
-        this.creditCard = creditCard;
     }
 
     public List<Ticket> getOwnedTicketList() {

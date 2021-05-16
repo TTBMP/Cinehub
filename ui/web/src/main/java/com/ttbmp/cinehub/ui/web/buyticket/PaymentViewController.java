@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.web.buyticket;
 
+import com.ttbmp.cinehub.ui.web.domain.PaymentForm;
 import com.ttbmp.cinehub.ui.web.domain.Seat;
-import com.ttbmp.cinehub.ui.web.domain.Ticket;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,7 +24,7 @@ public class PaymentViewController {
         model.addAttribute("option1", optionOne);
         model.addAttribute("option2", optionTwo);
         model.addAttribute("option3", optionThree);
-        model.addAttribute("ticket", new Ticket());
+        model.addAttribute("paymentForm", new PaymentForm());
         return "payment";
     }
 

@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.domain.employee;
 
 import com.ttbmp.cinehub.domain.Cinema;
-import com.ttbmp.cinehub.domain.CreditCard;
 import com.ttbmp.cinehub.domain.User;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
@@ -17,8 +16,8 @@ public abstract class Employee extends User {
     private Cinema cinema;
     private List<Shift> shiftList;
 
-    protected Employee(String id, String name, String surname, String email, CreditCard creditCard, Cinema cinema) {
-        super(id, name, surname, email, creditCard);
+    protected Employee(String id, String name, String surname, String email, Cinema cinema) {
+        super(id, name, surname, email);
         this.cinema = cinema;
     }
 
