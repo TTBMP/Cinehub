@@ -22,7 +22,7 @@ DROP SCHEMA IF EXISTS `test_schema`;
 -- Schema test_schema
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `test_schema`;
-GRANT ALL ON test_schema.* TO 'MYSQL_USER'@'%';
+GRANT ALL ON test_schema.* TO 'admin'@'%';
 FLUSH PRIVILEGES;
 USE `cinemadb`;
 
