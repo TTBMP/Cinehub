@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.service.persistence.utils.jdbc.dao.operation.strategies;
 
-import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
-import com.ttbmp.cinehub.service.persistence.entity.Cinema;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.TestDatabase;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.TestEntity;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourceProvider;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceClassException;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceMethodException;
@@ -18,19 +18,19 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 class DaoInsertOperationTest {
 
     @Test
-    void execute_InsertDto_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
-        assertDoesNotThrow(() -> dao.insert(new Cinema(0, "pippo", "pluto", "paperino")));
+    void insertOperation_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
+        var dao = JdbcDataSourceProvider.getDataSource(TestDatabase.class).getTestDao();
+        assertDoesNotThrow(() -> dao.insert(new TestEntity(0, "pippo")));
     }
 
     @Test
-    void execute_InsertListDto_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
-        var dao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getCinemaDao();
-        var dtoList = Arrays.asList(
-                new Cinema(0, "pippo", "pluto", "paperino"),
-                new Cinema(0, "qui", "quo", "qua")
+    void insertListOperation_doesNotThrow() throws DataSourceClassException, SQLException, ClassNotFoundException, DataSourceMethodException {
+        var dao = JdbcDataSourceProvider.getDataSource(TestDatabase.class).getTestDao();
+        var entityList = Arrays.asList(
+                new TestEntity(0, "pluto"),
+                new TestEntity(0, "paperino")
         );
-        assertDoesNotThrow(() -> dao.insert(dtoList));
+        assertDoesNotThrow(() -> dao.insert(entityList));
     }
 
 }

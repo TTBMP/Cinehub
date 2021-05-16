@@ -13,6 +13,15 @@ DROP SCHEMA IF EXISTS `cinemadb`;
 -- Schema cinemadb
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `cinemadb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+-- -----------------------------------------------------
+-- Schema test_schema
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `test_schema`;
+
+-- -----------------------------------------------------
+-- Schema test_schema
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `test_schema`;
 USE `cinemadb`;
 
 -- -----------------------------------------------------
@@ -217,6 +226,19 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`turno_proiezionista`
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
+
+USE `test_schema`;
+
+-- -----------------------------------------------------
+-- Table `test_schema`.`test_table`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `test_schema`.`test_table`
+(
+    `id`     INT         NOT NULL AUTO_INCREMENT,
+    `field1` VARCHAR(45) NULL,
+    PRIMARY KEY (`id`)
+)
+    ENGINE = InnoDB;
 
 USE `cinemadb`;
 

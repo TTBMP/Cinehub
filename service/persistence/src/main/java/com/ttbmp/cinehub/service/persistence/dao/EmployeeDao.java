@@ -13,21 +13,15 @@ import java.util.List;
 @Dao
 public interface EmployeeDao {
 
-    @Query("SELECT * FROM dipendente WHERE dipendente.id_utente = :id;")
-    Employee getEmployeeById(
-            @Parameter(name = "id") @NotNull String id
-    ) throws DaoMethodException;
+    @Query("SELECT * FROM dipendente WHERE dipendente.id_utente = :id")
+    Employee getEmployeeById(@Parameter(name = "id") @NotNull String id) throws DaoMethodException;
 
-    @Query("SELECT * FROM dipendente WHERE dipendente.id_utente in (" +
-            "SELECT turno.id_dipendente FROM turno WHERE turno.id = :id) ")
-    Employee getEmployeeByShiftId(
-            @Parameter(name = "id") @NotNull int id
-    ) throws DaoMethodException;
+    @Query("SELECT * FROM dipendente WHERE dipendente.id_utente IN " +
+            "(SELECT turno.id_dipendente FROM turno WHERE turno.id = :id)")
+    Employee getEmployeeByShiftId(@Parameter(name = "id") int id) throws DaoMethodException;
 
-    @Query("SELECT * FROM dipendente WHERE dipendente.id_cinema = :idCinema ")
-    List<Employee> getEmployeeList(
-            @Parameter(name = "idCinema") @NotNull int cinemaId
-    ) throws DaoMethodException;
+    @Query("SELECT * FROM dipendente WHERE dipendente.id_cinema = :idCinema")
+    List<Employee> getEmployeeList(@Parameter(name = "idCinema") int cinemaId) throws DaoMethodException;
 
     @Insert
     void insert(@NotNull Employee employee) throws DaoMethodException;
@@ -46,6 +40,5 @@ public interface EmployeeDao {
 
     @Delete
     void delete(@NotNull List<Employee> employee) throws DaoMethodException;
-
 
 }

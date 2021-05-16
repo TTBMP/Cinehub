@@ -17,42 +17,24 @@ public interface CinemaDao {
     List<Cinema> getAllCinema() throws DaoMethodException;
 
     @Query("SELECT * FROM cinema WHERE cinema.id = :id")
-    Cinema getCinemaById(
-            @Parameter(name = "id") @NotNull Integer id
-    ) throws DaoMethodException;
+    Cinema getCinemaById(@Parameter(name = "id") int id) throws DaoMethodException;
 
-    @Query("SELECT * FROM cinema WHERE cinema.id in (" +
-            " SELECT dipendente.id_cinema FROM dipendente WHERE dipendente.id_utente = :id) ")
-    Cinema getCinemaByEmployee(
-            @Parameter(name = "id") @NotNull String id
-    ) throws DaoMethodException;
+    @Query("SELECT * FROM cinema WHERE cinema.id IN " +
+            "(SELECT dipendente.id_cinema FROM dipendente WHERE dipendente.id_utente = :id)")
+    Cinema getCinemaByEmployee(@Parameter(name = "id") @NotNull String id) throws DaoMethodException;
 
-    @Query("SELECT * FROM cinema WHERE cinema.id in ( " +
-            "SELECT sala.id_cinema FROM sala WHERE sala.id in ( " +
-            "SELECT proiezione.id_sala FROM proiezione WHERE proiezione.id = :id)) ")
-    Cinema getCinemaByProjection(
-            @Parameter(name = "id") @NotNull Integer projectionId
-    ) throws DaoMethodException;
+    @Query("SELECT * FROM cinema WHERE cinema.id IN " +
+            "(SELECT sala.id_cinema FROM sala WHERE sala.id IN " +
+            "(SELECT proiezione.id_sala FROM proiezione WHERE proiezione.id = :id))")
+    Cinema getCinemaByProjection(@Parameter(name = "id") int projectionId) throws DaoMethodException;
 
-    @Query("SELECT * FROM cinema " +
-            "WHERE cinema.id in (" +
-            "SELECT sala.id_cinema " +
-            "FROM sala " +
-            "WHERE sala.id in (" +
-            "SELECT proiezione.id_sala " +
-            "FROM proiezione " +
-            "WHERE proiezione.id_film = :movieId AND proiezione.data = :data))")
+    @Query("SELECT * FROM cinema WHERE cinema.id IN " +
+            "(SELECT sala.id_cinema FROM sala WHERE sala.id IN " +
+            "(SELECT proiezione.id_sala FROM proiezione WHERE proiezione.id_film = :movieId AND proiezione.data = :data))")
     List<Cinema> getCinemaByMovieIdAndDate(
-            @Parameter(name = "movieId") @NotNull Integer movieId,
+            @Parameter(name = "movieId") int movieId,
             @Parameter(name = "data") @NotNull String data
     ) throws DaoMethodException;
-
-
-    @Query("SELECT * FROM cinema WHERE nome = :n")
-    Cinema getCinema(
-            @Parameter(name = "n") @NotNull String name
-    ) throws DaoMethodException; //TODO: serve solo per test
-
 
     @Insert
     void insert(@NotNull Cinema cinema) throws DaoMethodException;

@@ -10,10 +10,8 @@ import java.util.List;
 @Dao
 public interface ProjectionistShiftDao {
 
-    @Query("SELECT * from turno_proiezionista where turno_proiezionista.turno_id = :id")
-    ProjectionistShift getProjectionistShiftByShiftId(
-            @Parameter(name = "id") @NotNull Integer id
-    ) throws DaoMethodException;
+    @Query("SELECT * FROM turno_proiezionista WHERE turno_proiezionista.turno_id = :id")
+    ProjectionistShift getProjectionistShiftByShiftId(@Parameter(name = "id") int id) throws DaoMethodException;
 
     @Insert
     void insert(ProjectionistShift shift) throws DaoMethodException;

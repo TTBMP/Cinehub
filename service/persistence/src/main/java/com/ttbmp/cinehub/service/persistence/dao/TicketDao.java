@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.service.persistence.dao;
 
-
 import com.ttbmp.cinehub.service.persistence.entity.Ticket;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.*;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
@@ -14,12 +13,8 @@ import java.util.List;
 @Dao
 public interface TicketDao {
 
-
     @Query("SELECT * FROM biglietto WHERE biglietto.id_proiezione = :projectionId")
-    List<Ticket> getTicketList(
-            @Parameter(name = "projectionId") @NotNull Integer projectionId
-    ) throws DaoMethodException;
-
+    List<Ticket> getTicketList(@Parameter(name = "projectionId") int projectionId) throws DaoMethodException;
 
     @Insert
     void insert(@NotNull Ticket ticket) throws DaoMethodException;
