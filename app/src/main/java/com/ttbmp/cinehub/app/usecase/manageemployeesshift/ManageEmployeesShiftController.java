@@ -162,6 +162,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             List<ShiftDto> shiftDtoList = new ArrayList<>();
             UnaryOperator<LocalDate> increaseDateFunction;
             var employee = employeeRepository.getEmployee(request.getEmployeeDto().getId());
+            var hall = hallRepository.getHall(request.getHall().getId());
             switch (request.getOption()) {
                 case "EVERY_DAY":
                     increaseDateFunction = date -> date.plusDays(1);
@@ -182,7 +183,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                         date.toString(),
                         request.getStartShift().toString(),
                         request.getEndShift().toString(),
-                        HallDataMapper.mapToEntity(request.getHall())
+                        hall
                 );
                 saveShift(shift);
                 shiftDtoList.add(ShiftDataMapper.mapToDto(shift));

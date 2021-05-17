@@ -47,7 +47,7 @@ class ViewPersonalScheduleControllerTest {
         public void presentGetShiftList(ShiftListReply result) {
             String userId = null;
             try {
-                userId = serviceLocator.getService(SecurityService.class).authenticate("").getId();
+                userId = serviceLocator.getService(SecurityService.class).authenticate("PROJECTIONIST").getId();
             } catch (SecurityException e) {
                 e.printStackTrace();
             }

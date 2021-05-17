@@ -37,7 +37,7 @@ public class SeatsMatrixViewController extends ViewController {
     }
 
     private void createMatrix(BuyTicketViewModel viewModel, List<SeatDto> seatDtoList, ToggleGroup toggleGroup) {
-        var size = SeatDataMapper.mapToEntityList(viewModel.getSeatList()).size();
+        var size = viewModel.getSeatList().size();
         var rows = 10;
         var columns = (size / rows);
         var rest = size % rows;
