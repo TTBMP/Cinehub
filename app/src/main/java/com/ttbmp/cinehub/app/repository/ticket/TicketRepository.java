@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface TicketRepository {
 
-    void saveTicket(Ticket ticket, Projection projection) throws RepositoryException;
+    void saveTicket(Ticket ticket) throws RepositoryException;
 
     List<Ticket> getTicketList(Customer customer);
 

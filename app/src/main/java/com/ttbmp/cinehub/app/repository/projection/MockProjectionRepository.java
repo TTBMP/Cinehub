@@ -1,17 +1,20 @@
 package com.ttbmp.cinehub.app.repository.projection;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
 import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.app.repository.hall.MockHallRepository;
 import com.ttbmp.cinehub.app.repository.movie.MockMovieRepository;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
+import com.ttbmp.cinehub.app.repository.ticket.MockTicketRepository;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
+import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -108,6 +111,27 @@ public class MockProjectionRepository implements ProjectionRepository {
                         serviceLocator.getService(TicketRepository.class),
                         d.basePrice
                 ))
+                .orElse(null);
+    }
+
+    @Override
+    public Projection getProjection(Ticket ticket) throws RepositoryException {
+        return MockTicketRepository.getTicketDataList().stream()
+                .filter(d -> d.getId() == ticket.getId())
+                .findAny()
+                .flatMap(ticketData -> PROJECTION_DATA_LIST.stream()
+                        .filter(d -> ticketData.getProjectionId() == d.id)
+                        .findAny()
+                        .map(d -> new ProjectionProxy(
+                                d.id,
+                                d.date,
+                                d.startTime,
+                                serviceLocator.getService(MovieRepository.class),
+                                serviceLocator.getService(HallRepository.class),
+                                serviceLocator.getService(ProjectionistRepository.class),
+                                serviceLocator.getService(TicketRepository.class),
+                                d.basePrice
+                        )))
                 .orElse(null);
     }
 

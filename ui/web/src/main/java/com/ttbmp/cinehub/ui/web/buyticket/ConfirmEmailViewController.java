@@ -51,8 +51,6 @@ public class ConfirmEmailViewController {
         var ticketDto = (TicketDto) model.getAttribute("selectedTicket");
         buyTicketUseCase.pay(new PaymentRequest(
                 ticketDto,
-                projection,
-                cinemaDto,
                 paymentForm.getNumberCard(),
                 paymentForm.getCvv(),
                 paymentForm.getDate(),

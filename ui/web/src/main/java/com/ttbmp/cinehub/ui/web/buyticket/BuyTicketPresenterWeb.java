@@ -26,7 +26,7 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentMovieApiList(MovieListResponse response) {
+    public void presentMovieList(MovieListResponse response) {
         model.addAttribute("movieList", response.getMovieList());
     }
 
@@ -186,12 +186,12 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentGetListMovieNullRequest() {
+    public void presentMovieListNullRequest() {
         model.addAttribute(MOVIE_ERROR_ATTRIBUTE, "Movie can't be null");
     }
 
     @Override
-    public void presentInvalidGetListMovie(MovieListRequest request) {
+    public void presentMovieListInvalidRequest(MovieListRequest request) {
         model.addAttribute(MOVIE_ERROR_ATTRIBUTE, "Movie can't be null");
     }
 
@@ -214,7 +214,7 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentGetListMovieRepositoryException(String message) {
+    public void presentMovieListRepositoryException(String message) {
         model.addAttribute("listMovieRepositoryException", message);
 
     }

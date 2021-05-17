@@ -20,7 +20,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
 
     @Override
-    public void presentMovieApiList(MovieListResponse response) {
+    public void presentMovieList(MovieListResponse response) {
         viewModel.getMovieList().clear();
         viewModel.getMovieList().addAll(response.getMovieList());
     }
@@ -101,7 +101,6 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
         if (request.getErrorList().contains(TicketRequest.MISSING_NUMBER_ERROR)) {
             viewModel.seatErrorProperty().setValue(TicketRequest.MISSING_NUMBER_ERROR.getMessage());
         }
-
     }
 
     @Override
@@ -162,13 +161,13 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentGetListMovieNullRequest() {
+    public void presentMovieListNullRequest() {
         viewModel.movieErrorProperty().setValue("Unable to recover movies by service");
 
     }
 
     @Override
-    public void presentInvalidGetListMovie(MovieListRequest request) {
+    public void presentMovieListInvalidRequest(MovieListRequest request) {
         viewModel.movieErrorProperty().setValue(CinemaListRequest.MISSING_MOVIE_ERROR.getMessage());
     }
 
@@ -190,7 +189,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentGetListMovieRepositoryException(String message) {
+    public void presentMovieListRepositoryException(String message) {
         viewModel.listMovieRepositoryExceptionProperty().setValue(message);
 
     }

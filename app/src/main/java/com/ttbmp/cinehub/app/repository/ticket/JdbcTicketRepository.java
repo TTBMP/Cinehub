@@ -3,6 +3,7 @@ package com.ttbmp.cinehub.app.repository.ticket;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
+import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
 import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.Projection;
@@ -27,12 +28,12 @@ public class JdbcTicketRepository implements TicketRepository {
     }
 
     @Override
-    public void saveTicket(Ticket ticket, Projection projection) throws RepositoryException {
+    public void saveTicket(Ticket ticket) throws RepositoryException {
         try {
             getTicketDao().insert(new com.ttbmp.cinehub.service.persistence.entity.Ticket(
                     ticket.getId(),
                     ticket.getSeat().getId(),
-                    projection.getId(),
+                    ticket.getProjection().getId(),
                     ticket.getOwner().getId(),
                     ticket.getPrice()
             ));
@@ -51,7 +52,13 @@ public class JdbcTicketRepository implements TicketRepository {
         try {
             var ticketList = getTicketDao().getTicketList(projection.getId());
             return ticketList.stream()
-                    .map(ticket -> new TicketProxy(ticket.getId(), ticket.getPrice(), serviceLocator.getService(CustomerRepository.class), serviceLocator.getService(SeatRepository.class)))
+                    .map(ticket -> new TicketProxy(
+                            ticket.getId(),
+                            ticket.getPrice(),
+                            serviceLocator.getService(CustomerRepository.class),
+                            serviceLocator.getService(SeatRepository.class),
+                            serviceLocator.getService(ProjectionRepository.class)
+                    ))
                     .collect(Collectors.toList());
         } catch (DaoMethodException e) {
             return new ArrayList<>();

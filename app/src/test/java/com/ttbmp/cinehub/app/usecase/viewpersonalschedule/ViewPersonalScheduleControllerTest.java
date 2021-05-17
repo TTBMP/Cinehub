@@ -29,7 +29,7 @@ class ViewPersonalScheduleControllerTest {
                 new MockViewPersonalSchedulePresenter()
         );
         var request = new ShiftListRequest(
-                "",
+                "PROJECTIONIST",
                 LocalDate.now(),
                 LocalDate.now().plusDays(1)
         );

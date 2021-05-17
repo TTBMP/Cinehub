@@ -13,7 +13,6 @@ public class ProjectionListRequest extends Request {
     public static final Request.Error MISSING_DATE_ERROR = new Request.Error("Date can't be null");
     public static final Request.Error MISSING_CINEMA_ERROR = new Request.Error("Cinema can't be null");
 
-
     private Integer movieId;
     private Integer cinemaId;
     private String localDate;
@@ -59,7 +58,6 @@ public class ProjectionListRequest extends Request {
         if (cinemaId == null) {
             addError(MISSING_CINEMA_ERROR);
         }
-
-
     }
+
 }

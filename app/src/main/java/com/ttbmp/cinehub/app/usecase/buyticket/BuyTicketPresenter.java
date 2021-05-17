@@ -9,8 +9,13 @@ import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
  */
 public interface BuyTicketPresenter {
 
+    void presentMovieList(MovieListResponse response);
 
-    void presentMovieApiList(MovieListResponse response);
+    void presentMovieListNullRequest();
+
+    void presentMovieListInvalidRequest(MovieListRequest request);
+
+    void presentMovieListRepositoryException(String message);
 
     void presentCinemaList(CinemaListResponse response);
 
@@ -46,18 +51,11 @@ public interface BuyTicketPresenter {
 
     void presentProjectionList(ProjectionListResponse projectionTimeList);
 
-    void presentGetListMovieNullRequest();
-
-    void presentInvalidGetListMovie(MovieListRequest request);
-
     void presentAuthenticationError();
-
 
     void presentInvalidGetCinema(CinemaInformationRequest request);
 
     void presentPayRepositoryException(String message);
-
-    void presentGetListMovieRepositoryException(String message);
 
     void presentGetCinemaListRepositoryException(String message);
 
@@ -68,4 +66,5 @@ public interface BuyTicketPresenter {
     void presentGetProjectionRepositoryException(String message);
 
     void presentGetCinemaRepositoryException(String message);
+
 }

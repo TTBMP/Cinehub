@@ -9,7 +9,6 @@ import java.util.List;
  */
 public class NumberOfSeatsResponse {
 
-
     private final List<SeatDto> seatDtoList;
 
     public NumberOfSeatsResponse(List<SeatDto> seatDtoList) {

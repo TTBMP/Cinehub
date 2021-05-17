@@ -26,7 +26,7 @@ class BuyTicketBuyTicketControllerTest {
     class MockBuyTicketPresenter implements BuyTicketPresenter {
 
         @Override
-        public void presentMovieApiList(MovieListResponse response) {
+        public void presentMovieList(MovieListResponse response) {
             try {
                 var result = true;
                 var movieDtoList = serviceLocator.getService(MovieRepository.class)
@@ -132,12 +132,12 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentGetListMovieNullRequest() {
+        public void presentMovieListNullRequest() {
 
         }
 
         @Override
-        public void presentInvalidGetListMovie(MovieListRequest request) {
+        public void presentMovieListInvalidRequest(MovieListRequest request) {
 
         }
 
@@ -158,7 +158,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentGetListMovieRepositoryException(String message) {
+        public void presentMovieListRepositoryException(String message) {
 
         }
 

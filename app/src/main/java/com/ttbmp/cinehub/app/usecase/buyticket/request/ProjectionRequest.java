@@ -48,10 +48,8 @@ public class ProjectionRequest extends Request {
         this.localDate = localDate;
     }
 
-
     @Override
     public void onValidate() {
-
         if (localDate == null) {
             addError(MISSING_DATE_ERROR);
         }
@@ -61,6 +59,6 @@ public class ProjectionRequest extends Request {
         if (hallId < 0) {
             addError(MISSING_HALL_ERROR);
         }
-
     }
+
 }

@@ -8,19 +8,20 @@ import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
  */
 public interface BuyTicketUseCase extends UseCase {
 
-    void pay(PaymentRequest request);
-
     void getListMovie(MovieListRequest request);
-
-    void createTicket(TicketRequest request);
 
     void getListCinema(CinemaListRequest request);
 
-    void getProjectionList(ProjectionListRequest request);
+    void getCinema(CinemaInformationRequest request);
 
-    void getListOfSeat(CinemaInformationRequest request);
+    void getProjectionList(ProjectionListRequest request);
 
     void getProjection(ProjectionRequest request);
 
-    void getCinema(CinemaInformationRequest request);
+    void getListOfSeat(CinemaInformationRequest request);
+
+    void createTicket(TicketRequest request);
+
+    void pay(PaymentRequest request);
+
 }

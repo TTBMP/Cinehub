@@ -13,9 +13,9 @@ public class MockUserRepository implements UserRepository {
     private static final List<UserData> USER_DATA_LIST = new ArrayList<>();
 
     static {
+        USER_DATA_LIST.add(new UserData("-3", "Guest", "", "guest@cinehub.com", "guest"));
         USER_DATA_LIST.add(new UserData("-2", "Gastone", "Paperone", "gp@cinehub.com", "customer"));
         USER_DATA_LIST.add(new UserData("-1", "Paperino", "Paolino", "pp@cinehub.com", "manager;customer"));
-        USER_DATA_LIST.add(new UserData("", "Guest", "", "guest@cinehub.com", "guest"));
         USER_DATA_LIST.add(new UserData("0", "Fabio", "Buracchi", "fb@cinehub.com", "usher;employee;customer"));
         USER_DATA_LIST.add(new UserData("1", "Massimo", "Mazzetti", "mm@cinehub.com", "projectionist;employee;customer"));
         USER_DATA_LIST.add(new UserData("2", "Ivan", "Palmieri", "ip@cinehub.com", "usher;employee;customer"));

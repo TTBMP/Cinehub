@@ -16,11 +16,23 @@ public class TicketDataMapper {
     }
 
     public static TicketDto mapToDto(Ticket ticket) {
-        return new TicketDto(ticket.getId(), ticket.getPrice(), CustomerDataMapper.mapToDto(ticket.getOwner()), SeatDataMapper.mapToDto(ticket.getSeat()));
+        return new TicketDto(
+                ticket.getId(),
+                ticket.getPrice(),
+                CustomerDataMapper.mapToDto(ticket.getOwner()),
+                SeatDataMapper.mapToDto(ticket.getSeat()),
+                ProjectionDataMapper.mapToDto(ticket.getProjection())
+        );
     }
 
     public static Ticket mapToEntity(TicketDto ticketDto) {
-        return new Ticket(ticketDto.getId(), ticketDto.getPrice(), CustomerDataMapper.mapToEntity(ticketDto.getOwner()), SeatDataMapper.mapToEntity(ticketDto.getSeatDto()));
+        return new Ticket(
+                ticketDto.getId(),
+                ticketDto.getPrice(),
+                CustomerDataMapper.mapToEntity(ticketDto.getOwner()),
+                SeatDataMapper.mapToEntity(ticketDto.getSeatDto()),
+                ProjectionDataMapper.mapToEntity(ticketDto.getProjectionDto())
+        );
     }
 
     public static List<TicketDto> mapToDtoList(List<Ticket> ticketList) {

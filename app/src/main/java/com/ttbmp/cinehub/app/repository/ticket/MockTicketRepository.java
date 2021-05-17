@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.app.repository.ticket;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
+import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
 import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.Projection;
@@ -30,12 +31,12 @@ public class MockTicketRepository implements TicketRepository {
     }
 
     @Override
-    public synchronized void saveTicket(Ticket ticket, Projection projection) {
+    public synchronized void saveTicket(Ticket ticket) {
         TICKET_DATA_LIST.add(new TicketData(
                 counterTicketId++,
                 ticket.getPrice(),
                 ticket.getOwner().getId(),
-                projection.getId(),
+                ticket.getProjection().getId(),
                 ticket.getSeat().getId()
 
         ));
@@ -54,7 +55,8 @@ public class MockTicketRepository implements TicketRepository {
                         d.id,
                         d.price,
                         serviceLocator.getService(CustomerRepository.class),
-                        serviceLocator.getService(SeatRepository.class)
+                        serviceLocator.getService(SeatRepository.class),
+                        serviceLocator.getService(ProjectionRepository.class)
                 ))
                 .collect(Collectors.toList());
     }

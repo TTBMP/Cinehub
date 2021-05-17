@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.domain.ticket.component;
 
 import com.ttbmp.cinehub.domain.Customer;
+import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.Seat;
 
 /**
@@ -12,12 +13,14 @@ public class Ticket {
     private long price;
     private Seat seat;
     private Customer owner;
+    private Projection projection;
 
-    public Ticket(int id, long price, Customer owner, Seat seat) {
+    public Ticket(int id, long price, Customer owner, Seat seat, Projection projection) {
         this.id = id;
         this.price = price;
         this.owner = owner;
         this.seat = seat;
+        this.projection = projection;
     }
 
     public Seat getSeat() {
@@ -50,6 +53,14 @@ public class Ticket {
 
     public void setOwner(Customer owner) {
         this.owner = owner;
+    }
+
+    public Projection getProjection() {
+        return projection;
+    }
+
+    public void setProjection(Projection projection) {
+        this.projection = projection;
     }
 
 }

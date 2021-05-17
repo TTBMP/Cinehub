@@ -4,7 +4,6 @@ import com.ttbmp.cinehub.app.dto.CinemaDto;
 
 public class CinemaResponse {
 
-
     private final CinemaDto cinemaDto;
 
     public CinemaResponse(CinemaDto cinemaDto) {
