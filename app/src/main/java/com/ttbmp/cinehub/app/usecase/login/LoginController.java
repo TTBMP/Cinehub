@@ -22,7 +22,7 @@ public class LoginController implements LoginUseCase {
     public void login(LoginRequest request) {
         try {
             Request.validate(request);
-            String sessionToken = securityService.authenticate(request.getUsername(), request.getPassword());
+            var sessionToken = securityService.authenticate(request.getUsername(), request.getPassword());
             presenter.presentSessionToken(new LoginResponse(sessionToken));
         } catch (Request.NullRequestException e) {
             presenter.presentNullRequestException();

@@ -45,7 +45,7 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
         var temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
         var dateSelected = shiftList.getDate();
         var cinemaSelected = shiftList.getCinemaId();
-        List<EmployeeDto> employeeList = (List<EmployeeDto>) model.getAttribute("employeeList");
+        var employeeList = (List<EmployeeDto>) model.getAttribute("employeeList");
         findShift(shiftList.getShiftDtoList());
         Map<EmployeeDto, List<ShiftDto>> employeeShiftListMap = new HashMap<>();
         for (var employee : employeeList) {

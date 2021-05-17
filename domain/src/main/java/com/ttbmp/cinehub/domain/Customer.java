@@ -10,20 +10,11 @@ import java.util.List;
  */
 public class Customer extends User {
 
-    private String id;
     private List<Ticket> ownedTicketList;
 
     public Customer(String id, String name, String surname, String email, Role[] roles, List<Ticket> ownedTicketList) {
         super(id, name, surname, email, roles);
         this.ownedTicketList = ownedTicketList;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public List<Ticket> getOwnedTicketList() {
@@ -40,12 +31,12 @@ public class Customer extends User {
             return false;
         }
         var other = (Customer) obj;
-        return id.equals(other.getId());
+        return getId().equals(other.getId());
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return getId().hashCode();
     }
 
 }

@@ -61,7 +61,7 @@ public class LoginViewController extends ViewController {
                     ));
                     if (viewModel.accessErrorProperty().getValue().isEmpty()) {
                         try {
-                            Activity prevActivity = navController.getPreviousDestinationActivityClass().getConstructor().newInstance();
+                            var prevActivity = navController.getPreviousDestinationActivityClass().getConstructor().newInstance();
                             navController.open(new NavActivityDestination(prevActivity));
                         } catch (IOException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
                             e.printStackTrace();

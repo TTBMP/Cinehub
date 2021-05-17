@@ -37,13 +37,13 @@ public class MockSecurityService implements SecurityService {
         try {
             switch (sessionToken) {
                 case "CUSTOMER":
-                    return userRepository.getUser("4");
+                    return userRepository.getUser("-2");
                 case "PROJECTIONIST":
                     return userRepository.getUser("1");
                 case "USHER":
                     return userRepository.getUser("2");
                 case "MANAGER":
-                    return userRepository.getUser("5");
+                    return userRepository.getUser("-1");
                 default:
                     throw new IllegalStateException("Unexpected value: " + sessionToken);
             }

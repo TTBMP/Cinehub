@@ -10,7 +10,6 @@ import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Fabio Buracchi
@@ -20,10 +19,7 @@ public class MockCustomerRepository implements CustomerRepository {
     private static final List<CustomerData> CUSTOMER_DATA_LIST = new ArrayList<>();
 
     static {
-        CUSTOMER_DATA_LIST.add(new CustomerData("0"));
-        CUSTOMER_DATA_LIST.add(new CustomerData("1"));
-        CUSTOMER_DATA_LIST.add(new CustomerData("2"));
-        CUSTOMER_DATA_LIST.add(new CustomerData("3"));
+        MockUserRepository.getUserDataList().forEach(d -> CUSTOMER_DATA_LIST.add(new CustomerData(d.getId())));
     }
 
     private final ServiceLocator serviceLocator;

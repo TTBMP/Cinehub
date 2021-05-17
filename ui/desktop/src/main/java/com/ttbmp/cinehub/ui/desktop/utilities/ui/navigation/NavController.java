@@ -15,7 +15,7 @@ import java.util.Objects;
 public class NavController {
 
     private final Deque<NavDestination> navBackStack = new ArrayDeque<>();
-    Stage stage;
+    private Stage stage;
     private NavDestination currentDestination = null;
 
     public NavController(Stage stage) {
@@ -31,7 +31,7 @@ public class NavController {
     }
 
     public Class<? extends Activity> getPreviousDestinationActivityClass() {
-        for (NavDestination destination : navBackStack) {
+        for (var destination : navBackStack) {
             if (destination.activity != currentDestination.activity) {
                 return destination.activity.getClass();
             }
