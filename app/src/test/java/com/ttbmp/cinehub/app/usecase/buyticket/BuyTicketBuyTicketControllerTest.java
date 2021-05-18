@@ -52,11 +52,6 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentCinema(CinemaResponse response) {
-
-        }
-
-        @Override
         public void presentSeatList(NumberOfSeatsResponse response) {
 
         }
@@ -107,11 +102,6 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentProjection(ProjectionResponse request) {
-
-        }
-
-        @Override
         public void presentSeatListNullRequest() {
 
         }
@@ -146,12 +136,6 @@ class BuyTicketBuyTicketControllerTest {
 
         }
 
-
-        @Override
-        public void presentInvalidGetCinema(CinemaInformationRequest request) {
-
-        }
-
         @Override
         public void presentPayRepositoryException(String message) {
 
@@ -177,14 +161,5 @@ class BuyTicketBuyTicketControllerTest {
 
         }
 
-        @Override
-        public void presentGetProjectionRepositoryException(String message) {
-
-        }
-
-        @Override
-        public void presentGetCinemaRepositoryException(String message) {
-
-        }
     }
 }
