@@ -9,14 +9,12 @@ public class TicketDto {
     private long price;
     private CustomerDto owner;
     private SeatDto seatDto;
-    private ProjectionDto projectionDto;
 
-    public TicketDto(int id, long price, CustomerDto owner, SeatDto seatDto, ProjectionDto projectionDto) {
+    public TicketDto(int id, long price, CustomerDto owner, SeatDto seatDto) {
         this.id = id;
         this.owner = owner;
         this.price = price;
         this.seatDto = seatDto;
-        this.projectionDto = projectionDto;
     }
 
     public SeatDto getSeatDto() {
@@ -49,14 +47,6 @@ public class TicketDto {
 
     public void setPrice(long price) {
         this.price = price;
-    }
-
-    public ProjectionDto getProjectionDto() {
-        return projectionDto;
-    }
-
-    public void setProjectionDto(ProjectionDto projectionDto) {
-        this.projectionDto = projectionDto;
     }
 
 }

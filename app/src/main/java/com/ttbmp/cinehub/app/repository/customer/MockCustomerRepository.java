@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.repository.customer;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.ticket.MockTicketRepository;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
 import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
@@ -33,9 +34,9 @@ public class MockCustomerRepository implements CustomerRepository {
     }
 
     @Override
-    public Customer getCustomer(String userId) {
+    public Customer getCustomer(String customerId) throws RepositoryException {
         return MockUserRepository.getUserDataList().stream()
-                .filter(d -> d.getId().equals(userId))
+                .filter(d -> d.getId().equals(customerId))
                 .findAny()
                 .map(d -> new CustomerProxy(
                         d.getId(),
@@ -46,7 +47,7 @@ public class MockCustomerRepository implements CustomerRepository {
     }
 
     @Override
-    public Customer getCustomer(Ticket ticket) {
+    public Customer getCustomer(Ticket ticket) throws RepositoryException {
         return MockTicketRepository.getTicketDataList().stream()
                 .filter(d -> d.getId() == ticket.getId())
                 .map(MockTicketRepository.TicketData::getUserId)

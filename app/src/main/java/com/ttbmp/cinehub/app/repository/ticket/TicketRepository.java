@@ -14,7 +14,7 @@ public interface TicketRepository {
 
     void saveTicket(Ticket ticket) throws RepositoryException;
 
-    List<Ticket> getTicketList(Customer customer);
+    List<Ticket> getTicketList(Customer customer) throws RepositoryException;
 
     List<Ticket> getTicketList(Projection projection) throws RepositoryException;
 

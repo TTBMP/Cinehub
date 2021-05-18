@@ -32,7 +32,11 @@ public class TicketProxy extends Ticket {
     @Override
     public Customer getOwner() {
         if (!isUserLoaded) {
-            setOwner(customerRepository.getCustomer(this));
+            try {
+                setOwner(customerRepository.getCustomer(this));
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
         return super.getOwner();
     }

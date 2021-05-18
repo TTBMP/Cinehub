@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.app.di;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.cinema.JdbcCinemaRepository;
 import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
-import com.ttbmp.cinehub.app.repository.customer.MockCustomerRepository;
+import com.ttbmp.cinehub.app.repository.customer.JdbcCustomerRepository;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.JdbcEmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.JdbcProjectionistRepository;
@@ -55,7 +55,7 @@ public class ServiceLocator {
         serviceFactoryMap.put(PaymentService.class, MockPaymentService::new);
         serviceFactoryMap.put(SecurityService.class, () -> new MockSecurityService(this));
         serviceFactoryMap.put(CinemaRepository.class, () -> new JdbcCinemaRepository(this));
-        serviceFactoryMap.put(CustomerRepository.class, () -> new MockCustomerRepository(this));
+        serviceFactoryMap.put(CustomerRepository.class, () -> new JdbcCustomerRepository(this));
         serviceFactoryMap.put(EmployeeRepository.class, () -> new JdbcEmployeeRepository(this));
         serviceFactoryMap.put(ProjectionistRepository.class, () -> new JdbcProjectionistRepository(this));
         serviceFactoryMap.put(UsherRepository.class, () -> new JdbcUsherRepository(this));

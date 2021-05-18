@@ -16,7 +16,7 @@ public interface ProjectionDao {
     @Query("SELECT * FROM proiezione WHERE proiezione.id = :id")
     Projection getProjectionById(@Parameter(name = "id") int id) throws DaoMethodException;
 
-    @Query("SELECT * FROM proiezione, biglietto WHERE biglietto.id = :id AND proiezione.id = bilietto.id_proiezione")
+    @Query("SELECT * FROM proiezione, biglietto WHERE biglietto.id = :id AND proiezione.id = biglietto.id_proiezione")
     Projection getProjectionByTicketId(@Parameter(name = "id") int ticketId) throws DaoMethodException;
 
     @Query("SELECT * FROM proiezione WHERE proiezione.id_sala = :hallId AND proiezione.data = :date AND proiezione.inizio = :start")

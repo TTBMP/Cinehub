@@ -16,6 +16,7 @@ import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
 import com.ttbmp.cinehub.app.utilities.request.Request;
+import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.employee.Projectionist;
 import com.ttbmp.cinehub.domain.shift.ModifyShiftException;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
@@ -161,7 +162,10 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             List<ShiftDto> shiftDtoList = new ArrayList<>();
             UnaryOperator<LocalDate> increaseDateFunction;
             var employee = employeeRepository.getEmployee(request.getEmployeeDto().getId());
-            var hall = hallRepository.getHall(request.getHall().getId());
+            Hall hall = null;
+            if (request.getHall() != null) {
+                hall = hallRepository.getHall(request.getHall().getId());
+            }
             switch (request.getOption()) {
                 case "EVERY_DAY":
                     increaseDateFunction = date -> date.plusDays(1);

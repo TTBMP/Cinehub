@@ -119,7 +119,11 @@ public class CustomerProxy extends Customer {
     @Override
     public List<Ticket> getOwnedTicketList() {
         if (!isTicketListLoaded) {
-            setOwnedTicketList(ticketRepository.getTicketList(this));
+            try {
+                setOwnedTicketList(ticketRepository.getTicketList(this));
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
         return super.getOwnedTicketList();
     }

@@ -43,8 +43,21 @@ public class JdbcTicketRepository implements TicketRepository {
     }
 
     @Override
-    public List<Ticket> getTicketList(Customer customer) {
-        return null;
+    public List<Ticket> getTicketList(Customer customer) throws RepositoryException {
+        try {
+            var ticketList = getTicketDao().getTicketList(customer.getId());
+            return ticketList.stream()
+                    .map(ticket -> new TicketProxy(
+                            ticket.getId(),
+                            ticket.getPrice(),
+                            serviceLocator.getService(CustomerRepository.class),
+                            serviceLocator.getService(SeatRepository.class),
+                            serviceLocator.getService(ProjectionRepository.class)
+                    ))
+                    .collect(Collectors.toList());
+        } catch (DaoMethodException e) {
+            return new ArrayList<>();
+        }
     }
 
     @Override

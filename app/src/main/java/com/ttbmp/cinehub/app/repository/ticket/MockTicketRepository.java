@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.repository.ticket;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
 import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
@@ -43,8 +44,17 @@ public class MockTicketRepository implements TicketRepository {
     }
 
     @Override
-    public List<Ticket> getTicketList(Customer customer) {
-        return null;
+    public List<Ticket> getTicketList(Customer customer) throws RepositoryException {
+        return TICKET_DATA_LIST.stream()
+                .filter(d -> d.userId.equals(customer.getId()))
+                .map(d -> new TicketProxy(
+                        d.id,
+                        d.price,
+                        serviceLocator.getService(CustomerRepository.class),
+                        serviceLocator.getService(SeatRepository.class),
+                        serviceLocator.getService(ProjectionRepository.class)
+                ))
+                .collect(Collectors.toList());
     }
 
     @Override
