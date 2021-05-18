@@ -36,90 +36,34 @@
         <div class="col-12 col-sm-8 col-md-6 col-lg-4 mx-auto">
             <div class="card" id="pay-invoice" style="background-color: black; color: white">
                 <div class="card-body">
-                    <form action="#" method="post"
-                          th:action="@{/confirm_email}"
-                          th:object="${paymentForm}">
-                        <label>
-                            <select style="display: none" th:field="*{cinemaId}">
-                                <option style="display: none"
-                                        th:value="${seat.cinemaId}"></option>
-                            </select>
-                        </label>
-                        <label>
-                            <select style="display: none" th:field="*{hallId}">
-                                <option style="display: none"
-                                        th:value="${seat.hallId}"></option>
-                            </select>
-                        </label>
-                        <label>
-                            <select style="display: none" th:field="*{movieId}">
-                                <option style="display: none"
-                                        th:value="${seat.movieId}"></option>
-                            </select>
-                        </label>
-                        <label>
-                            <select style="display: none" th:field="*{date}">
-                                <option style="display: none"
-                                        th:value="${seat.date}"></option>
-                            </select>
-                        </label>
-                        <label>
-                            <select style="display: none" th:field="*{option1}">
-                                <option style="display: none"
-                                        th:value="${option1}"></option>
-                            </select>
-                        </label>
-                        <label>
-                            <select style="display: none" th:field="*{option2}">
-                                <option style="display: none"
-                                        th:value="${option2}"></option>
-                            </select>
-                        </label>
-                        <label>
-                            <select style="display: none" th:field="*{option3}">
-                                <option style="display: none"
-                                        th:value="${option3}"></option>
-                            </select>
-                        </label>
-                        <label>
-                            <select style="display: none" th:field="*{position}">
-                                <option style="display: none"
-                                        th:value="${seat.position}"></option>
-                            </select>
-                        </label>
-                        <label>
-                            <select style="display: none" th:field="*{number}">
-                                <option style="display: none"
-                                        th:value="${seat.number}"></option>
-                            </select>
-                        </label>
-                        <!--INZIO MODIFICA-->
-                        <label>
-                            <select style="display: none" th:field="*{email}">
-                                <option value="document.getElementById('form_email').value"></option>
-                            </select>
-                        </label>
-                        <label>
-                            <select style="display: none" th:field="*{cvv}">
-                                <option value="document.getElementById('x_card_code').value"></option>
-                            </select>
-                        </label>
-                        <label>
-                            <select style="display: none" th:field="*{expirationDate}">
-                                <option value="document.getElementById('cc-exp').value"></option>
-                            </select>
-                        </label>
-                        <label>
-                            <select style="display: none" th:field="*{numberCard}">
-                                <option value="document.getElementById('cc-number').value"></option>
-                            </select>
-                        </label>
-                        <!--FINE MODIFICA-->
+                    <form action="#" method="post" th:action="@{/confirm_email}" th:object="${payment_form}">
+                        <input th:name="cinema.id" th:value="${payment_form.cinema.id}" type="hidden"/>
+                        <input th:name="cinema.name" th:value="${payment_form.cinema.name}" type="hidden"/>
+                        <input th:name="cinema.address" th:value="${payment_form.cinema.address}" type="hidden"/>
+                        <input th:name="cinema.city" th:value="${payment_form.cinema.city}" type="hidden"/>
+                        <input th:name="movie.id" th:value="${payment_form.movie.id}" type="hidden"/>
+                        <input th:name="movie.name" th:value="${payment_form.movie.name}" type="hidden"/>
+                        <input th:name="movie.overview" th:value="${payment_form.movie.overview}" type="hidden"/>
+                        <input th:name="movie.movieUrl" th:value="${payment_form.movie.movieUrl}" type="hidden"/>
+                        <input th:name="movie.vote" th:value="${payment_form.movie.vote}" type="hidden"/>
+                        <input th:name="movie.releases" th:value="${payment_form.movie.releases}" type="hidden"/>
+                        <input th:name="date" th:value="${payment_form.date}" type="hidden"/>
+                        <input th:name="projection.id" th:value="${payment_form.projection.id}" type="hidden"/>
+                        <input th:name="projection.date" th:value="${payment_form.projection.date}" type="hidden"/>
+                        <input th:name="projection.startTime" th:value="${payment_form.projection.startTime}" type="hidden"/>
+                        <input th:name="projection.hallId" th:value="${payment_form.projection.hallId}" type="hidden"/>
+                        <input th:name="projection.basePrice" th:value="${payment_form.projection.basePrice}" type="hidden"/>
+                        <input th:name="seat.id" th:value="${payment_form.seat.id}" type="hidden"/>
+                        <input th:name="seat.position" th:value="${payment_form.seat.position}" type="hidden"/>
+                        <input th:name="seat.isBooked" th:value="${payment_form.seat.isBooked}" type="hidden"/>
+                        <input th:name="projection.option1" th:value="${option1}" type="hidden"/>
+                        <input th:name="projection.option2" th:value="${option2}" type="hidden"/>
+                        <input th:name="projection.option3" th:value="${option3}" type="hidden"/>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label class="control-label " for="cc-exp">Number of card</label>
-                                    <input autocomplete="off" class="form-control cc-number identified visa"
+                                    <input th:name="projection.email" autocomplete="off" class="form-control cc-number identified visa"
                                            id="cc-number"
                                            inputmode="numeric"
                                            maxlength="19" pattern="[0-9\s]{12,16}" placeholder="xxxx xxxx xxxx xxxx"
@@ -129,7 +73,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label class="control-label mb-1" for="cc-exp">Expiration</label>
+                                    <label th:name="projection.cvv" class="control-label mb-1" for="cc-exp">Expiration</label>
                                     <input autocomplete="cc-exp" class="form-control cc-exp" id="cc-exp" name="cc-exp"
                                            placeholder="MM / YY"
                                            required type="date">
@@ -139,7 +83,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label class="control-label mb-1" for="cc-exp">CVV</label>
-                                    <input autocomplete="cc-exp" class="form-control cc-exp" id="x_card_code"
+                                    <input th:name="projection.expirationDate" autocomplete="cc-exp" class="form-control cc-exp" id="x_card_code"
                                            name="x_card_code"
                                            placeholder="123"
                                            required type="text">
@@ -149,7 +93,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label class="control-label mb-1" for="cc-exp">Email</label>
-                                    <input class="form-control" data-val="true"
+                                    <input th:name="projection.numberCard" class="form-control" data-val="true"
                                            data-val-required="Please enter the Promotion  code" id="form_email"
                                            max="20" name="x_prom"
                                            placeholder="email@posta.dominio" required
@@ -163,8 +107,6 @@
                                 </button>
                             </div>
                         </div>
-
-
                     </form>
                 </div>
             </div>

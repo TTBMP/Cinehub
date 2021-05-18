@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.buyticket.chooseseat;
 
 
+import com.ttbmp.cinehub.app.dto.SeatDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.CinemaInformationRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.TicketRequest;
@@ -69,9 +70,9 @@ public class ChooseSeatViewController extends ViewController {
     protected void onLoad() {
         appBarController.load(activity, navController);
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
-        activity.getUseCase(BuyTicketUseCase.class).getListOfSeat(
+        activity.getUseCase(BuyTicketUseCase.class).getSeatList(
                 new CinemaInformationRequest(
-                        viewModel.selectedProjectionProperty().getValue()
+                        viewModel.selectedProjectionProperty().getValue().getId()
                 ));
         confirmSeatButton.setDisable(true);
         SeatsMatrixView seatsMatrixView;
@@ -89,14 +90,11 @@ public class ChooseSeatViewController extends ViewController {
         );
         toggleGroup.selectedToggleProperty().addListener(l -> confirmSeatButton.setDisable(false));
         buyRandomButton.setOnAction(a -> {
-
             try {
                 changeLayoutRandom();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
         });
         confirmSeatButton.setOnAction(a -> {
             try {
@@ -112,6 +110,9 @@ public class ChooseSeatViewController extends ViewController {
                 e.printStackTrace();
             }
         });
+        toggleGroup.selectedToggleProperty().addListener(l ->
+                viewModel.selectedSeatProperty().setValue((SeatDto) toggleGroup.getSelectedToggle().getUserData())
+        );
     }
 
 
@@ -131,8 +132,7 @@ public class ChooseSeatViewController extends ViewController {
         toggleGroup.getToggles().forEach(toggle -> findRandomPlace());
         activity.getUseCase(BuyTicketUseCase.class).createTicket(
                 new TicketRequest(
-                        viewModel.getSeatList(),
-                        viewModel.seatSelectedPositionNumber().getValue(),
+                        ((SeatDto) toggleGroup.getSelectedToggle().getUserData()).getId(),
                         viewModel.foldingArmchairOptionProperty().getValue(),
                         viewModel.heatedArmchairOptionProperty().getValue(),
                         viewModel.skipLineOptionProperty().getValue(),
@@ -147,8 +147,7 @@ public class ChooseSeatViewController extends ViewController {
         toggleGroup.getToggles().forEach(toggle -> findChosenPlace());
         activity.getUseCase(BuyTicketUseCase.class).createTicket(
                 new TicketRequest(
-                        viewModel.getSeatList(),
-                        viewModel.seatSelectedPositionNumber().getValue(),
+                        ((SeatDto) toggleGroup.getSelectedToggle().getUserData()).getId(),
                         viewModel.foldingArmchairOptionProperty().getValue(),
                         viewModel.heatedArmchairOptionProperty().getValue(),
                         viewModel.skipLineOptionProperty().getValue(),

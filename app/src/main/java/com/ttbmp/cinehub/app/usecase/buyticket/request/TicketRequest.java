@@ -1,78 +1,78 @@
 package com.ttbmp.cinehub.app.usecase.buyticket.request;
 
-import com.ttbmp.cinehub.app.dto.SeatDto;
 import com.ttbmp.cinehub.app.utilities.request.Request;
-
-import java.util.List;
 
 /**
  * @author Ivan Palmieri
  */
 public class TicketRequest extends Request {
 
-    public static final Request.Error MISSING_LIST_SEATS_ERROR = new Request.Error("List seats can't be null");
     public static final Request.Error MISSING_OPTION_ONE_ERROR = new Request.Error("Option one can't be null");
     public static final Request.Error MISSING_OPTION_TWO_ERROR = new Request.Error("Option two can't be null");
     public static final Request.Error MISSING_OPTION_THREE_ERROR = new Request.Error("Option three can't be null");
     public static final Request.Error MISSING_PROJECTION_ERROR = new Request.Error("Projection id can't be NEGATIVE");
-    public static final Request.Error MISSING_NUMBER_ERROR = new Request.Error("Number can't be null");
 
-    private final List<SeatDto> seatDtoList;
-    private final Integer position;
-    private final Boolean openBarOption;
-    private final Boolean magicBoxOption;
-    private final Boolean skipLineOption;
-    private final int projectionId;
+    private int seatId;
+    private Boolean openBarOption;
+    private Boolean magicBoxOption;
+    private Boolean skipLineOption;
+    private int projectionId;
 
 
-    public TicketRequest(List<SeatDto> seatDtoList,
-                         Integer position,
+    public TicketRequest(int seatId,
                          Boolean magicBoxOption,
                          Boolean openBarOption,
                          Boolean skipLineOption,
                          int projectionId) {
-        this.seatDtoList = seatDtoList;
-        this.position = position;
+        this.seatId = seatId;
         this.magicBoxOption = magicBoxOption;
         this.openBarOption = openBarOption;
         this.skipLineOption = skipLineOption;
         this.projectionId = projectionId;
     }
 
-    public Boolean getMagicBoxOption() {
-        return magicBoxOption;
+    public int getSeatId() {
+        return seatId;
+    }
+
+    public void setSeatId(int seatId) {
+        this.seatId = seatId;
     }
 
     public Boolean getOpenBarOption() {
         return openBarOption;
     }
 
+    public void setOpenBarOption(Boolean openBarOption) {
+        this.openBarOption = openBarOption;
+    }
+
+    public Boolean getMagicBoxOption() {
+        return magicBoxOption;
+    }
+
+    public void setMagicBoxOption(Boolean magicBoxOption) {
+        this.magicBoxOption = magicBoxOption;
+    }
+
     public Boolean getSkipLineOption() {
         return skipLineOption;
     }
 
-    public List<SeatDto> getSeatDtoList() {
-        return seatDtoList;
-    }
-
-
-    public Integer getPosition() {
-        return position;
+    public void setSkipLineOption(Boolean skipLineOption) {
+        this.skipLineOption = skipLineOption;
     }
 
     public int getProjectionId() {
         return projectionId;
     }
 
+    public void setProjectionId(int projectionId) {
+        this.projectionId = projectionId;
+    }
+
     @Override
     public void onValidate() {
-        if (seatDtoList == null) {
-            addError(MISSING_LIST_SEATS_ERROR);
-        }
-
-        if (position == null) {
-            addError(MISSING_NUMBER_ERROR);
-        }
         if (magicBoxOption == null) {
             addError(MISSING_OPTION_ONE_ERROR);
         }
@@ -86,4 +86,5 @@ public class TicketRequest extends Request {
             addError(MISSING_PROJECTION_ERROR);
         }
     }
+
 }

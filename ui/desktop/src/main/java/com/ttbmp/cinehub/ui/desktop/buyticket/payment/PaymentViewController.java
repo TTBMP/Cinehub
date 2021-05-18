@@ -86,11 +86,13 @@ public class PaymentViewController extends ViewController {
 
     private void startPayment(ActionEvent actionEvent) {
         activity.getUseCase(BuyTicketUseCase.class).pay(new PaymentRequest(
-                viewModel.selectedTicketProperty().getValue(),
+                viewModel.selectedProjectionProperty().getValue().getId(),
+                viewModel.selectedSeatProperty().getValue().getId(),
+                viewModel.selectedTicketProperty().getValue().getPrice(),
+                viewModel.emailUserProperty().getValue(),
                 viewModel.numberOfCardUserProperty().getValue(),
                 viewModel.txtCvvProperty().getValue(),
-                String.valueOf(fieldExpirationDatePicker.getValue()),
-                viewModel.emailUserProperty().getValue()
+                String.valueOf(fieldExpirationDatePicker.getValue())
         ));
         try {
             navController.navigate(new NavDestination(new ConfirmEmailView()));

@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface SeatRepository {
 
+    Seat getSeat(int id) throws RepositoryException;
+
     Seat getSeat(Ticket ticket) throws RepositoryException;
 
     List<Seat> getSeatList(Hall hall) throws RepositoryException;

@@ -1,8 +1,5 @@
 package com.ttbmp.cinehub.app.usecase.buyticket.request;
 
-import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 
 /**
@@ -10,25 +7,50 @@ import com.ttbmp.cinehub.app.utilities.request.Request;
  */
 public class PaymentRequest extends Request {
 
-    public static final Request.Error MISSING_TICKET_ERROR = new Request.Error("Ticket can't be null");
-    public static final Request.Error MISSING_PROJECTION_ERROR = new Request.Error("Projection can't be null");
     public static final Request.Error MISSING_EMAIL_ERROR = new Request.Error("Email can't be null");
     public static final Request.Error MISSING_CINEMA_ERROR = new Request.Error("Cinema can't be null");
     public static final Request.Error MISSING_CREDIT_CARD_ERROR = new Request.Error("Credit card can't be null");
 
+    private int projectionId;
+    private int seatId;
+    private long ticketPrice;
     private String email;
-    private TicketDto ticketDto;
     private String creditCardNumber;
     private String creditCardCvv;
     private String creditCardExpirationDate;
 
-    public PaymentRequest(TicketDto ticketDto, String creditCardNumber, String creditCardCvv, String creditCardExpirationDate, String email) {
+    public PaymentRequest(int projectionId, int seatId, long ticketPrice, String email, String creditCardNumber, String creditCardCvv, String creditCardExpirationDate) {
+        this.projectionId = projectionId;
+        this.seatId = seatId;
+        this.ticketPrice = ticketPrice;
         this.email = email;
-        this.ticketDto = ticketDto;
         this.creditCardNumber = creditCardNumber;
         this.creditCardCvv = creditCardCvv;
         this.creditCardExpirationDate = creditCardExpirationDate;
+    }
 
+    public int getProjectionId() {
+        return projectionId;
+    }
+
+    public void setProjectionId(int projectionId) {
+        this.projectionId = projectionId;
+    }
+
+    public int getSeatId() {
+        return seatId;
+    }
+
+    public void setSeatId(int seatId) {
+        this.seatId = seatId;
+    }
+
+    public long getTicketPrice() {
+        return ticketPrice;
+    }
+
+    public void setTicketPrice(long ticketPrice) {
+        this.ticketPrice = ticketPrice;
     }
 
     public String getEmail() {
@@ -37,14 +59,6 @@ public class PaymentRequest extends Request {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public TicketDto getTicketDto() {
-        return ticketDto;
-    }
-
-    public void setTicketDto(TicketDto ticketDto) {
-        this.ticketDto = ticketDto;
     }
 
     public String getCreditCardNumber() {
@@ -75,9 +89,6 @@ public class PaymentRequest extends Request {
     public void onValidate() {
         if (email == null) {
             addError(MISSING_EMAIL_ERROR);
-        }
-        if (ticketDto == null) {
-            addError(MISSING_TICKET_ERROR);
         }
         if (creditCardNumber == null) {
             addError(MISSING_CREDIT_CARD_ERROR);

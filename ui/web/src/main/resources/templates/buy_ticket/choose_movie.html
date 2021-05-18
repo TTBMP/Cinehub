@@ -147,7 +147,7 @@
             <input action="#" id="date-picker" method="post"
                    onchange="window.location.href = '?date='+document.getElementById('date-picker').value;"
                    th:action="@{/choose_movie}"
-                   th:value="${choose_date}"
+                   th:value="${selected_date}"
                    type="date">
             <label for="date-picker"></label>
             <a href="/choose_movie">
@@ -158,19 +158,18 @@
     <!--/Top-->
     <div class="row justify-content-center ">
         <!--List Movie-->
-        <tr th:each="movie,inter : ${movieList}">
+        <tr th:each="_movie,inter : ${movieList}">
             <div class="col-lg-3 col-md-6 col-sm-12">
-                <!--Inizio modifica-->
                 <div class="flip-card-container mb-4 ">
                     <div class="flip-card">
                         <div class="flip-card-front" id="flip-bob">
                             <h3 class="h3 mt-2 text-center">
-                                <span th:text="${movie.name}"></span>
+                                <span th:text="${_movie.name}"></span>
                             </h3>
                             <img alt="" class="rounded mx-auto d-block"
-                                 style="width:100%;max-width:400px" th:id="${movie.movieUrl}"
-                                 th:name="${movie.movieUrl}"
-                                 th:src="${movie.movieUrl}">
+                                 style="width:100%;max-width:400px" th:id="${_movie.movieUrl}"
+                                 th:name="${_movie.movieUrl}"
+                                 th:src="${_movie.movieUrl}">
                         </div>
                         <div class="flip-card-back">
                             <div class="scroll">
@@ -178,32 +177,29 @@
                                     <br>
                                     <div class="col-12 text-center mt-4">
                                         <h5 class="h5">Title:</h5>
-                                        <p style="color: white" th:text="${movie.name}"></p>
+                                        <p style="color: white" th:text="${_movie.name}"></p>
                                     </div>
                                     <div class="col-12 text-center">
                                         <h5 class="h5">Vote:</h5>
-                                        <p style="color: white" th:text="${movie.vote}"></p>
+                                        <p style="color: white" th:text="${_movie.vote}"></p>
                                     </div>
                                     <div class="col-12 text-center">
                                         <h5 class="h5">Releases:</h5>
-                                        <p style="color: white" th:text="${movie.releases}"></p>
+                                        <p style="color: white" th:text="${_movie.releases}"></p>
                                     </div>
                                     <div class="col-12 text-center">
                                         <h5 class="h5">Overview:</h5>
-                                        <p style="color: white" th:text="${movie.overview}"></p>
+                                        <p style="color: white" th:text="${_movie.overview}"></p>
                                     </div>
                                     <form action="#" method="post" th:action="@{/choose_cinema}"
-                                          th:object="${projection}">
-                                        <label>
-                                            <select style="display: none" th:field="*{movieId}">
-                                                <option style="display: none" th:value="${movie.id}"></option>
-                                            </select>
-                                        </label>
-                                        <label>
-                                            <select style="display: none" th:field="*{date}">
-                                                <option style="display: none" th:value="${choose_date}"></option>
-                                            </select>
-                                        </label>
+                                          th:object="${movie_form}">
+                                        <input th:name="movie.id" th:value="${_movie.id}" type="hidden"/>
+                                        <input th:name="movie.name" th:value="${_movie.name}" type="hidden"/>
+                                        <input th:name="movie.overview" th:value="${_movie.overview}" type="hidden"/>
+                                        <input th:name="movie.movieUrl" th:value="${_movie.movieUrl}" type="hidden"/>
+                                        <input th:name="movie.vote" th:value="${_movie.vote}" type="hidden"/>
+                                        <input th:name="movie.releases" th:value="${_movie.releases}" type="hidden"/>
+                                        <input th:name="date" th:value="${selected_date}" type="hidden"/>
                                         <button class="btn btn-primary mt-2 mb-5" type="submit">Continue
                                         </button>
                                     </form>
@@ -212,16 +208,9 @@
                         </div>
                     </div>
                 </div>
-                <!--/Fine modifica-->
-
-
             </div>
-
         </tr>
     </div>
-    <!--/List Movie-->
-
 </div>
-
 </body>
 </html>

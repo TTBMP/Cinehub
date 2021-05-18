@@ -5,9 +5,9 @@ import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
-import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
+import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
 import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
@@ -38,7 +38,7 @@ public class BuyTicketController implements BuyTicketUseCase {
     private final ProjectionRepository projectionRepository;
     private final CustomerRepository customerRepository;
     private final TicketRepository ticketRepository;
-    private final HallRepository hallRepository;
+    private final SeatRepository seatRepository;
 
     public BuyTicketController(ServiceLocator serviceLocator, BuyTicketPresenter buyTicketPresenter) {
         this.buyTicketPresenter = buyTicketPresenter;
@@ -50,11 +50,11 @@ public class BuyTicketController implements BuyTicketUseCase {
         this.projectionRepository = serviceLocator.getService(ProjectionRepository.class);
         this.customerRepository = serviceLocator.getService(CustomerRepository.class);
         this.ticketRepository = serviceLocator.getService(TicketRepository.class);
-        this.hallRepository = serviceLocator.getService(HallRepository.class);
+        this.seatRepository = serviceLocator.getService(SeatRepository.class);
     }
 
     @Override
-    public void getListMovie(MovieListRequest request) {
+    public void getMovieList(MovieListRequest request) {
         try {
             Request.validate(request);
             var localDate = request.getDate().toString();
@@ -70,7 +70,7 @@ public class BuyTicketController implements BuyTicketUseCase {
     }
 
     @Override
-    public void getListCinema(CinemaListRequest request) {
+    public void getCinemaList(CinemaListRequest request) {
         try {
             Request.validate(request);
             var movie = movieRepository.getMovie(request.getMovieId());
@@ -79,26 +79,11 @@ public class BuyTicketController implements BuyTicketUseCase {
                     new CinemaListResponse(CinemaDataMapper.mapToDtoList(cinemaList))
             );
         } catch (Request.NullRequestException e) {
-            buyTicketPresenter.presentGetListCinemaNullRequest();
+            buyTicketPresenter.presentCinemaListNullRequest();
         } catch (Request.InvalidRequestException e) {
-            buyTicketPresenter.presentInvalidGetListCinema(request);
+            buyTicketPresenter.presentCinemaListInvalidRequest(request);
         } catch (RepositoryException e) {
-            buyTicketPresenter.presentGetCinemaListRepositoryException(e.getMessage());
-        }
-    }
-
-    @Override
-    public void getCinema(CinemaInformationRequest request) {
-        try {
-            Request.validate(request);
-            var cinema = cinemaRepository.getCinema(request.getProjectionDto().getId());
-            buyTicketPresenter.presentCinema(new CinemaResponse(CinemaDataMapper.mapToDto(cinema)));
-        } catch (Request.NullRequestException e) {
-            buyTicketPresenter.presentGetListCinemaNullRequest();
-        } catch (Request.InvalidRequestException e) {
-            buyTicketPresenter.presentInvalidGetCinema(request);
-        } catch (RepositoryException e) {
-            buyTicketPresenter.presentGetCinemaRepositoryException(e.getMessage());
+            buyTicketPresenter.presentCinemaListRepositoryException(e.getMessage());
         }
     }
 
@@ -113,43 +98,25 @@ public class BuyTicketController implements BuyTicketUseCase {
                     new ProjectionListResponse(ProjectionDataMapper.mapToDtoList(projectionList))
             );
         } catch (Request.NullRequestException e) {
-            buyTicketPresenter.presentGetTimeOfProjectionNullRequest();
+            buyTicketPresenter.presentProjectionListNullRequest();
         } catch (Request.InvalidRequestException e) {
-            buyTicketPresenter.presentInvalidGetTimeOfProjection(request);
+            buyTicketPresenter.presentProjectionListInvalidRequest(request);
         } catch (RepositoryException e) {
-            buyTicketPresenter.presentGetProjectionListRepositoryException(e.getMessage());
+            buyTicketPresenter.presentProjectionListRepositoryException(e.getMessage());
         }
     }
 
     @Override
-    public void getProjection(ProjectionRequest request) {
-        try {
-            var hall = hallRepository.getHall(request.getHallId());
-            var projection = projectionRepository.getProjection(
-                    request.getLocalDate(),
-                    request.getStartTime(),
-                    hall
-            );
-            buyTicketPresenter.presentProjection(
-                    new ProjectionResponse(ProjectionDataMapper.mapToDto(projection))
-            );
-        } catch (RepositoryException e) {
-            buyTicketPresenter.presentGetProjectionRepositoryException(e.getMessage());
-        }
-    }
-
-    @Override
-    public void getListOfSeat(CinemaInformationRequest request) {
+    public void getSeatList(CinemaInformationRequest request) {
         try {
             Request.validate(request);
-            var projection = projectionRepository.getProjection(request.getProjectionDto().getId());
+            var projection = projectionRepository.getProjection(request.getProjectionId());
             buyTicketPresenter.presentSeatList(new NumberOfSeatsResponse(
-                    SeatDataMapper.mapToDtoList(projection.getHall().getSeatList())
-            ));
+                    SeatDataMapper.mapToDtoList(projection.getHall().getSeatList(), projection::isBooked)));
         } catch (Request.NullRequestException e) {
-            buyTicketPresenter.presentGetNumberOfSeatsNullRequest();
+            buyTicketPresenter.presentSeatListNullRequest();
         } catch (Request.InvalidRequestException e) {
-            buyTicketPresenter.presentInvalidGetNumberOfSeats(request);
+            buyTicketPresenter.presentSeatListInvalidRequest(request);
         } catch (RepositoryException e) {
             e.printStackTrace();
         }
@@ -161,8 +128,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             Request.validate(request);
             var customer = customerRepository.getCustomer(securityService.authenticate("PROJECTIONIST").getId());
             var projection = projectionRepository.getProjection(request.getProjectionId());
-            var seatList = SeatDataMapper.mapToEntityList(request.getSeatDtoList());
-            var seat = seatList.get(request.getPosition());
+            var seat = seatRepository.getSeat(request.getSeatId());
 
             /*-----------DECORATOR PATTERN GOF---------*/
             var ticket = new Ticket(0, projection.getBasePrice(), customer, seat, projection); // Ticket di base
@@ -176,18 +142,18 @@ public class BuyTicketController implements BuyTicketUseCase {
                 ticket = new TicketSkipLine(ticket);
             }
             /*-----------------------------------------*/
-            buyTicketPresenter.setSelectedTicket(
+            buyTicketPresenter.presentTicket(
                     new TicketResponse(TicketDataMapper.mapToDto(ticket))
             );
 
         } catch (Request.NullRequestException e) {
-            buyTicketPresenter.presentGetTicketBySeatsNullRequest();
+            buyTicketPresenter.presentTicketNullRequest();
         } catch (Request.InvalidRequestException e) {
-            buyTicketPresenter.presentInvalidGetTicketBySeats(request);
+            buyTicketPresenter.presentTicketInvalidRequest(request);
         } catch (SecurityException e) {
             buyTicketPresenter.presentAuthenticationError();
         } catch (RepositoryException e) {
-            buyTicketPresenter.presentCreateTicketRepositoryException(e.getMessage());
+            buyTicketPresenter.presentTicketRepositoryException(e.getMessage());
         }
     }
 
@@ -196,21 +162,23 @@ public class BuyTicketController implements BuyTicketUseCase {
         try {
             Request.validate(request);
             var customer = customerRepository.getCustomer(securityService.authenticate("PROJECTIONIST").getId());
-            var ticket = TicketDataMapper.mapToEntity(request.getTicketDto());
+            var projection = projectionRepository.getProjection(request.getProjectionId());
+            var seat = seatRepository.getSeat(request.getSeatId());
             paymentService.pay(new PayServiceRequest(
                     customer.getEmail(),
                     customer.getName(),
                     request.getCreditCardNumber(),
-                    ticket.getPrice(),
+                    request.getTicketPrice(),
                     request.getCreditCardCvv(),
                     request.getCreditCardExpirationDate()
             ));
+            var ticket = new Ticket(0, request.getTicketPrice(), customer, seat, projection);
             ticketRepository.saveTicket(ticket);
             emailService.sendMail(new EmailServiceRequest(request.getEmail(), "Payment receipt"));
         } catch (Request.NullRequestException e) {
             buyTicketPresenter.presentPayNullRequest();
         } catch (Request.InvalidRequestException e) {
-            buyTicketPresenter.presentInvalidPay(request);
+            buyTicketPresenter.presentPayInvalidRequest(request);
         } catch (PaymentServiceException e) {
             buyTicketPresenter.presentErrorByStripe(e);
         } catch (SecurityException e) {

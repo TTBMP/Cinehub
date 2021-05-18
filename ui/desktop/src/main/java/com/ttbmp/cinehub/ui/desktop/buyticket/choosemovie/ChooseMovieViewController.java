@@ -61,7 +61,7 @@ public class ChooseMovieViewController extends ViewController {
     protected void onLoad() {
         appBarController.load(activity, navController);
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
-        activity.getUseCase(BuyTicketUseCase.class).getListMovie(new MovieListRequest(viewModel.selectedDateProperty().getValue()));
+        activity.getUseCase(BuyTicketUseCase.class).getMovieList(new MovieListRequest(viewModel.selectedDateProperty().getValue()));
         movieListView.itemsProperty().addListener(l -> movieListView.refresh());
         movieListView.setItems(viewModel.getMovieList());
         movieListView.setCellFactory(movieList -> new ChooseMovieListCell(activity, navController));
@@ -74,7 +74,7 @@ public class ChooseMovieViewController extends ViewController {
         nextButton.setOnAction(a -> dateOfProjectionDatePicker.setValue(dateOfProjectionDatePicker.getValue().plusDays(1)));
         previousButton.setDisable(true);
         confirmMovieButton.setOnAction(a -> {
-            activity.getUseCase(BuyTicketUseCase.class).getListCinema(
+            activity.getUseCase(BuyTicketUseCase.class).getCinemaList(
                     new CinemaListRequest(
                             viewModel.selectedMovieProperty().getValue().getId(),
                             viewModel.selectedDateProperty().getValue().toString()
@@ -92,7 +92,7 @@ public class ChooseMovieViewController extends ViewController {
     }
 
     private void onDataChange() {
-        activity.getUseCase(BuyTicketUseCase.class).getListMovie(new MovieListRequest(viewModel.selectedDateProperty().getValue()));
+        activity.getUseCase(BuyTicketUseCase.class).getMovieList(new MovieListRequest(viewModel.selectedDateProperty().getValue()));
         previousButton.setDisable(viewModel.selectedDateProperty().getValue().equals(LocalDate.now()));
     }
 

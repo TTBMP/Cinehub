@@ -18,7 +18,6 @@ import java.util.List;
  */
 public class BuyTicketViewModel implements ViewModel {
 
-
     private final StringProperty emailUser = new SimpleStringProperty();
     private final StringProperty numberOfCardUser = new SimpleStringProperty();
     private final StringProperty txtCvv = new SimpleStringProperty();
@@ -35,6 +34,7 @@ public class BuyTicketViewModel implements ViewModel {
     private final ObjectProperty<CinemaDto> selectedCinema = new SimpleObjectProperty<>();
     private final ObjectProperty<LocalDate> selectedDate = new SimpleObjectProperty<>();
     private final ObjectProperty<ProjectionDto> selectedProjection = new SimpleObjectProperty<>();
+    private final ObjectProperty<SeatDto> selectedSeat = new SimpleObjectProperty<>();
     private final StringProperty selectedTicketPosition = new SimpleStringProperty();
     private final StringProperty selectedMovieName = new SimpleStringProperty();
     private final StringProperty selectedCinemaName = new SimpleStringProperty();
@@ -268,5 +268,16 @@ public class BuyTicketViewModel implements ViewModel {
         return authenticationError;
     }
 
+    public SeatDto getSelectedSeat() {
+        return selectedSeat.get();
+    }
+
+    public ObjectProperty<SeatDto> selectedSeatProperty() {
+        return selectedSeat;
+    }
+
+    public void setSelectedSeat(SeatDto selectedSeat) {
+        this.selectedSeat.set(selectedSeat);
+    }
 
 }

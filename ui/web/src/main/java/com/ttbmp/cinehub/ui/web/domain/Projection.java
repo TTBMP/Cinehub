@@ -5,12 +5,34 @@ package com.ttbmp.cinehub.ui.web.domain;
  */
 public class Projection {
 
-    private int hallId;
+    private int id;
     private String date;
-    private int movieId;
-    private int cinemaId;
     private String startTime;
+    private int hallId;
+    private int movieId;
+    private int cinemaId;   // TODO: remove
     private long basePrice;
+
+    public Projection() {
+    }
+
+    public Projection(int id, int hallId, String date, int movieId, int cinemaId, String startTime, long basePrice) {
+        this.id = id;
+        this.hallId = hallId;
+        this.date = date;
+        this.movieId = movieId;
+        this.cinemaId = cinemaId;
+        this.startTime = startTime;
+        this.basePrice = basePrice;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getStartTime() {
         return startTime;

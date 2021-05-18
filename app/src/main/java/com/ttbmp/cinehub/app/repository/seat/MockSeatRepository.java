@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.app.repository.seat;
 
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.hall.MockHallRepository;
 import com.ttbmp.cinehub.app.repository.ticket.MockTicketRepository;
 import com.ttbmp.cinehub.domain.Hall;
@@ -31,6 +32,15 @@ public class MockSeatRepository implements SeatRepository {
 
     public static List<SeatData> getSeatDataList() {
         return SEAT_DATA_LIST;
+    }
+
+    @Override
+    public Seat getSeat(int id) throws RepositoryException {
+        return SEAT_DATA_LIST.stream()
+                .filter(d -> d.getId() == id)
+                .findAny()
+                .map(d -> new SeatProxy(d.id, d.position))
+                .orElse(null);
     }
 
     @Override

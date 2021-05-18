@@ -4,6 +4,7 @@ import com.ttbmp.cinehub.domain.employee.Projectionist;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author Fabio Buracchi, Ivan Palmieri
@@ -96,6 +97,10 @@ public class Projection {
 
     public void setBasePrice(long basePrice) {
         this.basePrice = basePrice;
+    }
+
+    public boolean isBooked(Seat seat) {
+        return getTicketList().stream().anyMatch(t -> t.getSeat().getId() == seat.getId());
     }
 
 }

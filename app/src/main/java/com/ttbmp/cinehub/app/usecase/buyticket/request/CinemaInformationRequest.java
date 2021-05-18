@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.app.usecase.buyticket.request;
 
-import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 
 /**
@@ -8,26 +7,22 @@ import com.ttbmp.cinehub.app.utilities.request.Request;
  */
 public class CinemaInformationRequest extends Request {
 
-    public static final Request.Error MISSING_PROJECTION_ERROR = new Request.Error("Projection can't be null");
+    private int projectionId;
 
-    private ProjectionDto projectionDto;
-
-    public CinemaInformationRequest(ProjectionDto projectionDto) {
-        this.projectionDto = projectionDto;
+    public CinemaInformationRequest(int projectionId) {
+        this.projectionId = projectionId;
     }
 
-    public ProjectionDto getProjectionDto() {
-        return projectionDto;
+    public int getProjectionId() {
+        return projectionId;
     }
 
-    public void setProjectionDto(ProjectionDto projectionDto) {
-        this.projectionDto = projectionDto;
+    public void setProjectionId(int projectionId) {
+        this.projectionId = projectionId;
     }
 
     @Override
     public void onValidate() {
-        if (projectionDto == null) {
-            addError(MISSING_PROJECTION_ERROR);
-        }
+
     }
 }

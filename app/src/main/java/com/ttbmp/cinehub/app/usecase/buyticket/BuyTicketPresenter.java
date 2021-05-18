@@ -19,52 +19,42 @@ public interface BuyTicketPresenter {
 
     void presentCinemaList(CinemaListResponse response);
 
-    void presentCinema(CinemaResponse response);
+    void presentCinemaListNullRequest();
 
-    void presentSeatList(NumberOfSeatsResponse response);
+    void presentCinemaListInvalidRequest(CinemaListRequest request);
 
-    void setSelectedTicket(TicketResponse response);
-
-    void presentPayNullRequest();
-
-    void presentInvalidPay(PaymentRequest request);
-
-    void presentGetTicketBySeatsNullRequest();
-
-    void presentInvalidGetTicketBySeats(TicketRequest request);
-
-    void presentGetListCinemaNullRequest();
-
-    void presentInvalidGetListCinema(CinemaListRequest request);
-
-    void presentGetTimeOfProjectionNullRequest();
-
-    void presentInvalidGetTimeOfProjection(ProjectionListRequest request);
-
-    void presentProjection(ProjectionResponse request);
-
-    void presentGetNumberOfSeatsNullRequest();
-
-    void presentInvalidGetNumberOfSeats(CinemaInformationRequest request);
-
-    void presentErrorByStripe(PaymentServiceException error);
+    void presentCinemaListRepositoryException(String message);
 
     void presentProjectionList(ProjectionListResponse projectionTimeList);
 
-    void presentAuthenticationError();
+    void presentProjectionListNullRequest();
 
-    void presentInvalidGetCinema(CinemaInformationRequest request);
+    void presentProjectionListInvalidRequest(ProjectionListRequest request);
+
+    void presentProjectionListRepositoryException(String message);
+
+    void presentSeatList(NumberOfSeatsResponse response);
+
+    void presentSeatListNullRequest();
+
+    void presentSeatListInvalidRequest(CinemaInformationRequest request);
+
+    void presentTicket(TicketResponse response);
+
+    void presentTicketNullRequest();
+
+    void presentTicketInvalidRequest(TicketRequest request);
+
+    void presentTicketRepositoryException(String message);
+
+    void presentPayNullRequest();
+
+    void presentPayInvalidRequest(PaymentRequest request);
 
     void presentPayRepositoryException(String message);
 
-    void presentGetCinemaListRepositoryException(String message);
+    void presentErrorByStripe(PaymentServiceException error);
 
-    void presentCreateTicketRepositoryException(String message);
-
-    void presentGetProjectionListRepositoryException(String message);
-
-    void presentGetProjectionRepositoryException(String message);
-
-    void presentGetCinemaRepositoryException(String message);
+    void presentAuthenticationError();
 
 }

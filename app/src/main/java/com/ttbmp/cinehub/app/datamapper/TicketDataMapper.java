@@ -20,7 +20,7 @@ public class TicketDataMapper {
                 ticket.getId(),
                 ticket.getPrice(),
                 CustomerDataMapper.mapToDto(ticket.getOwner()),
-                SeatDataMapper.mapToDto(ticket.getSeat()),
+                SeatDataMapper.mapToDto(ticket.getSeat(), true),
                 ProjectionDataMapper.mapToDto(ticket.getProjection())
         );
     }

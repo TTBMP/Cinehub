@@ -20,7 +20,7 @@ class BuyTicketBuyTicketControllerTest {
     @Test
     void getListMovie_whitCorrectRequest_notGenerateErrors() {
         var buyTicketController = new BuyTicketController(serviceLocator, new MockBuyTicketPresenter());
-        buyTicketController.getListMovie(new MovieListRequest(LocalDate.now()));
+        buyTicketController.getMovieList(new MovieListRequest(LocalDate.now()));
     }
 
     class MockBuyTicketPresenter implements BuyTicketPresenter {
@@ -62,7 +62,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void setSelectedTicket(TicketResponse response) {
+        public void presentTicket(TicketResponse response) {
 
         }
 
@@ -72,37 +72,37 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentInvalidPay(PaymentRequest request) {
+        public void presentPayInvalidRequest(PaymentRequest request) {
 
         }
 
         @Override
-        public void presentGetTicketBySeatsNullRequest() {
+        public void presentTicketNullRequest() {
 
         }
 
         @Override
-        public void presentInvalidGetTicketBySeats(TicketRequest request) {
+        public void presentTicketInvalidRequest(TicketRequest request) {
 
         }
 
         @Override
-        public void presentGetListCinemaNullRequest() {
+        public void presentCinemaListNullRequest() {
 
         }
 
         @Override
-        public void presentInvalidGetListCinema(CinemaListRequest request) {
+        public void presentCinemaListInvalidRequest(CinemaListRequest request) {
 
         }
 
         @Override
-        public void presentGetTimeOfProjectionNullRequest() {
+        public void presentProjectionListNullRequest() {
 
         }
 
         @Override
-        public void presentInvalidGetTimeOfProjection(ProjectionListRequest request) {
+        public void presentProjectionListInvalidRequest(ProjectionListRequest request) {
 
         }
 
@@ -112,12 +112,12 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentGetNumberOfSeatsNullRequest() {
+        public void presentSeatListNullRequest() {
 
         }
 
         @Override
-        public void presentInvalidGetNumberOfSeats(CinemaInformationRequest request) {
+        public void presentSeatListInvalidRequest(CinemaInformationRequest request) {
 
         }
 
@@ -163,17 +163,17 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentGetCinemaListRepositoryException(String message) {
+        public void presentCinemaListRepositoryException(String message) {
 
         }
 
         @Override
-        public void presentCreateTicketRepositoryException(String message) {
+        public void presentTicketRepositoryException(String message) {
 
         }
 
         @Override
-        public void presentGetProjectionListRepositoryException(String message) {
+        public void presentProjectionListRepositoryException(String message) {
 
         }
 

@@ -1,27 +1,24 @@
-package com.ttbmp.cinehub.app.dto;
+package com.ttbmp.cinehub.ui.web.domain;
 
-
-/**
- * @author Ivan Palmieri
- */
-public class MovieDto {
+public class Movie {
 
     private int id;
     private String name;
     private String overview;
-    private String duration;
     private String movieUrl;
     private String vote;
     private String releases;
 
-    public MovieDto(int id, String name, String overview, String duration, String movieUrl, String vote, String releases) {
+    public Movie() {
+    }
+
+    public Movie(int id, String name, String overview, String movieUrl, String vote, String releases) {
         this.id = id;
         this.name = name;
-        this.vote = vote;
         this.overview = overview;
-        this.releases = releases;
         this.movieUrl = movieUrl;
-        this.duration = duration;
+        this.vote = vote;
+        this.releases = releases;
     }
 
     public int getId() {
@@ -40,28 +37,12 @@ public class MovieDto {
         this.name = name;
     }
 
-    public String getVote() {
-        return vote;
-    }
-
-    public void setVote(String vote) {
-        this.vote = vote;
-    }
-
     public String getOverview() {
         return overview;
     }
 
     public void setOverview(String overview) {
         this.overview = overview;
-    }
-
-    public String getReleases() {
-        return releases;
-    }
-
-    public void setReleases(String releases) {
-        this.releases = releases;
     }
 
     public String getMovieUrl() {
@@ -72,12 +53,20 @@ public class MovieDto {
         this.movieUrl = movieUrl;
     }
 
-    public String getDuration() {
-        return duration;
+    public String getVote() {
+        return vote;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setVote(String vote) {
+        this.vote = vote;
+    }
+
+    public String getReleases() {
+        return releases;
+    }
+
+    public void setReleases(String releases) {
+        this.releases = releases;
     }
 
 }
