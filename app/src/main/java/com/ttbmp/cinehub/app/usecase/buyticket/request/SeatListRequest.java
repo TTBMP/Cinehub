@@ -5,11 +5,11 @@ import com.ttbmp.cinehub.app.utilities.request.Request;
 /**
  * @author Ivan Palmieri
  */
-public class CinemaInformationRequest extends Request {
+public class SeatListRequest extends Request {
 
     private int projectionId;
 
-    public CinemaInformationRequest(int projectionId) {
+    public SeatListRequest(int projectionId) {
         this.projectionId = projectionId;
     }
 

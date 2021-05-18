@@ -107,7 +107,7 @@ public class BuyTicketController implements BuyTicketUseCase {
     }
 
     @Override
-    public void getSeatList(CinemaInformationRequest request) {
+    public void getSeatList(SeatListRequest request) {
         try {
             Request.validate(request);
             var projection = projectionRepository.getProjection(request.getProjectionId());

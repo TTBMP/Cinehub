@@ -18,7 +18,6 @@ public class TicketRequest extends Request {
     private Boolean skipLineOption;
     private int projectionId;
 
-
     public TicketRequest(int seatId,
                          Boolean magicBoxOption,
                          Boolean openBarOption,

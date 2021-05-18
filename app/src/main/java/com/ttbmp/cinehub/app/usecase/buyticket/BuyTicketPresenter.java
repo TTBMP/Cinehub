@@ -37,7 +37,7 @@ public interface BuyTicketPresenter {
 
     void presentSeatListNullRequest();
 
-    void presentSeatListInvalidRequest(CinemaInformationRequest request);
+    void presentSeatListInvalidRequest(SeatListRequest request);
 
     void presentTicket(TicketResponse response);
 

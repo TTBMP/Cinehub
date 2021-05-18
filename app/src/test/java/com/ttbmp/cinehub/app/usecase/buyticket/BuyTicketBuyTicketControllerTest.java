@@ -107,7 +107,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentSeatListInvalidRequest(CinemaInformationRequest request) {
+        public void presentSeatListInvalidRequest(SeatListRequest request) {
 
         }
 

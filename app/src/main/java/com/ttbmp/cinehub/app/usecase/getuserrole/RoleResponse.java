@@ -6,7 +6,7 @@ import static com.ttbmp.cinehub.domain.security.Role.*;
 
 public class RoleResponse {
 
-    private List<Role> roleList;
+    private final List<Role> roleList;
 
     public RoleResponse(List<Role> roleList) {
         this.roleList = roleList;

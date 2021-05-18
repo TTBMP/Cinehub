@@ -30,7 +30,7 @@ public class BuyTicketHandler implements BuyTicketUseCase {
     }
 
     @Override
-    public void getSeatList(CinemaInformationRequest request) {
+    public void getSeatList(SeatListRequest request) {
         buyTicketController.getSeatList(request);
     }
 

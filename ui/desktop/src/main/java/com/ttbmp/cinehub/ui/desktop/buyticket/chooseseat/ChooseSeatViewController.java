@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.ui.desktop.buyticket.chooseseat;
 
 import com.ttbmp.cinehub.app.dto.SeatDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.CinemaInformationRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.SeatListRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.TicketRequest;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketViewModel;
@@ -71,7 +71,7 @@ public class ChooseSeatViewController extends ViewController {
         appBarController.load(activity, navController);
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
         activity.getUseCase(BuyTicketUseCase.class).getSeatList(
-                new CinemaInformationRequest(
+                new SeatListRequest(
                         viewModel.selectedProjectionProperty().getValue().getId()
                 ));
         confirmSeatButton.setDisable(true);

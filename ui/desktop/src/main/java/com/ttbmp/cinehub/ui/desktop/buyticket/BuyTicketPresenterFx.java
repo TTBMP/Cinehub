@@ -112,7 +112,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentSeatListInvalidRequest(CinemaInformationRequest request) {
+    public void presentSeatListInvalidRequest(SeatListRequest request) {
     }
 
 

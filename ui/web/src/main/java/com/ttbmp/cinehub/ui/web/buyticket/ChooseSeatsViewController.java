@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.ui.web.buyticket;
 
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketHandler;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.CinemaInformationRequest;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.SeatListRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,7 +22,7 @@ public class ChooseSeatsViewController {
         model.addAttribute("color", "color:" + "white");
         model.addAttribute("classValue", "material-icons");
         BuyTicketUseCase useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
-        useCase.getSeatList(new CinemaInformationRequest(paymentForm.getProjection().getId()));
+        useCase.getSeatList(new SeatListRequest(paymentForm.getProjection().getId()));
         return "buy_ticket/choose_seats";
     }
 

@@ -23,7 +23,6 @@ public class CustomerProxy extends Customer {
     private boolean isSurnameLoaded = false;
     private boolean isEmailLoaded = false;
     private boolean isRoleArrayLoaded = false;
-    private boolean isCreditCardLoaded = false;
     private boolean isTicketListLoaded = false;
 
     public CustomerProxy(String id, UserRepository userRepository, TicketRepository ticketRepository) {
