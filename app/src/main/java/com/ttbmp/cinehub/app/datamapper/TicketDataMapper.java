@@ -25,22 +25,8 @@ public class TicketDataMapper {
         );
     }
 
-    public static Ticket mapToEntity(TicketDto ticketDto) {
-        return new Ticket(
-                ticketDto.getId(),
-                ticketDto.getPrice(),
-                CustomerDataMapper.mapToEntity(ticketDto.getOwner()),
-                SeatDataMapper.mapToEntity(ticketDto.getSeatDto()),
-                ProjectionDataMapper.mapToEntity(ticketDto.getProjectionDto())
-        );
-    }
-
     public static List<TicketDto> mapToDtoList(List<Ticket> ticketList) {
         return DataMapperHelper.mapList(ticketList, TicketDataMapper::mapToDto);
-    }
-
-    public static List<Ticket> mapToEntityList(List<TicketDto> ticketDto) {
-        return DataMapperHelper.mapList(ticketDto, TicketDataMapper::mapToEntity);
     }
 
 }

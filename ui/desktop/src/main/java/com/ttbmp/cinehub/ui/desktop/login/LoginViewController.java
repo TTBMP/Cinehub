@@ -4,7 +4,6 @@ package com.ttbmp.cinehub.ui.desktop.login;
 import com.ttbmp.cinehub.app.usecase.login.LoginRequest;
 import com.ttbmp.cinehub.app.usecase.login.LoginUseCase;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavActivityDestination;
 import javafx.fxml.FXML;

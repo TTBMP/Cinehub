@@ -26,25 +26,8 @@ public class MovieDataMapper {
         );
     }
 
-    public static Movie mapToEntity(MovieDto movieDto) {
-        return new Movie(
-                movieDto.getId(),
-                movieDto.getName(),
-                movieDto.getOverview(),
-                Integer.parseInt(movieDto.getDuration()),
-                movieDto.getMovieUrl(),
-                movieDto.getVote(),
-                movieDto.getReleases()
-        );
-    }
-
     public static List<MovieDto> mapToDtoList(List<Movie> movieList) {
         return DataMapperHelper.mapList(movieList, MovieDataMapper::mapToDto);
     }
-
-    public static List<Movie> mapToEntityList(List<MovieDto> movieList) {
-        return DataMapperHelper.mapList(movieList, MovieDataMapper::mapToEntity);
-    }
-
 
 }

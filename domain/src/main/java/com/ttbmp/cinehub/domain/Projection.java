@@ -4,7 +4,6 @@ import com.ttbmp.cinehub.domain.employee.Projectionist;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author Fabio Buracchi, Ivan Palmieri

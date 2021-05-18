@@ -9,10 +9,10 @@ import java.util.List;
  */
 public class ProjectionDto {
 
-    private int id;
-    private String date;
     private final String startTime;
     private final HallDto hallDto;
+    private int id;
+    private String date;
     private MovieDto movieDto;
     private Projectionist projectionist;
     private List<TicketDto> listTicket;

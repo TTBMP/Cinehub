@@ -272,12 +272,12 @@ public class BuyTicketViewModel implements ViewModel {
         return selectedSeat.get();
     }
 
-    public ObjectProperty<SeatDto> selectedSeatProperty() {
-        return selectedSeat;
-    }
-
     public void setSelectedSeat(SeatDto selectedSeat) {
         this.selectedSeat.set(selectedSeat);
+    }
+
+    public ObjectProperty<SeatDto> selectedSeatProperty() {
+        return selectedSeat;
     }
 
 }

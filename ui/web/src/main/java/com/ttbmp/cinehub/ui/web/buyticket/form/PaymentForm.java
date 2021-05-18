@@ -1,6 +1,9 @@
 package com.ttbmp.cinehub.ui.web.buyticket.form;
 
-import com.ttbmp.cinehub.ui.web.domain.*;
+import com.ttbmp.cinehub.ui.web.domain.Cinema;
+import com.ttbmp.cinehub.ui.web.domain.Movie;
+import com.ttbmp.cinehub.ui.web.domain.Projection;
+import com.ttbmp.cinehub.ui.web.domain.Seat;
 
 public class PaymentForm {
 

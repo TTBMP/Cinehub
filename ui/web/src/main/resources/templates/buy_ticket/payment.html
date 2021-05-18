@@ -50,9 +50,11 @@
                         <input th:name="date" th:value="${payment_form.date}" type="hidden"/>
                         <input th:name="projection.id" th:value="${payment_form.projection.id}" type="hidden"/>
                         <input th:name="projection.date" th:value="${payment_form.projection.date}" type="hidden"/>
-                        <input th:name="projection.startTime" th:value="${payment_form.projection.startTime}" type="hidden"/>
+                        <input th:name="projection.startTime" th:value="${payment_form.projection.startTime}"
+                               type="hidden"/>
                         <input th:name="projection.hallId" th:value="${payment_form.projection.hallId}" type="hidden"/>
-                        <input th:name="projection.basePrice" th:value="${payment_form.projection.basePrice}" type="hidden"/>
+                        <input th:name="projection.basePrice" th:value="${payment_form.projection.basePrice}"
+                               type="hidden"/>
                         <input th:name="seat.id" th:value="${payment_form.seat.id}" type="hidden"/>
                         <input th:name="seat.position" th:value="${payment_form.seat.position}" type="hidden"/>
                         <input th:name="seat.isBooked" th:value="${payment_form.seat.isBooked}" type="hidden"/>
@@ -63,17 +65,19 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label class="control-label " for="cc-exp">Number of card</label>
-                                    <input th:name="projection.email" autocomplete="off" class="form-control cc-number identified visa"
+                                    <input autocomplete="off" class="form-control cc-number identified visa"
                                            id="cc-number"
                                            inputmode="numeric"
-                                           maxlength="19" pattern="[0-9\s]{12,16}" placeholder="xxxx xxxx xxxx xxxx"
-                                           required>
+                                           maxlength="19"
+                                           pattern="[0-9\s]{12,16}" placeholder="xxxx xxxx xxxx xxxx" required
+                                           th:name="projection.email">
                                     <span class="invalid-feedback">Enter the number of card </span>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label th:name="projection.cvv" class="control-label mb-1" for="cc-exp">Expiration</label>
+                                    <label class="control-label mb-1" for="cc-exp"
+                                           th:name="projection.cvv">Expiration</label>
                                     <input autocomplete="cc-exp" class="form-control cc-exp" id="cc-exp" name="cc-exp"
                                            placeholder="MM / YY"
                                            required type="date">
@@ -83,20 +87,21 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label class="control-label mb-1" for="cc-exp">CVV</label>
-                                    <input th:name="projection.expirationDate" autocomplete="cc-exp" class="form-control cc-exp" id="x_card_code"
-                                           name="x_card_code"
+                                    <input autocomplete="cc-exp" class="form-control cc-exp"
+                                           id="x_card_code" name="x_card_code"
                                            placeholder="123"
-                                           required type="text">
+                                           required
+                                           th:name="projection.expirationDate" type="text">
                                     <span class="invalid-feedback">Enter the cvv </span>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label class="control-label mb-1" for="cc-exp">Email</label>
-                                    <input th:name="projection.numberCard" class="form-control" data-val="true"
-                                           data-val-required="Please enter the Promotion  code" id="form_email"
-                                           max="20" name="x_prom"
-                                           placeholder="email@posta.dominio" required
+                                    <input class="form-control" data-val="true" data-val-required="Please enter the Promotion  code"
+                                           id="form_email" max="20"
+                                           name="x_prom" placeholder="email@posta.dominio"
+                                           required th:name="projection.numberCard"
                                            type="email">
                                     <span class="invalid-feedback">Enter the email </span>
                                 </div>

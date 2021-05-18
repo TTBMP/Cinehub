@@ -15,16 +15,8 @@ public class CustomerDataMapper {
         return new CustomerDto(customer.getId(), customer.getName(), customer.getSurname(), customer.getEmail());
     }
 
-    public static Customer mapToEntity(CustomerDto customerDto) {
-        return new Customer(customerDto.getId(), customerDto.getName(), customerDto.getSurname(), customerDto.getEmail(), null, null);
-    }
-
     public static List<CustomerDto> mapToDtoList(List<Customer> customerList) {
         return DataMapperHelper.mapList(customerList, CustomerDataMapper::mapToDto);
-    }
-
-    public static List<Customer> mapToEntityList(List<CustomerDto> customerDtoList) {
-        return DataMapperHelper.mapList(customerDtoList, CustomerDataMapper::mapToEntity);
     }
 
 }

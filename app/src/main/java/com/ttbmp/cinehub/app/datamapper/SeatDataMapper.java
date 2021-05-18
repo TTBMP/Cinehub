@@ -18,10 +18,6 @@ public class SeatDataMapper {
         return new SeatDto(seat.getId(), seat.getPosition(), isBooked);
     }
 
-    public static Seat mapToEntity(SeatDto seatDto) {
-        return new Seat(seatDto.getId(), seatDto.getPosition());
-    }
-
     public static List<SeatDto> mapToDtoList(List<Seat> seatList, Predicate<Seat> isBooked) {
         return DataMapperHelper.mapList(
                 seatList,
@@ -32,8 +28,4 @@ public class SeatDataMapper {
                 ));
     }
 
-    public static List<Seat> mapToEntityList(List<SeatDto> ticketDtoList) {
-        return DataMapperHelper.mapList(ticketDtoList, SeatDataMapper::mapToEntity);
-
-    }
 }
