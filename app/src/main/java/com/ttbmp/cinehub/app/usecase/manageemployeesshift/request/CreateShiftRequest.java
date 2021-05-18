@@ -1,11 +1,12 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class CreateShiftRequest extends Request {
+public class CreateShiftRequest extends AuthenticatedRequest {
 
     public static final Request.Error MISSING_EMPLOYEE = new Request.Error("dipendente non valido");
     public static final Request.Error MISSING_DATE = new Request.Error("data non valida");
@@ -19,14 +20,16 @@ public class CreateShiftRequest extends Request {
     private LocalTime end;
     private int hallId;
 
-    public CreateShiftRequest(String employeeId, LocalDate date, LocalTime start, LocalTime end) {
+    public CreateShiftRequest(String sessionToken,String employeeId, LocalDate date, LocalTime start, LocalTime end) {
+        super(sessionToken);
         this.employeeId = employeeId;
         this.date = date;
         this.start = start;
         this.end = end;
     }
 
-    public CreateShiftRequest(String employeeId, LocalDate date, LocalTime start, LocalTime end, int hallId) {
+    public CreateShiftRequest(String sessionToken,String employeeId, LocalDate date, LocalTime start, LocalTime end, int hallId) {
+        super(sessionToken);
         this.employeeId = employeeId;
         this.date = date;
         this.start = start;

@@ -39,7 +39,7 @@ class ManageEmployeesShiftControllerTest {
                 serviceLocator,
                 new MockManageEmployeePresenter()
         );
-        Assertions.assertDoesNotThrow(controller::getCinemaList);
+        Assertions.assertDoesNotThrow(()->controller.getCinemaList(new GetCinemaListRequest("MANAGER")));
     }
 
     @Test
@@ -58,7 +58,7 @@ class ManageEmployeesShiftControllerTest {
             e.printStackTrace();
         }
         assert cinema != null;
-        var getShiftListRequest = new GetShiftListRequest(CinemaDataMapper.mapToDto(cinema), start, end);
+        var getShiftListRequest = new GetShiftListRequest("MANAGER",CinemaDataMapper.mapToDto(cinema), start, end);
         Assertions.assertDoesNotThrow(() -> controller.getShiftList(getShiftListRequest));
 
     }
@@ -76,7 +76,7 @@ class ManageEmployeesShiftControllerTest {
         } catch (RepositoryException e) {
             e.printStackTrace();
         }
-        var request = new GetEmployeeListRequest(cinema);
+        var request = new GetEmployeeListRequest("MANAGER",cinema);
         Assertions.assertDoesNotThrow(() -> controller.getEmployeeList(request));
     }
 
@@ -94,6 +94,7 @@ class ManageEmployeesShiftControllerTest {
         }
         assert shift != null;
         var request = new ShiftModifyRequest(
+                "MANAGER",
                 shift.getEmployee(),
                 shift.getId(),
                 shift.getDate().plusDays(1),
@@ -117,7 +118,7 @@ class ManageEmployeesShiftControllerTest {
             System.out.println(e.getMessage());
         }
         assert finalShift != null;
-        var request = new ShiftRequest(finalShift.getId());
+        var request = new ShiftRequest("MANAGER",finalShift.getId());
         Assertions.assertDoesNotThrow(() -> controller.deleteShift(request));
 
     }
@@ -138,6 +139,7 @@ class ManageEmployeesShiftControllerTest {
         }
 
         var request = new ShiftRepeatRequest(
+                "MANAGER",
                 LocalDate.now().plusYears(2),
                 LocalDate.now().plusDays(7).plusYears(2),
                 "EVERY_DAY",
@@ -156,6 +158,7 @@ class ManageEmployeesShiftControllerTest {
                 new MockManageEmployeePresenter()
         );
         var request = new CreateShiftRequest(
+                "MANAGER",
                 "0",
                 LocalDate.now().plusMonths(2),
                 LocalTime.now().withNano(0).withSecond(0),
