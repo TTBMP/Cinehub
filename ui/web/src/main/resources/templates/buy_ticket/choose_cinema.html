@@ -75,18 +75,18 @@
                                 <p th:text="${_cinema.city}"></p>
                             </div>
                         </div>
-                        <form action="#" method="post" th:action="@{/choose_projection}" th:object="${cinema_form}">
+                        <form action="#" method="post" th:action="@{/choose_projection}" th:object="${payment_form}">
                             <input th:name="cinema.id" th:value="${_cinema.id}" type="hidden"/>
                             <input th:name="cinema.name" th:value="${_cinema.name}" type="hidden"/>
                             <input th:name="cinema.address" th:value="${_cinema.address}" type="hidden"/>
                             <input th:name="cinema.city" th:value="${_cinema.city}" type="hidden"/>
-                            <input th:name="movie.id" th:value="${cinema_form.movie.id}" type="hidden"/>
-                            <input th:name="movie.name" th:value="${cinema_form.movie.name}" type="hidden"/>
-                            <input th:name="movie.overview" th:value="${cinema_form.movie.overview}" type="hidden"/>
-                            <input th:name="movie.movieUrl" th:value="${cinema_form.movie.movieUrl}" type="hidden"/>
-                            <input th:name="movie.vote" th:value="${cinema_form.movie.vote}" type="hidden"/>
-                            <input th:name="movie.releases" th:value="${cinema_form.movie.releases}" type="hidden"/>
-                            <input th:name="date" th:value="${cinema_form.date}" type="hidden"/>
+                            <input th:name="movie.id" th:value="${payment_form.movie.id}" type="hidden"/>
+                            <input th:name="movie.name" th:value="${payment_form.movie.name}" type="hidden"/>
+                            <input th:name="movie.overview" th:value="${payment_form.movie.overview}" type="hidden"/>
+                            <input th:name="movie.movieUrl" th:value="${payment_form.movie.movieUrl}" type="hidden"/>
+                            <input th:name="movie.vote" th:value="${payment_form.movie.vote}" type="hidden"/>
+                            <input th:name="movie.releases" th:value="${payment_form.movie.releases}" type="hidden"/>
+                            <input th:name="date" th:value="${payment_form.date}" type="hidden"/>
                             <div class="row mt-2 text-center">
                                 <div class="col-12 text-center">
                                     <button class="btn btn-primary" id="search_shift_cinema" type="submit">
@@ -109,18 +109,18 @@
                 <div class="col-2 mt-5 text-center" th:each="_projection,index : ${projectionList}">
                     <div class="card p-2 m-3 text-center justify-content-center"
                          style="background-color: #000000;border-color: #6d6d6d">
-                        <form action="#" method="post" th:action="@{/choose_seat}" th:object="${projection_form}">
-                            <input th:name="cinema.id" th:value="${projection_form.cinema.id}" type="hidden"/>
-                            <input th:name="cinema.name" th:value="${projection_form.cinema.name}" type="hidden"/>
-                            <input th:name="cinema.address" th:value="${projection_form.cinema.address}" type="hidden"/>
-                            <input th:name="cinema.city" th:value="${projection_form.cinema.city}" type="hidden"/>
-                            <input th:name="movie.id" th:value="${projection_form.movie.id}" type="hidden"/>
-                            <input th:name="movie.name" th:value="${projection_form.movie.name}" type="hidden"/>
-                            <input th:name="movie.overview" th:value="${projection_form.movie.overview}" type="hidden"/>
-                            <input th:name="movie.movieUrl" th:value="${projection_form.movie.movieUrl}" type="hidden"/>
-                            <input th:name="movie.vote" th:value="${projection_form.movie.vote}" type="hidden"/>
-                            <input th:name="movie.releases" th:value="${projection_form.movie.releases}" type="hidden"/>
-                            <input th:name="date" th:value="${projection_form.date}" type="hidden"/>
+                        <form action="#" method="post" th:action="@{/choose_seat}" th:object="${payment_form}">
+                            <input th:name="cinema.id" th:value="${payment_form.cinema.id}" type="hidden"/>
+                            <input th:name="cinema.name" th:value="${payment_form.cinema.name}" type="hidden"/>
+                            <input th:name="cinema.address" th:value="${payment_form.cinema.address}" type="hidden"/>
+                            <input th:name="cinema.city" th:value="${payment_form.cinema.city}" type="hidden"/>
+                            <input th:name="movie.id" th:value="${payment_form.movie.id}" type="hidden"/>
+                            <input th:name="movie.name" th:value="${payment_form.movie.name}" type="hidden"/>
+                            <input th:name="movie.overview" th:value="${payment_form.movie.overview}" type="hidden"/>
+                            <input th:name="movie.movieUrl" th:value="${payment_form.movie.movieUrl}" type="hidden"/>
+                            <input th:name="movie.vote" th:value="${payment_form.movie.vote}" type="hidden"/>
+                            <input th:name="movie.releases" th:value="${payment_form.movie.releases}" type="hidden"/>
+                            <input th:name="date" th:value="${payment_form.date}" type="hidden"/>
                             <input th:name="projection.id" th:value="${_projection.id}" type="hidden"/>
                             <input th:name="projection.date" th:value="${_projection.date}" type="hidden"/>
                             <input th:name="projection.startTime" th:value="${_projection.startTime}" type="hidden"/>

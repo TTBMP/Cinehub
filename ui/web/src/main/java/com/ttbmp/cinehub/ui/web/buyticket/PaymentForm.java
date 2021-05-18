@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.ui.web.buyticket.form;
+package com.ttbmp.cinehub.ui.web.buyticket;
 
 import com.ttbmp.cinehub.ui.web.domain.Cinema;
 import com.ttbmp.cinehub.ui.web.domain.Movie;

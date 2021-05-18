@@ -192,7 +192,7 @@
                                         <p style="color: white" th:text="${_movie.overview}"></p>
                                     </div>
                                     <form action="#" method="post" th:action="@{/choose_cinema}"
-                                          th:object="${movie_form}">
+                                          th:object="${payment_form}">
                                         <input th:name="movie.id" th:value="${_movie.id}" type="hidden"/>
                                         <input th:name="movie.name" th:value="${_movie.name}" type="hidden"/>
                                         <input th:name="movie.overview" th:value="${_movie.overview}" type="hidden"/>
