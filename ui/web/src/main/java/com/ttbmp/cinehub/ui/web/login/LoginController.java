@@ -26,8 +26,10 @@ public class LoginController {
         var useCase = new LoginHandler(new LoginPresenterWeb(model));
         useCase.login(new LoginRequest(form.email, form.password));
         var sessionToken = model.getAttribute("sessionToken");
-        response.addCookie(new Cookie("session", (String) sessionToken));
-        response.setHeader("Location", "/");
+        if (sessionToken != null) {
+            response.addCookie(new Cookie("session", (String) sessionToken));
+        }
+        response.setHeader("Location", sessionToken != null ? "/" : "/login");
         response.setStatus(302);
     }
 
