@@ -31,7 +31,7 @@ class ManageEmployeeViewControllerTest {
     }
 
     @BeforeEach
-    void setUp() throws InterruptedException {
+    void setUp() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
@@ -40,7 +40,7 @@ class ManageEmployeeViewControllerTest {
         driver.findElement(By.linkText("Manage employee shift")).click();
         driver.findElement(By.id("date")).sendKeys( LocalDate.now().format(DateTimeFormatter.ofPattern("ddMMyyyy")) );
         driver.findElement(By.id("search_shift_cinema")).click();
-        employee = driver.findElement(By.xpath("/html/body/div[2]/div/table/tbody/tr[1]/td[1]/div/div/div[2]/p[1]"));
+        employee = driver.findElement(By.id("1"));
     }
 
     @AfterEach
@@ -49,10 +49,11 @@ class ManageEmployeeViewControllerTest {
     }
 
     @Test
-    void searchCinema() {
+    void searchEmployee() {
         assertEquals(
                 employee.getText(),
-                "Fabio Buracchi"
+                "Massimo Mazzetti\n" +
+                        "Role : Projectionist"
         );
     }
 }
