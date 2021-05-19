@@ -5,6 +5,7 @@ import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.ProjectionListRequest;
+import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.desktop.buyticket.choosemovie.ChooseMovieView;
@@ -89,7 +90,8 @@ public class ChooseCinemaViewController extends ViewController {
         if (viewModel.selectedCinemaProperty().getValue() != null) {
             viewModel.getTimeOfProjectionList().clear();
             activity.getUseCase(BuyTicketUseCase.class).getProjectionList(new ProjectionListRequest(
-                            viewModel.selectedMovieProperty().getValue().getId(),
+                    CinehubApplication.getSessionToken(),
+                    viewModel.selectedMovieProperty().getValue().getId(),
                             viewModel.selectedCinemaProperty().getValue().getId(),
                             viewModel.selectedDateProperty().getValue()
 

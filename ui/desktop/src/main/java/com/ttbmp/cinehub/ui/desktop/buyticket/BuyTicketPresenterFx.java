@@ -1,10 +1,12 @@
 package com.ttbmp.cinehub.ui.desktop.buyticket;
 
 
+import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketPresenter;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 
 /**
  * @author Ivan Palmieri
@@ -33,11 +35,6 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
         viewModel.getSeatList().setAll(response.getSeatDtoList());
     }
 
-    @Override
-    public void presentTicket(TicketResponse response) {
-        viewModel.selectedTicketProperty().setValue(response.getTicketDto());
-        viewModel.selectedSeatPriceProperty().setValue(response.getTicketDto().getPrice().toString());
-    }
 
     @Override
     public void presentPayNullRequest() {
@@ -46,37 +43,32 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentPayInvalidRequest(PaymentRequest request) {
-        if (request.getErrorList().contains(PaymentRequest.MISSING_CINEMA_ERROR)) {
-            viewModel.paymentErrorProperty().setValue(PaymentRequest.MISSING_CINEMA_ERROR.getMessage());
+        if (request.getErrorList().contains(PaymentRequest.CVV_LETTERS_ERROR)) {
+            viewModel.paymentErrorProperty().setValue(PaymentRequest.CVV_LETTERS_ERROR.getMessage());
         }
-        if (request.getErrorList().contains(PaymentRequest.MISSING_CREDIT_CARD_ERROR)) {
-            viewModel.paymentErrorProperty().setValue(PaymentRequest.MISSING_CREDIT_CARD_ERROR.getMessage());
+        if (request.getErrorList().contains(PaymentRequest.NUMBER_OF_CARD_LETTERS_ERROR)) {
+            viewModel.paymentErrorProperty().setValue(PaymentRequest.NUMBER_OF_CARD_LETTERS_ERROR.getMessage());
+        }
+        if (request.getErrorList().contains(PaymentRequest.CREDIT_CARD_LENGTH_ERROR)) {
+            viewModel.paymentErrorProperty().setValue(PaymentRequest.CREDIT_CARD_LENGTH_ERROR.getMessage());
         }
         if (request.getErrorList().contains(PaymentRequest.MISSING_EMAIL_ERROR)) {
             viewModel.paymentErrorProperty().setValue(PaymentRequest.MISSING_EMAIL_ERROR.getMessage());
         }
+        if (request.getErrorList().contains(PaymentRequest.MISSING_CREDIT_CARD_ERROR)) {
+            viewModel.paymentErrorProperty().setValue(PaymentRequest.MISSING_CREDIT_CARD_ERROR.getMessage());
+        }
+        if (request.getErrorList().contains(PaymentRequest.LENGTH_CVV_CREDIT_CARD_ERROR)) {
+            viewModel.paymentErrorProperty().setValue(PaymentRequest.LENGTH_CVV_CREDIT_CARD_ERROR.getMessage());
+        }
+        if (request.getErrorList().contains(PaymentRequest.EXPIRATION_CREDIT_CARD_ERROR)) {
+            viewModel.paymentErrorProperty().setValue(PaymentRequest.EXPIRATION_CREDIT_CARD_ERROR.getMessage());
+        }
+        if (request.getErrorList().contains(PaymentRequest.EMAIL_ERROR)) {
+            viewModel.paymentErrorProperty().setValue(PaymentRequest.EMAIL_ERROR.getMessage());
+        }
     }
 
-    @Override
-    public void presentTicketNullRequest() {
-        viewModel.seatErrorProperty().setValue("Error with operation GetTicketBySeats");
-    }
-
-    @Override
-    public void presentTicketInvalidRequest(TicketRequest request) {
-        if (request.getErrorList().contains(TicketRequest.MISSING_OPTION_ONE_ERROR)) {
-            viewModel.seatErrorProperty().setValue(TicketRequest.MISSING_OPTION_ONE_ERROR.getMessage());
-        }
-        if (request.getErrorList().contains(TicketRequest.MISSING_OPTION_TWO_ERROR)) {
-            viewModel.seatErrorProperty().setValue(TicketRequest.MISSING_OPTION_TWO_ERROR.getMessage());
-        }
-        if (request.getErrorList().contains(TicketRequest.MISSING_OPTION_THREE_ERROR)) {
-            viewModel.seatErrorProperty().setValue(TicketRequest.MISSING_OPTION_THREE_ERROR.getMessage());
-        }
-        if (request.getErrorList().contains(TicketRequest.MISSING_PROJECTION_ERROR)) {
-            viewModel.seatErrorProperty().setValue(TicketRequest.MISSING_PROJECTION_ERROR.getMessage());
-        }
-    }
 
     @Override
     public void presentCinemaListNullRequest() {
@@ -142,6 +134,11 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
+    public void presentTicket(TicketDto ticketDto) {
+        viewModel.selectedTicketProperty().setValue(ticketDto);
+    }
+
+    @Override
     public void presentPayRepositoryException(String message) {
         viewModel.payRepositoryExceptionProperty().setValue(message);
     }
@@ -156,10 +153,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
         viewModel.cinemaListRepositoryExceptionProperty().setValue(message);
     }
 
-    @Override
-    public void presentTicketRepositoryException(String message) {
-        viewModel.ticketRepositoryExceptionProperty().setValue(message);
-    }
+
 
     @Override
     public void presentProjectionListRepositoryException(String message) {

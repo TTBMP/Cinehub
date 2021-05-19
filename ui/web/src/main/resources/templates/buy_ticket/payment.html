@@ -58,9 +58,9 @@
                         <input th:name="seat.id" th:value="${payment_form.seat.id}" type="hidden"/>
                         <input th:name="seat.position" th:value="${payment_form.seat.position}" type="hidden"/>
                         <input th:name="seat.isBooked" th:value="${payment_form.seat.isBooked}" type="hidden"/>
-                        <input th:name="projection.option1" th:value="${option1}" type="hidden"/>
-                        <input th:name="projection.option2" th:value="${option2}" type="hidden"/>
-                        <input th:name="projection.option3" th:value="${option3}" type="hidden"/>
+                        <input th:name="option1" th:value="${payment_form.option1}" type="hidden"/>
+                        <input th:name="option2" th:value="${payment_form.option2}" type="hidden"/>
+                        <input th:name="option3" th:value="${payment_form.option3}" type="hidden"/>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
@@ -70,14 +70,14 @@
                                            inputmode="numeric"
                                            maxlength="19"
                                            pattern="[0-9\s]{12,16}" placeholder="xxxx xxxx xxxx xxxx" required
-                                           th:name="projection.email">
+                                           th:name="numberCard">
                                     <span class="invalid-feedback">Enter the number of card </span>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label class="control-label mb-1" for="cc-exp"
-                                           th:name="projection.cvv">Expiration</label>
+                                           th:name="expirationDate">Expiration</label>
                                     <input autocomplete="cc-exp" class="form-control cc-exp" id="cc-exp" name="cc-exp"
                                            placeholder="MM / YY"
                                            required type="date">
@@ -91,7 +91,7 @@
                                            id="x_card_code" name="x_card_code"
                                            placeholder="123"
                                            required
-                                           th:name="projection.expirationDate" type="text">
+                                           th:name="cvv" type="text">
                                     <span class="invalid-feedback">Enter the cvv </span>
                                 </div>
                             </div>
@@ -102,7 +102,7 @@
                                            data-val-required="Please enter the Promotion  code"
                                            id="form_email" max="20"
                                            name="x_prom" placeholder="email@posta.dominio"
-                                           required th:name="projection.numberCard"
+                                           required th:name="email"
                                            type="email">
                                     <span class="invalid-feedback">Enter the email </span>
                                 </div>

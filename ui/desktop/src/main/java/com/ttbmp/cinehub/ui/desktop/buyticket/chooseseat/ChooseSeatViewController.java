@@ -4,7 +4,7 @@ package com.ttbmp.cinehub.ui.desktop.buyticket.chooseseat;
 import com.ttbmp.cinehub.app.dto.SeatDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.SeatListRequest;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.TicketRequest;
+import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.desktop.buyticket.choosecinema.ChooseCinemaView;
@@ -19,7 +19,7 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 
 /**
- * @author Ivan Palmieri
+ * @author Ivan Palmieri, Fabio Buracchi
  */
 public class ChooseSeatViewController extends ViewController {
 
@@ -46,9 +46,6 @@ public class ChooseSeatViewController extends ViewController {
     private Button returnButton;
 
     @FXML
-    private Button buyRandomButton;
-
-    @FXML
     private Label errorSectionLabel;
 
     @FXML
@@ -72,6 +69,7 @@ public class ChooseSeatViewController extends ViewController {
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
         activity.getUseCase(BuyTicketUseCase.class).getSeatList(
                 new SeatListRequest(
+                        CinehubApplication.getSessionToken(),
                         viewModel.selectedProjectionProperty().getValue().getId()
                 ));
         confirmSeatButton.setDisable(true);
@@ -89,13 +87,6 @@ public class ChooseSeatViewController extends ViewController {
                 setAllElementsOfTheToggleToNull()
         );
         toggleGroup.selectedToggleProperty().addListener(l -> confirmSeatButton.setDisable(false));
-        buyRandomButton.setOnAction(a -> {
-            try {
-                changeLayoutRandom();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
         confirmSeatButton.setOnAction(a -> {
             try {
                 changeLayoutSpecific();
@@ -121,39 +112,14 @@ public class ChooseSeatViewController extends ViewController {
         seatsTotalText.textProperty().bind(viewModel.totalSeatsProperty());
         seatsFreeText.textProperty().bind(viewModel.freeSeatsProperty());
         seatsBuysText.textProperty().bind(viewModel.buysSeatsProperty());
-        viewModel.foldingArmchairOptionProperty().bind(foldingArmchairRadioButton.selectedProperty());
-        viewModel.heatedArmchairOptionProperty().bind(heatedArmchairRadioButton.selectedProperty());
+        viewModel.openBarOptionProperty().bind(foldingArmchairRadioButton.selectedProperty());
+        viewModel.magicBoxOptionProperty().bind(heatedArmchairRadioButton.selectedProperty());
         viewModel.skipLineOptionProperty().bind(skipLineRadioButton.selectedProperty());
-    }
-
-
-    private void changeLayoutRandom() throws IOException {
-        viewModel.counterForToggle().setValue(0);
-        toggleGroup.getToggles().forEach(toggle -> findRandomPlace());
-        activity.getUseCase(BuyTicketUseCase.class).createTicket(
-                new TicketRequest(
-                        ((SeatDto) toggleGroup.getSelectedToggle().getUserData()).getId(),
-                        viewModel.foldingArmchairOptionProperty().getValue(),
-                        viewModel.heatedArmchairOptionProperty().getValue(),
-                        viewModel.skipLineOptionProperty().getValue(),
-                        viewModel.selectedProjectionProperty().getValue().getId()
-                )
-        );
-        navController.navigate(new NavDestination(new PaymentView()));
     }
 
     private void changeLayoutSpecific() throws IOException {
         viewModel.counterForToggle().setValue(0);
         toggleGroup.getToggles().forEach(toggle -> findChosenPlace());
-        activity.getUseCase(BuyTicketUseCase.class).createTicket(
-                new TicketRequest(
-                        ((SeatDto) toggleGroup.getSelectedToggle().getUserData()).getId(),
-                        viewModel.foldingArmchairOptionProperty().getValue(),
-                        viewModel.heatedArmchairOptionProperty().getValue(),
-                        viewModel.skipLineOptionProperty().getValue(),
-                        viewModel.selectedProjectionProperty().getValue().getId()
-                )
-        );
         navController.navigate(new NavDestination(new PaymentView()));
 
     }
@@ -161,22 +127,6 @@ public class ChooseSeatViewController extends ViewController {
     private void setAllElementsOfTheToggleToNull() {
         viewModel.getSeatsState().add(viewModel.falseBooleanProperty());
         viewModel.counterForToggle().setValue(viewModel.counterForToggle().getValue() + 1);
-    }
-
-    private void findRandomPlace() {
-        int j = viewModel.counterForToggle().getValue();
-        if (!(((RadioButton) toggleGroup.getToggles().get(j)).isDisabled())) {
-            viewModel.getSeatsState().remove(j);
-            viewModel.getSeatsState().add(j, viewModel.trueBooleanProperty());
-            viewModel.indexToggleSelected().setValue(j);
-            viewModel.selectedSeatsProperty().setValue(
-                    toggleGroup.getToggles().get(j).toString().substring(
-                            toggleGroup.getToggles().get(j).toString().length() - 6,
-                            toggleGroup.getToggles().get(j).toString().length() - 4));
-            viewModel.seatSelectedPositionNumber().setValue(viewModel.indexToggleSelected().getValue());
-        }
-        viewModel.counterForToggle().setValue(viewModel.counterForToggle().getValue() + 1);
-
     }
 
 

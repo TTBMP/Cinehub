@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.ui.web.buyticket;
 
+import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketPresenter;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
@@ -11,7 +12,6 @@ import org.springframework.ui.Model;
  */
 public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
-    private static final String PAYMENT_ERROR_ATTRIBUTE = "paymentError";
     private static final String MOVIE_ERROR_ATTRIBUTE = "movieError";
     private static final String CINEMA_ERROR_ATTRIBUTE = "cinemaError";
     private final Model model;
@@ -40,49 +40,35 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
         model.addAttribute("seatList", response.getSeatDtoList());
     }
 
-    @Override
-    public void presentTicket(TicketResponse response) {
-        model.addAttribute("selectedTicket", response.getTicketDto());
-    }
 
     @Override
     public void presentPayNullRequest() {
-        model.addAttribute(PAYMENT_ERROR_ATTRIBUTE, "Error with operation Pay");
+        model.addAttribute("paymentError", "Error with operation Pay");
 
     }
 
     @Override
     public void presentPayInvalidRequest(PaymentRequest request) {
-        if (request.getErrorList().contains(PaymentRequest.MISSING_CINEMA_ERROR)) {
-            model.addAttribute(PaymentRequest.MISSING_CINEMA_ERROR.getMessage());
+        if (request.getErrorList().contains(PaymentRequest.NUMBER_OF_CARD_LETTERS_ERROR)) {
+            model.addAttribute("paymentError",PaymentRequest.NUMBER_OF_CARD_LETTERS_ERROR.getMessage());
+        }
+        if (request.getErrorList().contains(PaymentRequest.CREDIT_CARD_LENGTH_ERROR)) {
+            model.addAttribute("paymentError",PaymentRequest.CREDIT_CARD_LENGTH_ERROR.getMessage());
+        }
+        if (request.getErrorList().contains(PaymentRequest.MISSING_EMAIL_ERROR)) {
+            model.addAttribute("paymentError",PaymentRequest.MISSING_EMAIL_ERROR.getMessage());
         }
         if (request.getErrorList().contains(PaymentRequest.MISSING_CREDIT_CARD_ERROR)) {
-            model.addAttribute(PaymentRequest.MISSING_CREDIT_CARD_ERROR.getMessage());
+            model.addAttribute("paymentError",PaymentRequest.MISSING_CREDIT_CARD_ERROR.getMessage());
         }
-
-        if (request.getErrorList().contains(PaymentRequest.MISSING_EMAIL_ERROR)) {
-            model.addAttribute(PaymentRequest.MISSING_EMAIL_ERROR.getMessage());
+        if (request.getErrorList().contains(PaymentRequest.LENGTH_CVV_CREDIT_CARD_ERROR)) {
+            model.addAttribute("paymentError",PaymentRequest.LENGTH_CVV_CREDIT_CARD_ERROR.getMessage());
         }
-    }
-
-    @Override
-    public void presentTicketNullRequest() {
-        model.addAttribute("ticketError", "Unable to retrieve ticket");
-    }
-
-    @Override
-    public void presentTicketInvalidRequest(TicketRequest request) {
-        if (request.getErrorList().contains(TicketRequest.MISSING_OPTION_ONE_ERROR)) {
-            model.addAttribute(TicketRequest.MISSING_OPTION_ONE_ERROR.getMessage());
+        if (request.getErrorList().contains(PaymentRequest.EXPIRATION_CREDIT_CARD_ERROR)) {
+            model.addAttribute("paymentError",PaymentRequest.EXPIRATION_CREDIT_CARD_ERROR.getMessage());
         }
-        if (request.getErrorList().contains(TicketRequest.MISSING_OPTION_TWO_ERROR)) {
-            model.addAttribute(TicketRequest.MISSING_OPTION_TWO_ERROR.getMessage());
-        }
-        if (request.getErrorList().contains(TicketRequest.MISSING_OPTION_THREE_ERROR)) {
-            model.addAttribute(TicketRequest.MISSING_OPTION_THREE_ERROR.getMessage());
-        }
-        if (request.getErrorList().contains(TicketRequest.MISSING_PROJECTION_ERROR)) {
-            model.addAttribute(TicketRequest.MISSING_PROJECTION_ERROR.getMessage());
+        if (request.getErrorList().contains(PaymentRequest.EMAIL_ERROR)) {
+            model.addAttribute("paymentError",PaymentRequest.EMAIL_ERROR.getMessage());
         }
     }
 
@@ -130,7 +116,7 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     @Override
     public void presentErrorByStripe(PaymentServiceException error) {
-        model.addAttribute(PAYMENT_ERROR_ATTRIBUTE, error.getMessage());
+        model.addAttribute("paymentError", error.getMessage());
     }
 
     @Override
@@ -150,8 +136,13 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     }
 
     @Override
+    public void presentTicket(TicketDto ticketDto) {
+        model.addAttribute("ticketDetail", ticketDto);
+    }
+
+    @Override
     public void presentPayRepositoryException(String message) {
-        model.addAttribute("payRepositoryException", message);
+        model.addAttribute("paymentError", message);
     }
 
     @Override
@@ -166,11 +157,6 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     }
 
-    @Override
-    public void presentTicketRepositoryException(String message) {
-        model.addAttribute("ticketRepositoryException", message);
-
-    }
 
     @Override
     public void presentProjectionListRepositoryException(String message) {

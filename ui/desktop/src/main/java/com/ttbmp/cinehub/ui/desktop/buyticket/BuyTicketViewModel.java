@@ -58,6 +58,7 @@ public class BuyTicketViewModel implements ViewModel {
     private final BooleanProperty heatedArmchairOption = new SimpleBooleanProperty();
     private final BooleanProperty foldingArmchairOption = new SimpleBooleanProperty();
     private final IntegerProperty numberOfSeats = new SimpleIntegerProperty(0);
+    private final ObjectProperty<LocalDate> expirationDate = new SimpleObjectProperty<>();
     private final List<BooleanProperty> seatsState = new ArrayList<>(60);
     private final IntegerProperty positionSelectedSeat = new SimpleIntegerProperty();
     private final BooleanProperty valueFalseForSeatState = new SimpleBooleanProperty(false);
@@ -83,6 +84,10 @@ public class BuyTicketViewModel implements ViewModel {
         selectedDateProperty().setValue(LocalDate.now());
     }
 
+
+    public ObjectProperty<LocalDate> expirationDateProperty() {
+        return expirationDate;
+    }
 
     public StringProperty payRepositoryExceptionProperty() {
         return payRepositoryException;
@@ -146,11 +151,11 @@ public class BuyTicketViewModel implements ViewModel {
         return skipLineOption;
     }
 
-    public BooleanProperty heatedArmchairOptionProperty() {
+    public BooleanProperty magicBoxOptionProperty() {
         return heatedArmchairOption;
     }
 
-    public BooleanProperty foldingArmchairOptionProperty() {
+    public BooleanProperty openBarOptionProperty() {
         return foldingArmchairOption;
     }
 
@@ -279,5 +284,6 @@ public class BuyTicketViewModel implements ViewModel {
     public ObjectProperty<SeatDto> selectedSeatProperty() {
         return selectedSeat;
     }
+
 
 }

@@ -34,10 +34,6 @@ public class BuyTicketHandler implements BuyTicketUseCase {
         buyTicketController.getSeatList(request);
     }
 
-    @Override
-    public void createTicket(TicketRequest request) {
-        buyTicketController.createTicket(request);
-    }
 
     @Override
     public void pay(PaymentRequest request) {

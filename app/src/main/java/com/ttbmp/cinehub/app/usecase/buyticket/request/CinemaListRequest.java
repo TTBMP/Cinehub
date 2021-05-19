@@ -1,11 +1,12 @@
 package com.ttbmp.cinehub.app.usecase.buyticket.request;
 
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 
 /**
  * @author Ivan Palmieri
  */
-public class CinemaListRequest extends Request {
+public class CinemaListRequest extends AuthenticatedRequest {
 
     public static final Request.Error MISSING_MOVIE_ERROR = new Request.Error("Cinema can't be null");
     public static final Request.Error MISSING_DATE_ERROR = new Request.Error("Date can't be null");
@@ -13,7 +14,8 @@ public class CinemaListRequest extends Request {
     private int movieId;
     private String data;
 
-    public CinemaListRequest(int movieId, String data) {
+    public CinemaListRequest(String sessionToken,int movieId, String data) {
+        super(sessionToken);
         this.movieId = movieId;
         this.data = data;
     }

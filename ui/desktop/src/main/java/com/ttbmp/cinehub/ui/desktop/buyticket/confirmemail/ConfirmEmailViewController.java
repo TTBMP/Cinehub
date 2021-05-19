@@ -84,7 +84,7 @@ public class ConfirmEmailViewController extends ViewController {
     }
 
     private void bind() {
-        errorSectionLabel.textProperty().bind(viewModel.emailErrorProperty());
+        errorSectionLabel.textProperty().bind(viewModel.paymentErrorProperty());
         emailText.textProperty().bind(viewModel.emailUserProperty());
         numberCardText.textProperty().bind(viewModel.numberOfCardUserProperty());
         ticketText.textProperty().bind((viewModel.selectedTicketPositionProperty()));

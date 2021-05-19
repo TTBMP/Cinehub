@@ -5,6 +5,7 @@ import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.CinemaListRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.MovieListRequest;
+import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.desktop.buyticket.CustomDateCell;
@@ -61,7 +62,10 @@ public class ChooseMovieViewController extends ViewController {
     protected void onLoad() {
         appBarController.load(activity, navController);
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
-        activity.getUseCase(BuyTicketUseCase.class).getMovieList(new MovieListRequest(viewModel.selectedDateProperty().getValue()));
+        activity.getUseCase(BuyTicketUseCase.class).getMovieList(new MovieListRequest(
+                CinehubApplication.getSessionToken(),
+                viewModel.selectedDateProperty().getValue()
+        ));
         movieListView.itemsProperty().addListener(l -> movieListView.refresh());
         movieListView.setItems(viewModel.getMovieList());
         movieListView.setCellFactory(movieList -> new ChooseMovieListCell(activity, navController));
@@ -76,6 +80,7 @@ public class ChooseMovieViewController extends ViewController {
         confirmMovieButton.setOnAction(a -> {
             activity.getUseCase(BuyTicketUseCase.class).getCinemaList(
                     new CinemaListRequest(
+                            CinehubApplication.getSessionToken(),
                             viewModel.selectedMovieProperty().getValue().getId(),
                             viewModel.selectedDateProperty().getValue().toString()
                     )
@@ -92,7 +97,9 @@ public class ChooseMovieViewController extends ViewController {
     }
 
     private void onDataChange() {
-        activity.getUseCase(BuyTicketUseCase.class).getMovieList(new MovieListRequest(viewModel.selectedDateProperty().getValue()));
+        activity.getUseCase(BuyTicketUseCase.class).getMovieList(new MovieListRequest(
+                CinehubApplication.getSessionToken(),
+                viewModel.selectedDateProperty().getValue()));
         previousButton.setDisable(viewModel.selectedDateProperty().getValue().equals(LocalDate.now()));
     }
 

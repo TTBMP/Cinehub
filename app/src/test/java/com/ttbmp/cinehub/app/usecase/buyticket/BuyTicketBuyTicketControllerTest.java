@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.app.usecase.buyticket;
 
 import com.ttbmp.cinehub.app.datamapper.MovieDataMapper;
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
+import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
@@ -20,7 +21,7 @@ class BuyTicketBuyTicketControllerTest {
     @Test
     void getListMovie_whitCorrectRequest_notGenerateErrors() {
         var buyTicketController = new BuyTicketController(serviceLocator, new MockBuyTicketPresenter());
-        buyTicketController.getMovieList(new MovieListRequest(LocalDate.now()));
+        buyTicketController.getMovieList(new MovieListRequest("CUSTOMER",LocalDate.now()));
     }
 
     class MockBuyTicketPresenter implements BuyTicketPresenter {
@@ -56,10 +57,7 @@ class BuyTicketBuyTicketControllerTest {
 
         }
 
-        @Override
-        public void presentTicket(TicketResponse response) {
 
-        }
 
         @Override
         public void presentPayNullRequest() {
@@ -71,15 +69,6 @@ class BuyTicketBuyTicketControllerTest {
 
         }
 
-        @Override
-        public void presentTicketNullRequest() {
-
-        }
-
-        @Override
-        public void presentTicketInvalidRequest(TicketRequest request) {
-
-        }
 
         @Override
         public void presentCinemaListNullRequest() {
@@ -137,6 +126,11 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
+        public void presentTicket(TicketDto ticketDto) {
+
+        }
+
+        @Override
         public void presentPayRepositoryException(String message) {
 
         }
@@ -151,10 +145,6 @@ class BuyTicketBuyTicketControllerTest {
 
         }
 
-        @Override
-        public void presentTicketRepositoryException(String message) {
-
-        }
 
         @Override
         public void presentProjectionListRepositoryException(String message) {

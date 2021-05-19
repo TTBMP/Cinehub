@@ -16,7 +16,6 @@ public interface BuyTicketUseCase extends UseCase {
 
     void getSeatList(SeatListRequest request);
 
-    void createTicket(TicketRequest request);
 
     void pay(PaymentRequest request);
 

@@ -1,32 +1,79 @@
 package com.ttbmp.cinehub.app.usecase.buyticket.request;
 
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
+
+import java.time.LocalDate;
 
 /**
  * @author Ivan Palmieri
  */
-public class PaymentRequest extends Request {
+public class PaymentRequest extends AuthenticatedRequest {
 
     public static final Request.Error MISSING_EMAIL_ERROR = new Request.Error("Email can't be null");
-    public static final Request.Error MISSING_CINEMA_ERROR = new Request.Error("Cinema can't be null");
     public static final Request.Error MISSING_CREDIT_CARD_ERROR = new Request.Error("Credit card can't be null");
+    public static final Request.Error LENGTH_CVV_CREDIT_CARD_ERROR = new Request.Error("The CVV must be three numbers in length");
+    public static final Request.Error EXPIRATION_CREDIT_CARD_ERROR = new Request.Error("You cannot select a date in the past");
+    public static final Request.Error EMAIL_ERROR = new Request.Error("The email entered is syntactically incorrect");
+    public static final Request.Error CREDIT_CARD_LENGTH_ERROR = new Request.Error("The credit card must have a minimum length of 12 characters and a maximum of 16 characters");
+    public static final Request.Error CVV_LETTERS_ERROR = new Request.Error("The CVV cannot contain letters");
+    public static final Request.Error NUMBER_OF_CARD_LETTERS_ERROR = new Request.Error("The number of card cannot contain letters");
+    public static final Request.Error MISSING_OPTION_ONE_ERROR = new Request.Error("Option one can't be null");
+    public static final Request.Error MISSING_OPTION_TWO_ERROR = new Request.Error("Option two can't be null");
+    public static final Request.Error MISSING_OPTION_THREE_ERROR = new Request.Error("Option three can't be null");
+
+
+
 
     private int projectionId;
     private int seatId;
-    private long ticketPrice;
     private String email;
     private String creditCardNumber;
     private String creditCardCvv;
     private String creditCardExpirationDate;
+    private Boolean openBarOption;
+    private Boolean magicBoxOption;
+    private Boolean skipLineOption;
 
-    public PaymentRequest(int projectionId, int seatId, long ticketPrice, String email, String creditCardNumber, String creditCardCvv, String creditCardExpirationDate) {
+
+    public PaymentRequest(String sessionToken,
+                          int projectionId,
+                          int seatId,
+                          String email, String creditCardNumber, String creditCardCvv, String creditCardExpirationDate, Boolean openBarOption, Boolean magicBoxOption, Boolean skipLineOption) {
+        super(sessionToken);
         this.projectionId = projectionId;
         this.seatId = seatId;
-        this.ticketPrice = ticketPrice;
         this.email = email;
         this.creditCardNumber = creditCardNumber;
         this.creditCardCvv = creditCardCvv;
         this.creditCardExpirationDate = creditCardExpirationDate;
+        this.openBarOption = openBarOption;
+        this.magicBoxOption = magicBoxOption;
+        this.skipLineOption = skipLineOption;
+    }
+
+    public Boolean getOpenBarOption() {
+        return openBarOption;
+    }
+
+    public void setOpenBarOption(Boolean openBarOption) {
+        this.openBarOption = openBarOption;
+    }
+
+    public Boolean getMagicBoxOption() {
+        return magicBoxOption;
+    }
+
+    public void setMagicBoxOption(Boolean magicBoxOption) {
+        this.magicBoxOption = magicBoxOption;
+    }
+
+    public Boolean getSkipLineOption() {
+        return skipLineOption;
+    }
+
+    public void setSkipLineOption(Boolean skipLineOption) {
+        this.skipLineOption = skipLineOption;
     }
 
     public int getProjectionId() {
@@ -45,13 +92,6 @@ public class PaymentRequest extends Request {
         this.seatId = seatId;
     }
 
-    public long getTicketPrice() {
-        return ticketPrice;
-    }
-
-    public void setTicketPrice(long ticketPrice) {
-        this.ticketPrice = ticketPrice;
-    }
 
     public String getEmail() {
         return email;
@@ -87,11 +127,39 @@ public class PaymentRequest extends Request {
 
     @Override
     public void onValidate() {
-        if (email == null) {
-            addError(MISSING_EMAIL_ERROR);
+        if (creditCardCvv.length()!=3) {
+            addError(LENGTH_CVV_CREDIT_CARD_ERROR);
         }
-        if (creditCardNumber == null) {
-            addError(MISSING_CREDIT_CARD_ERROR);
+        if (LocalDate.parse(creditCardExpirationDate).isBefore(LocalDate.now())) {
+            addError(EXPIRATION_CREDIT_CARD_ERROR);
+        }
+        if(!creditCardCvv.matches("[0-9]+")){
+            addError(CVV_LETTERS_ERROR);
+        }
+        if(!creditCardNumber.matches("[0-9]+")){
+            addError(NUMBER_OF_CARD_LETTERS_ERROR);
+        }
+        if(creditCardNumber.length()<12||creditCardNumber.length()>16){
+            addError(CREDIT_CARD_LENGTH_ERROR);
+        }
+        boolean value = false;
+        for(int i=0; i<email.length();i++){
+            if (email.charAt(i) == '@') {
+                value = true;
+                break;
+            }
+        }
+        if(!value){
+            addError(EMAIL_ERROR);
+        }
+        if (magicBoxOption == null) {
+            addError(MISSING_OPTION_ONE_ERROR);
+        }
+        if (openBarOption == null) {
+            addError(MISSING_OPTION_TWO_ERROR);
+        }
+        if (skipLineOption == null) {
+            addError(MISSING_OPTION_THREE_ERROR);
         }
     }
 

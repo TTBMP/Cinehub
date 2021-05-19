@@ -6,6 +6,7 @@ import com.ttbmp.cinehub.app.usecase.buyticket.request.CinemaListRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.ProjectionListRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -19,21 +20,28 @@ public class ChooseCinemaViewController {
 
     @PostMapping("/choose_cinema")
     public String chooseCinema(
+            @CookieValue(value = "session") String sessionToken,
             @ModelAttribute("payment_form") PaymentForm paymentForm,
             Model model) {
         model.addAttribute("payment_form", paymentForm);
         BuyTicketUseCase useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
-        useCase.getCinemaList(new CinemaListRequest(paymentForm.getMovie().getId(), paymentForm.getDate()));
+        useCase.getCinemaList(new CinemaListRequest(
+                sessionToken,
+                paymentForm.getMovie().getId(),
+                paymentForm.getDate()
+        ));
         return "buy_ticket/choose_cinema";
     }
 
     @PostMapping("/choose_projection")
     public String chooseProjection(
+            @CookieValue(value = "session") String sessionToken,
             @ModelAttribute("payment_form") PaymentForm paymentForm,
             Model model) {
         model.addAttribute("payment_form", paymentForm);
         BuyTicketUseCase useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
         useCase.getProjectionList(new ProjectionListRequest(
+                sessionToken,
                 paymentForm.getMovie().getId(),
                 paymentForm.getCinema().getId(),
                 LocalDate.parse(paymentForm.getDate())
