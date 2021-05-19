@@ -7,7 +7,6 @@ import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
 import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.Projection;
-import com.ttbmp.cinehub.domain.Seat;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 import java.util.ArrayList;
@@ -72,10 +71,6 @@ public class MockTicketRepository implements TicketRepository {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public void checkTicketExistence(Seat seat, Projection projection) {
-    }
-
     public static class TicketData {
 
         private int id;
@@ -91,7 +86,6 @@ public class MockTicketRepository implements TicketRepository {
             this.projectionId = projectionId;
             this.seatId = seatId;
         }
-
 
         public int getId() {
             return id;

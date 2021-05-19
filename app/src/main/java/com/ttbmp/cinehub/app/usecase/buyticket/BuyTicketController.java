@@ -17,7 +17,10 @@ import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.service.security.SecurityService;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
-import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
+import com.ttbmp.cinehub.app.usecase.buyticket.response.CinemaListResponse;
+import com.ttbmp.cinehub.app.usecase.buyticket.response.MovieListResponse;
+import com.ttbmp.cinehub.app.usecase.buyticket.response.NumberOfSeatsResponse;
+import com.ttbmp.cinehub.app.usecase.buyticket.response.ProjectionListResponse;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.domain.security.Permission;
@@ -145,7 +148,6 @@ public class BuyTicketController implements BuyTicketUseCase {
     }
 
 
-
     @Override
     public void pay(PaymentRequest request) {
         var permissions = new Permission[]{Permission.BUY_TICKET};
@@ -154,33 +156,34 @@ public class BuyTicketController implements BuyTicketUseCase {
             var customer = customerRepository.getCustomer(securityService.authenticate("PROJECTIONIST").getId());
             var projection = projectionRepository.getProjection(request.getProjectionId());
             var seat = seatRepository.getSeat(request.getSeatId());
-            ticketRepository.checkTicketExistence(seat,projection); //Controllo l'esistenza passata del biglietto
+            if (projection.isBooked(seat)) {
+                // TODO: handle the occurrence of booking a seat already booked
+            } else {
+                //-DECORATOR-//
+                var ticket = new Ticket(0, projection.getBasePrice(), customer, seat, projection); // Ticket di base
 
-            //-DECORATOR-//
-            var ticket = new Ticket(0, projection.getBasePrice(), customer, seat, projection); // Ticket di base
-
-            if (Boolean.TRUE.equals(request.getOpenBarOption())) {
-                ticket = new TicketOpenBar(ticket);
+                if (Boolean.TRUE.equals(request.getOpenBarOption())) {
+                    ticket = new TicketOpenBar(ticket);
+                }
+                if (Boolean.TRUE.equals(request.getMagicBoxOption())) {
+                    ticket = new TicketMagicBox(ticket);
+                }
+                if (Boolean.TRUE.equals(request.getSkipLineOption())) {
+                    ticket = new TicketSkipLine(ticket);
+                }
+                //---------//
+                paymentService.pay(new PayServiceRequest(
+                        customer.getEmail(),
+                        customer.getName(),
+                        request.getCreditCardNumber(),
+                        ticket.getPrice(),
+                        request.getCreditCardCvv(),
+                        request.getCreditCardExpirationDate()
+                ));
+                ticketRepository.saveTicket(ticket);
+                emailService.sendMail(new EmailServiceRequest(request.getEmail(), "Payment receipt"));
+                presenter.presentTicket(TicketDataMapper.mapToDto(ticket));
             }
-            if (Boolean.TRUE.equals(request.getMagicBoxOption())) {
-                ticket = new TicketMagicBox(ticket);
-            }
-            if (Boolean.TRUE.equals(request.getSkipLineOption())) {
-                ticket = new TicketSkipLine(ticket);
-            }
-            //---------//
-            paymentService.pay(new PayServiceRequest(
-                    customer.getEmail(),
-                    customer.getName(),
-                    request.getCreditCardNumber(),
-                    ticket.getPrice(),
-                    request.getCreditCardCvv(),
-                    request.getCreditCardExpirationDate()
-            ));
-
-            ticketRepository.saveTicket(ticket);
-            emailService.sendMail(new EmailServiceRequest(request.getEmail(), "Payment receipt"));
-            presenter.presentTicket(TicketDataMapper.mapToDto(ticket));
         } catch (Request.NullRequestException e) {
             presenter.presentPayNullRequest();
         } catch (Request.InvalidRequestException e) {
