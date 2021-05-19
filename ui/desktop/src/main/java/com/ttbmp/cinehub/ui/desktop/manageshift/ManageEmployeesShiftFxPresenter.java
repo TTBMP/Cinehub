@@ -5,9 +5,13 @@ import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
+import com.ttbmp.cinehub.ui.desktop.manageshift.modify.ModifyShiftView;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.Day;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.EmployeeShiftWeek;
+import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
+import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavDestination;
 
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
@@ -126,6 +130,16 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     public void presentCreateShift(CreateShiftResponse response) {
         viewModel.setErrorAssignVisibility(false);
         viewModel.setShiftCreated(response.getShiftDto());
+    }
+
+    @Override
+    public void presentInvalidGetCinemaListRequest(GetCinemaListRequest request) {
+
+    }
+
+    @Override
+    public void presentCinemaListNullRequest() {
+        viewModel.errorDaoProperty().setValue("Error with operation get cinema list");
     }
 
     @Override
@@ -264,6 +278,11 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     @Override
     public void presentRepositoryError(RepositoryException e) {
         viewModel.errorDaoProperty().setValue(e.getMessage());
+    }
+
+    @Override
+    public void presentUnauthenticatedRequest() {
+
     }
 
 }

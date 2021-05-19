@@ -109,6 +109,17 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     }
 
     @Override
+    public void presentInvalidGetCinemaListRequest(GetCinemaListRequest request) {
+
+    }
+
+    @Override
+    public void presentCinemaListNullRequest() {
+        model.addAttribute(ERROR, true);
+        model.addAttribute(ERROR_TEXT, "Error with operation get Cinema list");
+    }
+
+    @Override
     public void presentCreateShiftError(Throwable error) {
         presentError(error);
     }
@@ -124,7 +135,7 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     @Override
     public void presentEmployeeListNullRequest() {
         model.addAttribute(ERROR, true);
-        model.addAttribute(ERROR_TEXT, "Error with operation get Employee list shift");
+        model.addAttribute(ERROR_TEXT, "Error with operation get Employee list");
     }
 
     @Override
@@ -267,6 +278,11 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     @Override
     public void presentRepositoryError(RepositoryException e) {
         presentError(e);
+    }
+
+    @Override
+    public void presentUnauthenticatedRequest() {
+
     }
 
     private void presentError(Throwable error) {

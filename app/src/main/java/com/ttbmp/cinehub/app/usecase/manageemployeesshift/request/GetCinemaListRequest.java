@@ -10,5 +10,6 @@ public class GetCinemaListRequest extends AuthenticatedRequest {
 
     @Override
     protected void onValidate() {
+
     }
 }

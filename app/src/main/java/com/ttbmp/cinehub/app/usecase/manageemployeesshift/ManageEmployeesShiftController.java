@@ -69,13 +69,13 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (RepositoryException e) {
             manageEmployeesShiftPresenter.presentRepositoryError(e);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
         } catch (Request.NullRequestException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentCinemaListNullRequest();
         } catch (Request.InvalidRequestException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentInvalidGetCinemaListRequest(request);
         }
     }
 
@@ -96,9 +96,9 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (Request.InvalidRequestException e) {
             manageEmployeesShiftPresenter.presentInvalidEmployeeListRequest(request);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
         }
 
     }
@@ -120,9 +120,9 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (RepositoryException e) {
             manageEmployeesShiftPresenter.presentRepositoryError(e);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
         }
     }
 
@@ -158,9 +158,9 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (RepositoryException e) {
             manageEmployeesShiftPresenter.presentRepositoryError(e);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
         }
     }
 
@@ -184,9 +184,9 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (RepositoryException e) {
             manageEmployeesShiftPresenter.presentRepositoryError(e);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
         }
     }
 
@@ -241,9 +241,9 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (RepositoryException e) {
             manageEmployeesShiftPresenter.presentRepositoryError(e);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
         }
     }
 
@@ -279,9 +279,9 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (RepositoryException e) {
             manageEmployeesShiftPresenter.presentRepositoryError(e);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            e.printStackTrace();
+            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
         }
     }
 

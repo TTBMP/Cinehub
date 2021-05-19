@@ -287,6 +287,16 @@ class ManageEmployeesShiftControllerTest {
         }
 
         @Override
+        public void presentInvalidGetCinemaListRequest(GetCinemaListRequest request) {
+
+        }
+
+        @Override
+        public void presentCinemaListNullRequest() {
+
+        }
+
+        @Override
         public void presentCreateShiftError(Throwable error) {
 
         }
@@ -358,6 +368,11 @@ class ManageEmployeesShiftControllerTest {
 
         @Override
         public void presentRepositoryError(RepositoryException e) {
+
+        }
+
+        @Override
+        public void presentUnauthenticatedRequest() {
 
         }
 

@@ -40,7 +40,6 @@ public interface BuyTicketPresenter {
 
     void presentSeatListInvalidRequest(SeatListRequest request);
 
-
     void presentPayNullRequest();
 
     void presentPayInvalidRequest(PaymentRequest request);

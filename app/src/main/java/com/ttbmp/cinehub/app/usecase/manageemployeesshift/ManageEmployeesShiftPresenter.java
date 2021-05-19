@@ -24,6 +24,10 @@ public interface ManageEmployeesShiftPresenter {
 
     void presentCreateShift(CreateShiftResponse response);
 
+    void presentInvalidGetCinemaListRequest(GetCinemaListRequest request);
+
+    void presentCinemaListNullRequest();
+
     void presentCreateShiftError(Throwable error);
 
     void presentInvalidEmployeeListRequest(GetEmployeeListRequest request);
@@ -53,5 +57,7 @@ public interface ManageEmployeesShiftPresenter {
     void presentGetShiftListNullRequest();
 
     void presentRepositoryError(RepositoryException e);
+
+    void presentUnauthenticatedRequest();
 
 }

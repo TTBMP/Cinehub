@@ -36,6 +36,7 @@ public class ShowShiftViewController {
     @GetMapping("/manage_employee_shift")
     public String populateCinema(@CookieValue(value = "session") String sessionToken,
                                  Model model) {
+
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         model.addAttribute("cinemaSelected", false);
