@@ -4,6 +4,7 @@ import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.CreateShiftRequest;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetCinemaListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetEmployeeListRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewShiftForm;
 import org.springframework.stereotype.Controller;
@@ -35,12 +36,13 @@ public class AssignProjectionistShiftViewController {
     }
 
     @GetMapping("/assign_projectionist_shift")
-    public String assignProjectionistShift(@RequestParam(value = "idCinema") int cinemaId, Model model) {
+    public String assignProjectionistShift(@CookieValue(value = "session") String sessionToken,
+                                           @RequestParam(value = "idCinema") int cinemaId, Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
-        useCase.getCinemaList();
+        useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken,selectedCinema));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var shiftRequest = new NewShiftForm();
         model.addAttribute(ASSIGN_REQUEST, shiftRequest);
@@ -48,15 +50,17 @@ public class AssignProjectionistShiftViewController {
     }
 
     @PostMapping("/assign_projectionist_shift")
-    public String assignProjShift(@RequestParam(value = "idCinema") int cinemaId,
+    public String assignProjShift(@CookieValue(value = "session") String sessionToken,
+                                  @RequestParam(value = "idCinema") int cinemaId,
                                   @ModelAttribute(ASSIGN_REQUEST) NewShiftForm shiftRequest,
                                   Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
-        useCase.getCinemaList();
+        useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken,selectedCinema));
         useCase.createShift(new CreateShiftRequest(
+                sessionToken,
                 shiftRequest.getEmployee().getId(),
                 LocalDate.parse(shiftRequest.getDate()),
                 shiftRequest.getStart(),

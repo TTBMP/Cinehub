@@ -43,7 +43,12 @@ public class Role {
 
     public static final Role MANAGER_ROLE = new Role(
             new Permission[]{
-                    SHOW_MANAGE_EMPLOYEE_SHIFT_TAB
+                    SHOW_MANAGE_EMPLOYEE_SHIFT_TAB,
+                    GET_EMPLOYEE_LIST,
+                    GET_SHIFT_LIST,
+                    ASSIGN_SHIFT,
+                    MODIFY_SHIFT,
+                    DELETE_SHIFT
             }
     );
 

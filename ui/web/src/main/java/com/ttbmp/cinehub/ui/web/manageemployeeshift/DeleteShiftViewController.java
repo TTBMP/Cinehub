@@ -6,6 +6,7 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,10 +30,11 @@ public class DeleteShiftViewController {
     }
 
     @GetMapping("/delete_shift")
-    public String deleteShift(@RequestParam("shiftId") int shiftId,
+    public String deleteShift(@CookieValue(value = "session") String sessionToken,
+                              @RequestParam("shiftId") int shiftId,
                               Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-        useCase.deleteShift(new ShiftRequest(shiftId));
+        useCase.deleteShift(new ShiftRequest(sessionToken,shiftId));
         return "/delete_shift";
     }
 }

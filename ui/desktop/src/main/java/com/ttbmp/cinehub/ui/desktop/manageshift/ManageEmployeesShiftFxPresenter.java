@@ -235,6 +235,9 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_HALL)) {
             viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_HALL.getMessage());
         }
+        if (request.getErrorList().contains(ShiftRepeatRequest.PERIOD_ERROR)) {
+            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.PERIOD_ERROR.getMessage());
+        }
         viewModel.errorAssignVisibilityProperty().setValue(true);
     }
 

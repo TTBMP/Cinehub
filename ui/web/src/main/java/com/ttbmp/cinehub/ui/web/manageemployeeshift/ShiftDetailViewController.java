@@ -5,12 +5,14 @@ import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetCinemaListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetEmployeeListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftModifyRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewShiftForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +38,8 @@ public class ShiftDetailViewController {
     }
 
     @PostMapping("/shift_detail")
-    public String shiftDetail(@ModelAttribute("selectedShift") NewShiftForm shift,
+    public String shiftDetail(@CookieValue(value = "session") String sessionToken,
+                              @ModelAttribute("selectedShift") NewShiftForm shift,
                               Model model) {
 
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
@@ -45,21 +48,22 @@ public class ShiftDetailViewController {
         model.addAttribute("data", LocalDate.parse(shift.getDate()));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         model.addAttribute("idCinema", shift.getEmployee().getCinema().getId());
-        useCase.getCinemaList();
+        useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
 
         if (shift.isChange()) {
 
             if (shift.getHall() != null) {
                 model.addAttribute("selectedHallId", shift.getHall().getId());
             }
-            useCase.getCinemaList();
+            useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
             var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
             var selectedHall = (HallDto) model.getAttribute("selectedHall");
             model.addAttribute("selectedEmployeeId", shift.getEmployee().getId());
-            useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema));
+            useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken,selectedCinema));
             var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
 
             useCase.modifyShift(new ShiftModifyRequest(
+                    sessionToken,
                     selectedEmployee,
                     shift.getShiftId(),
                     LocalDate.parse(shift.getDate()),

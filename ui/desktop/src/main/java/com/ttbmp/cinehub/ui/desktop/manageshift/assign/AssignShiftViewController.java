@@ -6,6 +6,7 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUs
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ShiftRepeatingOption;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.CreateShiftRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftRepeatRequest;
+import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.manageshift.ManageEmployeesShiftViewModel;
 import com.ttbmp.cinehub.ui.desktop.manageshift.components.ComboBoxOptionValueFactory;
 import com.ttbmp.cinehub.ui.desktop.manageshift.components.HallFactory;
@@ -131,6 +132,7 @@ public class AssignShiftViewController extends ViewController {
 
         if (!viewModel.isRepeatVisibility()) {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(
+                    CinehubApplication.getSessionToken(),
                     viewModel.getSelectedDayWeek().getEmployee().getId(),
                     viewModel.getSelectedDayWeek().getDate(),
                     viewModel.getStartSpinnerTime().withNano(0),
@@ -139,6 +141,7 @@ public class AssignShiftViewController extends ViewController {
         } else {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).saveRepeatedShift(
                     new ShiftRepeatRequest(
+                            CinehubApplication.getSessionToken(),
                             viewModel.getSelectedDayWeek().getDate(),
                             viewModel.getSelectedEndRepeatDay(),
                             viewModel.getSelectedOption().toString(),

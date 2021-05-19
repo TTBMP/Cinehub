@@ -4,6 +4,7 @@ import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.app.dto.UsherDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftModifyRequest;
+import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.manageshift.ManageEmployeesShiftViewModel;
 import com.ttbmp.cinehub.ui.desktop.manageshift.components.HallFactory;
 import com.ttbmp.cinehub.ui.desktop.manageshift.components.SpinnerEndValueFactory;
@@ -85,12 +86,12 @@ public class ModifyShiftViewController extends ViewController {
         } else {
             viewModel.getHallList().setAll(viewModel.getSelectedShift().getEmployee().getCinema().getHalList());
             hallComboBox.setItems(viewModel.getHallList());
-            viewModel.selectedHallProperty().bind(hallComboBox.getSelectionModel().selectedItemProperty());
+            hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
+
         }
         hallComboBox.setButtonCell(new HallFactory(null));
         hallComboBox.setCellFactory(HallFactory::new);
         hallComboBox.getSelectionModel().selectFirst();
-        hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
 
         nameLabel.textProperty().bind(viewModel.selectedShiftEmployeeNameProperty());
         surnameLabel.textProperty().bind(viewModel.selectedShiftEmployeeSurnameProperty());
@@ -122,6 +123,7 @@ public class ModifyShiftViewController extends ViewController {
 
         activity.getUseCase(ManageEmployeesShiftUseCase.class).modifyShift(
                 new ShiftModifyRequest(
+                        CinehubApplication.getSessionToken(),
                         viewModel.getSelectedShift().getEmployee(),
                         viewModel.getSelectedShift().getId(),
                         viewModel.getSelectedDays(),
