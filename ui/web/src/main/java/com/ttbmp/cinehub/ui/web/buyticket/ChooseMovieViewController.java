@@ -20,7 +20,7 @@ public class ChooseMovieViewController {
 
     @GetMapping("/choose_movie")
     public String getMoviePost(
-            @CookieValue(value = "session") String sessionToken,
+            @CookieValue(value = "session", required = false) String sessionToken,
             @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, Model model) {
         if (date == null) {
             date = LocalDate.now();

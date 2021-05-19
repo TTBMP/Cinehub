@@ -21,15 +21,18 @@ public class ViewPersonalScheduleViewController {
 
     @GetMapping("/schedule")
     public String showShiftList(
-            @CookieValue(value = "session") String sessionToken,
+            @CookieValue(value = "session", required = false) String sessionToken,
             @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
             Model model) {
-        var useCase = new ViewPersonalScheduleHandler(new ViewPersonalSchedulePresenterWeb(model));
+        if (sessionToken == null) {
+            return "login";
+        }
         if (date == null) {
             date = LocalDate.now();
         }
         model.addAttribute("date", date);
         model.addAttribute("selectedShift", new Shift());
+        var useCase = new ViewPersonalScheduleHandler(new ViewPersonalSchedulePresenterWeb(model));
         useCase.getShiftList(new ShiftListRequest(
                 sessionToken,
                 date.with(TemporalAdjusters.firstDayOfMonth()),
@@ -39,15 +42,24 @@ public class ViewPersonalScheduleViewController {
     }
 
     @PostMapping("/schedule/detail")
-    public String showShiftDetail(@ModelAttribute Shift shift, Model model) {
+    public String showShiftDetail(
+            @CookieValue(value = "session", required = false) String sessionToken,
+            @ModelAttribute Shift shift,
+            Model model) {
+        if (sessionToken == null) {
+            return "login";
+        }
         model.addAttribute("shift", shift);
         return ErrorHelper.returnView(model, "schedule_detail");
     }
 
     @PostMapping("/schedule/detail/projectionist")
     public String showProjectionistShiftDetail(
-            @CookieValue(value = "session") String sessionToken,
+            @CookieValue(value = "session", required = false) String sessionToken,
             @ModelAttribute Shift shift, Model model) {
+        if (sessionToken == null) {
+            return "login";
+        }
         var useCase = new ViewPersonalScheduleHandler(new ViewPersonalSchedulePresenterWeb(model));
         model.addAttribute("shift", shift);
         useCase.getShiftProjectionList(new ProjectionListRequest(

@@ -20,7 +20,7 @@ public class ChooseCinemaViewController {
 
     @PostMapping("/choose_cinema")
     public String chooseCinema(
-            @CookieValue(value = "session") String sessionToken,
+            @CookieValue(value = "session", required = false) String sessionToken,
             @ModelAttribute("payment_form") PaymentForm paymentForm,
             Model model) {
         model.addAttribute("payment_form", paymentForm);
@@ -35,7 +35,7 @@ public class ChooseCinemaViewController {
 
     @PostMapping("/choose_projection")
     public String chooseProjection(
-            @CookieValue(value = "session") String sessionToken,
+            @CookieValue(value = "session", required = false) String sessionToken,
             @ModelAttribute("payment_form") PaymentForm paymentForm,
             Model model) {
         model.addAttribute("payment_form", paymentForm);
