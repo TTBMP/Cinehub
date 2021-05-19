@@ -22,9 +22,6 @@ import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.domain.security.Permission;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
-import com.ttbmp.cinehub.domain.ticket.decorator.TicketMagicBox;
-import com.ttbmp.cinehub.domain.ticket.decorator.TicketOpenBar;
-import com.ttbmp.cinehub.domain.ticket.decorator.TicketSkipLine;
 
 /**
  * @author Ivan Palmieri
@@ -150,21 +147,17 @@ public class BuyTicketController implements BuyTicketUseCase {
     public void pay(PaymentRequest request) {
         var permissions = new Permission[]{Permission.BUY_TICKET};
         try {
-
             AuthenticatedRequest.validate(request, securityService, permissions);
             var customer = customerRepository.getCustomer(securityService.authenticate("PROJECTIONIST").getId());
             var projection = projectionRepository.getProjection(request.getProjectionId());
             var seat = seatRepository.getSeat(request.getSeatId());
             var ticket = new Ticket(0, projection.getBasePrice(), customer, seat, projection); // Ticket di base
-            if (Boolean.TRUE.equals(request.getOpenBarOption())) {
-                ticket = new TicketOpenBar(ticket);
-            }
-            if (Boolean.TRUE.equals(request.getMagicBoxOption())) {
-                ticket = new TicketMagicBox(ticket);
-            }
-            if (Boolean.TRUE.equals(request.getSkipLineOption())) {
-                ticket = new TicketSkipLine(ticket);
-            }
+            ticket = new TicketOperation().calculatePrice(
+                    ticket,
+                    request.getOpenBarOption(),
+                    request.getMagicBoxOption(),
+                    request.getSkipLineOption()
+            );
             paymentService.pay(new PayServiceRequest(
                     customer.getEmail(),
                     customer.getName(),
@@ -173,7 +166,7 @@ public class BuyTicketController implements BuyTicketUseCase {
                     request.getCreditCardCvv(),
                     request.getCreditCardExpirationDate()
             ));
-            //TODO controlli sui ticket duplicati
+            ticketRepository.checkTicketExistence(seat,projection); //Controllo l'esistenza passata del biglietto
             ticketRepository.saveTicket(ticket);
             emailService.sendMail(new EmailServiceRequest(request.getEmail(), "Payment receipt"));
             presenter.presentTicket(TicketDataMapper.mapToDto(ticket));

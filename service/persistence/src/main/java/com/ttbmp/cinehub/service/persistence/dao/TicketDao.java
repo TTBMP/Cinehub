@@ -19,6 +19,12 @@ public interface TicketDao {
     @Query("SELECT * FROM biglietto WHERE biglietto.id_utente = :customerId")
     List<Ticket> getTicketList(@Parameter(name = "customerId") @NotNull String customerId) throws DaoMethodException;
 
+    @Query("SELECT * FROM biglietto WHERE biglietto.id_posto = :idSeat AND biglietto.id_proiezione = :idProjection")
+    Ticket getTicketById(@Parameter(name = "idSeat") @NotNull int idSeat,
+                         @Parameter(name = "idProjection") @NotNull int idProjection) throws DaoMethodException;
+
+
+
     @Insert
     void insert(@NotNull Ticket ticket) throws DaoMethodException;
 

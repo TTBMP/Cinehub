@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
 import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.Projection;
+import com.ttbmp.cinehub.domain.Seat;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
 import com.ttbmp.cinehub.service.persistence.dao.TicketDao;
@@ -75,6 +76,18 @@ public class JdbcTicketRepository implements TicketRepository {
                     .collect(Collectors.toList());
         } catch (DaoMethodException e) {
             return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public void checkTicketExistence(Seat seat, Projection projection) throws RepositoryException {
+        try {
+            var ticket = getTicketDao().getTicketById(seat.getId(),projection.getId());
+            if(ticket!=null){
+                throw new RepositoryException("Ticket must be bought");
+            }
+        } catch (DaoMethodException e) {
+            e.printStackTrace();
         }
     }
 
