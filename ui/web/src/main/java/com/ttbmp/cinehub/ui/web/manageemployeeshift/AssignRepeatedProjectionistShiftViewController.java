@@ -46,7 +46,7 @@ public class AssignRepeatedProjectionistShiftViewController {
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken,selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var request = new NewRepeatedShiftForm();
@@ -66,7 +66,7 @@ public class AssignRepeatedProjectionistShiftViewController {
         model.addAttribute("selectedHallId", request.getHallId());
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken,selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
         var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
         var selectedHall = (HallDto) model.getAttribute("selectedHall");
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());

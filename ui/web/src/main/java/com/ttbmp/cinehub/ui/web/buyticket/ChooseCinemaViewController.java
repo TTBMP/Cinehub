@@ -48,4 +48,5 @@ public class ChooseCinemaViewController {
         ));
         return "buy_ticket/choose_cinema";
     }
+
 }

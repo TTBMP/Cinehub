@@ -23,7 +23,6 @@ public class AssignUsherShiftViewController {
     private static final String ASSIGN_REQUEST = "assignRequest";
     private static final String SHIFT_ASSIGNED = "/shift_assigned";
 
-
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
@@ -42,7 +41,7 @@ public class AssignUsherShiftViewController {
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken,selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var shiftRequest = new NewShiftForm();
         model.addAttribute(ASSIGN_REQUEST, shiftRequest);
@@ -59,7 +58,7 @@ public class AssignUsherShiftViewController {
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken,selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         useCase.createShift(new CreateShiftRequest(
                 sessionToken,

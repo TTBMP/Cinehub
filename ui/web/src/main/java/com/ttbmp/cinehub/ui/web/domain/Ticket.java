@@ -12,7 +12,6 @@ public class Ticket {
     private int hallId;
     private String date;
 
-
     public Boolean getOption1() {
         return option1;
     }

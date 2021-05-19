@@ -26,11 +26,10 @@ public class ChooseMovieViewController {
             date = LocalDate.now();
         }
         BuyTicketUseCase buyTicketUseCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
-        buyTicketUseCase.getMovieList(new MovieListRequest( sessionToken,date));
+        buyTicketUseCase.getMovieList(new MovieListRequest(sessionToken, date));
         model.addAttribute("payment_form", new PaymentForm());
         model.addAttribute("selected_date", date);
         return "buy_ticket/choose_movie";
     }
-
 
 }

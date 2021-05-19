@@ -9,8 +9,6 @@ public class ModifyShiftViewController {
 
     @PostMapping("/shift_modify")
     public String shiftModify(Model model) {
-
-
         return "/shift_detail";
     }
 }

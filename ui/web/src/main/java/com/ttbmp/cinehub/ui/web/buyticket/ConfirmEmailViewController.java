@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Objects;
-
 /**
  * @author Palmieri Ivan
  */
@@ -37,7 +35,7 @@ public class ConfirmEmailViewController {
                 paymentForm.getOption3()
         ));
         var errorMessage = model.getAttribute("paymentError");
-        if (errorMessage!=null) {
+        if (errorMessage != null) {
             return "buy_ticket/payment";
         }
         return "buy_ticket/confirm_email";

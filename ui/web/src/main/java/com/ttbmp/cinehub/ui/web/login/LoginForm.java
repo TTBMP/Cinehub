@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.ui.web.login;
 
 public class LoginForm {
+
     String email;
     String password;
 
@@ -27,4 +28,5 @@ public class LoginForm {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

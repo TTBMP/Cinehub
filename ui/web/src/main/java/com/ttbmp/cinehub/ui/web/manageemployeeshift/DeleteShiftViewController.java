@@ -34,7 +34,7 @@ public class DeleteShiftViewController {
                               @RequestParam("shiftId") int shiftId,
                               Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-        useCase.deleteShift(new ShiftRequest(sessionToken,shiftId));
+        useCase.deleteShift(new ShiftRequest(sessionToken, shiftId));
         return "/delete_shift";
     }
 }

@@ -20,8 +20,6 @@ public class PaymentForm {
     private String expirationDate;
     private String numberCard;
 
-
-
     public String getDate() {
         return date;
     }

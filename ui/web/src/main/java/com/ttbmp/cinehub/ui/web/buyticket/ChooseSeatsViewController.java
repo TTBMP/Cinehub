@@ -24,7 +24,7 @@ public class ChooseSeatsViewController {
         model.addAttribute("color", "color:" + "white");
         model.addAttribute("classValue", "material-icons");
         BuyTicketUseCase useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
-        useCase.getSeatList(new SeatListRequest( sessionToken,paymentForm.getProjection().getId()));
+        useCase.getSeatList(new SeatListRequest(sessionToken, paymentForm.getProjection().getId()));
         return "buy_ticket/choose_seats";
     }
 

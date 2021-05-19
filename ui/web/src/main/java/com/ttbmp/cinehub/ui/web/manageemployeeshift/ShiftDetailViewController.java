@@ -59,7 +59,7 @@ public class ShiftDetailViewController {
             var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
             var selectedHall = (HallDto) model.getAttribute("selectedHall");
             model.addAttribute("selectedEmployeeId", shift.getEmployee().getId());
-            useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken,selectedCinema));
+            useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
             var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
 
             useCase.modifyShift(new ShiftModifyRequest(
@@ -83,6 +83,5 @@ public class ShiftDetailViewController {
         return "/shift_detail";
 
     }
-
 
 }

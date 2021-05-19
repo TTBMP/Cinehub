@@ -27,7 +27,6 @@ public class AssignRepeatedUsherShiftViewController {
     private static final String SHIFT_ASSIGNED = "/shift_assigned";
     private static final String PREFERENCE_LIST = "preferenceList";
 
-
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
@@ -46,7 +45,7 @@ public class AssignRepeatedUsherShiftViewController {
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken,selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
         var request = new NewRepeatedShiftForm();
@@ -65,7 +64,7 @@ public class AssignRepeatedUsherShiftViewController {
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken,selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());

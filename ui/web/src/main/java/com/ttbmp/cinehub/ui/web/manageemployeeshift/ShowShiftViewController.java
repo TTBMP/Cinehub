@@ -8,7 +8,6 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetEmployeeLis
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetShiftListRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.GetCinemaForm;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewShiftForm;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -53,7 +52,7 @@ public class ShowShiftViewController {
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
         model.addAttribute("cinemaSelected", true);
-        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken,selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
         useCase.getShiftList(new GetShiftListRequest(
                 sessionToken,
                 selectedCinema,
