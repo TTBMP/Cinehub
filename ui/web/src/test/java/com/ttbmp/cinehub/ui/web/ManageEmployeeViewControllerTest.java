@@ -10,6 +10,8 @@ import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
@@ -31,15 +33,17 @@ class ManageEmployeeViewControllerTest {
     }
 
     @BeforeEach
-    void setUp() {
+    void setUp()  {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         driver.get("http://localhost:8080/");
         driver.manage().addCookie(new Cookie("session", "MANAGER"));
         driver.findElement(By.linkText("Manage employee shift")).click();
-        driver.findElement(By.id("date")).sendKeys( LocalDate.now().format(DateTimeFormatter.ofPattern("ddMMyyyy")) );
+        new WebDriverWait(driver, 5).until(ExpectedConditions.presenceOfElementLocated(By.id("select_date")));
+        driver.findElement(By.id("select_date")).sendKeys( LocalDate.now().format(DateTimeFormatter.ofPattern("ddMMyyyy")) );
         driver.findElement(By.id("search_shift_cinema")).click();
+        new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.id("1")));
         employee = driver.findElement(By.id("1"));
     }
 
