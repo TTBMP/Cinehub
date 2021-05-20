@@ -1,9 +1,10 @@
 package com.ttbmp.cinehub.app.usecase.buyticket;
 
-import com.ttbmp.cinehub.app.dto.TicketDto;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 
 /**
  * @author Ivan Palmieri
@@ -14,42 +15,40 @@ public interface BuyTicketPresenter {
 
     void presentMovieListNullRequest();
 
-    void presentMovieListInvalidRequest(MovieListRequest request);
+    void presentInvalidMovieListRequest(MovieListRequest request);
 
-    void presentMovieListRepositoryException(String message);
+    void presentRepositoryError(RepositoryException exception);
 
     void presentCinemaList(CinemaListResponse response);
 
     void presentCinemaListNullRequest();
 
-    void presentCinemaListInvalidRequest(CinemaListRequest request);
+    void presentInvalidCinemaListRequest(CinemaListRequest request);
 
-    void presentCinemaListRepositoryException(String message);
-
-    void presentProjectionList(ProjectionListResponse projectionTimeList);
+    void presentProjectionList(ProjectionListResponse response);
 
     void presentProjectionListNullRequest();
 
-    void presentProjectionListInvalidRequest(ProjectionListRequest request);
-
-    void presentProjectionListRepositoryException(String message);
+    void presentInvalidProjectionListRequest(ProjectionListRequest request);
 
     void presentSeatList(NumberOfSeatsResponse response);
 
     void presentSeatListNullRequest();
 
-    void presentSeatListInvalidRequest(SeatListRequest request);
+    void presentInvalidSeatListRequest(SeatListRequest request);
 
     void presentPayNullRequest();
 
-    void presentPayInvalidRequest(PaymentRequest request);
+    void presentInvalidPayRequest(PaymentRequest request);
 
-    void presentPayRepositoryException(String message);
+    void presentPayPaymentServiceException(PaymentServiceException exception);
 
-    void presentErrorByStripe(PaymentServiceException error);
+    void presentTicket(TicketResponse response);
 
-    void presentAuthenticationError();
+    void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException requestException);
 
-    void presentTicket(TicketDto ticketDto);
+    void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException requestException);
 
+
+    void presentSeatAlreadyOccupiedException(String exception);
 }

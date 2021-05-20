@@ -16,7 +16,7 @@ public class BuyTicketActivity extends Activity {
     public BuyTicketActivity() throws IOException {
         super(new ChooseMovieView());
         var viewModel = new BuyTicketViewModel();
-        BuyTicketPresenter presenter = new BuyTicketPresenterFx(viewModel);
+        BuyTicketPresenter presenter = new BuyTicketFxPresenter(viewModel);
         viewModelStore.put(BuyTicketViewModel.class, viewModel);
         useCaseFactory.put(BuyTicketUseCase.class, () -> new BuyTicketHandler(presenter));
     }

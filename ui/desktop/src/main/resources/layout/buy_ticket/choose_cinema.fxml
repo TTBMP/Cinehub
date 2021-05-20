@@ -46,7 +46,7 @@
                                 textOverrun="CLIP" BorderPane.alignment="CENTER"/>
                     </right>
                     <center>
-                        <Label fx:id="errorSectionLabel" maxWidth="1.7976931348623157E308"
+                        <Label fx:id="errorLabel" maxWidth="1.7976931348623157E308"
                                BorderPane.alignment="CENTER">
                             <BorderPane.margin>
                                 <Insets left="16.0" right="16.0"/>

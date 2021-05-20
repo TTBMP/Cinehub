@@ -50,7 +50,7 @@ public class PaymentViewController extends ViewController {
     private TextField cvvTextField;
 
     @FXML
-    private Label errorSectionLabel;
+    private Label errorLabel;
 
     @FXML
     private DatePicker fieldExpirationDatePicker;
@@ -74,36 +74,36 @@ public class PaymentViewController extends ViewController {
     private void bind() {
         confirmButton.disableProperty().bind(
                 viewModel.emailUserProperty().isNull().
-                        or(viewModel.txtCvvProperty().isNull().
-                                or(viewModel.numberOfCardUserProperty().isNull().
+                        or(viewModel.cvvProperty().isNull().
+                                or(viewModel.numberCardProperty().isNull().
                                     or(viewModel.expirationDateProperty().isNull())
                                 )
                         )
         );
         emailTextField.textProperty().bindBidirectional(viewModel.emailUserProperty());
-        numberOfCreditCardTextField.textProperty().bindBidirectional(viewModel.numberOfCardUserProperty());
-        cvvTextField.textProperty().bindBidirectional(viewModel.txtCvvProperty());
+        numberOfCreditCardTextField.textProperty().bindBidirectional(viewModel.numberCardProperty());
+        cvvTextField.textProperty().bindBidirectional(viewModel.cvvProperty());
         fieldExpirationDatePicker.valueProperty().bindBidirectional(viewModel.expirationDateProperty());
-        errorSectionLabel.textProperty().bindBidirectional(viewModel.paymentErrorProperty());
+        errorLabel.textProperty().bindBidirectional(viewModel.errorMessageProperty());
         fieldExpirationDatePicker.setDayCellFactory(CustomDateCell::new);
     }
 
 
     private void startPayment(ActionEvent actionEvent) {
-        viewModel.paymentErrorProperty().setValue(null);
+        viewModel.errorMessageProperty().setValue(null);
         activity.getUseCase(BuyTicketUseCase.class).pay(new PaymentRequest(
                 CinehubApplication.getSessionToken(),
                 viewModel.selectedProjectionProperty().getValue().getId(),
                 viewModel.selectedSeatProperty().getValue().getId(),
                 viewModel.emailUserProperty().getValue(),
-                viewModel.numberOfCardUserProperty().getValue(),
-                viewModel.txtCvvProperty().getValue(),
+                viewModel.numberCardProperty().getValue(),
+                viewModel.cvvProperty().getValue(),
                 String.valueOf(fieldExpirationDatePicker.getValue()),
                 viewModel.openBarOptionProperty().getValue(),
                 viewModel.magicBoxOptionProperty().getValue(),
                 viewModel.skipLineOptionProperty().getValue()
         ));
-        if(viewModel.paymentErrorProperty().getValue()==null){
+        if(viewModel.errorMessageProperty().getValue()==null){
             try {
                 navController.navigate(new NavDestination(new ConfirmEmailView()));
             } catch (IOException e) {

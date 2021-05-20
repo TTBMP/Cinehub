@@ -14,13 +14,9 @@ import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.app.service.payment.PayServiceRequest;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
-import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.service.security.SecurityService;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
-import com.ttbmp.cinehub.app.usecase.buyticket.response.CinemaListResponse;
-import com.ttbmp.cinehub.app.usecase.buyticket.response.MovieListResponse;
-import com.ttbmp.cinehub.app.usecase.buyticket.response.NumberOfSeatsResponse;
-import com.ttbmp.cinehub.app.usecase.buyticket.response.ProjectionListResponse;
+import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.domain.security.Permission;
@@ -68,9 +64,9 @@ public class BuyTicketController implements BuyTicketUseCase {
         } catch (Request.NullRequestException e) {
             presenter.presentMovieListNullRequest();
         } catch (Request.InvalidRequestException e) {
-            presenter.presentMovieListInvalidRequest(request);
+            presenter.presentInvalidMovieListRequest(request);
         } catch (RepositoryException e) {
-            presenter.presentMovieListRepositoryException(e.getMessage());
+            presenter.presentRepositoryError(e);
         }
     }
 
@@ -86,9 +82,9 @@ public class BuyTicketController implements BuyTicketUseCase {
         } catch (Request.NullRequestException e) {
             presenter.presentCinemaListNullRequest();
         } catch (Request.InvalidRequestException e) {
-            presenter.presentCinemaListInvalidRequest(request);
+            presenter.presentInvalidCinemaListRequest(request);
         } catch (RepositoryException e) {
-            presenter.presentCinemaListRepositoryException(e.getMessage());
+            presenter.presentRepositoryError(e);
         }
     }
 
@@ -105,9 +101,9 @@ public class BuyTicketController implements BuyTicketUseCase {
         } catch (Request.NullRequestException e) {
             presenter.presentProjectionListNullRequest();
         } catch (Request.InvalidRequestException e) {
-            presenter.presentProjectionListInvalidRequest(request);
+            presenter.presentInvalidProjectionListRequest(request);
         } catch (RepositoryException e) {
-            presenter.presentProjectionListRepositoryException(e.getMessage());
+            presenter.presentRepositoryError(e);
         }
     }
 
@@ -122,13 +118,13 @@ public class BuyTicketController implements BuyTicketUseCase {
         } catch (Request.NullRequestException e) {
             presenter.presentSeatListNullRequest();
         } catch (Request.InvalidRequestException e) {
-            presenter.presentSeatListInvalidRequest(request);
+            presenter.presentInvalidSeatListRequest(request);
         } catch (RepositoryException e) {
-            e.printStackTrace();
+            presenter.presentRepositoryError(e);
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            e.printStackTrace();
+            presenter.presentUnauthenticatedError(e);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            e.printStackTrace();
+            presenter.presentUnauthorizedError(e);
         }
     }
 
@@ -138,15 +134,14 @@ public class BuyTicketController implements BuyTicketUseCase {
         var permissions = new Permission[]{Permission.BUY_TICKET};
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
-            var customer = customerRepository.getCustomer(securityService.authenticate("PROJECTIONIST").getId());
+            var customer = customerRepository.getCustomer(request.getUserId());
             var projection = projectionRepository.getProjection(request.getProjectionId());
             var seat = seatRepository.getSeat(request.getSeatId());
             if (projection.isBooked(seat)) {
-                // TODO: handle the occurrence of booking a seat already booked
+                presenter.presentSeatAlreadyOccupiedException("The place has already been occupied");
             } else {
                 //-DECORATOR-//
                 var ticket = new Ticket(0, projection.getBasePrice(), customer, seat, projection); // Ticket di base
-
                 if (Boolean.TRUE.equals(request.getOpenBarOption())) {
                     ticket = new TicketOpenBar(ticket);
                 }
@@ -167,22 +162,20 @@ public class BuyTicketController implements BuyTicketUseCase {
                 ));
                 ticketRepository.saveTicket(ticket);
                 emailService.sendMail(new EmailServiceRequest(request.getEmail(), "Payment receipt"));
-                presenter.presentTicket(TicketDataMapper.mapToDto(ticket));
+                presenter.presentTicket(new TicketResponse(TicketDataMapper.mapToDto(ticket)));
             }
         } catch (Request.NullRequestException e) {
             presenter.presentPayNullRequest();
         } catch (Request.InvalidRequestException e) {
-            presenter.presentPayInvalidRequest(request);
+            presenter.presentInvalidPayRequest(request);
         } catch (PaymentServiceException e) {
-            presenter.presentErrorByStripe(e);
-        } catch (SecurityException e) {
-            presenter.presentAuthenticationError();
+            presenter.presentPayPaymentServiceException(e);
         } catch (RepositoryException e) {
-            presenter.presentPayRepositoryException(e.getMessage());
+            presenter.presentRepositoryError(e);
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            e.printStackTrace();
+            presenter.presentUnauthenticatedError(e);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            e.printStackTrace();
+            presenter.presentUnauthorizedError(e);
         }
     }
 

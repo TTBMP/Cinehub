@@ -35,9 +35,6 @@ public class ChooseMovieViewController extends ViewController {
     private AppBarViewController appBarController;
 
     @FXML
-    private ImageView theMovieDbLogoImageView;
-
-    @FXML
     private Button todayButton;
 
     @FXML
@@ -47,7 +44,7 @@ public class ChooseMovieViewController extends ViewController {
     private Button nextButton;
 
     @FXML
-    private Label errorSectionLabel;
+    private Label errorLabel;
 
     @FXML
     private ListView<MovieDto> movieListView;
@@ -66,7 +63,7 @@ public class ChooseMovieViewController extends ViewController {
                 viewModel.selectedDateProperty().getValue()
         ));
         movieListView.itemsProperty().addListener(l -> movieListView.refresh());
-        movieListView.setItems(viewModel.getMovieList());
+        movieListView.setItems(viewModel.movieListProperty());
         movieListView.setCellFactory(movieList -> new ChooseMovieListCell(activity, navController));
         bind();
         dateOfProjectionDatePicker.setValue(LocalDate.now());
@@ -98,7 +95,7 @@ public class ChooseMovieViewController extends ViewController {
     }
 
     private void bind() {
-        errorSectionLabel.textProperty().bind(viewModel.movieErrorProperty());
+        errorLabel.textProperty().bind(viewModel.errorMessageProperty());
         confirmMovieButton.disableProperty().bind(viewModel.selectedDateProperty().isNull().or(viewModel.selectedMovieProperty().isNull()));
         viewModel.selectedMovieProperty().bind(movieListView.getSelectionModel().selectedItemProperty());
         dateOfProjectionDatePicker.valueProperty().bindBidirectional(viewModel.selectedDateProperty());

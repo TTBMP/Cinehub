@@ -52,7 +52,7 @@
                         </HBox>
                         <HBox>
                             <children>
-                                <Label fx:id="errorSectionLabel" textAlignment="CENTER">
+                                <Label fx:id="errorLabel" textAlignment="CENTER">
                                     <HBox.margin>
                                         <Insets left="20.0" />
                                     </HBox.margin>

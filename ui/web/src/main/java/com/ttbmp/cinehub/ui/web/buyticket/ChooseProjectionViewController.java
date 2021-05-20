@@ -44,6 +44,10 @@ public class ChooseProjectionViewController {
                 paymentForm.getMovie().getId(),
                 paymentForm.getDate()
         ));
+        var errorMessage = model.getAttribute("messageError");
+        if (errorMessage != null) {
+            return "buy_ticket/choose_movie";
+        }
         return "buy_ticket/choose_cinema";
     }
 
@@ -58,6 +62,10 @@ public class ChooseProjectionViewController {
                 paymentForm.getCinema().getId(),
                 LocalDate.parse(paymentForm.getDate())
         ));
+        var errorMessage = model.getAttribute("messageError");
+        if (errorMessage != null) {
+            return "login";
+        }
         return "buy_ticket/choose_cinema";
     }
 

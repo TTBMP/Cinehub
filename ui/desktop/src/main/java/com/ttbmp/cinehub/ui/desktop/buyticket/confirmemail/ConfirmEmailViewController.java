@@ -32,16 +32,11 @@ public class ConfirmEmailViewController extends ViewController {
     private AppBarViewController appBarController;
 
     @FXML
-    private Text surnameText;
-
-    @FXML
     private Text ticketText;
 
     @FXML
     private Text cinemaText;
 
-    @FXML
-    private Text nameText;
 
     @FXML
     private Text movieText;
@@ -56,7 +51,7 @@ public class ConfirmEmailViewController extends ViewController {
     private Button confirmButton;
 
     @FXML
-    private Label errorSectionLabel;
+    private Label errorLabel;
 
     @FXML
     private Text timeText;
@@ -84,10 +79,10 @@ public class ConfirmEmailViewController extends ViewController {
     }
 
     private void bind() {
-        errorSectionLabel.textProperty().bind(viewModel.paymentErrorProperty());
+        errorLabel.textProperty().bind(viewModel.errorMessageProperty());
         emailText.textProperty().bind(viewModel.emailUserProperty());
-        numberCardText.textProperty().bind(viewModel.numberOfCardUserProperty());
-        ticketText.textProperty().bind((viewModel.selectedTicketPositionProperty()));
+        numberCardText.textProperty().bind(viewModel.numberCardProperty());
+        ticketText.textProperty().bind((viewModel.selectedSeatPositionProperty()));
         movieText.textProperty().bind(viewModel.selectedMovieNameProperty());
         cinemaText.textProperty().bind(viewModel.selectedCinemaNameProperty());
         timeText.textProperty().bind(ObjectBindings.map(viewModel.selectedProjectionProperty(), ProjectionDto::getStartTime));

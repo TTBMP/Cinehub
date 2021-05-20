@@ -18,52 +18,43 @@ import java.util.List;
  */
 public class BuyTicketViewModel implements ViewModel {
 
-    private final StringProperty emailUser = new SimpleStringProperty();
-    private final StringProperty numberOfCardUser = new SimpleStringProperty();
-    private final StringProperty txtCvv = new SimpleStringProperty();
-    private final StringProperty freeSeats = new SimpleStringProperty();
-    private final StringProperty totalSeats = new SimpleStringProperty();
-    private final StringProperty buysSeats = new SimpleStringProperty();
+
+    private final StringProperty errorMessage = new SimpleStringProperty();
+
     private final ObservableList<SeatDto> seatList = FXCollections.observableArrayList();
     private final ObservableList<MovieDto> movieList = FXCollections.observableArrayList();
     private final ObservableList<CinemaDto> cinemaList = FXCollections.observableArrayList();
     private final ObservableList<String> timeOfProjectionList = FXCollections.observableArrayList();
+    private final ObservableList<ProjectionDto> projectionOfProjectionTimeList = FXCollections.observableArrayList();
     private final ObjectProperty<TicketDto> selectedTicket = new SimpleObjectProperty<>();
     private final ObjectProperty<MovieDto> selectedMovie = new SimpleObjectProperty<>();
-    private final StringProperty selectedSeats = new SimpleStringProperty();
     private final ObjectProperty<CinemaDto> selectedCinema = new SimpleObjectProperty<>();
     private final ObjectProperty<LocalDate> selectedDate = new SimpleObjectProperty<>();
     private final ObjectProperty<ProjectionDto> selectedProjection = new SimpleObjectProperty<>();
     private final ObjectProperty<SeatDto> selectedSeat = new SimpleObjectProperty<>();
+
+    private final StringProperty selectedSeatsName = new SimpleStringProperty();
     private final StringProperty selectedTicketPosition = new SimpleStringProperty();
     private final StringProperty selectedMovieName = new SimpleStringProperty();
     private final StringProperty selectedCinemaName = new SimpleStringProperty();
     private final LongProperty selectedTicketPrice = new SimpleLongProperty();
     private final IntegerProperty selectedPositionSeatInteger = new SimpleIntegerProperty();
-    private final StringProperty emailError = new SimpleStringProperty();
-    private final StringProperty movieError = new SimpleStringProperty();
-    private final StringProperty cinemaError = new SimpleStringProperty();
-    private final StringProperty seatError = new SimpleStringProperty();
-    private final StringProperty paymentError = new SimpleStringProperty();
-    private final StringProperty authenticationError = new SimpleStringProperty();
-    private final StringProperty payRepositoryException = new SimpleStringProperty();
-    private final StringProperty listMovieRepositoryException = new SimpleStringProperty();
-    private final StringProperty cinemaListRepositoryException = new SimpleStringProperty();
-    private final StringProperty ticketRepositoryException = new SimpleStringProperty();
-    private final StringProperty projectionListRepositoryException = new SimpleStringProperty();
-    private final StringProperty projectionRepositoryException = new SimpleStringProperty();
-    private final StringProperty cinemaRepositoryException = new SimpleStringProperty();
-    private final StringProperty selectedSeatPrice = new SimpleStringProperty();
+
+    private final StringProperty emailUser = new SimpleStringProperty();
+    private final StringProperty numberOfCard = new SimpleStringProperty();
+    private final StringProperty cvv = new SimpleStringProperty();
+    private final StringProperty freeSeats = new SimpleStringProperty();
+    private final StringProperty totalSeats = new SimpleStringProperty();
+    private final StringProperty buysSeats = new SimpleStringProperty();
     private final BooleanProperty skipLineOption = new SimpleBooleanProperty();
     private final BooleanProperty heatedArmchairOption = new SimpleBooleanProperty();
     private final BooleanProperty foldingArmchairOption = new SimpleBooleanProperty();
     private final IntegerProperty numberOfSeats = new SimpleIntegerProperty(0);
     private final ObjectProperty<LocalDate> expirationDate = new SimpleObjectProperty<>();
-    private final List<BooleanProperty> seatsState = new ArrayList<>(60);
+    private final List<BooleanProperty> seatState = new ArrayList<>(60);
     private final IntegerProperty positionSelectedSeat = new SimpleIntegerProperty();
     private final BooleanProperty valueFalseForSeatState = new SimpleBooleanProperty(false);
     private final BooleanProperty valueTrueForSeatState = new SimpleBooleanProperty(true);
-    private final ObservableList<ProjectionDto> projectionOfProjectionTimeList = FXCollections.observableArrayList();
 
 
     public BuyTicketViewModel() {
@@ -89,41 +80,7 @@ public class BuyTicketViewModel implements ViewModel {
         return expirationDate;
     }
 
-    public StringProperty payRepositoryExceptionProperty() {
-        return payRepositoryException;
-    }
-
-
-    public StringProperty listMovieRepositoryExceptionProperty() {
-        return listMovieRepositoryException;
-    }
-
-
-    public StringProperty cinemaListRepositoryExceptionProperty() {
-        return cinemaListRepositoryException;
-    }
-
-
-    public StringProperty ticketRepositoryExceptionProperty() {
-        return ticketRepositoryException;
-    }
-
-
-    public StringProperty projectionListRepositoryExceptionProperty() {
-        return projectionListRepositoryException;
-    }
-
-    public StringProperty projectionRepositoryExceptionProperty() {
-        return projectionRepositoryException;
-    }
-
-
-    public StringProperty cinemaRepositoryExceptionProperty() {
-        return cinemaRepositoryException;
-    }
-
-
-    public ObservableList<ProjectionDto> getProjectionOfProjectionTimeList() {
+    public ObservableList<ProjectionDto> projectionTimeListProperty() {
         return projectionOfProjectionTimeList;
     }
 
@@ -135,15 +92,15 @@ public class BuyTicketViewModel implements ViewModel {
         return valueFalseForSeatState;
     }
 
-    public IntegerProperty indexToggleSelected() {
+    public IntegerProperty indexToggleSelectedProperty() {
         return positionSelectedSeat;
     }
 
-    public List<BooleanProperty> getSeatsState() {
-        return seatsState;
+    public List<BooleanProperty> seatStateProperty() {
+        return seatState;
     }
 
-    public IntegerProperty counterForToggle() {
+    public IntegerProperty counterForToggleProperty() {
         return numberOfSeats;
     }
 
@@ -159,42 +116,21 @@ public class BuyTicketViewModel implements ViewModel {
         return foldingArmchairOption;
     }
 
-    public StringProperty selectedSeatPriceProperty() {
-        return selectedSeatPrice;
-    }
-
-    public StringProperty emailErrorProperty() {
-        return emailError;
-    }
-
-    public StringProperty movieErrorProperty() {
-        return movieError;
-    }
-
-    public StringProperty cinemaErrorProperty() {
-        return cinemaError;
-    }
-
-    public StringProperty seatErrorProperty() {
-        return seatError;
-    }
-
-    public StringProperty paymentErrorProperty() {
-        return paymentError;
+    public StringProperty errorMessageProperty() {
+        return errorMessage;
     }
 
     public ObjectProperty<ProjectionDto> selectedProjectionProperty() {
         return selectedProjection;
     }
 
-    public IntegerProperty seatSelectedPositionNumber() {
+    public IntegerProperty seatSelectedPositionProperty() {
         return selectedPositionSeatInteger;
     }
 
     public ObjectProperty<TicketDto> selectedTicketProperty() {
         return selectedTicket;
     }
-
 
     public ObjectProperty<LocalDate> selectedDateProperty() {
         return selectedDate;
@@ -208,7 +144,7 @@ public class BuyTicketViewModel implements ViewModel {
         return selectedCinemaName;
     }
 
-    public StringProperty selectedTicketPositionProperty() {
+    public StringProperty selectedSeatPositionProperty() {
         return selectedTicketPosition;
     }
 
@@ -220,7 +156,7 @@ public class BuyTicketViewModel implements ViewModel {
         return selectedMovie;
     }
 
-    public ObservableList<MovieDto> getMovieList() {
+    public ObservableList<MovieDto> movieListProperty() {
         return movieList;
     }
 
@@ -228,7 +164,7 @@ public class BuyTicketViewModel implements ViewModel {
         return selectedCinema;
     }
 
-    public ObservableList<CinemaDto> getCinemaList() {
+    public ObservableList<CinemaDto> cinemaListProperty() {
         return cinemaList;
     }
 
@@ -244,42 +180,30 @@ public class BuyTicketViewModel implements ViewModel {
         return buysSeats;
     }
 
-    public StringProperty selectedSeatsProperty() {
-        return selectedSeats;
+    public StringProperty selectedSeatsNameProperty() {
+        return selectedSeatsName;
     }
 
     public StringProperty emailUserProperty() {
         return emailUser;
     }
 
-    public StringProperty numberOfCardUserProperty() {
-        return numberOfCardUser;
+    public StringProperty numberCardProperty() {
+        return numberOfCard;
     }
 
-    public StringProperty txtCvvProperty() {
-        return txtCvv;
+    public StringProperty cvvProperty() {
+        return cvv;
     }
 
-    public ObservableList<String> getTimeOfProjectionList() {
+    public ObservableList<String> timeOfProjectionListProperty() {
         return timeOfProjectionList;
     }
 
-    public ObservableList<SeatDto> getSeatList() {
+    public ObservableList<SeatDto> seatListProperty() {
         return seatList;
     }
 
-
-    public StringProperty authenticationErrorProperty() {
-        return authenticationError;
-    }
-
-    public SeatDto getSelectedSeat() {
-        return selectedSeat.get();
-    }
-
-    public void setSelectedSeat(SeatDto selectedSeat) {
-        this.selectedSeat.set(selectedSeat);
-    }
 
     public ObjectProperty<SeatDto> selectedSeatProperty() {
         return selectedSeat;

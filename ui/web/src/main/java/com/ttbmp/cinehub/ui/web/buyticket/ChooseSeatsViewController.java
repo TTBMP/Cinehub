@@ -25,6 +25,10 @@ public class ChooseSeatsViewController {
         model.addAttribute("classValue", "material-icons");
         BuyTicketUseCase useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
         useCase.getSeatList(new SeatListRequest(sessionToken, paymentForm.getProjection().getId()));
+        var errorMessage = model.getAttribute("messageError");
+        if (errorMessage != null) {
+            return "buy_ticket/choose_movie";
+        }
         return "buy_ticket/choose_seats";
     }
 

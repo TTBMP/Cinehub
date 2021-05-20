@@ -69,7 +69,7 @@
                         <Insets bottom="16.0" left="16.0" right="16.0" />
                     </VBox.margin>
                <top>
-                          <Label fx:id="errorSectionLabel" prefHeight="49.0" prefWidth="763.0" textAlignment="CENTER" textFill="RED" BorderPane.alignment="CENTER" />
+                          <Label fx:id="errorLabel" prefHeight="49.0" prefWidth="763.0" textAlignment="CENTER" textFill="RED" BorderPane.alignment="CENTER" />
                </top>
                 </BorderPane>
             </children>

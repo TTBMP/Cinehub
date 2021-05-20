@@ -46,7 +46,7 @@ public class ChooseSeatViewController extends ViewController {
     private Button returnButton;
 
     @FXML
-    private Label errorSectionLabel;
+    private Label errorLabel;
 
     @FXML
     private Button confirmSeatButton;
@@ -108,7 +108,7 @@ public class ChooseSeatViewController extends ViewController {
 
 
     private void bind() {
-        errorSectionLabel.textProperty().bind(viewModel.seatErrorProperty());
+        errorLabel.textProperty().bind(viewModel.errorMessageProperty());
         seatsTotalText.textProperty().bind(viewModel.totalSeatsProperty());
         seatsFreeText.textProperty().bind(viewModel.freeSeatsProperty());
         seatsBuysText.textProperty().bind(viewModel.buysSeatsProperty());
@@ -118,33 +118,33 @@ public class ChooseSeatViewController extends ViewController {
     }
 
     private void changeLayoutSpecific() throws IOException {
-        viewModel.counterForToggle().setValue(0);
+        viewModel.counterForToggleProperty().setValue(0);
         toggleGroup.getToggles().forEach(toggle -> findChosenPlace());
         navController.navigate(new NavDestination(new PaymentView()));
 
     }
 
     private void setAllElementsOfTheToggleToNull() {
-        viewModel.getSeatsState().add(viewModel.falseBooleanProperty());
-        viewModel.counterForToggle().setValue(viewModel.counterForToggle().getValue() + 1);
+        viewModel.seatStateProperty().add(viewModel.falseBooleanProperty());
+        viewModel.counterForToggleProperty().setValue(viewModel.counterForToggleProperty().getValue() + 1);
     }
 
 
     private void findChosenPlace() {
-        int i = viewModel.counterForToggle().getValue();
+        int i = viewModel.counterForToggleProperty().getValue();
         if (toggleGroup.getToggles().get(i).isSelected()) {
-            viewModel.getSeatsState().remove(i);
-            viewModel.getSeatsState().add(i, viewModel.trueBooleanProperty());
-            viewModel.indexToggleSelected().setValue(i);
-            viewModel.selectedSeatsProperty().setValue(
+            viewModel.seatStateProperty().remove(i);
+            viewModel.seatStateProperty().add(i, viewModel.trueBooleanProperty());
+            viewModel.indexToggleSelectedProperty().setValue(i);
+            viewModel.selectedSeatsNameProperty().setValue(
                     toggleGroup.getToggles().get(i).toString().substring(
                             toggleGroup.getToggles().get(i).toString().length() - 6,
                             toggleGroup.getToggles().get(i).toString().length() - 4
                     )
             );
-            viewModel.seatSelectedPositionNumber().setValue(viewModel.indexToggleSelected().getValue());
+            viewModel.seatSelectedPositionProperty().setValue(viewModel.indexToggleSelectedProperty().getValue());
         }
-        viewModel.counterForToggle().setValue(viewModel.counterForToggle().getValue() + 1);
+        viewModel.counterForToggleProperty().setValue(viewModel.counterForToggleProperty().getValue() + 1);
 
     }
 }

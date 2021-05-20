@@ -2,12 +2,12 @@ package com.ttbmp.cinehub.app.usecase.buyticket;
 
 import com.ttbmp.cinehub.app.datamapper.MovieDataMapper;
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
-import com.ttbmp.cinehub.app.dto.TicketDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -65,7 +65,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentPayInvalidRequest(PaymentRequest request) {
+        public void presentInvalidPayRequest(PaymentRequest request) {
 
         }
 
@@ -76,7 +76,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentCinemaListInvalidRequest(CinemaListRequest request) {
+        public void presentInvalidCinemaListRequest(CinemaListRequest request) {
 
         }
 
@@ -86,7 +86,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentProjectionListInvalidRequest(ProjectionListRequest request) {
+        public void presentInvalidProjectionListRequest(ProjectionListRequest request) {
 
         }
 
@@ -96,12 +96,12 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentSeatListInvalidRequest(SeatListRequest request) {
+        public void presentInvalidSeatListRequest(SeatListRequest request) {
 
         }
 
         @Override
-        public void presentErrorByStripe(PaymentServiceException error) {
+        public void presentPayPaymentServiceException(PaymentServiceException error) {
 
         }
 
@@ -116,17 +116,32 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentMovieListInvalidRequest(MovieListRequest request) {
+        public void presentInvalidMovieListRequest(MovieListRequest request) {
 
         }
 
         @Override
-        public void presentAuthenticationError() {
+        public void presentTicket(TicketResponse ticketDto) {
 
         }
 
         @Override
-        public void presentTicket(TicketDto ticketDto) {
+        public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e) {
+
+        }
+
+        @Override
+        public void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e) {
+
+        }
+
+        @Override
+        public void presentGetSeatListRepositoryException(String e) {
+
+        }
+
+        @Override
+        public void presentSeatAlreadyOccupiedException(String s) {
 
         }
 
@@ -136,18 +151,18 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentMovieListRepositoryException(String message) {
+        public void presentRepositoryError(RepositoryException message) {
 
         }
 
         @Override
-        public void presentCinemaListRepositoryException(String message) {
+        public void presentGetCinemaListRepositoryException(String message) {
 
         }
 
 
         @Override
-        public void presentProjectionListRepositoryException(String message) {
+        public void presentGetProjectionListRepositoryException(String message) {
 
         }
 

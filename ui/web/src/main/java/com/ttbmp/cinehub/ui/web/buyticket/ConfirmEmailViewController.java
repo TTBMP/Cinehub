@@ -34,7 +34,7 @@ public class ConfirmEmailViewController {
                 paymentForm.getOption2(),
                 paymentForm.getOption3()
         ));
-        var errorMessage = model.getAttribute("paymentError");
+        var errorMessage = model.getAttribute("messageError");
         if (errorMessage != null) {
             return "buy_ticket/payment";
         }
