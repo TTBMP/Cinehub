@@ -43,7 +43,7 @@ class ManageEmployeeViewControllerTest {
         new WebDriverWait(driver, 5).until(ExpectedConditions.presenceOfElementLocated(By.id("select_date")));
         driver.findElement(By.id("select_date")).sendKeys( LocalDate.now().format(DateTimeFormatter.ofPattern("ddMMyyyy")) );
         driver.findElement(By.id("search_shift_cinema")).click();
-        new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.id("1")));
+        new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.id("1")));
         employee = driver.findElement(By.id("1"));
     }
 
