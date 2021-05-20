@@ -55,9 +55,17 @@ public abstract class AuthenticatedRequest extends Request {
 
     public static class UnauthenticatedRequestException extends Exception {
 
+        public UnauthenticatedRequestException() {
+            super("Unauthenticated request");
+        }
+
     }
 
     public static class UnauthorizedRequestException extends Exception {
+
+        public UnauthorizedRequestException() {
+            super("Forbidden");
+        }
 
     }
 

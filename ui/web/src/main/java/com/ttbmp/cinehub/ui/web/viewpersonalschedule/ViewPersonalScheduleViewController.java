@@ -5,7 +5,6 @@ import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ShiftListRequest;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalScheduleHandler;
 import com.ttbmp.cinehub.ui.web.domain.Shift;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
-import com.ttbmp.cinehub.ui.web.utilities.UnauthenticatedRequestException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,12 +22,10 @@ public class ViewPersonalScheduleViewController {
 
     @GetMapping("/schedule")
     public String showShiftList(
+            HttpServletResponse response,
             @CookieValue(value = "session", required = false) String sessionToken,
             @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-            Model model) throws UnauthenticatedRequestException {
-        if (sessionToken == null) {
-            throw new UnauthenticatedRequestException();
-        }
+            Model model) {
         if (date == null) {
             date = LocalDate.now();
         }
@@ -40,41 +37,27 @@ public class ViewPersonalScheduleViewController {
                 date.with(TemporalAdjusters.firstDayOfMonth()),
                 date.with(TemporalAdjusters.lastDayOfMonth())
         ));
-        return ErrorHelper.returnView(model, "schedule");
+        return ErrorHelper.returnView(response, model, "schedule");
     }
 
     @PostMapping("/schedule/detail")
-    public String showShiftDetail(
-            @CookieValue(value = "session", required = false) String sessionToken,
-            @ModelAttribute Shift shift,
-            Model model) throws UnauthenticatedRequestException {
-        if (sessionToken == null) {
-            throw new UnauthenticatedRequestException();
-        }
+    public String showShiftDetail(HttpServletResponse response, @ModelAttribute Shift shift, Model model) {
         model.addAttribute("shift", shift);
-        return ErrorHelper.returnView(model, "schedule_detail");
+        return ErrorHelper.returnView(response, model, "schedule_detail");
     }
 
     @PostMapping("/schedule/detail/projectionist")
     public String showProjectionistShiftDetail(
+            HttpServletResponse response,
             @CookieValue(value = "session", required = false) String sessionToken,
-            @ModelAttribute Shift shift, Model model) throws UnauthenticatedRequestException {
-        if (sessionToken == null) {
-            throw new UnauthenticatedRequestException();
-        }
+            @ModelAttribute Shift shift, Model model) {
         model.addAttribute("shift", shift);
         var useCase = new ViewPersonalScheduleHandler(new ViewPersonalSchedulePresenterWeb(model));
         useCase.getShiftProjectionList(new ProjectionListRequest(
                 sessionToken,
                 shift.getId())
         );
-        return ErrorHelper.returnView(model, "schedule_projectionist_detail");
-    }
-
-    @ExceptionHandler(UnauthenticatedRequestException.class)
-    public void redirectToLoginPage(HttpServletResponse response) {
-        response.setHeader("Location", "/login");
-        response.setStatus(302);
+        return ErrorHelper.returnView(response, model, "schedule_projectionist_detail");
     }
 
 }

@@ -39,10 +39,10 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
             presenter.presentShiftListNullRequest();
         } catch (Request.InvalidRequestException e) {
             presenter.presentInvalidShiftListRequest(request);
-        } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            e.printStackTrace();
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            e.printStackTrace();
+            presenter.presentUnauthorizedError(e);
+        } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
+            presenter.presentUnauthenticatedError(e);
         } catch (RepositoryException e) {
             presenter.presentRepositoryError(e);
         }
@@ -59,10 +59,10 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
             presenter.presentProjectionListNullRequest();
         } catch (Request.InvalidRequestException e) {
             presenter.presentInvalidProjectionListRequest(request);
-        } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            e.printStackTrace();
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            e.printStackTrace();
+            presenter.presentUnauthorizedError(e);
+        } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
+            presenter.presentUnauthenticatedError(e);
         } catch (RepositoryException e) {
             presenter.presentRepositoryError(e);
         }

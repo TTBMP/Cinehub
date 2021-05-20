@@ -17,7 +17,6 @@ public class RoleResponse {
     }
 
     public enum Role {
-        GUEST,
         CUSTOMER,
         EMPLOYEE,
         PROJECTIONIST,
@@ -25,9 +24,6 @@ public class RoleResponse {
         MANAGER;
 
         public static Role getRole(com.ttbmp.cinehub.domain.security.Role role) {
-            if (role.equals(GUEST_ROLE)) {
-                return GUEST;
-            }
             if (role.equals(EMPLOYEE_ROLE)) {
                 return EMPLOYEE;
             }

@@ -1,11 +1,9 @@
 package com.ttbmp.cinehub.ui.desktop.buyticket.choosemovie;
 
-
 import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.CinemaListRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.MovieListRequest;
-import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.desktop.buyticket.CustomDateCell;
@@ -23,14 +21,12 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.time.LocalDate;
 
-
 /**
  * @author Ivan Palmieri
  */
 public class ChooseMovieViewController extends ViewController {
 
     private BuyTicketViewModel viewModel;
-
 
     @FXML
     private VBox appBar;
@@ -40,6 +36,7 @@ public class ChooseMovieViewController extends ViewController {
 
     @FXML
     private ImageView theMovieDbLogoImageView;
+
     @FXML
     private Button todayButton;
 
@@ -48,22 +45,24 @@ public class ChooseMovieViewController extends ViewController {
 
     @FXML
     private Button nextButton;
+
     @FXML
     private Label errorSectionLabel;
+
     @FXML
     private ListView<MovieDto> movieListView;
+
     @FXML
     private Button confirmMovieButton;
+
     @FXML
     private DatePicker dateOfProjectionDatePicker;
-
 
     @Override
     protected void onLoad() {
         appBarController.load(activity, navController);
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
         activity.getUseCase(BuyTicketUseCase.class).getMovieList(new MovieListRequest(
-                CinehubApplication.getSessionToken(),
                 viewModel.selectedDateProperty().getValue()
         ));
         movieListView.itemsProperty().addListener(l -> movieListView.refresh());
@@ -78,13 +77,10 @@ public class ChooseMovieViewController extends ViewController {
         nextButton.setOnAction(a -> dateOfProjectionDatePicker.setValue(dateOfProjectionDatePicker.getValue().plusDays(1)));
         previousButton.setDisable(true);
         confirmMovieButton.setOnAction(a -> {
-            activity.getUseCase(BuyTicketUseCase.class).getCinemaList(
-                    new CinemaListRequest(
-                            CinehubApplication.getSessionToken(),
-                            viewModel.selectedMovieProperty().getValue().getId(),
-                            viewModel.selectedDateProperty().getValue().toString()
-                    )
-            );
+            activity.getUseCase(BuyTicketUseCase.class).getCinemaList(new CinemaListRequest(
+                    viewModel.selectedMovieProperty().getValue().getId(),
+                    viewModel.selectedDateProperty().getValue().toString()
+            ));
             try {
                 navController.navigate(new NavDestination(new ChooseCinemaView()));
             } catch (IOException e) {
@@ -92,25 +88,20 @@ public class ChooseMovieViewController extends ViewController {
             }
 
         });
-
-
     }
 
     private void onDataChange() {
         activity.getUseCase(BuyTicketUseCase.class).getMovieList(new MovieListRequest(
-                CinehubApplication.getSessionToken(),
-                viewModel.selectedDateProperty().getValue()));
+                viewModel.selectedDateProperty().getValue()
+        ));
         previousButton.setDisable(viewModel.selectedDateProperty().getValue().equals(LocalDate.now()));
     }
-
 
     private void bind() {
         errorSectionLabel.textProperty().bind(viewModel.movieErrorProperty());
         confirmMovieButton.disableProperty().bind(viewModel.selectedDateProperty().isNull().or(viewModel.selectedMovieProperty().isNull()));
         viewModel.selectedMovieProperty().bind(movieListView.getSelectionModel().selectedItemProperty());
         dateOfProjectionDatePicker.valueProperty().bindBidirectional(viewModel.selectedDateProperty());
-
     }
-
 
 }

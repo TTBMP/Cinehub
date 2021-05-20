@@ -1,9 +1,6 @@
 package com.ttbmp.cinehub.app.usecase.buyticket.request;
 
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
-import com.ttbmp.cinehub.app.utilities.request.Request;
-
-import javax.naming.AuthenticationException;
 
 /**
  * @author Ivan Palmieri
@@ -29,4 +26,5 @@ public class SeatListRequest extends AuthenticatedRequest {
     public void onValidate() {
 
     }
+
 }

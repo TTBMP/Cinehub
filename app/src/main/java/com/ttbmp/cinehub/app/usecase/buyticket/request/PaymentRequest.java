@@ -22,9 +22,6 @@ public class PaymentRequest extends AuthenticatedRequest {
     public static final Request.Error MISSING_OPTION_TWO_ERROR = new Request.Error("Option two can't be null");
     public static final Request.Error MISSING_OPTION_THREE_ERROR = new Request.Error("Option three can't be null");
 
-
-
-
     private int projectionId;
     private int seatId;
     private String email;
@@ -35,11 +32,17 @@ public class PaymentRequest extends AuthenticatedRequest {
     private Boolean magicBoxOption;
     private Boolean skipLineOption;
 
-
-    public PaymentRequest(String sessionToken,
-                          int projectionId,
-                          int seatId,
-                          String email, String creditCardNumber, String creditCardCvv, String creditCardExpirationDate, Boolean openBarOption, Boolean magicBoxOption, Boolean skipLineOption) {
+    public PaymentRequest(
+            String sessionToken,
+            int projectionId,
+            int seatId,
+            String email,
+            String creditCardNumber,
+            String creditCardCvv,
+            String creditCardExpirationDate,
+            Boolean openBarOption,
+            Boolean magicBoxOption,
+            Boolean skipLineOption) {
         super(sessionToken);
         this.projectionId = projectionId;
         this.seatId = seatId;
@@ -92,7 +95,6 @@ public class PaymentRequest extends AuthenticatedRequest {
         this.seatId = seatId;
     }
 
-
     public String getEmail() {
         return email;
     }
@@ -127,29 +129,22 @@ public class PaymentRequest extends AuthenticatedRequest {
 
     @Override
     public void onValidate() {
-        if (creditCardCvv.length()!=3) {
+        if (creditCardCvv.length() != 3) {
             addError(LENGTH_CVV_CREDIT_CARD_ERROR);
         }
         if (LocalDate.parse(creditCardExpirationDate).isBefore(LocalDate.now())) {
             addError(EXPIRATION_CREDIT_CARD_ERROR);
         }
-        if(!creditCardCvv.matches("[0-9]+")){
+        if (!creditCardCvv.matches("[0-9]+")) {
             addError(CVV_LETTERS_ERROR);
         }
-        if(!creditCardNumber.matches("[0-9]+")){
+        if (!creditCardNumber.matches("[0-9]+")) {
             addError(NUMBER_OF_CARD_LETTERS_ERROR);
         }
-        if(creditCardNumber.length()<12||creditCardNumber.length()>16){
+        if (creditCardNumber.length() < 12 || creditCardNumber.length() > 16) {
             addError(CREDIT_CARD_LENGTH_ERROR);
         }
-        boolean value = false;
-        for(int i=0; i<email.length();i++){
-            if (email.charAt(i) == '@') {
-                value = true;
-                break;
-            }
-        }
-        if(!value){
+        if (!email.contains("@")) {
             addError(EMAIL_ERROR);
         }
         if (magicBoxOption == null) {

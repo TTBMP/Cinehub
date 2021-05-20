@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.service.security.SecurityService;
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.shift.Shift;
 import org.junit.jupiter.api.Assertions;
@@ -98,12 +99,17 @@ class ViewPersonalScheduleControllerTest {
         }
 
         @Override
-        public void presentSecurityError(SecurityException e) {
+        public void presentRepositoryError(RepositoryException e) {
 
         }
 
         @Override
-        public void presentRepositoryError(RepositoryException e) {
+        public void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e) {
+
+        }
+
+        @Override
+        public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e) {
 
         }
 

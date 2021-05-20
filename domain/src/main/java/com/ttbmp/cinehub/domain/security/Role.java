@@ -7,17 +7,9 @@ import static com.ttbmp.cinehub.domain.security.Permission.*;
  */
 public class Role {
 
-    public static final Role GUEST_ROLE = new Role(
-            new Permission[]{
-                    SHOW_BUY_TICKET_TAB,
-                    FIND_PROJECTION
-            }
-    );
-
     public static final Role CUSTOMER_ROLE = new Role(
             new Permission[]{
                     SHOW_BUY_TICKET_TAB,
-                    FIND_PROJECTION,
                     BUY_TICKET
             }
     );

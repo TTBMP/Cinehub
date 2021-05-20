@@ -1,11 +1,9 @@
 package com.ttbmp.cinehub.ui.desktop.buyticket.choosecinema;
 
-
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.ProjectionListRequest;
-import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.desktop.buyticket.choosemovie.ChooseMovieView;
@@ -54,8 +52,7 @@ public class ChooseCinemaViewController extends ViewController {
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
         viewModel.selectedProjectionProperty().setValue(null);
         confirmCinemaButton.disableProperty().bind(viewModel.selectedProjectionProperty().isNull());
-        timeOfProjectionListView.getSelectionModel().selectedItemProperty().addListener(l ->
-                onTimeSelected());
+        timeOfProjectionListView.getSelectionModel().selectedItemProperty().addListener(l -> onTimeSelected());
         cinemaListView.getSelectionModel().selectedItemProperty().addListener(l -> onCinemaItemClick());
         errorSectionLabel.textProperty().bind(viewModel.cinemaErrorProperty());
         viewModel.selectedCinemaProperty().bind(cinemaListView.getSelectionModel().selectedItemProperty());
@@ -90,11 +87,9 @@ public class ChooseCinemaViewController extends ViewController {
         if (viewModel.selectedCinemaProperty().getValue() != null) {
             viewModel.getTimeOfProjectionList().clear();
             activity.getUseCase(BuyTicketUseCase.class).getProjectionList(new ProjectionListRequest(
-                    CinehubApplication.getSessionToken(),
                     viewModel.selectedMovieProperty().getValue().getId(),
                             viewModel.selectedCinemaProperty().getValue().getId(),
                             viewModel.selectedDateProperty().getValue()
-
                     )
             );
             timeOfProjectionListView.setItems(viewModel.getProjectionOfProjectionTimeList());

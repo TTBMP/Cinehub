@@ -1,15 +1,13 @@
 package com.ttbmp.cinehub.app.usecase.buyticket.request;
 
-import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 
-import javax.naming.AuthenticationException;
 import java.time.LocalDate;
 
 /**
  * @author Ivan Palmieri
  */
-public class ProjectionListRequest extends AuthenticatedRequest {
+public class ProjectionListRequest extends Request {
 
     public static final Request.Error MISSING_MOVIE_ERROR = new Request.Error("Movie can't be null");
     public static final Request.Error MISSING_DATE_ERROR = new Request.Error("Date can't be null");
@@ -19,8 +17,7 @@ public class ProjectionListRequest extends AuthenticatedRequest {
     private Integer cinemaId;
     private String localDate;
 
-    public ProjectionListRequest(String sessionToken, Integer movieId, Integer cinemaId, LocalDate localDate) {
-        super(sessionToken);
+    public ProjectionListRequest(Integer movieId, Integer cinemaId, LocalDate localDate) {
         this.movieId = movieId;
         this.cinemaId = cinemaId;
         this.localDate = localDate.toString();

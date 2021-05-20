@@ -4,6 +4,7 @@ import com.google.common.base.Joiner;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
 /**
@@ -14,6 +15,7 @@ public class ErrorHelper {
     public static final String ERROR_VIEW_PATH = "error";
     public static final String ERROR_ATTRIBUTE_NAME = "error";
     public static final String INVALID_ERROR_MESSAGE = "Invalid request";
+    public static final String UNAUTHENTICATED_ERROR_MESSAGE = "Unauthenticated request";
 
     private ErrorHelper() {
 
@@ -23,8 +25,17 @@ public class ErrorHelper {
         return Joiner.on("\n").join(new ArrayList<>(request.getErrorList()));
     }
 
-    public static String returnView(Model model, String viewPath) {
-        return (model.getAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME) == null) ? viewPath : ERROR_VIEW_PATH;
+    public static String returnView(HttpServletResponse response, Model model, String viewPath) {
+        var errorMessage = (String)model.getAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME);
+        if (errorMessage == null) {
+            return viewPath;
+        }
+        if (UNAUTHENTICATED_ERROR_MESSAGE.equals(errorMessage)) {
+            response.setHeader("Location", "/login");
+            response.setStatus(302);
+            return viewPath;
+        }
+        return ERROR_VIEW_PATH;
     }
 
 }

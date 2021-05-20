@@ -15,14 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginViewController {
 
     @GetMapping("/login")
-    public String Login(Model model) {
+    public String login(Model model) {
         var form = new LoginForm();
         model.addAttribute("loginForm", form);
         return "login";
     }
 
     @PostMapping("/login")
-    public void Login(HttpServletResponse response, @ModelAttribute LoginForm form, Model model) {
+    public void login(HttpServletResponse response, @ModelAttribute LoginForm form, Model model) {
         var useCase = new LoginHandler(new LoginPresenterWeb(model));
         useCase.login(new LoginRequest(form.email, form.password));
         var sessionToken = model.getAttribute("sessionToken");

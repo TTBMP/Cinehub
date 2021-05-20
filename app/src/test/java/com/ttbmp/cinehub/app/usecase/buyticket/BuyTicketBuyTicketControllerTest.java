@@ -21,7 +21,7 @@ class BuyTicketBuyTicketControllerTest {
     @Test
     void getListMovie_whitCorrectRequest_notGenerateErrors() {
         var buyTicketController = new BuyTicketController(serviceLocator, new MockBuyTicketPresenter());
-        buyTicketController.getMovieList(new MovieListRequest("CUSTOMER",LocalDate.now()));
+        buyTicketController.getMovieList(new MovieListRequest(LocalDate.now()));
     }
 
     class MockBuyTicketPresenter implements BuyTicketPresenter {

@@ -45,14 +45,10 @@ public class MockSecurityService implements SecurityService {
                 case "USHER":
                     return userRepository.getUser("2");
                 default:
-                    throw new IllegalStateException("Unexpected value: " + sessionToken);
+                    throw new SecurityException("Invalid session token");
             }
         } catch (NullPointerException e) {
-            try {
-                return userRepository.getUser("-3");
-            } catch (RepositoryException repositoryException) {
-                throw new SecurityException(e.getMessage());
-            }
+            throw new SecurityException("Session token is null");
         } catch (RepositoryException e) {
             throw new SecurityException(e.getMessage());
         }

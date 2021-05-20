@@ -51,4 +51,5 @@ public interface BuyTicketPresenter {
     void presentAuthenticationError();
 
     void presentTicket(TicketDto ticketDto);
+
 }

@@ -60,9 +60,8 @@ public class BuyTicketController implements BuyTicketUseCase {
 
     @Override
     public void getMovieList(MovieListRequest request) {
-        var permissions = new Permission[]{Permission.FIND_PROJECTION};
         try {
-            AuthenticatedRequest.validate(request, securityService, permissions);
+            Request.validate(request);
             var localDate = request.getDate().toString();
             var movieList = movieRepository.getMovieList(localDate);
             presenter.presentMovieList(new MovieListResponse(MovieDataMapper.mapToDtoList(movieList)));
@@ -72,18 +71,13 @@ public class BuyTicketController implements BuyTicketUseCase {
             presenter.presentMovieListInvalidRequest(request);
         } catch (RepositoryException e) {
             presenter.presentMovieListRepositoryException(e.getMessage());
-        } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            e.printStackTrace();
-        } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
     public void getCinemaList(CinemaListRequest request) {
-        var permissions = new Permission[]{Permission.FIND_PROJECTION};
         try {
-            AuthenticatedRequest.validate(request, securityService, permissions);
+            Request.validate(request);
             var movie = movieRepository.getMovie(request.getMovieId());
             var cinemaList = cinemaRepository.getListCinema(movie, request.getData());
             presenter.presentCinemaList(
@@ -95,18 +89,13 @@ public class BuyTicketController implements BuyTicketUseCase {
             presenter.presentCinemaListInvalidRequest(request);
         } catch (RepositoryException e) {
             presenter.presentCinemaListRepositoryException(e.getMessage());
-        } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            e.printStackTrace();
-        } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
     public void getProjectionList(ProjectionListRequest request) {
-        var permissions = new Permission[]{Permission.FIND_PROJECTION};
         try {
-            AuthenticatedRequest.validate(request, securityService, permissions);
+            Request.validate(request);
             var cinema = cinemaRepository.getCinema(request.getCinemaId());
             var movie = movieRepository.getMovie(request.getMovieId());
             var projectionList = projectionRepository.getProjectionList(cinema, movie, request.getLocalDate());
@@ -119,10 +108,6 @@ public class BuyTicketController implements BuyTicketUseCase {
             presenter.presentProjectionListInvalidRequest(request);
         } catch (RepositoryException e) {
             presenter.presentProjectionListRepositoryException(e.getMessage());
-        } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            e.printStackTrace();
-        } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            e.printStackTrace();
         }
     }
 
