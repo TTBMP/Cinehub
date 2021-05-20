@@ -29,7 +29,7 @@ public class ShiftRepeatRequest extends AuthenticatedRequest {
     private LocalTime endShift;
     private HallDto hall;
 
-    public ShiftRepeatRequest(String sessionToken,LocalDate start, LocalDate end, String option, EmployeeDto employeeDto, LocalTime startShift, LocalTime endShift, HallDto hall) {
+    public ShiftRepeatRequest(String sessionToken, LocalDate start, LocalDate end, String option, EmployeeDto employeeDto, LocalTime startShift, LocalTime endShift, HallDto hall) {
         super(sessionToken);
         this.start = start;
         this.end = end;

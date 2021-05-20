@@ -51,17 +51,17 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     @Override
     public void presentInvalidProjectionListRequest(ProjectionListRequest request) {
-        var messageError ="";
+        var messageError = "";
         if (request.getErrorList().contains(ProjectionListRequest.MISSING_MOVIE_ERROR)) {
-           messageError+=(ProjectionListRequest.MISSING_MOVIE_ERROR.getMessage());
+            messageError += (ProjectionListRequest.MISSING_MOVIE_ERROR.getMessage());
         }
         if (request.getErrorList().contains(ProjectionListRequest.MISSING_DATE_ERROR)) {
-            messageError+=(ProjectionListRequest.MISSING_DATE_ERROR.getMessage());
+            messageError += (ProjectionListRequest.MISSING_DATE_ERROR.getMessage());
         }
         if (request.getErrorList().contains(ProjectionListRequest.MISSING_CINEMA_ERROR)) {
-            messageError+=(ProjectionListRequest.MISSING_CINEMA_ERROR.getMessage());
+            messageError += (ProjectionListRequest.MISSING_CINEMA_ERROR.getMessage());
         }
-        model.addAttribute("messageError",messageError);
+        model.addAttribute("messageError", messageError);
 
     }
 
@@ -88,8 +88,8 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentSeatAlreadyOccupiedException(String exception) {
-        model.addAttribute("messageError", exception);
+    public void presentSeatAlreadyBookedError(String message) {
+        model.addAttribute("messageError", message);
     }
 
     @Override
@@ -99,29 +99,29 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     @Override
     public void presentInvalidPayRequest(PaymentRequest request) {
-        var messageError ="";
+        var messageError = "";
         if (request.getErrorList().contains(PaymentRequest.NUMBER_OF_CARD_LETTERS_ERROR)) {
-            messageError+=(PaymentRequest.NUMBER_OF_CARD_LETTERS_ERROR.getMessage());
+            messageError += (PaymentRequest.NUMBER_OF_CARD_LETTERS_ERROR.getMessage());
         }
         if (request.getErrorList().contains(PaymentRequest.CREDIT_CARD_LENGTH_ERROR)) {
-            messageError+=( PaymentRequest.CREDIT_CARD_LENGTH_ERROR.getMessage());
+            messageError += (PaymentRequest.CREDIT_CARD_LENGTH_ERROR.getMessage());
         }
         if (request.getErrorList().contains(PaymentRequest.MISSING_EMAIL_ERROR)) {
-            messageError+=( PaymentRequest.MISSING_EMAIL_ERROR.getMessage());
+            messageError += (PaymentRequest.MISSING_EMAIL_ERROR.getMessage());
         }
         if (request.getErrorList().contains(PaymentRequest.MISSING_CREDIT_CARD_ERROR)) {
-            messageError+=(PaymentRequest.MISSING_CREDIT_CARD_ERROR.getMessage());
+            messageError += (PaymentRequest.MISSING_CREDIT_CARD_ERROR.getMessage());
         }
         if (request.getErrorList().contains(PaymentRequest.LENGTH_CVV_CREDIT_CARD_ERROR)) {
-            messageError+=( PaymentRequest.LENGTH_CVV_CREDIT_CARD_ERROR.getMessage());
+            messageError += (PaymentRequest.LENGTH_CVV_CREDIT_CARD_ERROR.getMessage());
         }
         if (request.getErrorList().contains(PaymentRequest.EXPIRATION_CREDIT_CARD_ERROR)) {
-            messageError+=( PaymentRequest.EXPIRATION_CREDIT_CARD_ERROR.getMessage());
+            messageError += (PaymentRequest.EXPIRATION_CREDIT_CARD_ERROR.getMessage());
         }
         if (request.getErrorList().contains(PaymentRequest.EMAIL_ERROR)) {
-            messageError+=( PaymentRequest.EMAIL_ERROR.getMessage());
+            messageError += (PaymentRequest.EMAIL_ERROR.getMessage());
         }
-        model.addAttribute("messageError",messageError);
+        model.addAttribute("messageError", messageError);
 
     }
 
@@ -139,10 +139,12 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     public void presentSeatList(NumberOfSeatsResponse response) {
         model.addAttribute("seatList", response.getSeatDtoList());
     }
+
     @Override
     public void presentMovieList(MovieListResponse response) {
         model.addAttribute("movieList", response.getMovieList());
     }
+
     @Override
     public void presentCinemaList(CinemaListResponse response) {
         model.addAttribute("cinemaList", response.getCinemaList());

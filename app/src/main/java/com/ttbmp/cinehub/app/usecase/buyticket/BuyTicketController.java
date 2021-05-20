@@ -138,7 +138,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             var projection = projectionRepository.getProjection(request.getProjectionId());
             var seat = seatRepository.getSeat(request.getSeatId());
             if (projection.isBooked(seat)) {
-                presenter.presentSeatAlreadyOccupiedException("The place has already been occupied");
+                presenter.presentSeatAlreadyBookedError("The place has already been booked");
             } else {
                 //-DECORATOR-//
                 var ticket = new Ticket(0, projection.getBasePrice(), customer, seat, projection); // Ticket di base

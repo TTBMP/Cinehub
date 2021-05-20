@@ -76,7 +76,7 @@ public class PaymentViewController extends ViewController {
                 viewModel.emailUserProperty().isNull().
                         or(viewModel.cvvProperty().isNull().
                                 or(viewModel.numberCardProperty().isNull().
-                                    or(viewModel.expirationDateProperty().isNull())
+                                        or(viewModel.expirationDateProperty().isNull())
                                 )
                         )
         );
@@ -103,14 +103,13 @@ public class PaymentViewController extends ViewController {
                 viewModel.magicBoxOptionProperty().getValue(),
                 viewModel.skipLineOptionProperty().getValue()
         ));
-        if(viewModel.errorMessageProperty().getValue()==null){
+        if (viewModel.errorMessageProperty().getValue() == null) {
             try {
                 navController.navigate(new NavDestination(new ConfirmEmailView()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        else{
+        } else {
             try {
                 navController.navigate(new NavDestination(new PaymentView()));
             } catch (IOException e) {

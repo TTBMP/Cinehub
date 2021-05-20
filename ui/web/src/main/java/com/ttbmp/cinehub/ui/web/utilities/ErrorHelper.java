@@ -26,7 +26,7 @@ public class ErrorHelper {
     }
 
     public static String returnView(HttpServletResponse response, Model model, String viewPath) {
-        var errorMessage = (String)model.getAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME);
+        var errorMessage = (String) model.getAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME);
         if (errorMessage == null) {
             return viewPath;
         }

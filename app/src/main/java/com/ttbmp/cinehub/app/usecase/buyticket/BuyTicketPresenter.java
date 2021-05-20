@@ -17,8 +17,6 @@ public interface BuyTicketPresenter {
 
     void presentInvalidMovieListRequest(MovieListRequest request);
 
-    void presentRepositoryError(RepositoryException exception);
-
     void presentCinemaList(CinemaListResponse response);
 
     void presentCinemaListNullRequest();
@@ -49,6 +47,8 @@ public interface BuyTicketPresenter {
 
     void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException requestException);
 
+    void presentRepositoryError(RepositoryException exception);
 
-    void presentSeatAlreadyOccupiedException(String exception);
+    void presentSeatAlreadyBookedError(String message);
+
 }

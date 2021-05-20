@@ -12,7 +12,10 @@ import com.ttbmp.cinehub.ui.desktop.buyticket.payment.PaymentView;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavDestination;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 

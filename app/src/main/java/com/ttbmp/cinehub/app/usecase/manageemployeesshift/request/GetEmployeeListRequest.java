@@ -11,7 +11,7 @@ public class GetEmployeeListRequest extends AuthenticatedRequest {
 
     private CinemaDto cinema;
 
-    public GetEmployeeListRequest(String sessionToken,CinemaDto cinema) {
+    public GetEmployeeListRequest(String sessionToken, CinemaDto cinema) {
         super(sessionToken);
         this.cinema = cinema;
     }

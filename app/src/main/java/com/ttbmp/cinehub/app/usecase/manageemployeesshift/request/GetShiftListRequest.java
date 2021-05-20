@@ -18,7 +18,7 @@ public class GetShiftListRequest extends AuthenticatedRequest {
     private LocalDate start;
     private LocalDate end;
 
-    public GetShiftListRequest(String sessionToken,CinemaDto cinema, LocalDate start, LocalDate end) {
+    public GetShiftListRequest(String sessionToken, CinemaDto cinema, LocalDate start, LocalDate end) {
         super(sessionToken);
         this.cinema = cinema;
         this.start = start;

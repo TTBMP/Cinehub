@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
-import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 
 /**
  * @author Fabio Buracchi

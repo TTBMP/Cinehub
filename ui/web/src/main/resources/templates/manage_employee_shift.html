@@ -9,7 +9,7 @@
     <link href="../static/css/schedule.css" rel="stylesheet" th:href="@{/css/schedule.css}" type="text/css">
 </head>
 
-<body  data-new-gr-c-s-check-loaded="8.868.0" >
+<body data-new-gr-c-s-check-loaded="8.868.0">
 
 <div class="col-md-12 text-center mt-3">
     <h1>Show Shift</h1>
@@ -38,7 +38,7 @@
         </form>
         <hr class="mb-4">
         <table class="table table-bordered">
-            <thead class="table" >
+            <thead class="table">
             <tr>
                 <th scope="col">Employee</th>
                 <th scope="col">Monday</th>
@@ -58,8 +58,8 @@
                             <div class="col">
                                 <img src="images/employee.jpg">
                             </div>
-                            <div th:id="${employee.key.id}" class="col">
-                                <p  th:text=" ${employee.key.name} + ' ' + ${employee.key.surname}"></p>
+                            <div class="col" th:id="${employee.key.id}">
+                                <p th:text=" ${employee.key.name} + ' ' + ${employee.key.surname}"></p>
                                 <p th:text="'Role : Projectionist'  "></p>
                             </div>
                         </div>

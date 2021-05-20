@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 
 /**

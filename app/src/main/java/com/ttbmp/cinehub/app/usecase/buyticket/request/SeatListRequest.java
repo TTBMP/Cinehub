@@ -11,7 +11,7 @@ public class SeatListRequest extends AuthenticatedRequest {
     public static final Request.Error PROJECTION_ERROR = new Request.Error("Projection id can't be negative");
     private int projectionId;
 
-    public SeatListRequest(String sessionToken,int projectionId) {
+    public SeatListRequest(String sessionToken, int projectionId) {
         super(sessionToken);
         this.projectionId = projectionId;
     }
@@ -26,7 +26,7 @@ public class SeatListRequest extends AuthenticatedRequest {
 
     @Override
     public void onValidate() {
-        if(projectionId<0){
+        if (projectionId < 0) {
             addError(PROJECTION_ERROR);
 
         }

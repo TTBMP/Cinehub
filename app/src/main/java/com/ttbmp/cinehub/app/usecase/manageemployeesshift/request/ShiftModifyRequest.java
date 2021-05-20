@@ -25,7 +25,7 @@ public class ShiftModifyRequest extends AuthenticatedRequest {
     private LocalTime end;
     private HallDto hall;
 
-    public ShiftModifyRequest(String sessionToken,EmployeeDto employeeDto, int shiftId, LocalDate date, LocalTime start, LocalTime end, HallDto hall) {
+    public ShiftModifyRequest(String sessionToken, EmployeeDto employeeDto, int shiftId, LocalDate date, LocalTime start, LocalTime end, HallDto hall) {
         super(sessionToken);
         this.employeeDto = employeeDto;
         this.shiftId = shiftId;

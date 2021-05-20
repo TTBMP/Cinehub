@@ -32,7 +32,6 @@ import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.service.email.MockEmailService;
 import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
 import com.ttbmp.cinehub.app.service.movieapi.TheMovieDbApiServiceAdapter;
-import com.ttbmp.cinehub.app.service.payment.MockPaymentService;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
 import com.ttbmp.cinehub.app.service.payment.StripeServiceAdapter;
 import com.ttbmp.cinehub.app.service.security.MockSecurityService;

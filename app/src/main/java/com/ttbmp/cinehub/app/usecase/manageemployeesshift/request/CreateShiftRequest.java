@@ -20,7 +20,7 @@ public class CreateShiftRequest extends AuthenticatedRequest {
     private LocalTime end;
     private int hallId;
 
-    public CreateShiftRequest(String sessionToken,String employeeId, LocalDate date, LocalTime start, LocalTime end) {
+    public CreateShiftRequest(String sessionToken, String employeeId, LocalDate date, LocalTime start, LocalTime end) {
         super(sessionToken);
         this.employeeId = employeeId;
         this.date = date;
@@ -28,7 +28,7 @@ public class CreateShiftRequest extends AuthenticatedRequest {
         this.end = end;
     }
 
-    public CreateShiftRequest(String sessionToken,String employeeId, LocalDate date, LocalTime start, LocalTime end, int hallId) {
+    public CreateShiftRequest(String sessionToken, String employeeId, LocalDate date, LocalTime start, LocalTime end, int hallId) {
         super(sessionToken);
         this.employeeId = employeeId;
         this.date = date;

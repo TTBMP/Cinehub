@@ -58,7 +58,6 @@ class BuyTicketBuyTicketControllerTest {
         }
 
 
-
         @Override
         public void presentPayNullRequest() {
 
@@ -136,33 +135,12 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentGetSeatListRepositoryException(String e) {
-
-        }
-
-        @Override
-        public void presentSeatAlreadyOccupiedException(String s) {
-
-        }
-
-        @Override
-        public void presentPayRepositoryException(String message) {
+        public void presentSeatAlreadyBookedError(String message) {
 
         }
 
         @Override
         public void presentRepositoryError(RepositoryException message) {
-
-        }
-
-        @Override
-        public void presentGetCinemaListRepositoryException(String message) {
-
-        }
-
-
-        @Override
-        public void presentGetProjectionListRepositoryException(String message) {
 
         }
 
