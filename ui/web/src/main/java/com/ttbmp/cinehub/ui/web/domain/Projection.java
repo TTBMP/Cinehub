@@ -10,18 +10,16 @@ public class Projection {
     private String startTime;
     private int hallId;
     private int movieId;
-    private int cinemaId;   // TODO: remove
     private long basePrice;
 
     public Projection() {
     }
 
-    public Projection(int id, int hallId, String date, int movieId, int cinemaId, String startTime, long basePrice) {
+    public Projection(int id, int hallId, String date, int movieId, String startTime, long basePrice) {
         this.id = id;
         this.hallId = hallId;
         this.date = date;
         this.movieId = movieId;
-        this.cinemaId = cinemaId;
         this.startTime = startTime;
         this.basePrice = basePrice;
     }
@@ -48,14 +46,6 @@ public class Projection {
 
     public void setHallId(int hallId) {
         this.hallId = hallId;
-    }
-
-    public int getCinemaId() {
-        return cinemaId;
-    }
-
-    public void setCinemaId(int cinemaId) {
-        this.cinemaId = cinemaId;
     }
 
     public int getMovieId() {

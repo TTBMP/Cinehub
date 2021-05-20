@@ -20,9 +20,9 @@ public class LogoutController implements LogoutUseCase {
             Request.validate(request);
             presenter.logout();
         } catch (Request.NullRequestException e) {
-            e.printStackTrace();
+            presenter.presentNullRequest();
         } catch (Request.InvalidRequestException e) {
-            e.printStackTrace();
+            presenter.presentInvalidRequest(request);
         }
     }
 

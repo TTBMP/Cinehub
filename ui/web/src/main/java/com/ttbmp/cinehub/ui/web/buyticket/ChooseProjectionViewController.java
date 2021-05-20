@@ -21,6 +21,8 @@ import java.time.LocalDate;
 @Controller
 public class ChooseProjectionViewController {
 
+    private static final String PAYMENT_FORM_ATTRIBUTE = "payment_form";
+
     @GetMapping("/choose_movie")
     public String chooseMovie(
             @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, Model model) {
@@ -29,7 +31,7 @@ public class ChooseProjectionViewController {
         }
         BuyTicketUseCase buyTicketUseCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
         buyTicketUseCase.getMovieList(new MovieListRequest(date));
-        model.addAttribute("payment_form", new PaymentForm());
+        model.addAttribute(PAYMENT_FORM_ATTRIBUTE, new PaymentForm());
         model.addAttribute("selected_date", date);
         return "buy_ticket/choose_movie";
     }
@@ -38,7 +40,7 @@ public class ChooseProjectionViewController {
     public String chooseCinema(
             @ModelAttribute("payment_form") PaymentForm paymentForm,
             Model model) {
-        model.addAttribute("payment_form", paymentForm);
+        model.addAttribute(PAYMENT_FORM_ATTRIBUTE, paymentForm);
         BuyTicketUseCase useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
         useCase.getCinemaList(new CinemaListRequest(
                 paymentForm.getMovie().getId(),
@@ -55,7 +57,7 @@ public class ChooseProjectionViewController {
     public String chooseProjection(
             @ModelAttribute("payment_form") PaymentForm paymentForm,
             Model model) {
-        model.addAttribute("payment_form", paymentForm);
+        model.addAttribute(PAYMENT_FORM_ATTRIBUTE, paymentForm);
         BuyTicketUseCase useCase = new BuyTicketHandler(new BuyTicketPresenterWeb(model));
         useCase.getProjectionList(new ProjectionListRequest(
                 paymentForm.getMovie().getId(),

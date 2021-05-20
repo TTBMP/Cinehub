@@ -29,7 +29,7 @@ public class LoginController implements LoginUseCase {
         } catch (Request.InvalidRequestException e) {
             presenter.presentInvalidRequestException(request);
         } catch (SecurityException e) {
-            presenter.presentAuthenticationError(e);
+            presenter.presentSecurityError(e);
         }
     }
 

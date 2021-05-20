@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
  */
 public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
+    private static final String ERROR_MESSAGE_ATTRIBUTE = "messageError";
+
     private final Model model;
 
     public BuyTicketPresenterWeb(Model model) {
@@ -20,33 +22,58 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     }
 
     @Override
+    public void presentMovieList(MovieListResponse response) {
+        model.addAttribute("movieList", response.getMovieList());
+    }
+
+    @Override
+    public void presentCinemaList(CinemaListResponse response) {
+        model.addAttribute("cinemaList", response.getCinemaList());
+    }
+
+    @Override
+    public void presentProjectionList(ProjectionListResponse response) {
+        model.addAttribute("projectionList", response.getProjectionDtoList());
+    }
+
+    @Override
+    public void presentSeatList(NumberOfSeatsResponse response) {
+        model.addAttribute("seatList", response.getSeatDtoList());
+    }
+
+    @Override
+    public void presentTicket(TicketResponse response) {
+        model.addAttribute("ticketDetail", response.getTicketDto());
+    }
+
+    @Override
     public void presentMovieListNullRequest() {
-        model.addAttribute("messageError", "Movie can't be null");
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "Movie can't be null");
     }
 
     @Override
     public void presentInvalidMovieListRequest(MovieListRequest request) {
-        model.addAttribute("messageError", "Movie can't be null");
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "Movie can't be null");
     }
 
     @Override
     public void presentRepositoryError(RepositoryException exception) {
-        model.addAttribute("messageError", exception.getMessage());
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, exception.getMessage());
     }
 
     @Override
     public void presentCinemaListNullRequest() {
-        model.addAttribute("messageError", "Cinema can't be null");
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "Cinema can't be null");
     }
 
     @Override
     public void presentInvalidCinemaListRequest(CinemaListRequest request) {
-        model.addAttribute("messageError", request.getErrorList());
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, request.getErrorList());
     }
 
     @Override
     public void presentProjectionListNullRequest() {
-        model.addAttribute("messageError", "Unable to retrieve projection");
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "Unable to retrieve projection");
     }
 
     @Override
@@ -61,40 +88,38 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
         if (request.getErrorList().contains(ProjectionListRequest.MISSING_CINEMA_ERROR)) {
             messageError += (ProjectionListRequest.MISSING_CINEMA_ERROR.getMessage());
         }
-        model.addAttribute("messageError", messageError);
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, messageError);
 
     }
 
     @Override
     public void presentSeatListNullRequest() {
-        model.addAttribute("messageError", "Seat can't be null");
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "Seat can't be null");
     }
 
     @Override
     public void presentInvalidSeatListRequest(SeatListRequest request) {
-        model.addAttribute("messageError", request.getErrorList());
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, request.getErrorList());
     }
 
     @Override
     public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException exception) {
-        model.addAttribute("messageError", exception.getMessage());
-
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, exception.getMessage());
     }
 
     @Override
     public void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException exception) {
-        model.addAttribute("messageError", exception.getMessage());
-
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, exception.getMessage());
     }
 
     @Override
     public void presentSeatAlreadyBookedError(String message) {
-        model.addAttribute("messageError", message);
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, message);
     }
 
     @Override
     public void presentPayNullRequest() {
-        model.addAttribute("messageError", "Error with operation Pay");
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "Error with operation Pay");
     }
 
     @Override
@@ -121,37 +146,12 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
         if (request.getErrorList().contains(PaymentRequest.EMAIL_ERROR)) {
             messageError += (PaymentRequest.EMAIL_ERROR.getMessage());
         }
-        model.addAttribute("messageError", messageError);
-
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, messageError);
     }
 
     @Override
     public void presentPayPaymentServiceException(PaymentServiceException exception) {
-        model.addAttribute("messageError", exception.getMessage());
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, exception.getMessage());
     }
 
-    @Override
-    public void presentTicket(TicketResponse response) {
-        model.addAttribute("ticketDetail", response.getTicketDto());
-    }
-
-    @Override
-    public void presentSeatList(NumberOfSeatsResponse response) {
-        model.addAttribute("seatList", response.getSeatDtoList());
-    }
-
-    @Override
-    public void presentMovieList(MovieListResponse response) {
-        model.addAttribute("movieList", response.getMovieList());
-    }
-
-    @Override
-    public void presentCinemaList(CinemaListResponse response) {
-        model.addAttribute("cinemaList", response.getCinemaList());
-    }
-
-    @Override
-    public void presentProjectionList(ProjectionListResponse response) {
-        model.addAttribute("projectionList", response.getProjectionDtoList());
-    }
 }

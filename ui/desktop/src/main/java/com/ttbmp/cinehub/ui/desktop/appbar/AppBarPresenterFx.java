@@ -1,8 +1,11 @@
 package com.ttbmp.cinehub.ui.desktop.appbar;
 
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.getuserrole.GetUserRolePresenter;
+import com.ttbmp.cinehub.app.usecase.getuserrole.RoleRequest;
 import com.ttbmp.cinehub.app.usecase.getuserrole.RoleResponse;
 import com.ttbmp.cinehub.app.usecase.logout.LogoutPresenter;
+import com.ttbmp.cinehub.app.usecase.logout.LogoutRequest;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.about.AboutActivity;
@@ -38,6 +41,26 @@ public class AppBarPresenterFx implements GetUserRolePresenter, LogoutPresenter 
     }
 
     @Override
+    public void presentInvalidRequest(RoleRequest request) {
+        // TODO
+    }
+
+    @Override
+    public void presentNullRequest() {
+        // TODO
+    }
+
+    @Override
+    public void presentRepositoryError(RepositoryException e) {
+        // TODO
+    }
+
+    @Override
+    public void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e) {
+        // TODO
+    }
+
+    @Override
     public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e) {
         viewModel.getTabList().clear();
         viewModel.getTabList().add(viewModel.getActivityTabMap().get(AboutActivity.class));
@@ -48,6 +71,11 @@ public class AppBarPresenterFx implements GetUserRolePresenter, LogoutPresenter 
     @Override
     public void logout() {
         CinehubApplication.setSessionToken(null);
+    }
+
+    @Override
+    public void presentInvalidRequest(LogoutRequest request) {
+        // TODO
     }
 
 }

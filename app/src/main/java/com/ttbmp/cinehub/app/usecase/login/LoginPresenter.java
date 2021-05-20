@@ -6,7 +6,7 @@ public interface LoginPresenter {
 
     void presentSessionToken(LoginResponse response);
 
-    void presentAuthenticationError(SecurityException e);
+    void presentSecurityError(SecurityException e);
 
     void presentNullRequestException();
 

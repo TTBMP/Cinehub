@@ -34,15 +34,15 @@ public class GetUserRoleController implements GetUserRoleUseCase {
                     .collect(Collectors.toList());
             presenter.present(new RoleResponse(roleList));
         } catch (Request.NullRequestException e) {
-            e.printStackTrace();
+            presenter.presentNullRequest();
         } catch (Request.InvalidRequestException e) {
-            e.printStackTrace();
+            presenter.presentInvalidRequest(request);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            e.printStackTrace();
+            presenter.presentUnauthorizedError(e);
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
             presenter.presentUnauthenticatedError(e);
         } catch (RepositoryException e) {
-            e.printStackTrace();
+            presenter.presentRepositoryError(e);
         }
     }
 

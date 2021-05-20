@@ -27,7 +27,10 @@ public class LoginViewController {
         useCase.login(new LoginRequest(form.email, form.password));
         var sessionToken = model.getAttribute("sessionToken");
         if (sessionToken != null) {
-            response.addCookie(new Cookie("session", (String) sessionToken));
+            var cookie = new Cookie("session", (String) sessionToken);
+            cookie.setHttpOnly(true);
+            cookie.setSecure(true);
+            response.addCookie(cookie);
         }
         response.setHeader("Location", sessionToken != null ? "/" : "/login");
         response.setStatus(302);

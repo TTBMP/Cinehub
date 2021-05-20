@@ -4,4 +4,8 @@ public interface LogoutPresenter {
 
     void logout();
 
+    void presentInvalidRequest(LogoutRequest request);
+
+    void presentNullRequest();
+
 }

@@ -21,7 +21,7 @@ public class LoginPresenterFx implements LoginPresenter {
     }
 
     @Override
-    public void presentAuthenticationError(SecurityException e) {
+    public void presentSecurityError(SecurityException e) {
         viewModel.accessErrorProperty().setValue(e.getMessage());
     }
 
