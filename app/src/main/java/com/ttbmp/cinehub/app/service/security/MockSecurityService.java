@@ -37,13 +37,13 @@ public class MockSecurityService implements SecurityService {
         try {
             switch (sessionToken) {
                 case "CUSTOMER":
-                    return userRepository.getUser("-2");
+                    return userRepository.getUser("7jYsjrrXeFSUpu33TsdYwV135mx1");
                 case "MANAGER":
-                    return userRepository.getUser("-1");
+                    return userRepository.getUser("5KClU7hbNgedJAwLuF9eFVl6Qzz2");
                 case "PROJECTIONIST":
-                    return userRepository.getUser("1");
+                    return userRepository.getUser("mg9eBHkPumcssl9dvrotbZqDbk62");
                 case "USHER":
-                    return userRepository.getUser("2");
+                    return userRepository.getUser("gVUYDMojhmeFkErlbF0WWLQWMPn1");
                 default:
                     throw new SecurityException("Invalid session token");
             }

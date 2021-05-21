@@ -15,14 +15,14 @@ public interface ProjectionistDao {
             "WHERE " +
             "proiezione.id = :id AND " +
             "proiezione.id_sala = sala.id AND " +
-            "sala.id = turno_proiezionista.sala_id AND " +
-            "turno_proiezionista.turno_id = turno.id AND " +
+            "sala.id = turno_proiezionista.id_sala AND " +
+            "turno_proiezionista.id_turno = turno.id AND " +
             "turno.id_dipendente = dipendente.id_utente AND " +
             "proiezione.inizio BETWEEN turno.inizio AND turno.fine AND " +
             "turno.data = proiezione.data")
     Employee getProjectionistByProjectionId(@Parameter(name = "id") int id) throws DaoMethodException;
 
-    @Query("SELECT  dipendente.* FROM cinemadb.dipendente, cinemadb.turno WHERE dipendente.id_utente = turno.id_dipendente AND turno.id = :id ")
+    @Query("SELECT  dipendente.* FROM cinemadb.dipendente, cinemadb.turno WHERE dipendente.id_utente = turno.id_dipendente AND turno.id = :id")
     Employee getProjectionistByProjectionistShift(@Parameter(name = "id") int id) throws DaoMethodException;
 
     @Insert

@@ -31,7 +31,6 @@ public class MockUserRepository implements UserRepository {
         USER_DATA_LIST.add(new UserData("23", "Jeff", "Bezos", "jb@cinehub.com", "projectionist;employee;customer"));
     }
 
-
     public static List<UserData> getUserDataList() {
         return USER_DATA_LIST;
     }

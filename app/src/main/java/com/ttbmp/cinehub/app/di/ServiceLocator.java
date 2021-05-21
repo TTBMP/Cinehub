@@ -26,7 +26,7 @@ import com.ttbmp.cinehub.app.repository.shift.usher.JdbcUsherShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.usher.UsherShiftRepository;
 import com.ttbmp.cinehub.app.repository.ticket.JdbcTicketRepository;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
-import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
+import com.ttbmp.cinehub.app.repository.user.JdbcUserRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.service.email.MockEmailService;
@@ -34,7 +34,7 @@ import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
 import com.ttbmp.cinehub.app.service.movieapi.TheMovieDbApiServiceAdapter;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
 import com.ttbmp.cinehub.app.service.payment.StripeServiceAdapter;
-import com.ttbmp.cinehub.app.service.security.MockSecurityService;
+import com.ttbmp.cinehub.app.service.security.FirebaseAuthSecurityServiceAdapter;
 import com.ttbmp.cinehub.app.service.security.SecurityService;
 import com.ttbmp.cinehub.app.utilities.FactoryMap;
 
@@ -53,7 +53,7 @@ public class ServiceLocator {
         serviceFactoryMap.put(EmailService.class, MockEmailService::new);
         serviceFactoryMap.put(MovieApiService.class, TheMovieDbApiServiceAdapter::new);
         serviceFactoryMap.put(PaymentService.class, StripeServiceAdapter::new);
-        serviceFactoryMap.put(SecurityService.class, () -> new MockSecurityService(this));
+        serviceFactoryMap.put(SecurityService.class, () -> new FirebaseAuthSecurityServiceAdapter(this));
         serviceFactoryMap.put(CinemaRepository.class, () -> new JdbcCinemaRepository(this));
         serviceFactoryMap.put(CustomerRepository.class, () -> new JdbcCustomerRepository(this));
         serviceFactoryMap.put(EmployeeRepository.class, () -> new JdbcEmployeeRepository(this));
@@ -67,7 +67,7 @@ public class ServiceLocator {
         serviceFactoryMap.put(ProjectionistShiftRepository.class, () -> new JdbcProjectionistShiftRepository(this));
         serviceFactoryMap.put(UsherShiftRepository.class, () -> new JdbcUsherShiftRepository(this));
         serviceFactoryMap.put(TicketRepository.class, () -> new JdbcTicketRepository(this));
-        serviceFactoryMap.put(UserRepository.class, MockUserRepository::new);
+        serviceFactoryMap.put(UserRepository.class, () -> new JdbcUserRepository(this));
     }
 
     public <T> T getService(Class<T> serviceClass) {

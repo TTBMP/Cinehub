@@ -48,8 +48,7 @@ public class FirebaseAuthenticationService {
 
     public FirebaseSession verifySessionToken(String sessionToken) throws FirebaseException {
         try {
-            var email = sessionToken;
-            var userRecord = firebaseAuth.getUserByEmail(email);
+            var userRecord = firebaseAuth.getUser(sessionToken);
             return new FirebaseSession(userRecord);
         } catch (FirebaseAuthException e) {
             throw new FirebaseException(e.getMessage());

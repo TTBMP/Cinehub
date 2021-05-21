@@ -17,8 +17,8 @@ public interface SeatDao {
     Seat getSeat(@Parameter(name = "id") int id) throws DaoMethodException;
 
     @Query("SELECT * FROM posto WHERE posto.id IN " +
-            "(SELECT biglietto.id_posto FROM biglietto WHERE biglietto.id = :idTicket)")
-    Seat getSeatByTicketId(@Parameter(name = "idTicket") int idTicket) throws DaoMethodException;
+            "(SELECT biglietto.id_posto FROM biglietto WHERE biglietto.id = :id)")
+    Seat getSeatByTicketId(@Parameter(name = "id") int idTicket) throws DaoMethodException;
 
     @Query("SELECT * FROM posto WHERE id_sala = :hallId ")
     List<Seat> getSeatList(@Parameter(name = "hallId") int hallId) throws DaoMethodException;

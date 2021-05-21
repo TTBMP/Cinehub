@@ -14,7 +14,7 @@ import java.util.List;
 public interface ShiftDao {
 
     @Query("SELECT turno.* " +
-            "FROM cinemadb.turno, cinemadb.dipendente " +
+            "FROM turno, dipendente " +
             "WHERE " +
             "dipendente.id_cinema = :idCinema AND " +
             "dipendente.id_utente = turno.id_dipendente AND " +
@@ -32,7 +32,7 @@ public interface ShiftDao {
     List<Shift> getShiftListByEmployeeId(@Parameter(name = "idEmployee") @NotNull String name) throws DaoMethodException;
 
     @Query("SELECT  turno.* " +
-            "FROM cinemadb.dipendente, cinemadb.turno " +
+            "FROM dipendente, turno " +
             "WHERE " +
             "dipendente.id_utente = turno.id_dipendente AND " +
             "dipendente.id_utente = :idEmployee AND " +
@@ -43,7 +43,7 @@ public interface ShiftDao {
             @Parameter(name = "end") @NotNull String end
     ) throws DaoMethodException;
 
-    @Query("SELECT turno.* FROM cinemadb.turno WHERE turno.id_dipendente = :employeeId AND data = :date AND inizio = :start AND fine = :end")
+    @Query("SELECT turno.* FROM turno WHERE turno.id_dipendente = :employeeId AND data = :date AND inizio = :start AND fine = :end")
     Shift getShift(
             @Parameter(name = "employeeId") @NotNull String employeeId,
             @Parameter(name = "date") @NotNull String date,

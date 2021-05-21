@@ -26,13 +26,13 @@ public class UserProxy extends User {
 
     private static Role getRole(String roleString) {
         switch (roleString) {
-            case "customer":
+            case "cliente":
                 return Role.CUSTOMER_ROLE;
-            case "employee":
+            case "dipendente":
                 return Role.EMPLOYEE_ROLE;
-            case "projectionist":
+            case "proiezionista":
                 return Role.PROJECTIONIST_ROLE;
-            case "usher":
+            case "maschera":
                 return Role.USHER_ROLE;
             case "manager":
                 return Role.MANAGER_ROLE;

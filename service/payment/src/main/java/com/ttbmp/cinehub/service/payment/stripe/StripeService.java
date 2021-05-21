@@ -23,11 +23,11 @@ public class StripeService {
     @SuppressWarnings("Unused")
     public void requestPayment(String email, String nameUser, String numberOfCard, long ticketPrice, String expiredDate, String cvv) throws StripeServiceException {
         try {
-            var customer = CUSTOMER_HANDLER.getCustomer(nameUser, numberOfCard, email,expiredDate,cvv);
+            var customer = CUSTOMER_HANDLER.getCustomer(nameUser, numberOfCard, email, expiredDate, cvv);
             var paymentMethod = PAYMENT_METHOD_HANDLER.getCreditCard(customer);
-            if(!paymentMethod.getCard().getLast4().equals(numberOfCard.substring(numberOfCard.length()-4))){
-                customer = CUSTOMER_HANDLER.updateCreditCardCustomer(customer,numberOfCard, LocalDate.parse(expiredDate) ,cvv);
-                paymentMethod  = PAYMENT_METHOD_HANDLER.getCreditCard(customer);
+            if (!paymentMethod.getCard().getLast4().equals(numberOfCard.substring(numberOfCard.length() - 4))) {
+                customer = CUSTOMER_HANDLER.updateCreditCardCustomer(customer, numberOfCard, LocalDate.parse(expiredDate), cvv);
+                paymentMethod = PAYMENT_METHOD_HANDLER.getCreditCard(customer);
             }
             BALANCE_HANDLER.checkAvailability(customer, ticketPrice);
             BALANCE_HANDLER.setBalance(customer, ticketPrice, paymentMethod);

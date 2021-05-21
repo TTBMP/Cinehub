@@ -15,16 +15,12 @@ public class Employee {
     @ColumnInfo(name = "id_cinema")
     private int cinemaId;
 
-    @ColumnInfo(name = "ruolo")
-    private String role;
-
     public Employee() {
     }
 
-    public Employee(String idUser, int cinemaId, String role) {
+    public Employee(String idUser, int cinemaId) {
         this.idUser = idUser;
         this.cinemaId = cinemaId;
-        this.role = role;
     }
 
     public String getIdUser() {
@@ -43,11 +39,4 @@ public class Employee {
         this.cinemaId = cinemaId;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }

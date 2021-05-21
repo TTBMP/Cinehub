@@ -34,11 +34,7 @@ public class FirebaseAuthSecurityServiceAdapter implements SecurityService {
             var session = new FirebaseAuthenticationService().verifySessionToken(sessionToken);
             return userRepository.getUser(session.getUid());
         } catch (FirebaseException e) {
-            try {
-                return userRepository.getUser("");
-            } catch (RepositoryException repositoryException) {
-                throw new SecurityException(e.getMessage());
-            }
+            throw new SecurityException("Session token is null");
         } catch (RepositoryException e) {
             throw new SecurityException(e.getMessage());
         }

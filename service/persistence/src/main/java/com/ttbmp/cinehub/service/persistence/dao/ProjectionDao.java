@@ -49,8 +49,8 @@ public interface ProjectionDao {
             "FROM cinemadb.turno , cinemadb.turno_proiezionista, cinemadb.proiezione " +
             "WHERE " +
             "turno.id = :id AND " +
-            "turno.id = turno_proiezionista.turno_id AND " +
-            "turno_proiezionista.sala_id = proiezione.id_sala AND " +
+            "turno.id = turno_proiezionista.id_turno AND " +
+            "turno_proiezionista.id_sala = proiezione.id_sala AND " +
             "proiezione.data = turno.data AND " +
             "proiezione.inizio BETWEEN turno.inizio AND turno.fine")
     List<Projection> getProjectionListByProjectionistShift(@Parameter(name = "id") int id) throws DaoMethodException;

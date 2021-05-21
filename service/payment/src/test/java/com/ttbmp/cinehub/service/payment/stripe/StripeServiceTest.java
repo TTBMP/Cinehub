@@ -18,7 +18,7 @@ class StripeServiceTest {
                 12L,
                 "2024-05-11",
                 "354"
-                ));
+        ));
     }
 
 }

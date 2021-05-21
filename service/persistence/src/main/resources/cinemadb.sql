@@ -169,11 +169,11 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`biglietto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinemadb`.`dipendente`
 (
-    `id_utente` VARCHAR(45)                        NOT NULL,
-    `id_cinema` INT                                NOT NULL,
-    `ruolo`     ENUM ('proiezionista', 'maschera') NOT NULL,
+    `id_utente` VARCHAR(45) NOT NULL,
+    `id_cinema` INT         NOT NULL,
     INDEX `fk_Dipendente_Utente1_idx` (`id_utente` ASC) VISIBLE,
     INDEX `fk_Dipendente_Cinema1_idx` (`id_cinema` ASC) VISIBLE,
+    PRIMARY KEY (`id_utente`),
     CONSTRAINT `fk_Dipendente_Cinema1`
         FOREIGN KEY (`id_cinema`)
             REFERENCES `cinemadb`.`cinema` (`id`),
@@ -212,22 +212,57 @@ CREATE TABLE IF NOT EXISTS `cinemadb`.`turno`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinemadb`.`turno_proiezionista`
 (
-    `turno_id` INT NOT NULL,
-    `sala_id`  INT NOT NULL,
-    PRIMARY KEY (`turno_id`),
-    INDEX `fk_turno_proiezionista_turno1_idx` (`turno_id` ASC) VISIBLE,
-    INDEX `fk_turno_proiezionista_sala1_idx` (`sala_id` ASC) VISIBLE,
+    `id_turno` INT NOT NULL,
+    `id_sala`  INT NOT NULL,
+    PRIMARY KEY (`id_turno`, `id_sala`),
+    INDEX `fk_turno_proiezionista_turno1_idx` (`id_turno` ASC) VISIBLE,
+    INDEX `fk_turno_proiezionista_sala1_idx` (`id_sala` ASC) VISIBLE,
     CONSTRAINT `fk_turno_proiezionista_sala1`
-        FOREIGN KEY (`sala_id`)
+        FOREIGN KEY (`id_sala`)
             REFERENCES `cinemadb`.`sala` (`id`),
     CONSTRAINT `fk_turno_proiezionista_turno1`
-        FOREIGN KEY (`turno_id`)
+        FOREIGN KEY (`id_turno`)
             REFERENCES `cinemadb`.`turno` (`id`)
             ON DELETE CASCADE
 )
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `cinemadb`.`ruolo`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cinemadb`.`ruolo`
+(
+    `id`   INT         NOT NULL AUTO_INCREMENT,
+    `nome` VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`id`)
+)
+    ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `cinemadb`.`ruolo_utente`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cinemadb`.`ruolo_utente`
+(
+    `id_utente` VARCHAR(45) NOT NULL,
+    `id_ruolo`  INT         NOT NULL,
+    PRIMARY KEY (`id_utente`, `id_ruolo`),
+    INDEX `id_utente_idx` (`id_utente` ASC) VISIBLE,
+    CONSTRAINT `id_ruolo`
+        FOREIGN KEY (`id_ruolo`)
+            REFERENCES `cinemadb`.`ruolo` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION,
+    CONSTRAINT `id_utente`
+        FOREIGN KEY (`id_utente`)
+            REFERENCES `cinemadb`.`utente` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
+)
+    ENGINE = InnoDB;
 
 USE `test_schema`;
 
@@ -252,10 +287,7 @@ DELIMITER $$
 USE `cinemadb`$$
 CREATE PROCEDURE `login`(IN emailParam VARCHAR(255), IN passwordParam VARCHAR(255))
 BEGIN
-    SELECT *
-    FROM cinemadb.utente
-    WHERE email = emailParam
-      AND password = passwordParam;
+    SELECT * FROM cinemadb.utente WHERE email = emailParam AND password = passwordParam;
 END$$
 
 DELIMITER ;
@@ -268,11 +300,13 @@ DELIMITER $$
 USE `cinemadb`$$
 CREATE PROCEDURE `popola`()
 BEGIN
-    CALL cinemadb.popola_utente();
+    CALL cinemadb.popola_ruoli();
+    CALL cinemadb.popola_utenti();
+    CALL cinemadb.popola_ruoli_utente();
     CALL cinemadb.popola_cinema();
-    CALL cinemadb.popola_dipendente();
+    CALL cinemadb.popola_dipendenti();
     CALL cinemadb.popola_film();
-    CALL cinemadb.popola_sala();
+    CALL cinemadb.popola_sale();
     CALL cinemadb.popola_posti();
     CALL cinemadb.popola_proiezioni();
     CALL cinemadb.popola_turni();
@@ -298,41 +332,77 @@ END$$
 DELIMITER ;
 
 -- -----------------------------------------------------
--- procedure popola_dipendente
+-- procedure popola_dipendenti
 -- -----------------------------------------------------
 
 DELIMITER $$
 USE `cinemadb`$$
-CREATE PROCEDURE `popola_dipendente`()
+CREATE PROCEDURE `popola_dipendenti`()
 BEGIN
-    INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`, `ruolo`)
-    VALUES ('0', '1', 'maschera');
-    INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`, `ruolo`)
-    VALUES ('1', '1', 'proiezionista');
-    INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`, `ruolo`)
-    VALUES ('2', '2', 'maschera');
-    INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`, `ruolo`)
-    VALUES ('3', '1', 'proiezionista');
-    INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`, `ruolo`)
-    VALUES ('5', '1', 'proiezionista');
-    INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`, `ruolo`)
-    VALUES ('7', '1', 'proiezionista');
-    INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`, `ruolo`)
-    VALUES ('9', '1', 'proiezionista');
-    INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`, `ruolo`)
-    VALUES ('11', '1', 'proiezionista');
-    INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`, `ruolo`)
-    VALUES ('13', '2', 'proiezionista');
-    INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`, `ruolo`)
-    VALUES ('15', '2', 'proiezionista');
-    INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`, `ruolo`)
-    VALUES ('17', '2', 'proiezionista');
-    INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`, `ruolo`)
-    VALUES ('19', '2', 'proiezionista');
-    INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`, `ruolo`)
-    VALUES ('21', '2', 'proiezionista');
-    INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`, `ruolo`)
-    VALUES ('23', '2', 'proiezionista');
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE id_utente VARCHAR(45);
+    DECLARE maschera INT DEFAULT 1;
+    DECLARE proiezionista INT DEFAULT 1;
+    DECLARE nmaschere INT DEFAULT (SELECT COUNT(*)
+                                   FROM utente
+                                   WHERE id IN (SELECT ruolo_utente.id_utente
+                                                FROM ruolo_utente,
+                                                     ruolo
+                                                WHERE id = id_ruolo
+                                                  AND nome = "maschera"));
+    DECLARE nproiezionisti INT DEFAULT (SELECT COUNT(*)
+                                        FROM utente
+                                        WHERE id IN (SELECT ruolo_utente.id_utente
+                                                     FROM ruolo_utente,
+                                                          ruolo
+                                                     WHERE id = id_ruolo
+                                                       AND nome = "proiezionista"));
+    DECLARE cmaschera CURSOR FOR SELECT id
+                                 FROM utente
+                                 WHERE id IN (SELECT ruolo_utente.id_utente
+                                              FROM ruolo_utente,
+                                                   ruolo
+                                              WHERE id = id_ruolo
+                                                AND nome = "maschera");
+    DECLARE cproiezionista CURSOR FOR SELECT id
+                                      FROM utente
+                                      WHERE id IN (SELECT ruolo_utente.id_utente
+                                                   FROM ruolo_utente,
+                                                        ruolo
+                                                   WHERE id = id_ruolo
+                                                     AND nome = "proiezionista");
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    OPEN cmaschera;
+    popola_maschere:
+    LOOP
+        FETCH cmaschera INTO id_utente;
+        IF done THEN
+            LEAVE popola_maschere;
+        END IF;
+        IF maschera <= nmaschere / 2 THEN
+            INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`) VALUES (id_utente, 1);
+        ELSE
+            INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`) VALUES (id_utente, 2);
+        END IF;
+        SET maschera = maschera + 1;
+    END LOOP;
+    CLOSE cmaschera;
+    SET done = FALSE;
+    OPEN cproiezionista;
+    popola_proiezionista:
+    LOOP
+        FETCH cproiezionista INTO id_utente;
+        IF done THEN
+            LEAVE popola_proiezionista;
+        END IF;
+        IF proiezionista <= nproiezionisti / 2 THEN
+            INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`) VALUES (id_utente, 1);
+        ELSE
+            INSERT INTO `cinemadb`.`dipendente` (`id_utente`, `id_cinema`) VALUES (id_utente, 2);
+        END IF;
+        SET proiezionista = proiezionista + 1;
+    END LOOP;
+    CLOSE cproiezionista;
 END$$
 
 DELIMITER ;
@@ -345,15 +415,13 @@ DELIMITER $$
 USE `cinemadb`$$
 CREATE PROCEDURE `popola_film`()
 BEGIN
-    declare film int;
-    declare ultimo int;
-    set film = 15;
-    set ultimo = 22;
-    while film < (ultimo + 1)
-        do
+    DECLARE film INT DEFAULT 15;
+    DECLARE ultimo INT DEFAULT 22;
+    WHILE film < (ultimo + 1)
+        DO
             INSERT INTO `cinemadb`.`film` (`id`) VALUES (film);
-            set film = film + 1;
-        end while;
+            SET film = film + 1;
+        END WHILE;
 END$$
 
 DELIMITER ;
@@ -366,25 +434,23 @@ DELIMITER $$
 USE `cinemadb`$$
 CREATE PROCEDURE `popola_posti`()
 BEGIN
-    DECLARE nsala INT;
-    DECLARE sala INT;
-    SET nsala = (select count(*) from sala);
-    SET sala = 0;
-    WHILE sala < nsala * 7
+    DECLARE nsala INT DEFAULT (SELECT COUNT(*) FROM sala);
+    DECLARE counter INT DEFAULT 0;
+    WHILE counter < nsala * 7
         DO
             INSERT INTO `cinemadb`.`posto` (`id_sala`, `posizione`)
-            VALUES ((sala % nsala) + 1, concat('A', sala % 7));
+            VALUES ((counter % nsala) + 1, CONCAT('A', counter % 7));
             INSERT INTO `cinemadb`.`posto` (`id_sala`, `posizione`)
-            VALUES ((sala % nsala) + 1, concat('B', sala % 7));
+            VALUES ((counter % nsala) + 1, CONCAT('B', counter % 7));
             INSERT INTO `cinemadb`.`posto` (`id_sala`, `posizione`)
-            VALUES ((sala % nsala) + 1, concat('C', sala % 7));
+            VALUES ((counter % nsala) + 1, CONCAT('C', counter % 7));
             INSERT INTO `cinemadb`.`posto` (`id_sala`, `posizione`)
-            VALUES ((sala % nsala) + 1, concat('D', sala % 7));
+            VALUES ((counter % nsala) + 1, CONCAT('D', counter % 7));
             INSERT INTO `cinemadb`.`posto` (`id_sala`, `posizione`)
-            VALUES ((sala % nsala) + 1, concat('E', sala % 7));
+            VALUES ((counter % nsala) + 1, CONCAT('E', counter % 7));
             INSERT INTO `cinemadb`.`posto` (`id_sala`, `posizione`)
-            VALUES ((sala % nsala) + 1, concat('F', sala % 7));
-            set sala = sala + 1;
+            VALUES ((counter % nsala) + 1, CONCAT('F', counter % 7));
+            SET counter = counter + 1;
         END WHILE;
 END$$
 
@@ -399,20 +465,13 @@ USE `cinemadb`$$
 CREATE PROCEDURE `popola_proiezioni`()
 BEGIN
     DECLARE ora INT;
-    DECLARE film INT;
-    DECLARE nfilm INT;
-    DECLARE first_film INT;
-    DECLARE last_film INT;
+    DECLARE nfilm INT DEFAULT (SELECT count(*) FROM film);
+    DECLARE first_film INT DEFAULT (SELECT id FROM film ORDER BY id ASC LIMIT 1);
+    DECLARE last_film INT DEFAULT (SELECT id FROM film ORDER BY id DESC LIMIT 1);
+    DECLARE film INT DEFAULT first_film;
+    DECLARE nsale INT DEFAULT (SELECT count(*) FROM sala);
     DECLARE sala INT;
-    DECLARE nsale INT;
-    DECLARE _data DATE;
-
-    SET nsale = (SELECT count(*) FROM sala);
-    SET nfilm = (SELECT count(*) FROM film);
-    SET first_film = (SELECT id FROM film ORDER BY id ASC LIMIT 1);
-    SET last_film = (SELECT id FROM film ORDER BY id DESC LIMIT 1);
-    SET film = first_film;
-    SET _data = DATE_SUB(CURDATE(), INTERVAL 15 DAY);
+    DECLARE _data DATE DEFAULT DATE_SUB(CURDATE(), INTERVAL 15 DAY);
 
     WHILE DATEDIFF(_data, CURDATE()) < 45
         DO
@@ -433,7 +492,7 @@ BEGIN
                                     END IF;
                                 END IF;
                                 INSERT INTO `cinemadb`.`proiezione` (`id_sala`, `id_film`, `data`, `inizio`, `prezzo_base`)
-                                VALUES (sala, film, _data, concat(ora, ':00'), 5);
+                                VALUES (sala, film, _data, CONCAT(ora, ':00'), 5);
                                 SET sala = sala + 1;
                                 SET film = film + 1;
                             END WHILE;
@@ -447,29 +506,25 @@ END$$
 DELIMITER ;
 
 -- -----------------------------------------------------
--- procedure popola_sala
+-- procedure popola_sale
 -- -----------------------------------------------------
 
 DELIMITER $$
 USE `cinemadb`$$
-CREATE PROCEDURE `popola_sala`()
+CREATE PROCEDURE `popola_sale`()
 BEGIN
-    DECLARE ncinema INT;
-    DECLARE cinema INT;
+    DECLARE ncinema INT DEFAULT (SELECT COUNT(*) FROM cinema) + 1;
+    DECLARE cinema INT DEFAULT 1;
     DECLARE sala INT;
-    SET ncinema = (select count(*) from cinema) + 1;
-    SET cinema = 1;
     WHILE cinema < ncinema
         DO
             SET sala = 1;
-            WHILE sala < 3
+            WHILE sala <= cinema
                 DO
                     INSERT INTO `cinemadb`.`sala` (`id_cinema`, `numero`)
-                    VALUES (cinema, concat('A', sala));
+                    VALUES (cinema, CONCAT('A', sala));
                     INSERT INTO `cinemadb`.`sala` (`id_cinema`, `numero`)
-                    VALUES (cinema, concat('B', sala));
-                    INSERT INTO `cinemadb`.`sala` (`id_cinema`, `numero`)
-                    VALUES (cinema, concat('C', sala));
+                    VALUES (cinema, CONCAT('B', sala));
                     SET sala = sala + 1;
                 END WHILE;
             SET cinema = cinema + 1;
@@ -486,36 +541,68 @@ DELIMITER $$
 USE `cinemadb`$$
 CREATE PROCEDURE `popola_turni`()
 BEGIN
-    DECLARE inizio VARCHAR(7);
-    DECLARE fine VARCHAR(7);
-    DECLARE nmaschere INT;
-    DECLARE nproiezionisti INT;
-    DECLARE dipendente INT;
-    DECLARE _data DATE;
-
-    SET nproiezionisti = (select count(*) from dipendente where ruolo = 'proiezionista');
-    SET nmaschere = (select count(*) from dipendente where ruolo = 'maschera');
-    SET _data = DATE_SUB(CURDATE(), INTERVAL 15 DAY);
-    SET inizio = '14:30';
-    SET fine = '23:30';
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE _data DATE DEFAULT DATE_SUB(CURDATE(), INTERVAL 15 DAY);
+    DECLARE inizio VARCHAR(7) DEFAULT '14:30';
+    DECLARE fine VARCHAR(7) DEFAULT '23:30';
+    DECLARE id_utente VARCHAR(45);
+    DECLARE nmaschere INT DEFAULT (SELECT COUNT(*)
+                                   FROM utente
+                                   WHERE id IN (SELECT ruolo_utente.id_utente
+                                                FROM ruolo_utente,
+                                                     ruolo
+                                                WHERE id = id_ruolo
+                                                  AND nome = "maschera"));
+    DECLARE nproiezionisti INT DEFAULT (SELECT COUNT(*)
+                                        FROM utente
+                                        WHERE id IN (SELECT ruolo_utente.id_utente
+                                                     FROM ruolo_utente,
+                                                          ruolo
+                                                     WHERE id = id_ruolo
+                                                       AND nome = "proiezionista"));
+    DECLARE cmaschera CURSOR FOR SELECT id
+                                 FROM utente
+                                 WHERE id IN (SELECT ruolo_utente.id_utente
+                                              FROM ruolo_utente,
+                                                   ruolo
+                                              WHERE id = id_ruolo
+                                                AND nome = "maschera");
+    DECLARE cproiezionista CURSOR FOR SELECT id
+                                      FROM utente
+                                      WHERE id IN (SELECT ruolo_utente.id_utente
+                                                   FROM ruolo_utente,
+                                                        ruolo
+                                                   WHERE id = id_ruolo
+                                                     AND nome = "proiezionista");
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
     WHILE DATEDIFF(_data, CURDATE()) < 45
         DO
             IF (WEEKDAY(_data) != 0 AND WEEKDAY(_data) != 1) THEN
-                SET dipendente = 0;
-                WHILE dipendente < 2 * nmaschere
-                    DO
-                        INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `id_dipendente`, `data`)
-                        VALUES (inizio, fine, dipendente, _data);
-                        SET dipendente = dipendente + 2;
-                    END WHILE;
-                SET dipendente = 1;
-                WHILE dipendente < 2 * nproiezionisti
-                    DO
-                        INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `id_dipendente`, `data`)
-                        VALUES (inizio, fine, dipendente, _data);
-                        SET dipendente = dipendente + 2;
-                    END WHILE;
+                OPEN cmaschera;
+                popola_maschera:
+                LOOP
+                    FETCH cmaschera INTO id_utente;
+                    IF done THEN
+                        LEAVE popola_maschera;
+                    END IF;
+                    INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `id_dipendente`, `data`)
+                    VALUES (inizio, fine, id_utente, _data);
+                END LOOP;
+                CLOSE cmaschera;
+                SET done = FALSE;
+                OPEN cproiezionista;
+                popola_proiezionista:
+                LOOP
+                    FETCH cproiezionista INTO id_utente;
+                    IF done THEN
+                        LEAVE popola_proiezionista;
+                    END IF;
+                    INSERT INTO `cinemadb`.`turno` (`inizio`, `fine`, `id_dipendente`, `data`)
+                    VALUES (inizio, fine, id_utente, _data);
+                END LOOP;
+                CLOSE cproiezionista;
+                SET done = FALSE;
             END IF;
             SET _data = DATE_ADD(_data, INTERVAL 1 DAY);
         END WHILE;
@@ -531,76 +618,168 @@ DELIMITER $$
 USE `cinemadb`$$
 CREATE PROCEDURE `popola_turni_proiezionista`()
 BEGIN
-    DECLARE ndipendenti int;
-    DECLARE nmaschere int;
-    DECLARE nturni int;
-    DECLARE nsale int;
-    DECLARE sala int;
-    DECLARE turno int;
-    SET ndipendenti = (select count(*) from dipendente);
-    SET nmaschere = (select count(*) from dipendente where ruolo = 'maschera');
-    SET nturni = (select count(*) from turno);
-    SET nsale = (select count(*) from sala);
-    SET sala = 1;
-    SET turno = nmaschere + 1;
-    WHILE (turno < (nturni + 1))
-        DO
-            WHILE ((turno - 1) % ndipendenti AND turno < (nturni + 1))
-                DO
-                    INSERT INTO `cinemadb`.`turno_proiezionista` (`turno_id`, `sala_id`)
-                    VALUES (turno, sala);
-                    SET turno = turno + 1;
-                    SET sala = (sala % nsale) + 1;
-                END WHILE;
-            SET turno = turno + nmaschere;
-            IF sala = (nsale / 2) THEN
-                SET sala = 0;
-            END IF;
-            IF sala = nsale THEN
-                SET sala = (nsale / 2);
-            END IF;
-            SET sala = (sala % nsale) + 1;
-        END WHILE;
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE nsale INT DEFAULT (SELECT COUNT(*) FROM sala);
+    DECLARE sala INT DEFAULT 1;
+    DECLARE id_turno INT;
+    DECLARE cturno CURSOR FOR SELECT id
+                              FROM turno
+                              WHERE id_dipendente IN (SELECT ruolo_utente.id_utente
+                                                      FROM ruolo_utente,
+                                                           ruolo
+                                                      WHERE id = id_ruolo
+                                                        AND nome = "proiezionista");
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    OPEN cturno;
+    popola_turni:
+    LOOP
+        FETCH cturno INTO id_turno;
+        IF done THEN
+            LEAVE popola_turni;
+        END IF;
+        IF (SELECT id_cinema FROM sala WHERE sala.id = sala) != (SELECT id_cinema
+                                                                 FROM dipendente
+                                                                 WHERE id_utente = (SELECT id_dipendente FROM turno WHERE id = id_turno)) THEN
+            SET sala = (SELECT id
+                        FROM sala
+                        WHERE id_cinema = (SELECT id_cinema
+                                           FROM dipendente
+                                           WHERE id_utente = (SELECT id_dipendente FROM turno WHERE id = id_turno))
+                        LIMIT 1);
+        END IF;
+        INSERT INTO `cinemadb`.`turno_proiezionista` (`id_turno`, `id_sala`) VALUES (id_turno, sala);
+        SET sala = (sala % nsale) + 1;
+    END LOOP;
+    CLOSE cturno;
 END$$
 
 DELIMITER ;
 
 -- -----------------------------------------------------
--- procedure popola_utente
+-- procedure popola_utenti
 -- -----------------------------------------------------
 
 DELIMITER $$
 USE `cinemadb`$$
-CREATE PROCEDURE `popola_utente`()
+CREATE PROCEDURE `popola_utenti`()
 BEGIN
     INSERT INTO `cinemadb`.`utente` (`id`, `nome`, `cognome`, `email`)
-    VALUES ('0', 'Fabio', 'Buracchi', 'fb@cinehub.com');
+    VALUES ('T8SP2uHYdHZfBk6uh3fJ356Sji52', 'Fabio', 'Buracchi', 'fb@cinehub.com');
     INSERT INTO `cinemadb`.`utente` (`id`, `nome`, `cognome`, `email`)
-    VALUES ('1', 'Massimo', 'Mazzetti', 'mm@cinehub.com');
+    VALUES ('gVUYDMojhmeFkErlbF0WWLQWMPn1', 'Massimo', 'Mazzetti', 'mm@cinehub.com');
     INSERT INTO `cinemadb`.`utente` (`id`, `nome`, `cognome`, `email`)
-    VALUES ('2', 'Ivan', 'Palmieri', 'ip@cinehub.com');
+    VALUES ('vLmLJCuTwZZap4t4ngUclwUzwZ62', 'Ivan', 'Palmieri', 'ip@cinehub.com');
     INSERT INTO `cinemadb`.`utente` (`id`, `nome`, `cognome`, `email`)
-    VALUES ('3', 'Mario', 'Rossi', 'mr@cinehub.com');
+    VALUES ('bvMrqf60V8OwETW9aEjeYbM9I0b2', 'Mario', 'Rossi', 'mr@cinehub.com');
     INSERT INTO `cinemadb`.`utente` (`id`, `nome`, `cognome`, `email`)
-    VALUES ('5', 'Luigi', 'Bianchi', 'lb@cinehub.com');
+    VALUES ('JFDW7zA7pVh53im1Sl7fSnvaxML2', 'Luigi', 'Bianchi', 'lb@cinehub.com');
     INSERT INTO `cinemadb`.`utente` (`id`, `nome`, `cognome`, `email`)
-    VALUES ('7', 'Steve', 'Jobs', 'sj@cinehub.com');
+    VALUES ('mg9eBHkPumcssl9dvrotbZqDbk62', 'Steve', 'Jobs', 'sj@cinehub.com');
     INSERT INTO `cinemadb`.`utente` (`id`, `nome`, `cognome`, `email`)
-    VALUES ('9', 'Bill', 'Gates', 'bg@cinehub.com');
+    VALUES ('C9o3hGHcfZXEXAjtJtlUEckE9WC2', 'Bill', 'Gates', 'bg@cinehub.com');
     INSERT INTO `cinemadb`.`utente` (`id`, `nome`, `cognome`, `email`)
-    VALUES ('11', 'Elon', 'Musk', 'em@cinehub.com');
+    VALUES ('Tf6NcK4d8feY2TpuJVsqS74pbLf1', 'Elon', 'Musk', 'em@cinehub.com');
     INSERT INTO `cinemadb`.`utente` (`id`, `nome`, `cognome`, `email`)
-    VALUES ('13', 'Alan', 'Turing', 'at@cinehub.com');
+    VALUES ('ikBgUbCQYlevLnLj7SOUb1PvS0h2', 'Alan', 'Turing', 'at@cinehub.com');
     INSERT INTO `cinemadb`.`utente` (`id`, `nome`, `cognome`, `email`)
-    VALUES ('15', 'James', 'Gosling', 'jg@cinehub.com');
+    VALUES ('7jYsjrrXeFSUpu33TsdYwV135mx1', 'James', 'Gosling', 'jg@cinehub.com');
     INSERT INTO `cinemadb`.`utente` (`id`, `nome`, `cognome`, `email`)
-    VALUES ('17', 'Dennis', 'Ritchie', 'dr@cinehub.com');
+    VALUES ('L02YH8zWNJXzXcwRIJSDyx3GOqC3', 'Dennis', 'Ritchie', 'dr@cinehub.com');
     INSERT INTO `cinemadb`.`utente` (`id`, `nome`, `cognome`, `email`)
-    VALUES ('19', 'Larry', 'Page', 'lp@cinehub.com');
+    VALUES ('qTNkqPTioQO3cv953AqC3NR5NDf2', 'Larry', 'Page', 'lp@cinehub.com');
     INSERT INTO `cinemadb`.`utente` (`id`, `nome`, `cognome`, `email`)
-    VALUES ('21', 'Mark', 'Zuckerberg', 'mz@cinehub.com');
+    VALUES ('5KClU7hbNgedJAwLuF9eFVl6Qzz2', 'Mark', 'Zuckerberg', 'mz@cinehub.com');
     INSERT INTO `cinemadb`.`utente` (`id`, `nome`, `cognome`, `email`)
-    VALUES ('23', 'Jeff', 'Bezos', 'jb@cinehub.com');
+    VALUES ('ppgJVL8wS9bdjWxCxs6bll2K0Xs1', 'Jeff', 'Bezos', 'jb@cinehub.com');
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure popola_ruoli
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `cinemadb`$$
+CREATE PROCEDURE `popola_ruoli`()
+BEGIN
+    INSERT INTO `cinemadb`.`ruolo` (`nome`) VALUES ('cliente');
+    INSERT INTO `cinemadb`.`ruolo` (`nome`) VALUES ('manager');
+    INSERT INTO `cinemadb`.`ruolo` (`nome`) VALUES ('dipendente');
+    INSERT INTO `cinemadb`.`ruolo` (`nome`) VALUES ('maschera');
+    INSERT INTO `cinemadb`.`ruolo` (`nome`) VALUES ('proiezionista');
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure popola_ruoli_utente
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `cinemadb`$$
+CREATE PROCEDURE `popola_ruoli_utente`()
+BEGIN
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE id_utente VARCHAR(45);
+    DECLARE id_cliente INT DEFAULT (SELECT id FROM ruolo WHERE nome = "cliente");
+    DECLARE id_manager INT DEFAULT (SELECT id FROM ruolo WHERE nome = "manager");
+    DECLARE id_dipendente INT DEFAULT (SELECT id FROM ruolo WHERE nome = "dipendente");
+    DECLARE id_maschera INT DEFAULT (SELECT id FROM ruolo WHERE nome = "maschera");
+    DECLARE id_proiezionista INT DEFAULT (SELECT id FROM ruolo WHERE nome = "proiezionista");
+    DECLARE cmanager CURSOR FOR SELECT id FROM utente LIMIT 0, 1;
+    DECLARE ccliente CURSOR FOR SELECT id FROM utente LIMIT 1, 3;
+    DECLARE cmaschera CURSOR FOR SELECT id FROM utente LIMIT 4, 4;
+    DECLARE cproiezionista CURSOR FOR SELECT id FROM utente LIMIT 8, 6;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    OPEN cmanager;
+    popola_manager:
+    LOOP
+        FETCH cmanager INTO id_utente;
+        IF done THEN
+            LEAVE popola_manager;
+        END IF;
+        INSERT INTO `cinemadb`.`ruolo_utente` (`id_utente`, `id_ruolo`) VALUES (id_utente, id_cliente);
+        INSERT INTO `cinemadb`.`ruolo_utente` (`id_utente`, `id_ruolo`) VALUES (id_utente, id_manager);
+    END LOOP;
+    CLOSE cmanager;
+    OPEN ccliente;
+    SET done = FALSE;
+    popola_cliente:
+    LOOP
+        FETCH ccliente INTO id_utente;
+        IF done THEN
+            LEAVE popola_cliente;
+        END IF;
+        INSERT INTO `cinemadb`.`ruolo_utente` (`id_utente`, `id_ruolo`) VALUES (id_utente, id_cliente);
+    END LOOP;
+    CLOSE ccliente;
+    OPEN cmaschera;
+    SET done = FALSE;
+    popola_maschera:
+    LOOP
+        FETCH cmaschera INTO id_utente;
+        IF done THEN
+            LEAVE popola_maschera;
+        END IF;
+        INSERT INTO `cinemadb`.`ruolo_utente` (`id_utente`, `id_ruolo`) VALUES (id_utente, id_cliente);
+        INSERT INTO `cinemadb`.`ruolo_utente` (`id_utente`, `id_ruolo`) VALUES (id_utente, id_dipendente);
+        INSERT INTO `cinemadb`.`ruolo_utente` (`id_utente`, `id_ruolo`) VALUES (id_utente, id_maschera);
+    END LOOP;
+    CLOSE cmaschera;
+    OPEN cproiezionista;
+    SET done = FALSE;
+    popola_proiezionista:
+    LOOP
+        FETCH cproiezionista INTO id_utente;
+        IF done THEN
+            LEAVE popola_proiezionista;
+        END IF;
+        INSERT INTO `cinemadb`.`ruolo_utente` (`id_utente`, `id_ruolo`) VALUES (id_utente, id_cliente);
+        INSERT INTO `cinemadb`.`ruolo_utente` (`id_utente`, `id_ruolo`) VALUES (id_utente, id_dipendente);
+        INSERT INTO `cinemadb`.`ruolo_utente` (`id_utente`, `id_ruolo`) VALUES (id_utente, id_proiezionista);
+    END LOOP;
+    CLOSE cproiezionista;
 END$$
 
 DELIMITER ;

@@ -12,7 +12,7 @@ import java.util.Map;
 public class CustomerHandler {
 
     //Given an email retrieves the customer if it exists
-    public Customer getCustomer(String nome, String numberOfCard, String email,String expiredDate,String cvv) throws StripeException {
+    public Customer getCustomer(String nome, String numberOfCard, String email, String expiredDate, String cvv) throws StripeException {
         var customers = getListCustomer();
         if (customers == null) {
             return null;
@@ -22,7 +22,7 @@ public class CustomerHandler {
                 return customers.getData().get(i);
             }
         }
-        return registerCustomer(email, numberOfCard, nome, LocalDate.parse(expiredDate),cvv);
+        return registerCustomer(email, numberOfCard, nome, LocalDate.parse(expiredDate), cvv);
     }
 
     //Returns a list of users on Stripe
@@ -41,7 +41,7 @@ public class CustomerHandler {
         paramsCard.put("type", "card");
         paramsCard.put("card", card);
         PaymentMethod paymentMethod;
-        paymentMethod= PaymentMethod.create(paramsCard);
+        paymentMethod = PaymentMethod.create(paramsCard);
         Customer customer;
         Map<String, Object> paramsUser = new HashMap<>();
         paramsUser.put("email", email);
@@ -64,7 +64,7 @@ public class CustomerHandler {
         paramsCard.put("type", "card");
         paramsCard.put("card", card);
         PaymentMethod paymentMethod;
-        paymentMethod= PaymentMethod.create(paramsCard);
+        paymentMethod = PaymentMethod.create(paramsCard);
         Map<String, Object> paramUserCard = new HashMap<>();
         paramUserCard.put("customer", customer.getId());
         paymentMethod.attach(paramUserCard);
