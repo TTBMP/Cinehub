@@ -69,9 +69,9 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (RepositoryException e) {
             manageEmployeesShiftPresenter.presentRepositoryError(e);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
+            manageEmployeesShiftPresenter.presentUnauthorizedError(e);
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
+            manageEmployeesShiftPresenter.presentUnauthenticatedError(e);
         } catch (Request.NullRequestException e) {
             manageEmployeesShiftPresenter.presentCinemaListNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -96,9 +96,9 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (Request.InvalidRequestException e) {
             manageEmployeesShiftPresenter.presentInvalidEmployeeListRequest(request);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
+            manageEmployeesShiftPresenter.presentUnauthorizedError(e);
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
+            manageEmployeesShiftPresenter.presentUnauthenticatedError(e);
         }
 
     }
@@ -120,9 +120,9 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (RepositoryException e) {
             manageEmployeesShiftPresenter.presentRepositoryError(e);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
+            manageEmployeesShiftPresenter.presentUnauthorizedError(e);
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
+            manageEmployeesShiftPresenter.presentUnauthenticatedError(e);
         }
     }
 
@@ -158,9 +158,9 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (RepositoryException e) {
             manageEmployeesShiftPresenter.presentRepositoryError(e);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
+            manageEmployeesShiftPresenter.presentUnauthorizedError(e);
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
+            manageEmployeesShiftPresenter.presentUnauthenticatedError(e);
         }
     }
 
@@ -184,9 +184,9 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (RepositoryException e) {
             manageEmployeesShiftPresenter.presentRepositoryError(e);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
+            manageEmployeesShiftPresenter.presentUnauthorizedError(e);
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
+            manageEmployeesShiftPresenter.presentUnauthenticatedError(e);
         }
     }
 
@@ -241,9 +241,9 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (RepositoryException e) {
             manageEmployeesShiftPresenter.presentRepositoryError(e);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
+            manageEmployeesShiftPresenter.presentUnauthorizedError(e);
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
+            manageEmployeesShiftPresenter.presentUnauthenticatedError(e);
         }
     }
 
@@ -279,9 +279,9 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (RepositoryException e) {
             manageEmployeesShiftPresenter.presentRepositoryError(e);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
-            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
+            manageEmployeesShiftPresenter.presentUnauthorizedError(e);
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
-            manageEmployeesShiftPresenter.presentUnauthenticatedRequest();
+            manageEmployeesShiftPresenter.presentUnauthenticatedError(e);
         }
     }
 

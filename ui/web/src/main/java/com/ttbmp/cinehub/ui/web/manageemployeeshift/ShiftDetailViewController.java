@@ -9,6 +9,7 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetCinemaListR
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetEmployeeListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftModifyRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewShiftForm;
+import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletResponse;
 import java.beans.PropertyEditorSupport;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -38,9 +40,11 @@ public class ShiftDetailViewController {
     }
 
     @PostMapping("/shift_detail")
-    public String shiftDetail(@CookieValue(value = "session") String sessionToken,
-                              @ModelAttribute("selectedShift") NewShiftForm shift,
-                              Model model) {
+    public String shiftDetail(
+            HttpServletResponse response,
+            @CookieValue(value = "session") String sessionToken,
+            @ModelAttribute("selectedShift") NewShiftForm shift,
+            Model model) {
 
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
 
@@ -71,16 +75,12 @@ public class ShiftDetailViewController {
                     shift.getEnd(),
                     selectedHall
             ));
-            var error = (boolean) model.getAttribute(ERROR);
-
-            if (!error) {
-                return "shift_modify";
-            }
+            return ErrorHelper.returnView(response, model, "shift_modify");
 
         }
         model.addAttribute("modifyRequest", new NewShiftForm());
 
-        return "/shift_detail";
+        return ErrorHelper.returnView(response, model, "shift_detail");
 
     }
 

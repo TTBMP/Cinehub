@@ -5,6 +5,7 @@ import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.Day;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.EmployeeShiftWeek;
 
@@ -277,8 +278,14 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentUnauthenticatedRequest() {
-
+    public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e) {
+        viewModel.errorDaoProperty().setValue(e.getMessage());
     }
+
+    @Override
+    public void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e) {
+        viewModel.errorDaoProperty().setValue(e.getMessage());
+    }
+
 
 }

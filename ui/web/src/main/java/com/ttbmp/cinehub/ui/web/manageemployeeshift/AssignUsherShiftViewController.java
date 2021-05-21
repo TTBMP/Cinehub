@@ -7,11 +7,13 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.CreateShiftReq
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetCinemaListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetEmployeeListRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewShiftForm;
+import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.beans.PropertyEditorSupport;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -35,8 +37,10 @@ public class AssignUsherShiftViewController {
     }
 
     @GetMapping("/assign_usher_shift")
-    public String assignUsherShift(@CookieValue(value = "session") String sessionToken,
-                                   @RequestParam(value = "idCinema") int cinemaId, Model model) {
+    public String assignUsherShift(
+            HttpServletResponse response,
+            @CookieValue(value = "session") String sessionToken,
+            @RequestParam(value = "idCinema") int cinemaId, Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
@@ -45,14 +49,18 @@ public class AssignUsherShiftViewController {
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var shiftRequest = new NewShiftForm();
         model.addAttribute(ASSIGN_REQUEST, shiftRequest);
-        return "/assign_usher_shift";
+
+        return ErrorHelper.returnView(response, model, "assign_usher_shift");
+
     }
 
     @PostMapping("/assign_usher_shift")
-    public String assignUshShift(@CookieValue(value = "session") String sessionToken,
-                                 @RequestParam(value = "idCinema") int cinemaId,
-                                 @ModelAttribute(ASSIGN_REQUEST) NewShiftForm request,
-                                 Model model) {
+    public String assignUshShift(
+            HttpServletResponse response,
+            @CookieValue(value = "session") String sessionToken,
+            @RequestParam(value = "idCinema") int cinemaId,
+            @ModelAttribute(ASSIGN_REQUEST) NewShiftForm request,
+            Model model) {
 
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
@@ -67,11 +75,8 @@ public class AssignUsherShiftViewController {
                 request.getStart(),
                 request.getEnd())
         );
-        var error = (boolean) model.getAttribute(ERROR);
-        if (!error) {
-            return SHIFT_ASSIGNED;
-        }
-        return "/assign_usher_shift";
+
+        return ErrorHelper.returnView(response, model, "shift_assigned");
 
     }
 }

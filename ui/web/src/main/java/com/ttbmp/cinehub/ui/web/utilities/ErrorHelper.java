@@ -17,12 +17,18 @@ public class ErrorHelper {
     public static final String INVALID_ERROR_MESSAGE = "Invalid request";
     public static final String UNAUTHENTICATED_ERROR_MESSAGE = "Unauthenticated request";
 
+
     private ErrorHelper() {
 
     }
 
     public static String getRequestErrorMessage(Request request) {
-        return Joiner.on("\n").join(new ArrayList<>(request.getErrorList()));
+        var stringBuilder = new StringBuilder();
+        for(Request.Error message : request.getErrorList()){
+             stringBuilder.append(message.getMessage());
+        }
+        return stringBuilder.toString();
+      //  return Joiner.on("\n").join(new ArrayList<>(request.getErrorList()));         versione vecchia problema
     }
 
     public static String returnView(HttpServletResponse response, Model model, String viewPath) {

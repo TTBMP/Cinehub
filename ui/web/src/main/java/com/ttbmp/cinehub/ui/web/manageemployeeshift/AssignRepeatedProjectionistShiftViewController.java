@@ -11,11 +11,13 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetCinemaListR
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetEmployeeListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftRepeatRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewRepeatedShiftForm;
+import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.beans.PropertyEditorSupport;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -40,8 +42,10 @@ public class AssignRepeatedProjectionistShiftViewController {
     }
 
     @GetMapping("/assign_repeated_projectionist_shift")
-    public String assignRepeatedProjectionistShift(@CookieValue(value = "session") String sessionToken,
-                                                   @RequestParam(value = "idCinema") int cinemaId, Model model) {
+    public String assignRepeatedProjectionistShift(
+            HttpServletResponse response,
+            @CookieValue(value = "session") String sessionToken,
+            @RequestParam(value = "idCinema") int cinemaId, Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
@@ -51,14 +55,18 @@ public class AssignRepeatedProjectionistShiftViewController {
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var request = new NewRepeatedShiftForm();
         model.addAttribute(ASSIGN_REQUEST, request);
-        return "/assign_repeated_projectionist_shift";
+
+        return ErrorHelper.returnView(response, model, "assign_repeated_projectionist_shift");
+
     }
 
     @PostMapping("/assign_repeated_projectionist_shift")
-    public String assignRepeatedProjShift(@CookieValue(value = "session") String sessionToken,
-                                          @RequestParam(value = "idCinema") int cinemaId,
-                                          @ModelAttribute(ASSIGN_REQUEST) NewRepeatedShiftForm request,
-                                          Model model) {
+    public String assignRepeatedProjShift(
+            HttpServletResponse response,
+            @CookieValue(value = "session") String sessionToken,
+            @RequestParam(value = "idCinema") int cinemaId,
+            @ModelAttribute(ASSIGN_REQUEST) NewRepeatedShiftForm request,
+            Model model) {
 
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
@@ -80,11 +88,9 @@ public class AssignRepeatedProjectionistShiftViewController {
                 request.getStart(),
                 request.getEnd(),
                 selectedHall));
-        var error = (boolean) model.getAttribute(ERROR);
-        if (!error) {
-            return SHIFT_ASSIGNED;
-        }
-        return "/assign_repeated_projectionist_shift";
+
+        return ErrorHelper.returnView(response, model, "shift_assigned");
+
     }
 
 }

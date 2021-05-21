@@ -15,6 +15,7 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftCo
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.shift.Shift;
@@ -372,9 +373,16 @@ class ManageEmployeesShiftControllerTest {
         }
 
         @Override
-        public void presentUnauthenticatedRequest() {
+        public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e) {
 
         }
+
+        @Override
+        public void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e) {
+
+        }
+
+
 
     }
 }
