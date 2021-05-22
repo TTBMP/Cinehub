@@ -107,7 +107,7 @@ public class MockShiftRepository implements ShiftRepository {
         for (var d : SHIFT_DATA_LIST) {
             if (employeeRepository.getEmployee(d.employeeId).getCinema().getId() == cinemaId &&
                     LocalDate.parse(d.date).isAfter(start) &&
-                    LocalDate.parse(d.date).isBefore(end)) {
+                    LocalDate.parse(d.date).isBefore(end.plusDays(1))) {
                 var shift = new ShiftFactory().createShift(d);
                 list.add(shift);
             }

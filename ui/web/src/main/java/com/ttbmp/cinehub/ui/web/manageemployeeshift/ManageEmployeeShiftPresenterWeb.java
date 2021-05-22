@@ -89,17 +89,17 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
 
     @Override
     public void presentSaveShift() {
-
+        //on the web side there is the reload of the page so you don't have to submit any changes
     }
 
     @Override
     public void presentDeleteShift() {
-
+        //on the web side there is the reload of the page so you don't have to submit any changes
     }
 
     @Override
     public void presentRepeatShift(ShiftRepeatResponse response) {
-
+        //on the web side there is the reload of the page so you don't have to submit any changes
     }
 
     @Override
