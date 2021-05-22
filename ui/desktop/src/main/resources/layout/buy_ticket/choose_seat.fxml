@@ -58,13 +58,13 @@
                         <Insets top="5.0"/>
                     </VBox.margin>
                 </CheckBox>
-                <CheckBox fx:id="heatedArmchairRadioButton" mnemonicParsing="false"
+                <CheckBox fx:id="openBarRadioButton" mnemonicParsing="false"
                           text="Open bar, with this option you will get a full meal (food, drinks) for one person +10€">
                     <VBox.margin>
                         <Insets top="5.0"/>
                     </VBox.margin>
                 </CheckBox>
-                <CheckBox fx:id="foldingArmchairRadioButton" mnemonicParsing="false"
+                <CheckBox fx:id="magicBoxRadioButton" mnemonicParsing="false"
                           text="Magic Box, with this option you will get a gadget of the typical objects of the film +15€">
                     <VBox.margin>
                         <Insets top="5.0"/>

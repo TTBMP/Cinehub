@@ -11,12 +11,12 @@ import java.util.Properties;
 /**
  * @author Ivan Palmieri
  */
-public class SendEmailService {
+public class SendEmailService  {
 
-    public void sendMail(EmailServiceRequest emailServiceRequest) {
+    public void sendMail(String email) {
         final var username = "yourUsername@email.com";
         final var password = "password";
-        var fromEmail = emailServiceRequest.getEmail();
+        var fromEmail = email;
         var toEmail = "toEmail@example.com";
 
         var properties = new Properties();

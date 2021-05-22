@@ -7,11 +7,11 @@ import java.util.List;
 /**
  * @author Ivan Palmieri
  */
-public class NumberOfSeatsResponse {
+public class SeatListResponse {
 
     private final List<SeatDto> seatDtoList;
 
-    public NumberOfSeatsResponse(List<SeatDto> seatDtoList) {
+    public SeatListResponse(List<SeatDto> seatDtoList) {
         this.seatDtoList = seatDtoList;
     }
 

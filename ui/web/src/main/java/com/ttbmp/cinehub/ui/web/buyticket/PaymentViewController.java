@@ -23,9 +23,9 @@ public class PaymentViewController {
             @PathVariable("optionTwo") boolean optionTwo,
             @PathVariable("optionThree") boolean optionThree,
             Model model) {
-        paymentForm.setOption1(optionOne);
-        paymentForm.setOption2(optionTwo);
-        paymentForm.setOption3(optionThree);
+        paymentForm.setOption1(optionOne);//skipLine
+        paymentForm.setOption2(optionTwo);//openBar
+        paymentForm.setOption3(optionThree);//magicBox
         model.addAttribute("payment_form", paymentForm);
         return ErrorHelper.returnView(response, model, "buy_ticket/payment");
     }

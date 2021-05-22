@@ -1,9 +1,11 @@
 package com.ttbmp.cinehub.app.service.email;
 
+import com.ttbmp.cinehub.app.utilities.request.Request;
+
 /**
  * @author Ivan Palmieri
  */
-public class EmailServiceRequest {
+public class EmailServiceRequest extends Request {
 
     private String email;
     private String object;
@@ -29,4 +31,8 @@ public class EmailServiceRequest {
         this.object = object;
     }
 
+    @Override
+    protected void onValidate() {
+
+    }
 }

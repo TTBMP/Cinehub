@@ -9,9 +9,7 @@ import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.desktop.buyticket.choosecinema.ChooseCinemaView;
 import com.ttbmp.cinehub.ui.desktop.buyticket.payment.PaymentView;
-import com.ttbmp.cinehub.ui.desktop.login.LoginActivity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavActivityDestination;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavDestination;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -22,7 +20,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author Ivan Palmieri, Fabio Buracchi
@@ -40,10 +37,10 @@ public class ChooseSeatViewController extends ViewController {
     private AppBarViewController appBarController;
 
     @FXML
-    private CheckBox foldingArmchairRadioButton;
+    private CheckBox magicBoxRadioButton;
 
     @FXML
-    private CheckBox heatedArmchairRadioButton;
+    private CheckBox openBarRadioButton;
 
     @FXML
     private CheckBox skipLineRadioButton;
@@ -119,8 +116,8 @@ public class ChooseSeatViewController extends ViewController {
         seatsTotalText.textProperty().bind(viewModel.totalSeatsProperty());
         seatsFreeText.textProperty().bind(viewModel.freeSeatsProperty());
         seatsBuysText.textProperty().bind(viewModel.buysSeatsProperty());
-        viewModel.openBarOptionProperty().bind(foldingArmchairRadioButton.selectedProperty());
-        viewModel.magicBoxOptionProperty().bind(heatedArmchairRadioButton.selectedProperty());
+        viewModel.openBarOptionProperty().bind(openBarRadioButton.selectedProperty());
+        viewModel.magicBoxOptionProperty().bind(magicBoxRadioButton.selectedProperty());
         viewModel.skipLineOptionProperty().bind(skipLineRadioButton.selectedProperty());
     }
 

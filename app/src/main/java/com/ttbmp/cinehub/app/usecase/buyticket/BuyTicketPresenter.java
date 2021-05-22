@@ -29,7 +29,7 @@ public interface BuyTicketPresenter {
 
     void presentInvalidProjectionListRequest(ProjectionListRequest request);
 
-    void presentSeatList(NumberOfSeatsResponse response);
+    void presentSeatList(SeatListResponse response);
 
     void presentSeatListNullRequest();
 

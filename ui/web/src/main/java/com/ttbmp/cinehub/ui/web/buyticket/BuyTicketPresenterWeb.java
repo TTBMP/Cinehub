@@ -36,7 +36,7 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentSeatList(NumberOfSeatsResponse response) {
+    public void presentSeatList(SeatListResponse response) {
         model.addAttribute("seatList", response.getSeatDtoList());
     }
 

@@ -157,7 +157,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentSeatList(NumberOfSeatsResponse response) {
+    public void presentSeatList(SeatListResponse response) {
         viewModel.seatListProperty().setAll(response.getSeatDtoList());
     }
 

@@ -53,7 +53,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentSeatList(NumberOfSeatsResponse response) {
+        public void presentSeatList(SeatListResponse response) {
 
         }
 

@@ -53,7 +53,7 @@ public class ProjectionDto {
         this.projectionist = projectionist;
     }
 
-    public List<TicketDto> getListTicket() {
+    public List<TicketDto> C() {
         return listTicket;
     }
 

@@ -34,9 +34,9 @@ public class ConfirmEmailViewController {
                 paymentForm.getNumberCard(),
                 paymentForm.getCvv(),
                 paymentForm.getDate(),
-                paymentForm.getOption1(),
-                paymentForm.getOption2(),
-                paymentForm.getOption3()
+                paymentForm.getOption2(),//magicBox
+                paymentForm.getOption3(),//openBar
+                paymentForm.getOption1()//skipLine
         ));
         return ErrorHelper.returnView(response, model, "buy_ticket/confirm_email");
     }

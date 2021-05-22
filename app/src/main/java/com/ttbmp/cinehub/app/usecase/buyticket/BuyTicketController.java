@@ -113,7 +113,7 @@ public class BuyTicketController implements BuyTicketUseCase {
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
             var projection = projectionRepository.getProjection(request.getProjectionId());
-            presenter.presentSeatList(new NumberOfSeatsResponse(
+            presenter.presentSeatList(new SeatListResponse(
                     SeatDataMapper.mapToDtoList(projection.getHall().getSeatList(), projection::isBooked)));
         } catch (Request.NullRequestException e) {
             presenter.presentSeatListNullRequest();
