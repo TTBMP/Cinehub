@@ -5,14 +5,13 @@ import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.CinemaListRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.MovieListRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.ProjectionListRequest;
+import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 
 /**
@@ -25,7 +24,9 @@ public class ChooseProjectionViewController {
 
     @GetMapping("/choose_movie")
     public String chooseMovie(
-            @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, Model model) {
+            HttpServletResponse response,
+            @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            Model model) {
         if (date == null) {
             date = LocalDate.now();
         }
@@ -33,11 +34,13 @@ public class ChooseProjectionViewController {
         buyTicketUseCase.getMovieList(new MovieListRequest(date));
         model.addAttribute(PAYMENT_FORM_ATTRIBUTE, new PaymentForm());
         model.addAttribute("selected_date", date);
-        return "buy_ticket/choose_movie";
+        return ErrorHelper.returnView(response, model, "buy_ticket/choose_movie");
+
     }
 
     @PostMapping("/choose_cinema")
     public String chooseCinema(
+            HttpServletResponse response,
             @ModelAttribute("payment_form") PaymentForm paymentForm,
             Model model) {
         model.addAttribute(PAYMENT_FORM_ATTRIBUTE, paymentForm);
@@ -46,15 +49,12 @@ public class ChooseProjectionViewController {
                 paymentForm.getMovie().getId(),
                 paymentForm.getDate()
         ));
-        var errorMessage = model.getAttribute("messageError");
-        if (errorMessage != null) {
-            return "buy_ticket/choose_movie";
-        }
-        return "buy_ticket/choose_cinema";
+        return ErrorHelper.returnView(response, model, "buy_ticket/choose_cinema");
     }
 
     @PostMapping("/choose_projection")
     public String chooseProjection(
+            HttpServletResponse response,
             @ModelAttribute("payment_form") PaymentForm paymentForm,
             Model model) {
         model.addAttribute(PAYMENT_FORM_ATTRIBUTE, paymentForm);
@@ -64,11 +64,7 @@ public class ChooseProjectionViewController {
                 paymentForm.getCinema().getId(),
                 LocalDate.parse(paymentForm.getDate())
         ));
-        var errorMessage = model.getAttribute("messageError");
-        if (errorMessage != null) {
-            return "login";
-        }
-        return "buy_ticket/choose_cinema";
+        return ErrorHelper.returnView(response, model, "buy_ticket/choose_cinema");
     }
 
 }

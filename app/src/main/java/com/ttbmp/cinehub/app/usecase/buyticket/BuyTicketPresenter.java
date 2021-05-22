@@ -49,6 +49,6 @@ public interface BuyTicketPresenter {
 
     void presentRepositoryError(RepositoryException exception);
 
-    void presentSeatAlreadyBookedError(String message);
+    void presentSeatAlreadyBookedError(SeatErrorResponse response);
 
 }

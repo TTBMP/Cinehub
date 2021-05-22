@@ -22,43 +22,43 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentPayNullRequest() {
-        viewModel.errorMessageProperty().setValue("Pay null request");
+        viewModel.errorMessageProperty().setValue("Request can't be null");
     }
 
     @Override
     public void presentInvalidPayRequest(PaymentRequest request) {
-        var message = "";
+        var error = "";
         if (request.getErrorList().contains(PaymentRequest.CVV_LETTERS_ERROR)) {
-            message += PaymentRequest.CVV_LETTERS_ERROR.getMessage();
+            error += PaymentRequest.CVV_LETTERS_ERROR.getMessage();
         }
         if (request.getErrorList().contains(PaymentRequest.NUMBER_OF_CARD_LETTERS_ERROR)) {
-            message += PaymentRequest.NUMBER_OF_CARD_LETTERS_ERROR.getMessage();
+            error += PaymentRequest.NUMBER_OF_CARD_LETTERS_ERROR.getMessage();
         }
         if (request.getErrorList().contains(PaymentRequest.CREDIT_CARD_LENGTH_ERROR)) {
-            message += PaymentRequest.CREDIT_CARD_LENGTH_ERROR.getMessage();
+            error += PaymentRequest.CREDIT_CARD_LENGTH_ERROR.getMessage();
         }
         if (request.getErrorList().contains(PaymentRequest.MISSING_EMAIL_ERROR)) {
-            message += PaymentRequest.MISSING_EMAIL_ERROR.getMessage();
+            error += PaymentRequest.MISSING_EMAIL_ERROR.getMessage();
         }
         if (request.getErrorList().contains(PaymentRequest.MISSING_CREDIT_CARD_ERROR)) {
-            message += PaymentRequest.MISSING_CREDIT_CARD_ERROR.getMessage();
+            error += PaymentRequest.MISSING_CREDIT_CARD_ERROR.getMessage();
         }
         if (request.getErrorList().contains(PaymentRequest.LENGTH_CVV_CREDIT_CARD_ERROR)) {
-            message += PaymentRequest.LENGTH_CVV_CREDIT_CARD_ERROR.getMessage();
+            error += PaymentRequest.LENGTH_CVV_CREDIT_CARD_ERROR.getMessage();
         }
         if (request.getErrorList().contains(PaymentRequest.EXPIRATION_CREDIT_CARD_ERROR)) {
-            message += PaymentRequest.EXPIRATION_CREDIT_CARD_ERROR.getMessage();
+            error += PaymentRequest.EXPIRATION_CREDIT_CARD_ERROR.getMessage();
         }
         if (request.getErrorList().contains(PaymentRequest.EMAIL_ERROR)) {
-            message += PaymentRequest.EMAIL_ERROR.getMessage();
+            error += PaymentRequest.EMAIL_ERROR.getMessage();
         }
-        viewModel.errorMessageProperty().setValue(message);
+        viewModel.errorMessageProperty().setValue(error);
     }
 
 
     @Override
     public void presentCinemaListNullRequest() {
-        viewModel.errorMessageProperty().setValue("Cinema list null request");
+        viewModel.errorMessageProperty().setValue("Request can't be null");
     }
 
     @Override
@@ -68,27 +68,27 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentProjectionListNullRequest() {
-        viewModel.errorMessageProperty().setValue("Projection list null request");
+        viewModel.errorMessageProperty().setValue("Request can't be null");
     }
 
     @Override
     public void presentInvalidProjectionListRequest(ProjectionListRequest request) {
-        var message = "";
+        var error = "";
         if (request.getErrorList().contains(ProjectionListRequest.MISSING_MOVIE_ERROR)) {
-            message += ProjectionListRequest.MISSING_MOVIE_ERROR.getMessage();
+            error += ProjectionListRequest.MISSING_MOVIE_ERROR.getMessage();
         }
         if (request.getErrorList().contains(ProjectionListRequest.MISSING_DATE_ERROR)) {
-            message += ProjectionListRequest.MISSING_DATE_ERROR.getMessage();
+            error += ProjectionListRequest.MISSING_DATE_ERROR.getMessage();
         }
         if (request.getErrorList().contains(ProjectionListRequest.MISSING_CINEMA_ERROR)) {
-            message += ProjectionListRequest.MISSING_CINEMA_ERROR.getMessage();
+            error += ProjectionListRequest.MISSING_CINEMA_ERROR.getMessage();
         }
-        viewModel.errorMessageProperty().setValue(message);
+        viewModel.errorMessageProperty().setValue(error);
     }
 
     @Override
     public void presentSeatListNullRequest() {
-        viewModel.errorMessageProperty().setValue("Seat list null request");
+        viewModel.errorMessageProperty().setValue("Request can't be null");
     }
 
     @Override
@@ -105,7 +105,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentMovieListNullRequest() {
-        viewModel.errorMessageProperty().setValue("Unable to recover movies by service");
+        viewModel.errorMessageProperty().setValue("Request can't be null");
     }
 
     @Override
@@ -116,7 +116,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException exception) {
-        viewModel.errorMessageProperty().setValue(exception.getMessage() + ", you must log in first ...");
+        viewModel.errorMessageProperty().setValue(exception.getMessage() + ", you must log in first");
 
     }
 
@@ -126,8 +126,8 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentSeatAlreadyBookedError(String message) {
-        viewModel.errorMessageProperty().setValue(message);
+    public void presentSeatAlreadyBookedError(SeatErrorResponse response) {
+        viewModel.errorMessageProperty().setValue(response.getError());
     }
 
     @Override

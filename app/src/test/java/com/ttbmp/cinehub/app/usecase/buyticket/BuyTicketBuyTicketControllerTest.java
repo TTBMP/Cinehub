@@ -135,7 +135,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentSeatAlreadyBookedError(String message) {
+        public void presentSeatAlreadyBookedError(SeatErrorResponse message) {
 
         }
 
