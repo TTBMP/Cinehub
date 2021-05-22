@@ -48,4 +48,5 @@ public class ManageEmployeesShiftHandler implements ManageEmployeesShiftUseCase 
     public void modifyShift(ShiftModifyRequest request) {
         controller.modifyShift(request);
     }
+
 }

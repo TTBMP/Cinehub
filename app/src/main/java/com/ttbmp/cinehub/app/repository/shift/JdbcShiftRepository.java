@@ -19,7 +19,6 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodExcep
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class JdbcShiftRepository implements ShiftRepository {
@@ -142,7 +141,7 @@ public class JdbcShiftRepository implements ShiftRepository {
     }
 
     private Shift getShift(com.ttbmp.cinehub.service.persistence.entity.Shift shift) throws RepositoryException {
-        var roleList = Arrays.asList(serviceLocator.getService(UserRepository.class).getUser(shift.getUserId()).getRoles());
+        var roleList = serviceLocator.getService(UserRepository.class).getUser(shift.getUserId()).getRoleList();
         if (roleList.contains(Role.USHER_ROLE)) {
             return new UsherShiftProxy(
                     shift.getId(),

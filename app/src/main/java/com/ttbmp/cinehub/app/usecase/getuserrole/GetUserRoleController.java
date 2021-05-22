@@ -8,7 +8,6 @@ import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.domain.security.Permission;
 
-import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class GetUserRoleController implements GetUserRoleUseCase {
@@ -29,7 +28,7 @@ public class GetUserRoleController implements GetUserRoleUseCase {
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
             var user = userRepository.getUser(request.getUserId());
-            var roleList = Arrays.stream(user.getRoles())
+            var roleList = user.getRoleList().stream()
                     .map(RoleResponse.Role::getRole)
                     .collect(Collectors.toList());
             presenter.present(new RoleResponse(roleList));

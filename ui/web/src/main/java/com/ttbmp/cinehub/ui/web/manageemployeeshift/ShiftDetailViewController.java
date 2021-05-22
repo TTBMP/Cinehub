@@ -45,17 +45,13 @@ public class ShiftDetailViewController {
             @CookieValue(value = "session") String sessionToken,
             @ModelAttribute("selectedShift") NewShiftForm shift,
             Model model) {
-
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-
         model.addAttribute("shiftDetail", shift);
         model.addAttribute("data", LocalDate.parse(shift.getDate()));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         model.addAttribute("idCinema", shift.getEmployee().getCinema().getId());
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
-
         if (shift.isChange()) {
-
             if (shift.getHall() != null) {
                 model.addAttribute("selectedHallId", shift.getHall().getId());
             }
@@ -65,7 +61,6 @@ public class ShiftDetailViewController {
             model.addAttribute("selectedEmployeeId", shift.getEmployee().getId());
             useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
             var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
-
             useCase.modifyShift(new ShiftModifyRequest(
                     sessionToken,
                     selectedEmployee,
@@ -76,12 +71,9 @@ public class ShiftDetailViewController {
                     selectedHall
             ));
             return ErrorHelper.returnView(response, model, "shift_modify");
-
         }
         model.addAttribute("modifyRequest", new NewShiftForm());
-
         return ErrorHelper.returnView(response, model, "shift_detail");
-
     }
 
 }

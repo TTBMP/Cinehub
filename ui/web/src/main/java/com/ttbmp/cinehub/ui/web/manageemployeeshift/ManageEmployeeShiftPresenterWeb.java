@@ -9,7 +9,6 @@ import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.ui.Model;
 
-import javax.servlet.http.HttpServletResponse;
 import java.time.temporal.WeekFields;
 import java.util.HashMap;
 import java.util.List;
@@ -151,7 +150,6 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     @Override
     public void presentModifyShiftNullRequest() {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
-
     }
 
     @Override
@@ -162,7 +160,6 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     @Override
     public void presentInvalidCreateShiftListRequest(CreateShiftRequest request) {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
-
     }
 
     @Override
@@ -205,7 +202,6 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     public void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e) {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
     }
-
 
 
     private void findEmployee(List<EmployeeDto> employeeList) {

@@ -62,4 +62,5 @@ public interface ManageEmployeesShiftPresenter {
     void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e);
 
     void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e);
+
 }

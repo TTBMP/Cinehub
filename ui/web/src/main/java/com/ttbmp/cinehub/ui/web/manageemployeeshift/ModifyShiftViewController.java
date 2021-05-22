@@ -11,4 +11,5 @@ public class ModifyShiftViewController {
     public String shiftModify(Model model) {
         return "/shift_detail";
     }
+
 }

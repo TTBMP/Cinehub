@@ -27,7 +27,7 @@ public class UsherProxy extends Usher {
     private boolean isNameLoaded = false;
     private boolean isSurnameLoaded = false;
     private boolean isEmailLoaded = false;
-    private boolean isRoleArrayLoaded = false;
+    private boolean isRoleListLoaded = false;
     private boolean isCinemaLoaded = false;
     private boolean isShiftListLoaded = false;
 
@@ -97,28 +97,28 @@ public class UsherProxy extends Usher {
     }
 
     @Override
-    public Role[] getRoles() {
-        if (!isRoleArrayLoaded) {
+    public List<Role> getRoleList() {
+        if (!isRoleListLoaded) {
             try {
-                setRoles(userRepository.getUser(getId()).getRoles());
+                setRoleList(userRepository.getUser(getId()).getRoleList());
             } catch (RepositoryException e) {
                 throw new LazyLoadingException(e.getMessage());
             }
         }
-        return super.getRoles();
+        return super.getRoleList();
     }
 
     @Override
-    public void setRoles(Role[] roles) {
-        isRoleArrayLoaded = true;
-        super.setRoles(roles);
+    public void setRoleList(List<Role> roleList) {
+        isRoleListLoaded = true;
+        super.setRoleList(roleList);
     }
 
     @Override
     public boolean hasPermission(Permission requiredPermission) {
-        if (!isRoleArrayLoaded) {
+        if (!isRoleListLoaded) {
             try {
-                setRoles(userRepository.getUser(getId()).getRoles());
+                setRoleList(userRepository.getUser(getId()).getRoleList());
             } catch (RepositoryException e) {
                 throw new LazyLoadingException(e.getMessage());
             }

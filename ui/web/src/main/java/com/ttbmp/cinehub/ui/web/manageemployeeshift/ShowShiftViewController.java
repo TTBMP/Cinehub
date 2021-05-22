@@ -40,7 +40,6 @@ public class ShowShiftViewController {
             HttpServletResponse response,
             @CookieValue(value = "session", required = false) String sessionToken,
             Model model) {
-
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         model.addAttribute("cinemaSelected", false);
@@ -54,7 +53,6 @@ public class ShowShiftViewController {
             HttpServletResponse response,
             @CookieValue(value = "session") String sessionToken,
             @ModelAttribute("getShiftListRequest") GetCinemaForm form, Model model) {
-
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", form.getCinemaId());
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));

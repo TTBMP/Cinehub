@@ -3,6 +3,10 @@ package com.ttbmp.cinehub.domain;
 import com.ttbmp.cinehub.domain.security.Permission;
 import com.ttbmp.cinehub.domain.security.Role;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author Fabio Buracchi
  */
@@ -12,14 +16,14 @@ public class User {
     private String name;
     private String surname;
     private String email;
-    private Role[] roles;
+    private List<Role> roleList;
 
-    public User(String id, String name, String surname, String email, Role[] roles) {
+    public User(String id, String name, String surname, String email, List<Role> roleList) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
-        this.roles = roles;
+        this.roleList = roleList;
     }
 
     public String getId() {
@@ -54,23 +58,18 @@ public class User {
         this.email = email;
     }
 
-    public Role[] getRoles() {
-        return roles;
+    public List<Role> getRoleList() {
+        return roleList;
     }
 
-    public void setRoles(Role[] roles) {
-        this.roles = roles;
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
     }
 
     public boolean hasPermission(Permission requiredPermission) {
-        for (var role : roles) {
-            for (var permission : role.getPermissions()) {
-                if (permission.equals(requiredPermission)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return roleList.stream()
+                .map(Role::getPermissionList)
+                .anyMatch(permissionList -> permissionList.contains(requiredPermission));
     }
 
     @Override

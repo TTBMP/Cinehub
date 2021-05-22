@@ -100,7 +100,6 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
             manageEmployeesShiftPresenter.presentUnauthenticatedError(e);
         }
-
     }
 
     @Override
@@ -294,6 +293,5 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         }
 
     }
-
 
 }

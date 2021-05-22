@@ -2,12 +2,14 @@ package com.ttbmp.cinehub.app.repository.shift.projectionist;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.repository.employee.projectionist.MockProjectionistRepository;
+import com.ttbmp.cinehub.app.repository.employee.MockEmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
 import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.app.repository.hall.MockHallRepository;
 import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
+import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
+import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 
 import java.util.ArrayList;
@@ -22,16 +24,20 @@ public class MockProjectionistShiftRepository implements ProjectionistShiftRepos
     private static final List<ProjectionistShiftData> PROJECTIONIST_SHIFT_DATA_LIST = new ArrayList<>();
 
     static {
-        var hallNumber = MockHallRepository.getHallDataList().size();
-        var projectionistIdList = MockProjectionistRepository.getProjectionistDataList().stream()
-                .map(MockProjectionistRepository.ProjectionistData::getId)
+        var mockUserRepository = new MockUserRepository();
+        var projectionistIdList = MockEmployeeRepository.getEmployeeDataList().stream()
+                .map(MockEmployeeRepository.EmployeeData::getUserId)
+                .filter(userId -> mockUserRepository.getUser(userId).getRoleList().contains(Role.PROJECTIONIST_ROLE))
                 .collect(Collectors.toList());
-        MockShiftRepository.getShiftDataList().stream()
-                .filter(d -> projectionistIdList.contains(d.getEmployeeId()))
-                .forEach(d -> PROJECTIONIST_SHIFT_DATA_LIST.add(new ProjectionistShiftData(
-                        d.getId(),
-                        (int) (d.getId() - 3 - Math.floor((d.getId() - 3) / 14.0) + 6 * Math.floor((d.getId() - 3) / 84.0)) % hallNumber + 1
-                )));
+        var projectionistShiftIdList = MockShiftRepository.getShiftDataList().stream()
+                .filter(shiftData -> projectionistIdList.contains(shiftData.getEmployeeId()))
+                .map(MockShiftRepository.ShiftData::getId)
+                .collect(Collectors.toList());
+        var hallId = 1;
+        for (var projectionistShiftId : projectionistShiftIdList) {
+            PROJECTIONIST_SHIFT_DATA_LIST.add(new ProjectionistShiftData(projectionistShiftId, hallId));
+            hallId = (hallId % MockHallRepository.getHallDataList().size()) + 1;
+        }
     }
 
     private final ServiceLocator serviceLocator;

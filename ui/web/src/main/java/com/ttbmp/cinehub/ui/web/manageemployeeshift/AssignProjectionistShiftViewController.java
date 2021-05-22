@@ -49,7 +49,6 @@ public class AssignProjectionistShiftViewController {
         var shiftRequest = new NewShiftForm();
         model.addAttribute(ASSIGN_REQUEST, shiftRequest);
         return ErrorHelper.returnView(response, model, "assign_projectionist_shift");
-
     }
 
     @PostMapping("/assign_projectionist_shift")
@@ -72,7 +71,6 @@ public class AssignProjectionistShiftViewController {
                 shiftRequest.getEnd(),
                 shiftRequest.getHall().getId())
         );
-
         return ErrorHelper.returnView(response, model, "shift_assigned");
     }
 

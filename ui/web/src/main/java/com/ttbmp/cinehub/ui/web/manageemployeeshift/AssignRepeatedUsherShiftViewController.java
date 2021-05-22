@@ -56,7 +56,6 @@ public class AssignRepeatedUsherShiftViewController {
         var request = new NewRepeatedShiftForm();
         model.addAttribute(ASSIGN_REQUEST, request);
         return ErrorHelper.returnView(response, model, "assign_repeated_usher_shift");
-
     }
 
     @PostMapping("/assign_repeated_usher_shift")
@@ -85,8 +84,6 @@ public class AssignRepeatedUsherShiftViewController {
                 request.getStart(),
                 request.getEnd(),
                 null));
-
-
         return ErrorHelper.returnView(response, model, "shift_assigned");
     }
 

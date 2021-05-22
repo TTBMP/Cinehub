@@ -12,8 +12,8 @@ public class Customer extends User {
 
     private List<Ticket> ownedTicketList;
 
-    public Customer(String id, String name, String surname, String email, Role[] roles, List<Ticket> ownedTicketList) {
-        super(id, name, surname, email, roles);
+    public Customer(String id, String name, String surname, String email, List<Role> roleList, List<Ticket> ownedTicketList) {
+        super(id, name, surname, email, roleList);
         this.ownedTicketList = ownedTicketList;
     }
 

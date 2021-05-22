@@ -1,116 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.ui.desktop.manageshift.modify.ModifyShiftViewController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+            fx:controller="com.ttbmp.cinehub.ui.desktop.manageshift.modify.ModifyShiftViewController">
     <top>
         <VBox alignment="CENTER">
             <children>
                 <Label alignment="CENTER" text="Modify Shift">
                     <font>
-                        <Font size="25.0" />
+                        <Font size="25.0"/>
                     </font>
                 </Label>
-                <Separator prefWidth="200.0" />
+                <Separator prefWidth="200.0"/>
             </children>
         </VBox>
     </top>
     <center>
         <VBox BorderPane.alignment="CENTER">
             <BorderPane.margin>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
             </BorderPane.margin>
             <children>
                 <HBox fx:id="errorHBox" alignment="CENTER">
                     <children>
-                        <Label fx:id="errorLabel" style="-fx-background-color: RED;" text="Label" />
+                        <Label fx:id="errorLabel" style="-fx-background-color: RED;" text="Label"/>
                     </children>
                 </HBox>
                 <GridPane prefHeight="250.0" prefWidth="590.0">
                     <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="309.0" minWidth="10.0" prefWidth="293.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="451.0" minWidth="10.0" prefWidth="297.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="309.0" minWidth="10.0"
+                                           prefWidth="293.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="451.0" minWidth="10.0"
+                                           prefWidth="297.0"/>
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
                         <Label text="Name Employee:">
                             <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                             </GridPane.margin>
                         </Label>
                         <Label fx:id="nameLabel" text="Label" GridPane.columnIndex="1">
                             <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                             </GridPane.margin>
                         </Label>
                         <Label text="Surname Employee:" GridPane.rowIndex="1">
                             <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                             </GridPane.margin>
                         </Label>
                         <Label fx:id="surnameLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                             </GridPane.margin>
                         </Label>
                         <Label text="Start time:" GridPane.rowIndex="4">
                             <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                             </GridPane.margin>
                         </Label>
                         <Label text="End Time:" GridPane.rowIndex="5">
                             <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                             </GridPane.margin>
                         </Label>
                         <Label text="Cinema:" GridPane.rowIndex="6">
                             <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                             </GridPane.margin>
                         </Label>
                         <Label fx:id="cinemaLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6">
                             <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                             </GridPane.margin>
                         </Label>
                         <Label text="Role:" GridPane.rowIndex="2">
                             <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                             </GridPane.margin>
                         </Label>
-                        <Label fx:id="roleLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="roleLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                         <Label text="Shift Date:" GridPane.rowIndex="3">
                             <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                             </GridPane.margin>
                         </Label>
-                        <DatePicker fx:id="dateDatePicker" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Spinner fx:id="startSpinner" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Spinner fx:id="endSpinner" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <Label fx:id="hallLabel" text="Hall:" GridPane.rowIndex="7" />
-                        <ComboBox fx:id="hallComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <DatePicker fx:id="dateDatePicker" editable="false" GridPane.columnIndex="1"
+                                    GridPane.rowIndex="3"/>
+                        <Spinner fx:id="startSpinner" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                        <Spinner fx:id="endSpinner" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                        <Label fx:id="hallLabel" text="Hall:" GridPane.rowIndex="7"/>
+                        <ComboBox fx:id="hallComboBox" prefWidth="150.0" GridPane.columnIndex="1"
+                                  GridPane.rowIndex="7"/>
                     </children>
                 </GridPane>
             </children>
@@ -123,17 +119,17 @@
                     <children>
                         <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel">
                             <HBox.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                             </HBox.margin>
                         </Button>
                         <Button fx:id="confirmButton" mnemonicParsing="false" text="Apply">
                             <HBox.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                             </HBox.margin>
                         </Button>
                     </children>
                     <VBox.margin>
-                        <Insets />
+                        <Insets/>
                     </VBox.margin>
                 </HBox>
             </children>

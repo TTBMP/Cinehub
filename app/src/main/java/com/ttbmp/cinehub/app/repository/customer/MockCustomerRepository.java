@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
 import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Customer;
+import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 import java.util.ArrayList;
@@ -20,7 +21,11 @@ public class MockCustomerRepository implements CustomerRepository {
     private static final List<CustomerData> CUSTOMER_DATA_LIST = new ArrayList<>();
 
     static {
-        MockUserRepository.getUserDataList().forEach(d -> CUSTOMER_DATA_LIST.add(new CustomerData(d.getId())));
+        var mockUserRepository = new MockUserRepository();
+        MockUserRepository.getUserDataList().stream()
+                .map(MockUserRepository.UserData::getId)
+                .filter(userId -> mockUserRepository.getUser(userId).getRoleList().contains(Role.CUSTOMER_ROLE))
+                .forEach(userId -> CUSTOMER_DATA_LIST.add(new CustomerData(userId)));
     }
 
     private final ServiceLocator serviceLocator;

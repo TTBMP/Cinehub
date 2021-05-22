@@ -17,7 +17,6 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourc
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class JdbcEmployeeRepository implements EmployeeRepository {
@@ -81,7 +80,7 @@ public class JdbcEmployeeRepository implements EmployeeRepository {
     }
 
     private Employee getEmployee(com.ttbmp.cinehub.service.persistence.entity.Employee employee) throws RepositoryException {
-        var roleList = Arrays.asList(serviceLocator.getService(UserRepository.class).getUser(employee.getIdUser()).getRoles());
+        var roleList = serviceLocator.getService(UserRepository.class).getUser(employee.getIdUser()).getRoleList();
         if (roleList.contains(Role.USHER_ROLE)) {
             return new UsherProxy(
                     employee.getIdUser(),
