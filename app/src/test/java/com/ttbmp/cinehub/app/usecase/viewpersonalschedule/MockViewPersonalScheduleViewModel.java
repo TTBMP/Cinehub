@@ -4,6 +4,9 @@ import com.ttbmp.cinehub.app.dto.ShiftDto;
 
 import java.util.List;
 
+/**
+ * @author Fabio Buracchi
+ */
 public class MockViewPersonalScheduleViewModel {
 
     private String sessionToken;

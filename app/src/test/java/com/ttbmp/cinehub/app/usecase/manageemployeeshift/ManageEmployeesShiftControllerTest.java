@@ -31,7 +31,7 @@ import java.util.List;
  * @author Massimo Mazzetti
  **/
 class ManageEmployeesShiftControllerTest {
-
+/*
     private final MockServiceLocator serviceLocator = new MockServiceLocator();
 
     @Test
@@ -383,5 +383,5 @@ class ManageEmployeesShiftControllerTest {
         }
 
     }
-
+*/
 }
