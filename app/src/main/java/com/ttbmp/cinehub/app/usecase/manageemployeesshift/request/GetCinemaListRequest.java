@@ -10,6 +10,7 @@ public class GetCinemaListRequest extends AuthenticatedRequest {
 
     @Override
     protected void onValidate() {
-
+        // Do nothing because the class doesn't have attributes.
     }
+
 }

@@ -4,6 +4,7 @@ import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.usecase.login.LoginPresenter;
 import com.ttbmp.cinehub.app.usecase.login.LoginRequest;
 import com.ttbmp.cinehub.app.usecase.login.LoginResponse;
+import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.ui.Model;
 
 public class LoginPresenterWeb implements LoginPresenter {
@@ -21,17 +22,17 @@ public class LoginPresenterWeb implements LoginPresenter {
 
     @Override
     public void presentSecurityError(SecurityException e) {
-        // TODO
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
     }
 
     @Override
     public void presentNullRequestException() {
-        // TODO
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
     }
 
     @Override
     public void presentInvalidRequestException(LoginRequest request) {
-        // TODO
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
     }
 
 }

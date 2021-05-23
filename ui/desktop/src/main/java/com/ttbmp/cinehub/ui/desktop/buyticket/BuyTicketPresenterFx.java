@@ -13,16 +13,17 @@ import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
  */
 public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
+    private static final String NULL_REQUEST_MESSAGE = "Request can't be null";
+
     private final BuyTicketViewModel viewModel;
 
     public BuyTicketPresenterFx(BuyTicketViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
-
     @Override
     public void presentPayNullRequest() {
-        viewModel.errorMessageProperty().setValue("Request can't be null");
+        viewModel.errorMessageProperty().setValue(NULL_REQUEST_MESSAGE);
     }
 
     @Override
@@ -58,7 +59,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentCinemaListNullRequest() {
-        viewModel.errorMessageProperty().setValue("Request can't be null");
+        viewModel.errorMessageProperty().setValue(NULL_REQUEST_MESSAGE);
     }
 
     @Override
@@ -68,7 +69,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentProjectionListNullRequest() {
-        viewModel.errorMessageProperty().setValue("Request can't be null");
+        viewModel.errorMessageProperty().setValue(NULL_REQUEST_MESSAGE);
     }
 
     @Override
@@ -88,7 +89,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentSeatListNullRequest() {
-        viewModel.errorMessageProperty().setValue("Request can't be null");
+        viewModel.errorMessageProperty().setValue(NULL_REQUEST_MESSAGE);
     }
 
     @Override
@@ -105,7 +106,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentMovieListNullRequest() {
-        viewModel.errorMessageProperty().setValue("Request can't be null");
+        viewModel.errorMessageProperty().setValue(NULL_REQUEST_MESSAGE);
     }
 
     @Override

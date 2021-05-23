@@ -58,9 +58,7 @@ public class ChooseCinemaViewController extends ViewController {
         cinemaListView.setItems(viewModel.cinemaListProperty());
         cinemaListView.setCellFactory(listCinemaDto -> new ChooseCinemaListCell(activity, navController));//Cell Factory
         timeOfProjectionListView.setCellFactory(l -> new ChooseProjectionListCell(activity, navController));
-        cinemaListView.getSelectionModel().selectedItemProperty().addListener(l -> {
-            onCinemaItemClick();
-        });
+        cinemaListView.getSelectionModel().selectedItemProperty().addListener(l -> onCinemaItemClick());
         cancelButton.setOnAction(a -> {
             try {
                 timeOfProjectionListView.getItems().clear();

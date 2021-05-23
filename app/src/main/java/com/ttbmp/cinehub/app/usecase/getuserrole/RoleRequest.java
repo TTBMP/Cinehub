@@ -10,7 +10,7 @@ public class RoleRequest extends AuthenticatedRequest {
 
     @Override
     public void onValidate() {
-
+        // Do nothing because the class doesn't have attributes.
     }
 
 }

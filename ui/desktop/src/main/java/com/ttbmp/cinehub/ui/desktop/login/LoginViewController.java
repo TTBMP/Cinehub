@@ -18,11 +18,6 @@ import java.lang.reflect.InvocationTargetException;
 
 
 public class LoginViewController extends ViewController {
-
-    private LoginViewModel viewModel;
-
-    private LoginUseCase useCase;
-
     @FXML
     private Label errorSectionLabel;
 
@@ -44,8 +39,8 @@ public class LoginViewController extends ViewController {
     @Override
     protected void onLoad() {
         appBarController.load(activity, navController);
-        viewModel = activity.getViewModel(LoginViewModel.class);
-        useCase = activity.getUseCase(LoginUseCase.class);
+        var viewModel = activity.getViewModel(LoginViewModel.class);
+        var useCase = activity.getUseCase(LoginUseCase.class);
         viewModel.passwordUserProperty().bind(usernameLabel.textProperty());
         viewModel.usernameUserProperty().bind(passwordLabel.textProperty());
         errorSectionLabel.textProperty().bind(viewModel.accessErrorProperty());
