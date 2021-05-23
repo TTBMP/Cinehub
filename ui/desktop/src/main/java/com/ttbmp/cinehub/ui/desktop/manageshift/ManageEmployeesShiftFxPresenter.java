@@ -131,7 +131,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
 
     @Override
     public void presentInvalidGetCinemaListRequest(GetCinemaListRequest request) {
-
+        //The request contains only the session token so the onValidate method has no errors
     }
 
     @Override

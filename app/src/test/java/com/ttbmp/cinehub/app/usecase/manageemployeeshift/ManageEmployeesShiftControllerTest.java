@@ -30,9 +30,10 @@ import java.util.List;
 /**
  * @author Massimo Mazzetti
  **/
+
 class ManageEmployeesShiftControllerTest {
-/*
     private final MockServiceLocator serviceLocator = new MockServiceLocator();
+    private final static String sessionTokenManager = "5KClU7hbNgedJAwLuF9eFVl6Qzz2";
 
     @Test
     void getCinemaList() {
@@ -40,7 +41,7 @@ class ManageEmployeesShiftControllerTest {
                 serviceLocator,
                 new MockManageEmployeePresenter()
         );
-        Assertions.assertDoesNotThrow(() -> controller.getCinemaList(new GetCinemaListRequest("MANAGER")));
+        Assertions.assertDoesNotThrow(() -> controller.getCinemaList(new GetCinemaListRequest(sessionTokenManager)));
     }
 
     @Test
@@ -59,7 +60,7 @@ class ManageEmployeesShiftControllerTest {
             e.printStackTrace();
         }
         assert cinema != null;
-        var getShiftListRequest = new GetShiftListRequest("MANAGER", CinemaDataMapper.mapToDto(cinema), start, end);
+        var getShiftListRequest = new GetShiftListRequest(sessionTokenManager, CinemaDataMapper.mapToDto(cinema), start, end);
         Assertions.assertDoesNotThrow(() -> controller.getShiftList(getShiftListRequest));
 
     }
@@ -77,7 +78,7 @@ class ManageEmployeesShiftControllerTest {
         } catch (RepositoryException e) {
             e.printStackTrace();
         }
-        var request = new GetEmployeeListRequest("MANAGER", cinema);
+        var request = new GetEmployeeListRequest(sessionTokenManager, cinema);
         Assertions.assertDoesNotThrow(() -> controller.getEmployeeList(request));
     }
 
@@ -95,7 +96,7 @@ class ManageEmployeesShiftControllerTest {
         }
         assert shift != null;
         var request = new ShiftModifyRequest(
-                "MANAGER",
+                sessionTokenManager,
                 shift.getEmployee(),
                 shift.getId(),
                 shift.getDate().plusDays(1),
@@ -119,7 +120,7 @@ class ManageEmployeesShiftControllerTest {
             System.out.println(e.getMessage());
         }
         assert finalShift != null;
-        var request = new ShiftRequest("MANAGER", finalShift.getId());
+        var request = new ShiftRequest(sessionTokenManager, finalShift.getId());
         Assertions.assertDoesNotThrow(() -> controller.deleteShift(request));
 
     }
@@ -133,14 +134,14 @@ class ManageEmployeesShiftControllerTest {
         EmployeeDto employee = null;
         try {
             employee = EmployeeDataMapper.mapToDto(serviceLocator.getService(EmployeeRepository.class)
-                    .getEmployee("0")
+                    .getEmployee("gVUYDMojhmeFkErlbF0WWLQWMPn1")
             );
         } catch (RepositoryException e) {
             e.printStackTrace();
         }
 
         var request = new ShiftRepeatRequest(
-                "MANAGER",
+                sessionTokenManager,
                 LocalDate.now().plusYears(2),
                 LocalDate.now().plusDays(7).plusYears(2),
                 "EVERY_DAY",
@@ -159,8 +160,8 @@ class ManageEmployeesShiftControllerTest {
                 new MockManageEmployeePresenter()
         );
         var request = new CreateShiftRequest(
-                "MANAGER",
-                "0",
+                sessionTokenManager,
+                "gVUYDMojhmeFkErlbF0WWLQWMPn1",
                 LocalDate.now().plusMonths(2),
                 LocalTime.now().withNano(0).withSecond(0),
                 LocalTime.now().plusHours(1).withNano(0).withSecond(0)
@@ -225,13 +226,7 @@ class ManageEmployeesShiftControllerTest {
 
         @Override
         public void presentDeleteShift() {
-            Employee employee = null;
             var shiftRepository = serviceLocator.getService(ShiftRepository.class);
-            try {
-                employee = serviceLocator.getService(EmployeeRepository.class).getEmployee("0");
-            } catch (RepositoryException e) {
-                e.printStackTrace();
-            }
             Shift shift = null;
             try {
                 shift = shiftRepository.getShift(1);
@@ -247,7 +242,7 @@ class ManageEmployeesShiftControllerTest {
         public void presentRepeatShift(ShiftRepeatResponse response) {
             Employee employee = null;
             try {
-                employee = serviceLocator.getService(EmployeeRepository.class).getEmployee("0");
+                employee = serviceLocator.getService(EmployeeRepository.class).getEmployee("gVUYDMojhmeFkErlbF0WWLQWMPn1");
             } catch (RepositoryException e) {
                 e.printStackTrace();
             }
@@ -266,7 +261,7 @@ class ManageEmployeesShiftControllerTest {
         public void presentCreateShift(CreateShiftResponse response) {
             Employee employee = null;
             try {
-                employee = serviceLocator.getService(EmployeeRepository.class).getEmployee("0");
+                employee = serviceLocator.getService(EmployeeRepository.class).getEmployee("gVUYDMojhmeFkErlbF0WWLQWMPn1");
             } catch (RepositoryException e) {
                 e.printStackTrace();
             }
@@ -383,5 +378,6 @@ class ManageEmployeesShiftControllerTest {
         }
 
     }
-*/
+
+
 }
