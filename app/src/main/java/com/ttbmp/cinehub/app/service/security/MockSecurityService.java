@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.app.service.security;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.User;
 
@@ -18,37 +19,19 @@ public class MockSecurityService implements SecurityService {
 
     @Override
     public String authenticate(String email, String password) throws SecurityException {
-        switch (email) {
-            case "customer":
-                return "CUSTOMER";
-            case "projectionist":
-                return "PROJECTIONIST";
-            case "usher":
-                return "USHER";
-            case "manager":
-                return "MANAGER";
-            default:
-                throw new SecurityException("Wrong username or password.");
-        }
+        return MockUserRepository.getUserDataList().stream()
+                .filter(userData -> userData.getEmail().equals(email))
+                .map(MockUserRepository.UserData::getId)
+                .findAny()
+                .orElseThrow(() -> new SecurityException("Wrong username or password."));
     }
 
     @Override
     public User authenticate(String sessionToken) throws SecurityException {
         try {
-            switch (sessionToken) {
-                case "CUSTOMER":
-                    return userRepository.getUser("7jYsjrrXeFSUpu33TsdYwV135mx1");
-                case "MANAGER":
-                    return userRepository.getUser("5KClU7hbNgedJAwLuF9eFVl6Qzz2");
-                case "PROJECTIONIST":
-                    return userRepository.getUser("mg9eBHkPumcssl9dvrotbZqDbk62");
-                case "USHER":
-                    return userRepository.getUser("gVUYDMojhmeFkErlbF0WWLQWMPn1");
-                default:
-                    throw new SecurityException("Invalid session token");
-            }
+            return userRepository.getUser(sessionToken);
         } catch (NullPointerException e) {
-            throw new SecurityException("Session token is null");
+            throw new SecurityException("Invalid session token.");
         } catch (RepositoryException e) {
             throw new SecurityException(e.getMessage());
         }

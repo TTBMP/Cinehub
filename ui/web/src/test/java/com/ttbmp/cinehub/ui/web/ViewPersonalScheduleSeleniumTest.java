@@ -35,7 +35,7 @@ class ViewPersonalScheduleSeleniumTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         driver.get("http://localhost:8080/");
-        driver.manage().addCookie(new Cookie("session", "PROJECTIONIST"));
+        driver.manage().addCookie(new Cookie("session", "T8SP2uHYdHZfBk6uh3fJ356Sji52"));
         driver.findElement(By.linkText("View personal schedule")).click();
         datePicker = driver.findElement(By.id("date-picker"));
     }

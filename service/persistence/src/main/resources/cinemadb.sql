@@ -435,22 +435,22 @@ USE `cinemadb`$$
 CREATE PROCEDURE `popola_posti`()
 BEGIN
     DECLARE nsala INT DEFAULT (SELECT COUNT(*) FROM sala);
-    DECLARE counter INT DEFAULT 0;
-    WHILE counter < nsala * 7
+    DECLARE sala INT DEFAULT 0;
+    WHILE sala < nsala * 7
         DO
             INSERT INTO `cinemadb`.`posto` (`id_sala`, `posizione`)
-            VALUES ((counter % nsala) + 1, CONCAT('A', counter % 7));
+            VALUES ((sala % nsala) + 1, CONCAT('A', sala % 7));
             INSERT INTO `cinemadb`.`posto` (`id_sala`, `posizione`)
-            VALUES ((counter % nsala) + 1, CONCAT('B', counter % 7));
+            VALUES ((sala % nsala) + 1, CONCAT('B', sala % 7));
             INSERT INTO `cinemadb`.`posto` (`id_sala`, `posizione`)
-            VALUES ((counter % nsala) + 1, CONCAT('C', counter % 7));
+            VALUES ((sala % nsala) + 1, CONCAT('C', sala % 7));
             INSERT INTO `cinemadb`.`posto` (`id_sala`, `posizione`)
-            VALUES ((counter % nsala) + 1, CONCAT('D', counter % 7));
+            VALUES ((sala % nsala) + 1, CONCAT('D', sala % 7));
             INSERT INTO `cinemadb`.`posto` (`id_sala`, `posizione`)
-            VALUES ((counter % nsala) + 1, CONCAT('E', counter % 7));
+            VALUES ((sala % nsala) + 1, CONCAT('E', sala % 7));
             INSERT INTO `cinemadb`.`posto` (`id_sala`, `posizione`)
-            VALUES ((counter % nsala) + 1, CONCAT('F', counter % 7));
-            SET counter = counter + 1;
+            VALUES ((sala % nsala) + 1, CONCAT('F', sala % 7));
+            SET sala = sala + 1;
         END WHILE;
 END$$
 
@@ -515,18 +515,14 @@ CREATE PROCEDURE `popola_sale`()
 BEGIN
     DECLARE ncinema INT DEFAULT (SELECT COUNT(*) FROM cinema) + 1;
     DECLARE cinema INT DEFAULT 1;
-    DECLARE sala INT;
     WHILE cinema < ncinema
         DO
-            SET sala = 1;
-            WHILE sala <= cinema
-                DO
-                    INSERT INTO `cinemadb`.`sala` (`id_cinema`, `numero`)
-                    VALUES (cinema, CONCAT('A', sala));
-                    INSERT INTO `cinemadb`.`sala` (`id_cinema`, `numero`)
-                    VALUES (cinema, CONCAT('B', sala));
-                    SET sala = sala + 1;
-                END WHILE;
+            INSERT INTO `cinemadb`.`sala` (`id_cinema`, `numero`)
+            VALUES (cinema, 'A');
+            INSERT INTO `cinemadb`.`sala` (`id_cinema`, `numero`)
+            VALUES (cinema, 'B');
+            INSERT INTO `cinemadb`.`sala` (`id_cinema`, `numero`)
+            VALUES (cinema, 'C');
             SET cinema = cinema + 1;
         END WHILE;
 END$$
@@ -546,20 +542,6 @@ BEGIN
     DECLARE inizio VARCHAR(7) DEFAULT '14:30';
     DECLARE fine VARCHAR(7) DEFAULT '23:30';
     DECLARE id_utente VARCHAR(45);
-    DECLARE nmaschere INT DEFAULT (SELECT COUNT(*)
-                                   FROM utente
-                                   WHERE id IN (SELECT ruolo_utente.id_utente
-                                                FROM ruolo_utente,
-                                                     ruolo
-                                                WHERE id = id_ruolo
-                                                  AND nome = "maschera"));
-    DECLARE nproiezionisti INT DEFAULT (SELECT COUNT(*)
-                                        FROM utente
-                                        WHERE id IN (SELECT ruolo_utente.id_utente
-                                                     FROM ruolo_utente,
-                                                          ruolo
-                                                     WHERE id = id_ruolo
-                                                       AND nome = "proiezionista"));
     DECLARE cmaschera CURSOR FOR SELECT id
                                  FROM utente
                                  WHERE id IN (SELECT ruolo_utente.id_utente
@@ -628,7 +610,8 @@ BEGIN
                                                       FROM ruolo_utente,
                                                            ruolo
                                                       WHERE id = id_ruolo
-                                                        AND nome = "proiezionista");
+                                                        AND nome = "proiezionista")
+                              ORDER BY id;
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
     OPEN cturno;
     popola_turni:
@@ -636,16 +619,6 @@ BEGIN
         FETCH cturno INTO id_turno;
         IF done THEN
             LEAVE popola_turni;
-        END IF;
-        IF (SELECT id_cinema FROM sala WHERE sala.id = sala) != (SELECT id_cinema
-                                                                 FROM dipendente
-                                                                 WHERE id_utente = (SELECT id_dipendente FROM turno WHERE id = id_turno)) THEN
-            SET sala = (SELECT id
-                        FROM sala
-                        WHERE id_cinema = (SELECT id_cinema
-                                           FROM dipendente
-                                           WHERE id_utente = (SELECT id_dipendente FROM turno WHERE id = id_turno))
-                        LIMIT 1);
         END IF;
         INSERT INTO `cinemadb`.`turno_proiezionista` (`id_turno`, `id_sala`) VALUES (id_turno, sala);
         SET sala = (sala % nsale) + 1;

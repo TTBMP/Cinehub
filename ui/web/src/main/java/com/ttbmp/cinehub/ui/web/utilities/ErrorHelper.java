@@ -4,6 +4,7 @@ import com.ttbmp.cinehub.app.utilities.request.Request;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.stream.Collectors;
 
 /**
  * @author Fabio Buracchi
@@ -21,12 +22,9 @@ public class ErrorHelper {
     }
 
     public static String getRequestErrorMessage(Request request) {
-        var stringBuilder = new StringBuilder();
-        for (var message : request.getErrorList()) {
-            stringBuilder.append(message.getMessage());
-        }
-        return stringBuilder.toString();
-        //  return Joiner.on("\n").join(new ArrayList<>(request.getErrorList()));         versione vecchia problema
+        return request.getErrorList().stream()
+                .map(Request.Error::getMessage)
+                .collect(Collectors.joining());
     }
 
     public static String returnView(HttpServletResponse response, Model model, String viewPath) {
