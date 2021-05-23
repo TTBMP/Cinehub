@@ -33,7 +33,7 @@ public class ConfirmEmailViewController {
                 paymentForm.getEmail(),
                 paymentForm.getNumberCard(),
                 paymentForm.getCvv(),
-                paymentForm.getDate(),
+                paymentForm.getExpirationDate(),
                 paymentForm.getOption2(),//magicBox
                 paymentForm.getOption3(),//openBar
                 paymentForm.getOption1()//skipLine

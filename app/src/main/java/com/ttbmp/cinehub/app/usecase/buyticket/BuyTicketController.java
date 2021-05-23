@@ -141,7 +141,7 @@ public class BuyTicketController implements BuyTicketUseCase {
                 presenter.presentSeatAlreadyBookedError(new SeatErrorResponse("The place has already been booked"));
             } else {
                 //-DECORATOR-//
-                var ticket = new Ticket(0, projection.getBasePrice(), customer, seat, projection); // Ticket di base
+                var ticket = new Ticket(0, projection.getBasePrice(), customer, seat, projection);
                 if (Boolean.TRUE.equals(request.getOpenBarOption())) {
                     ticket = new TicketOpenBar(ticket);
                 }
