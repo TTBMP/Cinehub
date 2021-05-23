@@ -13,7 +13,7 @@ import org.springframework.ui.Model;
  * @author Palmieri Ivan
  */
 public class BuyTicketPresenterWeb implements BuyTicketPresenter {
-    
+
     private final Model model;
 
     public BuyTicketPresenterWeb(Model model) {
@@ -47,7 +47,7 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     @Override
     public void presentMovieListNullRequest() {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME,ErrorHelper.INVALID_ERROR_MESSAGE);
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     @Override
     public void presentCinemaListNullRequest() {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME,ErrorHelper.INVALID_ERROR_MESSAGE);
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
     }
 
     @Override

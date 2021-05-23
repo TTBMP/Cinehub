@@ -71,9 +71,11 @@ public class MockUserRepository implements UserRepository {
     public static List<UserData> getUserDataList() {
         return USER_DATA_LIST;
     }
+
     public static List<RoleData> getRoleDataList() {
         return ROLE_DATA_LIST;
     }
+
     public static List<UserRoleData> getUserRoleDataList() {
         return USER_ROLE_DATA_LIST;
     }

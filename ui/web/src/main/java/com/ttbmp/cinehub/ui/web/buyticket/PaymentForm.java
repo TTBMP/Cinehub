@@ -5,8 +5,6 @@ import com.ttbmp.cinehub.ui.web.domain.Movie;
 import com.ttbmp.cinehub.ui.web.domain.Projection;
 import com.ttbmp.cinehub.ui.web.domain.Seat;
 
-import java.time.LocalDate;
-
 public class PaymentForm {
 
     private String date;
@@ -21,7 +19,6 @@ public class PaymentForm {
     private String cvv;
     private String expirationDate;
     private String numberCard;
-
 
 
     public String getDate() {

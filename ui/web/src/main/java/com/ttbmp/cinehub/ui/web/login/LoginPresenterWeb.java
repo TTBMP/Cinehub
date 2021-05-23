@@ -21,17 +21,17 @@ public class LoginPresenterWeb implements LoginPresenter {
 
     @Override
     public void presentSecurityError(SecurityException e) {
-
+        // TODO
     }
 
     @Override
     public void presentNullRequestException() {
-
+        // TODO
     }
 
     @Override
     public void presentInvalidRequestException(LoginRequest request) {
-
+        // TODO
     }
 
 }
