@@ -30,8 +30,8 @@ public class MockViewPersonalSchedulePresenter implements ViewPersonalSchedulePr
     }
 
     @Override
-    public void presentGetProjectionList(ProjectionListReply projectionListReply) {
-
+    public void presentGetProjectionList(ProjectionListReply result) {
+        viewModel.setProjectionList(result.getProjectionDtoList());
     }
 
     @Override
