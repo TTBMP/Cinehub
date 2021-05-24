@@ -118,18 +118,14 @@ class ManageEmployeesShiftControllerTest {
 
 
     @Test
-    void modifyShift() {
+    void modifyShift() throws RepositoryException {
         logInAsManager();
-        ShiftDto shift = null;
-        try {
-            shift = ShiftDataMapper.mapToDto(serviceLocator.getService(ShiftRepository.class).getShift(2));
-        } catch (RepositoryException e) {
-            e.printStackTrace();
-        }
-        assert shift != null;
+        var shift = ShiftDataMapper.mapToDto(serviceLocator.getService(ShiftRepository.class).getShift(2));
+        var employee= EmployeeDataMapper.mapToDto(serviceLocator.getService(EmployeeRepository.class).getEmployee(shift.getEmployeeId()));
+
         var request = new ShiftModifyRequest(
                 viewModel.getSessionToken(),
-                shift.getEmployee(),
+                employee,
                 shift.getId(),
                 shift.getDate().plusDays(1),
                 shift.getStart(),
@@ -164,8 +160,8 @@ class ManageEmployeesShiftControllerTest {
                 LocalDate.now().plusDays(7).plusYears(2),
                 "EVERY_DAY",
                 employee,
+                LocalTime.now().withNano(0).withSecond(0).minusHours(2),
                 LocalTime.now().withNano(0).withSecond(0),
-                LocalTime.now().withNano(0).withSecond(0).plusHours(2),
                 null
         );
         controller.createRepeatedShift(request);
