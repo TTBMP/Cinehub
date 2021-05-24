@@ -45,13 +45,7 @@ public class JdbcUserRepository implements UserRepository {
                         }
                     })
                     .collect(Collectors.toList());
-            return new UserProxy(
-                    user.getId(),
-                    user.getName(),
-                    user.getSurname(),
-                    user.getEmail(),
-                    roleList
-            );
+            return new UserProxy(serviceLocator, user.getId(), user.getName(), user.getSurname(), user.getEmail(), roleList);
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }

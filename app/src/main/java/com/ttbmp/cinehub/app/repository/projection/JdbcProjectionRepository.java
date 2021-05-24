@@ -2,10 +2,6 @@ package com.ttbmp.cinehub.app.repository.projection;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
-import com.ttbmp.cinehub.app.repository.hall.HallRepository;
-import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
-import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Movie;
@@ -30,19 +26,15 @@ public class JdbcProjectionRepository implements ProjectionRepository {
         this.serviceLocator = serviceLocator;
     }
 
-
     @Override
     public Projection getProjection(int id) throws RepositoryException {
         try {
             var projection = getProjectionDao().getProjectionById(id);
             return new ProjectionProxy(
+                    serviceLocator,
                     projection.getId(),
                     projection.getDate(),
                     projection.getStartTime(),
-                    serviceLocator.getService(MovieRepository.class),
-                    serviceLocator.getService(HallRepository.class),
-                    serviceLocator.getService(ProjectionistRepository.class),
-                    serviceLocator.getService(TicketRepository.class),
                     (long) projection.getBasePrice()
             );
         } catch (DaoMethodException e) {
@@ -56,13 +48,10 @@ public class JdbcProjectionRepository implements ProjectionRepository {
             var projectionList = getProjectionDao().getProjectionListByCinemaAndMovieAndDate(cinema.getId(), movie.getId(), date);
             return projectionList.stream()
                     .map(projection -> new ProjectionProxy(
+                            serviceLocator,
                             projection.getId(),
                             projection.getDate(),
                             projection.getStartTime(),
-                            serviceLocator.getService(MovieRepository.class),
-                            serviceLocator.getService(HallRepository.class),
-                            serviceLocator.getService(ProjectionistRepository.class),
-                            serviceLocator.getService(TicketRepository.class),
                             (long) projection.getBasePrice()
                     )).collect(Collectors.toList());
         } catch (DaoMethodException e) {
@@ -76,13 +65,10 @@ public class JdbcProjectionRepository implements ProjectionRepository {
         try {
             var projection = getProjectionDao().getProjectionByDateAndTimeAndHallId(date, time, hall.getId());
             return new ProjectionProxy(
+                    serviceLocator,
                     projection.getId(),
                     projection.getDate(),
                     projection.getStartTime(),
-                    serviceLocator.getService(MovieRepository.class),
-                    serviceLocator.getService(HallRepository.class),
-                    serviceLocator.getService(ProjectionistRepository.class),
-                    serviceLocator.getService(TicketRepository.class),
                     (long) projection.getBasePrice()
             );
         } catch (DaoMethodException e) {
@@ -95,13 +81,10 @@ public class JdbcProjectionRepository implements ProjectionRepository {
         try {
             var projection = getProjectionDao().getProjectionByTicketId(ticket.getId());
             return new ProjectionProxy(
+                    serviceLocator,
                     projection.getId(),
                     projection.getDate(),
                     projection.getStartTime(),
-                    serviceLocator.getService(MovieRepository.class),
-                    serviceLocator.getService(HallRepository.class),
-                    serviceLocator.getService(ProjectionistRepository.class),
-                    serviceLocator.getService(TicketRepository.class),
                     (long) projection.getBasePrice()
             );
         } catch (DaoMethodException e) {
@@ -114,11 +97,11 @@ public class JdbcProjectionRepository implements ProjectionRepository {
         try {
             var projectionList = getProjectionDao().getProjectionListByProjectionistShift(shift.getId());
             return projectionList.stream()
-                    .map(projection -> new ProjectionProxy(projection.getId(), projection.getDate(), projection.getStartTime(),
-                            serviceLocator.getService(MovieRepository.class),
-                            serviceLocator.getService(HallRepository.class),
-                            serviceLocator.getService(ProjectionistRepository.class),
-                            serviceLocator.getService(TicketRepository.class),
+                    .map(projection -> new ProjectionProxy(
+                            serviceLocator,
+                            projection.getId(),
+                            projection.getDate(),
+                            projection.getStartTime(),
                             (long) projection.getBasePrice()
                     )).collect(Collectors.toList());
         } catch (DaoMethodException e) {

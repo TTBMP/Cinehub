@@ -26,8 +26,6 @@ import java.time.format.DateTimeFormatter;
 @Controller
 public class ShiftDetailViewController {
 
-    private static final String ERROR = "error";
-
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {

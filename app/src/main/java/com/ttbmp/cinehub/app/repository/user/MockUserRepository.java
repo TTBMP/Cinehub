@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.app.repository.user;
 
+import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.domain.User;
 import com.ttbmp.cinehub.domain.security.Role;
 
@@ -68,6 +69,12 @@ public class MockUserRepository implements UserRepository {
                 });
     }
 
+    private final ServiceLocator serviceLocator;
+
+    public MockUserRepository(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
+    }
+
     public static List<UserData> getUserDataList() {
         return USER_DATA_LIST;
     }
@@ -84,42 +91,9 @@ public class MockUserRepository implements UserRepository {
     public User getUser(String userId) {
         return USER_DATA_LIST.stream()
                 .filter(d -> d.id.equals(userId))
-                .map(d -> new UserProxy(
-                        d.id,
-                        d.name,
-                        d.surname,
-                        d.email,
-                        getRoleList(d.id)
-                ))
+                .map(d -> new UserProxy(serviceLocator, d.id, d.name, d.surname, d.email, d.getRoleList()))
                 .findAny()
                 .orElse(null);
-    }
-
-    private List<Role> getRoleList(String userId) {
-        return ROLE_DATA_LIST.stream()
-                .filter(roleData -> USER_ROLE_DATA_LIST.stream()
-                        .filter(userRoleData -> userRoleData.idUser.equals(userId))
-                        .map(userRoleData -> userRoleData.idRole)
-                        .collect(Collectors.toList())
-                        .contains(roleData.id)
-                )
-                .map(roleData -> {
-                    switch (roleData.name) {
-                        case "customer":
-                            return Role.CUSTOMER_ROLE;
-                        case "manager":
-                            return Role.MANAGER_ROLE;
-                        case "employee":
-                            return Role.EMPLOYEE_ROLE;
-                        case "usher":
-                            return Role.USHER_ROLE;
-                        case "projectionist":
-                            return Role.PROJECTIONIST_ROLE;
-                        default:
-                            throw new IllegalStateException("Unexpected value: " + roleData.name);
-                    }
-                })
-                .collect(Collectors.toList());
     }
 
     public static class UserData {
@@ -166,6 +140,35 @@ public class MockUserRepository implements UserRepository {
 
         public void setEmail(String email) {
             this.email = email;
+        }
+
+        public List<Role> getRoleList() {
+            return ROLE_DATA_LIST.stream()
+                    .filter(roleData -> USER_ROLE_DATA_LIST.stream()
+                            .filter(userRoleData -> userRoleData.idUser.equals(this.id))
+                            .map(userRoleData -> userRoleData.idRole)
+                            .collect(Collectors.toList())
+                            .contains(roleData.id)
+                    )
+                    .map(this::getRole)
+                    .collect(Collectors.toList());
+        }
+
+        private Role getRole(RoleData roleData) {
+            switch (roleData.name) {
+                case "customer":
+                    return Role.CUSTOMER_ROLE;
+                case "manager":
+                    return Role.MANAGER_ROLE;
+                case "employee":
+                    return Role.EMPLOYEE_ROLE;
+                case "usher":
+                    return Role.USHER_ROLE;
+                case "projectionist":
+                    return Role.PROJECTIONIST_ROLE;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + roleData.name);
+            }
         }
 
     }

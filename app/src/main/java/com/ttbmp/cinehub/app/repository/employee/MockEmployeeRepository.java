@@ -1,13 +1,10 @@
 package com.ttbmp.cinehub.app.repository.employee;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
-import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistProxy;
 import com.ttbmp.cinehub.app.repository.employee.usher.UsherProxy;
 import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
-import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
-import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.security.Role;
@@ -134,21 +131,15 @@ public class MockEmployeeRepository implements EmployeeRepository {
 
     class EmployeeFactory {
         Employee createEmployee(EmployeeData employeeData) {
-            var roleList = new MockUserRepository().getUser(employeeData.userId).getRoleList();
+            var roleList = MockUserRepository.getUserDataList().stream()
+                    .filter(d -> d.getId().equals(employeeData.userId))
+                    .findAny()
+                    .map(MockUserRepository.UserData::getRoleList)
+                    .orElse(new ArrayList<>());
             if (roleList.contains(Role.PROJECTIONIST_ROLE)) {
-                return new ProjectionistProxy(
-                        employeeData.userId,
-                        serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
-                        serviceLocator.getService(ShiftRepository.class)
-                );
+                return new ProjectionistProxy(serviceLocator, employeeData.userId);
             } else if (roleList.contains(Role.USHER_ROLE)) {
-                return new UsherProxy(
-                        employeeData.userId,
-                        serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
-                        serviceLocator.getService(ShiftRepository.class)
-                );
+                return new UsherProxy(serviceLocator, employeeData.userId);
             } else {
                 throw new IllegalStateException("Unexpected user: " + employeeData.userId);
             }

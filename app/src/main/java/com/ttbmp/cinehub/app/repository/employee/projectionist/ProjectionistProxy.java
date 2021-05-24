@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.app.repository.employee.projectionist;
 
+import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.LazyLoadingException;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
@@ -30,15 +31,11 @@ public class ProjectionistProxy extends Projectionist {
     private boolean isCinemaLoaded = false;
     private boolean isShiftListLoaded = false;
 
-    public ProjectionistProxy(
-            String id,
-            UserRepository userRepository,
-            CinemaRepository cinemaRepository,
-            ShiftRepository shiftRepository) {
+    public ProjectionistProxy(ServiceLocator serviceLocator, String id) {
         super(id, null, null, null, null, null);
-        this.userRepository = userRepository;
-        this.cinemaRepository = cinemaRepository;
-        this.shiftRepository = shiftRepository;
+        this.userRepository = serviceLocator.getService(UserRepository.class);
+        this.cinemaRepository = serviceLocator.getService(CinemaRepository.class);
+        this.shiftRepository = serviceLocator.getService(ShiftRepository.class);
     }
 
     @Override

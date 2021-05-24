@@ -2,10 +2,6 @@ package com.ttbmp.cinehub.app.repository.shift;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
-import com.ttbmp.cinehub.app.repository.employee.usher.UsherRepository;
-import com.ttbmp.cinehub.app.repository.hall.HallRepository;
-import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftProxy;
 import com.ttbmp.cinehub.app.repository.shift.usher.UsherShiftProxy;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
@@ -143,23 +139,9 @@ public class JdbcShiftRepository implements ShiftRepository {
     private Shift getShift(com.ttbmp.cinehub.service.persistence.entity.Shift shift) throws RepositoryException {
         var roleList = serviceLocator.getService(UserRepository.class).getUser(shift.getUserId()).getRoleList();
         if (roleList.contains(Role.USHER_ROLE)) {
-            return new UsherShiftProxy(
-                    shift.getId(),
-                    shift.getDate(),
-                    shift.getStart(),
-                    shift.getEnd(),
-                    serviceLocator.getService(UsherRepository.class)
-            );
+            return new UsherShiftProxy(serviceLocator, shift.getId(), shift.getDate(), shift.getStart(), shift.getEnd());
         } else if (roleList.contains(Role.PROJECTIONIST_ROLE)) {
-            return new ProjectionistShiftProxy(
-                    shift.getId(),
-                    shift.getDate(),
-                    shift.getStart(),
-                    shift.getEnd(),
-                    serviceLocator.getService(ProjectionistRepository.class),
-                    serviceLocator.getService(HallRepository.class),
-                    serviceLocator.getService(ProjectionRepository.class)
-            );
+            return new ProjectionistShiftProxy(serviceLocator, shift.getId(), shift.getDate(), shift.getStart(), shift.getEnd());
         } else {
             throw new RepositoryException("Not an employee.");
         }

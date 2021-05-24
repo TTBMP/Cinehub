@@ -3,9 +3,7 @@ package com.ttbmp.cinehub.app.repository.customer;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.ticket.MockTicketRepository;
-import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
 import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
-import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
@@ -21,10 +19,15 @@ public class MockCustomerRepository implements CustomerRepository {
     private static final List<CustomerData> CUSTOMER_DATA_LIST = new ArrayList<>();
 
     static {
-        var mockUserRepository = new MockUserRepository();
         MockUserRepository.getUserDataList().stream()
                 .map(MockUserRepository.UserData::getId)
-                .filter(userId -> mockUserRepository.getUser(userId).getRoleList().contains(Role.CUSTOMER_ROLE))
+                .filter(userId -> MockUserRepository.getUserDataList().stream()
+                        .filter(d -> d.getId().equals(userId))
+                        .findAny()
+                        .map(MockUserRepository.UserData::getRoleList)
+                        .orElse(new ArrayList<>())
+                        .contains(Role.CUSTOMER_ROLE)
+                )
                 .forEach(userId -> CUSTOMER_DATA_LIST.add(new CustomerData(userId)));
     }
 
@@ -43,11 +46,7 @@ public class MockCustomerRepository implements CustomerRepository {
         return MockUserRepository.getUserDataList().stream()
                 .filter(d -> d.getId().equals(customerId))
                 .findAny()
-                .map(d -> new CustomerProxy(
-                        d.getId(),
-                        serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(TicketRepository.class)
-                ))
+                .map(d -> new CustomerProxy(serviceLocator, d.getId()))
                 .orElse(null);
     }
 
@@ -60,11 +59,8 @@ public class MockCustomerRepository implements CustomerRepository {
                 .flatMap(ticketUserId -> MockUserRepository.getUserDataList().stream()
                         .filter(d -> d.getId().equals(ticketUserId))
                         .findAny()
-                        .map(d -> new CustomerProxy(
-                                d.getId(),
-                                serviceLocator.getService(UserRepository.class),
-                                serviceLocator.getService(TicketRepository.class)
-                        )))
+                        .map(d -> new CustomerProxy(serviceLocator, d.getId()))
+                )
                 .orElse(null);
     }
 

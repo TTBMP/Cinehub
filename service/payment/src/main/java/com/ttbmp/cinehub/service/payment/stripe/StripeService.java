@@ -20,7 +20,7 @@ public class StripeService {
         Stripe.apiKey = API_KEY;
     }
 
-    @SuppressWarnings("Unused")
+    @SuppressWarnings("unused")
     public void requestPayment(String email, String nameUser, String numberOfCard, long ticketPrice, String expiredDate, String cvv) throws StripeServiceException {
         try {
             var customer = CUSTOMER_HANDLER.getCustomer(nameUser, numberOfCard, email, expiredDate, cvv);

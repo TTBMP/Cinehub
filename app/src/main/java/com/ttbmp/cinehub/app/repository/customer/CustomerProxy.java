@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.app.repository.customer;
 
+import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.LazyLoadingException;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
@@ -25,10 +26,10 @@ public class CustomerProxy extends Customer {
     private boolean isRoleListLoaded = false;
     private boolean isTicketListLoaded = false;
 
-    public CustomerProxy(String id, UserRepository userRepository, TicketRepository ticketRepository) {
+    public CustomerProxy(ServiceLocator serviceLocator, String id) {
         super(id, null, null, null, null, null);
-        this.userRepository = userRepository;
-        this.ticketRepository = ticketRepository;
+        this.userRepository = serviceLocator.getService(UserRepository.class);
+        this.ticketRepository = serviceLocator.getService(TicketRepository.class);
     }
 
     @Override

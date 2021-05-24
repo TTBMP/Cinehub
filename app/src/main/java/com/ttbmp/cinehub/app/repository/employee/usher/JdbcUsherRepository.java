@@ -2,9 +2,6 @@ package com.ttbmp.cinehub.app.repository.employee.usher;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
-import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
-import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.employee.Usher;
 import com.ttbmp.cinehub.domain.shift.UsherShift;
 import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
@@ -26,12 +23,7 @@ public class JdbcUsherRepository implements UsherRepository {
     public Usher getUsher(UsherShift usherShift) throws RepositoryException {
         try {
             var employee = getUsherDao().getUsherByUsherShift(usherShift.getId());
-            return new UsherProxy(
-                    employee.getIdUser(),
-                    serviceLocator.getService(UserRepository.class),
-                    serviceLocator.getService(CinemaRepository.class),
-                    serviceLocator.getService(ShiftRepository.class)
-            );
+            return new UsherProxy(serviceLocator, employee.getIdUser());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }

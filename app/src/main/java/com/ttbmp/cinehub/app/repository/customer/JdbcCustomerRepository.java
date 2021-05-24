@@ -2,8 +2,6 @@ package com.ttbmp.cinehub.app.repository.customer;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
-import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
@@ -23,22 +21,14 @@ public class JdbcCustomerRepository implements CustomerRepository {
 
     @Override
     public Customer getCustomer(String userId) throws RepositoryException {
-        return new CustomerProxy(
-                userId,
-                serviceLocator.getService(UserRepository.class),
-                serviceLocator.getService(TicketRepository.class)
-        );
+        return new CustomerProxy(serviceLocator, userId);
     }
 
     @Override
     public Customer getCustomer(Ticket ticket) throws RepositoryException {
         try {
             var user = getUserDao().getUserByTicket(ticket.getId());
-            return new CustomerProxy(
-                    user.getId(),
-                    serviceLocator.getService(UserRepository.class),
-                    serviceLocator.getService(TicketRepository.class)
-            );
+            return new CustomerProxy(serviceLocator, user.getId());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }

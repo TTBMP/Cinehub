@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.app.repository.seat;
 
+import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.hall.MockHallRepository;
 import com.ttbmp.cinehub.app.repository.ticket.MockTicketRepository;
@@ -35,6 +36,12 @@ public class MockSeatRepository implements SeatRepository {
         }
     }
 
+    private final ServiceLocator serviceLocator;
+
+    public MockSeatRepository(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
+    }
+
     public static List<SeatData> getSeatDataList() {
         return SEAT_DATA_LIST;
     }
@@ -44,7 +51,7 @@ public class MockSeatRepository implements SeatRepository {
         return SEAT_DATA_LIST.stream()
                 .filter(d -> d.getId() == id)
                 .findAny()
-                .map(d -> new SeatProxy(d.id, d.position))
+                .map(d -> new SeatProxy(serviceLocator, d.id, d.position))
                 .orElse(null);
     }
 
@@ -57,7 +64,7 @@ public class MockSeatRepository implements SeatRepository {
                 .flatMap(ticketSeatId -> SEAT_DATA_LIST.stream()
                         .filter(d -> d.id == ticketSeatId)
                         .findAny()
-                        .map(d -> new SeatProxy(d.id, d.position))
+                        .map(d -> new SeatProxy(serviceLocator, d.id, d.position))
                 )
                 .orElse(null);
     }
@@ -66,7 +73,7 @@ public class MockSeatRepository implements SeatRepository {
     public List<Seat> getSeatList(Hall hall) {
         return SEAT_DATA_LIST.stream()
                 .filter(d -> d.hallId == hall.getId())
-                .map(d -> new SeatProxy(d.id, d.position))
+                .map(d -> new SeatProxy(serviceLocator, d.id, d.position))
                 .collect(Collectors.toList());
     }
 

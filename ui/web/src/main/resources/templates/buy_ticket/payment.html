@@ -77,12 +77,12 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label class="control-label mb-1" for="cc-exp"
-                                          >Expiration</label>
+                                    >Expiration</label>
                                     <input autocomplete="cc-exp" class="form-control cc-exp" id="cc-exp" name="cc-exp"
                                            placeholder="MM / YY"
-                                           th:value="${payment_form.expirationDate}"
+                                           required
                                            th:name="expirationDate"
-                                           required type="date">
+                                           th:value="${payment_form.expirationDate}" type="date">
                                     <span class="invalid-feedback">Enter the expiration date</span>
                                 </div>
                             </div>

@@ -1,12 +1,9 @@
 package com.ttbmp.cinehub.app.repository.employee.projectionist;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
-import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.projection.MockProjectionRepository;
 import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
-import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.MockProjectionistShiftRepository;
-import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.employee.Projectionist;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
@@ -44,12 +41,7 @@ public class MockProjectionistRepository implements ProjectionistRepository {
                     return shiftList.stream()
                             .findAny()
                             .map(MockShiftRepository.ShiftData::getEmployeeId)
-                            .map(projectionistId -> new ProjectionistProxy(
-                                    projectionistId,
-                                    serviceLocator.getService(UserRepository.class),
-                                    serviceLocator.getService(CinemaRepository.class),
-                                    serviceLocator.getService(ShiftRepository.class)
-                            ));
+                            .map(projectionistId -> new ProjectionistProxy(serviceLocator, projectionistId));
                 })
                 .orElse(null);
     }
@@ -58,12 +50,7 @@ public class MockProjectionistRepository implements ProjectionistRepository {
     public Projectionist getProjectionist(ProjectionistShift projectionistShift) {
         return MockShiftRepository.getShiftDataList().stream()
                 .filter(d -> d.getId() == projectionistShift.getId())
-                .map(shiftData -> new ProjectionistProxy(
-                        shiftData.getEmployeeId(),
-                        serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(CinemaRepository.class),
-                        serviceLocator.getService(ShiftRepository.class)
-                ))
+                .map(shiftData -> new ProjectionistProxy(serviceLocator, shiftData.getEmployeeId()))
                 .findAny()
                 .orElse(null);
     }

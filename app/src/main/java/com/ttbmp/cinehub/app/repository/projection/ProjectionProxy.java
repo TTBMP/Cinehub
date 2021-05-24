@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.app.repository.projection;
 
+import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.LazyLoadingException;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
@@ -29,20 +30,12 @@ public class ProjectionProxy extends Projection {
     private boolean isProjectionistLoaded = false;
     private boolean isTicketListLoaded = false;
 
-    public ProjectionProxy(
-            int id,
-            String date,
-            String startTime,
-            MovieRepository movieRepository,
-            HallRepository hallRepository,
-            ProjectionistRepository projectionistRepository,
-            TicketRepository ticketRepository,
-            long basePrice) {
+    public ProjectionProxy(ServiceLocator serviceLocator, int id, String date, String startTime, long basePrice) {
         super(id, date, startTime, null, null, null, null, basePrice);
-        this.movieRepository = movieRepository;
-        this.hallRepository = hallRepository;
-        this.projectionistRepository = projectionistRepository;
-        this.ticketRepository = ticketRepository;
+        this.movieRepository = serviceLocator.getService(MovieRepository.class);
+        this.hallRepository = serviceLocator.getService(HallRepository.class);
+        this.projectionistRepository = serviceLocator.getService(ProjectionistRepository.class);
+        this.ticketRepository = serviceLocator.getService(TicketRepository.class);
     }
 
     @Override

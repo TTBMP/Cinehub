@@ -62,7 +62,7 @@ public class ServiceLocator {
         serviceFactoryMap.put(HallRepository.class, () -> new JdbcHallRepository(this));
         serviceFactoryMap.put(MovieRepository.class, () -> new JdbcMovieRepository(this));
         serviceFactoryMap.put(ProjectionRepository.class, () -> new JdbcProjectionRepository(this));
-        serviceFactoryMap.put(SeatRepository.class, JdbcSeatRepository::new);
+        serviceFactoryMap.put(SeatRepository.class, () -> new JdbcSeatRepository(this));
         serviceFactoryMap.put(ShiftRepository.class, () -> new JdbcShiftRepository(this));
         serviceFactoryMap.put(ProjectionistShiftRepository.class, () -> new JdbcProjectionistShiftRepository(this));
         serviceFactoryMap.put(UsherShiftRepository.class, () -> new JdbcUsherShiftRepository(this));

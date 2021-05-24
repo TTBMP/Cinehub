@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.app.repository.ticket;
 
+import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.LazyLoadingException;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
@@ -22,11 +23,11 @@ public class TicketProxy extends Ticket {
     private boolean isSeatLoaded = false;
     private boolean isProjectionLoaded = false;
 
-    public TicketProxy(int id, long price, CustomerRepository customerRepository, SeatRepository seatRepository, ProjectionRepository projectionRepository) {
+    public TicketProxy(ServiceLocator serviceLocator, int id, long price) {
         super(id, price, null, null, null);
-        this.seatRepository = seatRepository;
-        this.customerRepository = customerRepository;
-        this.projectionRepository = projectionRepository;
+        this.seatRepository = serviceLocator.getService(SeatRepository.class);
+        this.customerRepository = serviceLocator.getService(CustomerRepository.class);
+        this.projectionRepository = serviceLocator.getService(ProjectionRepository.class);
     }
 
     @Override

@@ -3,10 +3,7 @@ package com.ttbmp.cinehub.app.repository.shift.projectionist;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.MockEmployeeRepository;
-import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
-import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.app.repository.hall.MockHallRepository;
-import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
 import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
 import com.ttbmp.cinehub.domain.security.Role;
@@ -24,10 +21,15 @@ public class MockProjectionistShiftRepository implements ProjectionistShiftRepos
     private static final List<ProjectionistShiftData> PROJECTIONIST_SHIFT_DATA_LIST = new ArrayList<>();
 
     static {
-        var mockUserRepository = new MockUserRepository();
         var projectionistIdList = MockEmployeeRepository.getEmployeeDataList().stream()
                 .map(MockEmployeeRepository.EmployeeData::getUserId)
-                .filter(userId -> mockUserRepository.getUser(userId).getRoleList().contains(Role.PROJECTIONIST_ROLE))
+                .filter(userId -> MockUserRepository.getUserDataList().stream()
+                        .filter(d -> d.getId().equals(userId))
+                        .findAny()
+                        .map(MockUserRepository.UserData::getRoleList)
+                        .orElse(new ArrayList<>())
+                        .contains(Role.PROJECTIONIST_ROLE)
+                )
                 .collect(Collectors.toList());
         var projectionistShiftIdList = MockShiftRepository.getShiftDataList().stream()
                 .filter(shiftData -> projectionistIdList.contains(shiftData.getEmployeeId()))
@@ -56,14 +58,12 @@ public class MockProjectionistShiftRepository implements ProjectionistShiftRepos
                 .filter(d -> d.getId() == shiftId)
                 .findAny()
                 .map(shiftData -> new ProjectionistShiftProxy(
+                        serviceLocator,
                         shiftData.getId(),
                         shiftData.getDate(),
                         shiftData.getStart(),
-                        shiftData.getEnd(),
-                        serviceLocator.getService(ProjectionistRepository.class),
-                        serviceLocator.getService(HallRepository.class),
-                        serviceLocator.getService(ProjectionRepository.class)
-                ))
+                        shiftData.getEnd())
+                )
                 .orElse(null);
     }
 

@@ -11,7 +11,7 @@ import java.util.Properties;
 /**
  * @author Ivan Palmieri
  */
-public class SendEmailService  {
+public class SendEmailService {
 
     public void sendMail(String email) {
         final var username = "yourUsername@email.com";

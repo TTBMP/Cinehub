@@ -21,9 +21,7 @@ import java.time.format.DateTimeFormatter;
 @Controller
 public class AssignUsherShiftViewController {
 
-    private static final String ERROR = "error";
     private static final String ASSIGN_REQUEST = "assignRequest";
-    private static final String SHIFT_ASSIGNED = "/shift_assigned";
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
