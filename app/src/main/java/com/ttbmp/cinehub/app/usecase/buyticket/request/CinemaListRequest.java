@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.app.usecase.buyticket.request;
 
-import com.ttbmp.cinehub.app.usecase.Request;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 
 /**
  * @author Ivan Palmieri
@@ -42,6 +42,6 @@ public class CinemaListRequest extends Request {
         if (movieId < 0) {
             addError(MISSING_MOVIE_ERROR);
         }
-
     }
+
 }

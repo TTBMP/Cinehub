@@ -21,15 +21,14 @@ public class MockHallRepository implements HallRepository {
 
     private static final List<HallData> HALL_DATA_LIST = new ArrayList<>();
 
+    private static int hallIdCounter = 1;
+
     static {
         var cinemaNumber = MockCinemaRepository.getCinemaDataList().size();
         for (var cinemaId = 1; cinemaId < cinemaNumber + 1; cinemaId++) {
-            for (var i = 0; i < 6; i++) {
-                HALL_DATA_LIST.add(new HallData(
-                        (cinemaId - 1) * 6 + i + 1,
-                        cinemaId,
-                        String.format("%c%d", 'A' + (i % 3), i / 3 + 1)
-                ));
+            for (var i = 1; i <= cinemaId; i++) {
+                HALL_DATA_LIST.add(new HallData(hallIdCounter++, cinemaId, "A" + i));
+                HALL_DATA_LIST.add(new HallData(hallIdCounter++, cinemaId, "B" + i));
             }
         }
     }

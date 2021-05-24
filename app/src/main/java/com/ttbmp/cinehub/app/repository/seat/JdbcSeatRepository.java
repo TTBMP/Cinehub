@@ -17,17 +17,13 @@ public class JdbcSeatRepository implements SeatRepository {
     private SeatDao seatDao = null;
 
     @Override
-    public List<Seat> getSeatList(Hall hall) throws RepositoryException {
-
+    public Seat getSeat(int id) throws RepositoryException {
         try {
-            var seatList = getSeatDao().getSeatList(hall.getId());
-            return seatList.stream()
-                    .map(seat -> new SeatProxy(seat.getId(), seat.getPosition()))
-                    .collect(Collectors.toList());
+            var seat = getSeatDao().getSeat(id);
+            return new SeatProxy(seat.getId(), seat.getPosition());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
-
     }
 
     @Override
@@ -35,6 +31,18 @@ public class JdbcSeatRepository implements SeatRepository {
         try {
             var seat = getSeatDao().getSeatByTicketId(ticket.getId());
             return new SeatProxy(seat.getId(), seat.getPosition());
+        } catch (DaoMethodException e) {
+            throw new RepositoryException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Seat> getSeatList(Hall hall) throws RepositoryException {
+        try {
+            var seatList = getSeatDao().getSeatList(hall.getId());
+            return seatList.stream()
+                    .map(seat -> new SeatProxy(seat.getId(), seat.getPosition()))
+                    .collect(Collectors.toList());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }

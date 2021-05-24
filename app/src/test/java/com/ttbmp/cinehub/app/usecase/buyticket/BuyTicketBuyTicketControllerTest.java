@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -19,29 +20,22 @@ class BuyTicketBuyTicketControllerTest {
 
     @Test
     void getListMovie_whitCorrectRequest_notGenerateErrors() {
-        var buyTicketController = new BuyTicketController(
-                serviceLocator,
-                new MockBuyTicketPresenter()
-        );
-        buyTicketController.getListMovie(
-                new MovieListRequest(LocalDate.now())
-        );
+        var buyTicketController = new BuyTicketController(serviceLocator, new MockBuyTicketPresenter());
+        buyTicketController.getMovieList(new MovieListRequest(LocalDate.now()));
     }
 
     class MockBuyTicketPresenter implements BuyTicketPresenter {
 
         @Override
-        public void presentMovieApiList(MovieListResponse response) {
+        public void presentMovieList(MovieListResponse response) {
             try {
                 var result = true;
                 var movieDtoList = serviceLocator.getService(MovieRepository.class)
-                        .getMovieList(
-                                String.valueOf(LocalDate.now())
-                        );
+                        .getMovieList(String.valueOf(LocalDate.now()));
                 var expected = MovieDataMapper.mapToDtoList(movieDtoList);
                 var actual = response.getMovieList();
                 for (var i = 0; i < expected.size(); i++) {
-                    if (expected.get(i).getId() != actual.get(i).getId()) {
+                    if (expected.get(i).equals(actual.get(i))) {
                         result = false;
                         break;
                     }
@@ -59,19 +53,10 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentCinema(CinemaResponse response) {
+        public void presentSeatList(SeatListResponse response) {
 
         }
 
-        @Override
-        public void presentSeatList(NumberOfSeatsResponse response) {
-
-        }
-
-        @Override
-        public void setSelectedTicket(TicketResponse response) {
-
-        }
 
         @Override
         public void presentPayNullRequest() {
@@ -79,57 +64,43 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentInvalidPay(PaymentRequest request) {
+        public void presentInvalidPayRequest(PaymentRequest request) {
+
+        }
+
+
+        @Override
+        public void presentCinemaListNullRequest() {
 
         }
 
         @Override
-        public void presentGetTicketBySeatsNullRequest() {
+        public void presentInvalidCinemaListRequest(CinemaListRequest request) {
 
         }
 
         @Override
-        public void presentInvalidGetTicketBySeats(TicketRequest request) {
+        public void presentProjectionListNullRequest() {
 
         }
 
         @Override
-        public void presentGetListCinemaNullRequest() {
+        public void presentInvalidProjectionListRequest(ProjectionListRequest request) {
 
         }
 
         @Override
-        public void presentInvalidGetListCinema(CinemaListRequest request) {
+        public void presentSeatListNullRequest() {
 
         }
 
         @Override
-        public void presentGetTimeOfProjectionNullRequest() {
+        public void presentInvalidSeatListRequest(SeatListRequest request) {
 
         }
 
         @Override
-        public void presentInvalidGetTimeOfProjection(ProjectionListRequest request) {
-
-        }
-
-        @Override
-        public void presentProjection(ProjectionResponse request) {
-
-        }
-
-        @Override
-        public void presentGetNumberOfSeatsNullRequest() {
-
-        }
-
-        @Override
-        public void presentInvalidGetNumberOfSeats(CinemaInformationRequest request) {
-
-        }
-
-        @Override
-        public void presentErrorByStripe(PaymentServiceException error) {
+        public void presentPayPaymentServiceException(PaymentServiceException error) {
 
         }
 
@@ -139,59 +110,39 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentGetListMovieNullRequest() {
+        public void presentMovieListNullRequest() {
 
         }
 
         @Override
-        public void presentInvalidGetListMovie(MovieListRequest request) {
+        public void presentInvalidMovieListRequest(MovieListRequest request) {
 
         }
 
         @Override
-        public void presentAuthenticationError() {
-
-        }
-
-
-        @Override
-        public void presentInvalidGetCinema(CinemaInformationRequest request) {
+        public void presentTicket(TicketResponse ticketDto) {
 
         }
 
         @Override
-        public void presentPayRepositoryException(String message) {
+        public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e) {
 
         }
 
         @Override
-        public void presentGetListMovieRepositoryException(String message) {
+        public void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e) {
 
         }
 
         @Override
-        public void presentGetCinemaListRepositoryException(String message) {
+        public void presentSeatAlreadyBookedError(SeatErrorResponse message) {
 
         }
 
         @Override
-        public void presentCreateTicketRepositoryException(String message) {
+        public void presentRepositoryError(RepositoryException message) {
 
         }
 
-        @Override
-        public void presentGetProjectionListRepositoryException(String message) {
-
-        }
-
-        @Override
-        public void presentGetProjectionRepositoryException(String message) {
-
-        }
-
-        @Override
-        public void presentGetCinemaRepositoryException(String message) {
-
-        }
     }
 }

@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.ui.desktop.manageshift;
 
 
 import com.ttbmp.cinehub.app.dto.*;
-import com.ttbmp.cinehub.domain.shift.ShiftRepeatingOption;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ShiftRepeatingOption;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.Day;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.EmployeeShiftWeek;
 import com.ttbmp.cinehub.ui.desktop.utilities.ObjectBindings;

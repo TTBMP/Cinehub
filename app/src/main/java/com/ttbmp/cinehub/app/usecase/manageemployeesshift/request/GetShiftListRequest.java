@@ -1,14 +1,15 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.usecase.Request;
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 
 import java.time.LocalDate;
 
 /**
  * @author Massimo Mazzetti
  */
-public class GetShiftListRequest extends Request {
+public class GetShiftListRequest extends AuthenticatedRequest {
     public static final Request.Error MISSING_CINEMA = new Request.Error("Cinema non valido");
     public static final Request.Error MISSING_START = new Request.Error("Inizio non valido");
     public static final Request.Error MISSING_END = new Request.Error("Fine non valido");
@@ -17,10 +18,8 @@ public class GetShiftListRequest extends Request {
     private LocalDate start;
     private LocalDate end;
 
-    public GetShiftListRequest() {
-    }
-
-    public GetShiftListRequest(CinemaDto cinema, LocalDate start, LocalDate end) {
+    public GetShiftListRequest(String sessionToken, CinemaDto cinema, LocalDate start, LocalDate end) {
+        super(sessionToken);
         this.cinema = cinema;
         this.start = start;
         this.end = end;

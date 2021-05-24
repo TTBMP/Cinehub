@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.app.usecase.buyticket.request;
 
-import com.ttbmp.cinehub.app.usecase.Request;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 
 import java.time.LocalDate;
 
@@ -12,7 +12,6 @@ public class MovieListRequest extends Request {
 
     public MovieListRequest(LocalDate date) {
         this.date = date;
-
     }
 
     public LocalDate getDate() {
@@ -29,4 +28,5 @@ public class MovieListRequest extends Request {
             addError(MISSING_DATE_ERROR);
         }
     }
+
 }

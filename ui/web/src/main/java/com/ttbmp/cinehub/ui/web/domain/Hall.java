@@ -20,4 +20,5 @@ public class Hall {
     public void setId(int id) {
         this.id = id;
     }
+
 }

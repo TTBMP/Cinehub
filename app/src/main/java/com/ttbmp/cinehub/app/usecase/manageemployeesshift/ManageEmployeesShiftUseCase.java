@@ -9,7 +9,7 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
  */
 public interface ManageEmployeesShiftUseCase extends UseCase {
 
-    void getCinemaList();
+    void getCinemaList(GetCinemaListRequest request);
 
     void getEmployeeList(GetEmployeeListRequest request);
 

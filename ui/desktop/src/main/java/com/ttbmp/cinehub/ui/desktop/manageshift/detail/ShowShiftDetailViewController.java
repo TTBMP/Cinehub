@@ -3,6 +3,7 @@ package com.ttbmp.cinehub.ui.desktop.manageshift.detail;
 import com.ttbmp.cinehub.app.dto.UsherDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftRequest;
+import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.manageshift.ManageEmployeesShiftViewModel;
 import com.ttbmp.cinehub.ui.desktop.manageshift.modify.ModifyShiftView;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
@@ -85,9 +86,11 @@ public class ShowShiftDetailViewController extends ViewController {
         }
 
         deleteShiftButton.setOnAction(a -> {
-            activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(viewModel.getSelectedShift().getId()));
+            activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(
+                    CinehubApplication.getSessionToken(),
+                    viewModel.getSelectedShift().getId()));
             try {
-                navController.popBackStack();
+                navController.navBack();
             } catch (IOException e) {
                 e.printStackTrace();
             }

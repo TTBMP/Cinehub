@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.ui.web.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.service.authentication.AuthenticationException;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.*;
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.ui.Model;
 
@@ -75,12 +75,17 @@ public class ViewPersonalSchedulePresenterWeb implements ViewPersonalSchedulePre
     }
 
     @Override
-    public void presentAuthenticationError(AuthenticationException e) {
+    public void presentRepositoryError(RepositoryException e) {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
     }
 
     @Override
-    public void presentRepositoryError(RepositoryException e) {
+    public void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e) {
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
+    }
+
+    @Override
+    public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e) {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
     }
 

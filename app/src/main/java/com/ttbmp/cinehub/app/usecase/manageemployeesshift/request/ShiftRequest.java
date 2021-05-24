@@ -1,16 +1,17 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
-import com.ttbmp.cinehub.app.usecase.Request;
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 
 /**
  * @author Massimo Mazzetti
  */
-public class ShiftRequest extends Request {
+public class ShiftRequest extends AuthenticatedRequest {
 
 
     private int shiftId;
 
-    public ShiftRequest(int shiftId) {
+    public ShiftRequest(String sessionToken, int shiftId) {
+        super(sessionToken);
         this.shiftId = shiftId;
     }
 

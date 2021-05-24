@@ -11,6 +11,7 @@ import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
+import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
 import com.ttbmp.cinehub.service.persistence.dao.ProjectionDao;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourceProvider;
@@ -74,6 +75,25 @@ public class JdbcProjectionRepository implements ProjectionRepository {
     public Projection getProjection(String date, String time, Hall hall) throws RepositoryException {
         try {
             var projection = getProjectionDao().getProjectionByDateAndTimeAndHallId(date, time, hall.getId());
+            return new ProjectionProxy(
+                    projection.getId(),
+                    projection.getDate(),
+                    projection.getStartTime(),
+                    serviceLocator.getService(MovieRepository.class),
+                    serviceLocator.getService(HallRepository.class),
+                    serviceLocator.getService(ProjectionistRepository.class),
+                    serviceLocator.getService(TicketRepository.class),
+                    (long) projection.getBasePrice()
+            );
+        } catch (DaoMethodException e) {
+            throw new RepositoryException(e.getMessage());
+        }
+    }
+
+    @Override
+    public Projection getProjection(Ticket ticket) throws RepositoryException {
+        try {
+            var projection = getProjectionDao().getProjectionByTicketId(ticket.getId());
             return new ProjectionProxy(
                     projection.getId(),
                     projection.getDate(),

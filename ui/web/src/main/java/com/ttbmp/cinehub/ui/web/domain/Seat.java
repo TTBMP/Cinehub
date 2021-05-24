@@ -2,12 +2,17 @@ package com.ttbmp.cinehub.ui.web.domain;
 
 public class Seat {
 
+    private int id;
     private String position;
-    private Integer number;
-    private int hallId;
-    private String date;
-    private int movieId;
-    private int cinemaId;
+    private boolean isBooked;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getPosition() {
         return position;
@@ -17,43 +22,12 @@ public class Seat {
         this.position = position;
     }
 
-    public Integer getNumber() {
-        return number;
+    public boolean isBooked() {
+        return isBooked;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setBooked(boolean booked) {
+        isBooked = booked;
     }
 
-    public int getHallId() {
-        return hallId;
-    }
-
-    public void setHallId(int hallId) {
-        this.hallId = hallId;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public int getMovieId() {
-        return movieId;
-    }
-
-    public void setMovieId(int movieId) {
-        this.movieId = movieId;
-    }
-
-    public int getCinemaId() {
-        return cinemaId;
-    }
-
-    public void setCinemaId(int cinemaId) {
-        this.cinemaId = cinemaId;
-    }
 }

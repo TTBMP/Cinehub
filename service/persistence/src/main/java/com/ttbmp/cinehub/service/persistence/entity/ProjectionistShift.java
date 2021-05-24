@@ -8,10 +8,10 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.PrimaryKey;
 public class ProjectionistShift {
 
     @PrimaryKey
-    @ColumnInfo(name = "turno_id")
+    @ColumnInfo(name = "id_turno")
     private int shiftId;
 
-    @ColumnInfo(name = "sala_id")
+    @ColumnInfo(name = "id_sala")
     private int hallId;
 
     public ProjectionistShift() {

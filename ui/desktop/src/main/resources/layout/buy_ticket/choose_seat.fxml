@@ -3,6 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" minHeight="730.0" minWidth="1156.0" stylesheets="@../../styles/stylesIvan.css"
       xmlns="http://javafx.com/javafx/8"
@@ -11,6 +12,13 @@
         <fx:include fx:id="appBar" source="/layout/app_bar/app_bar.fxml"/>
         <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
             <children>
+                <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0"
+                       prefWidth="1087.0" text="Devi prima effettuare l'accesso..." textAlignment="CENTER"
+                       textFill="RED">
+                    <font>
+                        <Font size="20.0"/>
+                    </font>
+                </Label>
                 <GridPane layoutX="26.0" layoutY="522.0" VBox.vgrow="ALWAYS">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
@@ -50,40 +58,19 @@
                         <Insets top="5.0"/>
                     </VBox.margin>
                 </CheckBox>
-                <CheckBox fx:id="heatedArmchairRadioButton" mnemonicParsing="false"
+                <CheckBox fx:id="openBarRadioButton" mnemonicParsing="false"
                           text="Open bar, with this option you will get a full meal (food, drinks) for one person +10€">
                     <VBox.margin>
                         <Insets top="5.0"/>
                     </VBox.margin>
                 </CheckBox>
-                <CheckBox fx:id="foldingArmchairRadioButton" mnemonicParsing="false"
+                <CheckBox fx:id="magicBoxRadioButton" mnemonicParsing="false"
                           text="Magic Box, with this option you will get a gadget of the typical objects of the film +15€">
                     <VBox.margin>
                         <Insets top="5.0"/>
                     </VBox.margin>
                 </CheckBox>
-                <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
-                    <children>
-                        <Label style="-fx-font-size: 20px; -fx-font-weight: bold;"
-                               text="If you don't have time to waste "/>
-                    </children>
-                </HBox>
-                <GridPane VBox.vgrow="ALWAYS">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                    </rowConstraints>
-                    <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Buy a seat randomly"
-                              wrappingWidth="226.99658203125"/>
-                        <Button fx:id="buyRandomButton" mnemonicParsing="false" text="Continue" GridPane.columnIndex="1"
-                                GridPane.halignment="CENTER"/>
-                    </children>
-                </GridPane>
+                <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1124.0" VBox.vgrow="ALWAYS"/>
                 <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                     <children>
                         <AnchorPane HBox.hgrow="ALWAYS">
@@ -94,8 +81,6 @@
                                 <Button fx:id="confirmSeatButton" mnemonicParsing="false" text="Continue"
                                         AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0"
                                         AnchorPane.topAnchor="10.0"/>
-                                <Label fx:id="errorSectionLabel" layoutX="145.0" layoutY="15.0" prefHeight="21.0"
-                                       prefWidth="326.0"/>
                             </children>
                         </AnchorPane>
                     </children>

@@ -3,9 +3,10 @@ package com.ttbmp.cinehub.ui.desktop.manageshift.assign;
 import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.app.dto.UsherDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ShiftRepeatingOption;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.CreateShiftRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftRepeatRequest;
-import com.ttbmp.cinehub.domain.shift.ShiftRepeatingOption;
+import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.manageshift.ManageEmployeesShiftViewModel;
 import com.ttbmp.cinehub.ui.desktop.manageshift.components.ComboBoxOptionValueFactory;
 import com.ttbmp.cinehub.ui.desktop.manageshift.components.HallFactory;
@@ -120,7 +121,7 @@ public class AssignShiftViewController extends ViewController {
                     viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());
                 }
                 viewModel.setSelectedOption(null);
-                navController.popBackStack();
+                navController.navBack();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -131,6 +132,7 @@ public class AssignShiftViewController extends ViewController {
 
         if (!viewModel.isRepeatVisibility()) {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(
+                    CinehubApplication.getSessionToken(),
                     viewModel.getSelectedDayWeek().getEmployee().getId(),
                     viewModel.getSelectedDayWeek().getDate(),
                     viewModel.getStartSpinnerTime().withNano(0),
@@ -139,6 +141,7 @@ public class AssignShiftViewController extends ViewController {
         } else {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).saveRepeatedShift(
                     new ShiftRepeatRequest(
+                            CinehubApplication.getSessionToken(),
                             viewModel.getSelectedDayWeek().getDate(),
                             viewModel.getSelectedEndRepeatDay(),
                             viewModel.getSelectedOption().toString(),
@@ -152,7 +155,7 @@ public class AssignShiftViewController extends ViewController {
         if (!viewModel.isErrorAssignVisibility()) {
             try {
                 viewModel.setSelectedOption(null);
-                navController.popBackStack();
+                navController.navBack();
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.app.repository.seat;
 
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.hall.MockHallRepository;
 import com.ttbmp.cinehub.app.repository.ticket.MockTicketRepository;
 import com.ttbmp.cinehub.domain.Hall;
@@ -22,15 +23,29 @@ public class MockSeatRepository implements SeatRepository {
         var hallIdList = MockHallRepository.getHallDataList().stream()
                 .map(MockHallRepository.HallData::getId)
                 .collect(Collectors.toList());
-        for (int hallId : hallIdList) {
-            for (var c : new char[]{'A', 'B', 'C', 'D', 'E', 'F'}) {
-                SEAT_DATA_LIST.add(new SeatData(seatIdCounter++, hallId, c + Integer.toString(hallId % 7)));
+        for (var hallId : hallIdList) {
+            for (var i = 0; i < 7; i++) {
+                SEAT_DATA_LIST.add(new SeatData(seatIdCounter++, hallId, "A" + (hallId + i) % 7));
+                SEAT_DATA_LIST.add(new SeatData(seatIdCounter++, hallId, "B" + (hallId + i) % 7));
+                SEAT_DATA_LIST.add(new SeatData(seatIdCounter++, hallId, "C" + (hallId + i) % 7));
+                SEAT_DATA_LIST.add(new SeatData(seatIdCounter++, hallId, "D" + (hallId + i) % 7));
+                SEAT_DATA_LIST.add(new SeatData(seatIdCounter++, hallId, "E" + (hallId + i) % 7));
+                SEAT_DATA_LIST.add(new SeatData(seatIdCounter++, hallId, "F" + (hallId + i) % 7));
             }
         }
     }
 
     public static List<SeatData> getSeatDataList() {
         return SEAT_DATA_LIST;
+    }
+
+    @Override
+    public Seat getSeat(int id) throws RepositoryException {
+        return SEAT_DATA_LIST.stream()
+                .filter(d -> d.getId() == id)
+                .findAny()
+                .map(d -> new SeatProxy(d.id, d.position))
+                .orElse(null);
     }
 
     @Override

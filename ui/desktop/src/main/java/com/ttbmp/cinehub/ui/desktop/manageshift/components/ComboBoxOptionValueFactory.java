@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift.components;
 
-import com.ttbmp.cinehub.domain.shift.ShiftRepeatingOption;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ShiftRepeatingOption;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 

@@ -4,13 +4,16 @@ import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.CreateShiftRequest;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetCinemaListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetEmployeeListRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewShiftForm;
+import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.beans.PropertyEditorSupport;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,8 +22,6 @@ import java.time.format.DateTimeFormatter;
 public class AssignProjectionistShiftViewController {
 
     private static final String ASSIGN_REQUEST = "assignRequest";
-    private static final String SHIFT_ASSIGNED = "/shift_assigned";
-    private static final String ERROR = "error";
 
 
     @InitBinder
@@ -35,40 +36,42 @@ public class AssignProjectionistShiftViewController {
     }
 
     @GetMapping("/assign_projectionist_shift")
-    public String assignProjectionistShift(@RequestParam(value = "idCinema") int cinemaId, Model model) {
+    public String assignProjectionistShift(
+            HttpServletResponse response,
+            @CookieValue(value = "session") String sessionToken,
+            @RequestParam(value = "idCinema") int cinemaId, Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
-        useCase.getCinemaList();
+        useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var shiftRequest = new NewShiftForm();
         model.addAttribute(ASSIGN_REQUEST, shiftRequest);
-        return "/assign_projectionist_shift";
+        return ErrorHelper.returnView(response, model, "assign_projectionist_shift");
     }
 
     @PostMapping("/assign_projectionist_shift")
-    public String assignProjShift(@RequestParam(value = "idCinema") int cinemaId,
-                                  @ModelAttribute(ASSIGN_REQUEST) NewShiftForm shiftRequest,
-                                  Model model) {
+    public String assignProjShift(
+            HttpServletResponse response,
+            @CookieValue(value = "session") String sessionToken,
+            @RequestParam(value = "idCinema") int cinemaId,
+            @ModelAttribute(ASSIGN_REQUEST) NewShiftForm shiftRequest,
+            Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
-        useCase.getCinemaList();
+        useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
         useCase.createShift(new CreateShiftRequest(
+                sessionToken,
                 shiftRequest.getEmployee().getId(),
                 LocalDate.parse(shiftRequest.getDate()),
                 shiftRequest.getStart(),
                 shiftRequest.getEnd(),
                 shiftRequest.getHall().getId())
         );
-        var error = (boolean) model.getAttribute(ERROR);
-        if (!error) {
-            return SHIFT_ASSIGNED;
-        }
-        return "/assign_projectionist_shift";
-
+        return ErrorHelper.returnView(response, model, "shift_assigned");
     }
 
 }

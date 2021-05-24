@@ -65,4 +65,5 @@ public class JdbcProjectionistRepository implements ProjectionistRepository {
         }
         return projectionistDao;
     }
+
 }

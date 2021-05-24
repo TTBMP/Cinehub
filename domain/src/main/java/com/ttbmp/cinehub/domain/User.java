@@ -1,12 +1,12 @@
 package com.ttbmp.cinehub.domain;
 
-import com.ttbmp.cinehub.domain.employee.Employee;
-import com.ttbmp.cinehub.domain.ticket.component.Ticket;
+import com.ttbmp.cinehub.domain.security.Permission;
+import com.ttbmp.cinehub.domain.security.Role;
 
 import java.util.List;
 
 /**
- * @author Fabio Buracchi, Ivan Palmieri
+ * @author Fabio Buracchi
  */
 public class User {
 
@@ -14,13 +14,14 @@ public class User {
     private String name;
     private String surname;
     private String email;
-    private List<Ticket> ownedTicketList;
+    private List<Role> roleList;
 
-    public User(String id, String name, String surname, String email) {
+    public User(String id, String name, String surname, String email, List<Role> roleList) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
+        this.roleList = roleList;
     }
 
     public String getId() {
@@ -55,12 +56,18 @@ public class User {
         this.email = email;
     }
 
-    public List<Ticket> getOwnedTicketList() {
-        return ownedTicketList;
+    public List<Role> getRoleList() {
+        return roleList;
     }
 
-    public void setOwnedTicketList(List<Ticket> ownedTicketList) {
-        this.ownedTicketList = ownedTicketList;
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
+
+    public boolean hasPermission(Permission requiredPermission) {
+        return roleList.stream()
+                .map(Role::getPermissionList)
+                .anyMatch(permissionList -> permissionList.contains(requiredPermission));
     }
 
     @Override
@@ -68,7 +75,7 @@ public class User {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        var other = (Employee) obj;
+        var other = (User) obj;
         return id.equals(other.getId());
     }
 

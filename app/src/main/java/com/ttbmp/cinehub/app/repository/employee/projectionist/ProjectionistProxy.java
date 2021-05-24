@@ -7,6 +7,8 @@ import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.employee.Projectionist;
+import com.ttbmp.cinehub.domain.security.Permission;
+import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
 import java.time.LocalDate;
@@ -21,7 +23,10 @@ public class ProjectionistProxy extends Projectionist {
     private final CinemaRepository cinemaRepository;
     private final ShiftRepository shiftRepository;
 
-    private boolean isUserLoaded = false;
+    private boolean isNameLoaded = false;
+    private boolean isSurnameLoaded = false;
+    private boolean isEmailLoaded = false;
+    private boolean isRoleListLoaded = false;
     private boolean isCinemaLoaded = false;
     private boolean isShiftListLoaded = false;
 
@@ -30,7 +35,7 @@ public class ProjectionistProxy extends Projectionist {
             UserRepository userRepository,
             CinemaRepository cinemaRepository,
             ShiftRepository shiftRepository) {
-        super(id, null, null, null, null);
+        super(id, null, null, null, null, null);
         this.userRepository = userRepository;
         this.cinemaRepository = cinemaRepository;
         this.shiftRepository = shiftRepository;
@@ -38,38 +43,86 @@ public class ProjectionistProxy extends Projectionist {
 
     @Override
     public String getName() {
-        if (!isUserLoaded) {
-            loadUser();
+        if (!isNameLoaded) {
+            try {
+                setName(userRepository.getUser(getId()).getName());
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
         return super.getName();
     }
 
     @Override
+    public void setName(String name) {
+        isNameLoaded = true;
+        super.setName(name);
+    }
+
+    @Override
     public String getSurname() {
-        if (!isUserLoaded) {
-            loadUser();
+        if (!isSurnameLoaded) {
+            try {
+                setSurname(userRepository.getUser(getId()).getSurname());
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
         return super.getSurname();
     }
 
     @Override
+    public void setSurname(String surname) {
+        isSurnameLoaded = true;
+        super.setSurname(surname);
+    }
+
+    @Override
     public String getEmail() {
-        if (!isUserLoaded) {
-            loadUser();
+        if (!isEmailLoaded) {
+            try {
+                setEmail(userRepository.getUser(getId()).getEmail());
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
         return super.getEmail();
     }
 
-    private void loadUser() {
-        try {
-            var user = userRepository.getUser(getId());
-            setName(user.getName());
-            setSurname(user.getSurname());
-            setEmail(user.getEmail());
-            isUserLoaded = true;
-        } catch (RepositoryException e) {
-            throw new LazyLoadingException(e.getMessage());
+    @Override
+    public void setEmail(String email) {
+        isEmailLoaded = true;
+        super.setEmail(email);
+    }
+
+    @Override
+    public List<Role> getRoleList() {
+        if (!isRoleListLoaded) {
+            try {
+                setRoleList(userRepository.getUser(getId()).getRoleList());
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
         }
+        return super.getRoleList();
+    }
+
+    @Override
+    public void setRoleList(List<Role> roleList) {
+        isRoleListLoaded = true;
+        super.setRoleList(roleList);
+    }
+
+    @Override
+    public boolean hasPermission(Permission requiredPermission) {
+        if (!isRoleListLoaded) {
+            try {
+                setRoleList(userRepository.getUser(getId()).getRoleList());
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
+        }
+        return super.hasPermission(requiredPermission);
     }
 
     @Override

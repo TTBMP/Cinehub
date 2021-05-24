@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.ui.desktop.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.service.authentication.AuthenticationException;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.*;
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 
 /**
  * @author Fabio Buracchi
@@ -60,12 +60,17 @@ public class ViewPersonalScheduleFxPresenter implements ViewPersonalSchedulePres
     }
 
     @Override
-    public void presentAuthenticationError(AuthenticationException e) {
+    public void presentRepositoryError(RepositoryException e) {
         viewModel.setErrorMessage(e.getMessage());
     }
 
     @Override
-    public void presentRepositoryError(RepositoryException e) {
+    public void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e) {
+        viewModel.setErrorMessage(e.getMessage());
+    }
+
+    @Override
+    public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e) {
         viewModel.setErrorMessage(e.getMessage());
     }
 

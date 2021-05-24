@@ -5,6 +5,7 @@ package com.ttbmp.cinehub.app.dto;
  * @author Ivan Palmieri
  */
 public class MovieDto {
+
     private int id;
     private String name;
     private String overview;

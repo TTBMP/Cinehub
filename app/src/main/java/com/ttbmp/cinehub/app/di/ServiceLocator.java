@@ -2,6 +2,8 @@ package com.ttbmp.cinehub.app.di;
 
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.cinema.JdbcCinemaRepository;
+import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
+import com.ttbmp.cinehub.app.repository.customer.JdbcCustomerRepository;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.JdbcEmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.JdbcProjectionistRepository;
@@ -26,14 +28,14 @@ import com.ttbmp.cinehub.app.repository.ticket.JdbcTicketRepository;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
 import com.ttbmp.cinehub.app.repository.user.JdbcUserRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
-import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
-import com.ttbmp.cinehub.app.service.authentication.MockAuthenticationService;
 import com.ttbmp.cinehub.app.service.email.EmailService;
 import com.ttbmp.cinehub.app.service.email.MockEmailService;
 import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
 import com.ttbmp.cinehub.app.service.movieapi.TheMovieDbApiServiceAdapter;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
 import com.ttbmp.cinehub.app.service.payment.StripeServiceAdapter;
+import com.ttbmp.cinehub.app.service.security.FirebaseAuthSecurityServiceAdapter;
+import com.ttbmp.cinehub.app.service.security.SecurityService;
 import com.ttbmp.cinehub.app.utilities.FactoryMap;
 
 /**
@@ -48,11 +50,12 @@ public class ServiceLocator {
     }
 
     protected void addServicesFactory() {
-        serviceFactoryMap.put(AuthenticationService.class, MockAuthenticationService::new);
         serviceFactoryMap.put(EmailService.class, MockEmailService::new);
         serviceFactoryMap.put(MovieApiService.class, TheMovieDbApiServiceAdapter::new);
         serviceFactoryMap.put(PaymentService.class, StripeServiceAdapter::new);
+        serviceFactoryMap.put(SecurityService.class, () -> new FirebaseAuthSecurityServiceAdapter(this));
         serviceFactoryMap.put(CinemaRepository.class, () -> new JdbcCinemaRepository(this));
+        serviceFactoryMap.put(CustomerRepository.class, () -> new JdbcCustomerRepository(this));
         serviceFactoryMap.put(EmployeeRepository.class, () -> new JdbcEmployeeRepository(this));
         serviceFactoryMap.put(ProjectionistRepository.class, () -> new JdbcProjectionistRepository(this));
         serviceFactoryMap.put(UsherRepository.class, () -> new JdbcUsherRepository(this));
