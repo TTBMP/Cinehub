@@ -7,11 +7,11 @@ import java.util.List;
  */
 public class CinemaDto {
 
-    private final int id;
-    private final String name;
-    private final String address;
-    private final String city;
-    private final List<HallDto> halList;
+    private int id;
+    private String name;
+    private String address;
+    private String city;
+    private List<HallDto> halList;
 
     public CinemaDto(int id, String name, String address, String city, List<HallDto> halList) {
         this.id = id;
@@ -25,20 +25,40 @@ public class CinemaDto {
         return id;
     }
 
-    public List<HallDto> getHalList() {
-        return halList;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getAddress() {
         return address;
     }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getCity() {
         return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public List<HallDto> getHalList() {
+        return halList;
+    }
+
+    public void setHalList(List<HallDto> halList) {
+        this.halList = halList;
     }
 
     @Override

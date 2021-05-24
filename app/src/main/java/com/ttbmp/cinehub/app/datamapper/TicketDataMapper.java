@@ -19,7 +19,6 @@ public class TicketDataMapper {
         return new TicketDto(
                 ticket.getId(),
                 ticket.getPrice(),
-                CustomerDataMapper.mapToDto(ticket.getOwner()),
                 SeatDataMapper.mapToDto(ticket.getSeat(), true)
         );
     }

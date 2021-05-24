@@ -15,7 +15,7 @@ public class HallDataMapper {
     }
 
     public static HallDto mapToDto(Hall hall) {
-        return new HallDto(hall.getId(), SeatDataMapper.mapToDtoList(hall.getSeatList(), s -> false), hall.getName());
+        return new HallDto(hall.getId(), hall.getName());
     }
 
     public static List<HallDto> mapToDtoList(List<Hall> hallList) {

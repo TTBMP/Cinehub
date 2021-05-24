@@ -16,14 +16,12 @@ public class ProjectionDataMapper {
 
     public static ProjectionDto mapToDto(Projection projection) {
         return new ProjectionDto(
-                MovieDataMapper.mapToDto(projection.getMovie()),
-                HallDataMapper.mapToDto(projection.getHall()),
-                projection.getStartTime(),
-                projection.getDate(),
-                TicketDataMapper.mapToDtoList(projection.getTicketList()),
                 projection.getId(),
-                projection.getProjectionist(),
-                projection.getBasePrice()
+                projection.getDate(),
+                projection.getStartTime(),
+                projection.getBasePrice(),
+                MovieDataMapper.mapToDto(projection.getMovie()),
+                HallDataMapper.mapToDto(projection.getHall())
         );
     }
 

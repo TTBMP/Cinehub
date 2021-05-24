@@ -7,21 +7,11 @@ public class TicketDto {
 
     private int id;
     private long price;
-    private CustomerDto owner;
     private SeatDto seatDto;
 
-    public TicketDto(int id, long price, CustomerDto owner, SeatDto seatDto) {
+    public TicketDto(int id, long price, SeatDto seatDto) {
         this.id = id;
-        this.owner = owner;
         this.price = price;
-        this.seatDto = seatDto;
-    }
-
-    public SeatDto getSeatDto() {
-        return seatDto;
-    }
-
-    public void setSeatDto(SeatDto seatDto) {
         this.seatDto = seatDto;
     }
 
@@ -33,20 +23,20 @@ public class TicketDto {
         this.id = id;
     }
 
-    public CustomerDto getOwner() {
-        return owner;
-    }
-
-    public void setOwner(CustomerDto owner) {
-        this.owner = owner;
-    }
-
-    public Long getPrice() {
+    public long getPrice() {
         return price;
     }
 
     public void setPrice(long price) {
         this.price = price;
+    }
+
+    public SeatDto getSeatDto() {
+        return seatDto;
+    }
+
+    public void setSeatDto(SeatDto seatDto) {
+        this.seatDto = seatDto;
     }
 
 }
