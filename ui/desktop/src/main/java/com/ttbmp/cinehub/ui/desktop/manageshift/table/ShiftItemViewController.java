@@ -42,7 +42,7 @@ public class ShiftItemViewController extends ViewController {
     protected void onLoad() {
         ManageEmployeesShiftViewModel viewModel;
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
-        if (shift.getEmployee() instanceof UsherDto) {
+        if (viewModel.getEmployee(shift) instanceof UsherDto) {
             shiftHBox.setStyle("-fx-background-color: #FFFF00;");
         }
 

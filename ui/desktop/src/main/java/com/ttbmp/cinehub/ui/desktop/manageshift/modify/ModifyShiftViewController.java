@@ -80,11 +80,11 @@ public class ModifyShiftViewController extends ViewController {
         errorHBox.visibleProperty().bind(viewModel.errorAssignVisibilityProperty());
         errorLabel.textProperty().bind(viewModel.errorProperty());
 
-        if (viewModel.getSelectedShift().getEmployee() instanceof UsherDto) {
+        if (viewModel.getEmployee(viewModel.getSelectedShift()) instanceof UsherDto) {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
             hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
         } else {
-            viewModel.getHallList().setAll(viewModel.getSelectedShift().getEmployee().getCinema().getHalList());
+            viewModel.getHallList().setAll(viewModel.getEmployee(viewModel.getSelectedShift()).getCinema().getHalList());
             hallComboBox.setItems(viewModel.getHallList());
             hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
 
@@ -124,7 +124,7 @@ public class ModifyShiftViewController extends ViewController {
         activity.getUseCase(ManageEmployeesShiftUseCase.class).modifyShift(
                 new ShiftModifyRequest(
                         CinehubApplication.getSessionToken(),
-                        viewModel.getSelectedShift().getEmployee(),
+                        viewModel.getEmployee(viewModel.getSelectedShift()),
                         viewModel.getSelectedShift().getId(),
                         viewModel.getSelectedDays(),
                         viewModel.getStartSpinnerModifyTime().withNano(0),

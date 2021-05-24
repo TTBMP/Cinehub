@@ -17,6 +17,7 @@ public class ViewPersonalScheduleFxPresenter implements ViewPersonalSchedulePres
 
     @Override
     public void presentGetShiftList(ShiftListReply result) {
+        viewModel.setCurrentEmployee(result.getEmployeeDto());
         viewModel.getShiftList().setAll(result.getShiftDtoList());
     }
 

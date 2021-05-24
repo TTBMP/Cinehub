@@ -25,7 +25,6 @@ import java.util.List;
  */
 class ViewPersonalScheduleControllerTest {
 
-
     private MockServiceLocator serviceLocator;
     private MockViewPersonalScheduleViewModel viewModel;
     private ViewPersonalScheduleController controller;

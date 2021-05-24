@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.master.calendar.tablecell.shiftitem;
 
+import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
@@ -45,7 +46,7 @@ public class CalendarShiftItemViewController extends ViewController {
         });
         startLabel.setText(shiftDto.getStart().toString());
         endLabel.setText(shiftDto.getEnd().toString());
-        locationLabel.setText(shiftDto.getEmployee().getCinema().getAddress());
+        locationLabel.setText(viewModel.getCurrentEmployee().getCinema().getAddress());
     }
 
     public void load(Activity activity, NavController navController, ShiftDto shiftDto) {

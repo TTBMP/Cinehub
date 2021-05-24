@@ -28,7 +28,7 @@ public class ShiftDataMapper {
         if (employee instanceof Usher) {
             return new ShiftUsherDto(
                     shift.getId(),
-                    EmployeeDataMapper.mapToDto(employee),
+                    employee.getId(),
                     LocalDate.parse(shift.getDate()),
                     LocalTime.parse(shift.getStart()),
                     LocalTime.parse(shift.getEnd())
@@ -36,7 +36,7 @@ public class ShiftDataMapper {
         } else {
             return new ShiftProjectionistDto( //TODO: troppo lenta
                     shift.getId(),
-                    EmployeeDataMapper.mapToDto(employee),
+                    employee.getId(),
                     LocalDate.parse(shift.getDate()),
                     LocalTime.parse(shift.getStart()),
                     LocalTime.parse(shift.getEnd()),

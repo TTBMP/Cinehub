@@ -32,9 +32,8 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
             var employee = employeeRepository.getEmployee(request.getUserId());
-            presenter.presentGetShiftList(new ShiftListReply(
-                    employee.getShiftListBetween(request.getStart(), request.getEnd())
-            ));
+            var shiftList = employee.getShiftListBetween(request.getStart(), request.getEnd());
+            presenter.presentGetShiftList(new ShiftListReply(employee, shiftList));
         } catch (Request.NullRequestException e) {
             presenter.presentShiftListNullRequest();
         } catch (Request.InvalidRequestException e) {

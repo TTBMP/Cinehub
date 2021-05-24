@@ -10,8 +10,8 @@ public class ShiftProjectionistDto extends ShiftDto {
 
     private final HallDto hallDto;
 
-    public ShiftProjectionistDto(int id, EmployeeDto employee, LocalDate date, LocalTime start, LocalTime end, HallDto hallDto) {
-        super(id, employee, date, start, end);
+    public ShiftProjectionistDto(int id, String employeeId, LocalDate date, LocalTime start, LocalTime end, HallDto hallDto) {
+        super(id, employeeId, date, start, end);
         this.hallDto = hallDto;
     }
 
