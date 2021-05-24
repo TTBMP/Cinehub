@@ -73,7 +73,7 @@ public class AssignRepeatedUsherShiftViewController {
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
-        useCase.saveRepeatedShift(new ShiftRepeatRequest(
+        useCase.createRepeatedShift(new ShiftRepeatRequest(
                 sessionToken,
                 request.getDate(),
                 request.getDateRepeated(),

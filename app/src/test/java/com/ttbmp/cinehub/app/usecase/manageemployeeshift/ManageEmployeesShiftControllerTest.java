@@ -168,7 +168,7 @@ class ManageEmployeesShiftControllerTest {
                 LocalTime.now().withNano(0).withSecond(0).plusHours(2),
                 null
         );
-        controller.saveRepeatedShift(request);
+        controller.createRepeatedShift(request);
         var expected = getSaveRepeatedShiftExpected(request);
         Assertions.assertTrue(expected.containsAll(viewModel.getShiftList()));
     }

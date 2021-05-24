@@ -8,13 +8,9 @@ public class GetEmployeeListResponse {
 
     private List<EmployeeDto> employeeDtoList;
 
-    public GetEmployeeListResponse() {
-    }
-
     public GetEmployeeListResponse(List<EmployeeDto> employeeDtoList) {
         this.employeeDtoList = employeeDtoList;
     }
-
 
     public List<EmployeeDto> getEmployeeDtoList() {
         return employeeDtoList;

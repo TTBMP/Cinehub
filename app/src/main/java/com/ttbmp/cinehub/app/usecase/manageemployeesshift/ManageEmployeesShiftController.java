@@ -190,7 +190,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
     }
 
     @Override
-    public void saveRepeatedShift(ShiftRepeatRequest request) {
+    public void createRepeatedShift(ShiftRepeatRequest request) {
         var permissions = new Permission[]{Permission.ASSIGN_SHIFT};
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
@@ -258,7 +258,6 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             var hall = hallRepository.getHall(request.getHallId());
             var shiftFactory = new ShiftFactory();
             var shift = shiftFactory.createConcreteShift(employee, date, start, end, hall);
-
             saveShift(shift);
             shift = shiftRepository.getShift(employee, date, start, end);
             manageEmployeesShiftPresenter.presentCreateShift(new CreateShiftResponse(ShiftDataMapper.mapToDto(shift)));
@@ -268,7 +267,6 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                     employee.getEmail(),
                     "Shift Assign"
             ));
-
         } catch (Request.NullRequestException e) {
             manageEmployeesShiftPresenter.presentCreateShiftNullRequest();
         } catch (Request.InvalidRequestException e) {

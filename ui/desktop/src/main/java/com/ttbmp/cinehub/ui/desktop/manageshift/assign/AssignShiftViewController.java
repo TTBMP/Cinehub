@@ -137,9 +137,10 @@ public class AssignShiftViewController extends ViewController {
                     viewModel.getSelectedDayWeek().getDate(),
                     viewModel.getStartSpinnerTime().withNano(0),
                     viewModel.getEndSpinnerTime().withNano(0),
-                    viewModel.getSelectedHall().getId()));
+                    viewModel.getSelectedHall().getId())
+            );
         } else {
-            activity.getUseCase(ManageEmployeesShiftUseCase.class).saveRepeatedShift(
+            activity.getUseCase(ManageEmployeesShiftUseCase.class).createRepeatedShift(
                     new ShiftRepeatRequest(
                             CinehubApplication.getSessionToken(),
                             viewModel.getSelectedDayWeek().getDate(),
@@ -163,5 +164,3 @@ public class AssignShiftViewController extends ViewController {
     }
 
 }
-
-

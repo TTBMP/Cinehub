@@ -74,7 +74,7 @@ public class AssignRepeatedProjectionistShiftViewController {
         var selectedHall = (HallDto) model.getAttribute("selectedHall");
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
         model.addAttribute("now", LocalDate.now().plusDays(1));
-        useCase.saveRepeatedShift(new ShiftRepeatRequest(
+        useCase.createRepeatedShift(new ShiftRepeatRequest(
                 sessionToken,
                 request.getDate(),
                 request.getDateRepeated(),
