@@ -1,12 +1,13 @@
 package com.ttbmp.cinehub.ui.web.buyticket;
 
-import com.ttbmp.cinehub.ui.web.domain.PaymentForm;
-import com.ttbmp.cinehub.ui.web.domain.Seat;
+import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Palmieri Ivan
@@ -16,17 +17,17 @@ public class PaymentViewController {
 
     @PostMapping("/payment/{optionOne}/{optionTwo}/{optionThree}")
     public String payment(
-            @ModelAttribute("seat") Seat seat,
+            HttpServletResponse response,
+            @ModelAttribute("payment_form") PaymentForm paymentForm,
             @PathVariable("optionOne") boolean optionOne,
             @PathVariable("optionTwo") boolean optionTwo,
             @PathVariable("optionThree") boolean optionThree,
             Model model) {
-        model.addAttribute("option1", optionOne);
-        model.addAttribute("option2", optionTwo);
-        model.addAttribute("option3", optionThree);
-        model.addAttribute("paymentForm", new PaymentForm());
-        return "payment";
+        paymentForm.setOption1(optionOne);//skipLine
+        paymentForm.setOption2(optionTwo);//openBar
+        paymentForm.setOption3(optionThree);//magicBox
+        model.addAttribute("payment_form", paymentForm);
+        return ErrorHelper.returnView(response, model, "buy_ticket/payment");
     }
-
 
 }

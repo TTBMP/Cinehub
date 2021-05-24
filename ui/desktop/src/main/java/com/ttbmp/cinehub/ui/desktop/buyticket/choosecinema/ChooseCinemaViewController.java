@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.ui.desktop.buyticket.choosecinema;
 
-
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
@@ -33,7 +32,7 @@ public class ChooseCinemaViewController extends ViewController {
     private AppBarViewController appBarController;
 
     @FXML
-    private Label errorSectionLabel;
+    private Label errorLabel;
 
     @FXML
     private ListView<CinemaDto> cinemaListView;
@@ -53,14 +52,13 @@ public class ChooseCinemaViewController extends ViewController {
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
         viewModel.selectedProjectionProperty().setValue(null);
         confirmCinemaButton.disableProperty().bind(viewModel.selectedProjectionProperty().isNull());
-        timeOfProjectionListView.getSelectionModel().selectedItemProperty().addListener(l ->
-                onTimeSelected());
-        cinemaListView.getSelectionModel().selectedItemProperty().addListener(l -> onCinemaItemClick());
-        errorSectionLabel.textProperty().bind(viewModel.cinemaErrorProperty());
+        timeOfProjectionListView.getSelectionModel().selectedItemProperty().addListener(l -> onTimeSelected());
+        errorLabel.textProperty().bind(viewModel.errorMessageProperty());
         viewModel.selectedCinemaProperty().bind(cinemaListView.getSelectionModel().selectedItemProperty());
-        cinemaListView.setItems(viewModel.getCinemaList());
+        cinemaListView.setItems(viewModel.cinemaListProperty());
         cinemaListView.setCellFactory(listCinemaDto -> new ChooseCinemaListCell(activity, navController));//Cell Factory
         timeOfProjectionListView.setCellFactory(l -> new ChooseProjectionListCell(activity, navController));
+        cinemaListView.getSelectionModel().selectedItemProperty().addListener(l -> onCinemaItemClick());
         cancelButton.setOnAction(a -> {
             try {
                 timeOfProjectionListView.getItems().clear();
@@ -70,7 +68,7 @@ public class ChooseCinemaViewController extends ViewController {
             }
         });
         confirmCinemaButton.setOnAction(a -> {
-            viewModel.cinemaErrorProperty().setValue(null);
+            viewModel.errorMessageProperty().setValue(null);
             try {
                 navController.navigate(new NavDestination(new ChooseSeatView()));
             } catch (IOException e) {
@@ -87,15 +85,14 @@ public class ChooseCinemaViewController extends ViewController {
 
     private void onCinemaItemClick() {
         if (viewModel.selectedCinemaProperty().getValue() != null) {
-            viewModel.getTimeOfProjectionList().clear();
+            viewModel.timeOfProjectionListProperty().clear();
             activity.getUseCase(BuyTicketUseCase.class).getProjectionList(new ProjectionListRequest(
                             viewModel.selectedMovieProperty().getValue().getId(),
                             viewModel.selectedCinemaProperty().getValue().getId(),
                             viewModel.selectedDateProperty().getValue()
-
                     )
             );
-            timeOfProjectionListView.setItems(viewModel.getProjectionOfProjectionTimeList());
+            timeOfProjectionListView.setItems(viewModel.projectionTimeListProperty());
         }
     }
 

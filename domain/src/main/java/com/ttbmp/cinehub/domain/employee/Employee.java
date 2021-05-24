@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.domain.employee;
 
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.User;
+import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
 import java.time.LocalDate;
@@ -16,8 +17,8 @@ public abstract class Employee extends User {
     private Cinema cinema;
     private List<Shift> shiftList;
 
-    protected Employee(String id, String name, String surname, String email, Cinema cinema) {
-        super(id, name, surname, email);
+    protected Employee(String id, String name, String surname, String email, List<Role> roleList, Cinema cinema) {
+        super(id, name, surname, email, roleList);
         this.cinema = cinema;
     }
 

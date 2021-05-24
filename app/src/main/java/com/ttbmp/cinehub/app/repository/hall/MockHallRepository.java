@@ -3,7 +3,6 @@ package com.ttbmp.cinehub.app.repository.hall;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.cinema.MockCinemaRepository;
 import com.ttbmp.cinehub.app.repository.projection.MockProjectionRepository;
-import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.MockProjectionistShiftRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.Hall;
@@ -21,15 +20,14 @@ public class MockHallRepository implements HallRepository {
 
     private static final List<HallData> HALL_DATA_LIST = new ArrayList<>();
 
+    private static int hallIdCounter = 1;
+
     static {
         var cinemaNumber = MockCinemaRepository.getCinemaDataList().size();
         for (var cinemaId = 1; cinemaId < cinemaNumber + 1; cinemaId++) {
-            for (var i = 0; i < 6; i++) {
-                HALL_DATA_LIST.add(new HallData(
-                        (cinemaId - 1) * 6 + i + 1,
-                        cinemaId,
-                        String.format("%c%d", 'A' + (i % 3), i / 3 + 1)
-                ));
+            for (var i = 1; i <= cinemaId; i++) {
+                HALL_DATA_LIST.add(new HallData(hallIdCounter++, cinemaId, "A" + i));
+                HALL_DATA_LIST.add(new HallData(hallIdCounter++, cinemaId, "B" + i));
             }
         }
     }
@@ -49,7 +47,7 @@ public class MockHallRepository implements HallRepository {
         return HALL_DATA_LIST.stream()
                 .filter(d -> d.id == hallId)
                 .findAny()
-                .map(d -> new HallProxy(d.id, serviceLocator.getService(SeatRepository.class), d.name))
+                .map(d -> new HallProxy(serviceLocator, d.id, d.name))
                 .orElse(null);
     }
 
@@ -62,7 +60,7 @@ public class MockHallRepository implements HallRepository {
                 .flatMap(projectionHallId -> HALL_DATA_LIST.stream()
                         .filter(d -> d.id == projectionHallId)
                         .findAny()
-                        .map(d -> new HallProxy(d.id, serviceLocator.getService(SeatRepository.class), d.name)))
+                        .map(d -> new HallProxy(serviceLocator, d.id, d.name)))
                 .orElse(null);
     }
 
@@ -75,7 +73,7 @@ public class MockHallRepository implements HallRepository {
                 .flatMap(projectionistShiftHallId -> HALL_DATA_LIST.stream()
                         .filter(d -> d.id == projectionistShiftHallId)
                         .findAny()
-                        .map(d -> new HallProxy(d.id, serviceLocator.getService(SeatRepository.class), d.name)
+                        .map(d -> new HallProxy(serviceLocator, d.id, d.name)
                         ))
                 .orElse(null);
     }
@@ -84,7 +82,7 @@ public class MockHallRepository implements HallRepository {
     public List<Hall> getHallList(Cinema cinema) {
         return HALL_DATA_LIST.stream()
                 .filter(d -> d.getCinemaId() == cinema.getId())
-                .map(d -> new HallProxy(d.id, serviceLocator.getService(SeatRepository.class), d.name))
+                .map(d -> new HallProxy(serviceLocator, d.id, d.name))
                 .collect(Collectors.toList());
     }
 

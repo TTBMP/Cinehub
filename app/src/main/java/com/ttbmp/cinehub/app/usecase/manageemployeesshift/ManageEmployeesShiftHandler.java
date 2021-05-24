@@ -15,8 +15,8 @@ public class ManageEmployeesShiftHandler implements ManageEmployeesShiftUseCase 
     }
 
     @Override
-    public void getCinemaList() {
-        controller.getCinemaList();
+    public void getCinemaList(GetCinemaListRequest request) {
+        controller.getCinemaList(request);
     }
 
     @Override
@@ -48,4 +48,5 @@ public class ManageEmployeesShiftHandler implements ManageEmployeesShiftUseCase 
     public void modifyShift(ShiftModifyRequest request) {
         controller.modifyShift(request);
     }
+
 }

@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.app.repository.movie;
 
+import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.LazyLoadingException;
 import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
 import com.ttbmp.cinehub.app.service.movieapi.MovieApiServiceException;
@@ -14,9 +15,9 @@ public class MovieProxy extends Movie {
 
     private boolean isMovieLoaded = false;
 
-    public MovieProxy(int id, MovieApiService movieApiService) {
+    public MovieProxy(ServiceLocator serviceLocator, int id) {
         super(id, null, null, 0, null, null, null);
-        this.movieApiService = movieApiService;
+        this.movieApiService = serviceLocator.getService(MovieApiService.class);
     }
 
     @Override

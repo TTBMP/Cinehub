@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="styleIvan.css" rel="stylesheet" type="text/css">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <script crossorigin="anonymous"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Getting Started: Serving Web Content</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body style="background-color: black">
+<div class="container mt-3" style="background-color: black; color: white">
+
+    <div class="card" style="border-color: white;background-color: black">
+        <div class="jumbotron" style="background-color: black">
+            <h1 class="display-3">Payment With Success</h1>
+            <div class="row mt-5">
+                <div class="col-3 mt-2">
+                    <h5>Ticket: </h5>
+                </div>
+                <div class="col-3 mt-2">
+                    <p th:text="${payment_form.seat.position}"></p>
+                </div>
+                <div class="col-3 mt-2">
+                    <h5>Cinema: </h5>
+                </div>
+                <div class="col-3 mt-2">
+                    <p th:text="${payment_form.cinema.name}"></p>
+                </div>
+
+                <div class="col-3 mt-2">
+                    <h5>Movie: </h5>
+                </div>
+                <div class="col-3 mt-2">
+                    <p th:text="${payment_form.movie.name}"></p>
+                </div>
+                <div class="col-3 mt-2">
+                    <h5>Date: </h5>
+                </div>
+                <div class="col-3 mt-2">
+                    <p th:text="${payment_form.date}"></p>
+                </div>
+
+                <div class="col-3 mt-2">
+                    <h5>Screening time: </h5>
+                </div>
+                <div class="col-3 mt-2">
+                    <p th:text="${payment_form.projection.startTime}"></p>
+                </div>
+                <div class="col-3 mt-2">
+                    <h5>Price(€): </h5>
+                </div>
+                <div class="col-3 mt-2">
+                    <p th:text="${ticketDetail.price} "></p>
+                </div>
+            </div>
+            <p class="lead mt-5">
+                An email has been sent to the address associated with this account.</p>
+            <hr class="my-4">
+        </div>
+        <p class="lead m-4"><a class="btn btn-primary btn-lg" href="\choose_movie" role="button">Back to menu</a>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>

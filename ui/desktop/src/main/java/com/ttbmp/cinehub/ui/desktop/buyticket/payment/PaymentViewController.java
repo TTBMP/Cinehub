@@ -3,6 +3,7 @@ package com.ttbmp.cinehub.ui.desktop.buyticket.payment;
 
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.PaymentRequest;
+import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.desktop.buyticket.CustomDateCell;
@@ -49,7 +50,7 @@ public class PaymentViewController extends ViewController {
     private TextField cvvTextField;
 
     @FXML
-    private Label errorSectionLabel;
+    private Label errorLabel;
 
     @FXML
     private DatePicker fieldExpirationDatePicker;
@@ -73,34 +74,47 @@ public class PaymentViewController extends ViewController {
     private void bind() {
         confirmButton.disableProperty().bind(
                 viewModel.emailUserProperty().isNull().
-                        or(viewModel.txtCvvProperty().isNull().
-                                or(viewModel.numberOfCardUserProperty().isNull()
-                                )));
-        errorSectionLabel.textProperty().bind(viewModel.paymentErrorProperty());
+                        or(viewModel.cvvProperty().isNull().
+                                or(viewModel.numberCardProperty().isNull().
+                                        or(viewModel.expirationDateProperty().isNull())
+                                )
+                        )
+        );
         emailTextField.textProperty().bindBidirectional(viewModel.emailUserProperty());
-        numberOfCreditCardTextField.textProperty().bindBidirectional(viewModel.numberOfCardUserProperty());
-        cvvTextField.textProperty().bindBidirectional(viewModel.txtCvvProperty());
+        numberOfCreditCardTextField.textProperty().bindBidirectional(viewModel.numberCardProperty());
+        cvvTextField.textProperty().bindBidirectional(viewModel.cvvProperty());
+        fieldExpirationDatePicker.valueProperty().bindBidirectional(viewModel.expirationDateProperty());
+        errorLabel.textProperty().bindBidirectional(viewModel.errorMessageProperty());
         fieldExpirationDatePicker.setDayCellFactory(CustomDateCell::new);
     }
 
 
     private void startPayment(ActionEvent actionEvent) {
+        viewModel.errorMessageProperty().setValue(null);
         activity.getUseCase(BuyTicketUseCase.class).pay(new PaymentRequest(
-                viewModel.selectedTicketProperty().getValue(),
-                viewModel.selectedProjectionProperty().getValue(),
-                viewModel.selectedCinemaProperty().getValue(),
-                viewModel.numberOfCardUserProperty().getValue(),
-                viewModel.txtCvvProperty().getValue(),
+                CinehubApplication.getSessionToken(),
+                viewModel.selectedProjectionProperty().getValue().getId(),
+                viewModel.selectedSeatProperty().getValue().getId(),
+                viewModel.emailUserProperty().getValue(),
+                viewModel.numberCardProperty().getValue(),
+                viewModel.cvvProperty().getValue(),
                 String.valueOf(fieldExpirationDatePicker.getValue()),
-                viewModel.emailUserProperty().getValue()
+                viewModel.openBarOptionProperty().getValue(),
+                viewModel.magicBoxOptionProperty().getValue(),
+                viewModel.skipLineOptionProperty().getValue()
         ));
-        try {
-            navController.navigate(new NavDestination(new ConfirmEmailView()));
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (viewModel.errorMessageProperty().getValue() == null) {
+            try {
+                navController.navigate(new NavDestination(new ConfirmEmailView()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                navController.navigate(new NavDestination(new PaymentView()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
     }
-
-
 }

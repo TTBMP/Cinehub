@@ -3,13 +3,14 @@ package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.app.dto.ProjectionistDto;
-import com.ttbmp.cinehub.app.usecase.Request;
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 
-public class ShiftRepeatRequest extends Request {
+public class ShiftRepeatRequest extends AuthenticatedRequest {
     public static final Request.Error MISSING_EMPLOYEE = new Request.Error("Dipendente non valido");
     public static final Request.Error MISSING_START = new Request.Error("Data inizio non valido");
     public static final Request.Error MISSING_END = new Request.Error("Data fine non valida");
@@ -28,7 +29,8 @@ public class ShiftRepeatRequest extends Request {
     private LocalTime endShift;
     private HallDto hall;
 
-    public ShiftRepeatRequest(LocalDate start, LocalDate end, String option, EmployeeDto employeeDto, LocalTime startShift, LocalTime endShift, HallDto hall) {
+    public ShiftRepeatRequest(String sessionToken, LocalDate start, LocalDate end, String option, EmployeeDto employeeDto, LocalTime startShift, LocalTime endShift, HallDto hall) {
+        super(sessionToken);
         this.start = start;
         this.end = end;
         this.option = option;
@@ -118,6 +120,9 @@ public class ShiftRepeatRequest extends Request {
             addError(MISSING_HALL);
         }
         if (start.isAfter(end)) {
+            addError(PERIOD_ERROR);
+        }
+        if (startShift.isAfter(endShift)) {
             addError(PERIOD_ERROR);
         }
     }

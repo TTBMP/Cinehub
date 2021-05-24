@@ -127,7 +127,7 @@
                         </AnchorPane>
                     </content>
                 </TitledPane>
-                <Label fx:id="errorSectionLabel" alignment="CENTER" prefHeight="21.0" prefWidth="580.0">
+                <Label fx:id="errorLabel" alignment="CENTER" prefHeight="21.0" prefWidth="580.0">
                     <VBox.margin>
                         <Insets top="15.0"/>
                     </VBox.margin>

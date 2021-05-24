@@ -2,7 +2,6 @@ package com.ttbmp.cinehub.app.repository.movie;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.projection.MockProjectionRepository;
-import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
 
@@ -37,7 +36,7 @@ public class MockMovieRepository implements MovieRepository {
         return MOVIE_DATA_LIST.stream()
                 .filter(d -> d.id == movieId)
                 .findAny()
-                .map(d -> new MovieProxy(d.id, serviceLocator.getService(MovieApiService.class)))
+                .map(d -> new MovieProxy(serviceLocator, d.id))
                 .orElse(null);
     }
 
@@ -50,7 +49,7 @@ public class MockMovieRepository implements MovieRepository {
                 .flatMap(projectionMovieId -> MOVIE_DATA_LIST.stream()
                         .filter(d -> d.getId() == projectionMovieId)
                         .findAny()
-                        .map(d -> new MovieProxy(d.id, serviceLocator.getService(MovieApiService.class))))
+                        .map(d -> new MovieProxy(serviceLocator, d.id)))
                 .orElse(null);
     }
 
@@ -63,7 +62,7 @@ public class MockMovieRepository implements MovieRepository {
                 .collect(Collectors.toList());
         return MOVIE_DATA_LIST.stream()
                 .filter(d -> projectionMovieIdList.contains(d.id))
-                .map(d -> new MovieProxy(d.id, serviceLocator.getService(MovieApiService.class)))
+                .map(d -> new MovieProxy(serviceLocator, d.id))
                 .collect(Collectors.toList());
     }
 

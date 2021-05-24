@@ -47,7 +47,7 @@
                         <VBox fx:id="dateVBox" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4">
                             <children>
                                 <Label text="To:"/>
-                                <DatePicker fx:id="repeatDatePicker" showWeekNumbers="true"/>
+                                <DatePicker fx:id="repeatDatePicker" editable="false" showWeekNumbers="true"/>
                             </children>
                         </VBox>
                     </children>

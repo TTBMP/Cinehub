@@ -84,4 +84,5 @@ public class NewShiftForm {
     public void setEnd(LocalTime end) {
         this.end = end;
     }
+
 }

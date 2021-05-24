@@ -10,6 +10,16 @@ public class Cinema {
     private String address;
     private String city;
 
+    public Cinema() {
+    }
+
+    public Cinema(Integer id, String name, String address, String city) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.city = city;
+    }
+
     public String getName() {
         return name;
     }

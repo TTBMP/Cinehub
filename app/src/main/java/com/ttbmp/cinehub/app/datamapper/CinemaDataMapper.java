@@ -24,21 +24,8 @@ public class CinemaDataMapper {
         );
     }
 
-    public static Cinema mapToEntity(CinemaDto cinemaDto) {
-        return new Cinema(
-                cinemaDto.getId(),
-                cinemaDto.getName(),
-                cinemaDto.getCity(), cinemaDto.getAddress(),
-                HallDataMapper.mapToEntityList(cinemaDto.getHalList())
-        );
-    }
-
     public static List<CinemaDto> mapToDtoList(List<Cinema> cinemaList) {
         return DataMapperHelper.mapList(cinemaList, CinemaDataMapper::mapToDto);
-    }
-
-    public static List<Cinema> mapToEntityList(List<CinemaDto> cinemaListDto) {
-        return DataMapperHelper.mapList(cinemaListDto, CinemaDataMapper::mapToEntity);
     }
 
 }

@@ -16,6 +16,16 @@ public interface ProjectionDao {
     @Query("SELECT * FROM proiezione WHERE proiezione.id = :id")
     Projection getProjectionById(@Parameter(name = "id") int id) throws DaoMethodException;
 
+    @Query("SELECT * FROM proiezione, biglietto WHERE biglietto.id = :id AND proiezione.id = biglietto.id_proiezione")
+    Projection getProjectionByTicketId(@Parameter(name = "id") int ticketId) throws DaoMethodException;
+
+    @Query("SELECT * FROM proiezione WHERE proiezione.id_sala = :hallId AND proiezione.data = :date AND proiezione.inizio = :start")
+    Projection getProjectionByDateAndTimeAndHallId(
+            @Parameter(name = "date") @NotNull String date,
+            @Parameter(name = "start") @NotNull String startTime,
+            @Parameter(name = "hallId") int hallId
+    ) throws DaoMethodException;
+
     @Query("SELECT * FROM proiezione WHERE proiezione.data = :date")
     List<Projection> getProjectionListByDate(@Parameter(name = "date") @NotNull String date) throws DaoMethodException;
 
@@ -39,18 +49,11 @@ public interface ProjectionDao {
             "FROM cinemadb.turno , cinemadb.turno_proiezionista, cinemadb.proiezione " +
             "WHERE " +
             "turno.id = :id AND " +
-            "turno.id = turno_proiezionista.turno_id AND " +
-            "turno_proiezionista.sala_id = proiezione.id_sala AND " +
+            "turno.id = turno_proiezionista.id_turno AND " +
+            "turno_proiezionista.id_sala = proiezione.id_sala AND " +
             "proiezione.data = turno.data AND " +
             "proiezione.inizio BETWEEN turno.inizio AND turno.fine")
     List<Projection> getProjectionListByProjectionistShift(@Parameter(name = "id") int id) throws DaoMethodException;
-
-    @Query("SELECT * FROM proiezione WHERE proiezione.id_sala = :hallId AND proiezione.data = :date AND proiezione.inizio = :start")
-    Projection getProjectionByDateAndTimeAndHallId(
-            @Parameter(name = "date") @NotNull String date,
-            @Parameter(name = "start") @NotNull String startTime,
-            @Parameter(name = "hallId") int hallId
-    ) throws DaoMethodException;
 
     @Insert
     void insert(@NotNull Projection projection) throws DaoMethodException;
@@ -69,6 +72,5 @@ public interface ProjectionDao {
 
     @Delete
     void delete(@NotNull List<Projection> projection) throws DaoMethodException;
-
 
 }

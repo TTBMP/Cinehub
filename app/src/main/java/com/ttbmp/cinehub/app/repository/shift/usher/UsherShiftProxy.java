@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.app.repository.shift.usher;
 
+import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.LazyLoadingException;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.usher.UsherRepository;
@@ -15,9 +16,9 @@ public class UsherShiftProxy extends UsherShift {
 
     private boolean isEmployeeLoaded = false;
 
-    public UsherShiftProxy(int id, String date, String start, String end, UsherRepository usherRepository) {
+    public UsherShiftProxy(ServiceLocator serviceLocator, int id, String date, String start, String end) {
         super(id, null, date, start, end);
-        this.usherRepository = usherRepository;
+        this.usherRepository = serviceLocator.getService(UsherRepository.class);
     }
 
     @Override

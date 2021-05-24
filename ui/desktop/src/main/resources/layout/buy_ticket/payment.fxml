@@ -41,16 +41,17 @@
                         <Label text="Enter the email where the invoice arrives:" GridPane.columnIndex="3"
                                GridPane.rowIndex="0"/>
                         <Label text="Credit card expiration date:" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
-                        <TextField fx:id="emailTextField" alignment="TOP_LEFT" promptText="Insert email"
+                        <TextField fx:id="emailTextField" alignment="TOP_LEFT" promptText="prova@prova.dom"
                                    GridPane.columnIndex="4" GridPane.rowIndex="0">
                         </TextField>
-                        <DatePicker fx:id="fieldExpirationDatePicker" prefHeight="31.0" prefWidth="181.0"
-                                    promptText="Insert date" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+                        <DatePicker fx:id="fieldExpirationDatePicker" editable="false" prefHeight="31.0"
+                                    prefWidth="181.0" promptText="aaaa-mm-gg" GridPane.columnIndex="4"
+                                    GridPane.rowIndex="1"/>
                         <Label text="Credit card number:" GridPane.rowIndex="0"/>
                         <Label text="CVV:" GridPane.rowIndex="1"/>
-                        <TextField fx:id="numberOfCreditCardTextField" alignment="TOP_LEFT" promptText="Insert card"
-                                   GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                        <TextField fx:id="cvvTextField" promptText="Insert cvv" GridPane.columnIndex="1"
+                        <TextField fx:id="numberOfCreditCardTextField" alignment="TOP_LEFT"
+                                   promptText="4242424242424242" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                        <TextField fx:id="cvvTextField" promptText="123" GridPane.columnIndex="1"
                                    GridPane.rowIndex="1"/>
                     </children>
                     <VBox.margin>
@@ -71,14 +72,17 @@
                               maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
                             <children>
                                 <Text fx:id="resultPaymentText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0"
-                                      wrappingWidth="214.6708984375"/>
-                                <Label fx:id="errorSectionLabel" prefHeight="21.0" prefWidth="253.0" textFill="RED"/>
+                                      wrappingWidth="13.6708984375"/>
                             </children>
                         </HBox>
                     </center>
                     <VBox.margin>
                         <Insets bottom="16.0" left="16.0" right="16.0"/>
                     </VBox.margin>
+                    <top>
+                        <Label fx:id="errorLabel" prefHeight="49.0" prefWidth="763.0" textAlignment="CENTER"
+                               textFill="RED" BorderPane.alignment="CENTER"/>
+                    </top>
                 </BorderPane>
             </children>
         </VBox>

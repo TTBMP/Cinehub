@@ -5,6 +5,8 @@ import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.ui.Model;
 
 import java.time.temporal.WeekFields;
@@ -17,8 +19,6 @@ import java.util.stream.Collectors;
 
 public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPresenter {
 
-    private static final String ERROR = "error";
-    private static final String ERROR_TEXT = "errorText";
     private final Model model;
 
     public ManageEmployeeShiftPresenterWeb(Model model) {
@@ -45,7 +45,7 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
         var temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
         var dateSelected = shiftList.getDate();
         var cinemaSelected = shiftList.getCinemaId();
-        List<EmployeeDto> employeeList = (List<EmployeeDto>) model.getAttribute("employeeList");
+        var employeeList = (List<EmployeeDto>) model.getAttribute("employeeList");
         findShift(shiftList.getShiftDtoList());
         Map<EmployeeDto, List<ShiftDto>> employeeShiftListMap = new HashMap<>();
         for (var employee : employeeList) {
@@ -89,18 +89,17 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
 
     @Override
     public void presentSaveShift() {
-        model.addAttribute(ERROR, false);
-        model.addAttribute(ERROR, false);
+        //on the web side there is the reload of the page so you don't have to submit any changes
     }
 
     @Override
     public void presentDeleteShift() {
-        model.addAttribute(ERROR, false);
+        //on the web side there is the reload of the page so you don't have to submit any changes
     }
 
     @Override
     public void presentRepeatShift(ShiftRepeatResponse response) {
-        model.addAttribute(ERROR, false);
+        //on the web side there is the reload of the page so you don't have to submit any changes
     }
 
     @Override
@@ -109,170 +108,101 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     }
 
     @Override
+    public void presentInvalidGetCinemaListRequest(GetCinemaListRequest request) {
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
+    }
+
+    @Override
+    public void presentCinemaListNullRequest() {
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
+    }
+
+    @Override
     public void presentCreateShiftError(Throwable error) {
-        presentError(error);
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, error.getMessage());
     }
 
     @Override
     public void presentInvalidEmployeeListRequest(GetEmployeeListRequest request) {
-        if (request.getErrorList().contains(GetEmployeeListRequest.MISSING_CINEMA)) {
-            model.addAttribute(ERROR_TEXT, GetEmployeeListRequest.MISSING_CINEMA.getMessage());
-        }
-        model.addAttribute(ERROR, true);
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
     }
 
     @Override
     public void presentEmployeeListNullRequest() {
-        model.addAttribute(ERROR, true);
-        model.addAttribute(ERROR_TEXT, "Error with operation get Employee list shift");
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
     }
 
     @Override
     public void presentInvalidDeleteShiftListRequest(ShiftRequest request) {
-        model.addAttribute(ERROR, true);
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
     }
 
     @Override
     public void presentDeleteShiftNullRequest() {
-        model.addAttribute(ERROR, true);
-        model.addAttribute(ERROR_TEXT, "Error with operation delete shift");
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
     }
 
     @Override
     public void presentInvalidModifyShiftListRequest(ShiftModifyRequest request) {
-        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_SHIFT)) {
-            model.addAttribute(ERROR_TEXT, ShiftModifyRequest.MISSING_SHIFT.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_START)) {
-            model.addAttribute(ERROR_TEXT, ShiftModifyRequest.MISSING_START.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_END)) {
-            model.addAttribute(ERROR_TEXT, ShiftModifyRequest.MISSING_END.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_DATE)) {
-            model.addAttribute(ERROR_TEXT, ShiftModifyRequest.MISSING_DATE.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_HALL)) {
-            model.addAttribute(ERROR_TEXT, ShiftModifyRequest.MISSING_HALL.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_EMPLOYEE)) {
-            model.addAttribute(ERROR_TEXT, ShiftModifyRequest.MISSING_EMPLOYEE.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftModifyRequest.ERROR_TIME)) {
-            model.addAttribute(ERROR_TEXT, ShiftModifyRequest.ERROR_TIME.getMessage());
-        }
-        model.addAttribute(ERROR, true);
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
     }
 
     @Override
     public void presentModifyShiftNullRequest() {
-        model.addAttribute(ERROR, true);
-        model.addAttribute(ERROR_TEXT, "Error with operation modify shift");
-
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
     }
 
     @Override
     public void presentModifyShiftError(Throwable error) {
-        presentError(error);
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, error.getMessage());
     }
 
     @Override
     public void presentInvalidCreateShiftListRequest(CreateShiftRequest request) {
-        if (request.getErrorList().contains(CreateShiftRequest.MISSING_EMPLOYEE)) {
-            model.addAttribute(ERROR_TEXT, CreateShiftRequest.MISSING_EMPLOYEE.getMessage());
-            model.addAttribute(ERROR_TEXT, CreateShiftRequest.MISSING_EMPLOYEE.getMessage());
-        }
-        if (request.getErrorList().contains(CreateShiftRequest.MISSING_DATE)) {
-            model.addAttribute(ERROR_TEXT, CreateShiftRequest.MISSING_DATE.getMessage());
-            model.addAttribute(ERROR_TEXT, CreateShiftRequest.MISSING_DATE.getMessage());
-        }
-        if (request.getErrorList().contains(CreateShiftRequest.MISSING_START)) {
-            model.addAttribute(ERROR_TEXT, CreateShiftRequest.MISSING_START.getMessage());
-            model.addAttribute(ERROR_TEXT, CreateShiftRequest.MISSING_START.getMessage());
-        }
-        if (request.getErrorList().contains(CreateShiftRequest.MISSING_END)) {
-            model.addAttribute(ERROR_TEXT, CreateShiftRequest.MISSING_END.getMessage());
-            model.addAttribute(ERROR_TEXT, CreateShiftRequest.MISSING_END.getMessage());
-        }
-        if (request.getErrorList().contains(CreateShiftRequest.DATE_ERROR)) {
-            model.addAttribute(ERROR_TEXT, CreateShiftRequest.DATE_ERROR.getMessage());
-            model.addAttribute(ERROR_TEXT, CreateShiftRequest.DATE_ERROR.getMessage());
-        }
-        model.addAttribute(ERROR, true);
-        model.addAttribute(ERROR, true);
-
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
     }
 
     @Override
     public void presentCreateShiftNullRequest() {
-        model.addAttribute(ERROR_TEXT, "Error with operation assign shift");
-        model.addAttribute(ERROR_TEXT, "Error with operation modify shift");
-        model.addAttribute(ERROR, true);
-        model.addAttribute(ERROR, true);
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
     }
 
     @Override
     public void presentInvalidRepeatedShiftListRequest(ShiftRepeatRequest request) {
-        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_START_SHIFT)) {
-            model.addAttribute(ERROR_TEXT, ShiftRepeatRequest.MISSING_START_SHIFT.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_START)) {
-            model.addAttribute(ERROR_TEXT, ShiftRepeatRequest.MISSING_START.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_END)) {
-            model.addAttribute(ERROR_TEXT, ShiftRepeatRequest.MISSING_END.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_OPTION)) {
-            model.addAttribute(ERROR_TEXT, ShiftRepeatRequest.MISSING_OPTION.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_END_SHIFT)) {
-            model.addAttribute(ERROR_TEXT, ShiftRepeatRequest.MISSING_END_SHIFT.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_EMPLOYEE)) {
-            model.addAttribute(ERROR_TEXT, ShiftRepeatRequest.MISSING_EMPLOYEE.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_HALL)) {
-            model.addAttribute(ERROR_TEXT, ShiftRepeatRequest.MISSING_HALL.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftRepeatRequest.PERIOD_ERROR)) {
-            model.addAttribute(ERROR_TEXT, ShiftRepeatRequest.PERIOD_ERROR.getMessage());
-        }
-        model.addAttribute(ERROR, true);
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
 
     }
 
     @Override
     public void presentRepeatedShiftNullRequest() {
-        model.addAttribute(ERROR_TEXT, "Error with operation save repeated shift");
-        model.addAttribute(ERROR, true);
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
     }
 
     @Override
     public void presentInvalidGetShiftListRequest(GetShiftListRequest request) {
-        if (request.getErrorList().contains(GetShiftListRequest.MISSING_START)) {
-            model.addAttribute(ERROR_TEXT, GetShiftListRequest.MISSING_START.getMessage());
-        }
-        if (request.getErrorList().contains(GetShiftListRequest.MISSING_CINEMA)) {
-            model.addAttribute(ERROR_TEXT, GetShiftListRequest.MISSING_CINEMA.getMessage());
-        }
-        model.addAttribute(ERROR, true);
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
     }
 
     @Override
     public void presentGetShiftListNullRequest() {
-        model.addAttribute(ERROR_TEXT, "Error with operation get Shift List");
-        model.addAttribute(ERROR, true);
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
     }
 
     @Override
     public void presentRepositoryError(RepositoryException e) {
-        presentError(e);
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
     }
 
-    private void presentError(Throwable error) {
-        model.addAttribute(ERROR, true);
-        model.addAttribute(ERROR_TEXT, error.getMessage());
+    @Override
+    public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e) {
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
     }
+
+    @Override
+    public void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e) {
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
+    }
+
 
     private void findEmployee(List<EmployeeDto> employeeList) {
         if (model.getAttribute("selectedEmployeeId") != null) {

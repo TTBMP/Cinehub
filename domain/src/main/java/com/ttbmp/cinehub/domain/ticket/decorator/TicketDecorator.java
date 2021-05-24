@@ -10,7 +10,7 @@ public abstract class TicketDecorator extends Ticket {
     protected final Ticket ticket;
 
     protected TicketDecorator(Ticket ticket) {
-        super(ticket.getId(), ticket.getPrice(), ticket.getOwner(), ticket.getSeat());
+        super(ticket.getId(), ticket.getPrice(), ticket.getOwner(), ticket.getSeat(), ticket.getProjection());
         this.ticket = ticket;
     }
 

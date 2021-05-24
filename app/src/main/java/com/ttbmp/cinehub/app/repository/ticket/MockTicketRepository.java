@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.app.repository.ticket;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
-import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
-import com.ttbmp.cinehub.app.repository.user.UserRepository;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
@@ -28,29 +28,31 @@ public class MockTicketRepository implements TicketRepository {
         return TICKET_DATA_LIST;
     }
 
-
     @Override
-    public synchronized void saveTicket(Ticket ticket, int projectionId) {
+    public synchronized void saveTicket(Ticket ticket) {
         TICKET_DATA_LIST.add(new TicketData(
                 counterTicketId++,
                 ticket.getPrice(),
                 ticket.getOwner().getId(),
-                projectionId,
+                ticket.getProjection().getId(),
                 ticket.getSeat().getId()
-        ));
 
+        ));
+    }
+
+    @Override
+    public List<Ticket> getTicketList(Customer customer) throws RepositoryException {
+        return TICKET_DATA_LIST.stream()
+                .filter(d -> d.userId.equals(customer.getId()))
+                .map(d -> new TicketProxy(serviceLocator, d.id, d.price))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Ticket> getTicketList(Projection projection) {
         return TICKET_DATA_LIST.stream()
                 .filter(d -> d.projectionId == projection.getId())
-                .map(d -> new TicketProxy(
-                        d.id,
-                        d.price,
-                        serviceLocator.getService(UserRepository.class),
-                        serviceLocator.getService(SeatRepository.class)
-                ))
+                .map(d -> new TicketProxy(serviceLocator, d.id, d.price))
                 .collect(Collectors.toList());
     }
 
@@ -69,7 +71,6 @@ public class MockTicketRepository implements TicketRepository {
             this.projectionId = projectionId;
             this.seatId = seatId;
         }
-
 
         public int getId() {
             return id;

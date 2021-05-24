@@ -27,25 +27,8 @@ public class ProjectionDataMapper {
         );
     }
 
-    public static Projection mapToEntity(ProjectionDto projectionDto) {
-        return new Projection(
-                projectionDto.getId(),
-                projectionDto.getDate(),
-                projectionDto.getStartTime(),
-                MovieDataMapper.mapToEntity(projectionDto.getMovieDto()),
-                HallDataMapper.mapToEntity(projectionDto.getHallDto()),
-                projectionDto.getProjectionist(),
-                TicketDataMapper.mapToEntityList(projectionDto.getListTicket()),
-                projectionDto.getBasePrice()
-        );
-    }
-
     public static List<ProjectionDto> mapToDtoList(List<Projection> projectionList) {
         return DataMapperHelper.mapList(projectionList, ProjectionDataMapper::mapToDto);
-    }
-
-    public static List<Projection> mapToEntityList(List<ProjectionDto> projectionDtoList) {
-        return DataMapperHelper.mapList(projectionDtoList, ProjectionDataMapper::mapToEntity);
     }
 
 }

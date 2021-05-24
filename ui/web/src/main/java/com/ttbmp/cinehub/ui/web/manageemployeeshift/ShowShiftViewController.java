@@ -3,18 +3,18 @@ package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetCinemaListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetEmployeeListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetShiftListRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.GetCinemaForm;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewShiftForm;
+import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.beans.PropertyEditorSupport;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -36,30 +36,38 @@ public class ShowShiftViewController {
     }
 
     @GetMapping("/manage_employee_shift")
-    public String populateCinema(Model model) {
+    public String populateCinema(
+            HttpServletResponse response,
+            @CookieValue(value = "session", required = false) String sessionToken,
+            Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-        useCase.getCinemaList();
+        useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         model.addAttribute("cinemaSelected", false);
         var form = new GetCinemaForm();
         model.addAttribute("getShiftListRequest", form);
-        return "/manage_employee_shift";
+        return ErrorHelper.returnView(response, model, "manage_employee_shift");
     }
 
     @PostMapping("/manage_employee_shift")
-    public String loadShift(@ModelAttribute("getShiftListRequest") GetCinemaForm form, Model model) {
+    public String loadShift(
+            HttpServletResponse response,
+            @CookieValue(value = "session") String sessionToken,
+            @ModelAttribute("getShiftListRequest") GetCinemaForm form, Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", form.getCinemaId());
-        useCase.getCinemaList();
+        useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
         model.addAttribute("cinemaSelected", true);
-        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema));
-        useCase.getShiftList(new GetShiftListRequest(selectedCinema,
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
+        useCase.getShiftList(new GetShiftListRequest(
+                sessionToken,
+                selectedCinema,
                 form.getStart().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
                 form.getStart().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
         ));
         model.addAttribute("date", form.getStart());
         model.addAttribute("selectedShift", new NewShiftForm());
-        return "/manage_employee_shift";
+        return ErrorHelper.returnView(response, model, "manage_employee_shift");
     }
 
 }

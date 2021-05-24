@@ -2,7 +2,6 @@ package com.ttbmp.cinehub.app.repository.movie;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
@@ -25,14 +24,14 @@ public class JdbcMovieRepository implements MovieRepository {
 
     @Override
     public Movie getMovie(Integer movieId) {
-        return new MovieProxy(movieId, serviceLocator.getService(MovieApiService.class));
+        return new MovieProxy(serviceLocator, movieId);
     }
 
     @Override
     public Movie getMovie(Projection projection) throws RepositoryException {
         try {
             var movie = getMovieDao().getMovieByProjection(projection.getId());
-            return new MovieProxy(movie.getId(), serviceLocator.getService(MovieApiService.class));
+            return new MovieProxy(serviceLocator, movie.getId());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
@@ -43,7 +42,7 @@ public class JdbcMovieRepository implements MovieRepository {
         try {
             var movieList = getMovieDao().getMovieByData(localDate);
             return movieList.stream()
-                    .map(movie -> new MovieProxy(movie.getId(), serviceLocator.getService(MovieApiService.class)))
+                    .map(movie -> new MovieProxy(serviceLocator, movie.getId()))
                     .collect(Collectors.toList());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());

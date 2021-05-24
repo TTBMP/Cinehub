@@ -4,16 +4,12 @@ import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.employee.MockEmployeeRepository;
-import com.ttbmp.cinehub.app.repository.employee.projectionist.MockProjectionistRepository;
-import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
-import com.ttbmp.cinehub.app.repository.employee.usher.MockUsherRepository;
-import com.ttbmp.cinehub.app.repository.employee.usher.UsherRepository;
-import com.ttbmp.cinehub.app.repository.hall.HallRepository;
-import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.MockProjectionistShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftProxy;
 import com.ttbmp.cinehub.app.repository.shift.usher.UsherShiftProxy;
+import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
 import com.ttbmp.cinehub.domain.employee.Employee;
+import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
@@ -38,12 +34,26 @@ public class MockShiftRepository implements ShiftRepository {
         for (var date = LocalDate.now().minusDays(15); date.isBefore(LocalDate.now().plusDays(46)); date = date.plusDays(1)) {
             if (!date.getDayOfWeek().equals(DayOfWeek.MONDAY) && !date.getDayOfWeek().equals(DayOfWeek.TUESDAY)) {
                 var finalDate = date.toString();
-                MockUsherRepository.getUsherDataList().stream()
-                        .map(MockUsherRepository.UsherData::getId)
+                MockEmployeeRepository.getEmployeeDataList().stream()
+                        .map(MockEmployeeRepository.EmployeeData::getUserId)
+                        .filter(userId -> MockUserRepository.getUserDataList().stream()
+                                .filter(d -> d.getId().equals(userId))
+                                .findAny()
+                                .map(MockUserRepository.UserData::getRoleList)
+                                .orElse(new ArrayList<>())
+                                .contains(Role.USHER_ROLE)
+                        )
                         .forEach(usherId -> SHIFT_DATA_LIST.add(new ShiftData(shiftIdCounter++, finalDate, start, end, usherId)));
-                MockProjectionistRepository.getProjectionistDataList().stream()
-                        .map(MockProjectionistRepository.ProjectionistData::getId)
-                        .forEach(projectionistId -> SHIFT_DATA_LIST.add(new ShiftData(shiftIdCounter++, finalDate, start, end, projectionistId)));
+                MockEmployeeRepository.getEmployeeDataList().stream()
+                        .map(MockEmployeeRepository.EmployeeData::getUserId)
+                        .filter(userId -> MockUserRepository.getUserDataList().stream()
+                                .filter(d -> d.getId().equals(userId))
+                                .findAny()
+                                .map(MockUserRepository.UserData::getRoleList)
+                                .orElse(new ArrayList<>())
+                                .contains(Role.PROJECTIONIST_ROLE)
+                        )
+                        .forEach(usherId -> SHIFT_DATA_LIST.add(new ShiftData(shiftIdCounter++, finalDate, start, end, usherId)));
             }
         }
     }
@@ -104,7 +114,7 @@ public class MockShiftRepository implements ShiftRepository {
         for (var d : SHIFT_DATA_LIST) {
             if (employeeRepository.getEmployee(d.employeeId).getCinema().getId() == cinemaId &&
                     LocalDate.parse(d.date).isAfter(start) &&
-                    LocalDate.parse(d.date).isBefore(end)) {
+                    LocalDate.parse(d.date).isBefore(end.plusDays(1))) {
                 var shift = new ShiftFactory().createShift(d);
                 list.add(shift);
             }
@@ -213,32 +223,17 @@ public class MockShiftRepository implements ShiftRepository {
 
     class ShiftFactory {
         Shift createShift(ShiftData shiftData) {
-            var employeeRole = MockEmployeeRepository.getEmployeeDataList().stream()
-                    .filter(d -> d.getUserId().equals(shiftData.employeeId))
-                    .map(MockEmployeeRepository.EmployeeData::getRole)
-                    .collect(Collectors.toList())
-                    .get(0);
-            switch (employeeRole) {
-                case PROJECTIONIST:
-                    return new ProjectionistShiftProxy(
-                            shiftData.id,
-                            shiftData.date,
-                            shiftData.start,
-                            shiftData.end,
-                            serviceLocator.getService(ProjectionistRepository.class),
-                            serviceLocator.getService(HallRepository.class),
-                            serviceLocator.getService(ProjectionRepository.class)
-                    );
-                case USHER:
-                    return new UsherShiftProxy(
-                            shiftData.id,
-                            shiftData.date,
-                            shiftData.start,
-                            shiftData.end,
-                            serviceLocator.getService(UsherRepository.class)
-                    );
-                default:
-                    throw new IllegalStateException("Unexpected value: " + employeeRole);
+            var roleList = MockUserRepository.getUserDataList().stream()
+                    .filter(d -> d.getId().equals(shiftData.employeeId))
+                    .findAny()
+                    .map(MockUserRepository.UserData::getRoleList)
+                    .orElse(new ArrayList<>());
+            if (roleList.contains(Role.PROJECTIONIST_ROLE)) {
+                return new ProjectionistShiftProxy(serviceLocator, shiftData.id, shiftData.date, shiftData.start, shiftData.end);
+            } else if (roleList.contains(Role.USHER_ROLE)) {
+                return new UsherShiftProxy(serviceLocator, shiftData.id, shiftData.date, shiftData.start, shiftData.end);
+            } else {
+                throw new IllegalStateException("Unexpected user: " + shiftData.employeeId);
             }
         }
     }

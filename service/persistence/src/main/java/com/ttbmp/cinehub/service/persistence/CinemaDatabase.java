@@ -24,6 +24,7 @@ import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DataSourceMeth
                 Shift.class,
                 Ticket.class,
                 User.class,
+                Role.class,
                 Seat.class,
                 Employee.class,
                 ProjectionistShift.class
@@ -43,6 +44,8 @@ public interface CinemaDatabase extends JdbcDataSource {
     TicketDao getTicketDao() throws DataSourceMethodException;
 
     UserDao getUserDao() throws DataSourceMethodException;
+
+    RoleDao getRoleDao() throws DataSourceMethodException;
 
     SeatDao getSeatDao() throws DataSourceMethodException;
 

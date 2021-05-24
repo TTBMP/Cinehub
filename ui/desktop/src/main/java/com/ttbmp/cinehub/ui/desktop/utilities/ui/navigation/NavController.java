@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation;
 
+import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.stage.DialogStage;
 import javafx.stage.Stage;
 
@@ -14,11 +15,45 @@ import java.util.Objects;
 public class NavController {
 
     private final Deque<NavDestination> navBackStack = new ArrayDeque<>();
-    Stage stage;
+    private Stage stage;
     private NavDestination currentDestination = null;
 
     public NavController(Stage stage) {
         this.stage = stage;
+    }
+
+    public NavDestination getCurrentDestination() {
+        return currentDestination;
+    }
+
+    public Class<? extends Activity> getCurrentDestinationActivityClass() {
+        return currentDestination.activity.getClass();
+    }
+
+    public Class<? extends Activity> getPreviousDestinationActivityClass() {
+        for (var destination : navBackStack) {
+            if (destination.activity != currentDestination.activity) {
+                return destination.activity.getClass();
+            }
+        }
+        return null;
+    }
+
+    public void open(NavActivityDestination destination) throws IOException {
+        Objects.requireNonNull(destination);
+        navBackStack.clear();
+        currentDestination = destination;
+        destination.initialize(this);
+        navBackStack.push(destination);
+        stage.setScene(destination.scene);
+    }
+
+    public void openInDialog(NavDestination destination, String title) throws IOException {
+        Objects.requireNonNull(destination);
+        Objects.requireNonNull(title);
+        var dialogNavController = new NavController(new DialogStage(stage, title));
+        dialogNavController.navigate(new NavActivityDestination(currentDestination.activity, destination.view));
+        dialogNavController.stage.show();
     }
 
     public void navigate(NavDestination destination) throws IOException {
@@ -35,19 +70,7 @@ public class NavController {
         stage.setScene(destination.scene);
     }
 
-    public void openInDialog(NavDestination destination, String title) throws IOException {
-        Objects.requireNonNull(destination);
-        Objects.requireNonNull(title);
-        var dialogNavController = new NavController(new DialogStage(stage, title));
-        dialogNavController.navigate(new NavActivityDestination(currentDestination.activity, destination.view));
-        dialogNavController.stage.show();
-    }
-
-    public NavDestination getCurrentDestination() {
-        return currentDestination;
-    }
-
-    public void popBackStack() throws IOException {
+    public void navBack() throws IOException {
         if (!navBackStack.isEmpty()) {
             navBackStack.pop();
             if (navBackStack.isEmpty()) {
@@ -55,7 +78,6 @@ public class NavController {
             } else {
                 var destination = navBackStack.pop();
                 navigate(destination);
-                currentDestination = destination;
             }
         }
     }

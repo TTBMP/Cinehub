@@ -4,9 +4,10 @@ import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftRepository;
-import com.ttbmp.cinehub.app.service.authentication.AuthenticationException;
-import com.ttbmp.cinehub.app.service.authentication.AuthenticationService;
-import com.ttbmp.cinehub.app.usecase.Request;
+import com.ttbmp.cinehub.app.service.security.SecurityService;
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
+import com.ttbmp.cinehub.domain.security.Permission;
 
 /**
  * @author Fabio Buracchi
@@ -17,20 +18,20 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
 
     private final EmployeeRepository employeeRepository;
     private final ProjectionistShiftRepository projectionistShiftRepository;
-    private final AuthenticationService authenticationService;
+    private final SecurityService securityService;
 
     public ViewPersonalScheduleController(ServiceLocator serviceLocator, ViewPersonalSchedulePresenter presenter) {
         this.presenter = presenter;
-        this.authenticationService = serviceLocator.getService(AuthenticationService.class);
         this.employeeRepository = serviceLocator.getService(EmployeeRepository.class);
         this.projectionistShiftRepository = serviceLocator.getService(ProjectionistShiftRepository.class);
+        this.securityService = serviceLocator.getService(SecurityService.class);
     }
 
     public void getShiftList(ShiftListRequest request) {
+        var permissions = new Permission[]{Permission.GET_OWN_SHIFT_LIST};
         try {
-            Request.validate(request);
-            var userId = authenticationService.signIn("", "").getUserId();
-            var employee = employeeRepository.getEmployee(userId);
+            AuthenticatedRequest.validate(request, securityService, permissions);
+            var employee = employeeRepository.getEmployee(request.getUserId());
             presenter.presentGetShiftList(new ShiftListReply(
                     employee.getShiftListBetween(request.getStart(), request.getEnd())
             ));
@@ -38,8 +39,10 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
             presenter.presentShiftListNullRequest();
         } catch (Request.InvalidRequestException e) {
             presenter.presentInvalidShiftListRequest(request);
-        } catch (AuthenticationException e) {
-            presenter.presentAuthenticationError(e);
+        } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
+            presenter.presentUnauthorizedError(e);
+        } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
+            presenter.presentUnauthenticatedError(e);
         } catch (RepositoryException e) {
             presenter.presentRepositoryError(e);
         }
@@ -47,14 +50,19 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
 
     @Override
     public void getShiftProjectionList(ProjectionListRequest request) {
+        var permissions = new Permission[]{Permission.GET_OWN_SHIFT_PROJECTION_LIST};
         try {
-            Request.validate(request);
+            AuthenticatedRequest.validate(request, securityService, permissions);
             var shift = projectionistShiftRepository.getProjectionistShift(request.getProjectionistShiftId());
             presenter.presentGetProjectionList(new ProjectionListReply(shift.getProjectionList()));
         } catch (Request.NullRequestException e) {
             presenter.presentProjectionListNullRequest();
         } catch (Request.InvalidRequestException e) {
             presenter.presentInvalidProjectionListRequest(request);
+        } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
+            presenter.presentUnauthorizedError(e);
+        } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
+            presenter.presentUnauthenticatedError(e);
         } catch (RepositoryException e) {
             presenter.presentRepositoryError(e);
         }

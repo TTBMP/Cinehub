@@ -3,8 +3,10 @@ package com.ttbmp.cinehub.ui.desktop.manageshift;
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetCinemaListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetEmployeeListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetShiftListRequest;
+import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.manageshift.components.ComboBoxCinemaValueFactory;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.Day;
@@ -67,7 +69,7 @@ public class ShowShiftViewController extends ViewController {
 
         errorLabel.textProperty().bind(viewModel.errorDaoProperty());
 
-        activity.getUseCase(ManageEmployeesShiftUseCase.class).getCinemaList();
+        activity.getUseCase(ManageEmployeesShiftUseCase.class).getCinemaList(new GetCinemaListRequest(CinehubApplication.getSessionToken()));
         cinemaComboBox.setItems(viewModel.getCinemaList());
 
         shiftTableView.setSelectionModel(null);
@@ -75,7 +77,8 @@ public class ShowShiftViewController extends ViewController {
         cinemaComboBox.setButtonCell(new ComboBoxCinemaValueFactory(null));
         cinemaComboBox.setCellFactory(ComboBoxCinemaValueFactory::new);
         cinemaComboBox.valueProperty().bindBidirectional(viewModel.selectedCinemaProperty());
-        cinemaComboBox.setValue(cinemaComboBox.getItems().get(0));
+
+        cinemaComboBox.getSelectionModel().selectFirst();
 
         periodDatePicker.valueProperty().bindBidirectional(viewModel.selectedWeekProperty());
 
@@ -83,11 +86,13 @@ public class ShowShiftViewController extends ViewController {
 
         activity.getUseCase((ManageEmployeesShiftUseCase.class)).getEmployeeList(
                 new GetEmployeeListRequest(
+                        CinehubApplication.getSessionToken(),
                         viewModel.getSelectedCinema()
                 ));
 
         activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
                 new GetShiftListRequest(
+                        CinehubApplication.getSessionToken(),
                         viewModel.getSelectedCinema(),
                         viewModel.getSelectedWeek().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
                         viewModel.getSelectedWeek().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
@@ -101,6 +106,7 @@ public class ShowShiftViewController extends ViewController {
 
         periodDatePicker.setOnAction(a -> activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
                 new GetShiftListRequest(
+                        CinehubApplication.getSessionToken(),
                         viewModel.getSelectedCinema(),
                         viewModel.getSelectedWeek().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
                         viewModel.getSelectedWeek().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
@@ -109,11 +115,13 @@ public class ShowShiftViewController extends ViewController {
         cinemaComboBox.setOnAction(a -> {
             activity.getUseCase((ManageEmployeesShiftUseCase.class)).getEmployeeList(
                     new GetEmployeeListRequest(
+                            CinehubApplication.getSessionToken(),
                             viewModel.getSelectedCinema()
                     ));
 
             activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
                     new GetShiftListRequest(
+                            CinehubApplication.getSessionToken(),
                             viewModel.getSelectedCinema(),
                             viewModel.getSelectedWeek().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
                             viewModel.getSelectedWeek().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))

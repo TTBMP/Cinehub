@@ -98,4 +98,8 @@ public class Projection {
         this.basePrice = basePrice;
     }
 
+    public boolean isBooked(Seat seat) {
+        return getTicketList().stream().anyMatch(t -> t.getSeat().getId() == seat.getId());
+    }
+
 }

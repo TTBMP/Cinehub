@@ -15,28 +15,13 @@ public class BuyTicketHandler implements BuyTicketUseCase {
     }
 
     @Override
-    public void pay(PaymentRequest request) {
-        buyTicketController.pay(request);
+    public void getMovieList(MovieListRequest request) {
+        buyTicketController.getMovieList(request);
     }
 
     @Override
-    public void getListMovie(MovieListRequest request) {
-        buyTicketController.getListMovie(request);
-    }
-
-    @Override
-    public void createTicket(TicketRequest request) {
-        buyTicketController.createTicket(request);
-    }
-
-    @Override
-    public void getListCinema(CinemaListRequest request) {
-        buyTicketController.getListCinema(request);
-    }
-
-    @Override
-    public void getCinema(CinemaInformationRequest request) {
-        buyTicketController.getCinema(request);
+    public void getCinemaList(CinemaListRequest request) {
+        buyTicketController.getCinemaList(request);
     }
 
     @Override
@@ -45,13 +30,14 @@ public class BuyTicketHandler implements BuyTicketUseCase {
     }
 
     @Override
-    public void getListOfSeat(CinemaInformationRequest request) {
-        buyTicketController.getListOfSeat(request);
+    public void getSeatList(SeatListRequest request) {
+        buyTicketController.getSeatList(request);
     }
 
+
     @Override
-    public void getProjection(ProjectionRequest request) {
-        buyTicketController.getProjection(request);
+    public void pay(PaymentRequest request) {
+        buyTicketController.pay(request);
     }
 
 }

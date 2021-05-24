@@ -3,12 +3,13 @@ package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.app.dto.ProjectionistDto;
-import com.ttbmp.cinehub.app.usecase.Request;
+import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class ShiftModifyRequest extends Request {
+public class ShiftModifyRequest extends AuthenticatedRequest {
     public static final Request.Error MISSING_SHIFT = new Request.Error("Shift non valido");
     public static final Request.Error MISSING_DATE = new Request.Error("Data non valido");
     public static final Request.Error MISSING_START = new Request.Error("Inizio non valido");
@@ -24,7 +25,8 @@ public class ShiftModifyRequest extends Request {
     private LocalTime end;
     private HallDto hall;
 
-    public ShiftModifyRequest(EmployeeDto employeeDto, int shiftId, LocalDate date, LocalTime start, LocalTime end, HallDto hall) {
+    public ShiftModifyRequest(String sessionToken, EmployeeDto employeeDto, int shiftId, LocalDate date, LocalTime start, LocalTime end, HallDto hall) {
+        super(sessionToken);
         this.employeeDto = employeeDto;
         this.shiftId = shiftId;
         this.date = date;

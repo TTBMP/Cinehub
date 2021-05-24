@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.app.repository.hall;
 
+import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.LazyLoadingException;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
@@ -17,9 +18,9 @@ public class HallProxy extends Hall {
 
     private boolean isSeatListLoaded = false;
 
-    public HallProxy(int id, SeatRepository seatRepository, String name) {
+    public HallProxy(ServiceLocator serviceLocator, int id, String name) {
         super(id, null, name);
-        this.seatRepository = seatRepository;
+        this.seatRepository = serviceLocator.getService(SeatRepository.class);
     }
 
     @Override

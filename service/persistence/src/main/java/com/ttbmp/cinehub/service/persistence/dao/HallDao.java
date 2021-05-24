@@ -24,8 +24,8 @@ public interface HallDao {
     Hall getHallByProjectionId(@Parameter(name = "projectionId") int projectionId) throws DaoMethodException;
 
     @Query("SELECT * FROM sala WHERE sala.id IN " +
-            "(SELECT turno_proiezionista.sala_id FROM turno_proiezionista WHERE turno_proiezionista.turno_id = :projectionistShift)")
-    Hall getHallByProjectionistShift(@Parameter(name = "projectionistShift") int projectionistShift) throws DaoMethodException;
+            "(SELECT turno_proiezionista.id_sala FROM turno_proiezionista WHERE turno_proiezionista.id_turno = :id)")
+    Hall getHallByProjectionistShift(@Parameter(name = "id") int projectionistShiftId) throws DaoMethodException;
 
     @Insert
     void insert(@NotNull Hall hall) throws DaoMethodException;

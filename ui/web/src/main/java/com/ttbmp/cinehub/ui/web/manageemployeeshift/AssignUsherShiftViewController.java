@@ -4,13 +4,16 @@ import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.CreateShiftRequest;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetCinemaListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetEmployeeListRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewShiftForm;
+import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.beans.PropertyEditorSupport;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -18,10 +21,7 @@ import java.time.format.DateTimeFormatter;
 @Controller
 public class AssignUsherShiftViewController {
 
-    private static final String ERROR = "error";
     private static final String ASSIGN_REQUEST = "assignRequest";
-    private static final String SHIFT_ASSIGNED = "/shift_assigned";
-
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -35,40 +35,42 @@ public class AssignUsherShiftViewController {
     }
 
     @GetMapping("/assign_usher_shift")
-    public String assignUsherShift(@RequestParam(value = "idCinema") int cinemaId, Model model) {
+    public String assignUsherShift(
+            HttpServletResponse response,
+            @CookieValue(value = "session") String sessionToken,
+            @RequestParam(value = "idCinema") int cinemaId, Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
-        useCase.getCinemaList();
+        useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var shiftRequest = new NewShiftForm();
         model.addAttribute(ASSIGN_REQUEST, shiftRequest);
-        return "/assign_usher_shift";
+        return ErrorHelper.returnView(response, model, "assign_usher_shift");
     }
 
     @PostMapping("/assign_usher_shift")
-    public String assignUshShift(@RequestParam(value = "idCinema") int cinemaId,
-                                 @ModelAttribute(ASSIGN_REQUEST) NewShiftForm request,
-                                 Model model) {
-
+    public String assignUshShift(
+            HttpServletResponse response,
+            @CookieValue(value = "session") String sessionToken,
+            @RequestParam(value = "idCinema") int cinemaId,
+            @ModelAttribute(ASSIGN_REQUEST) NewShiftForm request,
+            Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
-        useCase.getCinemaList();
+        useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         useCase.createShift(new CreateShiftRequest(
+                sessionToken,
                 request.getEmployee().getId(),
                 LocalDate.parse(request.getDate()),
                 request.getStart(),
                 request.getEnd())
         );
-        var error = (boolean) model.getAttribute(ERROR);
-        if (!error) {
-            return SHIFT_ASSIGNED;
-        }
-        return "/assign_usher_shift";
-
+        return ErrorHelper.returnView(response, model, "shift_assigned");
     }
+
 }

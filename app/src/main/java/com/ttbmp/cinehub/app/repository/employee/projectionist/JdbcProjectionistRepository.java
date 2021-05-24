@@ -2,9 +2,6 @@ package com.ttbmp.cinehub.app.repository.employee.projectionist;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
-import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
-import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.employee.Projectionist;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
@@ -28,12 +25,7 @@ public class JdbcProjectionistRepository implements ProjectionistRepository {
     public Projectionist getProjectionist(Projection projection) throws RepositoryException {
         try {
             var employee = getProjectionistDao().getProjectionistByProjectionId(projection.getId());
-            return new ProjectionistProxy(
-                    employee.getIdUser(),
-                    serviceLocator.getService(UserRepository.class),
-                    serviceLocator.getService(CinemaRepository.class),
-                    serviceLocator.getService(ShiftRepository.class)
-            );
+            return new ProjectionistProxy(serviceLocator, employee.getIdUser());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
@@ -43,12 +35,7 @@ public class JdbcProjectionistRepository implements ProjectionistRepository {
     public Projectionist getProjectionist(ProjectionistShift projectionistShift) throws RepositoryException {
         try {
             var employee = getProjectionistDao().getProjectionistByProjectionistShift(projectionistShift.getId());
-            return new ProjectionistProxy(
-                    employee.getIdUser(),
-                    serviceLocator.getService(UserRepository.class),
-                    serviceLocator.getService(CinemaRepository.class),
-                    serviceLocator.getService(ShiftRepository.class)
-            );
+            return new ProjectionistProxy(serviceLocator, employee.getIdUser());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
@@ -65,4 +52,5 @@ public class JdbcProjectionistRepository implements ProjectionistRepository {
         }
         return projectionistDao;
     }
+
 }
