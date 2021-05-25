@@ -45,6 +45,7 @@ public class ViewPersonalSchedulePresenterWeb implements ViewPersonalSchedulePre
             ));
             date = date.plusDays(1);
         }
+        model.addAttribute("employee", result.getEmployeeDto());
         model.addAttribute("calendarDayList", calendarDayList);
     }
 
@@ -60,8 +61,7 @@ public class ViewPersonalSchedulePresenterWeb implements ViewPersonalSchedulePre
 
     @Override
     public void presentGetProjectionList(ProjectionListReply result) {
-        var projectionForm = new ProjectionListDto(result.getProjectionDtoList());
-        model.addAttribute("form", projectionForm);
+        model.addAttribute("projections", result.getProjectionDtoList());
     }
 
     @Override
