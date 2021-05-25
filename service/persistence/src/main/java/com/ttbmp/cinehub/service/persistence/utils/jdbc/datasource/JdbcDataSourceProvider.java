@@ -21,9 +21,12 @@ public class JdbcDataSourceProvider {
 
     public static <T extends JdbcDataSource> T getDataSource(@NotNull Class<T> dataSourceClass)
             throws DataSourceClassException, SQLException, ClassNotFoundException {
-
-        DATA_SOURCE_INSTANCE_MAP.putIfAbsent(dataSourceClass, createDataSource(dataSourceClass));
-        return dataSourceClass.cast(DATA_SOURCE_INSTANCE_MAP.get(dataSourceClass));
+        var result = DATA_SOURCE_INSTANCE_MAP.get(dataSourceClass);
+        if (result == null) {
+            result = createDataSource(dataSourceClass);
+            DATA_SOURCE_INSTANCE_MAP.put(dataSourceClass, result);
+        }
+        return dataSourceClass.cast(result);
     }
 
     private static <T extends JdbcDataSource> T createDataSource(@NotNull Class<T> dataSourceClass)
