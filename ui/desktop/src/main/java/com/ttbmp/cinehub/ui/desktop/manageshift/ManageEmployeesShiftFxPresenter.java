@@ -76,14 +76,14 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         var temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
         var employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
         employeeShiftWeeks.forEach(e -> {
-                    if (e.getEmployeeDto().getId().equals(savedShift.getEmployeeId())
-                            && savedShift.getDate().get(temporalField) == viewModel.getSelectedWeek().get(temporalField)
-                            && savedShift.getDate().getYear() == viewModel.getSelectedWeek().getYear()) {
-                        e.getWeekMap().get(savedShift.getDate().getDayOfWeek())
-                                .getShiftList()
-                                .add(savedShift);
-                    }
-                });
+            if (e.getEmployeeDto().getId().equals(savedShift.getEmployeeId())
+                    && savedShift.getDate().get(temporalField) == viewModel.getSelectedWeek().get(temporalField)
+                    && savedShift.getDate().getYear() == viewModel.getSelectedWeek().getYear()) {
+                e.getWeekMap().get(savedShift.getDate().getDayOfWeek())
+                        .getShiftList()
+                        .add(savedShift);
+            }
+        });
         viewModel.getEmployeeShiftWeekList().setAll(employeeShiftWeeks);
     }
 

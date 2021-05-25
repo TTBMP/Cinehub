@@ -13,7 +13,6 @@ import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.stream.Collectors;
 
 /**
  * @author Massimo Mazzetti

@@ -28,7 +28,7 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     @Override
     public void presentEmployeeList(GetEmployeeListResponse response) {
         var employeeList = new EmployeeListDto(response.getEmployeeDtoList());
-        model.addAttribute("employeeList",employeeList.getEmployeeList());
+        model.addAttribute("employeeList", employeeList.getEmployeeList());
         model.addAttribute("projectionistList", employeeList.getEmployeeList().stream()
                 .filter(employeeDto -> employeeDto.getClass()
                         .equals(ProjectionistDto.class))
@@ -212,7 +212,6 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
             }
         }
     }
-
 
 
 }

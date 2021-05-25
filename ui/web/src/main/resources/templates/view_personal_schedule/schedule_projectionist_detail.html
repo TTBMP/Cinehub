@@ -25,7 +25,8 @@
     <hr/>
     <div class="row pb-3">
         <div class="col">
-            <span class="h5" th:text="${'Working in the hall ' + projections[0].hallDto.id}">Working in the hall hall</span>
+            <span class="h5"
+                  th:text="${'Working in the hall ' + projections[0].hallDto.id}">Working in the hall hall</span>
         </div>
     </div>
     <table class="table table-striped pt-4 pb-4">
@@ -54,7 +55,8 @@
                 <input th:name="employee.role" th:value="${scheduleForm.employee.role}" type="hidden"/>
                 <input th:name="employee.cinema.id" th:value="${scheduleForm.employee.cinema.id}" type="hidden"/>
                 <input th:name="employee.cinema.name" th:value="${scheduleForm.employee.cinema.name}" type="hidden"/>
-                <input th:name="employee.cinema.address" th:value="${scheduleForm.employee.cinema.address}" type="hidden"/>
+                <input th:name="employee.cinema.address" th:value="${scheduleForm.employee.cinema.address}"
+                       type="hidden"/>
                 <input th:name="employee.cinema.city" th:value="${scheduleForm.employee.cinema.city}" type="hidden"/>
                 <input th:name="shift.id" th:value="${scheduleForm.shift.id}" type="hidden"/>
                 <input th:name="shift.date" th:value="${scheduleForm.shift.date}" type="hidden"/>

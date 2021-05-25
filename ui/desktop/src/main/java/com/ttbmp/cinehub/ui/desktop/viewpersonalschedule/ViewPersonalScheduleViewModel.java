@@ -255,12 +255,12 @@ public class ViewPersonalScheduleViewModel implements ViewModel {
         return currentEmployee.get();
     }
 
-    public ObjectProperty<EmployeeDto> currentEmployeeProperty() {
-        return currentEmployee;
-    }
-
     public void setCurrentEmployee(EmployeeDto currentEmployee) {
         this.currentEmployee.set(currentEmployee);
+    }
+
+    public ObjectProperty<EmployeeDto> currentEmployeeProperty() {
+        return currentEmployee;
     }
 
 }
