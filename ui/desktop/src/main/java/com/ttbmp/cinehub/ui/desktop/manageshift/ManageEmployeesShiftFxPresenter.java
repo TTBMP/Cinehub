@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift;
 
-import com.ttbmp.cinehub.app.dto.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
@@ -46,7 +46,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         }
         for (var shift : response.getShiftDtoList()) {
             for (var employeeShiftWeek : viewModel.getEmployeeShiftWeekList()) {
-                if (employeeShiftWeek.getEmployeeDto().getId().equals(shift.getEmployee().getId())
+                if (employeeShiftWeek.getEmployeeDto().getId().equals(shift.getEmployeeId())
                         && viewModel.getSelectedWeek().getYear() == shift.getDate().getYear()
                         && viewModel.getSelectedWeek().get(temporalField) == shift.getDate().get(temporalField)) {
                     var index = viewModel.getEmployeeShiftWeekList().indexOf(employeeShiftWeek);
@@ -76,7 +76,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         var temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
         var employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
         employeeShiftWeeks.forEach(e -> {
-            if (e.getEmployeeDto().equals(savedShift.getEmployee())
+            if (e.getEmployeeDto().getId().equals(savedShift.getEmployeeId())
                     && savedShift.getDate().get(temporalField) == viewModel.getSelectedWeek().get(temporalField)
                     && savedShift.getDate().getYear() == viewModel.getSelectedWeek().getYear()) {
                 e.getWeekMap().get(savedShift.getDate().getDayOfWeek())
@@ -92,7 +92,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         var deleteShift = viewModel.getSelectedShift();
         var employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
         employeeShiftWeeks.forEach(e -> {
-            if (e.getEmployeeDto().equals(deleteShift.getEmployee())) {
+            if (e.getEmployeeDto().getId().equals(deleteShift.getEmployeeId())) {
                 e.getWeekMap().get(deleteShift.getDate().getDayOfWeek())
                         .getShiftList()
                         .removeIf(s -> s.equals(deleteShift));
@@ -108,7 +108,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         var employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
         for (var savedShift : shiftList) {
             employeeShiftWeeks.forEach(employeeShiftWeek -> {
-                if (employeeShiftWeek.getEmployeeDto().equals(savedShift.getEmployee()) &&
+                if (employeeShiftWeek.getEmployeeDto().getId().equals(savedShift.getEmployeeId()) &&
                         savedShift.getDate().get(temporalField) == viewModel.getSelectedWeek().get(temporalField) &&
                         savedShift.getDate().getYear() == viewModel.getSelectedWeek().getYear()) {
                     var dayOfWeek = savedShift.getDate().getDayOfWeek();

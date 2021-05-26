@@ -14,7 +14,7 @@ public interface ViewPersonalSchedulePresenter {
 
     void presentShiftListNullRequest();
 
-    void presentGetProjectionList(ProjectionListReply projectionListReply);
+    void presentGetProjectionList(ProjectionListReply result);
 
     void presentProjectionListNullRequest();
 

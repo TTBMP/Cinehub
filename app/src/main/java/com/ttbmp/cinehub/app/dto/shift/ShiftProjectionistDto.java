@@ -1,7 +1,7 @@
-package com.ttbmp.cinehub.app.dto;
+package com.ttbmp.cinehub.app.dto.shift;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import com.ttbmp.cinehub.app.dto.HallDto;
+import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 
 /**
  * @author Fabio Buracchi
@@ -10,9 +10,9 @@ public class ShiftProjectionistDto extends ShiftDto {
 
     private final HallDto hallDto;
 
-    public ShiftProjectionistDto(int id, EmployeeDto employee, LocalDate date, LocalTime start, LocalTime end, HallDto hallDto) {
-        super(id, employee, date, start, end);
-        this.hallDto = hallDto;
+    public ShiftProjectionistDto(ProjectionistShift shift) {
+        super(shift);
+        this.hallDto = new HallDto(shift.getHall());
     }
 
     public HallDto getHallDto() {

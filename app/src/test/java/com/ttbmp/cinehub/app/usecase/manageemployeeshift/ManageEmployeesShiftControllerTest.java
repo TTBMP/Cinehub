@@ -1,12 +1,11 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeeshift;
 
-import com.ttbmp.cinehub.app.datamapper.CinemaDataMapper;
-import com.ttbmp.cinehub.app.datamapper.EmployeeDataMapper;
-import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
 import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.dto.EmployeeDto;
-import com.ttbmp.cinehub.app.dto.ShiftDto;
+import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.employee.EmployeeDtoFactory;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDtoFactory;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
@@ -14,7 +13,6 @@ import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftController;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.domain.Cinema;
-import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.shift.Shift;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Massimo Mazzetti
@@ -59,9 +58,9 @@ class ManageEmployeesShiftControllerTest {
     }
 
     private List<CinemaDto> getCinemaListExpected() throws RepositoryException {
-        List<Cinema> result = serviceLocator.getService(CinemaRepository.class).getAllCinema();
-        return CinemaDataMapper.mapToDtoList(result);
-
+        return serviceLocator.getService(CinemaRepository.class).getAllCinema().stream()
+                .map(CinemaDto::new)
+                .collect(Collectors.toList());
     }
 
     @Test
@@ -77,7 +76,7 @@ class ManageEmployeesShiftControllerTest {
             e.printStackTrace();
         }
         assert cinema != null;
-        var getShiftListRequest = new GetShiftListRequest(viewModel.getSessionToken(), CinemaDataMapper.mapToDto(cinema), start, end);
+        var getShiftListRequest = new GetShiftListRequest(viewModel.getSessionToken(), new CinemaDto(cinema), start, end);
         controller.getShiftList(getShiftListRequest);
         var expected = getShiftListExpected(getShiftListRequest);
         var actual = viewModel.getShiftList();
@@ -86,13 +85,15 @@ class ManageEmployeesShiftControllerTest {
     }
 
     private List<ShiftDto> getShiftListExpected(GetShiftListRequest request) throws RepositoryException {
-        List<Shift> shiftList = serviceLocator.getService(ShiftRepository.class)
+        var shiftList = serviceLocator.getService(ShiftRepository.class)
                 .getCinemaShiftListBetween(
                         request.getCinema().getId(),
                         request.getStart(),
                         request.getEnd()
                 );
-        return ShiftDataMapper.mapToDtoList(shiftList);
+        return shiftList.stream()
+                .map(ShiftDtoFactory::getShiftDto)
+                .collect(Collectors.toList());
 
     }
 
@@ -100,7 +101,7 @@ class ManageEmployeesShiftControllerTest {
     void getEmployeeList() throws RepositoryException {
         logInAsManager();
         var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
-        CinemaDto cinema = CinemaDataMapper.mapToDto(cinemaRepository.getCinema(1));
+        var cinema = new CinemaDto(cinemaRepository.getCinema(1));
         var request = new GetEmployeeListRequest(viewModel.getSessionToken(), cinema);
         controller.getEmployeeList(request);
         var expected = getEmployeeListExpected(request);
@@ -111,25 +112,21 @@ class ManageEmployeesShiftControllerTest {
     }
 
     private List<EmployeeDto> getEmployeeListExpected(GetEmployeeListRequest request) throws RepositoryException {
-        Cinema cinema = serviceLocator.getService(CinemaRepository.class).getCinema(request.getCinema().getId());
-        List<Employee> employeeList = serviceLocator.getService(EmployeeRepository.class).getEmployeeList(cinema);
-        return EmployeeDataMapper.mapToDtoList(employeeList);
+        var cinema = serviceLocator.getService(CinemaRepository.class).getCinema(request.getCinema().getId());
+        var employeeList = serviceLocator.getService(EmployeeRepository.class).getEmployeeList(cinema);
+        return employeeList.stream()
+                .map(EmployeeDtoFactory::getEmployeeDto)
+                .collect(Collectors.toList());
     }
 
-
     @Test
-    void modifyShift() {
+    void modifyShift() throws RepositoryException {
         logInAsManager();
-        ShiftDto shift = null;
-        try {
-            shift = ShiftDataMapper.mapToDto(serviceLocator.getService(ShiftRepository.class).getShift(2));
-        } catch (RepositoryException e) {
-            e.printStackTrace();
-        }
-        assert shift != null;
+        var shift = ShiftDtoFactory.getShiftDto(serviceLocator.getService(ShiftRepository.class).getShift(2));
+        var employee = EmployeeDtoFactory.getEmployeeDto(serviceLocator.getService(EmployeeRepository.class).getEmployee(shift.getEmployeeId()));
         var request = new ShiftModifyRequest(
                 viewModel.getSessionToken(),
-                shift.getEmployee(),
+                employee,
                 shift.getId(),
                 shift.getDate().plusDays(1),
                 shift.getStart(),
@@ -155,7 +152,7 @@ class ManageEmployeesShiftControllerTest {
     @Test
     void saveRepeatedShift() throws RepositoryException {
         logInAsManager();
-        EmployeeDto employee = EmployeeDataMapper.mapToDto(serviceLocator.getService(EmployeeRepository.class)
+        var employee = EmployeeDtoFactory.getEmployeeDto(serviceLocator.getService(EmployeeRepository.class)
                 .getEmployee("gVUYDMojhmeFkErlbF0WWLQWMPn1")
         );
         var request = new ShiftRepeatRequest(
@@ -164,18 +161,20 @@ class ManageEmployeesShiftControllerTest {
                 LocalDate.now().plusDays(7).plusYears(2),
                 "EVERY_DAY",
                 employee,
+                LocalTime.now().withNano(0).withSecond(0).minusHours(2),
                 LocalTime.now().withNano(0).withSecond(0),
-                LocalTime.now().withNano(0).withSecond(0).plusHours(2),
                 null
         );
-        controller.saveRepeatedShift(request);
+        controller.createRepeatedShift(request);
         var expected = getSaveRepeatedShiftExpected(request);
         Assertions.assertTrue(expected.containsAll(viewModel.getShiftList()));
     }
 
     private List<ShiftDto> getSaveRepeatedShiftExpected(ShiftRepeatRequest request) throws RepositoryException {
-        Employee employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(request.getEmployeeDto().getId());
-        return ShiftDataMapper.mapToDtoList(serviceLocator.getService(ShiftRepository.class).getShiftList(employee));
+        var employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(request.getEmployeeDto().getId());
+        return serviceLocator.getService(ShiftRepository.class).getShiftList(employee).stream()
+                .map(ShiftDtoFactory::getShiftDto)
+                .collect(Collectors.toList());
     }
 
     @Test
@@ -195,8 +194,8 @@ class ManageEmployeesShiftControllerTest {
     }
 
     private ShiftDto createShiftExpected(CreateShiftRequest request) throws RepositoryException {
-        Employee employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(request.getEmployeeId());
-        return ShiftDataMapper.mapToDto(serviceLocator.getService(ShiftRepository.class)
+        var employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(request.getEmployeeId());
+        return ShiftDtoFactory.getShiftDto(serviceLocator.getService(ShiftRepository.class)
                 .getShift(
                         employee,
                         request.getDate().toString(),

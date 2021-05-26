@@ -1,10 +1,10 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift;
 
-import com.ttbmp.cinehub.app.datamapper.CinemaDataMapper;
-import com.ttbmp.cinehub.app.datamapper.EmployeeDataMapper;
-import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
-import com.ttbmp.cinehub.app.dto.ShiftDto;
+import com.ttbmp.cinehub.app.dto.CinemaDto;
+import com.ttbmp.cinehub.app.dto.employee.EmployeeDtoFactory;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDtoFactory;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
@@ -31,6 +31,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 
 /**
  * @author Massimo Mazzetti
@@ -63,9 +64,10 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         var permissions = new Permission[]{Permission.GET_SHIFT_LIST};
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
-            manageEmployeesShiftPresenter.presentCinemaList(new GetCinemaListResponse(
-                    CinemaDataMapper.mapToDtoList(cinemaRepository.getAllCinema())
-            ));
+            var cinemaList = cinemaRepository.getAllCinema().stream()
+                    .map(CinemaDto::new)
+                    .collect(Collectors.toList());
+            manageEmployeesShiftPresenter.presentCinemaList(new GetCinemaListResponse(cinemaList));
         } catch (RepositoryException e) {
             manageEmployeesShiftPresenter.presentRepositoryError(e);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
@@ -85,10 +87,10 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
             var cinema = cinemaRepository.getCinema(request.getCinema().getId());
-            var employeeList = employeeRepository.getEmployeeList(cinema);
-            manageEmployeesShiftPresenter.presentEmployeeList(new GetEmployeeListResponse(
-                    EmployeeDataMapper.mapToDtoList(employeeList))
-            );
+            var employeeList = employeeRepository.getEmployeeList(cinema).stream()
+                    .map(EmployeeDtoFactory::getEmployeeDto)
+                    .collect(Collectors.toList());
+            manageEmployeesShiftPresenter.presentEmployeeList(new GetEmployeeListResponse(employeeList));
         } catch (RepositoryException e) {
             manageEmployeesShiftPresenter.presentRepositoryError(e);
         } catch (Request.NullRequestException e) {
@@ -107,8 +109,11 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         var permissions = new Permission[]{Permission.GET_SHIFT_LIST};
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
+            var shiftList = shiftRepository.getCinemaShiftListBetween(request.getCinema().getId(), request.getStart(), request.getEnd()).stream()
+                    .map(ShiftDtoFactory::getShiftDto)
+                    .collect(Collectors.toList());
             manageEmployeesShiftPresenter.presentShiftList(new GetShiftListResponse(
-                    ShiftDataMapper.mapToDtoList(shiftRepository.getCinemaShiftListBetween(request.getCinema().getId(), request.getStart(), request.getEnd())),
+                    shiftList,
                     request.getStart(),
                     request.getCinema().getId()
             ));
@@ -144,7 +149,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                     employee.getEmail(),
                     "Shift Modify"
             ));
-            manageEmployeesShiftPresenter.presentCreateShift(new CreateShiftResponse(ShiftDataMapper.mapToDto(shift)));
+            manageEmployeesShiftPresenter.presentCreateShift(new CreateShiftResponse(ShiftDtoFactory.getShiftDto(shift)));
             manageEmployeesShiftPresenter.presentDeleteShift();
             manageEmployeesShiftPresenter.presentSaveShift();
 
@@ -190,7 +195,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
     }
 
     @Override
-    public void saveRepeatedShift(ShiftRepeatRequest request) {
+    public void createRepeatedShift(ShiftRepeatRequest request) {
         var permissions = new Permission[]{Permission.ASSIGN_SHIFT};
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
@@ -224,7 +229,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                         hall
                 );
                 saveShift(shift);
-                shiftDtoList.add(ShiftDataMapper.mapToDto(shift));
+                shiftDtoList.add(ShiftDtoFactory.getShiftDto(shift));
             }
             emailService.sendMail(new EmailServiceRequest(
                     employee.getEmail(),
@@ -258,17 +263,15 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             var hall = hallRepository.getHall(request.getHallId());
             var shiftFactory = new ShiftFactory();
             var shift = shiftFactory.createConcreteShift(employee, date, start, end, hall);
-
             saveShift(shift);
             shift = shiftRepository.getShift(employee, date, start, end);
-            manageEmployeesShiftPresenter.presentCreateShift(new CreateShiftResponse(ShiftDataMapper.mapToDto(shift)));
+            manageEmployeesShiftPresenter.presentCreateShift(new CreateShiftResponse(ShiftDtoFactory.getShiftDto(shift)));
 
             manageEmployeesShiftPresenter.presentSaveShift();
             emailService.sendMail(new EmailServiceRequest(
                     employee.getEmail(),
                     "Shift Assign"
             ));
-
         } catch (Request.NullRequestException e) {
             manageEmployeesShiftPresenter.presentCreateShiftNullRequest();
         } catch (Request.InvalidRequestException e) {

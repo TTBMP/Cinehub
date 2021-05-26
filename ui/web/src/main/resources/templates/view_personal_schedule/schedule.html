@@ -6,8 +6,8 @@
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
-    <link href="../static/css/schedule.css" rel="stylesheet" th:href="@{/css/schedule.css}" type="text/css">
-    <script src="../static/js/utilities.js" th:src="@{/js/utilities.js}" type="text/javascript"></script>
+    <link href="../../static/css/schedule.css" rel="stylesheet" th:href="@{/css/schedule.css}" type="text/css">
+    <script src="../../static/js/utilities.js" th:src="@{/js/utilities.js}" type="text/javascript"></script>
 </head>
 <body>
 <div class="container p-4">
@@ -47,15 +47,20 @@
                 <p th:text="${day.day}"> Date </p>
                 <th:block th:each="shift : ${day.shiftList}">
                     <form action="schedule_detail.html" method="POST" th:action="@{/schedule/detail}"
-                          th:object="${selectedShift}">
-                        <input th:name="id" th:value="${shift.id}" type="hidden"/>
-                        <input th:name="date" th:value="${shift.date}" type="hidden"/>
-                        <input th:name="start" th:value="${shift.start}" type="hidden"/>
-                        <input th:name="end" th:value="${shift.end}" type="hidden"/>
-                        <input th:name="employee.role" th:value="${shift.employee.toString()}" type="hidden"/>
-                        <input th:name="employee.cinema.address" th:value="${shift.employee.cinema.address}"
-                               type="hidden"/>
-                        <input th:name="employee.cinema.city" th:value="${shift.employee.cinema.city}" type="hidden"/>
+                          th:object="${scheduleForm}">
+                        <input th:name="employee.id" th:value="${employee.id}" type="hidden"/>
+                        <input th:name="employee.name" th:value="${employee.name}" type="hidden"/>
+                        <input th:name="employee.surname" th:value="${employee.surname}" type="hidden"/>
+                        <input th:name="employee.role" th:value="${employee.toString()}" type="hidden"/>
+                        <input th:name="employee.cinema.id" th:value="${employee.cinema.id}" type="hidden"/>
+                        <input th:name="employee.cinema.name" th:value="${employee.cinema.name}" type="hidden"/>
+                        <input th:name="employee.cinema.address" th:value="${employee.cinema.address}" type="hidden"/>
+                        <input th:name="employee.cinema.city" th:value="${employee.cinema.city}" type="hidden"/>
+                        <input th:name="shift.id" th:value="${shift.id}" type="hidden"/>
+                        <input th:name="shift.date" th:value="${shift.date}" type="hidden"/>
+                        <input th:name="shift.start" th:value="${shift.start}" type="hidden"/>
+                        <input th:name="shift.end" th:value="${shift.end}" type="hidden"/>
+                        <input th:name="shift.employeeId" th:value="${shift.employeeId}" type="hidden"/>
                         <input class="btn btn-outline-primary" th:value="${shift.start + ' - ' + shift.end}"
                                type="submit"
                                value="start - end"/>

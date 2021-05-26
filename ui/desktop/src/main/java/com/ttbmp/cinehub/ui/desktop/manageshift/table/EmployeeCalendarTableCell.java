@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift.table;
 
 
-import com.ttbmp.cinehub.app.dto.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavController;
 import javafx.scene.control.TableCell;

@@ -1,11 +1,14 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
-import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
-import com.ttbmp.cinehub.app.dto.ShiftDto;
+import com.ttbmp.cinehub.app.dto.ProjectionDto;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDtoFactory;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
+import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
+import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftRepository;
 import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.service.security.SecurityService;
 import org.junit.jupiter.api.Assertions;
@@ -14,19 +17,20 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Fabio Buracchi
  */
 class ViewPersonalScheduleControllerTest {
 
-
-    private final MockServiceLocator serviceLocator = new MockServiceLocator();
+    private MockServiceLocator serviceLocator;
     private MockViewPersonalScheduleViewModel viewModel;
     private ViewPersonalScheduleController controller;
 
     @BeforeEach
     void setPresenter() {
+        serviceLocator = new MockServiceLocator();
         viewModel = new MockViewPersonalScheduleViewModel();
         controller = new ViewPersonalScheduleController(
                 serviceLocator,
@@ -41,11 +45,7 @@ class ViewPersonalScheduleControllerTest {
     @Test
     void getShiftList() throws RepositoryException, SecurityException {
         logInAsProjectionist();
-        var request = new ShiftListRequest(
-                viewModel.getSessionToken(),
-                LocalDate.now(),
-                LocalDate.now().plusDays(1)
-        );
+        var request = new ShiftListRequest(viewModel.getSessionToken(), LocalDate.now(), LocalDate.now().plusDays(7));
         controller.getShiftList(request);
         var expected = getShiftList(request);
         var actual = viewModel.getShiftList();
@@ -54,8 +54,18 @@ class ViewPersonalScheduleControllerTest {
 
 
     @Test
-    void getShiftProjectionList() {
-
+    void getShiftProjectionList() throws RepositoryException, SecurityException {
+        logInAsProjectionist();
+        var shiftListRequest = new ShiftListRequest(viewModel.getSessionToken(), LocalDate.now(), LocalDate.now().plusDays(7));
+        var shiftId = getShiftList(shiftListRequest).get(0).getId();
+        var request = new ProjectionListRequest(viewModel.getSessionToken(), shiftId);
+        controller.getShiftProjectionList(request);
+        var expected = getShiftProjectionList(request);
+        var actual = viewModel.getProjectionList();
+        Assertions.assertArrayEquals(
+                expected.stream().map(ProjectionDto::getId).toArray(),
+                actual.stream().map(ProjectionDto::getId).toArray()
+        );
     }
 
     private List<ShiftDto> getShiftList(ShiftListRequest request) throws RepositoryException, SecurityException {
@@ -66,7 +76,19 @@ class ViewPersonalScheduleControllerTest {
                 request.getStart(),
                 request.getEnd()
         );
-        return ShiftDataMapper.mapToDtoList(shiftList);
+        return shiftList.stream()
+                .map(ShiftDtoFactory::getShiftDto)
+                .collect(Collectors.toList());
+    }
+
+    private List<ProjectionDto> getShiftProjectionList(ProjectionListRequest request) throws RepositoryException {
+        var projectionistShift = serviceLocator.getService(ProjectionistShiftRepository.class)
+                .getProjectionistShift(request.getProjectionistShiftId());
+        var projectionList = serviceLocator.getService(ProjectionRepository.class)
+                .getProjectionList(projectionistShift);
+        return projectionList.stream()
+                .map(ProjectionDto::new)
+                .collect(Collectors.toList());
     }
 
 }

@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.app.usecase.buyticket;
 
-import com.ttbmp.cinehub.app.datamapper.MovieDataMapper;
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
+import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 
 class BuyTicketBuyTicketControllerTest {
@@ -30,9 +31,12 @@ class BuyTicketBuyTicketControllerTest {
         public void presentMovieList(MovieListResponse response) {
             try {
                 var result = true;
-                var movieDtoList = serviceLocator.getService(MovieRepository.class)
+                var movieList = serviceLocator.getService(MovieRepository.class)
                         .getMovieList(String.valueOf(LocalDate.now()));
-                var expected = MovieDataMapper.mapToDtoList(movieDtoList);
+                var movieDtoList = movieList.stream()
+                        .map(MovieDto::new)
+                        .collect(Collectors.toList());
+                var expected = movieDtoList;
                 var actual = response.getMovieList();
                 for (var i = 0; i < expected.size(); i++) {
                     if (expected.get(i).equals(actual.get(i))) {

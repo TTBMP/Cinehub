@@ -5,7 +5,7 @@ package com.ttbmp.cinehub.ui.web.domain;
  */
 public class Cinema {
 
-    private Integer id;
+    private int id;
     private String name;
     private String address;
     private String city;
@@ -13,11 +13,19 @@ public class Cinema {
     public Cinema() {
     }
 
-    public Cinema(Integer id, String name, String address, String city) {
+    public Cinema(int id, String name, String address, String city) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.city = city;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -26,14 +34,6 @@ public class Cinema {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getAddress() {

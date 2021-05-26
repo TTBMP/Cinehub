@@ -1,40 +1,26 @@
 package com.ttbmp.cinehub.app.dto;
 
-import com.ttbmp.cinehub.domain.employee.Projectionist;
-
-import java.util.List;
+import com.ttbmp.cinehub.domain.Projection;
 
 /**
  * @author Ivan Palmieri
  */
 public class ProjectionDto {
 
-    private final String startTime;
-    private final HallDto hallDto;
     private int id;
     private String date;
-    private MovieDto movieDto;
-    private Projectionist projectionist;
-    private List<TicketDto> listTicket;
+    private String startTime;
     private long basePrice;
+    private MovieDto movieDto;
+    private HallDto hallDto;
 
-    public ProjectionDto(MovieDto movie,
-                         HallDto hall,
-                         String startTime,
-                         String date,
-                         List<TicketDto> listTicket,
-                         int id,
-                         Projectionist projectionist,
-                         long basePrice
-    ) {
-        this.id = id;
-        this.projectionist = projectionist;
-        this.movieDto = movie;
-        this.hallDto = hall;
-        this.startTime = startTime;
-        this.date = date;
-        this.listTicket = listTicket;
-        this.basePrice = basePrice;
+    public ProjectionDto(Projection projection) {
+        this.id = projection.getId();
+        this.date = projection.getDate();
+        this.startTime = projection.getStartTime();
+        this.basePrice = projection.getBasePrice();
+        this.movieDto = new MovieDto(projection.getMovie());
+        this.hallDto = new HallDto(projection.getHall());
     }
 
     public int getId() {
@@ -45,28 +31,28 @@ public class ProjectionDto {
         this.id = id;
     }
 
-    public Projectionist getProjectionist() {
-        return projectionist;
+    public String getDate() {
+        return date;
     }
 
-    public void setProjectionist(Projectionist projectionist) {
-        this.projectionist = projectionist;
-    }
-
-    public List<TicketDto> getListTicket() {
-        return listTicket;
-    }
-
-    public void setListTicket(List<TicketDto> listTicket) {
-        this.listTicket = listTicket;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getStartTime() {
         return startTime;
     }
 
-    public HallDto getHallDto() {
-        return hallDto;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(long basePrice) {
+        this.basePrice = basePrice;
     }
 
     public MovieDto getMovieDto() {
@@ -77,20 +63,12 @@ public class ProjectionDto {
         this.movieDto = movieDto;
     }
 
-    public String getDate() {
-        return date;
+    public HallDto getHallDto() {
+        return hallDto;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public long getBasePrice() {
-        return basePrice;
-    }
-
-    public void setBasePrice(long basePrice) {
-        this.basePrice = basePrice;
+    public void setHallDto(HallDto hallDto) {
+        this.hallDto = hallDto;
     }
 
 }

@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.app.usecase.buyticket;
 
-import com.ttbmp.cinehub.app.datamapper.*;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.dto.*;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.cinema.CinemaRepository;
 import com.ttbmp.cinehub.app.repository.customer.CustomerRepository;
@@ -24,6 +24,8 @@ import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketMagicBox;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketOpenBar;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketSkipLine;
+
+import java.util.stream.Collectors;
 
 /**
  * @author Ivan Palmieri
@@ -59,8 +61,10 @@ public class BuyTicketController implements BuyTicketUseCase {
         try {
             Request.validate(request);
             var localDate = request.getDate().toString();
-            var movieList = movieRepository.getMovieList(localDate);
-            presenter.presentMovieList(new MovieListResponse(MovieDataMapper.mapToDtoList(movieList)));
+            var movieList = movieRepository.getMovieList(localDate).stream()
+                    .map(MovieDto::new)
+                    .collect(Collectors.toList());
+            presenter.presentMovieList(new MovieListResponse(movieList));
         } catch (Request.NullRequestException e) {
             presenter.presentMovieListNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -75,10 +79,10 @@ public class BuyTicketController implements BuyTicketUseCase {
         try {
             Request.validate(request);
             var movie = movieRepository.getMovie(request.getMovieId());
-            var cinemaList = cinemaRepository.getListCinema(movie, request.getData());
-            presenter.presentCinemaList(
-                    new CinemaListResponse(CinemaDataMapper.mapToDtoList(cinemaList))
-            );
+            var cinemaList = cinemaRepository.getListCinema(movie, request.getData()).stream()
+                    .map(CinemaDto::new)
+                    .collect(Collectors.toList());
+            presenter.presentCinemaList(new CinemaListResponse(cinemaList));
         } catch (Request.NullRequestException e) {
             presenter.presentCinemaListNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -94,10 +98,10 @@ public class BuyTicketController implements BuyTicketUseCase {
             Request.validate(request);
             var cinema = cinemaRepository.getCinema(request.getCinemaId());
             var movie = movieRepository.getMovie(request.getMovieId());
-            var projectionList = projectionRepository.getProjectionList(cinema, movie, request.getLocalDate());
-            presenter.presentProjectionList(
-                    new ProjectionListResponse(ProjectionDataMapper.mapToDtoList(projectionList))
-            );
+            var projectionList = projectionRepository.getProjectionList(cinema, movie, request.getLocalDate()).stream()
+                    .map(ProjectionDto::new)
+                    .collect(Collectors.toList());
+            presenter.presentProjectionList(new ProjectionListResponse(projectionList));
         } catch (Request.NullRequestException e) {
             presenter.presentProjectionListNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -113,8 +117,10 @@ public class BuyTicketController implements BuyTicketUseCase {
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
             var projection = projectionRepository.getProjection(request.getProjectionId());
-            presenter.presentSeatList(new SeatListResponse(
-                    SeatDataMapper.mapToDtoList(projection.getHall().getSeatList(), projection::isBooked)));
+            var seatList = projection.getHall().getSeatList().stream()
+                    .map(seat -> new SeatDto(seat, projection.isBooked(seat)))
+                    .collect(Collectors.toList());
+            presenter.presentSeatList(new SeatListResponse(seatList));
         } catch (Request.NullRequestException e) {
             presenter.presentSeatListNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -162,7 +168,7 @@ public class BuyTicketController implements BuyTicketUseCase {
                 ));
                 ticketRepository.saveTicket(ticket);
                 emailService.sendMail(new EmailServiceRequest(request.getEmail(), "Payment receipt"));
-                presenter.presentTicket(new TicketResponse(TicketDataMapper.mapToDto(ticket)));
+                presenter.presentTicket(new TicketResponse(new TicketDto(ticket)));
             }
         } catch (Request.NullRequestException e) {
             presenter.presentPayNullRequest();

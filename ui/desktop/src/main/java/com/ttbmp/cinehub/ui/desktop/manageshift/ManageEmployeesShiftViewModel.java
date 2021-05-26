@@ -1,7 +1,12 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift;
 
 
-import com.ttbmp.cinehub.app.dto.*;
+import com.ttbmp.cinehub.app.dto.CinemaDto;
+import com.ttbmp.cinehub.app.dto.HallDto;
+import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.employee.ProjectionistDto;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
+import com.ttbmp.cinehub.app.dto.shift.ShiftProjectionistDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ShiftRepeatingOption;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.Day;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.EmployeeShiftWeek;
@@ -60,14 +65,14 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
     private final ObjectProperty<LocalTime> endSpinnerModifyTime = new SimpleObjectProperty<>();
 
     public ManageEmployeesShiftViewModel() {
-        selectedShiftEmployeeName.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEmployee().getName()));
-        selectedShiftCinema.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEmployee().getCinema().getName()));
-        selectedShiftEmployeeSurname.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEmployee().getSurname()));
+        selectedShiftEmployeeName.bind(ObjectBindings.map(selectedShift, shiftDto -> getEmployee(shiftDto).getName()));
+        selectedShiftCinema.bind(ObjectBindings.map(selectedShift, shiftDto -> getEmployee(shiftDto).getCinema().getName()));
+        selectedShiftEmployeeSurname.bind(ObjectBindings.map(selectedShift, shiftDto -> getEmployee(shiftDto).getSurname()));
         selectedShiftDate.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getDate().toString()));
         selectedShiftStart.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getStart().toString()));
         selectedShiftEnd.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEnd().toString()));
         selectedShiftRole.bind(ObjectBindings.map(selectedShift, shiftDto -> {
-            if (shiftDto.getEmployee() instanceof ProjectionistDto) {
+            if (getEmployee(shiftDto) instanceof ProjectionistDto) {
                 return "Projectionist";
             }
             return "Usher";
@@ -422,6 +427,14 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
 
     public ObjectProperty<LocalTime> endSpinnerModifyTimeProperty() {
         return endSpinnerModifyTime;
+    }
+
+    public EmployeeDto getEmployee(ShiftDto shift) {
+        return employeeShiftWeekList.stream()
+                .map(EmployeeShiftWeek::getEmployeeDto)
+                .filter(employeeDto -> employeeDto.getId().equals(shift.getEmployeeId()))
+                .findAny()
+                .orElse(null);
     }
 
 }

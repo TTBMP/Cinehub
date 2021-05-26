@@ -1,4 +1,6 @@
-package com.ttbmp.cinehub.app.dto;
+package com.ttbmp.cinehub.app.dto.shift;
+
+import com.ttbmp.cinehub.domain.shift.Shift;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -6,20 +8,20 @@ import java.time.LocalTime;
 /**
  * @author Fabio Buracchi, Massimo Mazzetti
  */
-public class ShiftDto {
+public abstract class ShiftDto {
 
     private int id;
-    private EmployeeDto employee;
+    private String employeeId;
     private LocalDate date;
     private LocalTime start;
     private LocalTime end;
 
-    public ShiftDto(int id, EmployeeDto employee, LocalDate date, LocalTime start, LocalTime end) {
-        this.id = id;
-        this.employee = employee;
-        this.date = date;
-        this.start = start;
-        this.end = end;
+    protected ShiftDto(Shift shift) {
+        this.id = shift.getId();
+        this.employeeId = shift.getEmployee().getId();
+        this.date = LocalDate.parse(shift.getDate());
+        this.start = LocalTime.parse(shift.getStart());
+        this.end = LocalTime.parse(shift.getEnd());
     }
 
     public int getId() {
@@ -30,12 +32,12 @@ public class ShiftDto {
         this.id = id;
     }
 
-    public EmployeeDto getEmployee() {
-        return employee;
+    public String getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployee(EmployeeDto employee) {
-        this.employee = employee;
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
     }
 
     public LocalDate getDate() {
@@ -68,7 +70,7 @@ public class ShiftDto {
             return false;
         }
         var other = (ShiftDto) obj;
-        return employee.equals(other.employee)
+        return employeeId.equals(other.employeeId)
                 && date.equals(other.date)
                 && start.equals(other.start)
                 && end.equals(other.end);
@@ -76,7 +78,7 @@ public class ShiftDto {
 
     @Override
     public int hashCode() {
-        return employee.hashCode() + date.hashCode() + start.hashCode() + end.hashCode();
+        return employeeId.hashCode() + date.hashCode() + start.hashCode() + end.hashCode();
     }
 
 }

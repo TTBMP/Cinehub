@@ -1,6 +1,10 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
-import com.ttbmp.cinehub.app.dto.*;
+import com.ttbmp.cinehub.app.dto.HallDto;
+import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.employee.ProjectionistDto;
+import com.ttbmp.cinehub.app.dto.employee.UsherDto;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
@@ -26,18 +30,19 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentEmployeeList(GetEmployeeListResponse employeeList) {
-        model.addAttribute("employeeList", employeeList.getEmployeeDtoList());
-        model.addAttribute("projectionistList", employeeList.getEmployeeDtoList().stream()
+    public void presentEmployeeList(GetEmployeeListResponse response) {
+        var employeeList = new EmployeeListDto(response.getEmployeeDtoList());
+        model.addAttribute("employeeList", employeeList.getEmployeeList());
+        model.addAttribute("projectionistList", employeeList.getEmployeeList().stream()
                 .filter(employeeDto -> employeeDto.getClass()
                         .equals(ProjectionistDto.class))
                 .collect(Collectors.toList()));
-        model.addAttribute("usherList", employeeList.getEmployeeDtoList().stream()
+        model.addAttribute("usherList", employeeList.getEmployeeList().stream()
                 .filter(employeeDto -> employeeDto.getClass()
                         .equals(UsherDto.class))
                 .collect(Collectors.toList()));
 
-        findEmployee(employeeList.getEmployeeDtoList());
+        findEmployee(response.getEmployeeDtoList());
     }
 
     @Override
@@ -46,14 +51,13 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
         var dateSelected = shiftList.getDate();
         var cinemaSelected = shiftList.getCinemaId();
         var employeeList = (List<EmployeeDto>) model.getAttribute("employeeList");
-        findShift(shiftList.getShiftDtoList());
         Map<EmployeeDto, List<ShiftDto>> employeeShiftListMap = new HashMap<>();
         for (var employee : employeeList) {
             employeeShiftListMap.put(
                     employee,
                     shiftList.getShiftDtoList().stream()
-                            .filter(shift -> shift.getEmployee().equals(employee)
-                                    && shift.getEmployee().getCinema().getId() == cinemaSelected
+                            .filter(shift -> shift.getEmployeeId().equals(employee.getId())
+                                    && employee.getCinema().getId() == cinemaSelected
                                     && shift.getDate().get(temporalField) == dateSelected.get(temporalField))
                             .collect(Collectors.toList())
             );
@@ -83,7 +87,6 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
                 }
             }
         }
-
 
     }
 
@@ -203,7 +206,6 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
     }
 
-
     private void findEmployee(List<EmployeeDto> employeeList) {
         if (model.getAttribute("selectedEmployeeId") != null) {
             var employeeId = (String) model.getAttribute("selectedEmployeeId");
@@ -215,16 +217,5 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
         }
     }
 
-    private void findShift(List<ShiftDto> shiftList) {
-        if (model.getAttribute("shiftId") != null) {
-            var shiftId = (int) model.getAttribute("shiftId");
-            for (var shiftDto : shiftList) {
-                if (shiftDto.getId() == shiftId) {
-                    model.addAttribute("selectedShift", shiftDto);
-                    model.addAttribute("selectedEmployee", shiftDto.getEmployee());
-                }
-            }
-        }
-    }
 
 }

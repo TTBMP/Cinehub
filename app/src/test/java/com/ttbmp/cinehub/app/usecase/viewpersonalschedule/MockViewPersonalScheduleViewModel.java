@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
-import com.ttbmp.cinehub.app.dto.ShiftDto;
+import com.ttbmp.cinehub.app.dto.ProjectionDto;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class MockViewPersonalScheduleViewModel {
 
     private String sessionToken;
     private List<ShiftDto> shiftList;
+    private List<ProjectionDto> projectionList;
 
     public String getSessionToken() {
         return sessionToken;
@@ -26,6 +28,14 @@ public class MockViewPersonalScheduleViewModel {
 
     public void setShiftList(List<ShiftDto> shiftList) {
         this.shiftList = shiftList;
+    }
+
+    public List<ProjectionDto> getProjectionList() {
+        return projectionList;
+    }
+
+    public void setProjectionList(List<ProjectionDto> projectionList) {
+        this.projectionList = projectionList;
     }
 
 }

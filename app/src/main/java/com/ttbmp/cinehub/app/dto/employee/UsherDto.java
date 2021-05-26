@@ -1,12 +1,14 @@
-package com.ttbmp.cinehub.app.dto;
+package com.ttbmp.cinehub.app.dto.employee;
+
+import com.ttbmp.cinehub.domain.employee.Usher;
 
 /**
  * @author Fabio Buracchi
  */
 public class UsherDto extends EmployeeDto {
 
-    public UsherDto(String id, String name, String surname, CinemaDto cinema) {
-        super(id, name, surname, cinema);
+    public UsherDto(Usher usher) {
+        super(usher);
     }
 
     @Override

@@ -2,8 +2,8 @@ package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.HallDto;
+import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ShiftRepeatingOption;
@@ -74,7 +74,7 @@ public class AssignRepeatedProjectionistShiftViewController {
         var selectedHall = (HallDto) model.getAttribute("selectedHall");
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
         model.addAttribute("now", LocalDate.now().plusDays(1));
-        useCase.saveRepeatedShift(new ShiftRepeatRequest(
+        useCase.createRepeatedShift(new ShiftRepeatRequest(
                 sessionToken,
                 request.getDate(),
                 request.getDateRepeated(),

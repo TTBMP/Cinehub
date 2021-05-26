@@ -30,8 +30,8 @@ public class ManageEmployeesShiftHandler implements ManageEmployeesShiftUseCase 
     }
 
     @Override
-    public void saveRepeatedShift(ShiftRepeatRequest request) {
-        controller.saveRepeatedShift(request);
+    public void createRepeatedShift(ShiftRepeatRequest request) {
+        controller.createRepeatedShift(request);
     }
 
     @Override

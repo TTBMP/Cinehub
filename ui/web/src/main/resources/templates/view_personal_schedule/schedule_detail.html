@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View personal schedule</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
+</head>
+<body>
+<div class="container w-50">
+    <div class="row pt-5 pb-4">
+        <div class="col">
+            <span class="h3 pr-3" th:text="${scheduleForm.shift.date}">Date</span>
+            <span class="h4" th:text="${scheduleForm.shift.start + ' ' + scheduleForm.shift.end}">Start - End</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <span class="h5"
+                  th:text="${scheduleForm.employee.cinema.city + ' as ' + scheduleForm.employee.role}">City as role</span>
+        </div>
+    </div>
+    <hr/>
+    <div class="row pb-3">
+        <div class="col">
+            <span class="h5"
+                  th:text="${scheduleForm.employee.cinema.city + ' - ' + scheduleForm.employee.cinema.address}">Location - Address</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <img class="h5" src="../../static/images/map.png" th:src="@{/images/map.png}"/>
+        </div>
+    </div>
+    <hr/>
+    <div class="row pt-3">
+        <div align="center" class="col">
+            <a class="btn btn-primary" href="schedule.html" role="button" th:href="@{/schedule}">BACK</a>
+        </div>
+        <div align="center" class="col">
+            <form action="schedule_projectionist_detail.html" method="POST"
+                  th:action="@{/schedule/detail/projectionist}" th:object="${scheduleForm.employee}">
+                <input th:name="employee.id" th:value="${scheduleForm.employee.id}" type="hidden"/>
+                <input th:name="employee.name" th:value="${scheduleForm.employee.name}" type="hidden"/>
+                <input th:name="employee.surname" th:value="${scheduleForm.employee.surname}" type="hidden"/>
+                <input th:name="employee.role" th:value="${scheduleForm.employee.role}" type="hidden"/>
+                <input th:name="employee.cinema.id" th:value="${scheduleForm.employee.cinema.id}" type="hidden"/>
+                <input th:name="employee.cinema.name" th:value="${scheduleForm.employee.cinema.name}" type="hidden"/>
+                <input th:name="employee.cinema.address" th:value="${scheduleForm.employee.cinema.address}"
+                       type="hidden"/>
+                <input th:name="employee.cinema.city" th:value="${scheduleForm.employee.cinema.city}" type="hidden"/>
+                <input th:name="shift.id" th:value="${scheduleForm.shift.id}" type="hidden"/>
+                <input th:name="shift.date" th:value="${scheduleForm.shift.date}" type="hidden"/>
+                <input th:name="shift.start" th:value="${scheduleForm.shift.start}" type="hidden"/>
+                <input th:name="shift.end" th:value="${scheduleForm.shift.end}" type="hidden"/>
+                <input th:name="shift.employeeId" th:value="${scheduleForm.shift.employeeId}" type="hidden"/>
+                <input class="btn btn-primary" th:if="${scheduleForm.employee.role.equals('projectionist')}"
+                       type="submit"
+                       value="SHOW DETAIL"/>
+            </form>
+        </div>
+    </div>
+</div>
+<script crossorigin="anonymous"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

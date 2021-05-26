@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift.modify;
 
 import com.ttbmp.cinehub.app.dto.HallDto;
-import com.ttbmp.cinehub.app.dto.UsherDto;
+import com.ttbmp.cinehub.app.dto.employee.UsherDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftModifyRequest;
 import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
@@ -80,11 +80,11 @@ public class ModifyShiftViewController extends ViewController {
         errorHBox.visibleProperty().bind(viewModel.errorAssignVisibilityProperty());
         errorLabel.textProperty().bind(viewModel.errorProperty());
 
-        if (viewModel.getSelectedShift().getEmployee() instanceof UsherDto) {
+        if (viewModel.getEmployee(viewModel.getSelectedShift()) instanceof UsherDto) {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
             hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
         } else {
-            viewModel.getHallList().setAll(viewModel.getSelectedShift().getEmployee().getCinema().getHalList());
+            viewModel.getHallList().setAll(viewModel.getEmployee(viewModel.getSelectedShift()).getCinema().getHalList());
             hallComboBox.setItems(viewModel.getHallList());
             hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
 
@@ -124,7 +124,7 @@ public class ModifyShiftViewController extends ViewController {
         activity.getUseCase(ManageEmployeesShiftUseCase.class).modifyShift(
                 new ShiftModifyRequest(
                         CinehubApplication.getSessionToken(),
-                        viewModel.getSelectedShift().getEmployee(),
+                        viewModel.getEmployee(viewModel.getSelectedShift()),
                         viewModel.getSelectedShift().getId(),
                         viewModel.getSelectedDays(),
                         viewModel.getStartSpinnerModifyTime().withNano(0),
