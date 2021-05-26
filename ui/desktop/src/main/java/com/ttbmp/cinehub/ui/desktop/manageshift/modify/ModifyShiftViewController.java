@@ -120,16 +120,20 @@ public class ModifyShiftViewController extends ViewController {
 
     private void submitButtonOnAction(ActionEvent action) {
         viewModel.setErrorAssignVisibility(false);
-
+        int hallId = -1;
+        if (viewModel.getSelectedHall() != null) {
+            hallId = viewModel.getSelectedHall().getId();
+        }
         activity.getUseCase(ManageEmployeesShiftUseCase.class).modifyShift(
                 new ShiftModifyRequest(
                         CinehubApplication.getSessionToken(),
-                        viewModel.getEmployee(viewModel.getSelectedShift()),
+                        viewModel.getSelectedShift().getEmployeeId(),
                         viewModel.getSelectedShift().getId(),
                         viewModel.getSelectedDays(),
                         viewModel.getStartSpinnerModifyTime().withNano(0),
                         viewModel.getEndSpinnerModifyTime().withNano(0),
-                        viewModel.getSelectedHall()));
+                        hallId
+                ));
 
         if (!viewModel.isErrorAssignVisibility()) {
             try {

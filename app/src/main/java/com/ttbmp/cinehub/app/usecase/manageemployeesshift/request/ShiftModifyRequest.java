@@ -1,10 +1,11 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
-import com.ttbmp.cinehub.app.dto.HallDto;
-import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
-import com.ttbmp.cinehub.app.dto.employee.ProjectionistDto;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
+import com.ttbmp.cinehub.domain.Hall;
+import com.ttbmp.cinehub.domain.employee.Employee;
+import com.ttbmp.cinehub.domain.employee.Projectionist;
+import com.ttbmp.cinehub.domain.shift.Shift;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,29 +19,29 @@ public class ShiftModifyRequest extends AuthenticatedRequest {
     public static final Request.Error MISSING_EMPLOYEE = new Request.Error("Dipendente non valido");
     public static final Request.Error ERROR_TIME = new Request.Error("Orario non Valido");
 
-    private EmployeeDto employeeDto;
+    private String employeeId;
     private int shiftId;
     private LocalDate date;
     private LocalTime start;
     private LocalTime end;
-    private HallDto hall;
+    private int hallId;
 
-    public ShiftModifyRequest(String sessionToken, EmployeeDto employeeDto, int shiftId, LocalDate date, LocalTime start, LocalTime end, HallDto hall) {
+    public ShiftModifyRequest(String sessionToken, String employeeId, int shiftId, LocalDate date, LocalTime start, LocalTime end, int hallId) {
         super(sessionToken);
-        this.employeeDto = employeeDto;
+        this.employeeId = employeeId;
         this.shiftId = shiftId;
         this.date = date;
         this.start = start;
         this.end = end;
-        this.hall = hall;
+        this.hallId = hallId;
     }
 
-    public EmployeeDto getEmployeeDto() {
-        return employeeDto;
+    public String getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployeeDto(EmployeeDto employeeDto) {
-        this.employeeDto = employeeDto;
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
     }
 
     public int getShiftId() {
@@ -75,16 +76,19 @@ public class ShiftModifyRequest extends AuthenticatedRequest {
         this.end = end;
     }
 
-    public HallDto getHall() {
-        return hall;
+    public int getHallId() {
+        return hallId;
     }
 
-    public void setHall(HallDto hall) {
-        this.hall = hall;
+    public void setHallId(int hallId) {
+        this.hallId = hallId;
     }
 
     @Override
     protected void onValidate() {
+        if (employeeId == null) {
+            addError(MISSING_EMPLOYEE);
+        }
         if (shiftId == -1) {
             addError(MISSING_SHIFT);
         }
@@ -97,15 +101,27 @@ public class ShiftModifyRequest extends AuthenticatedRequest {
         if (end == null) {
             addError(MISSING_END);
         }
-        if (hall == null && employeeDto instanceof ProjectionistDto) {
-            addError(MISSING_HALL);
-        }
-        if (employeeDto == null) {
+        if (employeeId == null) {
             addError(MISSING_EMPLOYEE);
         }
         if (start.isAfter(end)) {
             addError(ERROR_TIME);
         }
 
+    }
+
+    public void semanticValidate(Shift shift, Employee employee, Hall hall) throws InvalidRequestException {
+        if (shift == null) {
+            addError(MISSING_SHIFT);
+        }
+        if (employee == null) {
+            addError(MISSING_EMPLOYEE);
+        }
+        if (hall == null && employee instanceof Projectionist) {
+            addError(MISSING_HALL);
+        }
+        if(!getErrorList().isEmpty()) {
+            throw new InvalidRequestException();
+        }
     }
 }

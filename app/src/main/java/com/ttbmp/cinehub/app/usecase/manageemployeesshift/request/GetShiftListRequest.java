@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
-import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
+import com.ttbmp.cinehub.domain.Cinema;
 
 import java.time.LocalDate;
 
@@ -10,17 +10,17 @@ import java.time.LocalDate;
  * @author Massimo Mazzetti
  */
 public class GetShiftListRequest extends AuthenticatedRequest {
-    public static final Request.Error MISSING_CINEMA = new Request.Error("Cinema non valido");
+    public static final Request.Error INVALID_CINEMA = new Request.Error("Cinema non valido");
     public static final Request.Error MISSING_START = new Request.Error("Inizio non valido");
     public static final Request.Error MISSING_END = new Request.Error("Fine non valido");
 
-    private CinemaDto cinema;
+    private int cinemaId;
     private LocalDate start;
     private LocalDate end;
 
-    public GetShiftListRequest(String sessionToken, CinemaDto cinema, LocalDate start, LocalDate end) {
+    public GetShiftListRequest(String sessionToken, int cinemaId, LocalDate start, LocalDate end) {
         super(sessionToken);
-        this.cinema = cinema;
+        this.cinemaId = cinemaId;
         this.start = start;
         this.end = end;
     }
@@ -33,12 +33,12 @@ public class GetShiftListRequest extends AuthenticatedRequest {
         this.end = end;
     }
 
-    public CinemaDto getCinema() {
-        return cinema;
+    public int getCinemaId() {
+        return cinemaId;
     }
 
-    public void setCinema(CinemaDto cinema) {
-        this.cinema = cinema;
+    public void setCinemaId(int cinemaId) {
+        this.cinemaId = cinemaId;
     }
 
     public LocalDate getStart() {
@@ -51,9 +51,6 @@ public class GetShiftListRequest extends AuthenticatedRequest {
 
     @Override
     protected void onValidate() {
-        if (cinema == null) {
-            addError(MISSING_CINEMA);
-        }
         if (start == null) {
             addError(MISSING_START);
         }
@@ -62,4 +59,10 @@ public class GetShiftListRequest extends AuthenticatedRequest {
         }
     }
 
+    public void semanticValidate(Cinema cinema) throws InvalidRequestException {
+        if (cinema == null) {
+            addError(INVALID_CINEMA);
+            throw new InvalidRequestException();
+        }
+    }
 }

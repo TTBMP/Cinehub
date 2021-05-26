@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.repository.shift;
 
 import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
@@ -14,7 +15,7 @@ public interface ShiftRepository {
 
     Shift getShift(int shiftId) throws RepositoryException;
 
-    List<Shift> getCinemaShiftListBetween(int cinema, LocalDate start, LocalDate end) throws RepositoryException;
+    List<Shift> getCinemaShiftListBetween(Cinema cinema, LocalDate start, LocalDate end) throws RepositoryException;
 
     void saveShift(Shift shift) throws RepositoryException;
 

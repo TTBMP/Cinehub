@@ -86,7 +86,8 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         var permissions = new Permission[]{Permission.GET_EMPLOYEE_LIST};
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
-            var cinema = cinemaRepository.getCinema(request.getCinema().getId());
+            var cinema = cinemaRepository.getCinema(request.getCinemaId());
+            request.semanticValidate(cinema);
             var employeeList = employeeRepository.getEmployeeList(cinema).stream()
                     .map(EmployeeDtoFactory::getEmployeeDto)
                     .collect(Collectors.toList());
@@ -109,13 +110,15 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         var permissions = new Permission[]{Permission.GET_SHIFT_LIST};
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
-            var shiftList = shiftRepository.getCinemaShiftListBetween(request.getCinema().getId(), request.getStart(), request.getEnd()).stream()
+            var cinema = cinemaRepository.getCinema(request.getCinemaId());
+            request.semanticValidate(cinema);
+            var shiftList = shiftRepository.getCinemaShiftListBetween(cinema, request.getStart(), request.getEnd()).stream()
                     .map(ShiftDtoFactory::getShiftDto)
                     .collect(Collectors.toList());
             manageEmployeesShiftPresenter.presentShiftList(new GetShiftListResponse(
                     shiftList,
                     request.getStart(),
-                    request.getCinema().getId()
+                    request.getCinemaId()
             ));
         } catch (Request.NullRequestException e) {
             manageEmployeesShiftPresenter.presentGetShiftListNullRequest();
@@ -136,13 +139,15 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
             var shift = shiftRepository.getShift(request.getShiftId());
-            var employee = employeeRepository.getEmployee(request.getEmployeeDto().getId());
+            var employee = employeeRepository.getEmployee(request.getEmployeeId());
+            Hall hall = null;
             if (employee instanceof Projectionist) {
-                var hall = hallRepository.getHall(request.getHall().getId());
-                shift.modifyShift(shift, request.getDate(), request.getStart(), request.getEnd(), hall);
+                 hall = hallRepository.getHall(request.getHallId());
+            }
+            request.semanticValidate(shift, employee, hall);
+            shift.modifyShift(shift, request.getDate(), request.getStart(), request.getEnd(), hall);
+            if (employee instanceof Projectionist) {
                 projectionistShiftRepository.modifyShift((ProjectionistShift) shift);
-            } else {
-                shift.modifyShift(shift, request.getDate(), request.getStart(), request.getEnd(), null);
             }
             shiftRepository.modifyShift(shift);
             emailService.sendMail(new EmailServiceRequest(
@@ -175,6 +180,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             AuthenticatedRequest.validate(request, securityService, permissions);
             var shift = shiftRepository.getShift(request.getShiftId());
             var email = shift.getEmployee().getEmail();
+            request.semanticValidate(shift);
             shiftRepository.deletedShift(shift);
             manageEmployeesShiftPresenter.presentDeleteShift();
             emailService.sendMail(new EmailServiceRequest(
@@ -201,11 +207,12 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             AuthenticatedRequest.validate(request, securityService, permissions);
             List<ShiftDto> shiftDtoList = new ArrayList<>();
             UnaryOperator<LocalDate> increaseDateFunction;
-            var employee = employeeRepository.getEmployee(request.getEmployeeDto().getId());
+            var employee = employeeRepository.getEmployee(request.getEmployeeId());
             Hall hall = null;
-            if (request.getHall() != null) {
-                hall = hallRepository.getHall(request.getHall().getId());
+            if (employee instanceof Projectionist) {
+                hall = hallRepository.getHall(request.getHallId());
             }
+            request.semanticValidate(employee, hall);
             switch (request.getOption()) {
                 case "EVERY_DAY":
                     increaseDateFunction = date -> date.plusDays(1);
@@ -261,6 +268,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             var start = request.getStart().toString();
             var end = request.getEnd().toString();
             var hall = hallRepository.getHall(request.getHallId());
+            request.semanticValidate(employee, hall);
             var shiftFactory = new ShiftFactory();
             var shift = shiftFactory.createConcreteShift(employee, date, start, end, hall);
             saveShift(shift);

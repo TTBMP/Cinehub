@@ -54,17 +54,16 @@ public class ShowShiftViewController {
             @CookieValue(value = "session") String sessionToken,
             @ModelAttribute("getShiftListRequest") GetCinemaForm form, Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-        model.addAttribute("idCinema", form.getCinemaId());
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
-        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
         model.addAttribute("cinemaSelected", true);
-        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, form.getCinemaId()));
         useCase.getShiftList(new GetShiftListRequest(
                 sessionToken,
-                selectedCinema,
+                form.getCinemaId(),
                 form.getStart().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
                 form.getStart().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
         ));
+        model.addAttribute("idCinema", form.getCinemaId());
         model.addAttribute("date", form.getStart());
         model.addAttribute("selectedShift", new NewShiftForm());
         return ErrorHelper.returnView(response, model, "manage_employee_shift");

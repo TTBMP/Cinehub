@@ -87,13 +87,13 @@ public class ShowShiftViewController extends ViewController {
         activity.getUseCase((ManageEmployeesShiftUseCase.class)).getEmployeeList(
                 new GetEmployeeListRequest(
                         CinehubApplication.getSessionToken(),
-                        viewModel.getSelectedCinema()
+                        viewModel.getSelectedCinema().getId()
                 ));
 
         activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
                 new GetShiftListRequest(
                         CinehubApplication.getSessionToken(),
-                        viewModel.getSelectedCinema(),
+                        viewModel.getSelectedCinema().getId(),
                         viewModel.getSelectedWeek().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
                         viewModel.getSelectedWeek().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
                 )
@@ -107,7 +107,7 @@ public class ShowShiftViewController extends ViewController {
         periodDatePicker.setOnAction(a -> activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
                 new GetShiftListRequest(
                         CinehubApplication.getSessionToken(),
-                        viewModel.getSelectedCinema(),
+                        viewModel.getSelectedCinema().getId(),
                         viewModel.getSelectedWeek().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
                         viewModel.getSelectedWeek().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
                 )
@@ -116,13 +116,13 @@ public class ShowShiftViewController extends ViewController {
             activity.getUseCase((ManageEmployeesShiftUseCase.class)).getEmployeeList(
                     new GetEmployeeListRequest(
                             CinehubApplication.getSessionToken(),
-                            viewModel.getSelectedCinema()
+                            viewModel.getSelectedCinema().getId()
                     ));
 
             activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
                     new GetShiftListRequest(
                             CinehubApplication.getSessionToken(),
-                            viewModel.getSelectedCinema(),
+                            viewModel.getSelectedCinema().getId(),
                             viewModel.getSelectedWeek().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
                             viewModel.getSelectedWeek().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
                     ));

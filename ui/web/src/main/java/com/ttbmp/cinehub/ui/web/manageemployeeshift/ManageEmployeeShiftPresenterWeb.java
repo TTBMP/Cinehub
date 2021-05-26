@@ -77,16 +77,7 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
                 }
             }
         }
-        if (model.getAttribute("selectedHallId") != null) {
-            var hallDtoList = (List<HallDto>) model.getAttribute("hallList");
-            var hallId = (int) model.getAttribute("selectedHallId");
-            assert hallDtoList != null;
-            for (var hallDto : hallDtoList) {
-                if (hallDto.getId() == hallId) {
-                    model.addAttribute("selectedHall", hallDto);
-                }
-            }
-        }
+
 
     }
 

@@ -5,6 +5,7 @@ import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftProxy;
 import com.ttbmp.cinehub.app.repository.shift.usher.UsherShiftProxy;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
+import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.shift.Shift;
@@ -38,9 +39,9 @@ public class JdbcShiftRepository implements ShiftRepository {
     }
 
     @Override
-    public List<Shift> getCinemaShiftListBetween(int cinema, LocalDate start, LocalDate end) throws RepositoryException {
+    public List<Shift> getCinemaShiftListBetween(Cinema cinema, LocalDate start, LocalDate end) throws RepositoryException {
         try {
-            var shiftList = getShiftDao().getCinemaShiftListBetween(cinema, start.toString(), end.toString());
+            var shiftList = getShiftDao().getCinemaShiftListBetween(cinema.getId(), start.toString(), end.toString());
             return getListShift(shiftList);
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());

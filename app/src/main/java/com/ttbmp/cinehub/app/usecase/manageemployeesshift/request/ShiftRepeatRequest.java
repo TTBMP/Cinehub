@@ -1,10 +1,10 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
-import com.ttbmp.cinehub.app.dto.HallDto;
-import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
-import com.ttbmp.cinehub.app.dto.employee.ProjectionistDto;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
+import com.ttbmp.cinehub.domain.Hall;
+import com.ttbmp.cinehub.domain.employee.Employee;
+import com.ttbmp.cinehub.domain.employee.Projectionist;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -24,20 +24,20 @@ public class ShiftRepeatRequest extends AuthenticatedRequest {
     private LocalDate start;
     private LocalDate end;
     private String option;
-    private EmployeeDto employeeDto;
+    private String employeeId;
     private LocalTime startShift;
     private LocalTime endShift;
-    private HallDto hall;
+    private int hallId;
 
-    public ShiftRepeatRequest(String sessionToken, LocalDate start, LocalDate end, String option, EmployeeDto employeeDto, LocalTime startShift, LocalTime endShift, HallDto hall) {
+    public ShiftRepeatRequest(String sessionToken, LocalDate start, LocalDate end, String option, String employeeId, LocalTime startShift, LocalTime endShift, int hallId) {
         super(sessionToken);
         this.start = start;
         this.end = end;
         this.option = option;
-        this.employeeDto = employeeDto;
+        this.employeeId = employeeId;
         this.startShift = startShift;
         this.endShift = endShift;
-        this.hall = hall;
+        this.hallId = hallId;
     }
 
     public LocalDate getStart() {
@@ -64,12 +64,12 @@ public class ShiftRepeatRequest extends AuthenticatedRequest {
         this.option = option;
     }
 
-    public EmployeeDto getEmployeeDto() {
-        return employeeDto;
+    public String getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployeeDto(EmployeeDto employeeDto) {
-        this.employeeDto = employeeDto;
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
     }
 
     public LocalTime getStartShift() {
@@ -88,17 +88,17 @@ public class ShiftRepeatRequest extends AuthenticatedRequest {
         this.endShift = endShift;
     }
 
-    public HallDto getHall() {
-        return hall;
+    public int getHallId() {
+        return hallId;
     }
 
-    public void setHall(HallDto hall) {
-        this.hall = hall;
+    public void setHallId(int hallId) {
+        this.hallId = hallId;
     }
 
     @Override
     public void onValidate() {
-        if (employeeDto == null) {
+        if (employeeId == null) {
             addError(MISSING_EMPLOYEE);
         }
         if (option == null) {
@@ -116,9 +116,6 @@ public class ShiftRepeatRequest extends AuthenticatedRequest {
         if (endShift == null) {
             addError(MISSING_END_SHIFT);
         }
-        if (hall == null && employeeDto instanceof ProjectionistDto) {
-            addError(MISSING_HALL);
-        }
         if (start.isAfter(end)) {
             addError(PERIOD_ERROR);
         }
@@ -127,4 +124,15 @@ public class ShiftRepeatRequest extends AuthenticatedRequest {
         }
     }
 
+    public void semanticValidate(Employee employee, Hall hall) throws InvalidRequestException{
+        if(employee == null){
+            addError(MISSING_EMPLOYEE);
+        }
+        if( hall == null && employee instanceof Projectionist){
+            addError(MISSING_HALL);
+        }
+        if(!getErrorList().isEmpty()){
+            throw new InvalidRequestException();
+        }
+    }
 }

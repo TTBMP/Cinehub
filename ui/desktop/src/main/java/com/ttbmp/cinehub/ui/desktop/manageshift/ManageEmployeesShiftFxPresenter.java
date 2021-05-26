@@ -147,8 +147,8 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
 
     @Override
     public void presentInvalidEmployeeListRequest(GetEmployeeListRequest request) {
-        if (request.getErrorList().contains(GetEmployeeListRequest.MISSING_CINEMA)) {
-            viewModel.errorDaoProperty().setValue(GetEmployeeListRequest.MISSING_CINEMA.getMessage());
+        if (request.getErrorList().contains(GetEmployeeListRequest.INVALID_CINEMA)) {
+            viewModel.errorDaoProperty().setValue(GetEmployeeListRequest.INVALID_CINEMA.getMessage());
         }
     }
 
@@ -259,8 +259,8 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
 
     @Override
     public void presentInvalidGetShiftListRequest(GetShiftListRequest request) {
-        if (request.getErrorList().contains(GetShiftListRequest.MISSING_CINEMA)) {
-            viewModel.errorProperty().setValue(GetShiftListRequest.MISSING_CINEMA.getMessage());
+        if (request.getErrorList().contains(GetShiftListRequest.INVALID_CINEMA)) {
+            viewModel.errorProperty().setValue(GetShiftListRequest.INVALID_CINEMA.getMessage());
         }
         if (request.getErrorList().contains(GetShiftListRequest.MISSING_START)) {
             viewModel.errorProperty().setValue(GetShiftListRequest.MISSING_START.getMessage());

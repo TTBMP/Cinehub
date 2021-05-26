@@ -78,12 +78,16 @@ public class AssignShiftViewController extends ViewController {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
             hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
         }
+        else {
+            viewModel.getHallList().setAll(viewModel.getEmployee(viewModel.getSelectedShift()).getCinema().getHalList());
+            hallComboBox.setItems(viewModel.getHallList());
+            hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
+
+        }
         viewModel.setRepeatVisibility(false);
         viewModel.setErrorAssignVisibility(false);
 
-        hallComboBox.setItems(viewModel.getHallList());
 
-        hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
         viewModel.setSelectedEndRepeatDay(null);
         hallComboBox.setButtonCell(new HallFactory(null));
         hallComboBox.setCellFactory(HallFactory::new);
@@ -129,6 +133,10 @@ public class AssignShiftViewController extends ViewController {
     }
 
     private void confirmButtonOnAction(ActionEvent action) {
+        int hallId = -1;
+        if (viewModel.getSelectedHall() != null) {
+            hallId = viewModel.getSelectedHall().getId();
+        }
 
         if (!viewModel.isRepeatVisibility()) {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(
@@ -137,7 +145,7 @@ public class AssignShiftViewController extends ViewController {
                     viewModel.getSelectedDayWeek().getDate(),
                     viewModel.getStartSpinnerTime().withNano(0),
                     viewModel.getEndSpinnerTime().withNano(0),
-                    viewModel.getSelectedHall().getId())
+                    hallId)
             );
         } else {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).createRepeatedShift(
@@ -146,10 +154,10 @@ public class AssignShiftViewController extends ViewController {
                             viewModel.getSelectedDayWeek().getDate(),
                             viewModel.getSelectedEndRepeatDay(),
                             viewModel.getSelectedOption().toString(),
-                            viewModel.getSelectedDayWeek().getEmployee(),
+                            viewModel.getSelectedDayWeek().getEmployee().getId(),
                             viewModel.getStartSpinnerTime(),
                             viewModel.getEndSpinnerTime(),
-                            viewModel.getSelectedHall()
+                            hallId
                     )
             );
         }
