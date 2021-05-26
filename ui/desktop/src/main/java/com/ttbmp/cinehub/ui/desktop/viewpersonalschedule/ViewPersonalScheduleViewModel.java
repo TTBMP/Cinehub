@@ -1,9 +1,9 @@
 package com.ttbmp.cinehub.ui.desktop.viewpersonalschedule;
 
-import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.dto.ShiftDto;
-import com.ttbmp.cinehub.app.dto.ShiftProjectionistDto;
+import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
+import com.ttbmp.cinehub.app.dto.shift.ShiftProjectionistDto;
 import com.ttbmp.cinehub.ui.desktop.utilities.ObjectBindings;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewModel;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.master.calendar.CalendarDay;

@@ -1,4 +1,6 @@
-package com.ttbmp.cinehub.app.dto;
+package com.ttbmp.cinehub.app.dto.shift;
+
+import com.ttbmp.cinehub.domain.shift.Shift;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -6,7 +8,7 @@ import java.time.LocalTime;
 /**
  * @author Fabio Buracchi, Massimo Mazzetti
  */
-public class ShiftDto {
+public abstract class ShiftDto {
 
     private int id;
     private String employeeId;
@@ -14,12 +16,12 @@ public class ShiftDto {
     private LocalTime start;
     private LocalTime end;
 
-    public ShiftDto(int id, String employeeId, LocalDate date, LocalTime start, LocalTime end) {
-        this.id = id;
-        this.employeeId = employeeId;
-        this.date = date;
-        this.start = start;
-        this.end = end;
+    protected ShiftDto(Shift shift) {
+        this.id = shift.getId();
+        this.employeeId = shift.getEmployee().getId();
+        this.date = LocalDate.parse(shift.getDate());
+        this.start = LocalTime.parse(shift.getStart());
+        this.end = LocalTime.parse(shift.getEnd());
     }
 
     public int getId() {

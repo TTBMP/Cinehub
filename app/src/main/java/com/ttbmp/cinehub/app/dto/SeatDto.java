@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.app.dto;
 
+import com.ttbmp.cinehub.domain.Seat;
+
 /**
  * @author Ivan Palmieri
  */
@@ -9,9 +11,9 @@ public class SeatDto {
     private String position;
     private boolean isBooked;
 
-    public SeatDto(int id, String position, boolean isBooked) {
-        this.id = id;
-        this.position = position;
+    public SeatDto(Seat seat, boolean isBooked) {
+        this.id = seat.getId();
+        this.position = seat.getPosition();
         this.isBooked = isBooked;
     }
 

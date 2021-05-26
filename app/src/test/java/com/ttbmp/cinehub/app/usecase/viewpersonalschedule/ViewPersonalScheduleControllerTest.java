@@ -1,13 +1,11 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
-import com.ttbmp.cinehub.app.datamapper.ProjectionDataMapper;
-import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.dto.ShiftDto;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDtoFactory;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
-import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistRepository;
 import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftRepository;
@@ -19,6 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Fabio Buracchi
@@ -77,7 +76,9 @@ class ViewPersonalScheduleControllerTest {
                 request.getStart(),
                 request.getEnd()
         );
-        return ShiftDataMapper.mapToDtoList(shiftList);
+        return shiftList.stream()
+                .map(ShiftDtoFactory::getShiftDto)
+                .collect(Collectors.toList());
     }
 
     private List<ProjectionDto> getShiftProjectionList(ProjectionListRequest request) throws RepositoryException {
@@ -85,7 +86,9 @@ class ViewPersonalScheduleControllerTest {
                 .getProjectionistShift(request.getProjectionistShiftId());
         var projectionList = serviceLocator.getService(ProjectionRepository.class)
                 .getProjectionList(projectionistShift);
-        return ProjectionDataMapper.mapToDtoList(projectionList);
+        return projectionList.stream()
+                .map(ProjectionDto::new)
+                .collect(Collectors.toList());
     }
 
 }

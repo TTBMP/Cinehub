@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.dto.ShiftDto;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 
 import java.util.List;
 

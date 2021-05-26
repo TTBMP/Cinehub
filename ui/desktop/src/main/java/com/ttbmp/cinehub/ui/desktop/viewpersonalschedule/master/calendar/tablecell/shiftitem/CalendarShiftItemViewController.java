@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.master.calendar.tablecell.shiftitem;
 
-import com.ttbmp.cinehub.app.dto.ShiftDto;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavController;

@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
-import com.ttbmp.cinehub.app.dto.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
 
 import java.util.List;
 

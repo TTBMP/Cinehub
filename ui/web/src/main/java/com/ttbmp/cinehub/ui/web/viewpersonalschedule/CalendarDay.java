@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.web.viewpersonalschedule;
 
-import com.ttbmp.cinehub.app.dto.ShiftDto;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift;
 
-import com.ttbmp.cinehub.app.dto.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;

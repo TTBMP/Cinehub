@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift.detail;
 
-import com.ttbmp.cinehub.app.dto.UsherDto;
+import com.ttbmp.cinehub.app.dto.employee.UsherDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftRequest;
 import com.ttbmp.cinehub.ui.desktop.CinehubApplication;

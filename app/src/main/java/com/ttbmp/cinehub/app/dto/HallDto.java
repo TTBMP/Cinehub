@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.app.dto;
 
+import com.ttbmp.cinehub.domain.Hall;
+
 /**
  * @author Ivan Palmieri
  */
@@ -8,13 +10,9 @@ public class HallDto {
     private Integer id;
     private String name;
 
-    public HallDto(Integer id) {
-        this.id = id;
-    }
-
-    public HallDto(Integer id, String name) {
-        this.id = id;
-        this.name = name;
+    public HallDto(Hall hall) {
+        this.id = hall.getId();
+        this.name = hall.getName();
     }
 
     public Integer getId() {

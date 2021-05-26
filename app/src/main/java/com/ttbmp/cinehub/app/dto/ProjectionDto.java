@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.app.dto;
 
+import com.ttbmp.cinehub.domain.Projection;
+
 /**
  * @author Ivan Palmieri
  */
@@ -12,13 +14,13 @@ public class ProjectionDto {
     private MovieDto movieDto;
     private HallDto hallDto;
 
-    public ProjectionDto(int id, String date, String startTime, long basePrice, MovieDto movie, HallDto hall) {
-        this.id = id;
-        this.movieDto = movie;
-        this.hallDto = hall;
-        this.startTime = startTime;
-        this.date = date;
-        this.basePrice = basePrice;
+    public ProjectionDto(Projection projection) {
+        this.id = projection.getId();
+        this.date = projection.getDate();
+        this.startTime = projection.getStartTime();
+        this.basePrice = projection.getBasePrice();
+        this.movieDto = new MovieDto(projection.getMovie());
+        this.hallDto = new HallDto(projection.getHall());
     }
 
     public int getId() {

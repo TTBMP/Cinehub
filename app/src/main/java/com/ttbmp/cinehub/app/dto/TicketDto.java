@@ -1,5 +1,7 @@
 package com.ttbmp.cinehub.app.dto;
 
+import com.ttbmp.cinehub.domain.ticket.component.Ticket;
+
 /**
  * @author Ivan Palmieri
  */
@@ -9,10 +11,10 @@ public class TicketDto {
     private long price;
     private SeatDto seatDto;
 
-    public TicketDto(int id, long price, SeatDto seatDto) {
-        this.id = id;
-        this.price = price;
-        this.seatDto = seatDto;
+    public TicketDto(Ticket ticket) {
+        this.id = ticket.getId();
+        this.price = ticket.getPrice();
+        this.seatDto = new SeatDto(ticket.getSeat(), true);
     }
 
     public int getId() {

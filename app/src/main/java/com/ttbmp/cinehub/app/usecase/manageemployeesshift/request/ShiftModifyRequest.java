@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
-import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.HallDto;
-import com.ttbmp.cinehub.app.dto.ProjectionistDto;
+import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.employee.ProjectionistDto;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 

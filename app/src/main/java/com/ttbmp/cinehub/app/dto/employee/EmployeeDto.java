@@ -1,20 +1,23 @@
-package com.ttbmp.cinehub.app.dto;
+package com.ttbmp.cinehub.app.dto.employee;
+
+import com.ttbmp.cinehub.app.dto.CinemaDto;
+import com.ttbmp.cinehub.domain.employee.Employee;
 
 /**
  * @author Massimo Mazzetti
  */
-public class EmployeeDto {
+public abstract class EmployeeDto {
 
     private String id;
     private String name;
     private String surname;
     private CinemaDto cinema;
 
-    public EmployeeDto(String id, String name, String surname, CinemaDto cinema) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.cinema = cinema;
+    protected EmployeeDto(Employee employee) {
+        this.id = employee.getId();
+        this.name = employee.getName();
+        this.surname = employee.getSurname();
+        this.cinema = new CinemaDto(employee.getCinema());
     }
 
     public String getId() {
@@ -48,6 +51,9 @@ public class EmployeeDto {
     public void setCinema(CinemaDto cinema) {
         this.cinema = cinema;
     }
+
+    @Override
+    public abstract String toString();
 
     @Override
     public boolean equals(Object obj) {

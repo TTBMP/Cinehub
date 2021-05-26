@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift.response;
 
-import com.ttbmp.cinehub.app.dto.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
 
 import java.util.List;
 
