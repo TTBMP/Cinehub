@@ -117,7 +117,7 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentPayPaymentServiceException(PaymentServiceException e) {
+    public void presentPaymentServiceException(PaymentServiceException e) {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
     }
 

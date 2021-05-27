@@ -28,7 +28,6 @@ public class SeatListRequest extends AuthenticatedRequest {
     public void onValidate() {
         if (projectionId < 0) {
             addError(PROJECTION_ERROR);
-
         }
     }
 

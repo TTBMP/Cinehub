@@ -39,7 +39,7 @@ public interface BuyTicketPresenter {
 
     void presentInvalidPayRequest(PaymentRequest request);
 
-    void presentPayPaymentServiceException(PaymentServiceException exception);
+    void presentPaymentServiceException(PaymentServiceException exception);
 
     void presentTicket(TicketResponse response);
 

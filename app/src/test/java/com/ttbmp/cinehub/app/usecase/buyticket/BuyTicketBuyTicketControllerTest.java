@@ -104,7 +104,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentPayPaymentServiceException(PaymentServiceException error) {
+        public void presentPaymentServiceException(PaymentServiceException error) {
 
         }
 

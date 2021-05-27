@@ -147,6 +147,9 @@ public class PaymentRequest extends AuthenticatedRequest {
         if (!email.contains("@")) {
             addError(EMAIL_ERROR);
         }
+        if (!email.contains(".")) {
+            addError(EMAIL_ERROR);
+        }
         if (magicBoxOption == null) {
             addError(MISSING_OPTION_ONE_ERROR);
         }

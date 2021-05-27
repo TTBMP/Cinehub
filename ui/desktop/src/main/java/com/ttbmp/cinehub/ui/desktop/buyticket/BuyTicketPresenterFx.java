@@ -64,7 +64,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentInvalidCinemaListRequest(CinemaListRequest request) {
-        viewModel.errorMessageProperty().setValue(CinemaListRequest.MISSING_MOVIE_ERROR.getMessage());
+        viewModel.errorMessageProperty().setValue(CinemaListRequest.MISSING_DATE_ERROR.getMessage());
     }
 
     @Override
@@ -74,17 +74,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentInvalidProjectionListRequest(ProjectionListRequest request) {
-        var error = "";
-        if (request.getErrorList().contains(ProjectionListRequest.MISSING_MOVIE_ERROR)) {
-            error += ProjectionListRequest.MISSING_MOVIE_ERROR.getMessage();
-        }
-        if (request.getErrorList().contains(ProjectionListRequest.MISSING_DATE_ERROR)) {
-            error += ProjectionListRequest.MISSING_DATE_ERROR.getMessage();
-        }
-        if (request.getErrorList().contains(ProjectionListRequest.MISSING_CINEMA_ERROR)) {
-            error += ProjectionListRequest.MISSING_CINEMA_ERROR.getMessage();
-        }
-        viewModel.errorMessageProperty().setValue(error);
+        viewModel.errorMessageProperty().setValue(ProjectionListRequest.MISSING_DATE_ERROR.getMessage());
     }
 
     @Override
@@ -99,7 +89,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
 
     @Override
-    public void presentPayPaymentServiceException(PaymentServiceException exception) {
+    public void presentPaymentServiceException(PaymentServiceException exception) {
         viewModel.errorMessageProperty().setValue(exception.getMessage());
     }
 
@@ -111,7 +101,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentInvalidMovieListRequest(MovieListRequest request) {
-        viewModel.errorMessageProperty().setValue(CinemaListRequest.MISSING_MOVIE_ERROR.getMessage());
+        viewModel.errorMessageProperty().setValue(CinemaListRequest.MISSING_DATE_ERROR.getMessage());
     }
 
 

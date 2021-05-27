@@ -79,7 +79,7 @@ public class BuyTicketController implements BuyTicketUseCase {
         try {
             Request.validate(request);
             var movie = movieRepository.getMovie(request.getMovieId());
-            var cinemaList = cinemaRepository.getListCinema(movie, request.getData()).stream()
+            var cinemaList = cinemaRepository.getListCinema(movie, request.getDate()).stream()
                     .map(CinemaDto::new)
                     .collect(Collectors.toList());
             presenter.presentCinemaList(new CinemaListResponse(cinemaList));
@@ -175,7 +175,7 @@ public class BuyTicketController implements BuyTicketUseCase {
         } catch (Request.InvalidRequestException e) {
             presenter.presentInvalidPayRequest(request);
         } catch (PaymentServiceException e) {
-            presenter.presentPayPaymentServiceException(e);
+            presenter.presentPaymentServiceException(e);
         } catch (RepositoryException e) {
             presenter.presentRepositoryError(e);
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
