@@ -2,6 +2,9 @@ package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
+
+import java.util.List;
 
 /**
  * @author Fabio Buracchi
@@ -10,15 +13,11 @@ public interface ViewPersonalSchedulePresenter {
 
     void presentGetShiftList(ShiftListReply result);
 
-    void presentInvalidShiftListRequest(ShiftListRequest request);
-
-    void presentShiftListNullRequest();
-
     void presentGetProjectionList(ProjectionListReply result);
 
-    void presentProjectionListNullRequest();
+    void presentNullRequest();
 
-    void presentInvalidProjectionListRequest(ProjectionListRequest request);
+    void presentInvalidRequest(Request request);
 
     void presentRepositoryError(RepositoryException e);
 

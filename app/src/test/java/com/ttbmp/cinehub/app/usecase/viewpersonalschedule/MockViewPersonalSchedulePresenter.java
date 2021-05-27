@@ -2,6 +2,9 @@ package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
+
+import java.util.List;
 
 /**
  * @author Fabio Buracchi
@@ -20,27 +23,17 @@ public class MockViewPersonalSchedulePresenter implements ViewPersonalSchedulePr
     }
 
     @Override
-    public void presentInvalidShiftListRequest(ShiftListRequest request) {
-
-    }
-
-    @Override
-    public void presentShiftListNullRequest() {
-
-    }
-
-    @Override
     public void presentGetProjectionList(ProjectionListReply result) {
         viewModel.setProjectionList(result.getProjectionDtoList());
     }
 
     @Override
-    public void presentProjectionListNullRequest() {
+    public void presentNullRequest() {
 
     }
 
     @Override
-    public void presentInvalidProjectionListRequest(ProjectionListRequest request) {
+    public void presentInvalidRequest(List<Request.Error> errorList) {
 
     }
 

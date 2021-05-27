@@ -35,9 +35,9 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
             var shiftList = employee.getShiftListBetween(request.getStart(), request.getEnd());
             presenter.presentGetShiftList(new ShiftListReply(employee, shiftList));
         } catch (Request.NullRequestException e) {
-            presenter.presentShiftListNullRequest();
+            presenter.presentNullRequest();
         } catch (Request.InvalidRequestException e) {
-            presenter.presentInvalidShiftListRequest(request);
+            presenter.presentInvalidRequest(request);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
             presenter.presentUnauthorizedError(e);
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
@@ -55,9 +55,9 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
             var shift = projectionistShiftRepository.getProjectionistShift(request.getProjectionistShiftId());
             presenter.presentGetProjectionList(new ProjectionListReply(shift.getProjectionList()));
         } catch (Request.NullRequestException e) {
-            presenter.presentProjectionListNullRequest();
+            presenter.presentNullRequest();
         } catch (Request.InvalidRequestException e) {
-            presenter.presentInvalidProjectionListRequest(request);
+            presenter.presentInvalidRequest(request);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
             presenter.presentUnauthorizedError(e);
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {

@@ -3,6 +3,9 @@ package com.ttbmp.cinehub.ui.desktop.viewpersonalschedule;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
+
+import java.util.stream.Collectors;
 
 /**
  * @author Fabio Buracchi
@@ -22,42 +25,21 @@ public class ViewPersonalScheduleFxPresenter implements ViewPersonalSchedulePres
     }
 
     @Override
-    public void presentInvalidShiftListRequest(ShiftListRequest request) {
-        var message = "";
-        if (request.getErrorList().contains(ShiftListRequest.MISSING_START_TIME_ERROR)) {
-            message += ShiftListRequest.MISSING_START_TIME_ERROR.getMessage() + "\n";
-        }
-        if (request.getErrorList().contains(ShiftListRequest.MISSING_END_TIME_ERROR)) {
-            message += ShiftListRequest.MISSING_END_TIME_ERROR.getMessage() + "\n";
-        }
-        if (request.getErrorList().contains(ShiftListRequest.INVALID_TIME_SELECTION_ERROR)) {
-            message += ShiftListRequest.INVALID_TIME_SELECTION_ERROR.getMessage() + "\n";
-        }
-        viewModel.setErrorMessage(message);
-    }
-
-    @Override
-    public void presentShiftListNullRequest() {
-        viewModel.setErrorMessage("Request can't be null");
-    }
-
-    @Override
     public void presentGetProjectionList(ProjectionListReply projectionListReply) {
         viewModel.getProjectionList().setAll(projectionListReply.getProjectionDtoList());
     }
 
     @Override
-    public void presentProjectionListNullRequest() {
+    public void presentNullRequest() {
         viewModel.setErrorMessage("Request can't be null");
     }
 
     @Override
-    public void presentInvalidProjectionListRequest(ProjectionListRequest request) {
-        var message = "";
-        if (request.getErrorList().contains(ProjectionListRequest.INVALID_SHIFT_ID_ERROR)) {
-            message += ProjectionListRequest.INVALID_SHIFT_ID_ERROR.getMessage() + "\n";
-        }
-        viewModel.setErrorMessage(message);
+    public void presentInvalidRequest(Request request) {
+        viewModel.setErrorMessage(request.getErrorList().stream()
+                .map(Request.Error::getMessage)
+                .collect(Collectors.joining())
+        );
     }
 
     @Override
