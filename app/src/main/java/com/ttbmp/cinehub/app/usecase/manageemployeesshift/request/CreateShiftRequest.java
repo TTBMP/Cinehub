@@ -100,15 +100,15 @@ public class CreateShiftRequest extends AuthenticatedRequest {
         }
     }
 
-    public void semanticValidate(Employee employee, Hall hall)  throws InvalidRequestException {
-        if(employee == null){
+    public void semanticValidate(Employee employee, Hall hall) throws InvalidRequestException {
+        if (employee == null) {
             addError(MISSING_EMPLOYEE);
         }
-        if(hall == null && employee instanceof Projectionist){
+        if (hall == null && employee instanceof Projectionist) {
             addError(MISSING_HALL);
         }
-        if(!getErrorList().isEmpty()){
-            throw  new InvalidRequestException();
+        if (!getErrorList().isEmpty()) {
+            throw new InvalidRequestException();
         }
     }
 }

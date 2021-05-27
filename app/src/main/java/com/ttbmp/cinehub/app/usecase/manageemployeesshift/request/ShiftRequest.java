@@ -30,10 +30,10 @@ public class ShiftRequest extends AuthenticatedRequest {
         // Do nothing because the class doesn't have attributes.
     }
 
-    public void semanticValidate(Shift shift) throws InvalidRequestException{
-            if(shift == null){
-                addError(MISSING_SHIFT);
-                throw new InvalidRequestException();
-            }
+    public void semanticValidate(Shift shift) throws InvalidRequestException {
+        if (shift == null) {
+            addError(MISSING_SHIFT);
+            throw new InvalidRequestException();
+        }
     }
 }

@@ -61,12 +61,12 @@ public class AssignProjectionistShiftViewController {
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, cinemaId));
         useCase.createShift(new CreateShiftRequest(
-                sessionToken,
-                shiftRequest.getEmployee().getId(),
-                LocalDate.parse(shiftRequest.getDate()),
-                shiftRequest.getStart(),
-                shiftRequest.getEnd(),
-                shiftRequest.getHall().getId()
+                        sessionToken,
+                        shiftRequest.getEmployee().getId(),
+                        LocalDate.parse(shiftRequest.getDate()),
+                        shiftRequest.getStart(),
+                        shiftRequest.getEnd(),
+                        shiftRequest.getHall().getId()
                 )
         );
         return ErrorHelper.returnView(response, model, "shift_assigned");

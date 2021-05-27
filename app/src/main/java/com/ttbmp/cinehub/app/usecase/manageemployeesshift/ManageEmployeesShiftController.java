@@ -142,7 +142,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             var employee = employeeRepository.getEmployee(request.getEmployeeId());
             Hall hall = null;
             if (employee instanceof Projectionist) {
-                 hall = hallRepository.getHall(request.getHallId());
+                hall = hallRepository.getHall(request.getHallId());
             }
             request.semanticValidate(shift, employee, hall);
             shift.modifyShift(shift, request.getDate(), request.getStart(), request.getEnd(), hall);

@@ -120,7 +120,7 @@ public class ShiftModifyRequest extends AuthenticatedRequest {
         if (hall == null && employee instanceof Projectionist) {
             addError(MISSING_HALL);
         }
-        if(!getErrorList().isEmpty()) {
+        if (!getErrorList().isEmpty()) {
             throw new InvalidRequestException();
         }
     }

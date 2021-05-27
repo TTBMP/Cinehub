@@ -68,7 +68,7 @@ class ManageEmployeesShiftControllerTest {
         var start = LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());
         var end = LocalDate.now().with(TemporalAdjusters.lastDayOfMonth());
         var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
-        var cinema =  cinemaRepository.getCinema(1);
+        var cinema = cinemaRepository.getCinema(1);
         assert cinema != null;
         var getShiftListRequest = new GetShiftListRequest(viewModel.getSessionToken(), cinema.getId(), start, end);
         controller.getShiftList(getShiftListRequest);
@@ -80,7 +80,7 @@ class ManageEmployeesShiftControllerTest {
 
     private List<ShiftDto> getShiftListExpected(GetShiftListRequest request) throws RepositoryException {
         var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
-        var  cinema =  cinemaRepository.getCinema(request.getCinemaId());
+        var cinema = cinemaRepository.getCinema(request.getCinemaId());
         var shiftList = serviceLocator.getService(ShiftRepository.class)
                 .getCinemaShiftListBetween(
                         cinema,

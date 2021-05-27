@@ -8,6 +8,6 @@ dependencies {
 
     runtimeOnly("mysql", "mysql-connector-java", "8.0.22")
 
-    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.6.2")
+    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.7.0")
     testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine")
 }
