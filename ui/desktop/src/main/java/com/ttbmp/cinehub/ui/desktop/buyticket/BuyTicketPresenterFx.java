@@ -30,28 +30,37 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     public void presentInvalidPayRequest(PaymentRequest request) {
         var error = "";
         if (request.getErrorList().contains(PaymentRequest.CVV_LETTERS_ERROR)) {
-            error += PaymentRequest.CVV_LETTERS_ERROR.getMessage();
+            error += " "+PaymentRequest.CVV_LETTERS_ERROR.getMessage();
         }
         if (request.getErrorList().contains(PaymentRequest.NUMBER_OF_CARD_LETTERS_ERROR)) {
-            error += PaymentRequest.NUMBER_OF_CARD_LETTERS_ERROR.getMessage();
+            error += " "+PaymentRequest.NUMBER_OF_CARD_LETTERS_ERROR.getMessage();
         }
         if (request.getErrorList().contains(PaymentRequest.CREDIT_CARD_LENGTH_ERROR)) {
-            error += PaymentRequest.CREDIT_CARD_LENGTH_ERROR.getMessage();
+            error += " "+PaymentRequest.CREDIT_CARD_LENGTH_ERROR.getMessage();
         }
         if (request.getErrorList().contains(PaymentRequest.MISSING_EMAIL_ERROR)) {
-            error += PaymentRequest.MISSING_EMAIL_ERROR.getMessage();
+            error += " "+PaymentRequest.MISSING_EMAIL_ERROR.getMessage();
         }
         if (request.getErrorList().contains(PaymentRequest.MISSING_CREDIT_CARD_ERROR)) {
-            error += PaymentRequest.MISSING_CREDIT_CARD_ERROR.getMessage();
+            error += " "+PaymentRequest.MISSING_CREDIT_CARD_ERROR.getMessage();
         }
         if (request.getErrorList().contains(PaymentRequest.LENGTH_CVV_CREDIT_CARD_ERROR)) {
-            error += PaymentRequest.LENGTH_CVV_CREDIT_CARD_ERROR.getMessage();
+            error += " "+PaymentRequest.LENGTH_CVV_CREDIT_CARD_ERROR.getMessage();
         }
         if (request.getErrorList().contains(PaymentRequest.EXPIRATION_CREDIT_CARD_ERROR)) {
-            error += PaymentRequest.EXPIRATION_CREDIT_CARD_ERROR.getMessage();
+            error += " "+PaymentRequest.EXPIRATION_CREDIT_CARD_ERROR.getMessage();
         }
         if (request.getErrorList().contains(PaymentRequest.EMAIL_ERROR)) {
-            error += PaymentRequest.EMAIL_ERROR.getMessage();
+            error += " "+PaymentRequest.EMAIL_ERROR.getMessage();
+        }
+        if (request.getErrorList().contains(PaymentRequest.MISSING_CUSTOMER_ERROR)) {
+            error += " "+PaymentRequest.MISSING_CUSTOMER_ERROR.getMessage();
+        }
+        if (request.getErrorList().contains(PaymentRequest.MISSING_PROJECTION_ERROR)) {
+            error += " "+PaymentRequest.MISSING_PROJECTION_ERROR.getMessage();
+        }
+        if (request.getErrorList().contains(PaymentRequest.MISSING_SEAT_ERROR)) {
+            error += " "+PaymentRequest.MISSING_SEAT_ERROR.getMessage();
         }
         viewModel.errorMessageProperty().setValue(error);
     }
@@ -64,7 +73,14 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentInvalidCinemaListRequest(CinemaListRequest request) {
-        viewModel.errorMessageProperty().setValue(CinemaListRequest.MISSING_DATE_ERROR.getMessage());
+        var error = "";
+        if (request.getErrorList().contains(CinemaListRequest.INVALID_MOVIE)) {
+            error += " "+CinemaListRequest.INVALID_MOVIE.getMessage();
+        }
+        if (request.getErrorList().contains(CinemaListRequest.MISSING_DATE_ERROR)) {
+            error += " "+CinemaListRequest.MISSING_DATE_ERROR.getMessage();
+        }
+        viewModel.errorMessageProperty().setValue(error);
     }
 
     @Override
@@ -74,7 +90,14 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentInvalidProjectionListRequest(ProjectionListRequest request) {
-        viewModel.errorMessageProperty().setValue(ProjectionListRequest.MISSING_DATE_ERROR.getMessage());
+        var error = "";
+        if (request.getErrorList().contains(ProjectionListRequest.INVALID_MOVIE)) {
+            error += " "+ProjectionListRequest.INVALID_MOVIE.getMessage();
+        }
+        if (request.getErrorList().contains(ProjectionListRequest.INVALID_CINEMA)) {
+            error += " "+ProjectionListRequest.INVALID_CINEMA.getMessage();
+        }
+        viewModel.errorMessageProperty().setValue(error);
     }
 
     @Override
@@ -84,7 +107,11 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentInvalidSeatListRequest(SeatListRequest request) {
-        viewModel.errorMessageProperty().setValue(SeatListRequest.PROJECTION_ERROR.getMessage());
+        var error = "";
+        if (request.getErrorList().contains(SeatListRequest.PROJECTION_ERROR)) {
+            error += " "+SeatListRequest.PROJECTION_ERROR.getMessage();
+        }
+        viewModel.errorMessageProperty().setValue(error);
     }
 
 
@@ -101,7 +128,11 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentInvalidMovieListRequest(MovieListRequest request) {
-        viewModel.errorMessageProperty().setValue(CinemaListRequest.MISSING_DATE_ERROR.getMessage());
+        var error = "";
+        if (request.getErrorList().contains(MovieListRequest.MISSING_DATE_ERROR)) {
+            error += " "+MovieListRequest.MISSING_DATE_ERROR.getMessage();
+        }
+        viewModel.errorMessageProperty().setValue(error);
     }
 
 
