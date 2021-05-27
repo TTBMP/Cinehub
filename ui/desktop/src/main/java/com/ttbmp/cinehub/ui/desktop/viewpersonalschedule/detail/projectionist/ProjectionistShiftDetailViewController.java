@@ -52,7 +52,7 @@ public class ProjectionistShiftDetailViewController extends ViewController {
         roleLabel.textProperty().bind(viewModel.selectedShiftEmployeeRoleProperty());
         cityLabel.textProperty().bind(viewModel.selectedShiftCinemaCityProperty());
         hallLabel.textProperty().bind(viewModel.selectedProjectionistShiftHallProperty());
-        backButton.setOnAction(a -> navController.navBack());
+        backButton.setOnAction(a -> navController.goBack());
         activity.getUseCase(ViewPersonalScheduleUseCase.class).getShiftProjectionList(
                 new ProjectionListRequest(
                         CinehubApplication.getSessionToken(),

@@ -27,20 +27,6 @@ public class NavController {
         return currentDestination;
     }
 
-    @SuppressWarnings("unused")
-    public Class<? extends Activity> getCurrentDestinationActivityClass() {
-        return currentDestination.activity.getClass();
-    }
-
-    public Class<? extends Activity> getPreviousDestinationActivityClass() {
-        for (var destination : navBackStack) {
-            if (destination.activity != currentDestination.activity) {
-                return destination.activity.getClass();
-            }
-        }
-        return null;
-    }
-
     public void open(NavActivityDestination destination) {
         try {
             Objects.requireNonNull(destination);
@@ -64,7 +50,7 @@ public class NavController {
 
     public void openErrorDialog(String errorMessage, boolean isFatal) {
         Objects.requireNonNull(errorMessage);
-        NavFunction onCloseFunction = isFatal ? navController -> Platform.exit() : NavController::navBack;
+        NavFunction onCloseFunction = isFatal ? navController -> Platform.exit() : NavController::goBack;
         var errorView = new ErrorView(errorMessage, onCloseFunction);
         openInDialog(new NavDestination(errorView), "Error");
         var errorStage = ((Stage) errorView.getRoot().getScene().getWindow());
@@ -91,7 +77,7 @@ public class NavController {
         }
     }
 
-    public void navBack() {
+    public void goBack() {
         if (!navBackStack.isEmpty()) {
             navBackStack.pop();
             if (navBackStack.isEmpty()) {
@@ -100,6 +86,22 @@ public class NavController {
                 var destination = navBackStack.pop();
                 navigate(destination);
             }
+        }
+    }
+
+    public void openPreviousActivity() {
+        try {
+            Class<? extends Activity> prevActivityClass = null;
+            for (var destination : navBackStack) {
+                if (destination.activity != currentDestination.activity) {
+                    prevActivityClass = destination.activity.getClass();
+                    break;
+                }
+            }
+            var prevActivity = Objects.requireNonNull(prevActivityClass).getConstructor().newInstance();
+            open(new NavActivityDestination(prevActivity));
+        } catch (Exception e) {
+            openErrorDialog(e.getMessage(), true);
         }
     }
 

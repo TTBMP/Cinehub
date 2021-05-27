@@ -124,7 +124,7 @@ public class AssignShiftViewController extends ViewController {
                 viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());
             }
             viewModel.setSelectedOption(null);
-            navController.navBack();
+            navController.goBack();
         });
     }
 
@@ -159,7 +159,7 @@ public class AssignShiftViewController extends ViewController {
         }
         if (!viewModel.isErrorAssignVisibility()) {
             viewModel.setSelectedOption(null);
-            navController.navBack();
+            navController.goBack();
         }
     }
 }

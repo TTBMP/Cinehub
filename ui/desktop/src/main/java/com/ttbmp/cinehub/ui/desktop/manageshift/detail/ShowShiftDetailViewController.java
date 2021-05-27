@@ -88,11 +88,11 @@ public class ShowShiftDetailViewController extends ViewController {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(
                     CinehubApplication.getSessionToken(),
                     viewModel.getSelectedShift().getId()));
-            navController.navBack();
+            navController.goBack();
         });
         modifyShiftButton.setOnAction(a -> navController.navigate(new NavDestination(new ModifyShiftView())));
 
-        
+
     }
 
 }

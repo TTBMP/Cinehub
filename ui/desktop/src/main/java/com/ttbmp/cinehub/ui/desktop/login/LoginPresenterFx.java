@@ -18,26 +18,26 @@ public class LoginPresenterFx implements LoginPresenter {
     @Override
     public void presentSessionToken(LoginResponse response) {
         CinehubApplication.setSessionToken(response.getSessionCookie());
-        viewModel.accessErrorProperty().setValue("");
+        viewModel.setIsLogged(true);
     }
 
     @Override
     public void presentSecurityError(SecurityException e) {
-        viewModel.accessErrorProperty().setValue(e.getMessage());
+        viewModel.errorMessageProperty().setValue(e.getMessage());
     }
 
     @Override
     public void presentNullRequestException() {
-        viewModel.accessErrorProperty().setValue("Error with access");
+        viewModel.errorMessageProperty().setValue("Error with access");
     }
 
     @Override
     public void presentInvalidRequestException(Request request) {
         if (request.getErrorList().contains(LoginRequest.MISSING_PASSWORD_ERROR)) {
-            viewModel.accessErrorProperty().setValue(LoginRequest.MISSING_PASSWORD_ERROR.getMessage());
+            viewModel.errorMessageProperty().setValue(LoginRequest.MISSING_PASSWORD_ERROR.getMessage());
         }
         if (request.getErrorList().contains(LoginRequest.MISSING_USERNAME_ERROR)) {
-            viewModel.accessErrorProperty().setValue(LoginRequest.MISSING_USERNAME_ERROR.getMessage());
+            viewModel.errorMessageProperty().setValue(LoginRequest.MISSING_USERNAME_ERROR.getMessage());
         }
 
     }

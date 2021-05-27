@@ -108,7 +108,7 @@ public class ModifyShiftViewController extends ViewController {
         endSpinner.setValueFactory(new SpinnerEndValueFactory(viewModel.startSpinnerModifyTimeProperty(), viewModel.endSpinnerModifyTimeProperty()));
         confirmButton.setOnAction(this::submitButtonOnAction);
 
-        cancelButton.setOnAction(a -> navController.navBack());
+        cancelButton.setOnAction(a -> navController.goBack());
     }
 
     private void submitButtonOnAction(ActionEvent action) {
@@ -130,7 +130,7 @@ public class ModifyShiftViewController extends ViewController {
 
         if (!viewModel.isErrorAssignVisibility()) {
             viewModel.setSelectedShift(viewModel.getShiftCreated());
-            navController.navBack();
+            navController.goBack();
         }
     }
 
