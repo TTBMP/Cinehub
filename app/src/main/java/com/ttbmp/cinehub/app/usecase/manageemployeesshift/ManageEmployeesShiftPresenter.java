@@ -5,17 +5,18 @@ import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 
 /**
  * @author Massimo Mazzetti
  */
 public interface ManageEmployeesShiftPresenter {
 
-    void presentShiftList(GetShiftListResponse shiftList);
+    void presentShiftList(GetShiftListResponse response);
 
-    void presentEmployeeList(GetEmployeeListResponse employeeList);
+    void presentEmployeeList(GetEmployeeListResponse response);
 
-    void presentCinemaList(GetCinemaListResponse listCinema);
+    void presentCinemaList(GetCinemaListResponse response);
 
     void presentSaveShift();
 
@@ -25,37 +26,13 @@ public interface ManageEmployeesShiftPresenter {
 
     void presentCreateShift(CreateShiftResponse response);
 
-    void presentInvalidGetCinemaListRequest(GetCinemaListRequest request);
-
-    void presentCinemaListNullRequest();
-
     void presentCreateShiftError(Throwable error);
-
-    void presentInvalidEmployeeListRequest(GetEmployeeListRequest request);
-
-    void presentEmployeeListNullRequest();
-
-    void presentInvalidDeleteShiftListRequest(ShiftRequest request);
-
-    void presentDeleteShiftNullRequest();
-
-    void presentInvalidModifyShiftListRequest(ShiftModifyRequest request);
-
-    void presentModifyShiftNullRequest();
 
     void presentModifyShiftError(Throwable error);
 
-    void presentInvalidCreateShiftListRequest(CreateShiftRequest request);
+    void presentNullRequest();
 
-    void presentCreateShiftNullRequest();
-
-    void presentInvalidRepeatedShiftListRequest(ShiftRepeatRequest request);
-
-    void presentRepeatedShiftNullRequest();
-
-    void presentInvalidGetShiftListRequest(GetShiftListRequest request);
-
-    void presentGetShiftListNullRequest();
+    void presentInvalidRequest(Request request);
 
     void presentRepositoryError(RepositoryException e);
 

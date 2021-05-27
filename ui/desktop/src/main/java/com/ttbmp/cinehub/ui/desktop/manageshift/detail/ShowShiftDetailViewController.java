@@ -91,6 +91,8 @@ public class ShowShiftDetailViewController extends ViewController {
             navController.navBack();
         });
         modifyShiftButton.setOnAction(a -> navController.navigate(new NavDestination(new ModifyShiftView())));
+
+        
     }
 
 }

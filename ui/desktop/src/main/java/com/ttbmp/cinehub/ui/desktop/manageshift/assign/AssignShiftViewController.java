@@ -95,6 +95,7 @@ public class AssignShiftViewController extends ViewController {
         errorVBox.visibleProperty().bind(viewModel.errorAssignVisibilityProperty());
 
         optionVBox.visibleProperty().bind(viewModel.repeatVisibilityProperty());
+
         dateVBox.visibleProperty().bind(viewModel.repeatVisibilityProperty());
         errorLabel.textProperty().bind(viewModel.errorProperty());
 
@@ -115,6 +116,7 @@ public class AssignShiftViewController extends ViewController {
         optionRepeatComboBox.setButtonCell(new ComboBoxOptionValueFactory(null));
         optionRepeatComboBox.setCellFactory(ComboBoxOptionValueFactory::new);
         optionRepeatComboBox.valueProperty().bindBidirectional(viewModel.selectedOptionProperty());
+        optionRepeatComboBox.getSelectionModel().selectFirst();
         confirmButton.setOnAction(this::confirmButtonOnAction);
 
         cancelButton.setOnAction(a -> {
