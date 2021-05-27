@@ -79,6 +79,7 @@ public class BuyTicketController implements BuyTicketUseCase {
         try {
             Request.validate(request);
             var movie = movieRepository.getMovie(request.getMovieId());
+            request.semanticValidate(movie);
             var cinemaList = cinemaRepository.getListCinema(movie, request.getDate()).stream()
                     .map(CinemaDto::new)
                     .collect(Collectors.toList());
@@ -98,6 +99,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             Request.validate(request);
             var cinema = cinemaRepository.getCinema(request.getCinemaId());
             var movie = movieRepository.getMovie(request.getMovieId());
+            request.semanticValidate(movie,cinema);
             var projectionList = projectionRepository.getProjectionList(cinema, movie, request.getLocalDate()).stream()
                     .map(ProjectionDto::new)
                     .collect(Collectors.toList());
@@ -117,6 +119,7 @@ public class BuyTicketController implements BuyTicketUseCase {
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
             var projection = projectionRepository.getProjection(request.getProjectionId());
+            request.semanticValidate(projection);
             var seatList = projection.getHall().getSeatList().stream()
                     .map(seat -> new SeatDto(seat, projection.isBooked(seat)))
                     .collect(Collectors.toList());
@@ -143,6 +146,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             var customer = customerRepository.getCustomer(request.getUserId());
             var projection = projectionRepository.getProjection(request.getProjectionId());
             var seat = seatRepository.getSeat(request.getSeatId());
+            request.semanticValidate(customer,projection,seat);
             if (projection.isBooked(seat)) {
                 presenter.presentSeatAlreadyBookedError(new SeatErrorResponse("The place has already been booked"));
             } else {

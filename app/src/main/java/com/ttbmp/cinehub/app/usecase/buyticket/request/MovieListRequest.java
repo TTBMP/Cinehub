@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public class MovieListRequest extends Request {
 
-    public static final Request.Error MISSING_DATE_ERROR = new Request.Error("Date can't be null");
+    public static final Request.Error MISSING_DATE_ERROR = new Request.Error("The date cannot be earlier than today");
 
     private LocalDate date;
 
