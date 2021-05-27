@@ -274,7 +274,6 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             saveShift(shift);
             shift = shiftRepository.getShift(employee, date, start, end);
             manageEmployeesShiftPresenter.presentCreateShift(new CreateShiftResponse(ShiftDtoFactory.getShiftDto(shift)));
-
             manageEmployeesShiftPresenter.presentSaveShift();
             emailService.sendMail(new EmailServiceRequest(
                     employee.getEmail(),
@@ -302,7 +301,6 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             shift.setId(tmpShift.getId());
             projectionistShiftRepository.saveShift((ProjectionistShift) shift);
         }
-
     }
 
 }

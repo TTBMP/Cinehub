@@ -75,8 +75,6 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
                 }
             }
         }
-
-
     }
 
     @Override

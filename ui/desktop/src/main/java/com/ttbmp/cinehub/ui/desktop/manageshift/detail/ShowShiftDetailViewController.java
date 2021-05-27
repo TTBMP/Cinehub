@@ -90,7 +90,6 @@ public class ShowShiftDetailViewController extends ViewController {
                     viewModel.getSelectedShift().getId()));
             navController.navBack();
         });
-
         modifyShiftButton.setOnAction(a -> navController.navigate(new NavDestination(new ModifyShiftView())));
     }
 

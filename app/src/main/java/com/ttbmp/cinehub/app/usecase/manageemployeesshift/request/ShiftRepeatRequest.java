@@ -106,20 +106,16 @@ public class ShiftRepeatRequest extends AuthenticatedRequest {
         }
         if (start == null) {
             addError(MISSING_START);
-        }
-        if (end == null) {
+        } else if (end == null) {
             addError(MISSING_END);
+        } else if (start.isAfter(end)) {
+            addError(PERIOD_ERROR);
         }
         if (startShift == null) {
             addError(MISSING_START_SHIFT);
-        }
-        if (endShift == null) {
+        } else if (endShift == null) {
             addError(MISSING_END_SHIFT);
-        }
-        if (start.isAfter(end)) {
-            addError(PERIOD_ERROR);
-        }
-        if (startShift.isAfter(endShift)) {
+        } else if (startShift.isAfter(endShift)) {
             addError(PERIOD_ERROR);
         }
     }
