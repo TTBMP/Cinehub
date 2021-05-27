@@ -4,7 +4,7 @@ plugins {
 
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath("org.sonarsource.scanner.gradle", "sonarqube-gradle-plugin", "3.1.1")
