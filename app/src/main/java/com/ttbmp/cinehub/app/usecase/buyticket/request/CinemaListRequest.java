@@ -47,6 +47,8 @@ public class CinemaListRequest extends Request {
     public void semanticValidate(Movie movie) throws InvalidRequestException {
         if (movie == null) {
             addError(INVALID_MOVIE);
+        }
+        if (!getErrorList().isEmpty()) {
             throw new InvalidRequestException();
         }
     }

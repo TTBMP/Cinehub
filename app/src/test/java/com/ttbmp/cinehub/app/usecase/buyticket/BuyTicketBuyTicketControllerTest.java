@@ -8,6 +8,7 @@ import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -63,45 +64,22 @@ class BuyTicketBuyTicketControllerTest {
 
 
         @Override
-        public void presentPayNullRequest() {
+        public void presentNullRequest() {
 
         }
+
+
+
+
+
+
 
         @Override
-        public void presentInvalidPayRequest(PaymentRequest request) {
+        public void presentInvalidRequest(Request request) {
 
         }
 
 
-        @Override
-        public void presentCinemaListNullRequest() {
-
-        }
-
-        @Override
-        public void presentInvalidCinemaListRequest(CinemaListRequest request) {
-
-        }
-
-        @Override
-        public void presentProjectionListNullRequest() {
-
-        }
-
-        @Override
-        public void presentInvalidProjectionListRequest(ProjectionListRequest request) {
-
-        }
-
-        @Override
-        public void presentSeatListNullRequest() {
-
-        }
-
-        @Override
-        public void presentInvalidSeatListRequest(SeatListRequest request) {
-
-        }
 
         @Override
         public void presentPaymentServiceException(PaymentServiceException error) {
@@ -113,15 +91,7 @@ class BuyTicketBuyTicketControllerTest {
 
         }
 
-        @Override
-        public void presentMovieListNullRequest() {
 
-        }
-
-        @Override
-        public void presentInvalidMovieListRequest(MovieListRequest request) {
-
-        }
 
         @Override
         public void presentTicket(TicketResponse ticketDto) {

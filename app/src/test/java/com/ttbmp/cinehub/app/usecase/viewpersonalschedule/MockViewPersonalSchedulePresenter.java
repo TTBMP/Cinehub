@@ -33,7 +33,7 @@ public class MockViewPersonalSchedulePresenter implements ViewPersonalSchedulePr
     }
 
     @Override
-    public void presentInvalidRequest(List<Request.Error> errorList) {
+    public void presentInvalidRequest(Request request) {
 
     }
 

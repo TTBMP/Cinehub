@@ -66,9 +66,9 @@ public class BuyTicketController implements BuyTicketUseCase {
                     .collect(Collectors.toList());
             presenter.presentMovieList(new MovieListResponse(movieList));
         } catch (Request.NullRequestException e) {
-            presenter.presentMovieListNullRequest();
+            presenter.presentNullRequest();
         } catch (Request.InvalidRequestException e) {
-            presenter.presentInvalidMovieListRequest(request);
+            presenter.presentInvalidRequest(request);
         } catch (RepositoryException e) {
             presenter.presentRepositoryError(e);
         }
@@ -85,9 +85,9 @@ public class BuyTicketController implements BuyTicketUseCase {
                     .collect(Collectors.toList());
             presenter.presentCinemaList(new CinemaListResponse(cinemaList));
         } catch (Request.NullRequestException e) {
-            presenter.presentCinemaListNullRequest();
+            presenter.presentNullRequest();
         } catch (Request.InvalidRequestException e) {
-            presenter.presentInvalidCinemaListRequest(request);
+            presenter.presentInvalidRequest(request);
         } catch (RepositoryException e) {
             presenter.presentRepositoryError(e);
         }
@@ -105,9 +105,9 @@ public class BuyTicketController implements BuyTicketUseCase {
                     .collect(Collectors.toList());
             presenter.presentProjectionList(new ProjectionListResponse(projectionList));
         } catch (Request.NullRequestException e) {
-            presenter.presentProjectionListNullRequest();
+            presenter.presentNullRequest();
         } catch (Request.InvalidRequestException e) {
-            presenter.presentInvalidProjectionListRequest(request);
+            presenter.presentInvalidRequest(request);
         } catch (RepositoryException e) {
             presenter.presentRepositoryError(e);
         }
@@ -125,9 +125,9 @@ public class BuyTicketController implements BuyTicketUseCase {
                     .collect(Collectors.toList());
             presenter.presentSeatList(new SeatListResponse(seatList));
         } catch (Request.NullRequestException e) {
-            presenter.presentSeatListNullRequest();
+            presenter.presentNullRequest();
         } catch (Request.InvalidRequestException e) {
-            presenter.presentInvalidSeatListRequest(request);
+            presenter.presentInvalidRequest(request);
         } catch (RepositoryException e) {
             presenter.presentRepositoryError(e);
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
@@ -175,9 +175,9 @@ public class BuyTicketController implements BuyTicketUseCase {
                 presenter.presentTicket(new TicketResponse(new TicketDto(ticket)));
             }
         } catch (Request.NullRequestException e) {
-            presenter.presentPayNullRequest();
+            presenter.presentNullRequest();
         } catch (Request.InvalidRequestException e) {
-            presenter.presentInvalidPayRequest(request);
+            presenter.presentInvalidRequest(request);
         } catch (PaymentServiceException e) {
             presenter.presentPaymentServiceException(e);
         } catch (RepositoryException e) {

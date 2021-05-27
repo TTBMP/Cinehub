@@ -170,12 +170,12 @@ public class PaymentRequest extends AuthenticatedRequest {
     public void semanticValidate(Customer customer, Projection projection, Seat seat) throws InvalidRequestException {
         if (customer == null) {
             addError(MISSING_CUSTOMER_ERROR);
-            throw new InvalidRequestException();
         }if (projection == null) {
             addError(MISSING_PROJECTION_ERROR);
-            throw new InvalidRequestException();
         }if (seat == null) {
             addError(MISSING_SEAT_ERROR);
+        }
+        if (!getErrorList().isEmpty()) {
             throw new InvalidRequestException();
         }
     }

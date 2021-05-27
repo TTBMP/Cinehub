@@ -60,10 +60,11 @@ public class ProjectionListRequest extends Request {
     public void semanticValidate(Movie movie, Cinema cinema) throws InvalidRequestException {
         if (movie == null) {
             addError(INVALID_MOVIE);
-            throw new InvalidRequestException();
         }
         if(cinema == null){
             addError(INVALID_CINEMA);
+        }
+        if (!getErrorList().isEmpty()) {
             throw new InvalidRequestException();
         }
     }

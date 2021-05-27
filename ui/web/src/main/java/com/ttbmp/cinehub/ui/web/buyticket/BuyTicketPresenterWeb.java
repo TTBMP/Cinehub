@@ -6,6 +6,7 @@ import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketPresenter;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.ui.Model;
 
@@ -45,51 +46,20 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
         model.addAttribute("ticketDetail", response.getTicketDto());
     }
 
-    @Override
-    public void presentMovieListNullRequest() {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
-    }
 
-    @Override
-    public void presentInvalidMovieListRequest(MovieListRequest request) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
-    }
 
     @Override
     public void presentRepositoryError(RepositoryException e) {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
     }
 
-    @Override
-    public void presentCinemaListNullRequest() {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
-    }
+
 
     @Override
-    public void presentInvalidCinemaListRequest(CinemaListRequest request) {
+    public void presentInvalidRequest(Request request) {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
     }
 
-    @Override
-    public void presentProjectionListNullRequest() {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
-    }
-
-    @Override
-    public void presentInvalidProjectionListRequest(ProjectionListRequest request) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
-
-    }
-
-    @Override
-    public void presentSeatListNullRequest() {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
-    }
-
-    @Override
-    public void presentInvalidSeatListRequest(SeatListRequest request) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
-    }
 
     @Override
     public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e) {
@@ -107,13 +77,8 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentPayNullRequest() {
+    public void presentNullRequest() {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
-    }
-
-    @Override
-    public void presentInvalidPayRequest(PaymentRequest request) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
     }
 
     @Override

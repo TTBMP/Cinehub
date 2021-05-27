@@ -28,12 +28,14 @@ public class SeatListRequest extends AuthenticatedRequest {
 
     @Override
     public void onValidate() {
-
+        // Do nothing because the class doesn't have attributes.
     }
 
     public void semanticValidate(Projection projection) throws InvalidRequestException {
         if (projection == null) {
             addError(PROJECTION_ERROR);
+        }
+        if (!getErrorList().isEmpty()) {
             throw new InvalidRequestException();
         }
 

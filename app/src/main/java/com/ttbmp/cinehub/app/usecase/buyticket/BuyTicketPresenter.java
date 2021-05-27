@@ -5,6 +5,7 @@ import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 
 /**
  * @author Ivan Palmieri
@@ -13,31 +14,18 @@ public interface BuyTicketPresenter {
 
     void presentMovieList(MovieListResponse response);
 
-    void presentMovieListNullRequest();
-
-    void presentInvalidMovieListRequest(MovieListRequest request);
-
     void presentCinemaList(CinemaListResponse response);
 
-    void presentCinemaListNullRequest();
-
-    void presentInvalidCinemaListRequest(CinemaListRequest request);
 
     void presentProjectionList(ProjectionListResponse response);
 
-    void presentProjectionListNullRequest();
 
-    void presentInvalidProjectionListRequest(ProjectionListRequest request);
+    void presentInvalidRequest(Request request);
 
     void presentSeatList(SeatListResponse response);
 
-    void presentSeatListNullRequest();
+    void presentNullRequest();
 
-    void presentInvalidSeatListRequest(SeatListRequest request);
-
-    void presentPayNullRequest();
-
-    void presentInvalidPayRequest(PaymentRequest request);
 
     void presentPaymentServiceException(PaymentServiceException exception);
 
