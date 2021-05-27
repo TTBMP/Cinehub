@@ -4,6 +4,7 @@ import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.usecase.login.LoginPresenter;
 import com.ttbmp.cinehub.app.usecase.login.LoginRequest;
 import com.ttbmp.cinehub.app.usecase.login.LoginResponse;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 
 public class LoginPresenterFx implements LoginPresenter {
@@ -31,7 +32,7 @@ public class LoginPresenterFx implements LoginPresenter {
     }
 
     @Override
-    public void presentInvalidRequestException(LoginRequest request) {
+    public void presentInvalidRequestException(Request request) {
         if (request.getErrorList().contains(LoginRequest.MISSING_PASSWORD_ERROR)) {
             viewModel.accessErrorProperty().setValue(LoginRequest.MISSING_PASSWORD_ERROR.getMessage());
         }

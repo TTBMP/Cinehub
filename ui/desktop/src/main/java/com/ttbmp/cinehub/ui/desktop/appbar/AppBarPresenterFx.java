@@ -2,11 +2,10 @@ package com.ttbmp.cinehub.ui.desktop.appbar;
 
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.getuserrole.GetUserRolePresenter;
-import com.ttbmp.cinehub.app.usecase.getuserrole.RoleRequest;
 import com.ttbmp.cinehub.app.usecase.getuserrole.RoleResponse;
 import com.ttbmp.cinehub.app.usecase.logout.LogoutPresenter;
-import com.ttbmp.cinehub.app.usecase.logout.LogoutRequest;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.about.AboutActivity;
 import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketActivity;
@@ -41,11 +40,6 @@ public class AppBarPresenterFx implements GetUserRolePresenter, LogoutPresenter 
     }
 
     @Override
-    public void presentInvalidRequest(RoleRequest request) {
-        // TODO
-    }
-
-    @Override
     public void presentNullRequest() {
         // TODO
     }
@@ -74,7 +68,7 @@ public class AppBarPresenterFx implements GetUserRolePresenter, LogoutPresenter 
     }
 
     @Override
-    public void presentInvalidRequest(LogoutRequest request) {
+    public void presentInvalidRequest(Request request) {
         // TODO
     }
 

@@ -13,9 +13,9 @@ public interface ViewPersonalSchedulePresenter {
 
     void presentGetProjectionList(ProjectionListReply result);
 
-    void presentNullRequest();
-
     void presentInvalidRequest(Request request);
+
+    void presentNullRequest();
 
     void presentRepositoryError(RepositoryException e);
 

@@ -15,20 +15,15 @@ public interface BuyTicketPresenter {
 
     void presentCinemaList(CinemaListResponse response);
 
-
     void presentProjectionList(ProjectionListResponse response);
-
-
-    void presentInvalidRequest(Request request);
 
     void presentSeatList(SeatListResponse response);
 
-    void presentNullRequest();
-
-
-    void presentPaymentServiceException(PaymentServiceException exception);
-
     void presentTicket(TicketResponse response);
+
+    void presentInvalidRequest(Request request);
+
+    void presentNullRequest();
 
     void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException requestException);
 
@@ -37,5 +32,7 @@ public interface BuyTicketPresenter {
     void presentRepositoryError(RepositoryException exception);
 
     void presentSeatAlreadyBookedError(SeatErrorResponse response);
+
+    void presentPaymentServiceException(PaymentServiceException exception);
 
 }
