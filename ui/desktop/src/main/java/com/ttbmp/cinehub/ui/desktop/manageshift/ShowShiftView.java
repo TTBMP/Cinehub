@@ -2,14 +2,12 @@ package com.ttbmp.cinehub.ui.desktop.manageshift;
 
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.FxmlView;
 
-import java.io.IOException;
-
 /**
  * @author Massimo Mazzetti
  */
 public class ShowShiftView extends FxmlView {
 
-    protected ShowShiftView() throws IOException {
+    protected ShowShiftView() {
         super("show_shift.fxml");
         addStylesheet("styles.css");
     }

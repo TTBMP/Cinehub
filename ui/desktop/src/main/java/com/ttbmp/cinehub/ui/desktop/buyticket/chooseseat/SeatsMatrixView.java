@@ -5,8 +5,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 
-import java.io.IOException;
-
 /**
  * @author Ivan Palmieri
  */
@@ -15,8 +13,7 @@ public class SeatsMatrixView extends View {
     private final SeatsMatrixViewController seatsMatrixController;
     private final Parent root;
 
-
-    public SeatsMatrixView(ToggleGroup toggleGroup) throws IOException {
+    public SeatsMatrixView(ToggleGroup toggleGroup) {
         super();
         var gridSeats = new GridPane();
         seatsMatrixController = new SeatsMatrixViewController(gridSeats, toggleGroup);
@@ -24,12 +21,11 @@ public class SeatsMatrixView extends View {
     }
 
     @Override
-    public void load() throws IOException {
+    public void load() {
         //empty
     }
 
     public Parent getRoot() {
-
         return root;
     }
 

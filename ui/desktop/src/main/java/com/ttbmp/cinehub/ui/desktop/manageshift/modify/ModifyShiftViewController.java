@@ -15,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
@@ -109,18 +108,12 @@ public class ModifyShiftViewController extends ViewController {
         endSpinner.setValueFactory(new SpinnerEndValueFactory(viewModel.startSpinnerModifyTimeProperty(), viewModel.endSpinnerModifyTimeProperty()));
         confirmButton.setOnAction(this::submitButtonOnAction);
 
-        cancelButton.setOnAction(a -> {
-            try {
-                navController.navBack();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        cancelButton.setOnAction(a -> navController.navBack());
     }
 
     private void submitButtonOnAction(ActionEvent action) {
         viewModel.setErrorAssignVisibility(false);
-        int hallId = -1;
+        var hallId = -1;
         if (viewModel.getSelectedHall() != null) {
             hallId = viewModel.getSelectedHall().getId();
         }
@@ -136,13 +129,8 @@ public class ModifyShiftViewController extends ViewController {
                 ));
 
         if (!viewModel.isErrorAssignVisibility()) {
-            try {
-                viewModel.setSelectedShift(viewModel.getShiftCreated());
-                navController.navBack();
-            } catch (IOException e) {
-                e.printStackTrace();
-
-            }
+            viewModel.setSelectedShift(viewModel.getShiftCreated());
+            navController.navBack();
         }
     }
 

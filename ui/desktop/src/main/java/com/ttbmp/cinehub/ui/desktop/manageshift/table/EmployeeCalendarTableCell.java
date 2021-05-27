@@ -32,7 +32,7 @@ public class EmployeeCalendarTableCell extends TableCell<EmployeeShiftWeek, Empl
                 item = new EmployeeCalendarTableCellView();
                 item.load();
             } catch (IOException e) {
-                e.printStackTrace();
+                navController.openErrorDialog(e.getMessage(), true);
             }
             Objects.requireNonNull(item);
             item.getController().load(activity, navController, employeeDto);

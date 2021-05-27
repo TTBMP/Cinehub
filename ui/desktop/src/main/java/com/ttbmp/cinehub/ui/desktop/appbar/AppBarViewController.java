@@ -23,7 +23,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -87,8 +86,8 @@ public class AppBarViewController extends ViewController {
                     } else {
                         navController.open(new NavActivityDestination(key.getConstructor().newInstance()));
                     }
-                } catch (IOException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException ioException) {
-                    ioException.printStackTrace();
+                } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                    navController.openErrorDialog(e.getMessage(), true);
                 }
             }
         };

@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.ui.desktop.login;
 
-
 import com.ttbmp.cinehub.app.usecase.login.LoginRequest;
 import com.ttbmp.cinehub.app.usecase.login.LoginUseCase;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
@@ -13,9 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-
 
 public class LoginViewController extends ViewController {
     @FXML
@@ -57,8 +54,8 @@ public class LoginViewController extends ViewController {
                         try {
                             var prevActivity = navController.getPreviousDestinationActivityClass().getConstructor().newInstance();
                             navController.open(new NavActivityDestination(prevActivity));
-                        } catch (IOException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-                            e.printStackTrace();
+                        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                            navController.openErrorDialog(e.getMessage(), true);
                         }
                     }
                 }

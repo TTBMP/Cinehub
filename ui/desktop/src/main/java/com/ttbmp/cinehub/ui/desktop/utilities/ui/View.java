@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -14,13 +15,6 @@ import java.util.stream.Collectors;
 public abstract class View {
 
     private final List<String> stylesheetList = new ArrayList<>();
-
-    protected View() throws IOException {
-        var instanceName = this.getClass().getSimpleName();
-        if (!this.getClass().getName().matches(".*View$")) {
-            throw new IOException("Invalid View class name: " + instanceName + "view classes must end with the View suffix");
-        }
-    }
 
     public abstract void load() throws IOException;
 
@@ -33,12 +27,12 @@ public abstract class View {
     }
 
     public void addStylesheet(String stylesheet) {
-        stylesheetList.add(this.getClass().getResource("/styles/" + stylesheet).toExternalForm());
+        stylesheetList.add(Objects.requireNonNull(this.getClass().getResource("/styles/" + stylesheet)).toExternalForm());
     }
 
     public void addStylesheet(Collection<? extends String> stylesheetCollection) {
         stylesheetList.addAll(stylesheetCollection.stream()
-                .map(stylesheet -> this.getClass().getResource("/styles/" + stylesheet).toExternalForm())
+                .map(stylesheet -> Objects.requireNonNull(this.getClass().getResource("/styles/" + stylesheet)).toExternalForm())
                 .collect(Collectors.toList())
         );
     }

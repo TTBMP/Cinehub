@@ -19,9 +19,13 @@ public abstract class ViewController {
 
     protected abstract void onLoad();
 
-    @FXML
-    private void initialize() {
+    public NavController getNavController() {
+        return navController;
+    }
 
+    @FXML
+    protected void initialize() {
+        // needed for javafx
     }
 
 }

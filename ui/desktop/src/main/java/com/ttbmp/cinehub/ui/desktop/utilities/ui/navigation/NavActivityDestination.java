@@ -3,8 +3,6 @@ package com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.View;
 
-import java.io.IOException;
-
 /**
  * @author Fabio Buracchi
  */
@@ -20,7 +18,7 @@ public class NavActivityDestination extends NavDestination {
     }
 
     @Override
-    public void initialize(NavController navController) throws IOException {
+    public void initialize(NavController navController) {
         initialize(activity, navController);
     }
 

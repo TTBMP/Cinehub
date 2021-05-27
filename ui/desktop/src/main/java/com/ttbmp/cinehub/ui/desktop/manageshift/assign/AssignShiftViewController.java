@@ -19,7 +19,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.time.LocalTime;
 
 /**
@@ -77,8 +76,7 @@ public class AssignShiftViewController extends ViewController {
         if (viewModel.getSelectedDayWeek().getEmployee() instanceof UsherDto) {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
             hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
-        }
-        else {
+        } else {
             viewModel.getHallList().setAll(viewModel.getEmployee(viewModel.getSelectedShift()).getCinema().getHalList());
             hallComboBox.setItems(viewModel.getHallList());
             hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
@@ -120,20 +118,16 @@ public class AssignShiftViewController extends ViewController {
         confirmButton.setOnAction(this::confirmButtonOnAction);
 
         cancelButton.setOnAction(a -> {
-            try {
-                if (shiftRepeatCheckBox.isSelected()) {
-                    viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());
-                }
-                viewModel.setSelectedOption(null);
-                navController.navBack();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (shiftRepeatCheckBox.isSelected()) {
+                viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());
             }
+            viewModel.setSelectedOption(null);
+            navController.navBack();
         });
     }
 
     private void confirmButtonOnAction(ActionEvent action) {
-        int hallId = -1;
+        var hallId = -1;
         if (viewModel.getSelectedHall() != null) {
             hallId = viewModel.getSelectedHall().getId();
         }
@@ -162,13 +156,8 @@ public class AssignShiftViewController extends ViewController {
             );
         }
         if (!viewModel.isErrorAssignVisibility()) {
-            try {
-                viewModel.setSelectedOption(null);
-                navController.navBack();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            viewModel.setSelectedOption(null);
+            navController.navBack();
         }
     }
-
 }

@@ -52,7 +52,7 @@ public class CalendarTableCellViewController extends ViewController {
                 itemView = new CalendarShiftItemView();
                 itemView.load();
             } catch (IOException e) {
-                e.printStackTrace();
+                navController.openErrorDialog(e.getMessage(), true);
             }
             Objects.requireNonNull(itemView);
             shiftVBox.getChildren().add(itemView.getRoot());

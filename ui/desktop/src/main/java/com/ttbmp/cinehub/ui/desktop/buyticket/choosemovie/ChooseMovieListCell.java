@@ -33,7 +33,7 @@ public class ChooseMovieListCell extends ListCell<MovieDto> {
                 item = new ChooseMovieItemView();
                 item.load();
             } catch (IOException e) {
-                e.printStackTrace();
+                navController.openErrorDialog(e.getMessage(), true);
             }
             Objects.requireNonNull(item);
             item.getController().load(activity, navController, request);

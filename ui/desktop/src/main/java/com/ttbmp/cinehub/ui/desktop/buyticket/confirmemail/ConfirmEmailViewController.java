@@ -14,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
@@ -66,13 +65,7 @@ public class ConfirmEmailViewController extends ViewController {
     protected void onLoad() {
         appBarController.load(activity, navController);
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
-        confirmButton.setOnAction(a -> {
-            try {
-                navController.navigate(new NavActivityDestination(new BuyTicketActivity()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        confirmButton.setOnAction(a -> navController.navigate(new NavActivityDestination(new BuyTicketActivity())));
         bind();
         testLabel.setText(viewModel.selectedDateProperty().getValue().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)));
         priceText.setText((viewModel.selectedTicketPriceProperty().getValue()) + "\u20ac");

@@ -20,7 +20,6 @@ import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Map;
@@ -56,13 +55,7 @@ public class ScheduleViewController extends ViewController {
     protected void onLoad() {
         appBarController.load(activity, navController);
         var viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
-        viewModel.errorMessageProperty().addListener(l -> {
-            try {
-                navController.openInDialog(new NavDestination(new ErrorDialogView()), "Error");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        viewModel.errorMessageProperty().addListener(l -> navController.openInDialog(new NavDestination(new ErrorDialogView()), "Error"));
         datePicker.valueProperty().bindBidirectional(viewModel.dateProperty());
         datePicker.setOnAction(a -> activity.getUseCase(ViewPersonalScheduleUseCase.class).getShiftList(
                 new ShiftListRequest(

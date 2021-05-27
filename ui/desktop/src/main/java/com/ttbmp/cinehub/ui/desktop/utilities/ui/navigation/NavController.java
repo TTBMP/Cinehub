@@ -1,10 +1,11 @@
 package com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation;
 
+import com.ttbmp.cinehub.ui.desktop.error.ErrorView;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.stage.DialogStage;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Objects;
@@ -15,7 +16,7 @@ import java.util.Objects;
 public class NavController {
 
     private final Deque<NavDestination> navBackStack = new ArrayDeque<>();
-    private Stage stage;
+    private final Stage stage;
     private NavDestination currentDestination = null;
 
     public NavController(Stage stage) {
@@ -26,6 +27,7 @@ public class NavController {
         return currentDestination;
     }
 
+    @SuppressWarnings("unused")
     public Class<? extends Activity> getCurrentDestinationActivityClass() {
         return currentDestination.activity.getClass();
     }
@@ -39,16 +41,20 @@ public class NavController {
         return null;
     }
 
-    public void open(NavActivityDestination destination) throws IOException {
-        Objects.requireNonNull(destination);
-        navBackStack.clear();
-        currentDestination = destination;
-        destination.initialize(this);
-        navBackStack.push(destination);
-        stage.setScene(destination.scene);
+    public void open(NavActivityDestination destination) {
+        try {
+            Objects.requireNonNull(destination);
+            navBackStack.clear();
+            currentDestination = destination;
+            destination.initialize(this);
+            navBackStack.push(destination);
+            stage.setScene(destination.scene);
+        } catch (Exception e) {
+            openErrorDialog(e.getMessage(), true);
+        }
     }
 
-    public void openInDialog(NavDestination destination, String title) throws IOException {
+    public void openInDialog(NavDestination destination, String title) {
         Objects.requireNonNull(destination);
         Objects.requireNonNull(title);
         var dialogNavController = new NavController(new DialogStage(stage, title));
@@ -56,21 +62,35 @@ public class NavController {
         dialogNavController.stage.show();
     }
 
-    public void navigate(NavDestination destination) throws IOException {
-        Objects.requireNonNull(destination);
-        if (destination instanceof NavActivityDestination) {
-            currentDestination = destination;
-        } else {
-            var activity = currentDestination.activity;
-            currentDestination = destination;
-            currentDestination.activity = activity;
-        }
-        destination.initialize(this);
-        navBackStack.push(destination);
-        stage.setScene(destination.scene);
+    public void openErrorDialog(String errorMessage, boolean isFatal) {
+        Objects.requireNonNull(errorMessage);
+        NavFunction onCloseFunction = isFatal ? navController -> Platform.exit() : NavController::navBack;
+        var errorView = new ErrorView(errorMessage, onCloseFunction);
+        openInDialog(new NavDestination(errorView), "Error");
+        var errorStage = ((Stage) errorView.getRoot().getScene().getWindow());
+        errorStage.setResizable(false);
+        errorStage.setOnCloseRequest(w -> onCloseFunction.execute(errorView.getController().getNavController()));
     }
 
-    public void navBack() throws IOException {
+    public void navigate(NavDestination destination) {
+        try {
+            Objects.requireNonNull(destination);
+            if (destination instanceof NavActivityDestination) {
+                currentDestination = destination;
+            } else {
+                var activity = currentDestination.activity;
+                currentDestination = destination;
+                currentDestination.activity = activity;
+            }
+            destination.initialize(this);
+            navBackStack.push(destination);
+            stage.setScene(destination.scene);
+        } catch (Exception e) {
+            openErrorDialog(e.getMessage(), true);
+        }
+    }
+
+    public void navBack() {
         if (!navBackStack.isEmpty()) {
             navBackStack.pop();
             if (navBackStack.isEmpty()) {
@@ -80,6 +100,10 @@ public class NavController {
                 navigate(destination);
             }
         }
+    }
+
+    public interface NavFunction {
+        void execute(NavController navController);
     }
 
 }

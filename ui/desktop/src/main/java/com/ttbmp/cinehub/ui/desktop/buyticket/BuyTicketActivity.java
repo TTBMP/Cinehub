@@ -6,14 +6,12 @@ import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.ui.desktop.buyticket.choosemovie.ChooseMovieView;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 
-import java.io.IOException;
-
 /**
  * @author Ivan Palmieri
  */
 public class BuyTicketActivity extends Activity {
 
-    public BuyTicketActivity() throws IOException {
+    public BuyTicketActivity() {
         super(new ChooseMovieView());
         var viewModel = new BuyTicketViewModel();
         BuyTicketPresenter presenter = new BuyTicketPresenterFx(viewModel);

@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class NavDestination {
 
-    protected View view;
+    protected final View view;
     protected Activity activity;
     protected Scene scene;
     private boolean loaded;
@@ -21,18 +21,22 @@ public class NavDestination {
         loaded = false;
     }
 
-    public void initialize(NavController navController) throws IOException {
+    public void initialize(NavController navController) {
         initialize(navController.getCurrentDestination().activity, navController);
     }
 
-    protected void initialize(Activity activity, NavController navController) throws IOException {
-        if (!loaded) {
-            this.activity = activity;
-            view.load();
-            view.getController().load(activity, navController);
-            scene = new Scene(view.getRoot());
-            scene.getStylesheets().addAll(view.getStylesheetList());
-            loaded = true;
+    protected void initialize(Activity activity, NavController navController) {
+        try {
+            if (!loaded) {
+                this.activity = activity;
+                view.load();
+                view.getController().load(activity, navController);
+                scene = new Scene(view.getRoot());
+                scene.getStylesheets().addAll(view.getStylesheetList());
+                loaded = true;
+            }
+        } catch (IOException e) {
+            navController.openErrorDialog(e.getMessage(), true);
         }
     }
 

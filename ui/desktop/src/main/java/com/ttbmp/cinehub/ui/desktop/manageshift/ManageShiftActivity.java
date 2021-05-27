@@ -4,14 +4,12 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHa
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 
-import java.io.IOException;
-
 /**
  * @author Massimo Mazzetti
  */
 public class ManageShiftActivity extends Activity {
 
-    public ManageShiftActivity() throws IOException {
+    public ManageShiftActivity() {
         super(new ShowShiftView());
         var viewModel = new ManageEmployeesShiftViewModel();
         var presenter = new ManageEmployeesShiftFxPresenter(viewModel);

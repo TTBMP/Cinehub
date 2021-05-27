@@ -6,8 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-import java.io.IOException;
-
 public class ErrorDialogViewController extends ViewController {
 
     @FXML
@@ -20,13 +18,7 @@ public class ErrorDialogViewController extends ViewController {
     protected void onLoad() {
         var viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
         messageLabel.setText(viewModel.getErrorMessage());
-        closeButton.setOnAction(e -> {
-            try {
-                navController.navBack();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-        });
+        closeButton.setOnAction(e -> navController.navBack());
     }
 
 }

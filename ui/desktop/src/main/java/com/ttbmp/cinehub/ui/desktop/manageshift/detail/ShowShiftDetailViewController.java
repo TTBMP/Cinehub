@@ -13,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 /**
@@ -89,20 +88,10 @@ public class ShowShiftDetailViewController extends ViewController {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(
                     CinehubApplication.getSessionToken(),
                     viewModel.getSelectedShift().getId()));
-            try {
-                navController.navBack();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            navController.navBack();
         });
 
-        modifyShiftButton.setOnAction(a -> {
-            try {
-                navController.navigate(new NavDestination(new ModifyShiftView()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        modifyShiftButton.setOnAction(a -> navController.navigate(new NavDestination(new ModifyShiftView())));
     }
 
 }
