@@ -4,6 +4,7 @@ import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 import com.ttbmp.cinehub.app.dto.shift.ShiftProjectionistDto;
+import com.ttbmp.cinehub.app.utilities.observer.Observable;
 import com.ttbmp.cinehub.ui.desktop.utilities.ObjectBindings;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewModel;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.master.calendar.CalendarDay;
@@ -20,8 +21,6 @@ import java.util.Map;
  * @author Fabio Buracchi
  */
 public class ViewPersonalScheduleViewModel implements ViewModel {
-
-    private final StringProperty errorMessage = new SimpleStringProperty();
 
     private final ObjectProperty<LocalDate> date = new SimpleObjectProperty<>(LocalDate.now());
     private final ObservableList<ShiftDto> shiftList = FXCollections.observableArrayList();
@@ -45,6 +44,8 @@ public class ViewPersonalScheduleViewModel implements ViewModel {
     private final BooleanProperty isProjectionsDetailButtonVisible = new SimpleBooleanProperty();
     private final ObservableList<ProjectionDto> projectionList = FXCollections.observableArrayList();
 
+    private final Observable<String> errorMessage = new Observable<>();
+
     public ViewPersonalScheduleViewModel() {
         calendarPageFirstDate.bind(getCalendarPage().pageFirstDateProperty());
         calendarPageLastDate.bind(getCalendarPage().pageLastDateProperty());
@@ -57,18 +58,6 @@ public class ViewPersonalScheduleViewModel implements ViewModel {
         selectedShiftEnd.bind(ObjectBindings.map(selectedShift, shiftDto -> shiftDto.getEnd().toString()));
         selectedProjectionistShiftHall.bind(ObjectBindings.map(selectedShift, shiftDto -> ((ShiftProjectionistDto) shiftDto).getHallDto().getId().toString()));
         isProjectionsDetailButtonVisible.bind(ObjectBindings.map(selectedShiftEmployeeRole, e -> e.equals("projectionist")));   // TODO: refactor
-    }
-
-    public String getErrorMessage() {
-        return errorMessage.get();
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage.set(errorMessage);
-    }
-
-    public StringProperty errorMessageProperty() {
-        return errorMessage;
     }
 
     public LocalDate getDate() {
@@ -261,6 +250,18 @@ public class ViewPersonalScheduleViewModel implements ViewModel {
 
     public ObjectProperty<EmployeeDto> currentEmployeeProperty() {
         return currentEmployee;
+    }
+
+    public Observable<String> errorMessageProperty() {
+        return errorMessage;
+    }
+
+    public String getErrorMessage() {
+        return this.errorMessage.getValue();
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage.setValue(errorMessage);
     }
 
 }

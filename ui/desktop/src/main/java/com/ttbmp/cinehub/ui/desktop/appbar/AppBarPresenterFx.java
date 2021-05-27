@@ -14,6 +14,8 @@ import com.ttbmp.cinehub.ui.desktop.logout.LogoutActivity;
 import com.ttbmp.cinehub.ui.desktop.manageshift.ManageShiftActivity;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.ViewPersonalScheduleActivity;
 
+import java.util.stream.Collectors;
+
 import static com.ttbmp.cinehub.app.usecase.getuserrole.RoleResponse.Role.EMPLOYEE;
 import static com.ttbmp.cinehub.app.usecase.getuserrole.RoleResponse.Role.MANAGER;
 
@@ -40,18 +42,31 @@ public class AppBarPresenterFx implements GetUserRolePresenter, LogoutPresenter 
     }
 
     @Override
+    public void logout() {
+        CinehubApplication.setSessionToken(null);
+    }
+
+    @Override
+    public void presentInvalidRequest(Request request) {
+        viewModel.setErrorMessage(request.getErrorList().stream()
+                .map(Request.Error::getMessage)
+                .collect(Collectors.joining())
+        );
+    }
+
+    @Override
     public void presentNullRequest() {
-        // TODO
+        viewModel.setErrorMessage("Request can't be null");
     }
 
     @Override
     public void presentRepositoryError(RepositoryException e) {
-        // TODO
+        viewModel.setErrorMessage(e.getMessage());
     }
 
     @Override
     public void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e) {
-        // TODO
+        viewModel.setErrorMessage(e.getMessage());
     }
 
     @Override
@@ -60,16 +75,6 @@ public class AppBarPresenterFx implements GetUserRolePresenter, LogoutPresenter 
         viewModel.getTabList().add(viewModel.getActivityTabMap().get(AboutActivity.class));
         viewModel.getTabList().add(viewModel.getActivityTabMap().get(LoginActivity.class));
         viewModel.getTabList().add(viewModel.getActivityTabMap().get(BuyTicketActivity.class));
-    }
-
-    @Override
-    public void logout() {
-        CinehubApplication.setSessionToken(null);
-    }
-
-    @Override
-    public void presentInvalidRequest(Request request) {
-        // TODO
     }
 
 }

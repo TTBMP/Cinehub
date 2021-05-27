@@ -53,7 +53,6 @@ public class ScheduleViewController extends ViewController {
     protected void onLoad() {
         appBarController.load(activity, navController);
         var viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
-        viewModel.errorMessageProperty().addListener(l -> navController.openErrorDialog(viewModel.getErrorMessage(), false));
         datePicker.valueProperty().bindBidirectional(viewModel.dateProperty());
         datePicker.setOnAction(a -> activity.getUseCase(ViewPersonalScheduleUseCase.class).getShiftList(
                 new ShiftListRequest(
@@ -89,6 +88,7 @@ public class ScheduleViewController extends ViewController {
                         viewModel.getCalendarPageFirstDate(),
                         viewModel.getCalendarPageLastDate())
         );
+        viewModel.errorMessageProperty().addObserver(message -> navController.openErrorDialog(message, false));
     }
 
 }

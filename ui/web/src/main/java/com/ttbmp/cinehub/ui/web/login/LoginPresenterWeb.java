@@ -27,12 +27,12 @@ public class LoginPresenterWeb implements LoginPresenter {
     }
 
     @Override
-    public void presentNullRequestException() {
+    public void presentNullRequest() {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
     }
 
     @Override
-    public void presentInvalidRequestException(Request request) {
+    public void presentInvalidRequest(Request request) {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
     }
 

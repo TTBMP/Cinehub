@@ -34,10 +34,10 @@ public class LoginViewController extends ViewController {
         var useCase = activity.getUseCase(LoginUseCase.class);
         viewModel.emailProperty().bind(emailTextField.textProperty());
         viewModel.passwordProperty().bind(passwordField.textProperty());
-        viewModel.errorMessageProperty().addObserver(message -> navController.openErrorDialog(message, false));
         loginButton.disableProperty().bind(viewModel.isLoginButtonDisabledProperty());
         loginButton.setOnAction(a -> useCase.login(new LoginRequest(viewModel.getEmail(), viewModel.getPassword())));
         viewModel.isLoggedProperty().addListener(l -> navController.openPreviousActivity());
+        viewModel.errorMessageProperty().addObserver(message -> navController.openErrorDialog(message, false));
     }
 
 }

@@ -7,9 +7,9 @@ public interface LoginPresenter {
 
     void presentSessionToken(LoginResponse response);
 
-    void presentInvalidRequestException(Request request);
+    void presentInvalidRequest(Request request);
 
-    void presentNullRequestException();
+    void presentNullRequest();
 
     void presentSecurityError(SecurityException e);
 

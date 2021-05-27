@@ -63,6 +63,7 @@ public class AppBarViewController extends ViewController {
         getUserRoleUseCase.getUserRoles(new RoleRequest(CinehubApplication.getSessionToken()));
         tabPane.getSelectionModel().select(viewModel.getActivityTabMap().get(activity.getClass()));
         viewModel.getActivityTabMap().forEach((key, value) -> value.setOnSelectionChanged(handleTabSelection(key, value)));
+        viewModel.errorMessageProperty().addObserver(message -> navController.openErrorDialog(message, false));
     }
 
     private void loadActivityTabMap() {
@@ -77,17 +78,17 @@ public class AppBarViewController extends ViewController {
     private EventHandler<Event> handleTabSelection(Class<? extends Activity> key, Tab value) {
         return event -> {
             if (value.isSelected()) {
-                try {
-                    if (key == LoginActivity.class) {
-                        navController.navigate(new NavActivityDestination(key.getConstructor().newInstance()));
-                    } else if (key == LogoutActivity.class) {
-                        logoutUseCase.logout(new LogoutRequest(CinehubApplication.getSessionToken()));
-                        navController.open(new NavActivityDestination(new BuyTicketActivity()));
-                    } else {
+                if (key == LoginActivity.class) {
+                    navController.navigate(new NavActivityDestination(new LoginActivity()));
+                } else if (key == LogoutActivity.class) {
+                    logoutUseCase.logout(new LogoutRequest(CinehubApplication.getSessionToken()));
+                    navController.open(new NavActivityDestination(new BuyTicketActivity()));
+                } else {
+                    try {
                         navController.open(new NavActivityDestination(key.getConstructor().newInstance()));
+                    } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                        navController.openErrorDialog(e.getMessage(), true);
                     }
-                } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                    navController.openErrorDialog(e.getMessage(), true);
                 }
             }
         };
