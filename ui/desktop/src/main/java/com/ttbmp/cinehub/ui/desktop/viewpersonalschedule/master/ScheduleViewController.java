@@ -5,9 +5,7 @@ import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalScheduleUs
 import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavDestination;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.ViewPersonalScheduleViewModel;
-import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.error.ErrorDialogView;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.master.calendar.CalendarDay;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.master.calendar.tablecell.CalendarTableCell;
 import javafx.event.Event;
@@ -55,7 +53,7 @@ public class ScheduleViewController extends ViewController {
     protected void onLoad() {
         appBarController.load(activity, navController);
         var viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
-        viewModel.errorMessageProperty().addListener(l -> navController.openInDialog(new NavDestination(new ErrorDialogView()), "Error"));
+        viewModel.errorMessageProperty().addListener(l -> navController.openErrorDialog(viewModel.getErrorMessage(), false));
         datePicker.valueProperty().bindBidirectional(viewModel.dateProperty());
         datePicker.setOnAction(a -> activity.getUseCase(ViewPersonalScheduleUseCase.class).getShiftList(
                 new ShiftListRequest(
