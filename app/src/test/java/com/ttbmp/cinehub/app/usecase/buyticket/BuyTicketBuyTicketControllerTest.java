@@ -5,7 +5,7 @@ import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.MovieListRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
@@ -69,16 +69,10 @@ class BuyTicketBuyTicketControllerTest {
         }
 
 
-
-
-
-
-
         @Override
         public void presentInvalidRequest(Request request) {
 
         }
-
 
 
         @Override
@@ -90,7 +84,6 @@ class BuyTicketBuyTicketControllerTest {
         public void presentProjectionList(ProjectionListResponse projectionTimeList) {
 
         }
-
 
 
         @Override

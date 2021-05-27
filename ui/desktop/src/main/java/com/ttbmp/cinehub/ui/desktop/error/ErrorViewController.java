@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.ui.desktop.error;
 
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavController;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,7 +30,7 @@ public class ErrorViewController extends ViewController {
         vBox.getChildren().add(button);
         vBox.setAlignment(Pos.CENTER);
         vBox.setSpacing(32);
-        vBox.setPrefSize(320, 128);
+        vBox.setPadding(new Insets(32, 92, 32, 92));
     }
 
 }

@@ -99,7 +99,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             Request.validate(request);
             var cinema = cinemaRepository.getCinema(request.getCinemaId());
             var movie = movieRepository.getMovie(request.getMovieId());
-            request.semanticValidate(movie,cinema);
+            request.semanticValidate(movie, cinema);
             var projectionList = projectionRepository.getProjectionList(cinema, movie, request.getLocalDate()).stream()
                     .map(ProjectionDto::new)
                     .collect(Collectors.toList());
@@ -146,7 +146,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             var customer = customerRepository.getCustomer(request.getUserId());
             var projection = projectionRepository.getProjection(request.getProjectionId());
             var seat = seatRepository.getSeat(request.getSeatId());
-            request.semanticValidate(customer,projection,seat);
+            request.semanticValidate(customer, projection, seat);
             if (projection.isBooked(seat)) {
                 presenter.presentSeatAlreadyBookedError(new SeatErrorResponse("The place has already been booked"));
             } else {

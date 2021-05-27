@@ -4,8 +4,6 @@ import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 
-import java.util.List;
-
 /**
  * @author Fabio Buracchi
  */

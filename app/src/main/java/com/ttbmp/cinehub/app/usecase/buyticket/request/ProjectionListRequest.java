@@ -61,7 +61,7 @@ public class ProjectionListRequest extends Request {
         if (movie == null) {
             addError(INVALID_MOVIE);
         }
-        if(cinema == null){
+        if (cinema == null) {
             addError(INVALID_CINEMA);
         }
         if (!getErrorList().isEmpty()) {

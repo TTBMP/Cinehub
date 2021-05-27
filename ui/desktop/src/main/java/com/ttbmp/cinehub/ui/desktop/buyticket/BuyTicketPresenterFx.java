@@ -4,7 +4,6 @@ package com.ttbmp.cinehub.ui.desktop.buyticket;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketPresenter;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
@@ -15,7 +14,6 @@ import java.util.stream.Collectors;
  * @author Ivan Palmieri
  */
 public class BuyTicketPresenterFx implements BuyTicketPresenter {
-
 
 
     private final BuyTicketViewModel viewModel;
@@ -33,8 +31,8 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     public void presentInvalidRequest(Request request) {
         viewModel.errorMessageProperty().setValue(
                 request.getErrorList().stream()
-                .map(Request.Error::getMessage)
-                .collect(Collectors.joining())
+                        .map(Request.Error::getMessage)
+                        .collect(Collectors.joining())
         );
     }
 

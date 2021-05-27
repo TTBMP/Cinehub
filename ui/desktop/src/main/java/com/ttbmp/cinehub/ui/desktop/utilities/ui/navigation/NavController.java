@@ -69,6 +69,7 @@ public class NavController {
         openInDialog(new NavDestination(errorView), "Error");
         var errorStage = ((Stage) errorView.getRoot().getScene().getWindow());
         errorStage.setResizable(false);
+        errorStage.setAlwaysOnTop(true);
         errorStage.setOnCloseRequest(w -> onCloseFunction.execute(errorView.getController().getNavController()));
     }
 

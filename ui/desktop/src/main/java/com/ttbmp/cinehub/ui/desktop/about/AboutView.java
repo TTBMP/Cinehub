@@ -8,7 +8,7 @@ import com.ttbmp.cinehub.ui.desktop.utilities.ui.FxmlView;
 public class AboutView extends FxmlView {
 
     public AboutView() {
-        super("about_page.fxml");
+        super("about_page_.fxml");
     }
 
 }
