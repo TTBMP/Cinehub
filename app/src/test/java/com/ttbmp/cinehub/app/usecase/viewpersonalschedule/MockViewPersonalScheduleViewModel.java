@@ -14,6 +14,8 @@ public class MockViewPersonalScheduleViewModel {
     private List<ShiftDto> shiftList;
     private List<ProjectionDto> projectionList;
 
+    private String errorMessage;
+
     public String getSessionToken() {
         return sessionToken;
     }
@@ -36,6 +38,14 @@ public class MockViewPersonalScheduleViewModel {
 
     public void setProjectionList(List<ProjectionDto> projectionList) {
         this.projectionList = projectionList;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
 }

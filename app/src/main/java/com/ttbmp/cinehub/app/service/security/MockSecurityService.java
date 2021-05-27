@@ -6,6 +6,8 @@ import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
 import com.ttbmp.cinehub.domain.User;
 
+import java.util.Objects;
+
 /**
  * @author Fabio Buracchi
  */
@@ -29,7 +31,9 @@ public class MockSecurityService implements SecurityService {
     @Override
     public User authenticate(String sessionToken) throws SecurityException {
         try {
-            return userRepository.getUser(sessionToken);
+            var user = userRepository.getUser(sessionToken);
+            Objects.requireNonNull(user);
+            return user;
         } catch (NullPointerException e) {
             throw new SecurityException("Invalid session token.");
         } catch (RepositoryException e) {

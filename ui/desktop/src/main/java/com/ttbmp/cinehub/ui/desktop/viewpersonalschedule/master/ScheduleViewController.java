@@ -27,6 +27,8 @@ import java.util.Map;
  */
 public class ScheduleViewController extends ViewController {
 
+    private ViewPersonalScheduleViewModel viewModel;
+
     @FXML
     private VBox appBar;
 
@@ -52,15 +54,9 @@ public class ScheduleViewController extends ViewController {
     @Override
     protected void onLoad() {
         appBarController.load(activity, navController);
-        var viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
+        viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
         datePicker.valueProperty().bindBidirectional(viewModel.dateProperty());
-        datePicker.setOnAction(a -> activity.getUseCase(ViewPersonalScheduleUseCase.class).getShiftList(
-                new ShiftListRequest(
-                        CinehubApplication.getSessionToken(),
-                        viewModel.getCalendarPageFirstDate(),
-                        viewModel.getCalendarPageLastDate())
-                )
-        );
+        datePicker.setOnAction(a -> getShiftList());
         todayButton.setOnAction(a -> datePicker.setValue(LocalDate.now()));
         previousButton.setOnAction(a -> datePicker.setValue(datePicker.getValue().minusMonths(1)));
         nextButton.setOnAction(a -> datePicker.setValue(datePicker.getValue().plusMonths(1)));
@@ -71,24 +67,24 @@ public class ScheduleViewController extends ViewController {
         calendarTableView.itemsProperty().addListener(l -> calendarTableView.refresh());
         calendarTableView.setItems(viewModel.getShiftWeekList());
         for (var dayOfWeek : DayOfWeek.values()) {
-            TableColumn<Map<DayOfWeek, CalendarDay>, CalendarDay> dayTableColumn;
-            dayTableColumn = (TableColumn<Map<DayOfWeek, CalendarDay>, CalendarDay>)
-                    calendarTableView.getColumns().get(dayOfWeek.getValue() - 1);
+            var dayTableColumn = (TableColumn<Map<DayOfWeek, CalendarDay>, CalendarDay>) calendarTableView.getColumns().get(dayOfWeek.getValue() - 1);
             dayTableColumn.setCellValueFactory(new MapValueFactory(dayOfWeek));
             dayTableColumn.setCellFactory(tableColumn -> new CalendarTableCell(tableColumn, activity, navController));
             dayTableColumn.setReorderable(false);
             dayTableColumn.setResizable(false);
-            dayTableColumn.prefWidthProperty().bind(calendarTableView.widthProperty().divide(
-                    calendarTableView.getColumns().size())
-            );
+            dayTableColumn.prefWidthProperty().bind(calendarTableView.widthProperty().divide(calendarTableView.getColumns().size()));
         }
+        getShiftList();
+        viewModel.errorMessageProperty().addObserver(message -> navController.openErrorDialog(message, false));
+    }
+
+    private void getShiftList() {
         activity.getUseCase(ViewPersonalScheduleUseCase.class).getShiftList(
                 new ShiftListRequest(
                         CinehubApplication.getSessionToken(),
                         viewModel.getCalendarPageFirstDate(),
                         viewModel.getCalendarPageLastDate())
         );
-        viewModel.errorMessageProperty().addObserver(message -> navController.openErrorDialog(message, false));
     }
 
 }
