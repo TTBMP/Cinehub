@@ -10,7 +10,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine")
 
     testImplementation("org.testfx:testfx-core:4.0.16-alpha")
-    testImplementation("org.testfx:testfx-junit:4.0.16-alpha")
+    testImplementation("org.testfx:testfx-junit5:4.0.16-alpha")
 
 }
 
