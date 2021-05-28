@@ -22,6 +22,16 @@ import java.time.LocalDate;
 @ExtendWith({ApplicationExtension.class})
 class ViewPersonalScheduleTest {
 
+    static {
+        if (Boolean.getBoolean("headless")) {
+            System.setProperty("java.awt.headless", "true");
+            System.setProperty("testfx.robot", "glass");
+            System.setProperty("testfx.headless", "true");
+            System.setProperty("prism.order", "sw");
+            System.setProperty("prism.text", "t2k");
+        }
+    }
+
     @Start
     void onStart(Stage stage) {
         new NavController(stage).navigate(new NavActivityDestination(new BuyTicketActivity()));

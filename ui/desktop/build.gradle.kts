@@ -23,3 +23,8 @@ javafx {
 application {
     mainClass.set("com.ttbmp.cinehub.ui.desktop.CinehubApplication")
 }
+
+tasks.withType<Test>().all {
+    val headless = if (project.hasProperty("headless")) project.property("headless") else false
+    jvmArgs("-Dheadless=${ headless }")
+}
