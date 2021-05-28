@@ -59,10 +59,4 @@ public class GetShiftListRequest extends AuthenticatedRequest {
         }
     }
 
-    public void semanticValidate(Cinema cinema) throws InvalidRequestException {
-        if (cinema == null) {
-            addError(INVALID_CINEMA);
-            throw new InvalidRequestException();
-        }
-    }
 }

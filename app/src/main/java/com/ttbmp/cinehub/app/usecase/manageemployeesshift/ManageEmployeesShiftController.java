@@ -19,6 +19,7 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.domain.Hall;
+import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.employee.Projectionist;
 import com.ttbmp.cinehub.domain.security.Permission;
 import com.ttbmp.cinehub.domain.shift.ModifyShiftException;
@@ -87,7 +88,10 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
             var cinema = cinemaRepository.getCinema(request.getCinemaId());
-            request.semanticValidate(cinema);
+            if (cinema == null) {
+                request.addError(GetEmployeeListRequest.INVALID_CINEMA);
+                throw new Request.InvalidRequestException();
+            }
             var employeeList = employeeRepository.getEmployeeList(cinema).stream()
                     .map(EmployeeDtoFactory::getEmployeeDto)
                     .collect(Collectors.toList());
@@ -111,7 +115,10 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
             var cinema = cinemaRepository.getCinema(request.getCinemaId());
-            request.semanticValidate(cinema);
+            if (cinema == null) {
+                request.addError(GetShiftListRequest.INVALID_CINEMA);
+                throw new Request.InvalidRequestException();
+            }
             var shiftList = shiftRepository.getCinemaShiftListBetween(cinema, request.getStart(), request.getEnd()).stream()
                     .map(ShiftDtoFactory::getShiftDto)
                     .collect(Collectors.toList());
@@ -144,7 +151,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             if (employee instanceof Projectionist) {
                 hall = hallRepository.getHall(request.getHallId());
             }
-            request.semanticValidate(shift, employee, hall);
+            semanticValidationModifyShift(request, shift, employee, hall);
             shift.modifyShift(shift, request.getDate(), request.getStart(), request.getEnd(), hall);
             if (employee instanceof Projectionist) {
                 projectionistShiftRepository.modifyShift((ProjectionistShift) shift);
@@ -173,16 +180,33 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         }
     }
 
+    private void semanticValidationModifyShift(ShiftModifyRequest request, Shift shift, Employee employee, Hall hall) throws Request.InvalidRequestException {
+        if (shift == null) {
+            request.addError(ShiftModifyRequest.MISSING_SHIFT);
+        } else if (LocalDate.now().plusDays(1).isAfter(LocalDate.parse(shift.getDate()))) {
+            request.addError(ShiftModifyRequest.INVALID_SHIFT);
+        }
+        if (employee == null) {
+            request.addError(ShiftModifyRequest.MISSING_EMPLOYEE);
+        }
+        if (hall == null && employee instanceof Projectionist) {
+            request.addError(ShiftModifyRequest.MISSING_HALL);
+        }
+        if (!request.getErrorList().isEmpty()) {
+            throw new Request.InvalidRequestException();
+        }
+    }
+
     @Override
     public void deleteShift(ShiftRequest request) {
         var permissions = new Permission[]{Permission.DELETE_SHIFT};
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
             var shift = shiftRepository.getShift(request.getShiftId());
-            var email = shift.getEmployee().getEmail();
-            request.semanticValidate(shift);
+            semanticValidationDeleteShift(request, shift);
             shiftRepository.deletedShift(shift);
             manageEmployeesShiftPresenter.presentDeleteShift();
+            var email = shift.getEmployee().getEmail();
             emailService.sendMail(new EmailServiceRequest(
                     email,
                     "Shift Delete"
@@ -200,6 +224,18 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         }
     }
 
+    private void semanticValidationDeleteShift(ShiftRequest request, Shift shift) throws Request.InvalidRequestException {
+        if (shift == null) {
+            request.addError(ShiftRequest.MISSING_SHIFT);
+        } else if (LocalDate.now().plusDays(1).isAfter(LocalDate.parse(shift.getDate()))) {
+            request.addError(ShiftRequest.INVALID_SHIFT);
+        }
+        if (!request.getErrorList().isEmpty()) {
+            throw new Request.InvalidRequestException();
+        }
+
+    }
+
     @Override
     public void createRepeatedShift(ShiftRepeatRequest request) {
         var permissions = new Permission[]{Permission.ASSIGN_SHIFT};
@@ -212,7 +248,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             if (employee instanceof Projectionist) {
                 hall = hallRepository.getHall(request.getHallId());
             }
-            request.semanticValidate(employee, hall);
+            semanticValidationCreateShift(request, employee, hall);
             switch (request.getOption()) {
                 case "EVERY_DAY":
                     increaseDateFunction = date -> date.plusDays(1);
@@ -258,6 +294,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         }
     }
 
+
     @Override
     public void createShift(CreateShiftRequest request) {
         var permissions = new Permission[]{Permission.ASSIGN_SHIFT};
@@ -268,7 +305,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             var start = request.getStart().toString();
             var end = request.getEnd().toString();
             var hall = hallRepository.getHall(request.getHallId());
-            request.semanticValidate(employee, hall);
+            semanticValidationCreateShift(request, employee, hall);
             var shiftFactory = new ShiftFactory();
             var shift = shiftFactory.createConcreteShift(employee, date, start, end, hall);
             saveShift(shift);
@@ -292,6 +329,19 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
             manageEmployeesShiftPresenter.presentUnauthenticatedError(e);
         }
+    }
+
+    private void semanticValidationCreateShift(Request request, Employee employee, Hall hall) throws Request.InvalidRequestException {
+        if (employee == null) {
+            request.addError(CreateShiftRequest.MISSING_EMPLOYEE);
+        }
+        if (hall == null && employee instanceof Projectionist) {
+            request.addError(CreateShiftRequest.MISSING_HALL);
+        }
+        if (!request.getErrorList().isEmpty()) {
+            throw new Request.InvalidRequestException();
+        }
+
     }
 
     private void saveShift(Shift shift) throws RepositoryException {

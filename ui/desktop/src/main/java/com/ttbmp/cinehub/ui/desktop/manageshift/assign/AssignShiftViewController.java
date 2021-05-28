@@ -97,8 +97,7 @@ public class AssignShiftViewController extends ViewController {
         optionVBox.visibleProperty().bind(viewModel.repeatVisibilityProperty());
 
         dateVBox.visibleProperty().bind(viewModel.repeatVisibilityProperty());
-        errorLabel.textProperty().bind(viewModel.errorProperty());
-
+        viewModel.errorProperty().addObserver(s -> errorLabel.setText(s));
         viewModel.setRepeatVisibility(viewModel.isRepeatVisibility());
 
         shiftRepeatCheckBox.selectedProperty().bindBidirectional(viewModel.repeatVisibilityProperty());

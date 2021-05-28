@@ -77,7 +77,7 @@ public class ModifyShiftViewController extends ViewController {
 
         viewModel.setErrorAssignVisibility(false);
         errorHBox.visibleProperty().bind(viewModel.errorAssignVisibilityProperty());
-        errorLabel.textProperty().bind(viewModel.errorProperty());
+        viewModel.errorProperty().addObserver(s -> errorLabel.setText(s));
 
         if (viewModel.getEmployee(viewModel.getSelectedShift()) instanceof UsherDto) {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());

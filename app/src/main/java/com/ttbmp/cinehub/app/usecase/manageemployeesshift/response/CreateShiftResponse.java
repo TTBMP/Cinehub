@@ -17,4 +17,5 @@ public class CreateShiftResponse {
     public void setShiftDto(ShiftDto shiftDto) {
         this.shiftDto = shiftDto;
     }
+
 }

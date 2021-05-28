@@ -80,6 +80,8 @@ public class ShowShiftDetailViewController extends ViewController {
         cinemaLabel.textProperty().bind(viewModel.selectedShiftCinemaProperty());
 
         if (viewModel.getSelectedShift().getDate().isBefore(LocalDate.now().plusDays(1))) {
+            modifyShiftButton.setDisable(true);
+            deleteShiftButton.setDisable(true);
             modifyShiftButton.setVisible(false);
             deleteShiftButton.setVisible(false);
         }

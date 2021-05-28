@@ -19,6 +19,9 @@ import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
+import com.ttbmp.cinehub.domain.Customer;
+import com.ttbmp.cinehub.domain.Projection;
+import com.ttbmp.cinehub.domain.Seat;
 import com.ttbmp.cinehub.domain.security.Permission;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketMagicBox;
@@ -79,7 +82,12 @@ public class BuyTicketController implements BuyTicketUseCase {
         try {
             Request.validate(request);
             var movie = movieRepository.getMovie(request.getMovieId());
-            request.semanticValidate(movie);
+            if (movie == null) {
+                request.addError(CinemaListRequest.INVALID_MOVIE);
+            }
+            if (!request.getErrorList().isEmpty()) {
+                throw new Request.InvalidRequestException();
+            }
             var cinemaList = cinemaRepository.getListCinema(movie, request.getDate()).stream()
                     .map(CinemaDto::new)
                     .collect(Collectors.toList());
@@ -99,7 +107,15 @@ public class BuyTicketController implements BuyTicketUseCase {
             Request.validate(request);
             var cinema = cinemaRepository.getCinema(request.getCinemaId());
             var movie = movieRepository.getMovie(request.getMovieId());
-            request.semanticValidate(movie, cinema);
+            if (movie == null) {
+                request.addError(ProjectionListRequest.INVALID_MOVIE);
+            }
+            if (cinema == null) {
+                request.addError(ProjectionListRequest.INVALID_CINEMA);
+            }
+            if (!request.getErrorList().isEmpty()) {
+                throw new Request.InvalidRequestException();
+            }
             var projectionList = projectionRepository.getProjectionList(cinema, movie, request.getLocalDate()).stream()
                     .map(ProjectionDto::new)
                     .collect(Collectors.toList());
@@ -119,7 +135,7 @@ public class BuyTicketController implements BuyTicketUseCase {
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
             var projection = projectionRepository.getProjection(request.getProjectionId());
-            request.semanticValidate(projection);
+            semanticValidateGetSeatList(request, projection);
             var seatList = projection.getHall().getSeatList().stream()
                     .map(seat -> new SeatDto(seat, projection.isBooked(seat)))
                     .collect(Collectors.toList());
@@ -137,6 +153,15 @@ public class BuyTicketController implements BuyTicketUseCase {
         }
     }
 
+    private void semanticValidateGetSeatList(SeatListRequest request, Projection projection) throws Request.InvalidRequestException {
+        if (projection == null) {
+            request.addError(SeatListRequest.PROJECTION_ERROR);
+        }
+        if (!request.getErrorList().isEmpty()) {
+            throw new Request.InvalidRequestException();
+        }
+    }
+
 
     @Override
     public void pay(PaymentRequest request) {
@@ -146,7 +171,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             var customer = customerRepository.getCustomer(request.getUserId());
             var projection = projectionRepository.getProjection(request.getProjectionId());
             var seat = seatRepository.getSeat(request.getSeatId());
-            request.semanticValidate(customer, projection, seat);
+            semanticValidatePay(request, customer, projection, seat);
             if (projection.isBooked(seat)) {
                 presenter.presentSeatAlreadyBookedError(new SeatErrorResponse("The place has already been booked"));
             } else {
@@ -186,6 +211,20 @@ public class BuyTicketController implements BuyTicketUseCase {
             presenter.presentUnauthenticatedError(e);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
             presenter.presentUnauthorizedError(e);
+        }
+    }
+    private void semanticValidatePay(PaymentRequest request, Customer customer, Projection projection, Seat seat) throws Request.InvalidRequestException{
+        if (customer == null) {
+            request.addError(PaymentRequest.MISSING_CUSTOMER_ERROR);
+        }
+        if (projection == null) {
+            request.addError(PaymentRequest.MISSING_PROJECTION_ERROR);
+        }
+        if (seat == null) {
+            request.addError(PaymentRequest.MISSING_SEAT_ERROR);
+        }
+        if (!request.getErrorList().isEmpty()) {
+            throw new Request.InvalidRequestException();
         }
     }
 

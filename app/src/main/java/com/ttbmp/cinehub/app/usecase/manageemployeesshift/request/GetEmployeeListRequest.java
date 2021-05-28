@@ -29,10 +29,4 @@ public class GetEmployeeListRequest extends AuthenticatedRequest {
         // Do nothing because the class doesn't have attributes.
     }
 
-    public void semanticValidate(Cinema cinema) throws InvalidRequestException {
-        if (cinema == null) {
-            addError(INVALID_CINEMA);
-            throw new InvalidRequestException();
-        }
-    }
 }

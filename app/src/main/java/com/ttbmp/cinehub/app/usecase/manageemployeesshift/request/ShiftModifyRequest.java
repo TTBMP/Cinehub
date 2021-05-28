@@ -11,8 +11,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class ShiftModifyRequest extends AuthenticatedRequest {
-    public static final Request.Error MISSING_SHIFT = new Request.Error("Shift non valido");
-    public static final Request.Error MISSING_DATE = new Request.Error("Data non valido");
+    public static final Request.Error MISSING_SHIFT = new Request.Error("Shift non esiste");
+    public static final Request.Error INVALID_SHIFT = new Request.Error("Shift non valido");
+    public static final Request.Error MISSING_DATE = new Request.Error("Data non inserita");
+    public static final Request.Error INVALID_DATE = new Request.Error("Data non valido");
     public static final Request.Error MISSING_START = new Request.Error("Inizio non valido");
     public static final Request.Error MISSING_END = new Request.Error("Fine non valida");
     public static final Request.Error MISSING_HALL = new Request.Error("Hall non valida");
@@ -94,34 +96,21 @@ public class ShiftModifyRequest extends AuthenticatedRequest {
         }
         if (date == null) {
             addError(MISSING_DATE);
+        } else if (LocalDate.now().isAfter(date)) {
+            addError(INVALID_DATE);
         }
         if (start == null) {
             addError(MISSING_START);
-        }
-        if (end == null) {
+        } else if (end == null) {
             addError(MISSING_END);
+        } else if (start.isAfter(end)) {
+            addError(ERROR_TIME);
         }
         if (employeeId == null) {
             addError(MISSING_EMPLOYEE);
         }
-        if (start.isAfter(end)) {
-            addError(ERROR_TIME);
-        }
 
     }
 
-    public void semanticValidate(Shift shift, Employee employee, Hall hall) throws InvalidRequestException {
-        if (shift == null) {
-            addError(MISSING_SHIFT);
-        }
-        if (employee == null) {
-            addError(MISSING_EMPLOYEE);
-        }
-        if (hall == null && employee instanceof Projectionist) {
-            addError(MISSING_HALL);
-        }
-        if (!getErrorList().isEmpty()) {
-            throw new InvalidRequestException();
-        }
-    }
+
 }

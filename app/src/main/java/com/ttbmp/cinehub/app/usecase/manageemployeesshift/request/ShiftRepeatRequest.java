@@ -2,9 +2,6 @@ package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
-import com.ttbmp.cinehub.domain.Hall;
-import com.ttbmp.cinehub.domain.employee.Employee;
-import com.ttbmp.cinehub.domain.employee.Projectionist;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,7 +14,6 @@ public class ShiftRepeatRequest extends AuthenticatedRequest {
     public static final Request.Error MISSING_OPTION = new Request.Error("Opzione non valida");
     public static final Request.Error MISSING_START_SHIFT = new Request.Error("Ora inizio non valido");
     public static final Request.Error MISSING_END_SHIFT = new Request.Error("Ora fine non valida");
-    public static final Request.Error MISSING_HALL = new Request.Error("Sala non valida");
     public static final Request.Error PERIOD_ERROR = new Request.Error("Periodo non valido");
 
 
@@ -108,6 +104,8 @@ public class ShiftRepeatRequest extends AuthenticatedRequest {
             addError(MISSING_START);
         } else if (end == null) {
             addError(MISSING_END);
+        }else if(LocalDate.now().isAfter(start)){
+            addError(MISSING_START);
         } else if (start.isAfter(end)) {
             addError(PERIOD_ERROR);
         }
@@ -120,15 +118,4 @@ public class ShiftRepeatRequest extends AuthenticatedRequest {
         }
     }
 
-    public void semanticValidate(Employee employee, Hall hall) throws InvalidRequestException {
-        if (employee == null) {
-            addError(MISSING_EMPLOYEE);
-        }
-        if (hall == null && employee instanceof Projectionist) {
-            addError(MISSING_HALL);
-        }
-        if (!getErrorList().isEmpty()) {
-            throw new InvalidRequestException();
-        }
-    }
 }

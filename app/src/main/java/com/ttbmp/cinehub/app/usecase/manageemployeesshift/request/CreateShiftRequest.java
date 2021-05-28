@@ -89,6 +89,9 @@ public class CreateShiftRequest extends AuthenticatedRequest {
         if (date == null) {
             addError(MISSING_DATE);
         }
+        if (LocalDate.now().isAfter(date)) {
+            addError(MISSING_DATE);
+        }
         if (start == null) {
             addError(MISSING_START);
         }
@@ -100,15 +103,4 @@ public class CreateShiftRequest extends AuthenticatedRequest {
         }
     }
 
-    public void semanticValidate(Employee employee, Hall hall) throws InvalidRequestException {
-        if (employee == null) {
-            addError(MISSING_EMPLOYEE);
-        }
-        if (hall == null && employee instanceof Projectionist) {
-            addError(MISSING_HALL);
-        }
-        if (!getErrorList().isEmpty()) {
-            throw new InvalidRequestException();
-        }
-    }
 }

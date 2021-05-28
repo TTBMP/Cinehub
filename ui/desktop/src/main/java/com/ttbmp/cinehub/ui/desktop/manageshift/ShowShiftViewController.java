@@ -141,7 +141,7 @@ public class ShowShiftViewController extends ViewController {
         }
         shiftTableView.setItems(viewModel.getEmployeeShiftWeekList());
         viewModel.getEmployeeShiftWeekList().addListener((InvalidationListener) l -> shiftTableView.refresh());
-        viewModel.errorProperty().addListener(l -> navController.openErrorDialog(viewModel.getError(), false));
+        viewModel.errorProperty().addObserver(s -> navController.openErrorDialog(s, false));
 
     }
 }
