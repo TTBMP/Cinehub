@@ -12,11 +12,10 @@ dependencies {
     testImplementation("org.testfx", "testfx-core", "4.0.16-alpha")
     testImplementation("org.testfx", "testfx-junit5", "4.0.16-alpha")
     testImplementation("org.testfx", "openjfx-monocle", "jdk-11+26")
-
 }
 
 javafx {
-    version = "11.0.2"
+    version = "16"
     modules("javafx.base", "javafx.controls", "javafx.fxml")
 }
 
