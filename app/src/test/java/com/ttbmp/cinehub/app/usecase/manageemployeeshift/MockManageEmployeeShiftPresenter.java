@@ -7,6 +7,8 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 
+import java.util.stream.Collectors;
+
 public class MockManageEmployeeShiftPresenter implements ManageEmployeesShiftPresenter {
 
     private final MockManageEmployeeShiftViewModel viewModel;
@@ -53,38 +55,41 @@ public class MockManageEmployeeShiftPresenter implements ManageEmployeesShiftPre
 
     @Override
     public void presentCreateShiftError(Throwable error) {
-
+        viewModel.setErrorMessage(error.getMessage());
     }
 
 
     @Override
     public void presentModifyShiftError(Throwable error) {
-
+        viewModel.setErrorMessage(error.getMessage());
     }
 
     @Override
     public void presentNullRequest() {
-
+        viewModel.setErrorMessage("Request can't be null");
     }
 
     @Override
     public void presentInvalidRequest(Request request) {
-
+        viewModel.setErrorMessage(request.getErrorList().stream()
+                .map(Request.Error::getMessage)
+                .collect(Collectors.joining())
+        );
     }
 
 
     @Override
     public void presentRepositoryError(RepositoryException e) {
-
+        viewModel.setErrorMessage(e.getMessage());
     }
 
     @Override
     public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e) {
-
+        viewModel.setErrorMessage(e.getMessage());
     }
 
     @Override
     public void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e) {
-
+        viewModel.setErrorMessage(e.getMessage());
     }
 }

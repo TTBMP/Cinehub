@@ -204,9 +204,9 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             AuthenticatedRequest.validate(request, securityService, permissions);
             var shift = shiftRepository.getShift(request.getShiftId());
             semanticValidationDeleteShift(request, shift);
+            var email = shift.getEmployee().getEmail();
             shiftRepository.deletedShift(shift);
             manageEmployeesShiftPresenter.presentDeleteShift();
-            var email = shift.getEmployee().getEmail();
             emailService.sendMail(new EmailServiceRequest(
                     email,
                     "Shift Delete"

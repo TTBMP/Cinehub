@@ -13,6 +13,15 @@ public class MockManageEmployeeShiftViewModel {
     private List<ShiftDto> shiftList;
     private List<EmployeeDto> employeeList;
     private ShiftDto shift;
+    private String errorMessage;
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 
     public ShiftDto getShift() {
         return shift;
