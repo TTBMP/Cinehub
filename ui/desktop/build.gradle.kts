@@ -16,8 +16,8 @@ dependencies {
 }
 
 javafx {
-    version = "16"
-    modules("javafx.controls", "javafx.fxml")
+    version = "11.0.2"
+    modules("javafx.base", "javafx.controls", "javafx.fxml")
 }
 
 application {
@@ -25,6 +25,7 @@ application {
 }
 
 tasks.withType<Test>().all {
-    val headless = if (project.hasProperty("headless")) project.property("headless") else false
-    jvmArgs("-Dheadless=${ headless }")
+    if (project.hasProperty("headless")) {
+        jvmArgs("-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw")
+    }
 }
