@@ -18,4 +18,5 @@ public class BuyTicketActivity extends Activity {
         viewModelStore.put(BuyTicketViewModel.class, viewModel);
         useCaseFactory.put(BuyTicketUseCase.class, () -> new BuyTicketHandler(presenter));
     }
+    
 }
