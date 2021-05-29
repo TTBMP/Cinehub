@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class AssignShiftViewController {
 
-    private static final String SHIFT_ASSIGNED = "/shift_assigned";
-
-    @GetMapping(SHIFT_ASSIGNED)
+    @GetMapping("/shift_assigned")
     public String shiftAssigned(Model model) {
-        return SHIFT_ASSIGNED;
+        return "manage_employee_shift/shift_assigned";
     }
 
 }

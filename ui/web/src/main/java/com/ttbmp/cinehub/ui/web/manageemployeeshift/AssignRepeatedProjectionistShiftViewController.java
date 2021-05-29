@@ -48,7 +48,7 @@ public class AssignRepeatedProjectionistShiftViewController {
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var request = new NewRepeatedShiftForm();
         model.addAttribute(ASSIGN_REQUEST, request);
-        return ErrorHelper.returnView(response, model, "assign_repeated_projectionist_shift");
+        return ErrorHelper.returnView(response, model, "manage_employee_shift/assign_repeated_projectionist_shift");
     }
 
     @PostMapping("/assign_repeated_projectionist_shift")
@@ -73,7 +73,7 @@ public class AssignRepeatedProjectionistShiftViewController {
                 request.getStart(),
                 request.getEnd(),
                 request.getHallId()));
-        return ErrorHelper.returnView(response, model, "shift_assigned");
+        return ErrorHelper.returnView(response, model, "manage_employee_shift/shift_assigned");
     }
 
 }

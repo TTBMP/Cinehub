@@ -44,7 +44,7 @@ public class AssignUsherShiftViewController {
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var shiftRequest = new NewShiftForm();
         model.addAttribute(ASSIGN_REQUEST, shiftRequest);
-        return ErrorHelper.returnView(response, model, "assign_usher_shift");
+        return ErrorHelper.returnView(response, model, "manage_employee_shift/assign_usher_shift");
     }
 
     @PostMapping("/assign_usher_shift")
@@ -64,7 +64,7 @@ public class AssignUsherShiftViewController {
                 request.getStart(),
                 request.getEnd())
         );
-        return ErrorHelper.returnView(response, model, "shift_assigned");
+        return ErrorHelper.returnView(response, model, "manage_employee_shift/shift_assigned");
     }
 
 }
