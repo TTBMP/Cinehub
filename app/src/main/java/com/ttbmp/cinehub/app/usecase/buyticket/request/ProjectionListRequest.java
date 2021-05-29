@@ -1,6 +1,8 @@
 package com.ttbmp.cinehub.app.usecase.buyticket.request;
 
 import com.ttbmp.cinehub.app.utilities.request.Request;
+import com.ttbmp.cinehub.domain.Cinema;
+import com.ttbmp.cinehub.domain.Movie;
 
 import java.time.LocalDate;
 
@@ -9,9 +11,10 @@ import java.time.LocalDate;
  */
 public class ProjectionListRequest extends Request {
 
-    public static final Request.Error MISSING_MOVIE_ERROR = new Request.Error("Movie can't be null");
-    public static final Request.Error MISSING_DATE_ERROR = new Request.Error("Date can't be null");
-    public static final Request.Error MISSING_CINEMA_ERROR = new Request.Error("Cinema can't be null");
+    public static final Request.Error MISSING_DATE_ERROR = new Request.Error("The date cannot be earlier than today");
+    public static final Request.Error INVALID_MOVIE = new Request.Error("Movie can't be null");
+    public static final Request.Error INVALID_CINEMA = new Request.Error("Cinema can't be null");
+
 
     private Integer movieId;
     private Integer cinemaId;
@@ -49,15 +52,10 @@ public class ProjectionListRequest extends Request {
 
     @Override
     public void onValidate() {
-        if (movieId == null) {
-            addError(MISSING_MOVIE_ERROR);
-        }
-        if (localDate == null) {
+        if (LocalDate.parse(localDate).isBefore(LocalDate.now())) {
             addError(MISSING_DATE_ERROR);
         }
-        if (cinemaId == null) {
-            addError(MISSING_CINEMA_ERROR);
-        }
     }
+
 
 }

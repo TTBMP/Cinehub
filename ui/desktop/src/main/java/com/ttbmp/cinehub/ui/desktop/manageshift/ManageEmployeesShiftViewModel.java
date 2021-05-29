@@ -8,6 +8,7 @@ import com.ttbmp.cinehub.app.dto.employee.ProjectionistDto;
 import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 import com.ttbmp.cinehub.app.dto.shift.ShiftProjectionistDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ShiftRepeatingOption;
+import com.ttbmp.cinehub.app.utilities.observer.Observable;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.Day;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.EmployeeShiftWeek;
 import com.ttbmp.cinehub.ui.desktop.utilities.ObjectBindings;
@@ -34,7 +35,7 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
 
     private final BooleanProperty errorAssignVisibility = new SimpleBooleanProperty();
     private final BooleanProperty errorModifyVisibility = new SimpleBooleanProperty();
-    private final StringProperty error = new SimpleStringProperty();
+    private final Observable<String> error = new Observable<>();
     private final StringProperty errorDao = new SimpleStringProperty();
 
     private final BooleanProperty repeatVisibility = new SimpleBooleanProperty();
@@ -166,14 +167,14 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
     }
 
     public String getError() {
-        return error.get();
+        return error.getValue();
     }
 
     public void setError(String error) {
-        this.error.set(error);
+        this.error.setValue(error);
     }
 
-    public StringProperty errorProperty() {
+    public Observable<String> errorProperty() {
         return error;
     }
 

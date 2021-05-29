@@ -5,6 +5,9 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPr
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
+
+import java.util.stream.Collectors;
 
 public class MockManageEmployeeShiftPresenter implements ManageEmployeesShiftPresenter {
 
@@ -15,18 +18,18 @@ public class MockManageEmployeeShiftPresenter implements ManageEmployeesShiftPre
     }
 
     @Override
-    public void presentShiftList(GetShiftListResponse shiftList) {
-        viewModel.setShiftList(shiftList.getShiftDtoList());
+    public void presentShiftList(GetShiftListResponse response) {
+        viewModel.setShiftList(response.getShiftDtoList());
     }
 
     @Override
-    public void presentEmployeeList(GetEmployeeListResponse employeeList) {
-        viewModel.setEmployeeList(employeeList.getEmployeeDtoList());
+    public void presentEmployeeList(GetEmployeeListResponse response) {
+        viewModel.setEmployeeList(response.getEmployeeDtoList());
     }
 
     @Override
-    public void presentCinemaList(GetCinemaListResponse listCinema) {
-        viewModel.setCinemaList(listCinema.getCinemaList());
+    public void presentCinemaList(GetCinemaListResponse response) {
+        viewModel.setCinemaList(response.getCinemaList());
     }
 
     @Override
@@ -49,98 +52,44 @@ public class MockManageEmployeeShiftPresenter implements ManageEmployeesShiftPre
         viewModel.setShift(response.getShiftDto());
     }
 
-    @Override
-    public void presentInvalidGetCinemaListRequest(GetCinemaListRequest request) {
-
-    }
-
-    @Override
-    public void presentCinemaListNullRequest() {
-
-    }
 
     @Override
     public void presentCreateShiftError(Throwable error) {
-
+        viewModel.setErrorMessage(error.getMessage());
     }
 
-    @Override
-    public void presentInvalidEmployeeListRequest(GetEmployeeListRequest request) {
-
-    }
-
-    @Override
-    public void presentEmployeeListNullRequest() {
-
-    }
-
-    @Override
-    public void presentInvalidDeleteShiftListRequest(ShiftRequest request) {
-
-    }
-
-    @Override
-    public void presentDeleteShiftNullRequest() {
-
-    }
-
-    @Override
-    public void presentInvalidModifyShiftListRequest(ShiftModifyRequest request) {
-
-    }
-
-    @Override
-    public void presentModifyShiftNullRequest() {
-
-    }
 
     @Override
     public void presentModifyShiftError(Throwable error) {
-
+        viewModel.setErrorMessage(error.getMessage());
     }
 
     @Override
-    public void presentInvalidCreateShiftListRequest(CreateShiftRequest request) {
-
+    public void presentNullRequest() {
+        viewModel.setErrorMessage("Request can't be null");
     }
 
     @Override
-    public void presentCreateShiftNullRequest() {
-
+    public void presentInvalidRequest(Request request) {
+        viewModel.setErrorMessage(request.getErrorList().stream()
+                .map(Request.Error::getMessage)
+                .collect(Collectors.joining())
+        );
     }
 
-    @Override
-    public void presentInvalidRepeatedShiftListRequest(ShiftRepeatRequest request) {
-
-    }
-
-    @Override
-    public void presentRepeatedShiftNullRequest() {
-
-    }
-
-    @Override
-    public void presentInvalidGetShiftListRequest(GetShiftListRequest request) {
-
-    }
-
-    @Override
-    public void presentGetShiftListNullRequest() {
-
-    }
 
     @Override
     public void presentRepositoryError(RepositoryException e) {
-
+        viewModel.setErrorMessage(e.getMessage());
     }
 
     @Override
     public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e) {
-
+        viewModel.setErrorMessage(e.getMessage());
     }
 
     @Override
     public void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e) {
-
+        viewModel.setErrorMessage(e.getMessage());
     }
 }

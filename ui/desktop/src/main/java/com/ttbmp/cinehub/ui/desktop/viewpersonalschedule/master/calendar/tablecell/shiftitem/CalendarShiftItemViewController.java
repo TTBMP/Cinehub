@@ -11,8 +11,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
-
 /**
  * @author Fabio Buracchi
  */
@@ -37,11 +35,7 @@ public class CalendarShiftItemViewController extends ViewController {
         var viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
         itemVBox.setOnMouseClicked(event -> {
             viewModel.selectedShiftProperty().setValue(shiftDto);
-            try {
-                navController.openInDialog(new NavDestination(new ShiftDetailView()), "Detail");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            navController.openInDialog(new NavDestination(new ShiftDetailView()), "Detail");
         });
         startLabel.setText(shiftDto.getStart().toString());
         endLabel.setText(shiftDto.getEnd().toString());

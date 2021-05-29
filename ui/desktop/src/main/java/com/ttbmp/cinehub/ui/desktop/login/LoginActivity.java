@@ -4,11 +4,9 @@ import com.ttbmp.cinehub.app.usecase.login.LoginHandler;
 import com.ttbmp.cinehub.app.usecase.login.LoginUseCase;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 
-import java.io.IOException;
-
 public class LoginActivity extends Activity {
 
-    public LoginActivity() throws IOException {
+    public LoginActivity() {
         super(new LoginView());
         var viewModel = new LoginViewModel();
         var presenter = new LoginPresenterFx(viewModel);

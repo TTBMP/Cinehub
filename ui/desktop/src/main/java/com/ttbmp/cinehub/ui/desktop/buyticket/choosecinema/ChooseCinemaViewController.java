@@ -16,8 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
-
 /**
  * @author Ivan Palmieri
  */
@@ -60,20 +58,12 @@ public class ChooseCinemaViewController extends ViewController {
         timeOfProjectionListView.setCellFactory(l -> new ChooseProjectionListCell(activity, navController));
         cinemaListView.getSelectionModel().selectedItemProperty().addListener(l -> onCinemaItemClick());
         cancelButton.setOnAction(a -> {
-            try {
-                timeOfProjectionListView.getItems().clear();
-                navController.navigate(new NavDestination(new ChooseMovieView()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            timeOfProjectionListView.getItems().clear();
+            navController.navigate(new NavDestination(new ChooseMovieView()));
         });
         confirmCinemaButton.setOnAction(a -> {
             viewModel.errorMessageProperty().setValue(null);
-            try {
-                navController.navigate(new NavDestination(new ChooseSeatView()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            navController.navigate(new NavDestination(new ChooseSeatView()));
         });
     }
 

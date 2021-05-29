@@ -47,10 +47,8 @@ public class ShiftListRequest extends AuthenticatedRequest {
         if (end == null) {
             addError(MISSING_END_TIME_ERROR);
         }
-        if (start != null && end != null) {
-            if (start.isAfter(end)) {
-                addError(INVALID_TIME_SELECTION_ERROR);
-            }
+        if (start != null && end != null && start.isAfter(end)) {
+            addError(INVALID_TIME_SELECTION_ERROR);
         }
     }
 

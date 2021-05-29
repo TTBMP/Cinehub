@@ -50,7 +50,7 @@
             </thead>
             <tbody>
             <tr th:each="employee : ${shiftList}">
-                <td th:if=${employee.key.class.name.equals("com.ttbmp.cinehub.app.dto.ProjectionistDto")}>
+                <td>
                     <div class="container">
                         <div class="row ">
                             <div class="col">
@@ -58,30 +58,18 @@
                             </div>
                             <div class="col" th:id="${employee.key.id}">
                                 <p th:text=" ${employee.key.name} + ' ' + ${employee.key.surname}"></p>
-                                <p th:text="'Role : Projectionist'  "></p>
+                                <p th:text="'Role : ' + ${employee.key.toString()}   "></p>
                             </div>
                         </div>
                     </div>
                 </td>
-                <td th:unless=${employee.key.class.name.equals("com.ttbmp.cinehub.app.dto.ProjectionistDto")}>
-                    <div class="container">
-                        <div class="row ">
-                            <div class="col">
-                                <img src="images/employee.jpg">
-                            </div>
-                            <div class="col">
-                                <p th:text=" ${employee.key.name} + ' ' + ${employee.key.surname}"></p>
-                                <p th:text="'Role : Usher'  "></p>
-                            </div>
-                        </div>
-                    </div>
-                </td>
+
                 <td>
                     <span th:each="shift,indexShift : ${employee.value}">
                         <span th:if=${shift.date.dayOfWeek.toString.equals("MONDAY")}>
- <form action="shift_detail.html" method="POST" th:action="@{/shift_detail}"
-       th:object="${selectedShift}">
-                              <input th:name="shiftId" th:value="${shift.id}" type="hidden"/>
+                            <form action="shift_detail.html" method="POST" th:action="@{/shift_detail}"
+                                  th:object="${selectedShift}">
+                                <input th:name="shiftId" th:value="${shift.id}" type="hidden"/>
                                 <input th:name="date" th:value="${shift.date}" type="hidden"/>
                                 <input th:name="start" th:value="${shift.start}" type="hidden"/>
                                 <input th:name="end" th:value="${shift.end}" type="hidden"/>

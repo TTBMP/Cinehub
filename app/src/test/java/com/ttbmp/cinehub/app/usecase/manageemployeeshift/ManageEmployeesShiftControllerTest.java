@@ -12,7 +12,6 @@ import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftController;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
-import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.shift.Shift;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -69,14 +68,9 @@ class ManageEmployeesShiftControllerTest {
         var start = LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());
         var end = LocalDate.now().with(TemporalAdjusters.lastDayOfMonth());
         var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
-        Cinema cinema = null;
-        try {
-            cinema = cinemaRepository.getCinema(1);
-        } catch (RepositoryException e) {
-            e.printStackTrace();
-        }
+        var cinema = cinemaRepository.getCinema(1);
         assert cinema != null;
-        var getShiftListRequest = new GetShiftListRequest(viewModel.getSessionToken(), new CinemaDto(cinema), start, end);
+        var getShiftListRequest = new GetShiftListRequest(viewModel.getSessionToken(), cinema.getId(), start, end);
         controller.getShiftList(getShiftListRequest);
         var expected = getShiftListExpected(getShiftListRequest);
         var actual = viewModel.getShiftList();
@@ -85,9 +79,11 @@ class ManageEmployeesShiftControllerTest {
     }
 
     private List<ShiftDto> getShiftListExpected(GetShiftListRequest request) throws RepositoryException {
+        var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
+        var cinema = cinemaRepository.getCinema(request.getCinemaId());
         var shiftList = serviceLocator.getService(ShiftRepository.class)
                 .getCinemaShiftListBetween(
-                        request.getCinema().getId(),
+                        cinema,
                         request.getStart(),
                         request.getEnd()
                 );
@@ -102,17 +98,16 @@ class ManageEmployeesShiftControllerTest {
         logInAsManager();
         var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
         var cinema = new CinemaDto(cinemaRepository.getCinema(1));
-        var request = new GetEmployeeListRequest(viewModel.getSessionToken(), cinema);
+        var request = new GetEmployeeListRequest(viewModel.getSessionToken(), cinema.getId());
         controller.getEmployeeList(request);
         var expected = getEmployeeListExpected(request);
         var actual = viewModel.getEmployeeList();
         Assertions.assertEquals(expected, actual);
 
-
     }
 
     private List<EmployeeDto> getEmployeeListExpected(GetEmployeeListRequest request) throws RepositoryException {
-        var cinema = serviceLocator.getService(CinemaRepository.class).getCinema(request.getCinema().getId());
+        var cinema = serviceLocator.getService(CinemaRepository.class).getCinema(request.getCinemaId());
         var employeeList = serviceLocator.getService(EmployeeRepository.class).getEmployeeList(cinema);
         return employeeList.stream()
                 .map(EmployeeDtoFactory::getEmployeeDto)
@@ -122,23 +117,24 @@ class ManageEmployeesShiftControllerTest {
     @Test
     void modifyShift() throws RepositoryException {
         logInAsManager();
-        var shift = ShiftDtoFactory.getShiftDto(serviceLocator.getService(ShiftRepository.class).getShift(2));
-        var employee = EmployeeDtoFactory.getEmployeeDto(serviceLocator.getService(EmployeeRepository.class).getEmployee(shift.getEmployeeId()));
+        var shift = getFirstShiftAfterToday();
         var request = new ShiftModifyRequest(
                 viewModel.getSessionToken(),
-                employee,
+                shift.getEmployee().getId(),
                 shift.getId(),
-                shift.getDate().plusDays(1),
-                shift.getStart(),
-                shift.getEnd(),
-                null);
-        Assertions.assertDoesNotThrow(() -> controller.modifyShift(request));
+                LocalDate.parse(shift.getDate()).plusDays(1),
+                LocalTime.parse(shift.getStart()),
+                LocalTime.parse(shift.getEnd()),
+                -1);
+        controller.modifyShift(request);
+        Assertions.assertNull(viewModel.getErrorMessage());
     }
 
     @Test
     void deleteShift() throws RepositoryException {
         logInAsManager();
-        var request = new ShiftRequest(viewModel.getSessionToken(), 1);
+        var shift = getFirstShiftAfterToday();
+        var request = new ShiftRequest(viewModel.getSessionToken(), shift.getId());
         controller.deleteShift(request);
         Assertions.assertNull(deleteShiftExpected(request));
 
@@ -147,6 +143,17 @@ class ManageEmployeesShiftControllerTest {
     private Shift deleteShiftExpected(ShiftRequest request) throws RepositoryException {
         var shiftRepository = serviceLocator.getService(ShiftRepository.class);
         return shiftRepository.getShift(request.getShiftId());
+    }
+
+    private Shift getFirstShiftAfterToday() throws RepositoryException {
+        var cinema = serviceLocator.getService(CinemaRepository.class).getAllCinema().get(0);
+        var employee = serviceLocator.getService(EmployeeRepository.class).getEmployeeList(cinema).get(0);
+        var shiftList = serviceLocator.getService(ShiftRepository.class).getShiftList(employee);
+        return shiftList.stream()
+                .filter(s -> LocalDate.parse(s.getDate()).isAfter(LocalDate.now()))
+                .findAny()
+                .orElseThrow();
+
     }
 
     @Test
@@ -160,10 +167,10 @@ class ManageEmployeesShiftControllerTest {
                 LocalDate.now().plusYears(2),
                 LocalDate.now().plusDays(7).plusYears(2),
                 "EVERY_DAY",
-                employee,
+                employee.getId(),
                 LocalTime.now().withNano(0).withSecond(0).minusHours(2),
                 LocalTime.now().withNano(0).withSecond(0),
-                null
+                -1
         );
         controller.createRepeatedShift(request);
         var expected = getSaveRepeatedShiftExpected(request);
@@ -171,7 +178,7 @@ class ManageEmployeesShiftControllerTest {
     }
 
     private List<ShiftDto> getSaveRepeatedShiftExpected(ShiftRepeatRequest request) throws RepositoryException {
-        var employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(request.getEmployeeDto().getId());
+        var employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(request.getEmployeeId());
         return serviceLocator.getService(ShiftRepository.class).getShiftList(employee).stream()
                 .map(ShiftDtoFactory::getShiftDto)
                 .collect(Collectors.toList());
@@ -183,7 +190,7 @@ class ManageEmployeesShiftControllerTest {
         var request = new CreateShiftRequest(
                 viewModel.getSessionToken(),
                 "gVUYDMojhmeFkErlbF0WWLQWMPn1",
-                LocalDate.now().plusMonths(2),
+                LocalDate.now().plusYears(1),
                 LocalTime.now().withNano(0).withSecond(0),
                 LocalTime.now().plusHours(1).withNano(0).withSecond(0)
         );
@@ -205,6 +212,4 @@ class ManageEmployeesShiftControllerTest {
         );
 
     }
-
-
 }

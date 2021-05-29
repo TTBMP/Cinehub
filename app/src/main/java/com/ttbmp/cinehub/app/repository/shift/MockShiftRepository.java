@@ -8,6 +8,7 @@ import com.ttbmp.cinehub.app.repository.shift.projectionist.MockProjectionistShi
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftProxy;
 import com.ttbmp.cinehub.app.repository.shift.usher.UsherShiftProxy;
 import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
+import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
@@ -108,11 +109,11 @@ public class MockShiftRepository implements ShiftRepository {
     }
 
     @Override
-    public List<Shift> getCinemaShiftListBetween(int cinemaId, LocalDate start, LocalDate end) throws RepositoryException {
+    public List<Shift> getCinemaShiftListBetween(Cinema cinema, LocalDate start, LocalDate end) throws RepositoryException {
         var employeeRepository = serviceLocator.getService(EmployeeRepository.class);
         List<Shift> list = new ArrayList<>();
         for (var d : SHIFT_DATA_LIST) {
-            if (employeeRepository.getEmployee(d.employeeId).getCinema().getId() == cinemaId &&
+            if (employeeRepository.getEmployee(d.employeeId).getCinema().getId() == cinema.getId() &&
                     LocalDate.parse(d.date).isAfter(start) &&
                     LocalDate.parse(d.date).isBefore(end.plusDays(1))) {
                 var shift = new ShiftFactory().createShift(d);

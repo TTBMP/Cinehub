@@ -2,9 +2,9 @@ package com.ttbmp.cinehub.app.usecase.buyticket;
 
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 
 /**
  * @author Ivan Palmieri
@@ -13,35 +13,17 @@ public interface BuyTicketPresenter {
 
     void presentMovieList(MovieListResponse response);
 
-    void presentMovieListNullRequest();
-
-    void presentInvalidMovieListRequest(MovieListRequest request);
-
     void presentCinemaList(CinemaListResponse response);
-
-    void presentCinemaListNullRequest();
-
-    void presentInvalidCinemaListRequest(CinemaListRequest request);
 
     void presentProjectionList(ProjectionListResponse response);
 
-    void presentProjectionListNullRequest();
-
-    void presentInvalidProjectionListRequest(ProjectionListRequest request);
-
     void presentSeatList(SeatListResponse response);
 
-    void presentSeatListNullRequest();
-
-    void presentInvalidSeatListRequest(SeatListRequest request);
-
-    void presentPayNullRequest();
-
-    void presentInvalidPayRequest(PaymentRequest request);
-
-    void presentPayPaymentServiceException(PaymentServiceException exception);
-
     void presentTicket(TicketResponse response);
+
+    void presentInvalidRequest(Request request);
+
+    void presentNullRequest();
 
     void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException requestException);
 
@@ -50,5 +32,7 @@ public interface BuyTicketPresenter {
     void presentRepositoryError(RepositoryException exception);
 
     void presentSeatAlreadyBookedError(SeatErrorResponse response);
+
+    void presentPaymentServiceException(PaymentServiceException exception);
 
 }

@@ -1,9 +1,5 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
-
-import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.dto.HallDto;
-import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ShiftRepeatingOption;
@@ -47,8 +43,7 @@ public class AssignRepeatedProjectionistShiftViewController {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
-        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, cinemaId));
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var request = new NewRepeatedShiftForm();
@@ -65,13 +60,8 @@ public class AssignRepeatedProjectionistShiftViewController {
             Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
-        model.addAttribute("selectedEmployeeId", request.getEmployeeId());
-        model.addAttribute("selectedHallId", request.getHallId());
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
-        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
-        var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
-        var selectedHall = (HallDto) model.getAttribute("selectedHall");
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, cinemaId));
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
         model.addAttribute("now", LocalDate.now().plusDays(1));
         useCase.createRepeatedShift(new ShiftRepeatRequest(
@@ -79,10 +69,10 @@ public class AssignRepeatedProjectionistShiftViewController {
                 request.getDate(),
                 request.getDateRepeated(),
                 request.getPreference(),
-                selectedEmployee,
+                request.getEmployeeId(),
                 request.getStart(),
                 request.getEnd(),
-                selectedHall));
+                request.getHallId()));
         return ErrorHelper.returnView(response, model, "shift_assigned");
     }
 

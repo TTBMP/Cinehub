@@ -2,9 +2,11 @@ package com.ttbmp.cinehub.ui.desktop.login;
 
 import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.usecase.login.LoginPresenter;
-import com.ttbmp.cinehub.app.usecase.login.LoginRequest;
 import com.ttbmp.cinehub.app.usecase.login.LoginResponse;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
+
+import java.util.stream.Collectors;
 
 public class LoginPresenterFx implements LoginPresenter {
 
@@ -17,28 +19,25 @@ public class LoginPresenterFx implements LoginPresenter {
     @Override
     public void presentSessionToken(LoginResponse response) {
         CinehubApplication.setSessionToken(response.getSessionCookie());
-        viewModel.accessErrorProperty().setValue("");
+        viewModel.setIsLogged(true);
     }
 
     @Override
     public void presentSecurityError(SecurityException e) {
-        viewModel.accessErrorProperty().setValue(e.getMessage());
+        viewModel.errorMessageProperty().setValue(e.getMessage());
     }
 
     @Override
-    public void presentNullRequestException() {
-        viewModel.accessErrorProperty().setValue("Error with access");
+    public void presentNullRequest() {
+        viewModel.setErrorMessage("Request can't be null");
     }
 
     @Override
-    public void presentInvalidRequestException(LoginRequest request) {
-        if (request.getErrorList().contains(LoginRequest.MISSING_PASSWORD_ERROR)) {
-            viewModel.accessErrorProperty().setValue(LoginRequest.MISSING_PASSWORD_ERROR.getMessage());
-        }
-        if (request.getErrorList().contains(LoginRequest.MISSING_USERNAME_ERROR)) {
-            viewModel.accessErrorProperty().setValue(LoginRequest.MISSING_USERNAME_ERROR.getMessage());
-        }
-
+    public void presentInvalidRequest(Request request) {
+        viewModel.setErrorMessage(request.getErrorList().stream()
+                .map(Request.Error::getMessage)
+                .collect(Collectors.joining())
+        );
     }
 
 }

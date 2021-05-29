@@ -2,6 +2,9 @@ package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
+import com.ttbmp.cinehub.domain.Hall;
+import com.ttbmp.cinehub.domain.employee.Employee;
+import com.ttbmp.cinehub.domain.employee.Projectionist;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -12,6 +15,7 @@ public class CreateShiftRequest extends AuthenticatedRequest {
     public static final Request.Error MISSING_DATE = new Request.Error("data non valida");
     public static final Request.Error MISSING_START = new Request.Error("inizio non valido");
     public static final Request.Error MISSING_END = new Request.Error("fine non valida");
+    public static final Request.Error MISSING_HALL = new Request.Error("Sala non valida");
     public static final Request.Error DATE_ERROR = new Request.Error("ora non valida");
 
     private String employeeId;
@@ -85,6 +89,9 @@ public class CreateShiftRequest extends AuthenticatedRequest {
         if (date == null) {
             addError(MISSING_DATE);
         }
+        if (LocalDate.now().isAfter(date)) {
+            addError(MISSING_DATE);
+        }
         if (start == null) {
             addError(MISSING_START);
         }
@@ -95,4 +102,5 @@ public class CreateShiftRequest extends AuthenticatedRequest {
             addError(DATE_ERROR);
         }
     }
+
 }

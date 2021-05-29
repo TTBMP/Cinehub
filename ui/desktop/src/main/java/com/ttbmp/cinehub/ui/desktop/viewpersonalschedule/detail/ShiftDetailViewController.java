@@ -8,8 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-import java.io.IOException;
-
 /**
  * @author Fabio Buracchi
  */
@@ -52,13 +50,7 @@ public class ShiftDetailViewController extends ViewController {
         cityLabel.textProperty().bind(viewModel.selectedShiftCinemaCityProperty());
         addressLabel.textProperty().bind(viewModel.selectedShiftCinemaAddressProperty());
         detailButton.setVisible(viewModel.isIsProjectionsDetailButtonVisible());
-        detailButton.setOnAction(a -> {
-            try {
-                navController.navigate(new NavDestination(new ProjectionistShiftDetailView()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        detailButton.setOnAction(a -> navController.navigate(new NavDestination(new ProjectionistShiftDetailView())));
         requestChangeButton.setVisible(false);
         requestSwapButton.setVisible(false);
     }

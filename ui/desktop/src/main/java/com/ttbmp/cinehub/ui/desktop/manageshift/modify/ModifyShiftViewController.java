@@ -15,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
@@ -78,7 +77,7 @@ public class ModifyShiftViewController extends ViewController {
 
         viewModel.setErrorAssignVisibility(false);
         errorHBox.visibleProperty().bind(viewModel.errorAssignVisibilityProperty());
-        errorLabel.textProperty().bind(viewModel.errorProperty());
+        viewModel.errorProperty().addObserver(s -> errorLabel.setText(s));
 
         if (viewModel.getEmployee(viewModel.getSelectedShift()) instanceof UsherDto) {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
@@ -109,36 +108,29 @@ public class ModifyShiftViewController extends ViewController {
         endSpinner.setValueFactory(new SpinnerEndValueFactory(viewModel.startSpinnerModifyTimeProperty(), viewModel.endSpinnerModifyTimeProperty()));
         confirmButton.setOnAction(this::submitButtonOnAction);
 
-        cancelButton.setOnAction(a -> {
-            try {
-                navController.navBack();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        cancelButton.setOnAction(a -> navController.goBack());
     }
 
     private void submitButtonOnAction(ActionEvent action) {
         viewModel.setErrorAssignVisibility(false);
-
+        var hallId = -1;
+        if (viewModel.getSelectedHall() != null) {
+            hallId = viewModel.getSelectedHall().getId();
+        }
         activity.getUseCase(ManageEmployeesShiftUseCase.class).modifyShift(
                 new ShiftModifyRequest(
                         CinehubApplication.getSessionToken(),
-                        viewModel.getEmployee(viewModel.getSelectedShift()),
+                        viewModel.getSelectedShift().getEmployeeId(),
                         viewModel.getSelectedShift().getId(),
                         viewModel.getSelectedDays(),
                         viewModel.getStartSpinnerModifyTime().withNano(0),
                         viewModel.getEndSpinnerModifyTime().withNano(0),
-                        viewModel.getSelectedHall()));
+                        hallId
+                ));
 
         if (!viewModel.isErrorAssignVisibility()) {
-            try {
-                viewModel.setSelectedShift(viewModel.getShiftCreated());
-                navController.navBack();
-            } catch (IOException e) {
-                e.printStackTrace();
-
-            }
+            viewModel.setSelectedShift(viewModel.getShiftCreated());
+            navController.goBack();
         }
     }
 

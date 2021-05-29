@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -52,11 +51,7 @@ public class ShiftItemViewController extends ViewController {
         shiftHBox.setOnMouseClicked(l -> {
             viewModel.selectedDaysProperty().setValue(shift.getDate());
             viewModel.selectedShiftProperty().setValue(shift);
-            try {
-                navController.openInDialog(new NavDestination(new ShowShiftDetailView()), "Shift detail");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            navController.openInDialog(new NavDestination(new ShowShiftDetailView()), "Shift detail");
         });
     }
 

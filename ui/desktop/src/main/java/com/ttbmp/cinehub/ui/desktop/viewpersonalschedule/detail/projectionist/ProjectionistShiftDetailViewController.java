@@ -11,8 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
-import java.io.IOException;
-
 /**
  * @author Fabio Buracchi
  */
@@ -54,13 +52,7 @@ public class ProjectionistShiftDetailViewController extends ViewController {
         roleLabel.textProperty().bind(viewModel.selectedShiftEmployeeRoleProperty());
         cityLabel.textProperty().bind(viewModel.selectedShiftCinemaCityProperty());
         hallLabel.textProperty().bind(viewModel.selectedProjectionistShiftHallProperty());
-        backButton.setOnAction(a -> {
-            try {
-                navController.navBack();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        backButton.setOnAction(a -> navController.goBack());
         activity.getUseCase(ViewPersonalScheduleUseCase.class).getShiftProjectionList(
                 new ProjectionListRequest(
                         CinehubApplication.getSessionToken(),

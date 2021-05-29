@@ -2,12 +2,13 @@ package com.ttbmp.cinehub.app.usecase.getuserrole;
 
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 
 public interface GetUserRolePresenter {
 
     void present(RoleResponse response);
 
-    void presentInvalidRequest(RoleRequest request);
+    void presentInvalidRequest(Request request);
 
     void presentNullRequest();
 

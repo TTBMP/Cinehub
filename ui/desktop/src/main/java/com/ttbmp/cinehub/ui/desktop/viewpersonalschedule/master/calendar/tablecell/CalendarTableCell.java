@@ -28,7 +28,7 @@ public class CalendarTableCell extends TableCell<Map<DayOfWeek, CalendarDay>, Ca
             cell = new CalendarTableCellView();
             cell.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            navController.openErrorDialog(e.getMessage(), true);
         }
         Objects.requireNonNull(cell);
         this.activity = activity;

@@ -5,9 +5,7 @@ import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalScheduleUs
 import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavDestination;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.ViewPersonalScheduleViewModel;
-import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.error.ErrorDialogView;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.master.calendar.CalendarDay;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.master.calendar.tablecell.CalendarTableCell;
 import javafx.event.Event;
@@ -20,7 +18,6 @@ import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Map;
@@ -29,6 +26,8 @@ import java.util.Map;
  * @author Fabio Buracchi
  */
 public class ScheduleViewController extends ViewController {
+
+    private ViewPersonalScheduleViewModel viewModel;
 
     @FXML
     private VBox appBar;
@@ -55,22 +54,9 @@ public class ScheduleViewController extends ViewController {
     @Override
     protected void onLoad() {
         appBarController.load(activity, navController);
-        var viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
-        viewModel.errorMessageProperty().addListener(l -> {
-            try {
-                navController.openInDialog(new NavDestination(new ErrorDialogView()), "Error");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
         datePicker.valueProperty().bindBidirectional(viewModel.dateProperty());
-        datePicker.setOnAction(a -> activity.getUseCase(ViewPersonalScheduleUseCase.class).getShiftList(
-                new ShiftListRequest(
-                        CinehubApplication.getSessionToken(),
-                        viewModel.getCalendarPageFirstDate(),
-                        viewModel.getCalendarPageLastDate())
-                )
-        );
+        datePicker.setOnAction(a -> getShiftList());
         todayButton.setOnAction(a -> datePicker.setValue(LocalDate.now()));
         previousButton.setOnAction(a -> datePicker.setValue(datePicker.getValue().minusMonths(1)));
         nextButton.setOnAction(a -> datePicker.setValue(datePicker.getValue().plusMonths(1)));
@@ -81,17 +67,18 @@ public class ScheduleViewController extends ViewController {
         calendarTableView.itemsProperty().addListener(l -> calendarTableView.refresh());
         calendarTableView.setItems(viewModel.getShiftWeekList());
         for (var dayOfWeek : DayOfWeek.values()) {
-            TableColumn<Map<DayOfWeek, CalendarDay>, CalendarDay> dayTableColumn;
-            dayTableColumn = (TableColumn<Map<DayOfWeek, CalendarDay>, CalendarDay>)
-                    calendarTableView.getColumns().get(dayOfWeek.getValue() - 1);
+            var dayTableColumn = (TableColumn<Map<DayOfWeek, CalendarDay>, CalendarDay>) calendarTableView.getColumns().get(dayOfWeek.getValue() - 1);
             dayTableColumn.setCellValueFactory(new MapValueFactory(dayOfWeek));
             dayTableColumn.setCellFactory(tableColumn -> new CalendarTableCell(tableColumn, activity, navController));
             dayTableColumn.setReorderable(false);
             dayTableColumn.setResizable(false);
-            dayTableColumn.prefWidthProperty().bind(calendarTableView.widthProperty().divide(
-                    calendarTableView.getColumns().size())
-            );
+            dayTableColumn.prefWidthProperty().bind(calendarTableView.widthProperty().divide(calendarTableView.getColumns().size()));
         }
+        getShiftList();
+        viewModel.errorMessageProperty().addObserver(message -> navController.openErrorDialog(message, false));
+    }
+
+    private void getShiftList() {
         activity.getUseCase(ViewPersonalScheduleUseCase.class).getShiftList(
                 new ShiftListRequest(
                         CinehubApplication.getSessionToken(),

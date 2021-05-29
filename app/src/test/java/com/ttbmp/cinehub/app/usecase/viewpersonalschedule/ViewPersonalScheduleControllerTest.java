@@ -38,29 +38,66 @@ class ViewPersonalScheduleControllerTest {
         );
     }
 
-    private void logInAsProjectionist() {
-        viewModel.setSessionToken("T8SP2uHYdHZfBk6uh3fJ356Sji52");
-    }
-
     @Test
     void getShiftList() throws RepositoryException, SecurityException {
         logInAsProjectionist();
         var request = new ShiftListRequest(viewModel.getSessionToken(), LocalDate.now(), LocalDate.now().plusDays(7));
         controller.getShiftList(request);
-        var expected = getShiftList(request);
+        var expected = getActualShiftList(request);
         var actual = viewModel.getShiftList();
         Assertions.assertEquals(expected, actual);
     }
 
+    @Test
+    void getShiftListUnauthenticated_SetErrorMessageInViewModel() {
+        var request = new ShiftListRequest(viewModel.getSessionToken(), LocalDate.now(), LocalDate.now().plusDays(7));
+        controller.getShiftList(request);
+        Assertions.assertNotNull(viewModel.getErrorMessage());
+    }
+
+    @Test
+    void getShiftListWithNullDates_SetErrorMessageInViewModel() {
+        var request = new ShiftListRequest(viewModel.getSessionToken(), null, null);
+        controller.getShiftList(request);
+        Assertions.assertNotNull(viewModel.getErrorMessage());
+    }
+
+    @Test
+    void getShiftListWithNullStart_SetErrorMessageInViewModel() {
+        var request = new ShiftListRequest(viewModel.getSessionToken(), null, LocalDate.now());
+        controller.getShiftList(request);
+        Assertions.assertNotNull(viewModel.getErrorMessage());
+    }
+
+    @Test
+    void getShiftListWithNullEnd_SetErrorMessageInViewModel() {
+        var request = new ShiftListRequest(viewModel.getSessionToken(), LocalDate.now(), null);
+        controller.getShiftList(request);
+        Assertions.assertNotNull(viewModel.getErrorMessage());
+    }
+
+    @Test
+    void getShiftListWithStartAfterEnd_SetErrorMessageInViewModel() {
+        var request = new ShiftListRequest(viewModel.getSessionToken(), LocalDate.now().plusDays(7), LocalDate.now());
+        controller.getShiftList(request);
+        Assertions.assertNotNull(viewModel.getErrorMessage());
+    }
+
+    @Test
+    void getShiftProjectionListUnauthenticated_SetErrorMessageInViewModel() {
+        var request = new ShiftListRequest(viewModel.getSessionToken(), LocalDate.now(), LocalDate.now().plusDays(7));
+        controller.getShiftList(request);
+        Assertions.assertNotNull(viewModel.getErrorMessage());
+    }
 
     @Test
     void getShiftProjectionList() throws RepositoryException, SecurityException {
         logInAsProjectionist();
         var shiftListRequest = new ShiftListRequest(viewModel.getSessionToken(), LocalDate.now(), LocalDate.now().plusDays(7));
-        var shiftId = getShiftList(shiftListRequest).get(0).getId();
+        var shiftId = getActualShiftList(shiftListRequest).get(0).getId();
         var request = new ProjectionListRequest(viewModel.getSessionToken(), shiftId);
         controller.getShiftProjectionList(request);
-        var expected = getShiftProjectionList(request);
+        var expected = getActualShiftProjectionList(request);
         var actual = viewModel.getProjectionList();
         Assertions.assertArrayEquals(
                 expected.stream().map(ProjectionDto::getId).toArray(),
@@ -68,7 +105,11 @@ class ViewPersonalScheduleControllerTest {
         );
     }
 
-    private List<ShiftDto> getShiftList(ShiftListRequest request) throws RepositoryException, SecurityException {
+    private void logInAsProjectionist() {
+        viewModel.setSessionToken("T8SP2uHYdHZfBk6uh3fJ356Sji52");
+    }
+
+    private List<ShiftDto> getActualShiftList(ShiftListRequest request) throws RepositoryException, SecurityException {
         var userId = serviceLocator.getService(SecurityService.class).authenticate(request.getSessionToken()).getId();
         var employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(userId);
         var shiftList = serviceLocator.getService(ShiftRepository.class).getAllEmployeeShiftBetweenDate(
@@ -81,7 +122,7 @@ class ViewPersonalScheduleControllerTest {
                 .collect(Collectors.toList());
     }
 
-    private List<ProjectionDto> getShiftProjectionList(ProjectionListRequest request) throws RepositoryException {
+    private List<ProjectionDto> getActualShiftProjectionList(ProjectionListRequest request) throws RepositoryException {
         var projectionistShift = serviceLocator.getService(ProjectionistShiftRepository.class)
                 .getProjectionistShift(request.getProjectionistShiftId());
         var projectionList = serviceLocator.getService(ProjectionRepository.class)

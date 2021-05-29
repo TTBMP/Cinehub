@@ -26,19 +26,18 @@ public class ProjectionistListCell extends ListCell<ProjectionDto> {
     @Override
     public void updateItem(ProjectionDto projection, boolean empty) {
         super.updateItem(projection, empty);
-        if (projection != null) {
-            ProjectionistShiftItemView item = null;
-            try {
-                item = new ProjectionistShiftItemView();
+        try {
+            if (projection != null) {
+                var item = new ProjectionistShiftItemView();
                 item.load();
-            } catch (IOException e) {
-                e.printStackTrace();
+                Objects.requireNonNull(item);
+                item.getController().load(activity, navController, projection);
+                setGraphic(item.getRoot());
+            } else {
+                setVisible(false);
             }
-            Objects.requireNonNull(item);
-            item.getController().load(activity, navController, projection);
-            setGraphic(item.getRoot());
-        } else {
-            setVisible(false);
+        } catch (IOException e) {
+            navController.openErrorDialog(e.getMessage(), true);
         }
     }
 

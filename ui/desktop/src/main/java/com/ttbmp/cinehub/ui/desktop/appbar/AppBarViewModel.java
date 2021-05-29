@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.appbar;
 
+import com.ttbmp.cinehub.app.utilities.observer.Observable;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewModel;
 import javafx.collections.FXCollections;
@@ -15,12 +16,26 @@ public class AppBarViewModel implements ViewModel {
 
     private final ObservableList<Tab> tabList = FXCollections.observableArrayList();
 
+    private final Observable<String> errorMessage = new Observable<>();
+
     public Map<Class<? extends Activity>, Tab> getActivityTabMap() {
         return activityTabMap;
     }
 
     public ObservableList<Tab> getTabList() {
         return tabList;
+    }
+
+    public Observable<String> errorMessageProperty() {
+        return errorMessage;
+    }
+
+    public String getErrorMessage() {
+        return this.errorMessage.getValue();
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage.setValue(errorMessage);
     }
 
 }
