@@ -7,14 +7,15 @@ plugins {
 dependencies {
     implementation(project(":app"))
 
-    implementation("org.seleniumhq.selenium", "selenium-java", "3.141.59")
-    implementation("io.github.bonigarcia", "webdrivermanager", "4.3.1")
-
     implementation("org.springframework.boot", "spring-boot-starter-web")
     implementation("org.springframework.boot", "spring-boot-starter-thymeleaf")
     compileOnly("org.springframework.boot", "spring-boot-devtools")
     annotationProcessor("org.springframework.boot", "spring-boot-configuration-processor")
     testImplementation("org.springframework.boot", "spring-boot-starter-test")
+
+    implementation("org.seleniumhq.selenium", "selenium-java", "3.141.59")
+    implementation("io.github.bonigarcia", "webdrivermanager", "4.4.3")
+    implementation("com.google.guava", "guava", "30.1.1-jre")
 }
 
 application {
