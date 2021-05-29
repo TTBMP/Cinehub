@@ -1,11 +1,8 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
-import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ShiftRepeatingOption;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetCinemaListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetEmployeeListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftRepeatRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewRepeatedShiftForm;
@@ -45,10 +42,7 @@ public class AssignRepeatedUsherShiftViewController {
             @RequestParam(value = "idCinema") int cinemaId,
             Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-        model.addAttribute("idCinema", cinemaId);
-        useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
-        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, cinemaId));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
         var request = new NewRepeatedShiftForm();
@@ -65,23 +59,19 @@ public class AssignRepeatedUsherShiftViewController {
             Model model) {
 
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-        model.addAttribute("selectedEmployeeId", request.getEmployeeId());
-        model.addAttribute("idCinema", cinemaId);
-        useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
-        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
+
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, cinemaId));
         model.addAttribute("now", LocalDate.now().plusDays(1));
-        var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
-        useCase.saveRepeatedShift(new ShiftRepeatRequest(
+        useCase.createRepeatedShift(new ShiftRepeatRequest(
                 sessionToken,
                 request.getDate(),
                 request.getDateRepeated(),
                 request.getPreference(),
-                selectedEmployee,
+                request.getEmployeeId(),
                 request.getStart(),
                 request.getEnd(),
-                null));
+                -1));
         return ErrorHelper.returnView(response, model, "shift_assigned");
     }
 

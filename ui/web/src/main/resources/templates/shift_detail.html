@@ -55,7 +55,7 @@
     </div>
     <div class="row" th:if="${shiftDetail.employee.role == 'projectionist'}">
         <div class="col-sm"> Hall</div>
-        <div class="col-sm" th:text="${shiftDetail.hall.name}"> 1</div>
+        <div class="col-sm" th:text="${shiftDetail.hall.name}"></div>
     </div>
 
 
@@ -135,7 +135,7 @@
                             <select id="modifyHallComboBox" th:field="*{hall.id}" th:value="${hall}">
                                 <option th:each="hall : ${hallList}"
                                         th:text="${hall.name}"
-                                        th:value="${hall.id}">1
+                                        th:value="${hall.id}">
                                 </option>
                             </select>
                         </div>

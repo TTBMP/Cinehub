@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift.table;
 
 
-import com.ttbmp.cinehub.app.dto.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavController;
 import javafx.scene.control.TableCell;
@@ -32,7 +32,7 @@ public class EmployeeCalendarTableCell extends TableCell<EmployeeShiftWeek, Empl
                 item = new EmployeeCalendarTableCellView();
                 item.load();
             } catch (IOException e) {
-                e.printStackTrace();
+                navController.openErrorDialog(e.getMessage(), true);
             }
             Objects.requireNonNull(item);
             item.getController().load(activity, navController, employeeDto);

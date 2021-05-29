@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift.modify;
 
 import com.ttbmp.cinehub.app.dto.HallDto;
-import com.ttbmp.cinehub.app.dto.UsherDto;
+import com.ttbmp.cinehub.app.dto.employee.UsherDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftModifyRequest;
 import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
@@ -15,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
@@ -78,13 +77,13 @@ public class ModifyShiftViewController extends ViewController {
 
         viewModel.setErrorAssignVisibility(false);
         errorHBox.visibleProperty().bind(viewModel.errorAssignVisibilityProperty());
-        errorLabel.textProperty().bind(viewModel.errorProperty());
+        viewModel.errorProperty().addObserver(s -> errorLabel.setText(s));
 
-        if (viewModel.getSelectedShift().getEmployee() instanceof UsherDto) {
+        if (viewModel.getEmployee(viewModel.getSelectedShift()) instanceof UsherDto) {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
             hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
         } else {
-            viewModel.getHallList().setAll(viewModel.getSelectedShift().getEmployee().getCinema().getHalList());
+            viewModel.getHallList().setAll(viewModel.getEmployee(viewModel.getSelectedShift()).getCinema().getHalList());
             hallComboBox.setItems(viewModel.getHallList());
             hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
 
@@ -109,36 +108,29 @@ public class ModifyShiftViewController extends ViewController {
         endSpinner.setValueFactory(new SpinnerEndValueFactory(viewModel.startSpinnerModifyTimeProperty(), viewModel.endSpinnerModifyTimeProperty()));
         confirmButton.setOnAction(this::submitButtonOnAction);
 
-        cancelButton.setOnAction(a -> {
-            try {
-                navController.navBack();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        cancelButton.setOnAction(a -> navController.goBack());
     }
 
     private void submitButtonOnAction(ActionEvent action) {
         viewModel.setErrorAssignVisibility(false);
-
+        var hallId = -1;
+        if (viewModel.getSelectedHall() != null) {
+            hallId = viewModel.getSelectedHall().getId();
+        }
         activity.getUseCase(ManageEmployeesShiftUseCase.class).modifyShift(
                 new ShiftModifyRequest(
                         CinehubApplication.getSessionToken(),
-                        viewModel.getSelectedShift().getEmployee(),
+                        viewModel.getSelectedShift().getEmployeeId(),
                         viewModel.getSelectedShift().getId(),
                         viewModel.getSelectedDays(),
                         viewModel.getStartSpinnerModifyTime().withNano(0),
                         viewModel.getEndSpinnerModifyTime().withNano(0),
-                        viewModel.getSelectedHall()));
+                        hallId
+                ));
 
         if (!viewModel.isErrorAssignVisibility()) {
-            try {
-                viewModel.setSelectedShift(viewModel.getShiftCreated());
-                navController.navBack();
-            } catch (IOException e) {
-                e.printStackTrace();
-
-            }
+            viewModel.setSelectedShift(viewModel.getShiftCreated());
+            navController.goBack();
         }
     }
 

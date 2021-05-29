@@ -1,8 +1,11 @@
 package com.ttbmp.cinehub.ui.web.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.*;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ProjectionListReply;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ShiftListReply;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalSchedulePresenter;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.ui.Model;
 
@@ -45,32 +48,22 @@ public class ViewPersonalSchedulePresenterWeb implements ViewPersonalSchedulePre
             ));
             date = date.plusDays(1);
         }
+        model.addAttribute("employee", result.getEmployeeDto());
         model.addAttribute("calendarDayList", calendarDayList);
     }
 
     @Override
-    public void presentInvalidShiftListRequest(ShiftListRequest request) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
-    }
-
-    @Override
-    public void presentShiftListNullRequest() {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
-    }
-
-    @Override
     public void presentGetProjectionList(ProjectionListReply result) {
-        var projectionForm = new ProjectionListDto(result.getProjectionDtoList());
-        model.addAttribute("form", projectionForm);
+        model.addAttribute("projections", result.getProjectionDtoList());
     }
 
     @Override
-    public void presentProjectionListNullRequest() {
+    public void presentNullRequest() {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
     }
 
     @Override
-    public void presentInvalidProjectionListRequest(ProjectionListRequest request) {
+    public void presentInvalidRequest(Request request) {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
     }
 

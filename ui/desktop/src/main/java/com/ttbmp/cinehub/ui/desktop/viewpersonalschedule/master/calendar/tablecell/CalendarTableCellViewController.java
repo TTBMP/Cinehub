@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.master.calendar.tablecell;
 
-import com.ttbmp.cinehub.app.dto.ShiftDto;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 import com.ttbmp.cinehub.ui.desktop.utilities.ObjectBindings;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
@@ -52,7 +52,7 @@ public class CalendarTableCellViewController extends ViewController {
                 itemView = new CalendarShiftItemView();
                 itemView.load();
             } catch (IOException e) {
-                e.printStackTrace();
+                navController.openErrorDialog(e.getMessage(), true);
             }
             Objects.requireNonNull(itemView);
             shiftVBox.getChildren().add(itemView.getRoot());

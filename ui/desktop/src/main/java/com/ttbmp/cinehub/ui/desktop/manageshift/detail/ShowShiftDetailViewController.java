@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift.detail;
 
-import com.ttbmp.cinehub.app.dto.UsherDto;
+import com.ttbmp.cinehub.app.dto.employee.UsherDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftRequest;
 import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
@@ -13,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 /**
@@ -66,7 +65,7 @@ public class ShowShiftDetailViewController extends ViewController {
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
         new ManageEmployeesShiftViewModel();
         errorLabel.textProperty().bind(viewModel.errorDaoProperty());
-        if (viewModel.getSelectedShift().getEmployee() instanceof UsherDto) {
+        if (viewModel.getEmployee(viewModel.getSelectedShift()) instanceof UsherDto) {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
             hallLabelText.visibleProperty().bind(viewModel.hallVisibilityProperty());
         } else {
@@ -81,6 +80,8 @@ public class ShowShiftDetailViewController extends ViewController {
         cinemaLabel.textProperty().bind(viewModel.selectedShiftCinemaProperty());
 
         if (viewModel.getSelectedShift().getDate().isBefore(LocalDate.now().plusDays(1))) {
+            modifyShiftButton.setDisable(true);
+            deleteShiftButton.setDisable(true);
             modifyShiftButton.setVisible(false);
             deleteShiftButton.setVisible(false);
         }
@@ -89,20 +90,11 @@ public class ShowShiftDetailViewController extends ViewController {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(
                     CinehubApplication.getSessionToken(),
                     viewModel.getSelectedShift().getId()));
-            try {
-                navController.navBack();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            navController.goBack();
         });
+        modifyShiftButton.setOnAction(a -> navController.navigate(new NavDestination(new ModifyShiftView())));
 
-        modifyShiftButton.setOnAction(a -> {
-            try {
-                navController.navigate(new NavDestination(new ModifyShiftView()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+
     }
 
 }

@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
-import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.CreateShiftRequest;
@@ -43,8 +42,7 @@ public class AssignProjectionistShiftViewController {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
-        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, cinemaId));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var shiftRequest = new NewShiftForm();
         model.addAttribute(ASSIGN_REQUEST, shiftRequest);
@@ -61,15 +59,15 @@ public class AssignProjectionistShiftViewController {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
-        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, cinemaId));
         useCase.createShift(new CreateShiftRequest(
-                sessionToken,
-                shiftRequest.getEmployee().getId(),
-                LocalDate.parse(shiftRequest.getDate()),
-                shiftRequest.getStart(),
-                shiftRequest.getEnd(),
-                shiftRequest.getHall().getId())
+                        sessionToken,
+                        shiftRequest.getEmployee().getId(),
+                        LocalDate.parse(shiftRequest.getDate()),
+                        shiftRequest.getStart(),
+                        shiftRequest.getEnd(),
+                        shiftRequest.getHall().getId()
+                )
         );
         return ErrorHelper.returnView(response, model, "shift_assigned");
     }

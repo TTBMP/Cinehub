@@ -17,7 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 /**
@@ -77,12 +76,7 @@ public class ChooseMovieViewController extends ViewController {
                     viewModel.selectedMovieProperty().getValue().getId(),
                     viewModel.selectedDateProperty().getValue().toString()
             ));
-            try {
-                navController.navigate(new NavDestination(new ChooseCinemaView()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+            navController.navigate(new NavDestination(new ChooseCinemaView()));
         });
     }
 

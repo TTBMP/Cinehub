@@ -19,8 +19,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-import java.io.IOException;
-
 /**
  * @author Ivan Palmieri, Fabio Buracchi
  */
@@ -77,33 +75,19 @@ public class ChooseSeatViewController extends ViewController {
                 ));
         confirmSeatButton.setDisable(true);
         SeatsMatrixView seatsMatrixView;
-        try {
-            seatsMatrixView = new SeatsMatrixView(toggleGroup);
-            seatsMatrixView.load();
-            seatsContainerVBox.getChildren().add(seatsMatrixView.getRoot());
-            seatsMatrixView.getController().load(activity, navController);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        seatsMatrixView = new SeatsMatrixView(toggleGroup);
+        seatsMatrixView.load();
+        seatsContainerVBox.getChildren().add(seatsMatrixView.getRoot());
+        seatsMatrixView.getController().load(activity, navController);
         bind();
         toggleGroup.getToggles().forEach(toggle ->
                 setAllElementsOfTheToggleToNull()
         );
         toggleGroup.selectedToggleProperty().addListener(l -> confirmSeatButton.setDisable(false));
-        confirmSeatButton.setOnAction(a -> {
-            try {
-                changeLayoutSpecific();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        confirmSeatButton.setOnAction(a -> changeLayoutSpecific());
         returnButton.setOnAction(a -> {
-            try {
-                viewModel.errorMessageProperty().setValue(null);
-                navController.navigate(new NavDestination(new ChooseCinemaView()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            viewModel.errorMessageProperty().setValue(null);
+            navController.navigate(new NavDestination(new ChooseCinemaView()));
         });
         toggleGroup.selectedToggleProperty().addListener(l ->
                 viewModel.selectedSeatProperty().setValue((SeatDto) toggleGroup.getSelectedToggle().getUserData())
@@ -121,7 +105,7 @@ public class ChooseSeatViewController extends ViewController {
         viewModel.skipLineOptionProperty().bind(skipLineRadioButton.selectedProperty());
     }
 
-    private void changeLayoutSpecific() throws IOException {
+    private void changeLayoutSpecific() {
         viewModel.counterForToggleProperty().setValue(0);
         toggleGroup.getToggles().forEach(toggle -> findChosenPlace());
         navController.navigate(new NavDestination(new PaymentView()));

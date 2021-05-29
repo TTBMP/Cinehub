@@ -21,6 +21,9 @@ public class PaymentRequest extends AuthenticatedRequest {
     public static final Request.Error MISSING_OPTION_ONE_ERROR = new Request.Error("Option one can't be null");
     public static final Request.Error MISSING_OPTION_TWO_ERROR = new Request.Error("Option two can't be null");
     public static final Request.Error MISSING_OPTION_THREE_ERROR = new Request.Error("Option three can't be null");
+    public static final Request.Error MISSING_CUSTOMER_ERROR = new Request.Error("Customer can't be null");
+    public static final Request.Error MISSING_PROJECTION_ERROR = new Request.Error("Projection can't be null");
+    public static final Request.Error MISSING_SEAT_ERROR = new Request.Error("Seat can't be null");
 
     private int projectionId;
     private int seatId;
@@ -145,6 +148,9 @@ public class PaymentRequest extends AuthenticatedRequest {
             addError(CREDIT_CARD_LENGTH_ERROR);
         }
         if (!email.contains("@")) {
+            addError(EMAIL_ERROR);
+        }
+        if (!email.contains(".")) {
             addError(EMAIL_ERROR);
         }
         if (magicBoxOption == null) {

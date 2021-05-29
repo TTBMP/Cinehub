@@ -5,14 +5,12 @@ import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalScheduleUs
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.master.ScheduleView;
 
-import java.io.IOException;
-
 /**
  * @author Fabio Buracchi
  */
 public class ViewPersonalScheduleActivity extends Activity {
 
-    public ViewPersonalScheduleActivity() throws IOException {
+    public ViewPersonalScheduleActivity() {
         super(new ScheduleView());
         var viewModel = new ViewPersonalScheduleViewModel();
         var presenter = new ViewPersonalScheduleFxPresenter(viewModel);

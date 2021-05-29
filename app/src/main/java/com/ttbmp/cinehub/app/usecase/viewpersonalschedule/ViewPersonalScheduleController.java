@@ -1,6 +1,9 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.dto.ProjectionDto;
+import com.ttbmp.cinehub.app.dto.employee.EmployeeDtoFactory;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDtoFactory;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftRepository;
@@ -8,6 +11,8 @@ import com.ttbmp.cinehub.app.service.security.SecurityService;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.domain.security.Permission;
+
+import java.util.stream.Collectors;
 
 /**
  * @author Fabio Buracchi
@@ -32,13 +37,17 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
             var employee = employeeRepository.getEmployee(request.getUserId());
+            var shiftList = employee.getShiftListBetween(request.getStart(), request.getEnd());
             presenter.presentGetShiftList(new ShiftListReply(
-                    employee.getShiftListBetween(request.getStart(), request.getEnd())
+                    EmployeeDtoFactory.getEmployeeDto(employee),
+                    shiftList.stream()
+                            .map(ShiftDtoFactory::getShiftDto)
+                            .collect(Collectors.toList())
             ));
         } catch (Request.NullRequestException e) {
-            presenter.presentShiftListNullRequest();
+            presenter.presentNullRequest();
         } catch (Request.InvalidRequestException e) {
-            presenter.presentInvalidShiftListRequest(request);
+            presenter.presentInvalidRequest(request);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
             presenter.presentUnauthorizedError(e);
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
@@ -54,11 +63,15 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
             var shift = projectionistShiftRepository.getProjectionistShift(request.getProjectionistShiftId());
-            presenter.presentGetProjectionList(new ProjectionListReply(shift.getProjectionList()));
+            presenter.presentGetProjectionList(new ProjectionListReply(
+                    shift.getProjectionList().stream()
+                            .map(ProjectionDto::new)
+                            .collect(Collectors.toList())
+            ));
         } catch (Request.NullRequestException e) {
-            presenter.presentProjectionListNullRequest();
+            presenter.presentNullRequest();
         } catch (Request.InvalidRequestException e) {
-            presenter.presentInvalidProjectionListRequest(request);
+            presenter.presentInvalidRequest(request);
         } catch (AuthenticatedRequest.UnauthorizedRequestException e) {
             presenter.presentUnauthorizedError(e);
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {

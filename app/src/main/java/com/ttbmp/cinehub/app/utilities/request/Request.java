@@ -24,7 +24,7 @@ public abstract class Request {
         return errorList;
     }
 
-    protected void addError(Request.Error error) {
+    public void addError(Request.Error error) {
         errorList.add(error);
     }
 

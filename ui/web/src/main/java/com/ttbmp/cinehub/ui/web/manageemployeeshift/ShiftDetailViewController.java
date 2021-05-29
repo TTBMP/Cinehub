@@ -1,8 +1,5 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
-import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.dto.EmployeeDto;
-import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetCinemaListRequest;
@@ -49,24 +46,22 @@ public class ShiftDetailViewController {
         model.addAttribute("now", LocalDate.now().plusDays(1));
         model.addAttribute("idCinema", shift.getEmployee().getCinema().getId());
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
+
         if (shift.isChange()) {
+            int hallId = -1;
             if (shift.getHall() != null) {
-                model.addAttribute("selectedHallId", shift.getHall().getId());
+                hallId = shift.getHall().getId();
             }
-            useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
-            var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-            var selectedHall = (HallDto) model.getAttribute("selectedHall");
-            model.addAttribute("selectedEmployeeId", shift.getEmployee().getId());
-            useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
-            var selectedEmployee = (EmployeeDto) model.getAttribute("selectedEmployee");
+
+            useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, shift.getEmployee().getCinema().getId()));
             useCase.modifyShift(new ShiftModifyRequest(
                     sessionToken,
-                    selectedEmployee,
+                    shift.getEmployee().getId(),
                     shift.getShiftId(),
                     LocalDate.parse(shift.getDate()),
                     shift.getStart(),
                     shift.getEnd(),
-                    selectedHall
+                    hallId
             ));
             return ErrorHelper.returnView(response, model, "shift_modify");
         }

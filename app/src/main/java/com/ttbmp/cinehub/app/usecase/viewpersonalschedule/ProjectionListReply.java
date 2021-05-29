@@ -1,8 +1,6 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
-import com.ttbmp.cinehub.app.datamapper.ProjectionDataMapper;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.domain.Projection;
 
 import java.util.List;
 
@@ -13,8 +11,8 @@ public class ProjectionListReply {
 
     private List<ProjectionDto> projectionDtoList;
 
-    public ProjectionListReply(List<Projection> projectionList) {
-        this.projectionDtoList = ProjectionDataMapper.mapToDtoList(projectionList);
+    public ProjectionListReply(List<ProjectionDto> projectionDtoList) {
+        this.projectionDtoList = projectionDtoList;
     }
 
     public List<ProjectionDto> getProjectionDtoList() {
@@ -24,4 +22,5 @@ public class ProjectionListReply {
     public void setProjectionDtoList(List<ProjectionDto> projectionDtoList) {
         this.projectionDtoList = projectionDtoList;
     }
+
 }

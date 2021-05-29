@@ -1,11 +1,14 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
-import com.ttbmp.cinehub.app.dto.*;
+import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.employee.ProjectionistDto;
+import com.ttbmp.cinehub.app.dto.employee.UsherDto;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.ui.Model;
 
@@ -16,7 +19,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
 public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPresenter {
 
     private final Model model;
@@ -26,34 +28,34 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentEmployeeList(GetEmployeeListResponse employeeList) {
-        model.addAttribute("employeeList", employeeList.getEmployeeDtoList());
-        model.addAttribute("projectionistList", employeeList.getEmployeeDtoList().stream()
+    public void presentEmployeeList(GetEmployeeListResponse response) {
+        var employeeList = new EmployeeListDto(response.getEmployeeDtoList());
+        model.addAttribute("employeeList", employeeList.getEmployeeList());
+        model.addAttribute("projectionistList", employeeList.getEmployeeList().stream()
                 .filter(employeeDto -> employeeDto.getClass()
                         .equals(ProjectionistDto.class))
                 .collect(Collectors.toList()));
-        model.addAttribute("usherList", employeeList.getEmployeeDtoList().stream()
+        model.addAttribute("usherList", employeeList.getEmployeeList().stream()
                 .filter(employeeDto -> employeeDto.getClass()
                         .equals(UsherDto.class))
                 .collect(Collectors.toList()));
 
-        findEmployee(employeeList.getEmployeeDtoList());
+        findEmployee(response.getEmployeeDtoList());
     }
 
     @Override
-    public void presentShiftList(GetShiftListResponse shiftList) {
+    public void presentShiftList(GetShiftListResponse response) {
         var temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
-        var dateSelected = shiftList.getDate();
-        var cinemaSelected = shiftList.getCinemaId();
+        var dateSelected = response.getDate();
+        var cinemaSelected = response.getCinemaId();
         var employeeList = (List<EmployeeDto>) model.getAttribute("employeeList");
-        findShift(shiftList.getShiftDtoList());
         Map<EmployeeDto, List<ShiftDto>> employeeShiftListMap = new HashMap<>();
         for (var employee : employeeList) {
             employeeShiftListMap.put(
                     employee,
-                    shiftList.getShiftDtoList().stream()
-                            .filter(shift -> shift.getEmployee().equals(employee)
-                                    && shift.getEmployee().getCinema().getId() == cinemaSelected
+                    response.getShiftDtoList().stream()
+                            .filter(shift -> shift.getEmployeeId().equals(employee.getId())
+                                    && employee.getCinema().getId() == cinemaSelected
                                     && shift.getDate().get(temporalField) == dateSelected.get(temporalField))
                             .collect(Collectors.toList())
             );
@@ -62,29 +64,17 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentCinemaList(GetCinemaListResponse listCinema) {
-        model.addAttribute("cinemaList", listCinema.getCinemaList());
+    public void presentCinemaList(GetCinemaListResponse response) {
+        model.addAttribute("cinemaList", response.getCinemaList());
         if (model.getAttribute("idCinema") != null) {
             var idCinema = (int) model.getAttribute("idCinema");
-            for (var cinemaDto : listCinema.getCinemaList()) {
+            for (var cinemaDto : response.getCinemaList()) {
                 if (cinemaDto.getId() == idCinema) {
                     model.addAttribute("selectedCinema", cinemaDto);
                     model.addAttribute("hallList", cinemaDto.getHalList());
                 }
             }
         }
-        if (model.getAttribute("selectedHallId") != null) {
-            var hallDtoList = (List<HallDto>) model.getAttribute("hallList");
-            var hallId = (int) model.getAttribute("selectedHallId");
-            assert hallDtoList != null;
-            for (var hallDto : hallDtoList) {
-                if (hallDto.getId() == hallId) {
-                    model.addAttribute("selectedHall", hallDto);
-                }
-            }
-        }
-
-
     }
 
     @Override
@@ -108,48 +98,8 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentInvalidGetCinemaListRequest(GetCinemaListRequest request) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
-    }
-
-    @Override
-    public void presentCinemaListNullRequest() {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
-    }
-
-    @Override
     public void presentCreateShiftError(Throwable error) {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, error.getMessage());
-    }
-
-    @Override
-    public void presentInvalidEmployeeListRequest(GetEmployeeListRequest request) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
-    }
-
-    @Override
-    public void presentEmployeeListNullRequest() {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
-    }
-
-    @Override
-    public void presentInvalidDeleteShiftListRequest(ShiftRequest request) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
-    }
-
-    @Override
-    public void presentDeleteShiftNullRequest() {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
-    }
-
-    @Override
-    public void presentInvalidModifyShiftListRequest(ShiftModifyRequest request) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
-    }
-
-    @Override
-    public void presentModifyShiftNullRequest() {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
     }
 
     @Override
@@ -158,34 +108,13 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentInvalidCreateShiftListRequest(CreateShiftRequest request) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
-    }
-
-    @Override
-    public void presentCreateShiftNullRequest() {
+    public void presentNullRequest() {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
     }
 
     @Override
-    public void presentInvalidRepeatedShiftListRequest(ShiftRepeatRequest request) {
+    public void presentInvalidRequest(Request request) {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
-
-    }
-
-    @Override
-    public void presentRepeatedShiftNullRequest() {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
-    }
-
-    @Override
-    public void presentInvalidGetShiftListRequest(GetShiftListRequest request) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
-    }
-
-    @Override
-    public void presentGetShiftListNullRequest() {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
     }
 
     @Override
@@ -203,7 +132,6 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
     }
 
-
     private void findEmployee(List<EmployeeDto> employeeList) {
         if (model.getAttribute("selectedEmployeeId") != null) {
             var employeeId = (String) model.getAttribute("selectedEmployeeId");
@@ -215,16 +143,5 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
         }
     }
 
-    private void findShift(List<ShiftDto> shiftList) {
-        if (model.getAttribute("shiftId") != null) {
-            var shiftId = (int) model.getAttribute("shiftId");
-            for (var shiftDto : shiftList) {
-                if (shiftDto.getId() == shiftId) {
-                    model.addAttribute("selectedShift", shiftDto);
-                    model.addAttribute("selectedEmployee", shiftDto.getEmployee());
-                }
-            }
-        }
-    }
 
 }

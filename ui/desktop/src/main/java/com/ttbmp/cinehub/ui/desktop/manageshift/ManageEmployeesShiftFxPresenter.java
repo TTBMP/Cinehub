@@ -1,11 +1,11 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift;
 
-import com.ttbmp.cinehub.app.dto.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.Day;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.EmployeeShiftWeek;
 
@@ -13,6 +13,7 @@ import java.time.DayOfWeek;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Massimo Mazzetti
@@ -46,7 +47,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         }
         for (var shift : response.getShiftDtoList()) {
             for (var employeeShiftWeek : viewModel.getEmployeeShiftWeekList()) {
-                if (employeeShiftWeek.getEmployeeDto().getId().equals(shift.getEmployee().getId())
+                if (employeeShiftWeek.getEmployeeDto().getId().equals(shift.getEmployeeId())
                         && viewModel.getSelectedWeek().getYear() == shift.getDate().getYear()
                         && viewModel.getSelectedWeek().get(temporalField) == shift.getDate().get(temporalField)) {
                     var index = viewModel.getEmployeeShiftWeekList().indexOf(employeeShiftWeek);
@@ -76,7 +77,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         var temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
         var employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
         employeeShiftWeeks.forEach(e -> {
-            if (e.getEmployeeDto().equals(savedShift.getEmployee())
+            if (e.getEmployeeDto().getId().equals(savedShift.getEmployeeId())
                     && savedShift.getDate().get(temporalField) == viewModel.getSelectedWeek().get(temporalField)
                     && savedShift.getDate().getYear() == viewModel.getSelectedWeek().getYear()) {
                 e.getWeekMap().get(savedShift.getDate().getDayOfWeek())
@@ -92,7 +93,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         var deleteShift = viewModel.getSelectedShift();
         var employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
         employeeShiftWeeks.forEach(e -> {
-            if (e.getEmployeeDto().equals(deleteShift.getEmployee())) {
+            if (e.getEmployeeDto().getId().equals(deleteShift.getEmployeeId())) {
                 e.getWeekMap().get(deleteShift.getDate().getDayOfWeek())
                         .getShiftList()
                         .removeIf(s -> s.equals(deleteShift));
@@ -108,7 +109,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         var employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
         for (var savedShift : shiftList) {
             employeeShiftWeeks.forEach(employeeShiftWeek -> {
-                if (employeeShiftWeek.getEmployeeDto().equals(savedShift.getEmployee()) &&
+                if (employeeShiftWeek.getEmployeeDto().getId().equals(savedShift.getEmployeeId()) &&
                         savedShift.getDate().get(temporalField) == viewModel.getSelectedWeek().get(temporalField) &&
                         savedShift.getDate().getYear() == viewModel.getSelectedWeek().getYear()) {
                     var dayOfWeek = savedShift.getDate().getDayOfWeek();
@@ -130,69 +131,9 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentInvalidGetCinemaListRequest(GetCinemaListRequest request) {
-        //The request contains only the session token so the onValidate method has no errors
-    }
-
-    @Override
-    public void presentCinemaListNullRequest() {
-        viewModel.errorDaoProperty().setValue("Error with operation get cinema list");
-    }
-
-    @Override
     public void presentCreateShiftError(Throwable error) {
         viewModel.errorProperty().setValue(error.getMessage());
         viewModel.setErrorAssignVisibility(true);
-    }
-
-    @Override
-    public void presentInvalidEmployeeListRequest(GetEmployeeListRequest request) {
-        if (request.getErrorList().contains(GetEmployeeListRequest.MISSING_CINEMA)) {
-            viewModel.errorDaoProperty().setValue(GetEmployeeListRequest.MISSING_CINEMA.getMessage());
-        }
-    }
-
-    @Override
-    public void presentEmployeeListNullRequest() {
-        viewModel.errorDaoProperty().setValue("Error with operation get employee list");
-    }
-
-    @Override
-    public void presentInvalidDeleteShiftListRequest(ShiftRequest request) {
-        viewModel.errorDaoProperty().setValue("Error with operation delete shift");
-    }
-
-    @Override
-    public void presentDeleteShiftNullRequest() {
-        viewModel.errorProperty().setValue("Error with operation delete shift");
-    }
-
-    @Override
-    public void presentInvalidModifyShiftListRequest(ShiftModifyRequest request) {
-        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_EMPLOYEE)) {
-            viewModel.errorProperty().setValue(ShiftModifyRequest.MISSING_EMPLOYEE.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_SHIFT)) {
-            viewModel.errorProperty().setValue(ShiftModifyRequest.MISSING_SHIFT.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_DATE)) {
-            viewModel.errorProperty().setValue(ShiftModifyRequest.MISSING_DATE.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_HALL)) {
-            viewModel.errorProperty().setValue(ShiftModifyRequest.MISSING_HALL.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_START)) {
-            viewModel.errorProperty().setValue(ShiftModifyRequest.MISSING_START.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftModifyRequest.MISSING_END)) {
-            viewModel.errorProperty().setValue(ShiftModifyRequest.MISSING_END.getMessage());
-        }
-
-    }
-
-    @Override
-    public void presentModifyShiftNullRequest() {
-        viewModel.errorProperty().setValue("Error with operation modify shift");
     }
 
     @Override
@@ -202,75 +143,18 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentInvalidCreateShiftListRequest(CreateShiftRequest request) {
-        if (request.getErrorList().contains(CreateShiftRequest.MISSING_DATE)) {
-            viewModel.errorProperty().setValue(CreateShiftRequest.MISSING_DATE.getMessage());
-        }
-        if (request.getErrorList().contains(CreateShiftRequest.MISSING_EMPLOYEE)) {
-            viewModel.errorProperty().setValue(CreateShiftRequest.MISSING_EMPLOYEE.getMessage());
-        }
-        if (request.getErrorList().contains(CreateShiftRequest.MISSING_START)) {
-            viewModel.errorProperty().setValue(CreateShiftRequest.MISSING_START.getMessage());
-        }
-        if (request.getErrorList().contains(CreateShiftRequest.MISSING_END)) {
-            viewModel.errorProperty().setValue(CreateShiftRequest.MISSING_END.getMessage());
-        }
+    public void presentNullRequest() {
+        viewModel.setError("Request can't be null");
     }
 
     @Override
-    public void presentCreateShiftNullRequest() {
-        viewModel.errorProperty().setValue("Error with operation create shift");
+    public void presentInvalidRequest(Request request) {
+        viewModel.setError(request.getErrorList().stream()
+                .map(Request.Error::getMessage)
+                .collect(Collectors.joining())
+        );
     }
 
-    @Override
-    public void presentInvalidRepeatedShiftListRequest(ShiftRepeatRequest request) {
-        var error = "";
-        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_EMPLOYEE)) {
-            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_EMPLOYEE.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_START)) {
-            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_START.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_END)) {
-            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_END.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_OPTION)) {
-            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_OPTION.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_START_SHIFT)) {
-            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_START_SHIFT.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_END_SHIFT)) {
-            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_END_SHIFT.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftRepeatRequest.MISSING_HALL)) {
-            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.MISSING_HALL.getMessage());
-        }
-        if (request.getErrorList().contains(ShiftRepeatRequest.PERIOD_ERROR)) {
-            viewModel.errorProperty().setValue(error + ShiftRepeatRequest.PERIOD_ERROR.getMessage());
-        }
-        viewModel.errorAssignVisibilityProperty().setValue(true);
-    }
-
-    @Override
-    public void presentRepeatedShiftNullRequest() {
-        viewModel.errorProperty().setValue("Error with operation save repeated shift");
-    }
-
-    @Override
-    public void presentInvalidGetShiftListRequest(GetShiftListRequest request) {
-        if (request.getErrorList().contains(GetShiftListRequest.MISSING_CINEMA)) {
-            viewModel.errorProperty().setValue(GetShiftListRequest.MISSING_CINEMA.getMessage());
-        }
-        if (request.getErrorList().contains(GetShiftListRequest.MISSING_START)) {
-            viewModel.errorProperty().setValue(GetShiftListRequest.MISSING_START.getMessage());
-        }
-    }
-
-    @Override
-    public void presentGetShiftListNullRequest() {
-        viewModel.errorProperty().setValue("Error with operation get shift List");
-    }
 
     @Override
     public void presentRepositoryError(RepositoryException e) {

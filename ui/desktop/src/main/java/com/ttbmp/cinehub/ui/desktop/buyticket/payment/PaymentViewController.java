@@ -19,8 +19,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
-
 /**
  * @author Ivan Palmieri
  */
@@ -61,13 +59,7 @@ public class PaymentViewController extends ViewController {
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
         bind();
         confirmButton.setOnAction(this::startPayment);
-        returnButton.setOnAction(a -> {
-            try {
-                navController.navigate(new NavDestination(new ChooseSeatView()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        returnButton.setOnAction(a -> navController.navigate(new NavDestination(new ChooseSeatView())));
     }
 
 
@@ -104,17 +96,9 @@ public class PaymentViewController extends ViewController {
                 viewModel.skipLineOptionProperty().getValue()
         ));
         if (viewModel.errorMessageProperty().getValue() == null) {
-            try {
-                navController.navigate(new NavDestination(new ConfirmEmailView()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            navController.navigate(new NavDestination(new ConfirmEmailView()));
         } else {
-            try {
-                navController.navigate(new NavDestination(new PaymentView()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            navController.navigate(new NavDestination(new PaymentView()));
         }
     }
 }

@@ -31,7 +31,7 @@ public class ChooseProjectionListCell extends ListCell<ProjectionDto> {
                 item = new ChooseProjectionItemView();
                 item.load();
             } catch (IOException e) {
-                e.printStackTrace();
+                navController.openErrorDialog(e.getMessage(), true);
             }
             Objects.requireNonNull(item);
             item.getController().load(activity, navController, request);

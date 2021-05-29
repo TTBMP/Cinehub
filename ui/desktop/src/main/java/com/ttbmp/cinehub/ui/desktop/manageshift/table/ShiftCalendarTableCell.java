@@ -30,7 +30,7 @@ public class ShiftCalendarTableCell extends TableCell<EmployeeShiftWeek, Day> {
                 item = new CalendarShiftItemView();
                 item.load();
             } catch (IOException e) {
-                e.printStackTrace();
+                navController.openErrorDialog(e.getMessage(), true);
             }
             Objects.requireNonNull(item);
             item.getController().load(activity, navController, day);

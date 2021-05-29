@@ -47,7 +47,7 @@ public class CalendarShiftItemViewController extends ViewController {
                 item = new ShiftItemView();
                 item.load();
             } catch (IOException e) {
-                e.printStackTrace();
+                navController.openErrorDialog(e.getMessage(), true);
             }
             Objects.requireNonNull(item);
             item.getController().load(activity, navController, shift);
@@ -60,11 +60,7 @@ public class CalendarShiftItemViewController extends ViewController {
         addButton.setOnAction(a -> {
             viewModel.setSelectedDayWeek(day);
             viewModel.getHallList().setAll(day.getEmployee().getCinema().getHalList());
-            try {
-                navController.openInDialog(new NavDestination(new AssignShiftView()), "Assign shift");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            navController.openInDialog(new NavDestination(new AssignShiftView()), "Assign shift");
         });
     }
 

@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift.assign;
 
 import com.ttbmp.cinehub.app.dto.HallDto;
-import com.ttbmp.cinehub.app.dto.UsherDto;
+import com.ttbmp.cinehub.app.dto.employee.UsherDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ShiftRepeatingOption;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.CreateShiftRequest;
@@ -19,7 +19,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.time.LocalTime;
 
 /**
@@ -77,13 +76,16 @@ public class AssignShiftViewController extends ViewController {
         if (viewModel.getSelectedDayWeek().getEmployee() instanceof UsherDto) {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
             hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
+        } else {
+            viewModel.getHallList().setAll(viewModel.getSelectedDayWeek().getEmployee().getCinema().getHalList());
+            hallComboBox.setItems(viewModel.getHallList());
+            hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
+
         }
         viewModel.setRepeatVisibility(false);
         viewModel.setErrorAssignVisibility(false);
 
-        hallComboBox.setItems(viewModel.getHallList());
 
-        hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
         viewModel.setSelectedEndRepeatDay(null);
         hallComboBox.setButtonCell(new HallFactory(null));
         hallComboBox.setCellFactory(HallFactory::new);
@@ -93,9 +95,9 @@ public class AssignShiftViewController extends ViewController {
         errorVBox.visibleProperty().bind(viewModel.errorAssignVisibilityProperty());
 
         optionVBox.visibleProperty().bind(viewModel.repeatVisibilityProperty());
-        dateVBox.visibleProperty().bind(viewModel.repeatVisibilityProperty());
-        errorLabel.textProperty().bind(viewModel.errorProperty());
 
+        dateVBox.visibleProperty().bind(viewModel.repeatVisibilityProperty());
+        viewModel.errorProperty().addObserver(s -> errorLabel.setText(s));
         viewModel.setRepeatVisibility(viewModel.isRepeatVisibility());
 
         shiftRepeatCheckBox.selectedProperty().bindBidirectional(viewModel.repeatVisibilityProperty());
@@ -113,22 +115,23 @@ public class AssignShiftViewController extends ViewController {
         optionRepeatComboBox.setButtonCell(new ComboBoxOptionValueFactory(null));
         optionRepeatComboBox.setCellFactory(ComboBoxOptionValueFactory::new);
         optionRepeatComboBox.valueProperty().bindBidirectional(viewModel.selectedOptionProperty());
+        optionRepeatComboBox.getSelectionModel().selectFirst();
         confirmButton.setOnAction(this::confirmButtonOnAction);
 
         cancelButton.setOnAction(a -> {
-            try {
-                if (shiftRepeatCheckBox.isSelected()) {
-                    viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());
-                }
-                viewModel.setSelectedOption(null);
-                navController.navBack();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (shiftRepeatCheckBox.isSelected()) {
+                viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());
             }
+            viewModel.setSelectedOption(null);
+            navController.goBack();
         });
     }
 
     private void confirmButtonOnAction(ActionEvent action) {
+        var hallId = -1;
+        if (viewModel.getSelectedHall() != null) {
+            hallId = viewModel.getSelectedHall().getId();
+        }
 
         if (!viewModel.isRepeatVisibility()) {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(
@@ -137,31 +140,25 @@ public class AssignShiftViewController extends ViewController {
                     viewModel.getSelectedDayWeek().getDate(),
                     viewModel.getStartSpinnerTime().withNano(0),
                     viewModel.getEndSpinnerTime().withNano(0),
-                    viewModel.getSelectedHall().getId()));
+                    hallId)
+            );
         } else {
-            activity.getUseCase(ManageEmployeesShiftUseCase.class).saveRepeatedShift(
+            activity.getUseCase(ManageEmployeesShiftUseCase.class).createRepeatedShift(
                     new ShiftRepeatRequest(
                             CinehubApplication.getSessionToken(),
                             viewModel.getSelectedDayWeek().getDate(),
                             viewModel.getSelectedEndRepeatDay(),
                             viewModel.getSelectedOption().toString(),
-                            viewModel.getSelectedDayWeek().getEmployee(),
+                            viewModel.getSelectedDayWeek().getEmployee().getId(),
                             viewModel.getStartSpinnerTime(),
                             viewModel.getEndSpinnerTime(),
-                            viewModel.getSelectedHall()
+                            hallId
                     )
             );
         }
         if (!viewModel.isErrorAssignVisibility()) {
-            try {
-                viewModel.setSelectedOption(null);
-                navController.navBack();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            viewModel.setSelectedOption(null);
+            navController.goBack();
         }
     }
-
 }
-
-

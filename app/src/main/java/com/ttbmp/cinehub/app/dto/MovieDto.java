@@ -1,6 +1,8 @@
 package com.ttbmp.cinehub.app.dto;
 
 
+import com.ttbmp.cinehub.domain.Movie;
+
 /**
  * @author Ivan Palmieri
  */
@@ -14,14 +16,14 @@ public class MovieDto {
     private String vote;
     private String releases;
 
-    public MovieDto(int id, String name, String overview, String duration, String movieUrl, String vote, String releases) {
-        this.id = id;
-        this.name = name;
-        this.vote = vote;
-        this.overview = overview;
-        this.releases = releases;
-        this.movieUrl = movieUrl;
-        this.duration = duration;
+    public MovieDto(Movie movie) {
+        this.id = movie.getId();
+        this.name = movie.getName();
+        this.overview = movie.getOverview();
+        this.duration = Integer.toString(movie.getDuration());
+        this.movieUrl = movie.getImageUrl();
+        this.vote = movie.getRating();
+        this.releases = movie.getReleaseDate();
     }
 
     public int getId() {

@@ -2,14 +2,12 @@ package com.ttbmp.cinehub.ui.desktop.manageshift.table;
 
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.FxmlView;
 
-import java.io.IOException;
-
 /**
  * @author Massimo Mazzetti
  */
 public class EmployeeCalendarTableCellView extends FxmlView {
 
-    public EmployeeCalendarTableCellView() throws IOException {
+    public EmployeeCalendarTableCellView() {
         super("calendar_employee_item.fxml");
 
     }

@@ -1,8 +1,7 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
-import com.ttbmp.cinehub.app.datamapper.ShiftDataMapper;
-import com.ttbmp.cinehub.app.dto.ShiftDto;
-import com.ttbmp.cinehub.domain.shift.Shift;
+import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 
 import java.util.List;
 
@@ -11,10 +10,20 @@ import java.util.List;
  */
 public class ShiftListReply {
 
+    private EmployeeDto employeeDto;
     private List<ShiftDto> shiftDtoList;
 
-    public ShiftListReply(List<Shift> shiftList) {
-        this.shiftDtoList = ShiftDataMapper.mapToDtoList(shiftList);
+    public ShiftListReply(EmployeeDto employeeDto, List<ShiftDto> shiftDtoList) {
+        this.employeeDto = employeeDto;
+        this.shiftDtoList = shiftDtoList;
+    }
+
+    public EmployeeDto getEmployeeDto() {
+        return employeeDto;
+    }
+
+    public void setEmployeeDto(EmployeeDto employeeDto) {
+        this.employeeDto = employeeDto;
     }
 
     public List<ShiftDto> getShiftDtoList() {

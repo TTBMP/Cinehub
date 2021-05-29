@@ -2,14 +2,12 @@ package com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.master.calendar.tablec
 
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.FxmlView;
 
-import java.io.IOException;
-
 /**
  * @author Fabio Buracchi
  */
 public class CalendarShiftItemView extends FxmlView {
 
-    public CalendarShiftItemView() throws IOException {
+    public CalendarShiftItemView() {
         super("view_personal_schedule/calendar_shift_item.fxml");
         addStylesheet("styles.css");
     }

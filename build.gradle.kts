@@ -1,13 +1,13 @@
 plugins {
-    id("org.sonarqube") version "3.1.1"
+    id("org.sonarqube") version "3.2.0"
 }
 
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath("org.sonarsource.scanner.gradle", "sonarqube-gradle-plugin", "3.1.1")
+        classpath("org.sonarsource.scanner.gradle", "sonarqube-gradle-plugin", "3.2.0")
     }
 }
 

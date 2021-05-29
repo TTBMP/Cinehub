@@ -8,7 +8,8 @@ import com.ttbmp.cinehub.app.utilities.request.Request;
  */
 public class SeatListRequest extends AuthenticatedRequest {
 
-    public static final Request.Error PROJECTION_ERROR = new Request.Error("Projection id can't be negative");
+    public static final Request.Error PROJECTION_ERROR = new Request.Error("Projection id can't be null");
+
     private int projectionId;
 
     public SeatListRequest(String sessionToken, int projectionId) {
@@ -26,10 +27,8 @@ public class SeatListRequest extends AuthenticatedRequest {
 
     @Override
     public void onValidate() {
-        if (projectionId < 0) {
-            addError(PROJECTION_ERROR);
-
-        }
+        // Do nothing because the class doesn't have attributes.
     }
+
 
 }

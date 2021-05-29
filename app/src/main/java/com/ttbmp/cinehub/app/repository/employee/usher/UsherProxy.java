@@ -13,7 +13,6 @@ import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -144,17 +143,14 @@ public class UsherProxy extends Usher {
 
     @Override
     public List<Shift> getShiftList() {
-        try {
-            if (!isShiftListLoaded) {
+        if (!isShiftListLoaded) {
+            try {
                 setShiftList(shiftRepository.getShiftList(this));
-                return super.getShiftList();
-            } else {
-                return new ArrayList<>();
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
             }
-        } catch (RepositoryException e) {
-            throw new LazyLoadingException(e.getMessage());
         }
-
+        return super.getShiftList();
     }
 
     @Override

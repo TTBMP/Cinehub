@@ -1,33 +1,31 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
-import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 
 
 public class GetEmployeeListRequest extends AuthenticatedRequest {
 
-    public static final Request.Error MISSING_CINEMA = new Request.Error("Cinema non valido");
+    public static final Request.Error INVALID_CINEMA = new Request.Error("Cinema non valido");
 
-    private CinemaDto cinema;
+    private int cinemaId;
 
-    public GetEmployeeListRequest(String sessionToken, CinemaDto cinema) {
+    public GetEmployeeListRequest(String sessionToken, int cinemaId) {
         super(sessionToken);
-        this.cinema = cinema;
+        this.cinemaId = cinemaId;
     }
 
-    public CinemaDto getCinema() {
-        return cinema;
+    public int getCinemaId() {
+        return cinemaId;
     }
 
-    public void setCinema(CinemaDto cinema) {
-        this.cinema = cinema;
+    public void setCinemaId(int cinemaId) {
+        this.cinemaId = cinemaId;
     }
 
     @Override
     protected void onValidate() {
-        if (cinema == null) {
-            addError(MISSING_CINEMA);
-        }
+        // Do nothing because the class doesn't have attributes.
     }
+
 }

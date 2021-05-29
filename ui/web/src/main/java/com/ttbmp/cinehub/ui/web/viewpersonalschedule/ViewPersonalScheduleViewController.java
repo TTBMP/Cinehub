@@ -3,7 +3,6 @@ package com.ttbmp.cinehub.ui.web.viewpersonalschedule;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ProjectionListRequest;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ShiftListRequest;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalScheduleHandler;
-import com.ttbmp.cinehub.ui.web.domain.Shift;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -20,6 +19,8 @@ import java.time.temporal.TemporalAdjusters;
 @Controller
 public class ViewPersonalScheduleViewController {
 
+    private static final String SCHEDULE_FORM_ATTRIBUTE_NAME = "scheduleForm";
+
     @GetMapping("/schedule")
     public String showShiftList(
             HttpServletResponse response,
@@ -30,34 +31,32 @@ public class ViewPersonalScheduleViewController {
             date = LocalDate.now();
         }
         model.addAttribute("date", date);
-        model.addAttribute("selectedShift", new Shift());
+        model.addAttribute(SCHEDULE_FORM_ATTRIBUTE_NAME, new ScheduleForm());
         var useCase = new ViewPersonalScheduleHandler(new ViewPersonalSchedulePresenterWeb(model));
         useCase.getShiftList(new ShiftListRequest(
                 sessionToken,
                 date.with(TemporalAdjusters.firstDayOfMonth()),
                 date.with(TemporalAdjusters.lastDayOfMonth())
         ));
-        return ErrorHelper.returnView(response, model, "schedule");
+        return ErrorHelper.returnView(response, model, "view_personal_schedule/schedule");
     }
 
     @PostMapping("/schedule/detail")
-    public String showShiftDetail(HttpServletResponse response, @ModelAttribute Shift shift, Model model) {
-        model.addAttribute("shift", shift);
-        return ErrorHelper.returnView(response, model, "schedule_detail");
+    public String showShiftDetail(HttpServletResponse response, @ModelAttribute ScheduleForm scheduleForm, Model model) {
+        model.addAttribute(SCHEDULE_FORM_ATTRIBUTE_NAME, scheduleForm);
+        return ErrorHelper.returnView(response, model, "view_personal_schedule/schedule_detail");
     }
 
     @PostMapping("/schedule/detail/projectionist")
     public String showProjectionistShiftDetail(
             HttpServletResponse response,
             @CookieValue(value = "session", required = false) String sessionToken,
-            @ModelAttribute Shift shift, Model model) {
-        model.addAttribute("shift", shift);
+            @ModelAttribute ScheduleForm scheduleForm,
+            Model model) {
+        model.addAttribute(SCHEDULE_FORM_ATTRIBUTE_NAME, scheduleForm);
         var useCase = new ViewPersonalScheduleHandler(new ViewPersonalSchedulePresenterWeb(model));
-        useCase.getShiftProjectionList(new ProjectionListRequest(
-                sessionToken,
-                shift.getId())
-        );
-        return ErrorHelper.returnView(response, model, "schedule_projectionist_detail");
+        useCase.getShiftProjectionList(new ProjectionListRequest(sessionToken, scheduleForm.getShift().getId()));
+        return ErrorHelper.returnView(response, model, "view_personal_schedule/schedule_projectionist_detail");
     }
 
 }

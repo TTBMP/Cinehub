@@ -1,17 +1,17 @@
 plugins {
     id("com.ttbmp.cinehub.java-application-conventions")
-    id("org.openjfx.javafxplugin") version "0.0.9"
+    id("org.openjfx.javafxplugin") version "0.0.10"
 }
 
 dependencies {
     implementation(project(":app"))
 
-    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.6.2")
+    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.7.2")
     testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine")
 }
 
 javafx {
-    version = "15.0.1"
+    version = "16"
     modules("javafx.controls", "javafx.fxml")
 }
 

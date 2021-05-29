@@ -9,7 +9,7 @@ public class Shift {
     private String date;
     private String start;
     private String end;
-    private Employee employee;
+    private String employeeId;
     private Hall hall;
 
     public Hall getHall() {
@@ -52,12 +52,12 @@ public class Shift {
         this.end = end;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public String getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
     }
 
 }

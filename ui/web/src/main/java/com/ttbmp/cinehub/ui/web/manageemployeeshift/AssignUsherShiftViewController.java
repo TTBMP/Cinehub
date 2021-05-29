@@ -1,10 +1,8 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
-import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftHandler;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.CreateShiftRequest;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetCinemaListRequest;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetEmployeeListRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewShiftForm;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
@@ -41,9 +39,8 @@ public class AssignUsherShiftViewController {
             @RequestParam(value = "idCinema") int cinemaId, Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         model.addAttribute("idCinema", cinemaId);
-        useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
-        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
+
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, cinemaId));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         var shiftRequest = new NewShiftForm();
         model.addAttribute(ASSIGN_REQUEST, shiftRequest);
@@ -58,10 +55,7 @@ public class AssignUsherShiftViewController {
             @ModelAttribute(ASSIGN_REQUEST) NewShiftForm request,
             Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
-        model.addAttribute("idCinema", cinemaId);
-        useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
-        var selectedCinema = (CinemaDto) model.getAttribute("selectedCinema");
-        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, selectedCinema));
+        useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, cinemaId));
         model.addAttribute("now", LocalDate.now().plusDays(1));
         useCase.createShift(new CreateShiftRequest(
                 sessionToken,

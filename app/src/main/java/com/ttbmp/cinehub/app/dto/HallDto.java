@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.app.dto;
 
-import java.util.List;
+import com.ttbmp.cinehub.domain.Hall;
 
 /**
  * @author Ivan Palmieri
@@ -8,25 +8,11 @@ import java.util.List;
 public class HallDto {
 
     private Integer id;
-    private List<SeatDto> seatList;
     private String name;
 
-    public HallDto(Integer id) {
-        this.id = id;
-    }
-
-    public HallDto(Integer id, List<SeatDto> seatList, String name) {
-        this.id = id;
-        this.seatList = seatList;
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public HallDto(Hall hall) {
+        this.id = hall.getId();
+        this.name = hall.getName();
     }
 
     public Integer getId() {
@@ -37,12 +23,12 @@ public class HallDto {
         this.id = id;
     }
 
-    public List<SeatDto> getSeatList() {
-        return seatList;
+    public String getName() {
+        return name;
     }
 
-    public void setSeatList(List<SeatDto> seatList) {
-        this.seatList = seatList;
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

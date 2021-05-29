@@ -14,4 +14,5 @@ public class DialogStage extends Stage {
         initOwner(owner);
         setTitle(title);
     }
+
 }

@@ -1,17 +1,19 @@
 package com.ttbmp.cinehub.app.usecase.buyticket;
 
-import com.ttbmp.cinehub.app.datamapper.MovieDataMapper;
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
+import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
-import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
+import com.ttbmp.cinehub.app.usecase.buyticket.request.MovieListRequest;
 import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
+import com.ttbmp.cinehub.app.utilities.request.Request;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 
 class BuyTicketBuyTicketControllerTest {
@@ -30,9 +32,12 @@ class BuyTicketBuyTicketControllerTest {
         public void presentMovieList(MovieListResponse response) {
             try {
                 var result = true;
-                var movieDtoList = serviceLocator.getService(MovieRepository.class)
+                var movieList = serviceLocator.getService(MovieRepository.class)
                         .getMovieList(String.valueOf(LocalDate.now()));
-                var expected = MovieDataMapper.mapToDtoList(movieDtoList);
+                var movieDtoList = movieList.stream()
+                        .map(MovieDto::new)
+                        .collect(Collectors.toList());
+                var expected = movieDtoList;
                 var actual = response.getMovieList();
                 for (var i = 0; i < expected.size(); i++) {
                     if (expected.get(i).equals(actual.get(i))) {
@@ -59,48 +64,19 @@ class BuyTicketBuyTicketControllerTest {
 
 
         @Override
-        public void presentPayNullRequest() {
-
-        }
-
-        @Override
-        public void presentInvalidPayRequest(PaymentRequest request) {
+        public void presentNullRequest() {
 
         }
 
 
         @Override
-        public void presentCinemaListNullRequest() {
+        public void presentInvalidRequest(Request request) {
 
         }
 
-        @Override
-        public void presentInvalidCinemaListRequest(CinemaListRequest request) {
-
-        }
 
         @Override
-        public void presentProjectionListNullRequest() {
-
-        }
-
-        @Override
-        public void presentInvalidProjectionListRequest(ProjectionListRequest request) {
-
-        }
-
-        @Override
-        public void presentSeatListNullRequest() {
-
-        }
-
-        @Override
-        public void presentInvalidSeatListRequest(SeatListRequest request) {
-
-        }
-
-        @Override
-        public void presentPayPaymentServiceException(PaymentServiceException error) {
+        public void presentPaymentServiceException(PaymentServiceException error) {
 
         }
 
@@ -109,15 +85,6 @@ class BuyTicketBuyTicketControllerTest {
 
         }
 
-        @Override
-        public void presentMovieListNullRequest() {
-
-        }
-
-        @Override
-        public void presentInvalidMovieListRequest(MovieListRequest request) {
-
-        }
 
         @Override
         public void presentTicket(TicketResponse ticketDto) {

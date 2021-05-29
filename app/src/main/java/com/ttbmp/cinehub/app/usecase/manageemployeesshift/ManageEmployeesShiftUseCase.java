@@ -15,7 +15,7 @@ public interface ManageEmployeesShiftUseCase extends UseCase {
 
     void getShiftList(GetShiftListRequest request);
 
-    void saveRepeatedShift(ShiftRepeatRequest request);
+    void createRepeatedShift(ShiftRepeatRequest request);
 
     void deleteShift(ShiftRequest request);
 
