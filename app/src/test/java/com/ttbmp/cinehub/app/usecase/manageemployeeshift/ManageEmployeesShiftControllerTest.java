@@ -28,13 +28,14 @@ import java.util.stream.Collectors;
  **/
 
 class ManageEmployeesShiftControllerTest {
-    private final MockServiceLocator serviceLocator = new MockServiceLocator();
 
+    private MockServiceLocator serviceLocator;
     private MockManageEmployeeShiftViewModel viewModel;
     private ManageEmployeesShiftController controller;
 
     @BeforeEach
     void setPresenter() {
+        serviceLocator = new MockServiceLocator();
         viewModel = new MockManageEmployeeShiftViewModel();
         controller = new ManageEmployeesShiftController(
                 serviceLocator,
@@ -122,9 +123,9 @@ class ManageEmployeesShiftControllerTest {
                 viewModel.getSessionToken(),
                 shift.getEmployee().getId(),
                 shift.getId(),
-                LocalDate.parse(shift.getDate()).plusDays(1),
-                LocalTime.parse(shift.getStart()),
-                LocalTime.parse(shift.getEnd()),
+                LocalDate.parse(shift.getDate()),
+                LocalTime.parse(shift.getStart()).minusHours(1),
+                LocalTime.parse(shift.getEnd()).minusHours(1),
                 -1);
         controller.modifyShift(request);
         Assertions.assertNull(viewModel.getErrorMessage());
