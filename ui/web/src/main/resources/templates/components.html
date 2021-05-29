@@ -1,256 +1,96 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <style>
-        .hoverable {
-            display: inline-block;
-
-            vertical-align: middle;
-            position: relative;
-            box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-            tranform: translateZ(0);
-            transition-duration: .3s;
-
-        }
-
-        .hoverable:before {
-            position: absolute;
-            pointer-events: none;
-            z-index: -1;
-            content: '';
-            top: 100%;
-            left: 5%;
-            height: 10px;
-            width: 90%;
-            opacity: 0;
-            background: -webkit-radial-gradient(center, ellipse, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 80%);
-            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 80%);
-            /* W3C */
-            transition-duration: 0.3s;
-            transition-property: transform, opacity;
-        }
-
-        .hoverable:hover, .hoverable:active, .hoverable:focus {
-            transform: translateY(-5px);
-        }
-
-        .hoverable:hover:before, .hoverable:active:before, .hoverable:focus:before {
-            opacity: 2;
-            transform: translateY(-5px);
-        }
-
-        @keyframes bounce-animation {
-            16.65% {
-                -webkit-transform: translateY(8px);
-                transform: translateY(8px);
-            }
-
-            33.3% {
-                -webkit-transform: translateY(-6px);
-                transform: translateY(-6px);
-            }
-
-            49.95% {
-                -webkit-transform: translateY(4px);
-                transform: translateY(4px);
-            }
-
-            66.6% {
-                -webkit-transform: translateY(-2px);
-                transform: translateY(-2px);
-            }
-
-            83.25% {
-                -webkit-transform: translateY(1px);
-                transform: translateY(1px);
-            }
-
-            100% {
-                -webkit-transform: translateY(0);
-                transform: translateY(0);
-            }
-        }
-
-        .bounce {
-            animation-name: bounce-animation;
-            animation-duration: 2s;
-        }
-
-        nav {
-            background: none !important;
-        }
-
-        li {
-            margin-left: 3em;
-            margin-right: 3em;
-        }
-
-        a {
-            transition: .5s;
-        }
-    </style>
-    <!-- CSS only -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" id="bootstrap-css"
-          rel="stylesheet">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
-          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" rel="stylesheet">
-    <!-- JavaScript Bundle with Popper -->
-    <script crossorigin="anonymous"
-            integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+    <meta th:fragment="charset" charset="utf-8">
+    <meta th:fragment="meta_viewport" name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:fragment="Bootstrap_CSS" rel="stylesheet" crossorigin="anonymous"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/5.0.1/css/bootstrap.min.css}">
     <title></title>
-    <!------ Include the above in your HEAD tag ---------->
 </head>
 <body>
-<nav th:fragment="navbar" class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-    <h4 class="text-white mt-1">Cine</h4>
-    <h4 class="ml-1  bg-primary mt-1 text-dark rectangle rounded">hub</h4>
-    <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-            class="navbar-toggler"
-            data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class=" ml-4 nav-item active">
-                <a class="nav-link" href="/choose_movie" style="text-decoration:none ">
-                    <i class="fa fa-envelope-o">
-                        <i class="fas fa-ticket-alt"></i>
-                    </i>
-            <li><a class="hoverable mt-2" href="/choose_movie" style="color: white">Buy ticket</a></li>
-            <span class="sr-only">(current)</span>
-            </a>
-            </li>
-
-            <li class=" ml-4 nav-item">
-                <a class="nav-link" href="/manage_employee_shift" style="text-decoration: none">
-                    <i class="fa fa-envelope-o">
-                        <i class="fas fa-users"></i>
-                    </i>
-            <li><a class="hoverable mt-2" href="/manage_employee_shift" style="color: white">Manage employee
-                shift</a></li>
-            </a>
-            </li>
-            <li class=" ml-4 nav-item">
-                <a class="nav-link " href="/schedule" style="text-decoration: none">
-                    <i class="fa fa-envelope-o">
-                        <i class="far fa-calendar-alt"></i>
-                    </i>
-            <li><a class="hoverable mt-2 disabled" href="/schedule" style="color: white">View personal schedule</a>
-            </li>
-            </a>
-            </li>
-            <li class="ml-4 nav-item">
-                <a class="nav-link " href="/about" style="text-decoration: none">
-                    <i class="fa fa-envelope-o">
-                        <i class="fas fa-info"></i>
-                    </i>
-            <li><a class="hoverable mt-2 disabled" href="/about" style="color: white ">About</a></li>
-            </a>
-            </li>
-        </ul>
-        <ul class=" navbar-nav ">
-            <li class="mr-4 nav-item">
-                <a class="nav-link" href="#" style="text-decoration: transparent">
-
-                    Login
-                </a>
-            </li>
-            <li class=" mr-4 nav-item">
-                <a class=" nav-link" href="#" style="text-decoration: transparent">
-
-                    Register
-                </a>
-            </li>
-        </ul>
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <link href="../static/css/navbar.css" rel="stylesheet" th:href="@{css/navbar.css}" type="text/css">
+    <div class="container-md">
+        <a class="navbar-brand mb-0 h1" href="#" th:href="@{/}">Cinehub</a>
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler"
+                data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item" th:if="${is_buy_ticket_tab_visible}">
+                    <a aria-current="page" class="nav-link active" href="#" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item" th:if="${is_manage_shift_tab_visible}">
+                    <a class="nav-link" href="#" th:href="@{/manage_employee_shift}">Manage shift</a>
+                </li>
+                <li class="nav-item" th:if="${is_view_personal_schedule_tab_visible}">
+                    <a class="nav-link" href="#" th:href="@{/schedule}">View schedule</a>
+                </li>
+                <li class="nav-item" th:if="${is_about_tab_visible}">
+                    <a class="nav-link" href="#" th:href="@{/about}">About</a>
+                </li>
+            </ul>
+            <form action="#" method="GET" th:action="@{/login}">
+                <input class="btn btn-primary" type="submit" value="Login" th:if="${is_login_tab_visible}"/>
+            </form>
+            <form action="#" method="GET" th:action="@{/logout}">
+                <input class="btn btn-outline-secondary" type="submit" value="Logout" th:if="${is_logout_tab_visible}"/>
+            </form>
+        </div>
     </div>
-    <script>
-        $(function () {
-            var str = '#len'; //increment by 1 up to 1-nelemnts
-            $(document).ready(function () {
-                var i, stop;
-                i = 1;
-                stop = 4; //num elements
-                setInterval(function () {
-                    if (i > stop) {
-                        return;
-                    }
-                    $('#len' + (i++)).toggleClass('bounce');
-                }, 500)
-            });
-        });
-    </script>
 </nav>
-
-<footer th:fragment="footer" class="bg-dark text-center text-white mt-5" style="height: auto; width: 100%">
-    <div class="container text-center">
+<footer th:fragment="footer" class="text-light pt-4 mt-md-5 pt-md-5 border-top" style="background-color: #343a40;">
+    <div class="container">
         <div class="row">
-            <div class="col-md-3 mt-3 col-lg-3 col-xl-3 mx-auto mb-4">
-                <h6 class="text-uppercase font-weight-bold">TTBMP</h6>
-                <hr>
-                <p>
-                    Management based on the purchase, management and control of users and shift schedules.
-                    is a project born from the need to add functionality to a system based on the transmission
-                    of films in a certain territory
-                </p>
+            <div class="col-12 col-md">
+                <h4>Cinehub</h4>
             </div>
-            <div class="col-md-2 mt-3 col-lg-3 col-xl-3 mx-auto mb-4">
-                <h6 class=" font-weight-bold">Products</h6>
-                <hr>
-                <p>
-                    <a class="badge badge-dark" href="https://github.com/TTBMP/Cinehub">Cinehub</a>
-                </p>
-                <p>
-                    <a class="badge badge-dark" href="https://github.com/TTBMP/deliverables">Deliverables</a>
-                </p>
+            <div class="col-6 col-md">
+                <h5>Resources</h5>
+                <ul class="list-unstyled text-small">
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource name</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another resource</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Final resource</a></li>
+                </ul>
             </div>
-            <div class="col-md-3 mt-3 col-lg-3 col-xl-3 mx-auto mb-4">
-                <h6 class="font-weight-bold">Members</h6>
-                <hr>
-                <p>
-                    <a class="badge badge-dark" href="https://github.com/buracchi">Fabio Buracchi</a>
-                </p>
-                <p>
-                    <a class="badge badge-dark" href="https://github.com/sonMassimo1">Massimo Mazzetti</a>
-                </p>
-                <p>
-                    <a class="badge badge-dark" href="https://github.com/Ivan-Palm">Ivan Palmieri</a>
-                </p>
-            </div>
-            <div class="col-md-4 mt-3 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                <h6 class=" font-weight-bold">Links</h6>
-                <hr>
-                <p>
-                    <a class="badge badge-dark" href="https://firebase.google.com/?hl=it">FireBase</a>
-                </p>
-                <p>
-                    <a class="badge badge-dark" href="https://www.themoviedb.org/?language=it-IT">The Movie
-                        DB</a>
-                </p>
-                <p>
-                    <a class="badge badge-dark" href="https://stripe.com/it">Stripe</a>
-                </p>
-                <p>
-                    <a class="badge badge-dark" href="https://www.mysql.com/it/">MySql</a>
-                </p>
+            <div class="col-6 col-md">
+                <h5>About</h5>
+                <ul class="list-unstyled text-small">
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Locations</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Privacy</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Terms</a></li>
+                </ul>
             </div>
         </div>
     </div>
-    <div class=" font-italic footer-copyright text-center py-3">2020 Copyright: TTBMP
-        <p><a href="https://github.com/TTBMP">
-            <svg class="bi bi-github" fill="white" height="16" viewBox="0 0 16 16" width="16"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-            </svg>
-        </a>
-        </p>
-    </div>
+    <footer class="footer mt-auto pt-3 bg-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-md"></div>
+                <div class="col-md">
+                    <small class="d-block mb-3 text-muted">© 2021–2025</small>
+                </div>
+                <div class="col-md">
+                    <a href="https://github.com/TTBMP">
+                        <svg class="bi bi-github" fill="white" height="16" viewBox="0 0 16 16" width="16"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </footer>
+<script th:fragment="Bootstrap_JS" crossorigin="anonymous"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        th:src="@{/webjars/bootstrap/5.0.1/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>
