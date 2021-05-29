@@ -22,5 +22,5 @@ public class ProjectionListReply {
     public void setProjectionDtoList(List<ProjectionDto> projectionDtoList) {
         this.projectionDtoList = projectionDtoList;
     }
-    
+
 }

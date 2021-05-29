@@ -2,7 +2,6 @@ package com.ttbmp.cinehub.ui.web.login;
 
 import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.usecase.login.LoginPresenter;
-import com.ttbmp.cinehub.app.usecase.login.LoginRequest;
 import com.ttbmp.cinehub.app.usecase.login.LoginResponse;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;

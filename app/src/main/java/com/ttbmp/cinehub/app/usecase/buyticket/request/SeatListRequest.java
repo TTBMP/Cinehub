@@ -2,7 +2,6 @@ package com.ttbmp.cinehub.app.usecase.buyticket.request;
 
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
-import com.ttbmp.cinehub.domain.Projection;
 
 /**
  * @author Ivan Palmieri

@@ -6,12 +6,8 @@ plugins {
 dependencies {
     implementation(project(":app"))
 
-    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.7.0")
+    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.7.2")
     testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine")
-
-    testImplementation("org.testfx:testfx-core:4.0.16-alpha")
-    testImplementation("org.testfx:testfx-junit5:4.0.16-alpha")
-
 }
 
 javafx {

@@ -3,6 +3,6 @@ plugins {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.7.0")
+    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.7.2")
     testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine")
 }

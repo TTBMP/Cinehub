@@ -104,7 +104,7 @@ public class ShiftRepeatRequest extends AuthenticatedRequest {
             addError(MISSING_START);
         } else if (end == null) {
             addError(MISSING_END);
-        }else if(LocalDate.now().isAfter(start)){
+        } else if (LocalDate.now().isAfter(start)) {
             addError(MISSING_START);
         } else if (start.isAfter(end)) {
             addError(PERIOD_ERROR);

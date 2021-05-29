@@ -213,7 +213,8 @@ public class BuyTicketController implements BuyTicketUseCase {
             presenter.presentUnauthorizedError(e);
         }
     }
-    private void semanticValidatePay(PaymentRequest request, Customer customer, Projection projection, Seat seat) throws Request.InvalidRequestException{
+
+    private void semanticValidatePay(PaymentRequest request, Customer customer, Projection projection, Seat seat) throws Request.InvalidRequestException {
         if (customer == null) {
             request.addError(PaymentRequest.MISSING_CUSTOMER_ERROR);
         }

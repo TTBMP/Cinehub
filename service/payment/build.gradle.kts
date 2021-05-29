@@ -3,8 +3,8 @@ plugins {
 }
 
 dependencies {
-    implementation("com.stripe", "stripe-java", "20.24.0")
+    implementation("com.stripe", "stripe-java", "20.52.0")
 
-    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.7.0")
+    testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.7.2")
     testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine")
 }

@@ -2,7 +2,6 @@ package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
-import com.ttbmp.cinehub.domain.Cinema;
 
 import java.time.LocalDate;
 
