@@ -6,6 +6,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: #f5f5f5;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 main {
