@@ -10,6 +10,9 @@ import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
@@ -21,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 class ViewPersonalScheduleSeleniumTest {
 
-    public WebElement datePicker;
     private WebDriver driver;
 
     @BeforeAll
@@ -35,9 +37,6 @@ class ViewPersonalScheduleSeleniumTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         driver.get("http://localhost:8080/");
-        driver.manage().addCookie(new Cookie("session", "T8SP2uHYdHZfBk6uh3fJ356Sji52"));
-        driver.findElement(By.linkText("View personal schedule")).click();
-        datePicker = driver.findElement(By.id("date-picker"));
     }
 
     @AfterEach
@@ -47,10 +46,26 @@ class ViewPersonalScheduleSeleniumTest {
 
     @Test
     void isDefaultDateTodayDate() {
+        loginAsProjectionist();
+        var scheduleTab = driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[2]/a"));
+        scheduleTab.click();
+        new WebDriverWait(driver, 5).until(ExpectedConditions.presenceOfElementLocated(By.id("date-picker")));
+        var datePicker = driver.findElement(By.id("date-picker"));
         assertEquals(
                 LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE),
                 datePicker.getAttribute("value")
         );
+    }
+
+    private void loginAsProjectionist() {
+        var loginButton = driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/form[1]/input"));
+        loginButton.click();
+        var emailInput = driver.findElement(By.xpath("//*[@id=\"floatingInput\"]"));
+        var passwordInput = driver.findElement(By.xpath("//*[@id=\"floatingPassword\"]"));
+        var sigInButton = driver.findElement(By.xpath("/html/body/main/form/button"));
+        new Actions(driver).click(emailInput).sendKeys("fb@cinehub.com").perform();
+        new Actions(driver).click(passwordInput).sendKeys("asdfghjkl").perform();
+        sigInButton.click();
     }
 
 }
