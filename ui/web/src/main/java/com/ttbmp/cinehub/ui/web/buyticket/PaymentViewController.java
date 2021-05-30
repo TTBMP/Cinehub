@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
 
 /**
  * @author Palmieri Ivan
@@ -27,6 +28,7 @@ public class PaymentViewController {
         paymentForm.setOption2(optionTwo);//openBar
         paymentForm.setOption3(optionThree);//magicBox
         model.addAttribute("payment_form", paymentForm);
+        model.addAttribute("now", LocalDate.now());
         return ErrorHelper.returnView(response, model, "buy_ticket/payment");
     }
 

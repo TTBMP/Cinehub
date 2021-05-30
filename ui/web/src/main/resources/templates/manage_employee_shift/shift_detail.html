@@ -9,7 +9,7 @@
     <link href="../../static/css/theme.css" rel="stylesheet" th:href="@{css/theme.css}" type="text/css">
     <title>Shift Detail</title>
 </head>
-<body style="background-color: black">
+<body>
 <nav th:replace="components::navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <link href="../../static/css/navbar.css" rel="stylesheet" th:href="@{css/navbar.css}" type="text/css">
     <div class="container-md">
@@ -43,11 +43,8 @@
         </div>
     </div>
 </nav>
-<h1 align="center">Shift Detail</h1>
-
-<br/>
-<!--<div class="container" th:value="${employee} + ${shiftDetail} + ${projection}">-->
-<div class="container" }>
+<div class="container">
+    <h1 align="center">Shift Detail</h1>
     <div class="row">
         <div class="col-sm"> Name</div>
         <div class="col-sm" th:text="${shiftDetail.employee.name}"> Pippo</div>
@@ -56,14 +53,12 @@
         <div class="col-sm"> Surname</div>
         <div class="col-sm" th:text="${shiftDetail.employee.surname}"> Pluto</div>
     </div>
-
     <div class="row">
         <div class="col-sm"> Role</div>
         <div class="col-sm" th:if="${shiftDetail.employee.role == 'usher'}">Usher</div>
         <!-- ELSE -->
         <div class="col-sm" th:unless="${shiftDetail.employee.role == 'usher'}">Projectionist</div>
     </div>
-
     <div class="row">
         <div class="col-sm"> Date</div>
         <div class="col-sm" id="day" th:text="${shiftDetail.date}"></div>
@@ -84,8 +79,6 @@
         <div class="col-sm"> Hall</div>
         <div class="col-sm" th:text="${shiftDetail.hall.name}"></div>
     </div>
-
-
     <a href="/manage_employee_shift">
         <button class="btn btn-outline-primary btn-sm" type="button">
             Close
@@ -111,9 +104,7 @@
             </div>
         </div>
     </div>
-
 </div>
-
 <div class="modal it-dialog-scrollable fade" id="modifyShift" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-dialog-right" role="document">
         <div class="modal-content">
@@ -131,13 +122,11 @@
                             <div class="col-sm"> Surname</div>
                             <div class="col-sm" th:text="${shiftDetail.employee.surname}"> Pluto</div>
                         </div>
-
                         <div class="row">
                             <div class="col-sm"> Role</div>
                             <div class="col-sm" th:if="${shiftDetail.employee.role == 'usher'}">Usher</div>
                             <div class="col-sm" th:unless="${shiftDetail.employee.role == 'usher'}">Projectionist</div>
                         </div>
-
                         <div class="row">
                             <div class="col-sm"> Date</div>
                             <input id="modifyDate" required th:attr="min=${now}" th:field="*{date}"
@@ -167,7 +156,6 @@
                             </select>
                         </div>
                     </div>
-
                     <input th:name="shiftId" th:value="${shiftDetail.shiftId}" type="hidden"/>
                     <input th:name="employee.id" th:value="${shiftDetail.employee.id}" type="hidden"/>
                     <input th:name="employee.role" th:value="${shiftDetail.employee.toString()}" type="hidden"/>
@@ -176,7 +164,6 @@
                     <input th:name="employee.cinema.id" th:value="${shiftDetail.employee.cinema.id}" type="hidden"/>
                     <input th:name="employee.cinema.name" th:value="${shiftDetail.employee.cinema.name}" type="hidden"/>
                     <input th:name="change" th:value="true" type="hidden"/>
-
                     <br/>
                     <div class="modal-footer">
                         <button class="btn btn-primary btn-lg btn-block" type="submit">Modify Shift</button>

@@ -7,94 +7,60 @@
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" rel="stylesheet">
     <link href="../static/css/theme.css" rel="stylesheet" th:href="@{css/theme.css}" type="text/css">
-    <title>Getting Started: Serving Web Content</title>
+    <link href="../../static/css/styleIvan.css" rel="stylesheet" th:href="@{css/styleIvan.css}" type="text/css">
+    <title>Cinehub</title>
 </head>
-<body style="background-color: black">
-<nav th:replace="components::navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <link href="../../static/css/navbar.css" rel="stylesheet" th:href="@{css/navbar.css}" type="text/css">
-    <div class="container-md">
-        <a class="navbar-brand mb-0 h1" href="#">Cinehub</a>
-        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-                class="navbar-toggler"
-                data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a aria-current="page" class="nav-link active" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Manage shift</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">View schedule</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-            </ul>
-            <form action="#" method="GET">
-                <input class="btn btn-primary" type="submit" value="Login"/>
-            </form>
-            <form action="#" method="GET">
-                <input class="btn btn-outline-secondary" type="submit" value="Logout"/>
-            </form>
-        </div>
-    </div>
-</nav>
-<div class="container mt-3" style="background-color: black; color: white">
-
-    <div class="card" style="border-color: white;background-color: black">
-        <div class="jumbotron" style="background-color: black">
-            <h1 class="display-3">Payment With Success</h1>
-            <div class="row mt-5">
-                <div class="col-3 mt-2">
-                    <h5>Ticket: </h5>
-                </div>
-                <div class="col-3 mt-2">
-                    <p th:text="${payment_form.seat.position}"></p>
-                </div>
-                <div class="col-3 mt-2">
-                    <h5>Cinema: </h5>
-                </div>
-                <div class="col-3 mt-2">
-                    <p th:text="${payment_form.cinema.name}"></p>
-                </div>
-
-                <div class="col-3 mt-2">
-                    <h5>Movie: </h5>
-                </div>
-                <div class="col-3 mt-2">
-                    <p th:text="${payment_form.movie.name}"></p>
-                </div>
-                <div class="col-3 mt-2">
-                    <h5>Date: </h5>
-                </div>
-                <div class="col-3 mt-2">
-                    <p th:text="${payment_form.date}"></p>
-                </div>
-
-                <div class="col-3 mt-2">
-                    <h5>Screening time: </h5>
-                </div>
-                <div class="col-3 mt-2">
-                    <p th:text="${payment_form.projection.startTime}"></p>
-                </div>
-                <div class="col-3 mt-2">
-                    <h5>Price(€): </h5>
-                </div>
-                <div class="col-3 mt-2">
-                    <p th:text="${ticketDetail.price} "></p>
-                </div>
+</div>
+<body style="font-family: Arial,serif">
+<div class="container mt-3">
+    <div class="card p-5">
+        <h1 class="display-3">Payment With Success</h1>
+        <div class="row mt-5">
+            <div class="col-3 mt-2">
+                <h5>Ticket: </h5>
             </div>
-            <p class="lead mt-5">
-                An email has been sent to the address associated with this account.</p>
-            <hr class="my-4">
+            <div class="col-3 mt-2">
+                <p th:text="${payment_form.seat.position}"></p>
+            </div>
+            <div class="col-3 mt-2">
+                <h5>Cinema: </h5>
+            </div>
+            <div class="col-3 mt-2">
+                <p th:text="${payment_form.cinema.name}"></p>
+            </div>
+            <div class="col-3 mt-2">
+                <h5>Movie: </h5>
+            </div>
+            <div class="col-3 mt-2">
+                <p th:text="${payment_form.movie.name}"></p>
+            </div>
+            <div class="col-3 mt-2">
+                <h5>Date: </h5>
+            </div>
+            <div class="col-3 mt-2">
+                <p th:text="${payment_form.date}"></p>
+            </div>
+
+            <div class="col-3 mt-2">
+                <h5>Screening time: </h5>
+            </div>
+            <div class="col-3 mt-2">
+                <p th:text="${payment_form.projection.startTime}"></p>
+            </div>
+            <div class="col-3 mt-2">
+                <h5>Price(€): </h5>
+            </div>
+            <div class="col-3 mt-2">
+                <p th:text="${ticketDetail.price} "></p>
+            </div>
         </div>
+        <p class="lead mt-5">
+            An email has been sent to the address associated with this account.</p>
+        <hr class="my-4">
         <p class="lead m-4"><a class="btn btn-primary btn-lg" href="\choose_movie" role="button">Back to menu</a>
         </p>
     </div>
+
 </div>
 <footer th:replace="components::footer" class="text-light pt-md-5 border-top" style="background-color: #343a40;">
     <div class="container">

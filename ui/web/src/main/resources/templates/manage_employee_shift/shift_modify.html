@@ -43,12 +43,14 @@
         </div>
     </div>
 </nav>
-<h1> Shift Modify Successful</h1>
-<a href="manage_employee_shift.html" th:href="@{/manage_employee_shift}">
-    <button class="btn btn-outline-primary btn-sm" type="button">
-        Close
-    </button>
-</a>
+<div class="container text-center mt-5">
+    <h1>Shift Modify Successful</h1>
+    <a href="/manage_employee_shift">
+        <button class="btn btn-primary btn-lg" type="button">
+            Close
+        </button>
+    </a>
+</div>
 <footer th:replace="components::footer" class="text-light pt-md-5 border-top" style="background-color: #343a40;">
     <div class="container">
         <div class="row">

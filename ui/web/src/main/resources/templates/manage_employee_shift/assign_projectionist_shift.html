@@ -9,7 +9,6 @@
     <link href="../../static/css/theme.css" rel="stylesheet" th:href="@{css/theme.css}" type="text/css">
     <title>Manage Employee Shift</title>
 </head>
-
 <body>
 <nav th:replace="components::navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <link href="../../static/css/navbar.css" rel="stylesheet" th:href="@{css/navbar.css}" type="text/css">
@@ -44,56 +43,58 @@
         </div>
     </div>
 </nav>
-<h1 align="center">Assign Projectionist Shift</h1>
-<div>
-    <form action="#" method="post" th:object="${assignRequest}">
-
-        <div class="col-sm"> Employee</div>
-        <select id="employeeComboBox" required th:field="*{employee.id}">
-            <option th:each="employee : ${projectionistList}"
-                    th:text="${employee.name + ' '+ employee.surname}"
-                    th:value="${employee.id}">1
-            </option>
-        </select>
-
-        <label>Date</label>
-        <input id="date" required th:attr="min=${now}" th:field="*{date}" type="date"/>
-        <br/>
-
-        <div class="form-group row">
-            <div class="col-md-3 mb-3">
-                <label for="start_time">Start Shift</label>
-                <input class="form-control" id="start_time"
-                       required th:field="*{start}" type="time">
+<div class="container">
+    <h1 class="text-center mt-3">Assign Projectionist Shift</h1>
+    <div>
+        <form action="#" method="post" th:object="${assignRequest}">
+            <div class="row justify-content-center text-center">
+                <div class="col-4 mt-3">
+                    <label> Employee</label>
+                    <select id="employeeComboBox" required th:field="*{employee.id}">
+                        <option th:each="employee : ${projectionistList}"
+                                th:text="${employee.name + ' '+ employee.surname}"
+                                th:value="${employee.id}">1
+                        </option>
+                    </select>
+                </div>
+                <div class="col-4 mt-3 ">
+                    <label>Date</label>
+                    <input id="date" required th:attr="min=${now}" th:field="*{date}" type="date"/>
+                </div>
+                <div class="col-4 mt-3">
+                    <label> Hall</label>
+                    <select id="modifyHallComboBox" required th:field="*{hall.id}" th:value="${hall}">
+                        <option th:each="hall : ${hallList}"
+                                th:text="${hall.name}"
+                                th:value="${hall.id}">1
+                        </option>
+                    </select>
+                </div>
+                <div class="col-12  mt-5  ">
+                    <label>Start Shift</label>
+                    <input class="form-control" id="start_time"
+                           required th:field="*{start}" type="time">
+                </div>
+                <div class="col-12  mt-5">
+                    <label>End Shift</label>
+                    <input class="form-control" id="end_time" required th:field="*{end}"
+                           type="time">
+                </div>
+                <div class="col-6 mt-5">
+                    <a href="/shift_assigned">
+                        <button class="btn btn-primary btn-lg">Save Shift</button>
+                    </a>
+                </div>
+                <div class="col-6  mt-5">
+                    <a href="/manage_employee_shift">
+                        <button class="btn btn-danger btn-lg">
+                            Close
+                        </button>
+                    </a>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-3 mb-3">
-                <label for="end_time">End Shift</label>
-                <input class="form-control" id="end_time" required th:field="*{end}" type="time">
-            </div>
-        </div>
-
-        <div class="col-sm"> Hall</div>
-        <select id="modifyHallComboBox" required th:field="*{hall.id}" th:value="${hall}">
-            <option th:each="hall : ${hallList}"
-                    th:text="${hall.name}"
-                    th:value="${hall.id}">1
-            </option>
-        </select>
-        <br/>
-
-        <a href="/shift_assigned">
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Save Shift</button>
-        </a>
-        <br/>
-        <a href="/manage_employee_shift">
-            <button class="btn btn-secondary btn-lg btn-block" type="button">
-                Close
-            </button>
-        </a>
-    </form>
+        </form>
+    </div>
 </div>
 <footer th:replace="components::footer" class="text-light pt-md-5 border-top" style="background-color: #343a40;">
     <div class="container">
