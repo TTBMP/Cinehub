@@ -16,7 +16,6 @@ public class ErrorHelper {
     public static final String INVALID_ERROR_MESSAGE = "Invalid request";
     public static final String UNAUTHENTICATED_ERROR_MESSAGE = "Unauthenticated request";
 
-
     private ErrorHelper() {
 
     }

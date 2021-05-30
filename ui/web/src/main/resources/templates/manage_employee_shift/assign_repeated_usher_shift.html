@@ -6,12 +6,13 @@
     <link th:replace="components::Bootstrap_CSS" crossorigin="anonymous"
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" rel="stylesheet">
-    <link href="../static/css/theme.css" rel="stylesheet" th:href="@{css/theme.css}" type="text/css">
-    <title>Error</title>
+    <link href="../../static/css/theme.css" rel="stylesheet" th:href="@{css/theme.css}" type="text/css">
+    <title>Manage Employee Shift</title>
 </head>
+
 <body>
 <nav th:replace="components::navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <link href="../static/css/navbar.css" rel="stylesheet" th:href="@{css/navbar.css}" type="text/css">
+    <link href="../../static/css/navbar.css" rel="stylesheet" th:href="@{css/navbar.css}" type="text/css">
     <div class="container-md">
         <a class="navbar-brand mb-0 h1" href="#">Cinehub</a>
         <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
@@ -43,14 +44,61 @@
         </div>
     </div>
 </nav>
-<main>
-    <div class="container p-4">
-        <div align="center" class="p-5">
-            <p th:text="${error}">Error message</p>
-            <a href="../static/index.html" th:href="@{/}">Return to home page</a>
+<h1 align="center">Assign Repeated Usher Shift</h1>
+<div>
+    <form action="#" method="post" th:object="${assignRequest}">
+
+        <div class="col-sm"> Employee</div>
+        <div class="col-sm"> Employee</div>
+        <select id="employeeComboBox" th:field="*{employeeId}">
+            <option th:each="employee : ${usherList}"
+                    th:text="${employee.name + ' '+ employee.surname}"
+                    th:value="${employee.id}">1
+            </option>
+        </select>
+
+        <label>Date</label>
+        <input id="date" required th:attr="min=${now}" th:field="*{date}" type="date"/>
+        <br/>
+
+        <div class="form-group row">
+            <div class="col-md-3 mb-3">
+                <label for="start_time">Start Shift</label>
+                <input aria-describedby="inputGroupPrepend2" class="form-control" id="start_time"
+                       required th:field="*{start}" type="time">
+            </div>
         </div>
-    </div>
-</main>
+
+        <div class="form-group row">
+            <div class="col-md-3 mb-3">
+                <label for="end_time">End Shift</label>
+                <input class="form-control" id="end_time" required th:field="*{end}" type="time">
+            </div>
+        </div>
+
+        <div>Preference</div>
+        <select th:field="*{preference}" th:value="${preference}">
+            <option th:each="preference : ${preferenceList}"
+                    th:text="${preference.value}"
+                    th:value="${preference}">1
+            </option>
+
+        </select>
+
+        <label class="my-1 mr-2" for="repeateDate">to</label>
+        <input id="repeateDate" th:attr="min=${now}" th:field="*{dateRepeated}" type="date">
+
+        <br/>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Save Shift</button>
+        <br/>
+        <a href="/manage_employee_shift">
+            <button class="btn btn-secondary btn-lg btn-block" type="button">
+                Close
+            </button>
+        </a>
+
+    </form>
+</div>
 <footer th:replace="components::footer" class="text-light pt-md-5 border-top" style="background-color: #343a40;">
     <div class="container">
         <div class="row">

@@ -25,7 +25,7 @@ public class ChooseProjectionViewController {
 
     private static final String PAYMENT_FORM_ATTRIBUTE = "payment_form";
 
-    @GetMapping("/choose_movie")
+    @GetMapping("/")
     public String chooseMovie(
             HttpServletResponse response,
             @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
