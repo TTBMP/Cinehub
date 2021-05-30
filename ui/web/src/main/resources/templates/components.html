@@ -38,7 +38,7 @@
             <form action="#" method="GET" th:action="@{/login}">
                 <input class="btn btn-primary" type="submit" value="Login" th:if="${is_login_tab_visible}"/>
             </form>
-            <form action="#" th:action="@{/logout}">
+            <form action="#" method="GET" th:action="@{/logout}">
                 <input class="btn btn-outline-secondary" type="submit" value="Logout" th:if="${is_logout_tab_visible}"/>
             </form>
         </div>
