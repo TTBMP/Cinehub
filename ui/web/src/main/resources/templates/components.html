@@ -39,11 +39,11 @@
                        th:class="'nav-link' + ${is_about_tab_active ? ' active' : ''}">About</a>
                 </li>
             </ul>
-            <form action="#" method="GET" th:action="@{/login}">
-                <input class="btn btn-primary" type="submit" value="Login" th:if="${is_login_tab_visible}"/>
+            <form action="#" method="GET" th:action="@{/login}" th:if="${is_login_tab_visible}">
+                <input class="btn btn-primary" type="submit" value="Login"/>
             </form>
-            <form action="#" method="GET" th:action="@{/logout}">
-                <input class="btn btn-outline-secondary" type="submit" value="Logout" th:if="${is_logout_tab_visible}"/>
+            <form action="#" method="GET" th:action="@{/logout}" th:if="${is_logout_tab_visible}">
+                <input class="btn btn-outline-secondary" type="submit" value="Logout"/>
             </form>
         </div>
     </div>

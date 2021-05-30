@@ -13,17 +13,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest
-class ViewPersonalScheduleSeleniumTest {
+class LogoutSeleniumTest {
 
     private WebDriver driver;
 
@@ -46,38 +42,28 @@ class ViewPersonalScheduleSeleniumTest {
     }
 
     @Test
-    void viewPersonalScheduleWithoutAuthentication_redirectToLogin() {
-        driver.get("http://localhost:8080/schedule");
-        new WebDriverWait(driver, 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/main/form/button")));
-        assertEquals("http://localhost:8080/login", driver.getCurrentUrl());
+    void logoutButtonWithoutAuthentication_isNotPresent() {
+        var button = driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/form/input"));
+        assertNotEquals("Logout", button.getAttribute("value"));
     }
 
     @Test
-    void viewPersonalScheduleNavLink_isActive() {
+    void logoutButtonWithAuthentication_isPresent() {
         loginAsProjectionist();
-        var scheduleTab = driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[2]/a"));
-        scheduleTab.click();
-        new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("date-picker")));
-        var navLink = driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[2]/a"));
-        var classList = Arrays.stream(navLink.getAttribute("class").split(" ")).collect(Collectors.toList());
-        assertTrue(classList.contains("active"));
+        var button = driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/form/input"));
+        assertNotEquals("Logout", button.getAttribute("value"));
     }
 
     @Test
-    void viewPersonalScheduleDefaultDate_isToday() {
+    void logoutWithAuthentication_closeSession() {
         loginAsProjectionist();
-        var scheduleTab = driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[2]/a"));
-        scheduleTab.click();
-        new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("date-picker")));
-        var datePicker = driver.findElement(By.id("date-picker"));
-        assertEquals(
-                LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE),
-                datePicker.getAttribute("value")
-        );
+        var logoutButton = driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/form/input"));
+        logoutButton.click();
+        assertFalse(driver.manage().getCookies().stream().anyMatch(cookie -> cookie.getName().equals("session")));
     }
 
     private void loginAsProjectionist() {
-        var loginButton = driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/form/input"));
+        var loginButton = driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/form[1]/input"));
         loginButton.click();
         var emailInput = driver.findElement(By.xpath("//*[@id=\"floatingInput\"]"));
         var passwordInput = driver.findElement(By.xpath("//*[@id=\"floatingPassword\"]"));
