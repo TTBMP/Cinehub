@@ -9,7 +9,6 @@
     <link href="../../static/css/theme.css" rel="stylesheet" th:href="@{css/theme.css}" type="text/css">
     <title>Manage Employee Shift</title>
 </head>
-
 <body>
 <nav th:replace="components::navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <link href="../../static/css/navbar.css" rel="stylesheet" th:href="@{css/navbar.css}" type="text/css">
@@ -44,60 +43,63 @@
         </div>
     </div>
 </nav>
-<h1 align="center">Assign Repeated Usher Shift</h1>
-<div>
-    <form action="#" method="post" th:object="${assignRequest}">
+<div class="container">
+    <h1 class="text-center">Assign Repeated Usher Shift</h1>
+    <div>
+        <form action="#" method="post" th:object="${assignRequest}">
+            <div class="row">
+                <div class="col-12">
+                    <h4> Employee</h4>
+                </div>
+                <div class="col-6">
+                    <label> Employee</label>
+                    <select id="employeeComboBox" th:field="*{employeeId}">
+                        <option th:each="employee : ${usherList}"
+                                th:text="${employee.name + ' '+ employee.surname}"
+                                th:value="${employee.id}">1
+                        </option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <label>Date</label>
+                    <input id="date" required th:attr="min=${now}" th:field="*{date}" type="date"/>
+                    <br/>
+                </div>
+                <div class="col-6 mt-3">
+                    <label for="start_time">Start Shift</label>
+                    <input aria-describedby="inputGroupPrepend2" class="form-control" id="start_time"
+                           required th:field="*{start}" type="time">
+                </div>
+                <div class="col-6 mt-3">
+                    <label for="end_time">End Shift</label>
+                    <input class="form-control" id="end_time" required th:field="*{end}" type="time">
+                </div>
+                <div class="col-12 mt-3">
+                    <label>Preference</label>
+                    <select th:field="*{preference}" th:value="${preference}">
+                        <option th:each="preference : ${preferenceList}"
+                                th:text="${preference.value}"
+                                th:value="${preference}">1
+                        </option>
+                        <input id="repeateDate" th:attr="min=${now}" th:field="*{dateRepeated}" type="date">
+                    </select>
+                </div>
+                <div class="col-6 mt-3">
+                    <button class="btn btn-primary btn-lg ">Save Shift</button>
+                    <br/>
 
-        <div class="col-sm"> Employee</div>
-        <div class="col-sm"> Employee</div>
-        <select id="employeeComboBox" th:field="*{employeeId}">
-            <option th:each="employee : ${usherList}"
-                    th:text="${employee.name + ' '+ employee.surname}"
-                    th:value="${employee.id}">1
-            </option>
-        </select>
-
-        <label>Date</label>
-        <input id="date" required th:attr="min=${now}" th:field="*{date}" type="date"/>
-        <br/>
-
-        <div class="form-group row">
-            <div class="col-md-3 mb-3">
-                <label for="start_time">Start Shift</label>
-                <input aria-describedby="inputGroupPrepend2" class="form-control" id="start_time"
-                       required th:field="*{start}" type="time">
+                </div>
+                <div class="col-6 mt-3">
+                    <a href="/manage_employee_shift">
+                        <button class="btn btn-danger btn-lg ">
+                            Close
+                        </button>
+                    </a>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-3 mb-3">
-                <label for="end_time">End Shift</label>
-                <input class="form-control" id="end_time" required th:field="*{end}" type="time">
-            </div>
-        </div>
-
-        <div>Preference</div>
-        <select th:field="*{preference}" th:value="${preference}">
-            <option th:each="preference : ${preferenceList}"
-                    th:text="${preference.value}"
-                    th:value="${preference}">1
-            </option>
-
-        </select>
-
-        <label class="my-1 mr-2" for="repeateDate">to</label>
-        <input id="repeateDate" th:attr="min=${now}" th:field="*{dateRepeated}" type="date">
-
-        <br/>
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Save Shift</button>
-        <br/>
-        <a href="/manage_employee_shift">
-            <button class="btn btn-secondary btn-lg btn-block" type="button">
-                Close
-            </button>
-        </a>
-
-    </form>
+        </form>
+    </div>
+</div>
 </div>
 <footer th:replace="components::footer" class="text-light pt-md-5 border-top" style="background-color: #343a40;">
     <div class="container">
