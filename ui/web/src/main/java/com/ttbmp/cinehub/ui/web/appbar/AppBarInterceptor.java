@@ -29,10 +29,11 @@ public class AppBarInterceptor implements HandlerInterceptor {
             ));
             var viewName = modelAndView.getViewName();
             if (viewName != null) {
-                modelAndView.addObject("is_buy_ticket_tab_active", viewName.matches("^buy_ticket/*.*"));
-                modelAndView.addObject("is_manage_shift_tab_active", viewName.matches("^manage_employee_shift/*.*"));
-                modelAndView.addObject("is_view_personal_schedule_tab_active", viewName.matches("^view_personal_schedule/*.*"));
-                modelAndView.addObject("is_about_tab_active", viewName.matches("^about/*.*"));
+                viewName = viewName.split("/")[0];
+                modelAndView.addObject("is_buy_ticket_tab_active", viewName.equals("buy_ticket"));
+                modelAndView.addObject("is_manage_shift_tab_active", viewName.equals("manage_employee_shift"));
+                modelAndView.addObject("is_view_personal_schedule_tab_active", viewName.equals("view_personal_schedule"));
+                modelAndView.addObject("is_about_tab_active", viewName.equals("about"));
             }
             if (modelAndView.getModel().containsKey(ErrorHelper.ERROR_ATTRIBUTE_NAME)) {
                 modelAndView.setViewName(ErrorHelper.ERROR_VIEW_PATH);

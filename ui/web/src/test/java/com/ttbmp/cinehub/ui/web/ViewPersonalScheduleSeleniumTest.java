@@ -49,7 +49,7 @@ class ViewPersonalScheduleSeleniumTest {
         loginAsProjectionist();
         var scheduleTab = driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[2]/a"));
         scheduleTab.click();
-        new WebDriverWait(driver, 5).until(ExpectedConditions.presenceOfElementLocated(By.id("date-picker")));
+        new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("date-picker")));
         var datePicker = driver.findElement(By.id("date-picker"));
         assertEquals(
                 LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE),
@@ -63,6 +63,7 @@ class ViewPersonalScheduleSeleniumTest {
         var emailInput = driver.findElement(By.xpath("//*[@id=\"floatingInput\"]"));
         var passwordInput = driver.findElement(By.xpath("//*[@id=\"floatingPassword\"]"));
         var sigInButton = driver.findElement(By.xpath("/html/body/main/form/button"));
+        new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(sigInButton));
         new Actions(driver).click(emailInput).sendKeys("fb@cinehub.com").perform();
         new Actions(driver).click(passwordInput).sendKeys("asdfghjkl").perform();
         sigInButton.click();
