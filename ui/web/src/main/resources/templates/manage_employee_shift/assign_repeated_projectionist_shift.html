@@ -44,27 +44,55 @@
     </div>
 </nav>
 <div class="container ">
-    <h1 class="text-center mt-3">Assign Repeated Projectionist Shift</h1>
+    <div class="col-md-12 text-center mt-3">
+        <br/>
+        <h1>Assign Repeated Projectionist Shift</h1>
+        <hr>
+    </div>
     <form action="#" method="post" th:object="${assignRequest}">
         <div class="row justify-content-center text-center">
-            <div class="col-12 mt-2 ">
-                <h4> Employee</h4>
-            </div>
-            <div class="col-4 mt-4">
+            <div class="col-6 mt-3">
                 <label> Employee</label>
-                <select id="employeeComboBox" th:field="*{employeeId}">
+                <select class="form-select" id="employeeComboBox" th:field="*{employeeId}">
                     <option th:each="employee : ${projectionistList}"
                             th:text="${employee.name + ' '+ employee.surname}"
                             th:value="${employee.id}">1
                     </option>
                 </select>
             </div>
-            <div class="col-4 mt-4">
-                <label>Date</label>
-                <input id="date" required th:attr="min=${now}" th:field="*{date}" type="date"/>
-                <br/>
 
+            <div class="col-6 mt-3">
+                <label> Hall</label>
+                <select class="form-select" id="modifyHallComboBox" th:field="*{hallId}" th:value="${hall}">
+                    <option th:each="hall : ${hallList}"
+                            th:text="${hall.name}"
+                            th:value="${hall.id}">
+                    </option>
+                </select>
             </div>
+
+            <div class="col-4 mt-3">
+                <label>Preference:</label>
+                <select class="form-select" th:field="*{preference}" th:value="${preference}">
+                    <option th:each="preference : ${preferenceList}"
+                            th:text="${preference.value}"
+                            th:value="${preference}" required>1
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-4 mt-3">
+                <label>Date</label>
+                <input class="form-control it-date-datepicker" id="date" required th:attr="min=${now}"
+                       th:field="*{date}" type="date"/>
+                <br/>
+            </div>
+            <div class="col-4 mt-3">
+                <label>To</label>
+                <input class="form-control it-date-datepicker" id="repeateDate" th:attr="min=${now}" required th:field="*{dateRepeated}" type="date">
+                <br/>
+            </div>
+
             <div class="col-6 mt-3">
                 <label for="start_time">Start Shift</label>
                 <input aria-describedby="inputGroupPrepend2" class="form-control" id="start_time"
@@ -75,40 +103,23 @@
                 <input class="form-control" id="end_time" required th:field="*{end}" type="time">
 
             </div>
-            <div class="col-12 mt-5">
-                <label> Hall</label>
-                <select id="modifyHallComboBox" th:field="*{hallId}" th:value="${hall}">
-                    <option th:each="hall : ${hallList}"
-                            th:text="${hall.name}"
-                            th:value="${hall.id}">1
-                    </option>
-                </select>
+            <div class="col-12  mt-2">
+                <hr>
             </div>
-            <div class="col-12 mt-2">
-                <label>Preference:</label>
-                <select th:field="*{preference}" th:value="${preference}">
-                    <option th:each="preference : ${preferenceList}"
-                            th:text="${preference.value}"
-                            th:value="${preference}">1
-                    </option>
-                </select>
-                <label>to</label>
-                <input id="repeateDate" th:attr="min=${now}" th:field="*{dateRepeated}" type="date">
-                <br/>
+
+            <div class="col-6 mt-3">
+                <a href="/manage_employee_shift">
+                    <button class="btn btn-danger btn-lg " type="button" >Close</button>
+                </a>
             </div>
+
             <div class="col-6 mt-3">
                 <button class="btn btn-primary btn-lg ">Save Shift</button>
                 <br/>
             </div>
-            <div class="col-6 mt-3">
-                <a href="/manage_employee_shift">
-                    <button class="btn btn-danger btn-lg ">
-                        Close
-                    </button>
-                </a>
-            </div>
         </div>
     </form>
+    <br/>
 </div>
 <footer th:replace="components::footer" class="text-light pt-md-5 border-top" style="background-color: #343a40;">
     <div class="container">
