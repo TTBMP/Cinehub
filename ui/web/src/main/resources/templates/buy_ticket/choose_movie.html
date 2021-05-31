@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta th:replace="components::meta_content" content="text/html; charset=UTF-8" http-equiv="Content-Type">
-    <meta th:replace="components::meta_viewport" content="width=device-width, initial-scale=1.0" name="viewport">
-    <link th:replace="components::Bootstrap_CSS" crossorigin="anonymous"
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
-          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" rel="stylesheet">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" th:replace="components::meta_content">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" th:replace="components::meta_viewport">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+          rel="stylesheet" th:replace="components::Bootstrap_CSS">
     <link href="../../static/css/theme.css" rel="stylesheet" th:href="@{css/theme.css}" type="text/css">
     <link href="../../static/css/styleIvan.css" rel="stylesheet" th:href="@{css/styleIvan.css}" type="text/css">
     <title>Cinehub</title>
 </head>
 <body style="font-family: Arial,serif">
-<nav th:replace="components::navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:replace="components::navbar">
     <link href="../../static/css/navbar.css" rel="stylesheet" th:href="@{css/navbar.css}" type="text/css">
     <div class="container-md">
         <a class="navbar-brand mb-0 h1" href="#">Cinehub</a>
@@ -44,14 +44,14 @@
         </div>
     </div>
 </nav>
-<div class="container">
+
+<div class="container h-100 mb-5">
     <!--Top-->
     <div class="row justify-content-center text-center mb-5">
         <div class="col-12 text-center">
-            <div class="col-md-5 p-lg-5 mx-auto my-5">
+            <div class="col-md-5 mx-auto my-5">
                 <h1 class="display-4 ">Movies available </h1>
-                <p class="lead">Select a movie you like, we will find the cinemas that will present
-                    it .</p>
+                <p class="lead">Select a movie you like, we will find the cinemas that will present it .</p>
             </div>
         </div>
         <div class="col-12 text-center">
@@ -62,77 +62,79 @@
                    th:value="${selected_date}"
                    type="date">
             <label for="date-picker"></label>
-            <a href="/choose_movie">
+            <a href="/">
                 <button class="btn btn-primary" type="button">Today</button>
             </a>
         </div>
     </div>
     <!--/Top-->
-    <div class="row text-center justify-content-center ">
-
-        <!--List Movie-->
-        <tr th:each="_movie,inter : ${movieList}">
-            <div class="col-lg-3 col-md-6 col-sm-12">
-
-                <!--Card-->
-                <div class="card m-2 lead font-weight-normal card-flip h-100 border border-white">
-                    <!--Front-->
-                    <div class="card-front ">
-                        <div class="card-body">
-                            <img class="rounded border border-white" th:id="${_movie.movieUrl}"
+    <!--Down-->
+    <main>
+        <div class="row text-center justify-content-center mb-5 ">
+            <!--List Movie-->
+            <tr th:each="_movie,inter : ${movieList}">
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <!--Card-->
+                    <div class="card card-flip">
+                        <!--Front-->
+                        <div class="card-front">
+                            <img
+                                 style="border-radius: 10px;box-shadow: 10px 10px 5px grey;"
+                                 th:id="${_movie.movieUrl}"
                                  th:name="${_movie.movieUrl}"
-                                 th:src="${_movie.movieUrl}"
-                            height="75%">
+                                 th:src="${_movie.movieUrl}">
                         </div>
-                    </div>
-                    <!--\Front-->
-                    <!--Back-->
-                    <div class="card-back ">
-                        <div class="card-body">
-                            <div class="row text-center">
-                                <br>
-                                <div class="col-12 text-center mt-4">
-                                    <h5 class="h5">Title:</h5>
-                                    <h6 class="h6" th:text="${_movie.name}"></h6>
+                        <!--\Front-->
+                        <!--Back-->
+                        <div class="card-back ">
+                            <div class="card-body">
+                                <div class="row text-center" style="height: min-content">
+                                    <div class="col-12 text-center">
+                                        <label class="lead">Title:</label>
+                                        <h6 style="font-size: small" th:text="${_movie.name}"></h6>
+                                    </div>
+                                    <div class="col-12 text-center mt-2">
+                                        <label class="lead">Vote:</label>
+                                        <h6 style="font-size: small" th:text="${_movie.vote}"></h6>
+                                    </div>
+                                    <div class="col-12 text-center mt-2">
+                                        <label class="lead">Releases:</label>
+                                        <h6 style="font-size: small" th:text="${_movie.releases}"></h6>
+                                    </div>
+                                    <div class="col-12 text-center mt-2">
+                                        <label class="lead">Overview:</label>
+                                        <h6 style="font-size: small" th:text="${_movie.overview}"></h6>
+                                    </div>
+                                    <form action="#" method="post" th:action="@{/choose_cinema}"
+                                          th:object="${payment_form}">
+                                        <input th:name="movie.id" th:value="${_movie.id}" type="hidden"/>
+                                        <input th:name="movie.name" th:value="${_movie.name}" type="hidden"/>
+                                        <input th:name="movie.overview" th:value="${_movie.overview}" type="hidden"/>
+                                        <input th:name="movie.movieUrl" th:value="${_movie.movieUrl}" type="hidden"/>
+                                        <input th:name="movie.vote" th:value="${_movie.vote}" type="hidden"/>
+                                        <input th:name="movie.releases" th:value="${_movie.releases}" type="hidden"/>
+                                        <input th:name="date" th:value="${selected_date}" type="hidden"/>
+                                        <button class="btn btn-primary mt-2 mb-5" type="submit">Continue
+                                        </button>
+                                    </form>
                                 </div>
-                                <div class="col-12 text-center">
-                                    <h5 class="h5">Vote:</h5>
-                                    <h6 class="h6" th:text="${_movie.vote}"></h6>
-                                </div>
-                                <div class="col-12 text-center">
-                                    <h5 class="h5">Releases:</h5>
-                                    <h6 class="h6" th:text="${_movie.releases}"></h6>
-                                </div>
-                                <div class="col-12 text-center">
-                                    <h5 class="h5">Overview:</h5>
-                                    <h6 class="h6" th:text="${_movie.overview}"></h6>
-                                </div>
-                                <form action="#" method="post" th:action="@{/choose_cinema}"
-                                      th:object="${payment_form}">
-                                    <input th:name="movie.id" th:value="${_movie.id}" type="hidden"/>
-                                    <input th:name="movie.name" th:value="${_movie.name}" type="hidden"/>
-                                    <input th:name="movie.overview" th:value="${_movie.overview}" type="hidden"/>
-                                    <input th:name="movie.movieUrl" th:value="${_movie.movieUrl}" type="hidden"/>
-                                    <input th:name="movie.vote" th:value="${_movie.vote}" type="hidden"/>
-                                    <input th:name="movie.releases" th:value="${_movie.releases}" type="hidden"/>
-                                    <input th:name="date" th:value="${selected_date}" type="hidden"/>
-                                    <button class="btn btn-primary mt-2 mb-5" type="submit">Continue
-                                    </button>
-                                </form>
                             </div>
                         </div>
+                        <!--\Back-->
                     </div>
-                    <!--\Back-->
+                    <!--\Card-->
                 </div>
-                <!--\Card-->
-            </div>
-        </tr>
-    </div>
+            </tr>
+        </div>
+    </main>
+    <!--/Down-->
     <div th:if="${error != null}">
         <h3 th:text="${error}"></h3>
     </div>
+
 </div>
-<footer th:replace="components::footer" class="text-light pt-md-5 border-top" style="background-color: #343a40;">
+
+<footer class="text-light pt-md-5 border-top" style="background-color: #343a40;" th:replace="components::footer">
     <div class="container">
         <div class="row">
             <div class="col-12 col-md">
@@ -177,8 +179,8 @@
         </div>
     </footer>
 </footer>
-<script th:replace="components::Bootstrap_JS" crossorigin="anonymous"
-        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        th:replace="components::Bootstrap_JS"></script>
 </body>
 </html>

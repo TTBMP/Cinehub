@@ -98,12 +98,12 @@
                 </div>
             </div>
         </div>
-        <div class="card m-5 p-2">
+        <div class="card  m-sm-1 m-lg-5-5 p-2">
             <!--/Checkbox-->
             <div class="row justify-content-center">
-            <div class="card p-2 m-2 justify-content-center"
+            <div class="card p-2 m-2 justify-content-center border-dark"
                  th:each="_seat,inter : ${seatList}"
-                 style="width: min-content; text-align: center" >
+                 style="width: min-content; text-align: center; border-color: black; background-color: white" >
                 <div th:if="${_seat.isBooked}">
                     <div>SOLD</div>
                 </div>

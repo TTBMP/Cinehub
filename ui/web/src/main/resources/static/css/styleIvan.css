@@ -10,12 +10,28 @@
 
 .card-front {
     transform: rotateY(0deg);
+
+}
+.card-body {
+    background-color: transparent;
+
+}
+.card {
+    background-color: transparent;
+    border-color: transparent;
+    font-size: medium;
+    border-radius: 10px;
+
+}
+.h6{
+    font-size: small;
 }
 
 .card-back {
     transform: rotateY(180deg);
     position: absolute;
     top: 0;
+
 }
 
 .card-flip:hover .card-front {
