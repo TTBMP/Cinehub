@@ -5,15 +5,20 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class ManageEmployeeViewControllerTest {
@@ -32,13 +37,13 @@ class ManageEmployeeViewControllerTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         driver.get("http://localhost:8080/");
-        driver.manage().addCookie(new Cookie("session", "MANAGER"));
-        // driver.findElement(By.linkText("Manage employee shift")).click();
-        // new WebDriverWait(driver, 5).until(ExpectedConditions.presenceOfElementLocated(By.id("select_date")));
-        // driver.findElement(By.id("select_date")).sendKeys(LocalDate.now().format(DateTimeFormatter.ofPattern("ddMMyyyy")));
-        // driver.findElement(By.id("search_shift_cinema")).click();
-        // new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.id("1")));
-        // employee = driver.findElement(By.id("1"));
+        driver.manage().addCookie(new Cookie("session", "5KClU7hbNgedJAwLuF9eFVl6Qzz2"));
+        driver.findElement(By.linkText("Manage employee shift")).click();
+        new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"select_date\"]")));
+        driver.findElement(By.xpath("//*[@id=\"select_date\"]")).sendKeys(LocalDate.now().format(DateTimeFormatter.ofPattern("ddMMyyyy")));
+        driver.findElement(By.xpath("//*[@id=\"search_shift_cinema\"]")).click();
+        new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"ppgJVL8wS9bdjWxCxs6bll2K0Xs1\"]")));
+        employee = driver.findElement(By.xpath("//*[@id=\"ppgJVL8wS9bdjWxCxs6bll2K0Xs1\"]"));
     }
 
     @AfterEach
@@ -48,8 +53,8 @@ class ManageEmployeeViewControllerTest {
 
     @Test
     void searchEmployee() {
-        assertTrue(true);
-        // assertEquals(employee.getText(), "Massimo Mazzetti\n" + "Role : Projectionist");
+        //assertTrue(true);
+        assertEquals(employee.getText(), "Jeff Bezos\n" + "Role : Projectionist");
     }
 
 }
