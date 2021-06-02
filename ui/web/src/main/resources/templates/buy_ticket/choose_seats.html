@@ -48,7 +48,7 @@
 </nav>
 <section class="jumbotron jumbotron-background js-handle-banner js-id-991573 position-relative mb-5"
          style="
-             background-image: url(https://st.ilfattoquotidiano.it/wp-content/uploads/2020/10/29/cinema1200.jpg);background-position: top;color: #E1E2E1">
+             background-image: url(https://st.ilfattoquotidiano.it/wp-content/uploads/2020/10/29/cinema1200.jpg);background-position: top;color: #E1E2E1;filter: drop-shadow(10px 10px 20px black); -webkit-filter: drop-shadow(10px 10px 20px black);">
     <div class="col-12 text-center">
         <div class="container">
             <div class="page-section-anchor"></div>
@@ -64,7 +64,7 @@
         </div>
     </div>
 </section>
-<div class="container">
+<div class="container" style="color: #E1E2E1">
     <div class="row ">
         <!--Checkbox-->
         <div class="col-12">
@@ -110,9 +110,9 @@
         <div class="card  m-sm-1 m-lg-5-5 p-2">
             <!--/Checkbox-->
             <div class="row justify-content-center">
-            <div class="card p-2 m-2 justify-content-center border-dark"
+            <div class="card p-2 m-2 justify-content-center border-white"
                  th:each="_seat,inter : ${seatList}"
-                 style="width: min-content; text-align: center; border-color: black; background-color: white" >
+                 style="width: min-content; text-align: center; border-color: white;  background-image: url(https://st.ilfattoquotidiano.it/wp-content/uploads/2020/10/29/cinema1200.jpg);background-position: left" >
                 <div th:if="${_seat.isBooked}">
                     <div>SOLD</div>
                 </div>

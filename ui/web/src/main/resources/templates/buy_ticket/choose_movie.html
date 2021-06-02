@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
 <body style="font-family: Arial,serif">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:replace="components::navbar">
     <link href="../../static/css/navbar.css" rel="stylesheet" th:href="@{css/navbar.css}" type="text/css">
@@ -36,100 +36,101 @@
 </nav>
 <!--Top-->
 
-    <section class="jumbotron jumbotron-background js-handle-banner js-id-991573 position-relative mb-5"
-             style="background-image: url(https://st.ilfattoquotidiano.it/wp-content/uploads/2020/10/29/cinema1200.jpg);background-position: top;color: #E1E2E1">
-        <div class="col-12 text-center mt-4">
-            <div class="container mt-5">
-                <div class="page-section-anchor"></div>
-                <div class="row">
-                    <div class="col-md "><h1 class="jumbotron-title display-2">
-                        Movies available
-                    </h1><h4 class="jumbotron-subtitle mt-3">
-                        Select a movie you like, we will find the cinemas that will present it .
-                    </h4>
-                    </div>
+<section class="jumbotron jumbotron-background js-handle-banner js-id-991573 position-relative mb-5"
+         style="background-image: url(https://st.ilfattoquotidiano.it/wp-content/uploads/2020/10/29/cinema1200.jpg);background-position: top;color: #E1E2E1;filter: drop-shadow(10px 10px 20px black); -webkit-filter: drop-shadow(10px 10px 20px black);">
+    <div class="col-12 text-center mt-4">
+        <div class="container mt-5">
+            <div class="page-section-anchor"></div>
+            <div class="row">
+                <div class="col-md "><h1 class="jumbotron-title display-2">
+                    Movies available
+                </h1><h4 class="jumbotron-subtitle mt-3">
+                    Select a movie you like, we will find the cinemas that will present it .
+                </h4>
                 </div>
             </div>
         </div>
-        <div class="col-12 text-center mt-5 " style="margin-bottom: 100px;">
-            <label>Selected a date:</label>
-            <input action="#" id="date-picker" method="post"
-                   onchange="window.location.href = '?date='+document.getElementById('date-picker').value;"
-                   th:action="@{/choose_movie}"
-                   th:value="${selected_date}"
-                   type="date">
-            <label for="date-picker"></label>
-            <a href="/">
-                <button class="btn btn-primary" type="button">Today</button>
-            </a>
-        </div>
-    </section>
+    </div>
+    <div class="col-12 text-center mt-5 " style="margin-bottom: 100px;">
+        <label>Selected a date:</label>
+        <input action="#" id="date-picker" method="post"
+               onchange="window.location.href = '?date='+document.getElementById('date-picker').value;"
+               th:action="@{/choose_movie}"
+               th:value="${selected_date}"
+               type="date">
+        <label for="date-picker"></label>
+        <a href="/">
+            <button class="btn btn-primary" type="button">Today</button>
+        </a>
+    </div>
+</section>
 <div class="container h-100 mt-4 mb-5">
     <main>
-
-
-    <!--/Top-->
-    <!--Down-->
-    <div class="row text-center justify-content-center mb-5 ">
-        <!--List Movie-->
-        <tr th:each="_movie,inter : ${movieList}">
-            <div class="col-lg-3 mb-3 col-md-6 col-sm-12">
-                <!--Card-->
-                <div class="card card-flip">
-                    <!--Front-->
-                    <div class="card-front">
-                        <img
-                                style="border-radius: 10px;box-shadow: 10px 10px 5px grey;"
-                                th:id="${_movie.movieUrl}"
-                                th:name="${_movie.movieUrl}"
-                                th:src="${_movie.movieUrl}">
-                    </div>
-                    <!--\Front-->
-                    <!--Back-->
-                    <div class="card-back ">
-                        <div class="card-body">
-                            <div class="row text-center" style="height: min-content">
-                                <div class="col-12 text-center">
-                                    <label class="lead">Title:</label>
-                                    <h6 style="font-size: small" th:text="${_movie.name}"></h6>
-                                </div>
-                                <div class="col-12 text-center mt-2">
-                                    <label class="lead">Vote:</label>
-                                    <h6 style="font-size: small" th:text="${_movie.vote}"></h6>
-                                </div>
-                                <div class="col-12 text-center mt-2">
-                                    <label class="lead">Releases:</label>
-                                    <h6 style="font-size: small" th:text="${_movie.releases}"></h6>
-                                </div>
-                                <div class="col-12 text-center mt-2">
-                                    <label class="lead">Overview:</label>
-                                    <h6 style="font-size: small" th:text="${_movie.overview}"></h6>
-                                </div>
-                                <form action="#" method="post" th:action="@{/choose_cinema}"
-                                      th:object="${payment_form}">
-                                    <input th:name="movie.id" th:value="${_movie.id}" type="hidden"/>
-                                    <input th:name="movie.name" th:value="${_movie.name}" type="hidden"/>
-                                    <input th:name="movie.overview" th:value="${_movie.overview}" type="hidden"/>
-                                    <input th:name="movie.movieUrl" th:value="${_movie.movieUrl}" type="hidden"/>
-                                    <input th:name="movie.vote" th:value="${_movie.vote}" type="hidden"/>
-                                    <input th:name="movie.releases" th:value="${_movie.releases}" type="hidden"/>
-                                    <input th:name="date" th:value="${selected_date}" type="hidden"/>
-                                    <button class="btn btn-primary mt-2 mb-5" type="submit">Continue
-                                    </button>
-                                </form>
+        <!--/Top-->
+        <!--Down-->
+        <div class="row text-center justify-content-center mb-5 " style="color: #E1E2E1">
+            <!--List Movie-->
+            <tr th:each="_movie,inter : ${movieList}">
+                <div class="col-xl-3 col- col-lg-4 mb-3 col-md-6 col-sm-12">
+                    <!--Card-->
+                    <div class="card card-flip">
+                        <!--Front-->
+                        <div class="card-front">
+                            <div class="card-img-top">
+                                <img style="border-radius: 10px;box-shadow: 10px 10px 5px rgba(150,150,150,.0);"
+                                     th:id="${_movie.movieUrl}"
+                                     th:name="${_movie.movieUrl}"
+                                     th:src="${_movie.movieUrl}">
                             </div>
                         </div>
+                        <!--\Front-->
+                        <!--Back-->
+                        <div class="card-back">
+                            <div class="card-body" style="border: 2px dashed #E1E2E1;
+                                    box-shadow: 0px 10px 20px rgba(150,150,150,.0);
+                                    border-radius: 10px;">
+                                <div class="row text-center" style="height: min-content; ">
+                                    <div class="col-12 text-center">
+                                        <label class="lead">Title:</label>
+                                        <h6 style="font-size: small" th:text="${_movie.name}"></h6>
+                                    </div>
+                                    <div class="col-12 text-center mt-2">
+                                        <label class="lead">Vote:</label>
+                                        <h6 style="font-size: small" th:text="${_movie.vote}"></h6>
+                                    </div>
+                                    <div class="col-12 text-center mt-2">
+                                        <label class="lead">Releases:</label>
+                                        <h6 style="font-size: small" th:text="${_movie.releases}"></h6>
+                                    </div>
+                                    <div class="col-12 text-center mt-2">
+                                        <label class="lead">Overview:</label>
+                                        <h6 style="font-size: small" th:text="${_movie.overview}"></h6>
+                                    </div>
+                                    <form action="#" method="post" th:action="@{/choose_cinema}"
+                                          th:object="${payment_form}">
+                                        <input th:name="movie.id" th:value="${_movie.id}" type="hidden"/>
+                                        <input th:name="movie.name" th:value="${_movie.name}" type="hidden"/>
+                                        <input th:name="movie.overview" th:value="${_movie.overview}" type="hidden"/>
+                                        <input th:name="movie.movieUrl" th:value="${_movie.movieUrl}" type="hidden"/>
+                                        <input th:name="movie.vote" th:value="${_movie.vote}" type="hidden"/>
+                                        <input th:name="movie.releases" th:value="${_movie.releases}" type="hidden"/>
+                                        <input th:name="date" th:value="${selected_date}" type="hidden"/>
+                                        <button class="btn btn-primary mt-2 mb-5" type="submit">Continue
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--\Back-->
                     </div>
-                    <!--\Back-->
+                    <!--\Card-->
                 </div>
-                <!--\Card-->
-            </div>
-        </tr>
-    </div>
-    <!--/Down-->
-    <div th:if="${error != null}">
-        <h3 th:text="${error}"></h3>
-    </div>
+            </tr>
+        </div>
+        <!--/Down-->
+        <div th:if="${error != null}">
+            <h3 th:text="${error}"></h3>
+        </div>
     </main>
 </div>
 
