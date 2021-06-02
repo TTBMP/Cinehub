@@ -45,19 +45,29 @@
         </div>
     </div>
 </nav>
-<div class="container h-100">
+
+<div class="h-100" style="max-width: 100%">
     <div th:if="${projectionList == null}">
-        <div class="row justify-content-center">
+        <section class="jumbotron jumbotron-background js-handle-banner js-id-991573 position-relative mb-5"
+                 style="
+             background-image: url(https://st.ilfattoquotidiano.it/wp-content/uploads/2020/10/29/cinema1200.jpg);background-position: top;color: #E1E2E1">
             <div class="col-12 text-center">
-                <div class="col-md-5 mx-auto my-5">
-                    <h1 class="display-4 font-weight-normal">Cinema</h1>
-                    <p class="lead font-weight-normal">Select the cinema closest to you, otherwise have a good
-                        trip...</p>
+                <div class="container">
+                    <div class="page-section-anchor"></div>
+                    <div class="row">
+                        <div class="col-md "><h1 class="jumbotron-title display-2 mt-5">
+                            Cinemas available
+                        </h1><h4 class="jumbotron-subtitle mt-5" style="margin-bottom: 80px;">
+                            Select the cinema closest to you, otherwise have a good
+                            trip...
+                        </h4>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-6 col-md-6 col-sm-12" th:each="_cinema : ${cinemaList}">
+        </section>
+        <div class="row justify-content-center" style="margin-bottom: 100px">
+            <div class="col-lg-3 col-md-6 col-sm-12" th:each="_cinema : ${cinemaList}">
                 <!--Card-->
                 <div class="card lead card-flip h-100">
                     <!--Front-->
@@ -123,11 +133,24 @@
     </div>
 
     <div th:if="${projectionList != null}">
-        <div class="row justify-content-center mt-3">
-            <div class="col-12 mx-auto my-5 text-center">
-                <h1 class="display-4 font-weight-normal">Time</h1>
-                <p class="lead font-weight-normal">Choose a time projection</p>
+        <section class="jumbotron jumbotron-background js-handle-banner js-id-991573 position-relative mb-5"
+                 style="
+             background-image: url(https://st.ilfattoquotidiano.it/wp-content/uploads/2020/10/29/cinema1200.jpg);background-position: top;color: #E1E2E1">
+            <div class="col-12 text-center">
+                <div class="container">
+                    <div class="page-section-anchor"></div>
+                    <div class="row">
+                        <div class="col-md "><h1 class="jumbotron-title display-2 mt-5">
+                            Time available
+                        </h1><h4 class="jumbotron-subtitle mt-5" style="margin-bottom: 80px;">
+                            Choose a time projection
+                        </h4>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </section>
+        <div class="row justify-content-center" style="margin-bottom: 100px">
             <div class="row justify-content-center h-100">
                 <div class="col-lg-2 col-md-6 col-sm-12 mt-5 text-center" th:each="_projection,index : ${projectionList}">
                     <div class="card m-3 text-center justify-content-center">
