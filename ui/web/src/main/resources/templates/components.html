@@ -14,7 +14,14 @@
 <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <link href="../static/css/navbar.css" rel="stylesheet" th:href="@{/css/navbar.css}" type="text/css">
     <div class="container-md">
-        <a class="navbar-brand mb-0 h1" href="#" th:href="@{/}">Cinehub</a>
+        <a class="navbar-brand mb-0 h1" href="#" th:href="@{/}">
+            <a class="navbar-brand mb-0 h1" href="#">
+                <div class="bg-dark" id="logo">
+                    <span class="text-white">Cine</span>
+                    <span class="bg-primary text-dark rectangle rounded p-1">hub</span>
+                </div>
+            </a>
+        </a>
         <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
                 class="navbar-toggler"
                 data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
