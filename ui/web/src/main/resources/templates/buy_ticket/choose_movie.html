@@ -77,13 +77,13 @@
         <div class="row text-center justify-content-center mb-5">
             <!--List Movie-->
             <tr th:each="_movie,inter : ${movieList}">
-                <div class="col-xl-3 col- col-lg-4 mb-3 col-md-6 col-sm-12">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" style="margin-bottom: 50px;">
                     <!--Card-->
                     <div class="card card-flip">
                         <!--Front-->
                         <div class="card-front">
                             <div class="card-img-top">
-                                <img style="border-radius: 10px;box-shadow: 10px 10px 5px rgba(150,150,150,.0);"
+                                <img style="border-radius: 10px;box-shadow: 10px 10px 20px  #2c2c2c;"
                                      th:id="${_movie.movieUrl}"
                                      th:name="${_movie.movieUrl}"
                                      th:src="${_movie.movieUrl}">
@@ -91,10 +91,10 @@
                         </div>
                         <!--\Front-->
                         <!--Back-->
-                        <div class="card-back">
-                            <div class="card-body" style="border: 2px dashed;
-                                    box-shadow: 0px 10px 20px rgba(150,150,150,.0);
+                        <div class="card-back" style="
+                                  box-shadow: 10px 10px 20px  #2c2c2c;
                                     border-radius: 10px;">
+                            <div class="card-body" >
                                 <div class="row text-center" style="height: min-content; ">
                                     <div class="col-12 text-center">
                                         <label class="lead">Title:</label>
@@ -121,7 +121,7 @@
                                         <input th:name="movie.vote" th:value="${_movie.vote}" type="hidden"/>
                                         <input th:name="movie.releases" th:value="${_movie.releases}" type="hidden"/>
                                         <input th:name="date" th:value="${selected_date}" type="hidden"/>
-                                        <button class="btn btn-primary mt-2 mb-5" type="submit">Continue
+                                        <button class="btn btn-primary mt-2" type="submit">Continue
                                         </button>
                                     </form>
                                 </div>
