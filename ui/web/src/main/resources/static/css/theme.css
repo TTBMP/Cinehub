@@ -5,10 +5,20 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
-    background-color: #484d51;
+    background-color: #f5f5f5;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 main {
     margin: auto;
+}
+
+.banner {
+    text-align: center;
+    background-image: url(https://st.ilfattoquotidiano.it/wp-content/uploads/2020/10/29/cinema1200.jpg);
+    background-position: top;
+    color: #E1E2E1;
+    filter: drop-shadow(10px 10px 20px black);
+    -webkit-filter: drop-shadow(10px 10px 20px black);
+    padding-bottom: 80px;
 }

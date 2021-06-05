@@ -6,12 +6,12 @@
     <link th:replace="components::Bootstrap_CSS" crossorigin="anonymous"
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" rel="stylesheet">
-    <link href="../../static/css/theme.css" rel="stylesheet" th:href="@{css/theme.css}" type="text/css">
+    <link href="../../static/css/theme.css" rel="stylesheet" th:href="@{/css/theme.css}" type="text/css">
     <title>Shift Detail</title>
 </head>
 <body>
 <nav th:replace="components::navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <link href="../../static/css/navbar.css" rel="stylesheet" th:href="@{css/navbar.css}" type="text/css">
+    <link href="../../static/css/navbar.css" rel="stylesheet" th:href="@{/css/navbar.css}" type="text/css">
     <div class="container-md">
         <a class="navbar-brand mb-0 h1" href="#">Cinehub</a>
         <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
@@ -207,8 +207,7 @@
         </div>
     </div>
 </div>
-<footer th:replace="components::footer" class="text-light pt-md-5 border-top"
-        style="background-color: #343a40;">
+<footer th:replace="components::footer" class="text-light pt-md-5 border-top" style="background-color: #343a40;">
     <div class="container">
         <div class="row">
             <div class="col-12 col-md">
@@ -218,12 +217,9 @@
                 <h5>Resources</h5>
                 <ul class="list-unstyled text-small">
                     <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource</a></li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource name</a>
-                    </li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another
-                        resource</a></li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Final resource</a>
-                    </li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource name</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another resource</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Final resource</a></li>
                 </ul>
             </div>
             <div class="col-6 col-md">

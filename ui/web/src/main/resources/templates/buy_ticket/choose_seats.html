@@ -6,15 +6,15 @@
     <link th:replace="components::Bootstrap_CSS" crossorigin="anonymous"
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" rel="stylesheet">
-    <link href="../../static/css/theme.css" rel="stylesheet" th:href="@{css/theme.css}" type="text/css">
-    <link href="../../static/css/styleIvan.css" rel="stylesheet" th:href="@{css/styleIvan.css}" type="text/css">
+    <link href="../../static/css/theme.css" rel="stylesheet" th:href="@{/css/theme.css}" type="text/css">
+    <link href="../../static/css/styleIvan.css" rel="stylesheet" th:href="@{/css/styleIvan.css}" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <title>Cinehub</title>
 </head>
-<body style="font-family: Arial,serif">
+<body>
 <nav th:replace="components::navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <link href="../../static/css/navbar.css" rel="stylesheet" th:href="@{css/navbar.css}" type="text/css">
+    <link href="../../static/css/navbar.css" rel="stylesheet" th:href="@{/css/navbar.css}" type="text/css">
     <div class="container-md">
         <a class="navbar-brand mb-0 h1" href="#">Cinehub</a>
         <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
@@ -46,132 +46,123 @@
         </div>
     </div>
 </nav>
-<section class="jumbotron jumbotron-background js-handle-banner js-id-991573 position-relative mb-5"
-         style="
-             background-image: url(https://st.ilfattoquotidiano.it/wp-content/uploads/2020/10/29/cinema1200.jpg);background-position: top;color: #E1E2E1;filter: drop-shadow(10px 10px 20px black); -webkit-filter: drop-shadow(10px 10px 20px black);">
-    <div class="col-12 text-center">
-        <div class="container">
-            <div class="page-section-anchor"></div>
-            <div class="row">
-                <div class="col-md "><h1 class="jumbotron-title display-2 mt-5">
-                    View of the seats
-                </h1><h4 class="jumbotron-subtitle mt-5" style="margin-bottom: 80px;">
-                    Select the place you like the most, don't hesitate to ask for some
-                    extras .
-                </h4>
-                </div>
-            </div>
-        </div>
+<header class="jumbotron banner position-relative mb-5">
+    <div class="container">
+        <h1 class="jumbotron-title display-2 mt-5">View of the seats</h1>
+        <h4 class="jumbotron-subtitle mt-5">Select the place you like the most, don't hesitate to ask for some
+            extras.</h4>
     </div>
-</section>
-<div class="container" style="color: #E1E2E1">
-    <div class="row ">
-        <!--Checkbox-->
-        <div class="col-12">
-            <h3>Additional options: </h3>
-            <div class="row">
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-7">
-                            <label for="c1"></label><input id="c1" type="checkbox">
-                            Skip line, with this option you can skip the initial waiting line
-                        </div>
-                        <div class="col-1">
-                            <p class="text-danger"> + 1€</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-7">
-                            <label for="c2"></label><input id="c2" type="checkbox">
-                            Open bar, with this option you will get a full meal (food, drinks) for one person
-                        </div>
-                        <div class="col-1">
-                            <p class="text-danger">
-                                + 10€</p>
+</header>
+<main>
+    <div class="container">
+        <div class="row ">
+            <!--Checkbox-->
+            <div class="col-12">
+                <h3>Additional options: </h3>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-7">
+                                <label for="c1"></label><input id="c1" type="checkbox">
+                                Skip line, with this option you can skip the initial waiting line
+                            </div>
+                            <div class="col-1">
+                                <p class="text-danger"> + 1€</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-7">
-                            <label for="c3"></label><input id="c3" type="checkbox">
-                            Magic Box, with this option you will get a gadget of the typical objects of the film
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-7">
+                                <label for="c2"></label><input id="c2" type="checkbox">
+                                Open bar, with this option you will get a full meal (food, drinks) for one person
+                            </div>
+                            <div class="col-1">
+                                <p class="text-danger">
+                                    + 10€</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-7">
+                                <label for="c3"></label><input id="c3" type="checkbox">
+                                Magic Box, with this option you will get a gadget of the typical objects of the film
 
-                        </div>
-                        <div class="col-1">
-                            <p class="text-danger"> + 15€</p>
+                            </div>
+                            <div class="col-1">
+                                <p class="text-danger"> + 15€</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card  m-sm-1 m-lg-5-5 p-2">
-            <!--/Checkbox-->
-            <div class="row justify-content-center">
-            <div class="card p-2 m-2 justify-content-center border-white"
-                 th:each="_seat,inter : ${seatList}"
-                 style="width: min-content; text-align: center; border-color: white;  background-image: url(https://st.ilfattoquotidiano.it/wp-content/uploads/2020/10/29/cinema1200.jpg);background-position: left" >
-                <div th:if="${_seat.isBooked}">
-                    <div>SOLD</div>
+            <div class="card m-sm-1 m-lg-5-5 p-2">
+                <!--/Checkbox-->
+                <div class="row justify-content-center">
+                    <div class="card p-2 m-2 justify-content-center border-white text-light"
+                         th:each="_seat,inter : ${seatList}"
+                         style="width: min-content; text-align: center; border-color: white;  background-image: url(https://st.ilfattoquotidiano.it/wp-content/uploads/2020/10/29/cinema1200.jpg);background-position: left">
+                        <div th:if="${_seat.isBooked}">
+                            <div>SOLD</div>
+                        </div>
+                        <div th:unless="${_seat.isBooked}">
+                            <form action="#" method="post"
+                                  onclick="action +='/'+ document.getElementById('c1').checked+'/'+ document.getElementById('c2').checked+'/'+ document.getElementById('c3').checked"
+                                  th:action="@{/payment}"
+                                  th:object="${payment_form}">
+                                <input th:name="cinema.id" th:value="${payment_form.cinema.id}" type="hidden"/>
+                                <input th:name="cinema.name" th:value="${payment_form.cinema.name}" type="hidden"/>
+                                <input th:name="cinema.address" th:value="${payment_form.cinema.address}"
+                                       type="hidden"/>
+                                <input th:name="cinema.city" th:value="${payment_form.cinema.city}" type="hidden"/>
+                                <input th:name="movie.id" th:value="${payment_form.movie.id}" type="hidden"/>
+                                <input th:name="movie.name" th:value="${payment_form.movie.name}" type="hidden"/>
+                                <input th:name="movie.overview" th:value="${payment_form.movie.overview}"
+                                       type="hidden"/>
+                                <input th:name="movie.movieUrl" th:value="${payment_form.movie.movieUrl}"
+                                       type="hidden"/>
+                                <input th:name="movie.vote" th:value="${payment_form.movie.vote}" type="hidden"/>
+                                <input th:name="movie.releases" th:value="${payment_form.movie.releases}"
+                                       type="hidden"/>
+                                <input th:name="date" th:value="${payment_form.date}" type="hidden"/>
+                                <input th:name="projection.id" th:value="${payment_form.projection.id}" type="hidden"/>
+                                <input th:name="projection.date" th:value="${payment_form.projection.date}"
+                                       type="hidden"/>
+                                <input th:name="projection.startTime" th:value="${payment_form.projection.startTime}"
+                                       type="hidden"/>
+                                <input th:name="projection.hallId" th:value="${payment_form.projection.hallId}"
+                                       type="hidden"/>
+                                <input th:name="projection.basePrice" th:value="${payment_form.projection.basePrice}"
+                                       type="hidden"/>
+                                <input th:name="seat.id" th:value="${_seat.id}" type="hidden"/>
+                                <input th:name="seat.position" th:value="${_seat.position}" type="hidden"/>
+                                <input th:name="seat.isBooked" th:value="${_seat.isBooked}" type="hidden"/>
+                                <div class="col-12">
+                                    <p id="url">
+                                        <i class="material-icons">event_seat</i>
+                                    </p>
+                                </div>
+                                <div class="col-12">
+                                    <div th:text="${_seat.position}">A0</div>
+                                </div>
+                                <div class="col-12">
+                                    <p th:text="${payment_form.projection.basePrice}+'€'"></p>
+                                </div>
+                                <button class="btn btn-primary" type="submit">Buy
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div th:unless="${_seat.isBooked}">
-                    <form action="#" method="post"
-                          onclick="action +='/'+ document.getElementById('c1').checked+'/'+ document.getElementById('c2').checked+'/'+ document.getElementById('c3').checked"
-                          th:action="@{/payment}"
-                          th:object="${payment_form}">
-                        <input th:name="cinema.id" th:value="${payment_form.cinema.id}" type="hidden"/>
-                        <input th:name="cinema.name" th:value="${payment_form.cinema.name}" type="hidden"/>
-                        <input th:name="cinema.address" th:value="${payment_form.cinema.address}"
-                               type="hidden"/>
-                        <input th:name="cinema.city" th:value="${payment_form.cinema.city}" type="hidden"/>
-                        <input th:name="movie.id" th:value="${payment_form.movie.id}" type="hidden"/>
-                        <input th:name="movie.name" th:value="${payment_form.movie.name}" type="hidden"/>
-                        <input th:name="movie.overview" th:value="${payment_form.movie.overview}"
-                               type="hidden"/>
-                        <input th:name="movie.movieUrl" th:value="${payment_form.movie.movieUrl}"
-                               type="hidden"/>
-                        <input th:name="movie.vote" th:value="${payment_form.movie.vote}" type="hidden"/>
-                        <input th:name="movie.releases" th:value="${payment_form.movie.releases}"
-                               type="hidden"/>
-                        <input th:name="date" th:value="${payment_form.date}" type="hidden"/>
-                        <input th:name="projection.id" th:value="${payment_form.projection.id}" type="hidden"/>
-                        <input th:name="projection.date" th:value="${payment_form.projection.date}"
-                               type="hidden"/>
-                        <input th:name="projection.startTime" th:value="${payment_form.projection.startTime}"
-                               type="hidden"/>
-                        <input th:name="projection.hallId" th:value="${payment_form.projection.hallId}"
-                               type="hidden"/>
-                        <input th:name="projection.basePrice" th:value="${payment_form.projection.basePrice}"
-                               type="hidden"/>
-                        <input th:name="seat.id" th:value="${_seat.id}" type="hidden"/>
-                        <input th:name="seat.position" th:value="${_seat.position}" type="hidden"/>
-                        <input th:name="seat.isBooked" th:value="${_seat.isBooked}" type="hidden"/>
-                        <div class="col-12">
-                            <p id="url">
-                                <i class="material-icons">event_seat</i>
-                            </p>
-                        </div>
-                        <div class="col-12">
-                            <div th:text="${_seat.position}">A0</div>
-                        </div>
-                        <div class="col-12">
-                            <p th:text="${payment_form.projection.basePrice}+'€'"></p>
-                        </div>
-                        <button class="btn btn-primary" type="submit">Buy
-                        </button>
-                    </form>
-                </div>
-            </div>
-            </div>
 
+            </div>
+        </div>
+        <div th:if="${error != null}">
+            <h3 th:text="${error}"></h3>
         </div>
     </div>
-    <div th:if="${error != null}">
-        <h3 th:text="${error}"></h3>
-    </div>
-</div>
+</main>
 <footer th:replace="components::footer" class="text-light pt-md-5 border-top" style="background-color: #343a40;">
     <div class="container">
         <div class="row">
