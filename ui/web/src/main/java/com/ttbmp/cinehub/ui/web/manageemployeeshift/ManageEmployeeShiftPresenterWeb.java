@@ -12,6 +12,8 @@ import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.ui.Model;
 
+import java.time.DayOfWeek;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +62,7 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
                             .collect(Collectors.toList())
             );
         }
-        model.addAttribute("shiftList", employeeShiftListMap);
+        model.addAttribute("employeeShiftListMap", employeeShiftListMap);
     }
 
     @Override

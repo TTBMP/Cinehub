@@ -43,68 +43,73 @@
         </div>
     </div>
 </nav>
-<div class="container">
-    <div class="col-md-12 text-center mt-3">
-        <br/>
-        <h1>Assign Projectionist Shift</h1>
-        <hr>
-    </div>
-    <div>
-        <form action="#" method="post" th:object="${assignRequest}">
-            <div class="row justify-content-center text-center">
-                <div class="col-4 mt-3">
-                    <label> Employee</label>
-                    <select class="form-select" id="employeeComboBox" required th:field="*{employee.id}">
-                        <option th:each="employee : ${projectionistList}"
-                                th:text="${employee.name + ' '+ employee.surname}"
-                                th:value="${employee.id}"></option>
-                    </select>
-                </div>
-                <div class="col-4 mt-3 ">
-                    <label>Date</label>
-                    <input class="form-control it-date-datepicker"  id="date" required th:attr="min=${now}" th:field="*{date}" type="date"/>
-                </div>
-                <div class="col-4 mt-3">
-                    <label> Hall</label>
-                    <select class="form-select" id="modifyHallComboBox" required th:field="*{hall.id}" th:value="${hall}">
-                        <option th:each="hall : ${hallList}"
-                                th:text="${hall.name}"
-                                th:value="${hall.id}">
-                        </option>
-                    </select>
-                </div>
-                <div class="col-6  mt-3  ">
-                    <label>Start Shift</label>
-                    <input class="form-control" id="start_time"
-                           required th:field="*{start}" type="time">
-                </div>
-                <div class="col-6  mt-3">
-                    <label>End Shift</label>
-                    <input class="form-control" id="end_time" required th:field="*{end}"
-                           type="time">
-                </div>
-                <div class="col-12  mt-2">
-                    <hr>
-                </div>
+<main>
+    <div class="container">
+        <div class="col-md-12 text-center mt-3">
+            <br/>
+            <h1>Assign Projectionist Shift</h1>
+            <hr>
+        </div>
+        <div>
+            <form action="#" method="post" th:object="${assignRequest}">
+                <div class="row justify-content-center text-center">
+                    <div class="col-4 mt-3">
+                        <label> Employee</label>
+                        <select class="form-select" id="employeeComboBox" required th:field="*{employee.id}">
+                            <option th:each="employee : ${projectionistList}"
+                                    th:text="${employee.name + ' '+ employee.surname}"
+                                    th:value="${employee.id}"></option>
+                        </select>
+                    </div>
+                    <div class="col-4 mt-3 ">
+                        <label>Date</label>
+                        <input class="form-control it-date-datepicker" id="date" required th:attr="min=${now}"
+                               th:field="*{date}" type="date"/>
+                    </div>
+                    <div class="col-4 mt-3">
+                        <label> Hall</label>
+                        <select class="form-select" id="modifyHallComboBox" required th:field="*{hall.id}"
+                                th:value="${hall}">
+                            <option th:each="hall : ${hallList}"
+                                    th:text="${hall.name}"
+                                    th:value="${hall.id}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-6  mt-3  ">
+                        <label>Start Shift</label>
+                        <input class="form-control" id="start_time"
+                               required th:field="*{start}" type="time">
+                    </div>
+                    <div class="col-6  mt-3">
+                        <label>End Shift</label>
+                        <input class="form-control" id="end_time" required th:field="*{end}"
+                               type="time">
+                    </div>
+                    <div class="col-12  mt-2">
+                        <hr>
+                    </div>
 
-                <div class="col-6  mt-3">
-                    <a href="/manage_employee_shift">
-                        <button class="btn btn-danger btn-lg" type="button">
-                            Close
-                        </button>
-                    </a>
-                </div>
+                    <div class="col-6  mt-3">
+                        <a href="/manage_employee_shift">
+                            <button class="btn btn-danger btn-lg" type="button">
+                                Close
+                            </button>
+                        </a>
+                    </div>
 
-                <div class="col-6 mt-3">
-                    <a href="/shift_assigned">
-                        <button class="btn btn-primary btn-lg">Save Shift</button>
-                    </a>
+                    <div class="col-6 mt-3">
+                        <a href="/shift_assigned">
+                            <button class="btn btn-primary btn-lg">Save Shift</button>
+                        </a>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
+</main>
 <br/>
+
 <footer th:replace="components::footer" class="text-light pt-md-5 border-top" style="background-color: #343a40;">
     <div class="container">
         <div class="row">
@@ -150,6 +155,7 @@
         </div>
     </footer>
 </footer>
+
 <script th:replace="components::Bootstrap_JS" crossorigin="anonymous"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
