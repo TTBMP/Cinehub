@@ -77,7 +77,7 @@
                         </div>
                         <div th:unless="${_seat.isBooked}">
                             <form action="#" method="post"
-                                  onclick="action +='/'+ document.getElementById('c1').checked+'/'+ document.getElementById('c2').checked+'/'+ document.getElementById('c3').checked"
+                                  onclick="action = '/payment'+'/'+ document.getElementById('c1').checked+'/'+ document.getElementById('c2').checked+'/'+ document.getElementById('c3').checked"
                                   th:action="@{/payment}"
                                   th:object="${payment_form}">
                                 <input th:name="cinema.id" th:value="${payment_form.cinema.id}" type="hidden"/>
