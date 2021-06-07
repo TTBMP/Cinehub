@@ -71,7 +71,7 @@
                                 <div class="m-2">
                                     <img src="../../static/images/employee.jpg" th:src="@{images/employee.jpg}">
                                 </div>
-                                <div th:id="${employee.key.id}">
+                                <div >
                                     <p th:text=" ${employee.key.name} + ' ' + ${employee.key.surname}"></p>
                                     <p th:text="'Role : ' + ${employee.key.toString()}   "></p>
                                 </div>
@@ -121,7 +121,7 @@
                 <div class="buttonAssign">
                     <form action="/assign_projectionist_shift" method="get">
                         <input name="idCinema" th:value="${idCinema}" type="hidden"/>
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">
+                        <button id="assignProjShift" class="btn btn-primary btn-lg btn-block" type="submit">
                             Assign New Projectionist Shift
                         </button>
                     </form>
@@ -129,7 +129,7 @@
                 <div class="buttonAssign">
                     <form class="assignButton" action="/assign_repeated_projectionist_shift" method="get">
                         <input name="idCinema" th:value="${idCinema}" type="hidden"/>
-                        <button class="btn btn-primary  btn-lg btn-block" type="submit">
+                        <button  id="assignProjRepShift" class="btn btn-primary  btn-lg btn-block" type="submit">
                             Assign New Repeated Projectionist Shift
                         </button>
                     </form>
@@ -137,7 +137,7 @@
                 <div class="buttonAssign">
                     <form action="/assign_usher_shift" method="get">
                         <input name="idCinema" th:value="${idCinema}" type="hidden"/>
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Assign New Usher
+                        <button  id="assignUshShift" class="btn btn-primary btn-lg btn-block" type="submit">Assign New Usher
                             Shift
                         </button>
                     </form>
@@ -145,7 +145,7 @@
                 <div class="buttonAssign">
                     <form action="/assign_repeated_usher_shift" method="get">
                         <input name="idCinema" th:value="${idCinema}" type="hidden"/>
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Assign New
+                        <button id="assignUshRepShift" class="btn btn-primary btn-lg btn-block" type="submit">Assign New
                             Repeated Usher Shift
                         </button>
                     </form>
