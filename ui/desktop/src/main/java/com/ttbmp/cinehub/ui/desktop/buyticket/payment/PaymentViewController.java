@@ -72,6 +72,7 @@ public class PaymentViewController extends ViewController {
                                 )
                         )
         );
+        errorLabel.visibleProperty().bind(viewModel.errorMessageProperty().isNotEmpty());
         emailTextField.textProperty().bindBidirectional(viewModel.emailUserProperty());
         numberOfCreditCardTextField.textProperty().bindBidirectional(viewModel.numberCardProperty());
         cvvTextField.textProperty().bindBidirectional(viewModel.cvvProperty());

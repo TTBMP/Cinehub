@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta th:replace="components::meta_content" content="text/html; charset=UTF-8" http-equiv="Content-Type">
-    <meta th:replace="components::meta_viewport" content="width=device-width, initial-scale=1.0" name="viewport">
-    <link th:replace="components::Bootstrap_CSS" crossorigin="anonymous"
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
-          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" rel="stylesheet">
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" th:replace="components::meta_content">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" th:replace="components::meta_viewport">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+          rel="stylesheet" th:replace="components::Bootstrap_CSS">
     <link href="../../static/css/theme.css" rel="stylesheet" th:href="@{/css/theme.css}" type="text/css">
     <link href="../../static/css/styleIvan.css" rel="stylesheet" th:href="@{/css/styleIvan.css}" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -68,10 +68,11 @@
             </div>
             <div class="card m-sm-1 m-lg-5-5 p-2">
                 <!--/Checkbox-->
-                <div class="row justify-content-center">
-                    <div class="card p-2 m-2 justify-content-center border-white text-light"
-                         th:each="_seat,inter : ${seatList}"
-                         style="width: min-content; text-align: center; border-color: white;  background-image: url(https://st.ilfattoquotidiano.it/wp-content/uploads/2020/10/29/cinema1200.jpg);background-position: left">
+                <div class="row p-5 justify-content-center">
+                    <div class="col-1 card p-2 mb-2 justify-content-center border-white text-light"
+                         style="margin-right: 60px; text-align: center; border-color: white;  background-image: url(https://st.ilfattoquotidiano.it/wp-content/uploads/2020/10/29/cinema1200.jpg);background-position: left"
+                         th:each="_seat,inter : ${seatList}">
+
                         <div th:if="${_seat.isBooked}">
                             <div>SOLD</div>
                         </div>
@@ -95,14 +96,17 @@
                                 <input th:name="movie.releases" th:value="${payment_form.movie.releases}"
                                        type="hidden"/>
                                 <input th:name="date" th:value="${payment_form.date}" type="hidden"/>
-                                <input th:name="projection.id" th:value="${payment_form.projection.id}" type="hidden"/>
+                                <input th:name="projection.id" th:value="${payment_form.projection.id}"
+                                       type="hidden"/>
                                 <input th:name="projection.date" th:value="${payment_form.projection.date}"
                                        type="hidden"/>
-                                <input th:name="projection.startTime" th:value="${payment_form.projection.startTime}"
+                                <input th:name="projection.startTime"
+                                       th:value="${payment_form.projection.startTime}"
                                        type="hidden"/>
                                 <input th:name="projection.hallId" th:value="${payment_form.projection.hallId}"
                                        type="hidden"/>
-                                <input th:name="projection.basePrice" th:value="${payment_form.projection.basePrice}"
+                                <input th:name="projection.basePrice"
+                                       th:value="${payment_form.projection.basePrice}"
                                        type="hidden"/>
                                 <input th:name="seat.id" th:value="${_seat.id}" type="hidden"/>
                                 <input th:name="seat.position" th:value="${_seat.position}" type="hidden"/>
@@ -133,9 +137,9 @@
     </div>
 </main>
 <footer th:replace="components::footer"></footer>
-<script th:replace="components::Bootstrap_JS" crossorigin="anonymous"
-        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        th:replace="components::Bootstrap_JS"></script>
 <script th:if="false">replace('nav', '../components.html')</script>
 <script th:if="false">replace('footer', '../components.html')</script>
 </body>

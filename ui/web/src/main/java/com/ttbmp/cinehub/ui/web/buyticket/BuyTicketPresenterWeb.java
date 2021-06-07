@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.ui.web.buyticket;
 
+import com.ttbmp.cinehub.app.dto.SeatDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketPresenter;
@@ -8,6 +9,10 @@ import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.ui.Model;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 /**
  * @author Palmieri Ivan
@@ -37,7 +42,10 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     @Override
     public void presentSeatList(SeatListResponse response) {
-        model.addAttribute("seatList", response.getSeatDtoList());
+        var seatList = response.getSeatDtoList().stream()
+                .sorted(Comparator.comparing(SeatDto::getPosition))
+                .collect(Collectors.toList());
+        model.addAttribute("seatList", seatList);
     }
 
     @Override

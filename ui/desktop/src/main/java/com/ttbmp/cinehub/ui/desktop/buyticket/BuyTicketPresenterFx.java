@@ -32,7 +32,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
         viewModel.errorMessageProperty().setValue(
                 request.getErrorList().stream()
                         .map(Request.Error::getMessage)
-                        .collect(Collectors.joining())
+                        .collect(Collectors.joining("\n"))
         );
     }
 
