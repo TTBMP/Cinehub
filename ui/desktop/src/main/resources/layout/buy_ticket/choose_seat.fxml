@@ -9,7 +9,7 @@
       xmlns="http://javafx.com/javafx/8"
       fx:controller="com.ttbmp.cinehub.ui.desktop.buyticket.chooseseat.ChooseSeatViewController">
     <children>
-        <fx:include fx:id="appBar" source="/layout/app_bar/app_bar.fxml"/>
+        <fx:include fx:id="appBar" source="../app_bar/app_bar.fxml"/>
         <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
             <children>
                 <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0"

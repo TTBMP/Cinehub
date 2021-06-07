@@ -9,6 +9,7 @@ public class AboutView extends FxmlView {
 
     public AboutView() {
         super("about_page.fxml");
+        addStylesheet("theme.css");
     }
 
 }

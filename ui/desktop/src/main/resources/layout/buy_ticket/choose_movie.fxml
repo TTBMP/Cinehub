@@ -4,86 +4,91 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" minHeight="730.0" minWidth="1156.0" stylesheets="@../../styles/stylesIvan.css"
-      xmlns="http://javafx.com/javafx/8"
+<?import java.lang.*?>
+<VBox minHeight="730.0" minWidth="1156.0" stylesheets="@../../styles/stylesIvan.css" xmlns="http://javafx.com/javafx/16"
+      xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.ttbmp.cinehub.ui.desktop.buyticket.choosemovie.ChooseMovieViewController">
-    <children>
-        <fx:include fx:id="appBar" source="/layout/app_bar/app_bar.fxml"/>
-        <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308"
-                    maxWidth="1.7976931348623157E308" prefHeight="700.0">
-            <content>
-                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0">
-                    <children>
-                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                            <children>
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a date!"
-                                      wrappingWidth="110.6708984375">
-                                    <HBox.margin>
-                                        <Insets left="10.0" top="15.0"/>
-                                    </HBox.margin>
-                                </Text>
-                                <Button fx:id="previousButton" mnemonicParsing="false" text="&lt;">
-                                    <HBox.margin>
-                                        <Insets top="10.0"/>
-                                    </HBox.margin>
-                                </Button>
-                                <Button fx:id="nextButton" mnemonicParsing="false" text="&gt;">
-                                    <HBox.margin>
-                                        <Insets right="10.0" top="10.0"/>
-                                    </HBox.margin>
-                                </Button>
-                                <Button fx:id="todayButton" mnemonicParsing="false" text="TODAY">
-                                    <HBox.margin>
-                                        <Insets right="10.0" top="10.0"/>
-                                    </HBox.margin>
-                                </Button>
-                                <DatePicker fx:id="dateOfProjectionDatePicker" editable="false"
-                                            promptText="Projection date" showWeekNumbers="true">
-                                    <opaqueInsets>
-                                        <Insets/>
-                                    </opaqueInsets>
-                                    <HBox.margin>
-                                        <Insets left="10.0" top="10.0"/>
-                                    </HBox.margin>
-                                </DatePicker>
-                                <AnchorPane/>
-                            </children>
-                            <VBox.margin>
-                                <Insets top="10.0"/>
-                            </VBox.margin>
-                        </HBox>
-                        <HBox>
-                            <children>
-                                <Label fx:id="errorLabel" textAlignment="CENTER">
-                                    <HBox.margin>
-                                        <Insets left="20.0"/>
-                                    </HBox.margin>
-                                </Label>
-                            </children>
-                            <VBox.margin>
-                                <Insets left="16.0"/>
-                            </VBox.margin>
-                        </HBox>
-                        <ListView fx:id="movieListView" VBox.vgrow="ALWAYS">
-                            <VBox.margin>
-                                <Insets bottom="16.0" left="16.0" right="16.0"/>
-                            </VBox.margin>
-                        </ListView>
-                        <HBox alignment="TOP_RIGHT">
-                            <children>
-                                <Button fx:id="confirmMovieButton" alignment="CENTER" contentDisplay="TOP"
-                                        mnemonicParsing="false" text="Continue"/>
-                            </children>
-                            <VBox.margin>
-                                <Insets bottom="16.0" right="16.0"/>
-                            </VBox.margin>
-                        </HBox>
-                    </children>
-                </VBox>
-            </content>
-            <padding>
-                <Insets left="16.0" right="16.0" top="16.0"/>
-            </padding>
-        </ScrollPane>
-    </children>
+    <fx:include fx:id="appBar" source="../app_bar/app_bar.fxml"/>
+    <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308"
+                maxWidth="1.7976931348623157E308" prefHeight="700.0" VBox.vgrow="ALWAYS">
+        <padding>
+            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
+        </padding>
+        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0">
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                <VBox.margin>
+                    <Insets top="10.0"/>
+                </VBox.margin>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a date!" wrappingWidth="110.6708984375">
+                    <HBox.margin>
+                        <Insets left="10.0" top="15.0"/>
+                    </HBox.margin>
+                </Text>
+                <Button fx:id="previousButton" mnemonicParsing="false" text="&lt;">
+                    <styleClass>
+                        <String fx:value="btn-sm"/>
+                        <String fx:value="btn-primary"/>
+                    </styleClass>
+                    <HBox.margin>
+                        <Insets top="10.0"/>
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="nextButton" mnemonicParsing="false" text="&gt;">
+                    <styleClass>
+                        <String fx:value="btn-sm"/>
+                        <String fx:value="btn-primary"/>
+                    </styleClass>
+                    <HBox.margin>
+                        <Insets right="10.0" top="10.0"/>
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="todayButton" mnemonicParsing="false" text="TODAY">
+                    <styleClass>
+                        <String fx:value="btn-sm"/>
+                        <String fx:value="btn-primary"/>
+                    </styleClass>
+                    <HBox.margin>
+                        <Insets right="10.0" top="10.0"/>
+                    </HBox.margin>
+                </Button>
+                <DatePicker fx:id="dateOfProjectionDatePicker" editable="false" promptText="Projection date"
+                            showWeekNumbers="true">
+                    <opaqueInsets>
+                        <Insets/>
+                    </opaqueInsets>
+                    <HBox.margin>
+                        <Insets left="10.0" top="10.0"/>
+                    </HBox.margin>
+                </DatePicker>
+                <AnchorPane/>
+            </HBox>
+            <HBox>
+                <VBox.margin>
+                    <Insets left="16.0"/>
+                </VBox.margin>
+                <Label fx:id="errorLabel" textAlignment="CENTER">
+                    <HBox.margin>
+                        <Insets left="20.0"/>
+                    </HBox.margin>
+                </Label>
+            </HBox>
+            <ListView fx:id="movieListView" VBox.vgrow="ALWAYS">
+                <VBox.margin>
+                    <Insets bottom="16.0" left="16.0" right="16.0"/>
+                </VBox.margin>
+            </ListView>
+            <HBox alignment="TOP_RIGHT">
+                <VBox.margin>
+                    <Insets bottom="16.0" right="16.0"/>
+                </VBox.margin>
+                <Button fx:id="confirmMovieButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false"
+                        text="Continue">
+                    <styleClass>
+                        <String fx:value="btn"/>
+                        <String fx:value="btn-primary"/>
+                    </styleClass>
+                </Button>
+            </HBox>
+        </VBox>
+    </ScrollPane>
 </VBox>

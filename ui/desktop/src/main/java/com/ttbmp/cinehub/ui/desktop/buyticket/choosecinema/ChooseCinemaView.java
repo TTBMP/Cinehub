@@ -10,5 +10,6 @@ public class ChooseCinemaView extends FxmlView {
 
     public ChooseCinemaView() {
         super("buy_ticket/choose_cinema.fxml");
+        addStylesheet("theme.css");
     }
 }

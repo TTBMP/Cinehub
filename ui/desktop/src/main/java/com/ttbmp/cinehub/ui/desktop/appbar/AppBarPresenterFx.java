@@ -30,15 +30,16 @@ public class AppBarPresenterFx implements GetUserRolePresenter, LogoutPresenter 
     @Override
     public void present(RoleResponse response) {
         viewModel.getTabList().clear();
-        viewModel.getTabList().add(viewModel.getActivityTabMap().get(AboutActivity.class));
-        viewModel.getTabList().add(viewModel.getActivityTabMap().get(LogoutActivity.class));
+        viewModel.getTabList().add(viewModel.getActivityTabMap().get(null));
+        viewModel.getTabList().add(viewModel.getActivityTabMap().get(BuyTicketActivity.class));
         if (response.getRoleList().contains(EMPLOYEE)) {
             viewModel.getTabList().add(viewModel.getActivityTabMap().get(ViewPersonalScheduleActivity.class));
         }
         if (response.getRoleList().contains(MANAGER)) {
             viewModel.getTabList().add(viewModel.getActivityTabMap().get(ManageShiftActivity.class));
         }
-        viewModel.getTabList().add(viewModel.getActivityTabMap().get(BuyTicketActivity.class));
+        viewModel.getTabList().add(viewModel.getActivityTabMap().get(AboutActivity.class));
+        viewModel.getTabList().add(viewModel.getActivityTabMap().get(LogoutActivity.class));
     }
 
     @Override
@@ -72,9 +73,10 @@ public class AppBarPresenterFx implements GetUserRolePresenter, LogoutPresenter 
     @Override
     public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e) {
         viewModel.getTabList().clear();
+        viewModel.getTabList().add(viewModel.getActivityTabMap().get(null));
+        viewModel.getTabList().add(viewModel.getActivityTabMap().get(BuyTicketActivity.class));
         viewModel.getTabList().add(viewModel.getActivityTabMap().get(AboutActivity.class));
         viewModel.getTabList().add(viewModel.getActivityTabMap().get(LoginActivity.class));
-        viewModel.getTabList().add(viewModel.getActivityTabMap().get(BuyTicketActivity.class));
     }
 
 }

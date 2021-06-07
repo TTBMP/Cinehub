@@ -9,6 +9,7 @@ public class ShowShiftView extends FxmlView {
 
     protected ShowShiftView() {
         super("show_shift.fxml");
+        addStylesheet("theme.css");
         addStylesheet("styles.css");
     }
 }

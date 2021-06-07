@@ -10,5 +10,6 @@ public class ConfirmEmailView extends FxmlView {
 
     public ConfirmEmailView() {
         super("buy_ticket/confirm_email.fxml");
+        addStylesheet("theme.css");
     }
 }

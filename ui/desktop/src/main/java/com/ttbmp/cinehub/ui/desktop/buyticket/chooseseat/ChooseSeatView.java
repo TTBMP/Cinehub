@@ -10,5 +10,6 @@ public class ChooseSeatView extends FxmlView {
 
     public ChooseSeatView() {
         super("buy_ticket/choose_seat.fxml");
+        addStylesheet("theme.css");
     }
 }

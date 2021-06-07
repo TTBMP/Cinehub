@@ -6,6 +6,8 @@ plugins {
 dependencies {
     implementation(project(":app"))
 
+    implementation("org.kordamp.bootstrapfx", "bootstrapfx-core", "0.4.0")
+    
     testImplementation("org.junit.jupiter", "junit-jupiter-api", "5.7.2")
     testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine")
 }

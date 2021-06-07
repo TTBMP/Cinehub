@@ -10,5 +10,6 @@ public class PaymentView extends FxmlView {
 
     public PaymentView() {
         super("buy_ticket/payment.fxml");
+        addStylesheet("theme.css");
     }
 }

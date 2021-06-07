@@ -9,6 +9,7 @@ public class ShiftDetailView extends FxmlView {
 
     public ShiftDetailView() {
         super("view_personal_schedule/shift_detail.fxml");
+        addStylesheet("theme.css");
         addStylesheet("styles.css");
     }
 

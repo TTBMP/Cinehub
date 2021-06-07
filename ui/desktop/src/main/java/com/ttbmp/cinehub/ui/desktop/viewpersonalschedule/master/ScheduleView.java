@@ -9,6 +9,7 @@ public class ScheduleView extends FxmlView {
 
     public ScheduleView() {
         super("view_personal_schedule/schedule.fxml");
+        addStylesheet("theme.css");
         addStylesheet("styles.css");
         addStylesheet("personal_schedule.css");
     }

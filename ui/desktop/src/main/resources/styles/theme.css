@@ -1,0 +1,236 @@
+* {
+    -fx-blue: #007bff;
+    -fx-indigo: #6610f2;
+    -fx-purple: #6f42c1;
+    -fx-pink: #e83e8c;
+    -fx-red: #dc3545;
+    -fx-orange: #fd7e14;
+    -fx-yellow: #ffc107;
+    -fx-green: #28a745;
+    -fx-teal: #20c997;
+    -fx-cyan: #17a2b8;
+    -fx-white: #fff;
+    -fx-gray: #6c757d;
+    -fx-gray-dark: #343a40;
+    -fx-primary: #007bff;
+    -fx-secondary: #6c757d;
+    -fx-success: #28a745;
+    -fx-info: #17a2b8;
+    -fx-warning: #ffc107;
+    -fx-danger: #dc3545;
+    -fx-light: #f8f9fa;
+    -fx-dark: #343a40;
+    -fx-dark-white: #f5f5f5;
+    -fx-bs-blue: #0d6efd;
+    -fx-bs-indigo: #6610f2;
+    -fx-bs-purple: #6f42c1;
+    -fx-bs-pink: #d63384;
+    -fx-bs-red: #dc3545;
+    -fx-bs-orange: #fd7e14;
+    -fx-bs-yellow: #ffc107;
+    -fx-bs-green: #198754;
+    -fx-bs-teal: #20c997;
+    -fx-bs-cyan: #0dcaf0;
+    -fx-bs-white: #fff;
+    -fx-bs-gray: #6c757d;
+    -fx-bs-gray-dark: #343a40;
+    -fx-bs-primary: #0d6efd;
+    -fx-bs-secondary: #6c757d;
+    -fx-bs-success: #198754;
+    -fx-bs-info: #0dcaf0;
+    -fx-bs-warning: #ffc107;
+    -fx-bs-danger: #dc3545;
+    -fx-bs-light: #f8f9fa;
+    -fx-bs-dark: #212529;
+}
+
+.root {
+    -fx-background-color: -fx-bs-light;
+}
+
+.p-1 {
+    -fx-padding: 16px;
+}
+
+.p-2 {
+    -fx-padding: 32px;
+}
+
+.p-3 {
+    -fx-padding: 48px;
+}
+
+.p-4 {
+    -fx-padding: 64px;
+}
+
+.p-5 {
+    -fx-padding: 80px;
+}
+
+.pt-1 {
+    -fx-padding: 16px 0px 0px 0px;
+}
+
+.pt-2 {
+    -fx-padding: 32px 0px 0px 0px;
+}
+
+.pt-3 {
+    -fx-padding: 48px 0px 0px 0px;
+}
+
+.pt-4 {
+    -fx-padding: 64px 0px 0px 0px;
+}
+
+.pt-5 {
+    -fx-padding: 80px 0px 0px 0px;
+}
+
+.pr-1 {
+    -fx-padding: 0px 16px 0px 0px;
+}
+
+.pr-2 {
+    -fx-padding: 0px 32px 0px 0px;
+}
+
+.pr-3 {
+    -fx-padding: 0px 48px 0px 0px;
+}
+
+.pr-4 {
+    -fx-padding: 0px 64px 0px 0px;
+}
+
+.pr-5 {
+    -fx-padding: 0px 80px 0px 0px;
+}
+
+.pb-1 {
+    -fx-padding: 0px 0px 16px 0px;
+}
+
+.pb-2 {
+    -fx-padding: 0px 0px 32px 0px;
+}
+
+.pb-3 {
+    -fx-padding: 0px 0px 48px 0px;
+}
+
+.pb-4 {
+    -fx-padding: 0px 0px 64px 0px;
+}
+
+.pb-5 {
+    -fx-padding: 0px 0px 80px 0px;
+}
+
+.pl-1 {
+    -fx-padding: 0px 0px  0px 16px;
+}
+
+.pl-2 {
+    -fx-padding: 0px 0px  0px 32px;
+}
+
+.pl-3 {
+    -fx-padding: 0px 0px  0px 48px;
+}
+
+.pl-4 {
+    -fx-padding: 0px 0px  0px 64px;
+}
+
+.pl-5 {
+    -fx-padding: 0px 0px  0px 80px;
+}
+
+TextField {
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-border-color: #ced4da;
+    -fx-color: -fx-bs-dark;
+    -fx-min-height: 42px;
+    -fx-max-height: 42px;
+}
+
+PasswordField {
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-border-color: #ced4da;
+    -fx-color: -fx-bs-dark;
+    -fx-min-height: 42px;
+    -fx-max-height: 42px;
+}
+
+.tab-pane {
+    -fx-tab-min-width: 150px;
+    -fx-tab-max-width: 250px;
+    -fx-tab-min-height: 50px;
+    -fx-tab-max-height: 50px;
+}
+
+.tab-pane *.tab-header-background {
+    -fx-background-color: -fx-bs-dark;
+}
+
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-width: 0;
+}
+
+.tab .tab-label {
+    -fx-background-color: transparent;
+    -fx-alignment: CENTER;
+    -fx-text-fill: -fx-white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-font-family: Calibri;
+    -fx-opacity: 0.5;
+}
+
+.tab:hover .tab-label {
+    -fx-text-fill: -fx-white;
+    -fx-opacity: 0.75;
+}
+
+.tab:selected {
+    -fx-border-style: none;
+}
+
+.tab:selected .tab-label {
+    -fx-text-fill: -fx-white;
+    -fx-opacity: 1.0;
+}
+
+.tab-content-area {
+    -fx-padding: 0px;
+}
+
+#logo {
+    -fx-end-margin: 50px;
+}
+
+.tab:disabled,
+.tab:disabled > *,
+.tab:disabled .tab-label {
+    -fx-opacity: 1.0;
+}
+
+.tab:top {
+    -fx-background-color: -fx-bs-dark;
+}
+
+.tab:right {
+    -fx-background-color: -fx-bs-dark;
+}
+
+.tab:bottom {
+    -fx-background-color: -fx-bs-dark;
+}
+
+.tab:left {
+    -fx-background-color: -fx-bs-dark;
+}
