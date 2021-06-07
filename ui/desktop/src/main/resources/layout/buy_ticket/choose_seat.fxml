@@ -5,90 +5,89 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import java.lang.String?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" minHeight="730.0" minWidth="1156.0" stylesheets="@../../styles/stylesIvan.css"
       xmlns="http://javafx.com/javafx/8"
       fx:controller="com.ttbmp.cinehub.ui.desktop.buyticket.chooseseat.ChooseSeatViewController">
-    <children>
-        <fx:include fx:id="appBar" source="../app_bar/app_bar.fxml"/>
-        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-            <children>
-                <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0"
-                       prefWidth="1087.0" text="Devi prima effettuare l'accesso..." textAlignment="CENTER"
-                       textFill="RED">
-                    <font>
-                        <Font size="20.0"/>
-                    </font>
-                </Label>
-                <GridPane layoutX="26.0" layoutY="522.0" VBox.vgrow="ALWAYS">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                    </rowConstraints>
-                    <children>
-                        <Text fx:id="seatsTotalText" strokeType="OUTSIDE" strokeWidth="0.0" text="Total seats:"
-                              wrappingWidth="199.6708984375"/>
-                        <Text fx:id="seatsBuysText" strokeType="OUTSIDE" strokeWidth="0.0" text="Occupied seats:"
-                              textAlignment="CENTER" wrappingWidth="157.6708984375" GridPane.columnIndex="1"/>
-                        <Text fx:id="seatsFreeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Free seats:"
-                              textAlignment="RIGHT" wrappingWidth="128.6708984375" GridPane.columnIndex="2"/>
-                    </children>
-                </GridPane>
-                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                    <children>
-                        <TitledPane collapsible="false" text="Buy a specific seat" HBox.hgrow="ALWAYS">
-                            <content>
-                                <VBox fx:id="seatsContainerVBox"/>
-                            </content>
-                        </TitledPane>
-                    </children>
-                </HBox>
-                <Label alignment="CENTER" text="Each additional service increases the cost of the ticket by one euro "
-                       textFill="#b54848" VBox.vgrow="ALWAYS">
-                    <VBox.margin>
-                        <Insets bottom="16.0"/>
-                    </VBox.margin>
-                </Label>
-                <CheckBox fx:id="skipLineRadioButton" mnemonicParsing="false"
-                          text="Skip line, with this option you can skip the initial waiting line +1€">
-                    <VBox.margin>
-                        <Insets top="5.0"/>
-                    </VBox.margin>
-                </CheckBox>
-                <CheckBox fx:id="openBarRadioButton" mnemonicParsing="false"
-                          text="Open bar, with this option you will get a full meal (food, drinks) for one person +10€">
-                    <VBox.margin>
-                        <Insets top="5.0"/>
-                    </VBox.margin>
-                </CheckBox>
-                <CheckBox fx:id="magicBoxRadioButton" mnemonicParsing="false"
-                          text="Magic Box, with this option you will get a gadget of the typical objects of the film +15€">
-                    <VBox.margin>
-                        <Insets top="5.0"/>
-                    </VBox.margin>
-                </CheckBox>
-                <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1124.0" VBox.vgrow="ALWAYS"/>
-                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                    <children>
-                        <AnchorPane HBox.hgrow="ALWAYS">
-                            <children>
-                                <Button fx:id="returnButton" mnemonicParsing="false" text="Back"
-                                        AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
-                                        AnchorPane.topAnchor="10.0"/>
-                                <Button fx:id="confirmSeatButton" mnemonicParsing="false" text="Continue"
-                                        AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0"
-                                        AnchorPane.topAnchor="10.0"/>
-                            </children>
-                        </AnchorPane>
-                    </children>
-                </HBox>
-            </children>
-            <padding>
-                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
-            </padding>
-        </VBox>
-    </children>
+    <fx:include fx:id="appBar" source="../app_bar/app_bar.fxml"/>
+    <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+        <padding>
+            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
+        </padding>
+        <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0"
+               prefWidth="1087.0" text="Devi prima effettuare l'accesso..." textAlignment="CENTER"
+               textFill="RED">
+            <font>
+                <Font size="20.0"/>
+            </font>
+        </Label>
+        <GridPane layoutX="26.0" layoutY="522.0" VBox.vgrow="ALWAYS">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <Text fx:id="seatsTotalText" strokeType="OUTSIDE" strokeWidth="0.0" text="Total seats:"
+                  wrappingWidth="199.6708984375"/>
+            <Text fx:id="seatsBuysText" strokeType="OUTSIDE" strokeWidth="0.0" text="Occupied seats:"
+                  textAlignment="CENTER" wrappingWidth="157.6708984375" GridPane.columnIndex="1"/>
+            <Text fx:id="seatsFreeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Free seats:"
+                  textAlignment="RIGHT" wrappingWidth="128.6708984375" GridPane.columnIndex="2"/>
+        </GridPane>
+        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+            <TitledPane collapsible="false" text="Buy a specific seat" HBox.hgrow="ALWAYS">
+                <content>
+                    <VBox fx:id="seatsContainerVBox"/>
+                </content>
+            </TitledPane>
+        </HBox>
+        <Label alignment="CENTER" text="Each additional service increases the cost of the ticket by one euro "
+               textFill="#b54848" VBox.vgrow="ALWAYS">
+            <VBox.margin>
+                <Insets bottom="16.0"/>
+            </VBox.margin>
+        </Label>
+        <CheckBox fx:id="skipLineRadioButton" mnemonicParsing="false"
+                  text="Skip line, with this option you can skip the initial waiting line +1€">
+            <VBox.margin>
+                <Insets top="5.0"/>
+            </VBox.margin>
+        </CheckBox>
+        <CheckBox fx:id="openBarRadioButton" mnemonicParsing="false"
+                  text="Open bar, with this option you will get a full meal (food, drinks) for one person +10€">
+            <VBox.margin>
+                <Insets top="5.0"/>
+            </VBox.margin>
+        </CheckBox>
+        <CheckBox fx:id="magicBoxRadioButton" mnemonicParsing="false"
+                  text="Magic Box, with this option you will get a gadget of the typical objects of the film +15€">
+            <VBox.margin>
+                <Insets top="5.0"/>
+            </VBox.margin>
+        </CheckBox>
+        <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1124.0" VBox.vgrow="ALWAYS"/>
+        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            <AnchorPane HBox.hgrow="ALWAYS">
+                <Button fx:id="returnButton" text="Back"
+                        AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
+                        AnchorPane.topAnchor="10.0">
+                    <styleClass>
+                        <String fx:value="btn"/>
+                        <String fx:value="btn-secondary"/>
+                    </styleClass>
+                </Button>
+                <Button fx:id="confirmSeatButton" text="Continue"
+                        AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                        AnchorPane.topAnchor="10.0">
+                    <styleClass>
+                        <String fx:value="btn"/>
+                        <String fx:value="btn-primary"/>
+                    </styleClass>
+                </Button>
+            </AnchorPane>
+        </HBox>
+    </VBox>
 </VBox>

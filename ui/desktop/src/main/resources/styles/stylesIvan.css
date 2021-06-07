@@ -60,6 +60,7 @@
 .text-field:focused {
     -fx-background-color: -fx-focus-color, -fx-background;
 }
+
 /*
 #confirmCinemaButton, #confirmMovieButton, #confirmButton, #confirmSeatButton, #buyRandomButton, #timerCount {
     -fx-text-fill: white;

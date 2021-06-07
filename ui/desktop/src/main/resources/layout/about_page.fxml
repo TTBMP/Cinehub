@@ -6,76 +6,48 @@
 <?import javafx.scene.layout.*?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" minHeight="730.0" minWidth="1156.0" xmlns="http://javafx.com/javafx/11.0.1"
       fx:controller="com.ttbmp.cinehub.ui.desktop.about.AboutViewController">
-    <children>
-        <fx:include fx:id="appBar" source="app_bar/app_bar.fxml"/>
-        <VBox VBox.vgrow="ALWAYS">
-            <children>
-                <HBox alignment="CENTER" prefHeight="150.0">
-                    <children>
-                        <Label style="-fx-font-weight: bold; -fx-font-size: 32;" text="About us"/>
-                    </children>
-                </HBox>
-                <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
-                    <children>
-                        <Label style="-fx-font-size: 16;" text="TTBMP organization"/>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../drawables/trademark/ttbmpLogo.png"/>
-                            </image>
-                        </ImageView>
-                    </children>
-                </VBox>
-                <HBox>
-                    <children>
-                        <Label style="-fx-font-size: 16;" text="Powered by:"/>
-                    </children>
-                </HBox>
-                <HBox alignment="CENTER" spacing="24.0">
-                    <children>
-                        <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../drawables/trademark/JavaFXLogo.png"/>
-                            </image>
-                        </ImageView>
-                        <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../drawables/trademark/SpringFrameworkLogo.png"/>
-                            </image>
-                        </ImageView>
-                        <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../drawables/trademark/firebaseLogo.png"/>
-                            </image>
-                        </ImageView>
-                        <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../drawables/trademark/javamailLogo.png"/>
-                            </image>
-                        </ImageView>
-                        <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../drawables/trademark/stripeLogo.png"/>
-                            </image>
-                        </ImageView>
-                        <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../drawables/trademark/theMovieDbLogo.png"/>
-                            </image>
-                        </ImageView>
-                        <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../drawables/trademark/MySQLLogo.png"/>
-                            </image>
-                        </ImageView>
-                    </children>
-                    <padding>
-                        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
-                    </padding>
-                </HBox>
-            </children>
-            <VBox.margin>
-                <Insets bottom="16.0" left="16.0" right="16.0"/>
-            </VBox.margin>
+    <fx:include fx:id="appBar" source="app_bar/app_bar.fxml"/>
+    <VBox VBox.vgrow="ALWAYS">
+        <VBox.margin>
+            <Insets bottom="16.0" left="16.0" right="16.0"/>
+        </VBox.margin>
+        <HBox alignment="CENTER" prefHeight="150.0">
+            <Label style="-fx-font-weight: bold; -fx-font-size: 32;" text="About us"/>
+        </HBox>
+        <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+            <Label style="-fx-font-size: 16;" text="TTBMP organization"/>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../drawables/trademark/ttbmpLogo.png"/>
+            </ImageView>
         </VBox>
-    </children>
+        <HBox>
+            <Label style="-fx-font-size: 16;" text="Powered by:"/>
+        </HBox>
+        <HBox alignment="CENTER" spacing="24.0">
+            <padding>
+                <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
+            </padding>
+            <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../drawables/trademark/JavaFXLogo.png"/>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../drawables/trademark/SpringFrameworkLogo.png"/>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../drawables/trademark/firebaseLogo.png"/>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../drawables/trademark/javamailLogo.png"/>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../drawables/trademark/stripeLogo.png"/>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../drawables/trademark/theMovieDbLogo.png"/>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../drawables/trademark/MySQLLogo.png"/>
+            </ImageView>
+        </HBox>
+    </VBox>
 </VBox>

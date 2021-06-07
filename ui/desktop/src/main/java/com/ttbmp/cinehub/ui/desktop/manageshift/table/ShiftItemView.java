@@ -9,7 +9,7 @@ import com.ttbmp.cinehub.ui.desktop.utilities.ui.FxmlView;
 public class ShiftItemView extends FxmlView {
 
     public ShiftItemView() {
-        super("shift_item.fxml");
+        super("manage_employee_shift/shift_item.fxml");
         addStylesheet("styles.css");
 
     }

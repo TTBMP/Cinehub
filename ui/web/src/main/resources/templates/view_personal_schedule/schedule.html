@@ -15,7 +15,7 @@
 <nav th:replace="components::navbar"></nav>
 <main>
     <div class="container p-4">
-        <div align="center" class="pt-4 pb-4">
+        <div class="pt-4 pb-4 text-center">
             <input class="m-3" id="date-picker"
                    onchange="window.location.href = '?date=' + document.getElementById('date-picker').value;"
                    th:value="${date}"

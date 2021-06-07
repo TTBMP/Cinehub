@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.ui.desktop.manageshift.assign;
 
 
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.FxmlView;
+import org.kordamp.bootstrapfx.BootstrapFX;
 
 /**
  * @author Massimo Mazzetti
@@ -9,8 +10,9 @@ import com.ttbmp.cinehub.ui.desktop.utilities.ui.FxmlView;
 public class AssignShiftView extends FxmlView {
 
     public AssignShiftView() {
-        super("assign_shift.fxml");
-        addStylesheet("styles.css");
+        super("manage_employee_shift/assign_shift.fxml");
+        addStylesheet("theme.css");
+        addExternalStylesheet(BootstrapFX.bootstrapFXStylesheet());
     }
 
 }

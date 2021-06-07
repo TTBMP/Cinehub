@@ -13,7 +13,6 @@ import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 
 import java.net.URL;
 import java.time.LocalTime;
@@ -65,9 +64,6 @@ public class ModifyShiftViewController extends ViewController {
     private Button confirmButton;
 
     @FXML
-    private HBox errorHBox;
-
-    @FXML
     private Label errorLabel;
 
     @Override
@@ -76,7 +72,7 @@ public class ModifyShiftViewController extends ViewController {
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
 
         viewModel.setErrorAssignVisibility(false);
-        errorHBox.visibleProperty().bind(viewModel.errorAssignVisibilityProperty());
+        errorLabel.visibleProperty().bind(viewModel.errorAssignVisibilityProperty());
         viewModel.errorProperty().addObserver(s -> errorLabel.setText(s));
 
         if (viewModel.getEmployee(viewModel.getSelectedShift()) instanceof UsherDto) {

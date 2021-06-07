@@ -42,9 +42,9 @@ public class ShiftItemViewController extends ViewController {
     protected void onLoad() {
         ManageEmployeesShiftViewModel viewModel;
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
-        if(shift.getDate().isBefore(LocalDate.now().plusDays(1))){
+        if (shift.getDate().isBefore(LocalDate.now().plusDays(1))) {
             shiftHBox.setStyle("-fx-background-color: #ff0000;");
-        }else if (viewModel.getEmployee(shift) instanceof UsherDto) {
+        } else if (viewModel.getEmployee(shift) instanceof UsherDto) {
             shiftHBox.setStyle("-fx-background-color: #FFFF00;");
         }
 

@@ -3,8 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="420.0" prefWidth="450.0" spacing="16.0"
-      xmlns="http://javafx.com/javafx/11.0.1"
+<?import java.lang.String?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="550.0" spacing="16.0"
+      xmlns="http://javafx.com/javafx/16"
       fx:controller="com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.detail.projectionist.ProjectionistShiftDetailViewController">
     <children>
         <VBox>
@@ -32,17 +33,18 @@
         </VBox>
         <Separator/>
         <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
-            <children>
-                <Label text="Working in the hall"/>
-                <Label fx:id="hallLabel" text="hall"/>
-            </children>
+            <Label text="Working in the hall"/>
+            <Label fx:id="hallLabel" text="hall"/>
         </HBox>
         <ListView fx:id="projectionListView"/>
         <Separator/>
         <HBox>
-            <children>
-                <Button fx:id="backButton" mnemonicParsing="false" text="BACK"/>
-            </children>
+            <Button fx:id="backButton" mnemonicParsing="false" text="BACK">
+                <styleClass>
+                    <String fx:value="btn"/>
+                    <String fx:value="btn-secondary"/>
+                </styleClass>
+            </Button>
         </HBox>
     </children>
     <padding>

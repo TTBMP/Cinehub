@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.ui.desktop.manageshift.table;
 
 
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.FxmlView;
+import org.kordamp.bootstrapfx.BootstrapFX;
 
 /**
  * @author Massimo Mazzetti
@@ -9,9 +10,9 @@ import com.ttbmp.cinehub.ui.desktop.utilities.ui.FxmlView;
 public class CalendarShiftItemView extends FxmlView {
 
     public CalendarShiftItemView() {
-        super("calendar_shift_item_massimo.fxml");
-        addStylesheet("styles.css");
-
+        super("manage_employee_shift/calendar_shift_item.fxml");
+        addStylesheet("theme.css");
+        addExternalStylesheet(BootstrapFX.bootstrapFXStylesheet());
     }
 
     @Override

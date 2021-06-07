@@ -192,7 +192,6 @@
 }
 
 .table-view .column-header, .table-view .filler {
-
     -fx-border-width: 0 0 0 0;
     -fx-background-color: transparent;
     -fx-border-color: transparent transparent derive(-fx-base, 80%) transparent;
@@ -207,9 +206,7 @@
 
 
 .table-cell {
-
     -fx-padding: 1em 0em 0.1em 0.1em;
-
 }
 
 .table-row-cell:empty {
@@ -240,6 +237,3 @@
 .combo-box .arrow-button {
     -fx-background-color: white;
 }
-
-
-
