@@ -1,9 +1,9 @@
 package com.ttbmp.cinehub.ui.web.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ProjectionListReply;
-import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ShiftListReply;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalSchedulePresenter;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.reply.ProjectionListReply;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.reply.ShiftListReply;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;

@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.detail.projectionist;
 
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ProjectionListRequest;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalScheduleUseCase;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.request.ProjectionListRequest;
 import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.ViewPersonalScheduleViewModel;

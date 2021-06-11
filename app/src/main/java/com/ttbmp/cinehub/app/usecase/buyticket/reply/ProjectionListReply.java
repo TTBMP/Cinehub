@@ -1,17 +1,17 @@
-package com.ttbmp.cinehub.app.usecase.buyticket.response;
+package com.ttbmp.cinehub.app.usecase.buyticket.reply;
 
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectionListResponse {
+public class ProjectionListReply {
 
 
     private final List<ProjectionDto> projectionDtoList;
     private final List<String> projectionDtoTime = new ArrayList<>();
 
-    public ProjectionListResponse(List<ProjectionDto> projectionDtoList) {
+    public ProjectionListReply(List<ProjectionDto> projectionDtoList) {
         this.projectionDtoList = projectionDtoList;
         for (var projection : projectionDtoList) {
             addProjectionDtoTime(projection.getStartTime());

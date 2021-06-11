@@ -4,11 +4,11 @@ import java.util.List;
 
 import static com.ttbmp.cinehub.domain.security.Role.*;
 
-public class RoleResponse {
+public class RoleReply {
 
     private final List<Role> roleList;
 
-    public RoleResponse(List<Role> roleList) {
+    public RoleReply(List<Role> roleList) {
         this.roleList = roleList;
     }
 

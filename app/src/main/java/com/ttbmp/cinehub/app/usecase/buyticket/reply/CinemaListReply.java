@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.app.usecase.buyticket.response;
+package com.ttbmp.cinehub.app.usecase.buyticket.reply;
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 
@@ -7,11 +7,11 @@ import java.util.List;
 /**
  * @author Ivan Palmieri
  */
-public class CinemaListResponse {
+public class CinemaListReply {
 
     private final List<CinemaDto> cinemaList;
 
-    public CinemaListResponse(List<CinemaDto> cinemaList) {
+    public CinemaListReply(List<CinemaDto> cinemaList) {
         this.cinemaList = cinemaList;
 
     }

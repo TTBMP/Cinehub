@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
+package com.ttbmp.cinehub.app.usecase.viewpersonalschedule.request;
 
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;

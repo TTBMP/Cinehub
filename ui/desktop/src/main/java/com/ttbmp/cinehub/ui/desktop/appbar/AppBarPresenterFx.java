@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.ui.desktop.appbar;
 
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.getuserrole.GetUserRolePresenter;
-import com.ttbmp.cinehub.app.usecase.getuserrole.RoleResponse;
+import com.ttbmp.cinehub.app.usecase.getuserrole.RoleReply;
 import com.ttbmp.cinehub.app.usecase.logout.LogoutPresenter;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
@@ -16,8 +16,8 @@ import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.ViewPersonalScheduleAct
 
 import java.util.stream.Collectors;
 
-import static com.ttbmp.cinehub.app.usecase.getuserrole.RoleResponse.Role.EMPLOYEE;
-import static com.ttbmp.cinehub.app.usecase.getuserrole.RoleResponse.Role.MANAGER;
+import static com.ttbmp.cinehub.app.usecase.getuserrole.RoleReply.Role.EMPLOYEE;
+import static com.ttbmp.cinehub.app.usecase.getuserrole.RoleReply.Role.MANAGER;
 
 public class AppBarPresenterFx implements GetUserRolePresenter, LogoutPresenter {
 
@@ -28,14 +28,14 @@ public class AppBarPresenterFx implements GetUserRolePresenter, LogoutPresenter 
     }
 
     @Override
-    public void present(RoleResponse response) {
+    public void present(RoleReply reply) {
         viewModel.getTabList().clear();
         viewModel.getTabList().add(viewModel.getActivityTabMap().get(null));
         viewModel.getTabList().add(viewModel.getActivityTabMap().get(BuyTicketActivity.class));
-        if (response.getRoleList().contains(EMPLOYEE)) {
+        if (reply.getRoleList().contains(EMPLOYEE)) {
             viewModel.getTabList().add(viewModel.getActivityTabMap().get(ViewPersonalScheduleActivity.class));
         }
-        if (response.getRoleList().contains(MANAGER)) {
+        if (reply.getRoleList().contains(MANAGER)) {
             viewModel.getTabList().add(viewModel.getActivityTabMap().get(ManageShiftActivity.class));
         }
         viewModel.getTabList().add(viewModel.getActivityTabMap().get(AboutActivity.class));

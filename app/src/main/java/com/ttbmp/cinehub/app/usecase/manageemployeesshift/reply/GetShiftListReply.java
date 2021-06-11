@@ -1,20 +1,19 @@
-package com.ttbmp.cinehub.app.usecase.manageemployeesshift.response;
+package com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply;
 
 import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 
 import java.time.LocalDate;
 import java.util.List;
 
-
 /**
  * @author Massimo Mazzetti
  */
-public class GetShiftListResponse {
+public class GetShiftListReply {
     private List<ShiftDto> shiftDtoList;
     private LocalDate date;
     private int cinemaId;
 
-    public GetShiftListResponse(List<ShiftDto> shiftList, LocalDate date, int cinema) {
+    public GetShiftListReply(List<ShiftDto> shiftList, LocalDate date, int cinema) {
         this.shiftDtoList = shiftList;
         this.date = date;
         this.cinemaId = cinema;

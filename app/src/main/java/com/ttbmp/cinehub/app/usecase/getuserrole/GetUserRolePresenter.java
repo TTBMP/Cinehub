@@ -6,7 +6,7 @@ import com.ttbmp.cinehub.app.utilities.request.Request;
 
 public interface GetUserRolePresenter {
 
-    void present(RoleResponse response);
+    void present(RoleReply reply);
 
     void presentInvalidRequest(Request request);
 

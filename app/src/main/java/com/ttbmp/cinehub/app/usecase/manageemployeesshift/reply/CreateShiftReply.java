@@ -1,12 +1,12 @@
-package com.ttbmp.cinehub.app.usecase.manageemployeesshift.response;
+package com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply;
 
 import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 
-public class CreateShiftResponse {
+public class CreateShiftReply {
 
     private ShiftDto shiftDto;
 
-    public CreateShiftResponse(ShiftDto shiftDto) {
+    public CreateShiftReply(ShiftDto shiftDto) {
         this.shiftDto = shiftDto;
     }
 

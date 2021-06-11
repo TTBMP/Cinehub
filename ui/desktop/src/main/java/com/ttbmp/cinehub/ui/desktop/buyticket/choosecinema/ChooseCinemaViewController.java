@@ -5,7 +5,6 @@ import com.ttbmp.cinehub.app.dto.ProjectionDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.ProjectionListRequest;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
-import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketActivity;
 import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.desktop.buyticket.choosemovie.ChooseMovieView;
 import com.ttbmp.cinehub.ui.desktop.buyticket.chooseseat.ChooseSeatView;
@@ -67,7 +66,7 @@ public class ChooseCinemaViewController extends ViewController {
         confirmCinemaButton.setOnAction(a -> {
             viewModel.errorMessageProperty().setValue(null);
             navController.navigate(new NavDestination(new ChooseSeatView()));
-            if(viewModel.loginRequestedProperty().getValue().equals(Boolean.TRUE)){
+            if (viewModel.loginRequestedProperty().getValue().equals(Boolean.TRUE)) {
                 navController.navigate(new NavActivityDestination(new LoginActivity()));
             }
         });

@@ -1,10 +1,10 @@
-package com.ttbmp.cinehub.app.usecase.buyticket.response;
+package com.ttbmp.cinehub.app.usecase.buyticket.reply;
 
-public class SeatErrorResponse {
+public class SeatErrorReply {
 
     private String error;
 
-    public SeatErrorResponse(String error) {
+    public SeatErrorReply(String error) {
         this.error = error;
     }
 

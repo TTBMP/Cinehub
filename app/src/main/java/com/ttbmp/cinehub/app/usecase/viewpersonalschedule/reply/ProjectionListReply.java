@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
+package com.ttbmp.cinehub.app.usecase.viewpersonalschedule.reply;
 
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
 

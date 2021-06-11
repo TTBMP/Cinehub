@@ -75,6 +75,7 @@ public class BuyTicketViewModel implements ViewModel {
         selectedMovieReleased.bind(ObjectBindings.map(selectedMovie, MovieDto::getReleases));
         selectedDateProperty().setValue(LocalDate.now());
     }
+
     public BooleanProperty loginRequestedProperty() {
         return loginRequested;
     }

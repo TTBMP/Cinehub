@@ -6,7 +6,7 @@ import com.ttbmp.cinehub.app.dto.employee.UsherDto;
 import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
@@ -28,8 +28,8 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentEmployeeList(GetEmployeeListResponse response) {
-        var employeeList = new EmployeeListDto(response.getEmployeeDtoList());
+    public void presentEmployeeList(GetEmployeeListReply reply) {
+        var employeeList = new EmployeeListDto(reply.getEmployeeDtoList());
         model.addAttribute("employeeList", employeeList.getEmployeeList());
         model.addAttribute("projectionistList", employeeList.getEmployeeList().stream()
                 .filter(employeeDto -> employeeDto.getClass()
@@ -40,20 +40,20 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
                         .equals(UsherDto.class))
                 .collect(Collectors.toList()));
 
-        findEmployee(response.getEmployeeDtoList());
+        findEmployee(reply.getEmployeeDtoList());
     }
 
     @Override
-    public void presentShiftList(GetShiftListResponse response) {
+    public void presentShiftList(GetShiftListReply reply) {
         var temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
-        var dateSelected = response.getDate();
-        var cinemaSelected = response.getCinemaId();
+        var dateSelected = reply.getDate();
+        var cinemaSelected = reply.getCinemaId();
         var employeeList = (List<EmployeeDto>) model.getAttribute("employeeList");
         Map<EmployeeDto, List<ShiftDto>> employeeShiftListMap = new HashMap<>();
         for (var employee : employeeList) {
             employeeShiftListMap.put(
                     employee,
-                    response.getShiftDtoList().stream()
+                    reply.getShiftDtoList().stream()
                             .filter(shift -> shift.getEmployeeId().equals(employee.getId())
                                     && employee.getCinema().getId() == cinemaSelected
                                     && shift.getDate().get(temporalField) == dateSelected.get(temporalField))
@@ -64,11 +64,11 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentCinemaList(GetCinemaListResponse response) {
-        model.addAttribute("cinemaList", response.getCinemaList());
+    public void presentCinemaList(GetCinemaListReply reply) {
+        model.addAttribute("cinemaList", reply.getCinemaList());
         if (model.getAttribute("idCinema") != null) {
             var idCinema = (int) model.getAttribute("idCinema");
-            for (var cinemaDto : response.getCinemaList()) {
+            for (var cinemaDto : reply.getCinemaList()) {
                 if (cinemaDto.getId() == idCinema) {
                     model.addAttribute("selectedCinema", cinemaDto);
                     model.addAttribute("hallList", cinemaDto.getHalList());
@@ -88,13 +88,13 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentRepeatShift(ShiftRepeatResponse response) {
+    public void presentRepeatShift(ShiftRepeatReply reply) {
         //on the web side there is the reload of the page so you don't have to submit any changes
     }
 
     @Override
-    public void presentCreateShift(CreateShiftResponse response) {
-        model.addAttribute("shiftCreated", response.getShiftDto());
+    public void presentCreateShift(CreateShiftReply reply) {
+        model.addAttribute("shiftCreated", reply.getShiftDto());
     }
 
     @Override

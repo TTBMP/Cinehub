@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.ui.web.login;
 
 import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.usecase.login.LoginPresenter;
-import com.ttbmp.cinehub.app.usecase.login.LoginResponse;
+import com.ttbmp.cinehub.app.usecase.login.LoginReply;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.ui.Model;
@@ -16,8 +16,8 @@ public class LoginPresenterWeb implements LoginPresenter {
     }
 
     @Override
-    public void presentSessionToken(LoginResponse response) {
-        model.addAttribute("sessionToken", response.getSessionCookie());
+    public void presentSessionToken(LoginReply reply) {
+        model.addAttribute("sessionToken", reply.getSessionCookie());
     }
 
     @Override

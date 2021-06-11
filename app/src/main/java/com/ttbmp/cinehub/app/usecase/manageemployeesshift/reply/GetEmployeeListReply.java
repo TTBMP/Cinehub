@@ -1,14 +1,14 @@
-package com.ttbmp.cinehub.app.usecase.manageemployeesshift.response;
+package com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply;
 
 import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
 
 import java.util.List;
 
-public class GetEmployeeListResponse {
+public class GetEmployeeListReply {
 
     private List<EmployeeDto> employeeDtoList;
 
-    public GetEmployeeListResponse(List<EmployeeDto> employeeDtoList) {
+    public GetEmployeeListReply(List<EmployeeDto> employeeDtoList) {
         this.employeeDtoList = employeeDtoList;
     }
 

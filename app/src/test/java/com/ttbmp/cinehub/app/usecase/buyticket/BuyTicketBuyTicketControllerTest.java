@@ -5,8 +5,8 @@ import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
+import com.ttbmp.cinehub.app.usecase.buyticket.reply.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.MovieListRequest;
-import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import org.junit.jupiter.api.Assertions;
@@ -29,7 +29,7 @@ class BuyTicketBuyTicketControllerTest {
     class MockBuyTicketPresenter implements BuyTicketPresenter {
 
         @Override
-        public void presentMovieList(MovieListResponse response) {
+        public void presentMovieList(MovieListReply reply) {
             try {
                 var result = true;
                 var movieList = serviceLocator.getService(MovieRepository.class)
@@ -38,7 +38,7 @@ class BuyTicketBuyTicketControllerTest {
                         .map(MovieDto::new)
                         .collect(Collectors.toList());
                 var expected = movieDtoList;
-                var actual = response.getMovieList();
+                var actual = reply.getMovieList();
                 for (var i = 0; i < expected.size(); i++) {
                     if (expected.get(i).equals(actual.get(i))) {
                         result = false;
@@ -53,12 +53,12 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentCinemaList(CinemaListResponse response) {
+        public void presentCinemaList(CinemaListReply reply) {
 
         }
 
         @Override
-        public void presentSeatList(SeatListResponse response) {
+        public void presentSeatList(SeatListReply reply) {
 
         }
 
@@ -81,13 +81,13 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentProjectionList(ProjectionListResponse projectionTimeList) {
+        public void presentProjectionList(ProjectionListReply reply) {
 
         }
 
 
         @Override
-        public void presentTicket(TicketResponse ticketDto) {
+        public void presentTicket(TicketReply reply) {
 
         }
 
@@ -102,7 +102,7 @@ class BuyTicketBuyTicketControllerTest {
         }
 
         @Override
-        public void presentSeatAlreadyBookedError(SeatErrorResponse message) {
+        public void presentSeatAlreadyBookedError(SeatErrorReply reply) {
 
         }
 

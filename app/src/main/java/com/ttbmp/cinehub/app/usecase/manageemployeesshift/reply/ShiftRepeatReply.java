@@ -1,14 +1,13 @@
-package com.ttbmp.cinehub.app.usecase.manageemployeesshift.response;
+package com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply;
 
 import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 
 import java.util.List;
 
-
-public class ShiftRepeatResponse {
+public class ShiftRepeatReply {
     private List<ShiftDto> shiftDto;
 
-    public ShiftRepeatResponse(List<ShiftDto> shiftDto) {
+    public ShiftRepeatReply(List<ShiftDto> shiftDto) {
         this.shiftDto = shiftDto;
     }
 

@@ -1,10 +1,10 @@
 package com.ttbmp.cinehub.app.usecase.login;
 
-public class LoginResponse {
+public class LoginReply {
 
     String sessionCookie;
 
-    public LoginResponse(String sessionCookie) {
+    public LoginReply(String sessionCookie) {
         this.sessionCookie = sessionCookie;
     }
 

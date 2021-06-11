@@ -1,4 +1,4 @@
-package com.ttbmp.cinehub.app.usecase.manageemployeesshift.response;
+package com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply;
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 
@@ -7,10 +7,10 @@ import java.util.List;
 /**
  * @author Massimo Mazzetti
  */
-public class GetCinemaListResponse {
+public class GetCinemaListReply {
     private List<CinemaDto> cinemaList;
 
-    public GetCinemaListResponse(List<CinemaDto> cinemaList) {
+    public GetCinemaListReply(List<CinemaDto> cinemaList) {
         this.cinemaList = cinemaList;
     }
 
