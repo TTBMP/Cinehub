@@ -20,6 +20,7 @@ import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.ViewPersonalScheduleAct
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
@@ -62,6 +63,7 @@ public class AppBarViewController extends ViewController {
     @Override
     protected void onLoad() {
         loadActivityTabMap();
+        logo.setGraphic(new LogoView());
         BindingHelper.bind(tabPane.getTabs(), viewModel.getTabList());
         getUserRoleUseCase.getUserRoles(new RoleRequest(CinehubApplication.getSessionToken()));
         tabPane.getSelectionModel().select(viewModel.getActivityTabMap().get(activity.getClass()));

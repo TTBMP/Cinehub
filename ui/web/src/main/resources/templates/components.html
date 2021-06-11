@@ -15,9 +15,9 @@
     <link href="../static/css/navbar.css" rel="stylesheet" th:href="@{/css/navbar.css}" type="text/css">
     <div class="container-md">
         <a class="navbar-brand mb-0 h1" href="#" th:href="@{/}">
-            <div class="bg-dark" id="logo">
-                <span class="text-white">Cine</span>
-                <span class="bg-primary text-dark rectangle rounded p-1">hub</span>
+            <div class="bg-dark d-flex flex-row align-items-center gap-1" id="logo">
+                <div class="text-white">Cine</div>
+                <div class="bg-primary text-dark rectangle rounded p-1">hub</div>
             </div>
         </a>
         <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
@@ -60,7 +60,12 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md">
-                <h4>Cinehub</h4>
+                <a class="navbar-brand mb-0 h1" href="#" th:href="@{/}">
+                    <div class="d-flex flex-row align-items-center gap-1" id="footer-logo">
+                        <div class="text-white">Cine</div>
+                        <div class="bg-primary text-dark rectangle rounded p-1">hub</div>
+                    </div>
+                </a>
             </div>
             <div class="col-6 col-md">
                 <h5>Resources</h5>

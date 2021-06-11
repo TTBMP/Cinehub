@@ -11,6 +11,6 @@
         <Tab fx:id="manageShiftTab" text="Manage Shift"/>
         <Tab fx:id="viewPersonalScheduleTab" text="View Personal Schedule"/>
         <Tab fx:id="buyTicketTab" text="Buy Ticket"/>
-        <Tab fx:id="logo" disable="true" text="Cinehub"/>
+        <Tab fx:id="logo" disable="true"/>
     </TabPane>
 </VBox>
