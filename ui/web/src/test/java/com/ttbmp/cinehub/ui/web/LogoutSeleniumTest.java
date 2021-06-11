@@ -15,8 +15,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static com.ttbmp.cinehub.ui.web.SeleniumHelper.clickAndWaitPageToLoad;
+import static com.ttbmp.cinehub.ui.web.SeleniumHelper.waitPageToLoad;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class LogoutSeleniumTest {
@@ -33,7 +34,9 @@ class LogoutSeleniumTest {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.manage().deleteAllCookies();
         driver.get("http://localhost:8080/");
+        waitPageToLoad(driver);
     }
 
     @AfterEach
@@ -51,27 +54,26 @@ class LogoutSeleniumTest {
     void logoutButtonWithAuthentication_isPresent() {
         loginAsProjectionist();
         var button = driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/form/input"));
-        assertNotEquals("Logout", button.getAttribute("value"));
+        assertEquals("Logout", button.getAttribute("value"));
     }
 
     @Test
     void logoutWithAuthentication_closeSession() {
         loginAsProjectionist();
         var logoutButton = driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/form/input"));
-        logoutButton.click();
+        clickAndWaitPageToLoad(driver, logoutButton);
         assertFalse(driver.manage().getCookies().stream().anyMatch(cookie -> cookie.getName().equals("session")));
     }
 
     private void loginAsProjectionist() {
         var loginButton = driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/form[1]/input"));
-        loginButton.click();
+        clickAndWaitPageToLoad(driver, loginButton);
         var emailInput = driver.findElement(By.xpath("//*[@id=\"floatingInput\"]"));
         var passwordInput = driver.findElement(By.xpath("//*[@id=\"floatingPassword\"]"));
         var sigInButton = driver.findElement(By.xpath("/html/body/main/form/button"));
-        new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(sigInButton));
         new Actions(driver).click(emailInput).sendKeys("fb@cinehub.com").perform();
         new Actions(driver).click(passwordInput).sendKeys("asdfghjkl").perform();
-        sigInButton.click();
+        clickAndWaitPageToLoad(driver, sigInButton);
     }
 
 }

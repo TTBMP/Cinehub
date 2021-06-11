@@ -8,7 +8,7 @@ import com.ttbmp.cinehub.ui.desktop.utilities.ui.FxmlView;
 public class EmployeeCalendarTableCellView extends FxmlView {
 
     public EmployeeCalendarTableCellView() {
-        super("calendar_employee_item.fxml");
+        super("manage_employee_shift/calendar_employee_item.fxml");
 
     }
 

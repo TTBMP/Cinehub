@@ -4,87 +4,60 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" minHeight="730.0" minWidth="1156.0" stylesheets="@../../styles/stylesIvan.css"
+<?import java.lang.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" minHeight="730.0" minWidth="1156.0"
       xmlns="http://javafx.com/javafx/8"
       fx:controller="com.ttbmp.cinehub.ui.desktop.buyticket.payment.PaymentViewController">
     <children>
-        <fx:include fx:id="appBar" source="/layout/app_bar/app_bar.fxml"/>
-        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0" VBox.vgrow="ALWAYS">
+        <fx:include fx:id="appBar" source="../app_bar/app_bar.fxml"/>
+        <Label alignment="CENTER" styleClass="h1" text="Enter your billing information ">
+            <font>
+                <Font size="20.0"/>
+            </font>
+            <VBox.margin>
+                <Insets top="92.0"/>
+            </VBox.margin>
+        </Label>
+        <VBox alignment="CENTER" maxWidth="330.0" spacing="32.0" VBox.vgrow="ALWAYS">
             <children>
-                <HBox alignment="CENTER">
-                    <children>
-                        <Label alignment="CENTER" text="Enter your billing information " HBox.hgrow="ALWAYS">
-                            <font>
-                                <Font size="20.0"/>
-                            </font>
-                        </Label>
-                    </children>
-                    <VBox.margin>
-                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
-                    </VBox.margin>
-                </HBox>
-                <GridPane VBox.vgrow="ALWAYS">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                    </rowConstraints>
-                    <children>
-                        <Label text="Enter the email where the invoice arrives:" GridPane.columnIndex="3"
-                               GridPane.rowIndex="0"/>
-                        <Label text="Credit card expiration date:" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
-                        <TextField fx:id="emailTextField" alignment="TOP_LEFT" promptText="prova@prova.dom"
-                                   GridPane.columnIndex="4" GridPane.rowIndex="0">
-                        </TextField>
-                        <DatePicker fx:id="fieldExpirationDatePicker" editable="false" prefHeight="31.0"
-                                    prefWidth="181.0" promptText="aaaa-mm-gg" GridPane.columnIndex="4"
-                                    GridPane.rowIndex="1"/>
-                        <Label text="Credit card number:" GridPane.rowIndex="0"/>
-                        <Label text="CVV:" GridPane.rowIndex="1"/>
-                        <TextField fx:id="numberOfCreditCardTextField" alignment="TOP_LEFT"
-                                   promptText="4242424242424242" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                        <TextField fx:id="cvvTextField" promptText="123" GridPane.columnIndex="1"
-                                   GridPane.rowIndex="1"/>
-                    </children>
-                    <VBox.margin>
-                        <Insets left="32.0" right="32.0"/>
-                    </VBox.margin>
-                </GridPane>
-                <BorderPane>
-                    <left>
-                        <Button fx:id="returnButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="54.0"
-                                text="Back" BorderPane.alignment="CENTER"/>
-                    </left>
-                    <right>
-                        <Button fx:id="confirmButton" mnemonicParsing="false" text="Pay" textAlignment="JUSTIFY"
-                                BorderPane.alignment="CENTER"/>
-                    </right>
-                    <center>
-                        <HBox alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308"
-                              maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
-                            <children>
-                                <Text fx:id="resultPaymentText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0"
-                                      wrappingWidth="13.6708984375"/>
-                            </children>
-                        </HBox>
-                    </center>
-                    <VBox.margin>
-                        <Insets bottom="16.0" left="16.0" right="16.0"/>
-                    </VBox.margin>
-                    <top>
-                        <Label fx:id="errorLabel" prefHeight="49.0" prefWidth="763.0" textAlignment="CENTER"
-                               textFill="RED" BorderPane.alignment="CENTER"/>
-                    </top>
-                </BorderPane>
+                <TextField fx:id="numberOfCreditCardTextField" promptText="Card number"/>
+                <DatePicker fx:id="fieldExpirationDatePicker" editable="false" prefHeight="48.0" prefWidth="330.0"
+                            promptText="Expiration"/>
+                <TextField fx:id="cvvTextField" promptText="Cvv"/>
+                <TextField fx:id="emailTextField" promptText="Email"/>
             </children>
+            <VBox.margin>
+                <Insets left="16.0" right="16.0"/>
+            </VBox.margin>
         </VBox>
+        <HBox alignment="CENTER">
+            <children>
+                <Label fx:id="errorLabel" text="Label" visible="false">
+                    <styleClass>
+                        <String fx:value="alert"/>
+                        <String fx:value="alert-danger"/>
+                    </styleClass>
+                </Label>
+            </children>
+        </HBox>
+        <AnchorPane>
+            <children>
+                <Button fx:id="returnButton" text="Back" AnchorPane.leftAnchor="0.0">
+                    <styleClass>
+                        <String fx:value="btn"/>
+                        <String fx:value="btn-secondary"/>
+                    </styleClass>
+                </Button>
+                <Button fx:id="confirmButton" text="Pay" AnchorPane.rightAnchor="0.0">
+                    <styleClass>
+                        <String fx:value="btn"/>
+                        <String fx:value="btn-primary"/>
+                    </styleClass>
+                </Button>
+            </children>
+            <padding>
+                <Insets bottom="16.0" left="16.0" right="16.0"/>
+            </padding>
+        </AnchorPane>
     </children>
 </VBox>

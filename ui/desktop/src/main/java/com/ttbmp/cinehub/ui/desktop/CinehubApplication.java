@@ -30,9 +30,11 @@ public class CinehubApplication extends Application {
         var navController = new NavController(primaryStage);
         navController.navigate(new NavActivityDestination(new BuyTicketActivity()));
         primaryStage.setTitle("Cinehub");
+        primaryStage.setMinWidth(1280);
+        primaryStage.setMinHeight(856);
+        primaryStage.setWidth(1280);
+        primaryStage.setHeight(856);
         primaryStage.show();
-        primaryStage.setMinWidth(primaryStage.getWidth());
-        primaryStage.setMinHeight(primaryStage.getHeight());
     }
 
 }

@@ -69,7 +69,8 @@ public class AssignProjectionistShiftViewController {
                         shiftRequest.getHall().getId()
                 )
         );
-        return ErrorHelper.returnView(response, model, "manage_employee_shift/shift_assigned");
+        model.addAttribute("scope", "Shift Assigned");
+        return ErrorHelper.returnView(response, model, "manage_employee_shift/notification");
     }
 
 }

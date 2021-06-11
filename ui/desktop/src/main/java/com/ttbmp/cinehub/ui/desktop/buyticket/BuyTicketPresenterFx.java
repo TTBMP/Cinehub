@@ -32,7 +32,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
         viewModel.errorMessageProperty().setValue(
                 request.getErrorList().stream()
                         .map(Request.Error::getMessage)
-                        .collect(Collectors.joining())
+                        .collect(Collectors.joining("\n"))
         );
     }
 
@@ -44,6 +44,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException exception) {
+        viewModel.loginRequestedProperty().setValue(true);
         viewModel.errorMessageProperty().setValue(exception.getMessage() + ", you must log in first");
 
     }

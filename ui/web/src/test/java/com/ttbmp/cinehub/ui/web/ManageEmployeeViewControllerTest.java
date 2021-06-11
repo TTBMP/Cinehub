@@ -5,20 +5,24 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Cookie;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static com.ttbmp.cinehub.ui.web.SeleniumHelper.clickAndWaitPageToLoad;
+import static com.ttbmp.cinehub.ui.web.SeleniumHelper.waitPageToLoad;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest
 class ManageEmployeeViewControllerTest {
 
-    public WebElement employee;
     private WebDriver driver;
 
     @BeforeAll
@@ -31,14 +35,9 @@ class ManageEmployeeViewControllerTest {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.manage().deleteAllCookies();
         driver.get("http://localhost:8080/");
-        driver.manage().addCookie(new Cookie("session", "MANAGER"));
-        // driver.findElement(By.linkText("Manage employee shift")).click();
-        // new WebDriverWait(driver, 5).until(ExpectedConditions.presenceOfElementLocated(By.id("select_date")));
-        // driver.findElement(By.id("select_date")).sendKeys(LocalDate.now().format(DateTimeFormatter.ofPattern("ddMMyyyy")));
-        // driver.findElement(By.id("search_shift_cinema")).click();
-        // new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.id("1")));
-        // employee = driver.findElement(By.id("1"));
+        waitPageToLoad(driver);
     }
 
     @AfterEach
@@ -47,9 +46,20 @@ class ManageEmployeeViewControllerTest {
     }
 
     @Test
-    void searchEmployee() {
-        assertTrue(true);
-        // assertEquals(employee.getText(), "Massimo Mazzetti\n" + "Role : Projectionist");
+    void tableLoaded() {
+        loginAsManager();
+        var manageEmployeeTab = driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul/li[2]/a"));
+        clickAndWaitPageToLoad(driver, manageEmployeeTab);
+        var isPresent = driver.findElements(By.xpath("/html/body/main/div/div[2]/div[1]/table")).size() > 0;
+        assertFalse(isPresent);
     }
 
+    private void loginAsManager() {
+        var loginButton = driver.findElement(By.xpath("//*[@id=\"navbarSupportedContent\"]/form/input"));
+        clickAndWaitPageToLoad(driver, loginButton);
+        driver.findElement(By.xpath("//*[@id=\"floatingInput\"]")).sendKeys("mz@cinehub.com");
+        driver.findElement(By.xpath("//*[@id=\"floatingPassword\"]")).sendKeys("123");
+        var signInButton = driver.findElement(By.xpath("/html/body/main/form/button"));
+        clickAndWaitPageToLoad(driver, signInButton);
+    }
 }

@@ -73,7 +73,7 @@ public class NavController {
             navBackStack.push(destination);
             stage.setScene(destination.scene);
         } catch (Exception e) {
-            openErrorDialog(e.getMessage(), true);
+            openErrorDialog(e + ": " + e.getMessage(), true);
         }
     }
 

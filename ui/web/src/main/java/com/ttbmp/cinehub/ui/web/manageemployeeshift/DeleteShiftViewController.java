@@ -39,7 +39,8 @@ public class DeleteShiftViewController {
             Model model) {
         ManageEmployeesShiftUseCase useCase = new ManageEmployeesShiftHandler(new ManageEmployeeShiftPresenterWeb(model));
         useCase.deleteShift(new ShiftRequest(sessionToken, shiftId));
-        return ErrorHelper.returnView(response, model, "manage_employee_shift/delete_shift");
+        model.addAttribute("scope", "Shift deleted");
+        return ErrorHelper.returnView(response, model, "manage_employee_shift/notification");
     }
 
 }

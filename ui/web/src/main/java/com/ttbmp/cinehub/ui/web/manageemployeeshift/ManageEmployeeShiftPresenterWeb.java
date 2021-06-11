@@ -60,7 +60,7 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
                             .collect(Collectors.toList())
             );
         }
-        model.addAttribute("shiftList", employeeShiftListMap);
+        model.addAttribute("employeeShiftListMap", employeeShiftListMap);
     }
 
     @Override

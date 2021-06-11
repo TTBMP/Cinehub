@@ -4,25 +4,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity"
-            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+<?import java.lang.String?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16"
             fx:controller="com.ttbmp.cinehub.ui.desktop.manageshift.detail.ShowShiftDetailViewController">
     <top>
         <VBox alignment="CENTER">
-            <children>
-                <Label alignment="CENTER" text="Shift Detail">
-                    <font>
-                        <Font size="25.0"/>
-                    </font>
-                </Label>
-                <Separator prefWidth="200.0"/>
-                <VBox fx:id="errorVBox" alignment="CENTER">
-                    <children>
-                        <Label fx:id="errorLabel" textFill="RED"/>
-                    </children>
-                </VBox>
-            </children>
+            <Label alignment="CENTER" text="Shift Detail">
+                <font>
+                    <Font size="25.0"/>
+                </font>
+            </Label>
+            <Separator prefWidth="200.0"/>
         </VBox>
     </top>
     <center>
@@ -86,31 +79,38 @@
                 <Label fx:id="dateLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
             </children>
             <BorderPane.margin>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                <Insets/>
             </BorderPane.margin>
         </GridPane>
     </center>
     <bottom>
-        <VBox BorderPane.alignment="TOP_LEFT">
-            <BorderPane.margin>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-            </BorderPane.margin>
+        <HBox alignment="CENTER">
             <children>
-                <HBox alignment="CENTER">
-                    <children>
-                        <Button fx:id="modifyShiftButton" mnemonicParsing="false" text="Modify Shift">
-                            <HBox.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                            </HBox.margin>
-                        </Button>
-                        <Button fx:id="deleteShiftButton" mnemonicParsing="false" text="Delete Shift">
-                            <HBox.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                            </HBox.margin>
-                        </Button>
-                    </children>
-                </HBox>
+                <Button fx:id="modifyShiftButton" mnemonicParsing="false" text="Modify Shift">
+                    <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                    </HBox.margin>
+                    <styleClass>
+                        <String fx:value="btn"/>
+                        <String fx:value="btn-warning"/>
+                    </styleClass>
+                </Button>
+                <Button fx:id="deleteShiftButton" mnemonicParsing="false" text="Delete Shift">
+                    <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                    </HBox.margin>
+                    <styleClass>
+                        <String fx:value="btn"/>
+                        <String fx:value="btn-danger"/>
+                    </styleClass>
+                </Button>
             </children>
-        </VBox>
+            <BorderPane.margin>
+                <Insets top="16.0"/>
+            </BorderPane.margin>
+        </HBox>
     </bottom>
+    <padding>
+        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
+    </padding>
 </BorderPane>

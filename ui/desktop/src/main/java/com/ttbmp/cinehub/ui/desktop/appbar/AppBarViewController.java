@@ -39,6 +39,9 @@ public class AppBarViewController extends ViewController {
     private TabPane tabPane;
 
     @FXML
+    private Tab logo;
+
+    @FXML
     private Tab buyTicketTab;
 
     @FXML
@@ -59,6 +62,7 @@ public class AppBarViewController extends ViewController {
     @Override
     protected void onLoad() {
         loadActivityTabMap();
+        logo.setGraphic(new LogoView());
         BindingHelper.bind(tabPane.getTabs(), viewModel.getTabList());
         getUserRoleUseCase.getUserRoles(new RoleRequest(CinehubApplication.getSessionToken()));
         tabPane.getSelectionModel().select(viewModel.getActivityTabMap().get(activity.getClass()));
@@ -67,6 +71,7 @@ public class AppBarViewController extends ViewController {
     }
 
     private void loadActivityTabMap() {
+        viewModel.getActivityTabMap().put(null, logo);
         viewModel.getActivityTabMap().put(LoginActivity.class, loginTab);
         viewModel.getActivityTabMap().put(LogoutActivity.class, logoutTab);
         viewModel.getActivityTabMap().put(BuyTicketActivity.class, buyTicketTab);

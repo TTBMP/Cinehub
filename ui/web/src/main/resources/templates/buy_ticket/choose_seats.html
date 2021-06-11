@@ -6,118 +6,79 @@
     <link th:replace="components::Bootstrap_CSS" crossorigin="anonymous"
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" rel="stylesheet">
-    <link href="../static/css/theme.css" rel="stylesheet" th:href="@{css/theme.css}" type="text/css">
-    <link href="styleIvan.css" rel="stylesheet" type="text/css">
+    <link href="../../static/css/theme.css" rel="stylesheet" th:href="@{/css/theme.css}" type="text/css">
+    <link href="../../static/css/styleIvan.css" rel="stylesheet" th:href="@{/css/styleIvan.css}" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <title>Getting Started: Serving Web Content</title>
+    <script src="../../static/js/utilities.js" th:src="@{/js/utilities.js}" type="text/javascript"></script>
+    <title>Cinehub</title>
 </head>
-<body style="background-color: black">
-<nav th:replace="components::navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <link href="../../static/css/navbar.css" rel="stylesheet" th:href="@{css/navbar.css}" type="text/css">
-    <div class="container-md">
-        <a class="navbar-brand mb-0 h1" href="#">Cinehub</a>
-        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-                class="navbar-toggler"
-                data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a aria-current="page" class="nav-link active" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Manage shift</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">View schedule</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-            </ul>
-            <form action="#" method="GET">
-                <input class="btn btn-primary" type="submit" value="Login"/>
-            </form>
-            <form action="#" method="GET">
-                <input class="btn btn-outline-secondary" type="submit" value="Logout"/>
-            </form>
-        </div>
+<body>
+<nav th:replace="components::navbar"></nav>
+<header class="jumbotron banner position-relative mb-5">
+    <div class="container">
+        <h1 class="jumbotron-title display-2 mt-5">View of the seats</h1>
+        <h4 class="jumbotron-subtitle mt-5">Select the place you like the most, don't hesitate to ask for some
+            extras.</h4>
     </div>
-</nav>
-<div class="container" style="color: aliceblue">
-    <div class="row ">
-        <div class="col-md-12 text-center mt-3">
-            <div class="col-md-5 p-lg-5 mx-auto my-5">
-                <h1 class="display-4 font-weight-normal">View of the seats </h1>
-                <p class="lead font-weight-normal">Select the place you like the most, don't hesitate to ask for some
-                    extras .</p>
-            </div>
-            <div class="product-device box-shadow d-none d-md-block"></div>
-            <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
-        </div>
-        <!--Checkbox-->
-        <div class="col-12">
-            <h3>Additional options: </h3>
-            <div class="row">
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-7">
-                            <label for="c1"></label><input id="c1" type="checkbox">
-                            Skip line, with this option you can skip the initial waiting line
-                        </div>
-                        <div class="col-1">
-                            <p style="color: red"> + 1€</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-7">
-                            <label for="c2"></label><input id="c2" type="checkbox">
-                            Open bar, with this option you will get a full meal (food, drinks) for one person
-                        </div>
-                        <div class="col-1">
-                            <p style="color: red">
-                                + 10€</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-7">
-                            <label for="c3"></label><input id="c3" type="checkbox">
-                            Magic Box, with this option you will get a gadget of the typical objects of the film
-
-                        </div>
-                        <div class="col-1">
-                            <p style="color: red"> + 15€</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card m-5 p-2" style="background-color: #1b1b1b;border-color: #6d6d6d">
-            <div class="container mt-5 mb-5">
+</header>
+<main>
+    <div class="container">
+        <div class="row ">
+            <!--Checkbox-->
+            <div class="col-12">
+                <h3>Additional options: </h3>
                 <div class="row">
-                    <!--/Checkbox-->
-                    <div class="card p-2 m-2 justify-content-center"
-                         style="background-color: #000000;border-color: #6d6d6d"
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-7">
+                                <label for="c1"></label><input id="c1" type="checkbox">
+                                Skip line, with this option you can skip the initial waiting line
+                            </div>
+                            <div class="col-1">
+                                <p class="text-danger"> + 1€</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-7">
+                                <label for="c2"></label><input id="c2" type="checkbox">
+                                Open bar, with this option you will get a full meal (food, drinks) for one person
+                            </div>
+                            <div class="col-1">
+                                <p class="text-danger">
+                                    + 10€</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-7">
+                                <label for="c3"></label><input id="c3" type="checkbox">
+                                Magic Box, with this option you will get a gadget of the typical objects of the film
+
+                            </div>
+                            <div class="col-1">
+                                <p class="text-danger"> + 15€</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card m-sm-1 m-lg-5-5 p-2">
+                <!--/Checkbox-->
+                <div class="row p-5 justify-content-center">
+                    <div class="col-1 card p-2 mb-2 justify-content-center border-white text-light"
+                         style="margin-right: 60px; text-align: center; border-color: white;  background-image: url(https://st.ilfattoquotidiano.it/wp-content/uploads/2020/10/29/cinema1200.jpg);background-position: left"
                          th:each="_seat,inter : ${seatList}">
+
                         <div th:if="${_seat.isBooked}">
-                            <a id="urlDisable">
-                                <div>
-                                    <div style="text-align: center;">
-                                        <i class="" style="color: #6d6d6d" th:class="${classValue}">event_seat</i>
-                                    </div>
-                                    <div>SOLD</div>
-                                </div>
-                            </a>
+                            <div>SOLD</div>
                         </div>
                         <div th:unless="${_seat.isBooked}">
                             <form action="#" method="post"
-                                  onclick="action +='/'+ document.getElementById('c1').checked+'/'+ document.getElementById('c2').checked+'/'+ document.getElementById('c3').checked"
+                                  onclick="action = '/payment'+'/'+ document.getElementById('c1').checked+'/'+ document.getElementById('c2').checked+'/'+ document.getElementById('c3').checked"
                                   th:action="@{/payment}"
                                   th:object="${payment_form}">
                                 <input th:name="cinema.id" th:value="${payment_form.cinema.id}" type="hidden"/>
@@ -135,21 +96,24 @@
                                 <input th:name="movie.releases" th:value="${payment_form.movie.releases}"
                                        type="hidden"/>
                                 <input th:name="date" th:value="${payment_form.date}" type="hidden"/>
-                                <input th:name="projection.id" th:value="${payment_form.projection.id}" type="hidden"/>
+                                <input th:name="projection.id" th:value="${payment_form.projection.id}"
+                                       type="hidden"/>
                                 <input th:name="projection.date" th:value="${payment_form.projection.date}"
                                        type="hidden"/>
-                                <input th:name="projection.startTime" th:value="${payment_form.projection.startTime}"
+                                <input th:name="projection.startTime"
+                                       th:value="${payment_form.projection.startTime}"
                                        type="hidden"/>
                                 <input th:name="projection.hallId" th:value="${payment_form.projection.hallId}"
                                        type="hidden"/>
-                                <input th:name="projection.basePrice" th:value="${payment_form.projection.basePrice}"
+                                <input th:name="projection.basePrice"
+                                       th:value="${payment_form.projection.basePrice}"
                                        type="hidden"/>
                                 <input th:name="seat.id" th:value="${_seat.id}" type="hidden"/>
                                 <input th:name="seat.position" th:value="${_seat.position}" type="hidden"/>
                                 <input th:name="seat.isBooked" th:value="${_seat.isBooked}" type="hidden"/>
                                 <div class="col-12">
                                     <p id="url">
-                                        <i class="" th:class="${classValue}" th:style="${color}">event_seat</i>
+                                        <i class="material-icons">event_seat</i>
                                     </p>
                                 </div>
                                 <div class="col-12">
@@ -164,60 +128,19 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
-    </div>
-    <div th:if="${error != null}">
-        <h3 th:text="${error}"></h3>
-    </div>
-</div>
-<footer th:replace="components::footer" class="text-light pt-md-5 border-top" style="background-color: #343a40;">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md">
-                <h4>Cinehub</h4>
-            </div>
-            <div class="col-6 col-md">
-                <h5>Resources</h5>
-                <ul class="list-unstyled text-small">
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource</a></li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource name</a></li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another resource</a></li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Final resource</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>About</h5>
-                <ul class="list-unstyled text-small">
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team</a></li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Locations</a></li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Privacy</a></li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Terms</a></li>
-                </ul>
-            </div>
+        <div th:if="${error != null}">
+            <h3 th:text="${error}"></h3>
         </div>
     </div>
-    <footer class="footer mt-auto pt-3 bg-dark">
-        <div class="container">
-            <div class="row">
-                <div class="col-md"></div>
-                <div class="col-md">
-                    <small class="d-block mb-3 text-muted">© 2021–2025</small>
-                </div>
-                <div class="col-md">
-                    <a href="https://github.com/TTBMP">
-                        <svg class="bi bi-github" fill="white" height="16" viewBox="0 0 16 16" width="16"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </footer>
-</footer>
+</main>
+<footer th:replace="components::footer"></footer>
 <script th:replace="components::Bootstrap_JS" crossorigin="anonymous"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+<script th:if="false">replace('nav', '../components.html')</script>
+<script th:if="false">replace('footer', '../components.html')</script>
 </body>
 </html>

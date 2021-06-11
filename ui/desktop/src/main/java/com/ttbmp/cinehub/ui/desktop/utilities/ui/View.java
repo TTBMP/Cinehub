@@ -37,4 +37,12 @@ public abstract class View {
         );
     }
 
+    public void addExternalStylesheet(String fullPath) {
+        stylesheetList.add(fullPath);
+    }
+
+    public void addExternalStylesheet(Collection<? extends String> fullPathCollection) {
+        stylesheetList.addAll(new ArrayList<>(fullPathCollection));
+    }
+
 }

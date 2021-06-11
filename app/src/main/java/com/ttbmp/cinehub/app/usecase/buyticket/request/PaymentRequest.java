@@ -15,7 +15,7 @@ public class PaymentRequest extends AuthenticatedRequest {
     public static final Request.Error LENGTH_CVV_CREDIT_CARD_ERROR = new Request.Error("The CVV must be three numbers in length");
     public static final Request.Error EXPIRATION_CREDIT_CARD_ERROR = new Request.Error("You cannot select a date in the past");
     public static final Request.Error EMAIL_ERROR = new Request.Error("The email entered is syntactically incorrect");
-    public static final Request.Error CREDIT_CARD_LENGTH_ERROR = new Request.Error("The credit card must have a minimum length of 12 characters and a maximum of 16 characters");
+    public static final Request.Error CREDIT_CARD_LENGTH_ERROR = new Request.Error("The credit card must have a length of 16 characters");
     public static final Request.Error CVV_LETTERS_ERROR = new Request.Error("The CVV cannot contain letters");
     public static final Request.Error NUMBER_OF_CARD_LETTERS_ERROR = new Request.Error("The number of card cannot contain letters");
     public static final Request.Error MISSING_OPTION_ONE_ERROR = new Request.Error("Option one can't be null");
@@ -148,9 +148,6 @@ public class PaymentRequest extends AuthenticatedRequest {
             addError(CREDIT_CARD_LENGTH_ERROR);
         }
         if (!email.contains("@")) {
-            addError(EMAIL_ERROR);
-        }
-        if (!email.contains(".")) {
             addError(EMAIL_ERROR);
         }
         if (magicBoxOption == null) {

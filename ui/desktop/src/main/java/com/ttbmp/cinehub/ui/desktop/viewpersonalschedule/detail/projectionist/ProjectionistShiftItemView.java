@@ -9,7 +9,7 @@ public class ProjectionistShiftItemView extends FxmlView {
 
     public ProjectionistShiftItemView() {
         super("view_personal_schedule/projectionist_shift_item.fxml");
-        addStylesheet("styles.css");
+        addStylesheet("theme.css");
     }
 
     @Override
