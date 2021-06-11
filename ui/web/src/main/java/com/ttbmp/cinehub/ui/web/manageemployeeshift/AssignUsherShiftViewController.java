@@ -64,7 +64,7 @@ public class AssignUsherShiftViewController {
                 request.getStart(),
                 request.getEnd())
         );
-        model.addAttribute("scope","Shift Assigned");
+        model.addAttribute("scope", "Shift Assigned");
         return ErrorHelper.returnView(response, model, "manage_employee_shift/notification");
     }
 

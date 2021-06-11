@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.*?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" minHeight="730.0" minWidth="1156.0" xmlns="http://javafx.com/javafx/16"
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16"
       fx:controller="com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.master.ScheduleViewController">
     <fx:include fx:id="appBar" maxHeight="57.0" minHeight="57.0" prefHeight="57.0" source="../app_bar/app_bar.fxml"
                 VBox.vgrow="ALWAYS"/>
@@ -44,7 +44,7 @@
                     </HBox.margin>
                 </Button>
                 <VBox.margin>
-                    <Insets top="16.0"/>
+                    <Insets bottom="16.0"/>
                 </VBox.margin>
             </HBox>
             <TableView fx:id="calendarTableView" focusTraversable="false" VBox.vgrow="ALWAYS">
@@ -65,18 +65,15 @@
                                  resizable="false" sortable="false" text="Sunday"/>
                 </columns>
                 <VBox.margin>
-                    <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
+                    <Insets/>
                 </VBox.margin>
                 <columnResizePolicy>
                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                 </columnResizePolicy>
             </TableView>
-            <padding>
-                <Insets bottom="16.0"/>
-            </padding>
         </VBox>
         <padding>
-            <Insets left="16.0" right="16.0" top="16.0"/>
+            <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
         </padding>
     </ScrollPane>
 </VBox>

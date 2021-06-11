@@ -4,21 +4,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.String?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" minHeight="730.0" minWidth="1156.0" xmlns="http://javafx.com/javafx/16"
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16"
       fx:controller="com.ttbmp.cinehub.ui.desktop.buyticket.choosecinema.ChooseCinemaViewController">
     <fx:include fx:id="appBar" source="../app_bar/app_bar.fxml"/>
     <VBox spacing="16.0" VBox.vgrow="ALWAYS">
         <VBox.margin>
-            <Insets bottom="16.0" left="16.0" right="16.0"/>
+            <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
         </VBox.margin>
         <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="h1" text="Choose a Cinema"/>
         <ListView fx:id="cinemaListView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                   prefHeight="200.0" VBox.vgrow="ALWAYS">
             <VBox.margin>
-                <Insets bottom="12.0"/>
+                <Insets/>
             </VBox.margin>
         </ListView>
-        <TitledPane animated="false" collapsible="false" text="Choose a time">
+        <TitledPane animated="false" collapsible="false" text="Choose screening time">
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0">
                 <ListView fx:id="timeOfProjectionListView" maxHeight="1.7976931348623157E308"
                           maxWidth="1.7976931348623157E308" prefHeight="200.0" VBox.vgrow="ALWAYS"/>
@@ -50,7 +50,7 @@
                 </Label>
             </center>
             <VBox.margin>
-                <Insets/>
+                <Insets top="16.0"/>
             </VBox.margin>
         </BorderPane>
     </VBox>

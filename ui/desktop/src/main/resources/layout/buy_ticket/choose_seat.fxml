@@ -6,17 +6,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import java.lang.String?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" minHeight="730.0" minWidth="1156.0" stylesheets="@../../styles/stylesIvan.css"
-      xmlns="http://javafx.com/javafx/8"
+<VBox xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../../styles/stylesIvan.css" xmlns="http://javafx.com/javafx/16"
       fx:controller="com.ttbmp.cinehub.ui.desktop.buyticket.chooseseat.ChooseSeatViewController">
     <fx:include fx:id="appBar" source="../app_bar/app_bar.fxml"/>
-    <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-        <padding>
-            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
-        </padding>
-        <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0"
-               prefWidth="1087.0" text="Devi prima effettuare l'accesso..." textAlignment="CENTER"
-               textFill="RED">
+    <VBox spacing="16.0" VBox.vgrow="ALWAYS">
+        <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" text="You must login first!"
+               textAlignment="CENTER" textFill="RED">
             <font>
                 <Font size="20.0"/>
             </font>
@@ -34,13 +29,13 @@
                   wrappingWidth="199.6708984375"/>
             <Text fx:id="seatsBuysText" strokeType="OUTSIDE" strokeWidth="0.0" text="Occupied seats:"
                   textAlignment="CENTER" wrappingWidth="157.6708984375" GridPane.columnIndex="1"/>
-            <Text fx:id="seatsFreeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Free seats:"
-                  textAlignment="RIGHT" wrappingWidth="128.6708984375" GridPane.columnIndex="2"/>
+            <Text fx:id="seatsFreeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Free seats:" textAlignment="RIGHT"
+                  wrappingWidth="128.6708984375" GridPane.columnIndex="2"/>
         </GridPane>
         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
             <TitledPane collapsible="false" text="Buy a specific seat" HBox.hgrow="ALWAYS">
                 <content>
-                    <VBox fx:id="seatsContainerVBox"/>
+                    <VBox fx:id="seatsContainerVBox" alignment="CENTER"/>
                 </content>
             </TitledPane>
         </HBox>
@@ -68,26 +63,29 @@
                 <Insets top="5.0"/>
             </VBox.margin>
         </CheckBox>
-        <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1124.0" VBox.vgrow="ALWAYS"/>
-        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-            <AnchorPane HBox.hgrow="ALWAYS">
-                <Button fx:id="returnButton" text="Back"
-                        AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
-                        AnchorPane.topAnchor="10.0">
+        <BorderPane>
+            <left>
+                <Button fx:id="returnButton" text="Back" BorderPane.alignment="CENTER">
                     <styleClass>
                         <String fx:value="btn"/>
                         <String fx:value="btn-secondary"/>
                     </styleClass>
                 </Button>
-                <Button fx:id="confirmSeatButton" text="Continue"
-                        AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0"
-                        AnchorPane.topAnchor="10.0">
+            </left>
+            <right>
+                <Button fx:id="confirmSeatButton" text="Continue" BorderPane.alignment="CENTER">
                     <styleClass>
                         <String fx:value="btn"/>
                         <String fx:value="btn-primary"/>
                     </styleClass>
                 </Button>
-            </AnchorPane>
-        </HBox>
+            </right>
+            <VBox.margin>
+                <Insets top="16.0"/>
+            </VBox.margin>
+        </BorderPane>
+        <VBox.margin>
+            <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
+        </VBox.margin>
     </VBox>
 </VBox>

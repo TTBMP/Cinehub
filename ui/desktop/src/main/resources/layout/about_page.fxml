@@ -4,12 +4,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" minHeight="730.0" minWidth="1156.0" xmlns="http://javafx.com/javafx/11.0.1"
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16"
       fx:controller="com.ttbmp.cinehub.ui.desktop.about.AboutViewController">
     <fx:include fx:id="appBar" source="app_bar/app_bar.fxml"/>
     <VBox VBox.vgrow="ALWAYS">
         <VBox.margin>
-            <Insets bottom="16.0" left="16.0" right="16.0"/>
+            <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
         </VBox.margin>
         <HBox alignment="CENTER" prefHeight="150.0">
             <Label style="-fx-font-weight: bold; -fx-font-size: 32;" text="About us"/>

@@ -32,7 +32,7 @@
             </children>
         </VBox>
         <Separator/>
-        <HBox prefHeight="100.0" prefWidth="200.0" spacing="4.0">
+        <HBox spacing="4.0">
             <Label text="Working in the hall"/>
             <Label fx:id="hallLabel" text="hall"/>
         </HBox>
@@ -45,9 +45,12 @@
                     <String fx:value="btn-secondary"/>
                 </styleClass>
             </Button>
+            <VBox.margin>
+                <Insets top="16.0"/>
+            </VBox.margin>
         </HBox>
     </children>
     <padding>
-        <Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/>
+        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
     </padding>
 </VBox>

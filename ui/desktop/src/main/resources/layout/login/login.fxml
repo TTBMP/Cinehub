@@ -7,20 +7,19 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.String?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" minHeight="730.0" minWidth="1156.0"
-      xmlns="http://javafx.com/javafx/16"
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" xmlns="http://javafx.com/javafx/16"
       fx:controller="com.ttbmp.cinehub.ui.desktop.login.LoginViewController">
     <fx:include fx:id="appBar" source="../app_bar/app_bar.fxml"/>
     <VBox spacing="2.0" styleClass="form-signin" VBox.vgrow="ALWAYS">
         <VBox.margin>
-            <Insets/>
+            <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
         </VBox.margin>
         <Label text="Please sign in">
             <styleClass>
                 <String fx:value="h1"/>
             </styleClass>
             <VBox.margin>
-                <Insets bottom="32.0"/>
+                <Insets bottom="64.0"/>
             </VBox.margin>
         </Label>
         <TextField fx:id="emailTextField" promptText="Email address"/>

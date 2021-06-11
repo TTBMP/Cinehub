@@ -63,7 +63,7 @@ public class ShiftDetailViewController {
                     shift.getEnd(),
                     hallId
             ));
-            model.addAttribute("scope","Shift Modify Successful");
+            model.addAttribute("scope", "Shift Modify Successful");
             return ErrorHelper.returnView(response, model, "manage_employee_shift/notification");
         }
         model.addAttribute("modifyRequest", new NewShiftForm());

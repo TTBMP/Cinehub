@@ -9,7 +9,7 @@ public class AssignShiftViewController {
 
     @GetMapping("/shift_assigned")
     public String shiftAssigned(Model model) {
-        model.addAttribute("scope","Shift Assigned");
+        model.addAttribute("scope", "Shift Assigned");
         return "manage_employee_shift/notification";
     }
 

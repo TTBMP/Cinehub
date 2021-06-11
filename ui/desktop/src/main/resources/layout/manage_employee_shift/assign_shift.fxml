@@ -11,7 +11,7 @@
     <center>
         <VBox BorderPane.alignment="CENTER">
             <BorderPane.margin>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                <Insets/>
             </BorderPane.margin>
             <HBox alignment="CENTER">
                 <Label fx:id="errorLabel">
@@ -36,8 +36,7 @@
                 <children>
                     <Label text="Choice End Time:" GridPane.rowIndex="1"/>
                     <Label fx:id="hallLabel" text="Select Hall:" GridPane.rowIndex="2"/>
-                    <ComboBox fx:id="hallComboBox" prefWidth="150.0" GridPane.columnIndex="1"
-                              GridPane.rowIndex="2"/>
+                    <ComboBox fx:id="hallComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                     <Label text="Choice Start Time:"/>
                     <Spinner fx:id="endSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                     <Spinner fx:id="startSpinner" GridPane.columnIndex="1"/>
@@ -57,7 +56,7 @@
                     </VBox>
                 </children>
                 <VBox.margin>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                    <Insets/>
                 </VBox.margin>
             </GridPane>
         </VBox>
@@ -81,6 +80,9 @@
                     </VBox.margin>
                 </HBox>
             </children>
+            <BorderPane.margin>
+                <Insets/>
+            </BorderPane.margin>
         </VBox>
     </top>
     <bottom>
@@ -105,9 +107,12 @@
                     </styleClass>
                 </Button>
             </children>
-            <padding>
-                <Insets bottom="5.0"/>
-            </padding>
+            <BorderPane.margin>
+                <Insets top="16.0"/>
+            </BorderPane.margin>
         </HBox>
     </bottom>
+    <padding>
+        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
+    </padding>
 </BorderPane>

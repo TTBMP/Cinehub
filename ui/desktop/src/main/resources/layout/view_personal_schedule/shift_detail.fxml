@@ -10,7 +10,7 @@
       xmlns="http://javafx.com/javafx/16"
       fx:controller="com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.detail.ShiftDetailViewController">
     <padding>
-        <Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/>
+        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
     </padding>
     <VBox>
         <HBox spacing="4.0">
@@ -33,7 +33,7 @@
     <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
         <Label text="LOCATION"/>
         <Label fx:id="addressLabel" layoutX="10.0" layoutY="160.0" text="address"/>
-        <ImageView fitHeight="400.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="380.0" fitWidth="480.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@../../drawables/map.png"/>
         </ImageView>
     </VBox>
@@ -47,5 +47,8 @@
                 <String fx:value="btn-primary"/>
             </styleClass>
         </Button>
+        <VBox.margin>
+            <Insets top="16.0"/>
+        </VBox.margin>
     </HBox>
 </VBox>

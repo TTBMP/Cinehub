@@ -1,64 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<?import java.lang.String?>
-
-<VBox alignment="CENTER" minHeight="730.0" minWidth="1156.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ttbmp.cinehub.ui.desktop.buyticket.payment.PaymentViewController">
-   <children>
-       <fx:include fx:id="appBar" source="../app_bar/app_bar.fxml" />
-       <Label alignment="CENTER" styleClass="h1" text="Enter your billing information ">
-           <font>
-               <Font size="20.0" />
-           </font>
-           <VBox.margin>
-               <Insets top="92.0" />
-           </VBox.margin>
-       </Label>
-       <VBox alignment="CENTER" maxWidth="330.0" spacing="32.0" VBox.vgrow="ALWAYS">
-          <children>
-              <TextField fx:id="numberOfCreditCardTextField" promptText="Card number" />
-              <DatePicker fx:id="fieldExpirationDatePicker" editable="false" prefHeight="48.0" prefWidth="330.0" promptText="Expiration" />
-              <TextField fx:id="cvvTextField" promptText="Cvv" />
-              <TextField fx:id="emailTextField" promptText="Email" />
-          </children>
-           <VBox.margin>
-               <Insets left="16.0" right="16.0" />
-           </VBox.margin>
-       </VBox>
+<?import java.lang.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" minHeight="730.0" minWidth="1156.0"
+      xmlns="http://javafx.com/javafx/8"
+      fx:controller="com.ttbmp.cinehub.ui.desktop.buyticket.payment.PaymentViewController">
+    <children>
+        <fx:include fx:id="appBar" source="../app_bar/app_bar.fxml"/>
+        <Label alignment="CENTER" styleClass="h1" text="Enter your billing information ">
+            <font>
+                <Font size="20.0"/>
+            </font>
+            <VBox.margin>
+                <Insets top="92.0"/>
+            </VBox.margin>
+        </Label>
+        <VBox alignment="CENTER" maxWidth="330.0" spacing="32.0" VBox.vgrow="ALWAYS">
+            <children>
+                <TextField fx:id="numberOfCreditCardTextField" promptText="Card number"/>
+                <DatePicker fx:id="fieldExpirationDatePicker" editable="false" prefHeight="48.0" prefWidth="330.0"
+                            promptText="Expiration"/>
+                <TextField fx:id="cvvTextField" promptText="Cvv"/>
+                <TextField fx:id="emailTextField" promptText="Email"/>
+            </children>
+            <VBox.margin>
+                <Insets left="16.0" right="16.0"/>
+            </VBox.margin>
+        </VBox>
         <HBox alignment="CENTER">
-           <children>
-               <Label fx:id="errorLabel" text="Label" visible="false">
-                   <styleClass>
-                       <String fx:value="alert" />
-                       <String fx:value="alert-danger" />
-                   </styleClass>
-               </Label>
-           </children>
+            <children>
+                <Label fx:id="errorLabel" text="Label" visible="false">
+                    <styleClass>
+                        <String fx:value="alert"/>
+                        <String fx:value="alert-danger"/>
+                    </styleClass>
+                </Label>
+            </children>
         </HBox>
-       <AnchorPane>
-           <children>
-               <Button fx:id="returnButton" text="Back" AnchorPane.leftAnchor="0.0">
-                   <styleClass>
-                       <String fx:value="btn" />
-                       <String fx:value="btn-secondary" />
-                   </styleClass>
-               </Button>
-               <Button fx:id="confirmButton" text="Pay" AnchorPane.rightAnchor="0.0">
-                   <styleClass>
-                       <String fx:value="btn" />
-                       <String fx:value="btn-primary" />
-                   </styleClass>
-               </Button>
-           </children>
-           <padding>
-               <Insets bottom="16.0" left="16.0" right="16.0" />
-           </padding>
-       </AnchorPane>
-   </children>
+        <AnchorPane>
+            <children>
+                <Button fx:id="returnButton" text="Back" AnchorPane.leftAnchor="0.0">
+                    <styleClass>
+                        <String fx:value="btn"/>
+                        <String fx:value="btn-secondary"/>
+                    </styleClass>
+                </Button>
+                <Button fx:id="confirmButton" text="Pay" AnchorPane.rightAnchor="0.0">
+                    <styleClass>
+                        <String fx:value="btn"/>
+                        <String fx:value="btn-primary"/>
+                    </styleClass>
+                </Button>
+            </children>
+            <padding>
+                <Insets bottom="16.0" left="16.0" right="16.0"/>
+            </padding>
+        </AnchorPane>
+    </children>
 </VBox>
