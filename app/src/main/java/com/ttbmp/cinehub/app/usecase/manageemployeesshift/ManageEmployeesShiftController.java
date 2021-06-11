@@ -152,7 +152,10 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                 hall = hallRepository.getHall(request.getHallId());
             }
             semanticValidationModifyShift(request, shift, employee, hall);
+
             shift.modifyShift(shift, request.getDate(), request.getStart(), request.getEnd(), hall);
+
+
             if (employee instanceof Projectionist) {
                 projectionistShiftRepository.modifyShift((ProjectionistShift) shift);
             }
@@ -241,7 +244,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
         var permissions = new Permission[]{Permission.ASSIGN_SHIFT};
         try {
             AuthenticatedRequest.validate(request, securityService, permissions);
-            List<ShiftDto> shiftDtoList = new ArrayList<>();
+            List<Shift> shiftList = new ArrayList<>();
             UnaryOperator<LocalDate> increaseDateFunction;
             var employee = employeeRepository.getEmployee(request.getEmployeeId());
             Hall hall = null;
@@ -271,9 +274,15 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                         request.getEndShift().toString(),
                         hall
                 );
+
+                shiftList.add(shift);
+            }
+            List<ShiftDto> shiftDtoList = new ArrayList<>();
+            for(var shift : shiftList){
                 saveShift(shift);
                 shiftDtoList.add(ShiftDtoFactory.getShiftDto(shift));
             }
+
             emailService.sendMail(new EmailServiceRequest(
                     employee.getEmail(),
                     "Shift Modify"
