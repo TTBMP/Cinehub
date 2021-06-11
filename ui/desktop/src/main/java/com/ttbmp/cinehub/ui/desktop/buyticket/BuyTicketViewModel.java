@@ -55,6 +55,7 @@ public class BuyTicketViewModel implements ViewModel {
     private final IntegerProperty positionSelectedSeat = new SimpleIntegerProperty();
     private final BooleanProperty valueFalseForSeatState = new SimpleBooleanProperty(false);
     private final BooleanProperty valueTrueForSeatState = new SimpleBooleanProperty(true);
+    private final BooleanProperty loginRequested = new SimpleBooleanProperty(false);
 
 
     public BuyTicketViewModel() {
@@ -74,7 +75,9 @@ public class BuyTicketViewModel implements ViewModel {
         selectedMovieReleased.bind(ObjectBindings.map(selectedMovie, MovieDto::getReleases));
         selectedDateProperty().setValue(LocalDate.now());
     }
-
+    public BooleanProperty loginRequestedProperty() {
+        return loginRequested;
+    }
 
     public ObjectProperty<LocalDate> expirationDateProperty() {
         return expirationDate;
