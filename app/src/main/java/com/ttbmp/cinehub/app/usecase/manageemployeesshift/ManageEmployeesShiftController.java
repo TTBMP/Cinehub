@@ -355,9 +355,9 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
 
     private void saveShift(Shift shift) throws RepositoryException {
         shiftRepository.saveShift(shift);
+        var tmpShift = shiftRepository.getShift(shift.getEmployee(), shift.getDate(), shift.getStart(), shift.getEnd());
+        shift.setId(tmpShift.getId());
         if (shift.getEmployee() instanceof Projectionist) {
-            var tmpShift = shiftRepository.getShift(shift.getEmployee(), shift.getDate(), shift.getStart(), shift.getEnd());
-            shift.setId(tmpShift.getId());
             projectionistShiftRepository.saveShift((ProjectionistShift) shift);
         }
     }
