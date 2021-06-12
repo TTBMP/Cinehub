@@ -7,7 +7,6 @@ import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketActivity;
 import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.desktop.utilities.ObjectBindings;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavActivityDestination;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -65,7 +64,7 @@ public class ConfirmEmailViewController extends ViewController {
     protected void onLoad() {
         appBarController.load(activity, navController);
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
-        confirmButton.setOnAction(a -> navController.navigate(new NavActivityDestination(new BuyTicketActivity())));
+        confirmButton.setOnAction(a -> navController.openActivity(BuyTicketActivity.class));
         bind();
         testLabel.setText(viewModel.selectedDateProperty().getValue().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)));
         priceText.setText((viewModel.selectedTicketPriceProperty().getValue()) + "\u20ac");

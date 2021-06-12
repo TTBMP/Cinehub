@@ -15,15 +15,12 @@ import com.ttbmp.cinehub.ui.desktop.manageshift.ManageShiftActivity;
 import com.ttbmp.cinehub.ui.desktop.utilities.BindingHelper;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavActivityDestination;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.ViewPersonalScheduleActivity;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author Fabio Buracchi
@@ -83,17 +80,16 @@ public class AppBarViewController extends ViewController {
     private EventHandler<Event> handleTabSelection(Class<? extends Activity> key, Tab value) {
         return event -> {
             if (value.isSelected()) {
-                if (key == LoginActivity.class) {
-                    navController.navigate(new NavActivityDestination(new LoginActivity()));
-                } else if (key == LogoutActivity.class) {
-                    logoutUseCase.logout(new LogoutRequest(CinehubApplication.getSessionToken()));
-                    navController.open(new NavActivityDestination(new BuyTicketActivity()));
-                } else {
-                    try {
-                        navController.open(new NavActivityDestination(key.getConstructor().newInstance()));
-                    } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                        navController.openErrorDialog(e.getMessage(), true);
-                    }
+                switch (key.getSimpleName()) {
+                    case "LoginActivity":
+                        navController.openActivity(LoginActivity.class);
+                        break;
+                    case "LogoutActivity":
+                        logoutUseCase.logout(new LogoutRequest(CinehubApplication.getSessionToken()));
+                        navController.replaceActivity(BuyTicketActivity.class);
+                        break;
+                    default:
+                        navController.replaceActivity(key);
                 }
             }
         };

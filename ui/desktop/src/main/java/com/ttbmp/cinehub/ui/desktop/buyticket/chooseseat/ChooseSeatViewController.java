@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.ui.desktop.buyticket.chooseseat;
 
-
 import com.ttbmp.cinehub.app.dto.SeatDto;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketUseCase;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.SeatListRequest;
@@ -10,7 +9,6 @@ import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.desktop.buyticket.choosecinema.ChooseCinemaView;
 import com.ttbmp.cinehub.ui.desktop.buyticket.payment.PaymentView;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavDestination;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -87,13 +85,12 @@ public class ChooseSeatViewController extends ViewController {
         confirmSeatButton.setOnAction(a -> changeLayoutSpecific());
         returnButton.setOnAction(a -> {
             viewModel.errorMessageProperty().setValue(null);
-            navController.navigate(new NavDestination(new ChooseCinemaView()));
+            navController.openView(ChooseCinemaView.class);
         });
         toggleGroup.selectedToggleProperty().addListener(l ->
                 viewModel.selectedSeatProperty().setValue((SeatDto) toggleGroup.getSelectedToggle().getUserData())
         );
     }
-
 
     private void bind() {
         errorLabel.textProperty().bind(viewModel.errorMessageProperty());
@@ -108,15 +105,13 @@ public class ChooseSeatViewController extends ViewController {
     private void changeLayoutSpecific() {
         viewModel.counterForToggleProperty().setValue(0);
         toggleGroup.getToggles().forEach(toggle -> findChosenPlace());
-        navController.navigate(new NavDestination(new PaymentView()));
-
+        navController.openView(PaymentView.class);
     }
 
     private void setAllElementsOfTheToggleToNull() {
         viewModel.seatStateProperty().add(viewModel.falseBooleanProperty());
         viewModel.counterForToggleProperty().setValue(viewModel.counterForToggleProperty().getValue() + 1);
     }
-
 
     private void findChosenPlace() {
         int i = viewModel.counterForToggleProperty().getValue();
@@ -133,9 +128,6 @@ public class ChooseSeatViewController extends ViewController {
             viewModel.seatSelectedPositionProperty().setValue(viewModel.indexToggleSelectedProperty().getValue());
         }
         viewModel.counterForToggleProperty().setValue(viewModel.counterForToggleProperty().getValue() + 1);
-
     }
+
 }
-
-
-

@@ -7,7 +7,6 @@ import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.manageshift.ManageEmployeesShiftViewModel;
 import com.ttbmp.cinehub.ui.desktop.manageshift.modify.ModifyShiftView;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavDestination;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -84,7 +83,7 @@ public class ShowShiftDetailViewController extends ViewController {
                     viewModel.getSelectedShift().getId()));
             navController.goBack();
         });
-        modifyShiftButton.setOnAction(a -> navController.navigate(new NavDestination(new ModifyShiftView())));
+        modifyShiftButton.setOnAction(a -> navController.openView(ModifyShiftView.class));
 
 
     }

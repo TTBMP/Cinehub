@@ -5,7 +5,6 @@ import com.ttbmp.cinehub.ui.desktop.manageshift.assign.AssignShiftView;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavController;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavDestination;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -60,7 +59,7 @@ public class CalendarShiftItemViewController extends ViewController {
         addButton.setOnAction(a -> {
             viewModel.setSelectedDayWeek(day);
             viewModel.getHallList().setAll(day.getEmployee().getCinema().getHalList());
-            navController.openInDialog(new NavDestination(new AssignShiftView()), "Assign shift");
+            navController.openViewInDialog(AssignShiftView.class, "Assign shift");
         });
     }
 

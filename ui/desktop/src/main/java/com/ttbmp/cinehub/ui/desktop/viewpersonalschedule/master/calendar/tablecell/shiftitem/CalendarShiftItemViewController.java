@@ -4,7 +4,6 @@ import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavController;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavDestination;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.ViewPersonalScheduleViewModel;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.detail.ShiftDetailView;
 import javafx.fxml.FXML;
@@ -35,7 +34,7 @@ public class CalendarShiftItemViewController extends ViewController {
         var viewModel = activity.getViewModel(ViewPersonalScheduleViewModel.class);
         itemVBox.setOnMouseClicked(event -> {
             viewModel.selectedShiftProperty().setValue(shiftDto);
-            navController.openInDialog(new NavDestination(new ShiftDetailView()), "Detail");
+            navController.openViewInDialog(ShiftDetailView.class, "Detail");
         });
         startLabel.setText(shiftDto.getStart().toString());
         endLabel.setText(shiftDto.getEnd().toString());

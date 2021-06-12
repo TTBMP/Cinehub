@@ -10,8 +10,6 @@ import com.ttbmp.cinehub.ui.desktop.buyticket.choosemovie.ChooseMovieView;
 import com.ttbmp.cinehub.ui.desktop.buyticket.chooseseat.ChooseSeatView;
 import com.ttbmp.cinehub.ui.desktop.login.LoginActivity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavActivityDestination;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavDestination;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -61,13 +59,13 @@ public class ChooseCinemaViewController extends ViewController {
         cinemaListView.getSelectionModel().selectedItemProperty().addListener(l -> onCinemaItemClick());
         cancelButton.setOnAction(a -> {
             timeOfProjectionListView.getItems().clear();
-            navController.navigate(new NavDestination(new ChooseMovieView()));
+            navController.openView(ChooseMovieView.class);
         });
         confirmCinemaButton.setOnAction(a -> {
             viewModel.errorMessageProperty().setValue(null);
-            navController.navigate(new NavDestination(new ChooseSeatView()));
+            navController.openView(ChooseSeatView.class);
             if (viewModel.loginRequestedProperty().getValue().equals(Boolean.TRUE)) {
-                navController.navigate(new NavActivityDestination(new LoginActivity()));
+                navController.openActivity(LoginActivity.class);
             }
         });
     }

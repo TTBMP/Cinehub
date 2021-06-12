@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop;
 
 import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketActivity;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavActivityDestination;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavController;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -28,7 +27,7 @@ public class CinehubApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         var navController = new NavController(primaryStage);
-        navController.navigate(new NavActivityDestination(new BuyTicketActivity()));
+        navController.openActivity(BuyTicketActivity.class);
         primaryStage.setTitle("Cinehub");
         primaryStage.setMinWidth(1280);
         primaryStage.setMinHeight(856);

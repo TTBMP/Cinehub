@@ -10,7 +10,6 @@ import com.ttbmp.cinehub.ui.desktop.buyticket.CustomDateCell;
 import com.ttbmp.cinehub.ui.desktop.buyticket.chooseseat.ChooseSeatView;
 import com.ttbmp.cinehub.ui.desktop.buyticket.confirmemail.ConfirmEmailView;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavDestination;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -59,7 +58,7 @@ public class PaymentViewController extends ViewController {
         viewModel = activity.getViewModel(BuyTicketViewModel.class);
         bind();
         confirmButton.setOnAction(this::startPayment);
-        returnButton.setOnAction(a -> navController.navigate(new NavDestination(new ChooseSeatView())));
+        returnButton.setOnAction(a -> navController.openView(ChooseSeatView.class));
     }
 
 
@@ -97,9 +96,9 @@ public class PaymentViewController extends ViewController {
                 viewModel.skipLineOptionProperty().getValue()
         ));
         if (viewModel.errorMessageProperty().getValue() == null) {
-            navController.navigate(new NavDestination(new ConfirmEmailView()));
+            navController.openView(ConfirmEmailView.class);
         } else {
-            navController.navigate(new NavDestination(new PaymentView()));
+            navController.openView(PaymentView.class);
         }
     }
 }
