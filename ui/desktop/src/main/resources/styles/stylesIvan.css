@@ -1,6 +1,8 @@
+/*
 .button {
     -fx-border-radius: 10;
 }
+*/
 
 .radio-button .radio {
     -fx-border-width: 1px;
@@ -33,25 +35,19 @@
 
 .radio-button .dot {
     -fx-background-radius: 15px;
-
 }
 
 .check-box .box {
-
     -fx-background-color: white;
     -fx-border-color: grey;
     -fx-border-radius: 3px;
-
 }
 
 .check-box:selected .mark {
-
     -fx-background-color: white;
-
 }
 
 .check-box:selected .box {
-
     -fx-background-color: #28a3f4;
 }
 
@@ -65,13 +61,13 @@
     -fx-background-color: -fx-focus-color, -fx-background;
 }
 
+/*
 #confirmCinemaButton, #confirmMovieButton, #confirmButton, #confirmSeatButton, #buyRandomButton, #timerCount {
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-background-color: linear-gradient(#cfff95, #6b9b37);
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
 }
-
 
 #cancelButton, #returnButton {
     -fx-text-fill: white;
@@ -91,4 +87,4 @@
     -fx-text-fill: black;
     -fx-font-size: 12px;
 }
-
+*/

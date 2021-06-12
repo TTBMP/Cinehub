@@ -1,6 +1,8 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.usecase.UseCase;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.request.ProjectionListRequest;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.request.ShiftListRequest;
 
 /**
  * @author Fabio Buracchi

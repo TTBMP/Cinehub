@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.ui.desktop.manageshift;
 import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.Day;
@@ -27,9 +27,9 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentEmployeeList(GetEmployeeListResponse response) {
+    public void presentEmployeeList(GetEmployeeListReply reply) {
         List<EmployeeShiftWeek> employeeShiftWeekList = new ArrayList<>();
-        for (var employeeDto : response.getEmployeeDtoList()) {
+        for (var employeeDto : reply.getEmployeeDtoList()) {
             var weekMap = new EnumMap<DayOfWeek, Day>(DayOfWeek.class);
             initializeWeekMap(weekMap, employeeDto);
             employeeShiftWeekList.add(new EmployeeShiftWeek(employeeDto, weekMap));
@@ -38,14 +38,14 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentShiftList(GetShiftListResponse response) {
+    public void presentShiftList(GetShiftListReply reply) {
         var temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
         for (var employeeShiftWeek : viewModel.getEmployeeShiftWeekList()) {
             initializeWeekMap(employeeShiftWeek.getWeekMap(), employeeShiftWeek.getEmployeeDto());
             var index = viewModel.getEmployeeShiftWeekList().indexOf(employeeShiftWeek);
             viewModel.getEmployeeShiftWeekList().set(index, employeeShiftWeek);
         }
-        for (var shift : response.getShiftDtoList()) {
+        for (var shift : reply.getShiftDtoList()) {
             for (var employeeShiftWeek : viewModel.getEmployeeShiftWeekList()) {
                 if (employeeShiftWeek.getEmployeeDto().getId().equals(shift.getEmployeeId())
                         && viewModel.getSelectedWeek().getYear() == shift.getDate().getYear()
@@ -67,8 +67,8 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentCinemaList(GetCinemaListResponse response) {
-        viewModel.getCinemaList().setAll(response.getCinemaList());
+    public void presentCinemaList(GetCinemaListReply reply) {
+        viewModel.getCinemaList().setAll(reply.getCinemaList());
     }
 
     @Override
@@ -103,8 +103,8 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentRepeatShift(ShiftRepeatResponse response) {
-        var shiftList = response.getShiftDto();
+    public void presentRepeatShift(ShiftRepeatReply reply) {
+        var shiftList = reply.getShiftDto();
         var temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
         var employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
         for (var savedShift : shiftList) {
@@ -125,9 +125,9 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentCreateShift(CreateShiftResponse response) {
+    public void presentCreateShift(CreateShiftReply reply) {
         viewModel.setErrorAssignVisibility(false);
-        viewModel.setShiftCreated(response.getShiftDto());
+        viewModel.setShiftCreated(reply.getShiftDto());
     }
 
     @Override

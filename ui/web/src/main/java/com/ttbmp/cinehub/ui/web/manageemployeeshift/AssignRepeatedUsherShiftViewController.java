@@ -47,7 +47,7 @@ public class AssignRepeatedUsherShiftViewController {
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
         var request = new NewRepeatedShiftForm();
         model.addAttribute(ASSIGN_REQUEST, request);
-        return ErrorHelper.returnView(response, model, "assign_repeated_usher_shift");
+        return ErrorHelper.returnView(response, model, "manage_employee_shift/assign_repeated_usher_shift");
     }
 
     @PostMapping("/assign_repeated_usher_shift")
@@ -72,7 +72,8 @@ public class AssignRepeatedUsherShiftViewController {
                 request.getStart(),
                 request.getEnd(),
                 -1));
-        return ErrorHelper.returnView(response, model, "shift_assigned");
+        model.addAttribute("scope", "Shift Assigned");
+        return ErrorHelper.returnView(response, model, "manage_employee_shift/notification");
     }
 
 }

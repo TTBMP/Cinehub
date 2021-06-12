@@ -1,13 +1,17 @@
 package com.ttbmp.cinehub.ui.web.buyticket;
 
+import com.ttbmp.cinehub.app.dto.SeatDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketPresenter;
-import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
+import com.ttbmp.cinehub.app.usecase.buyticket.reply.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.ui.Model;
+
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 /**
  * @author Palmieri Ivan
@@ -21,28 +25,31 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentMovieList(MovieListResponse response) {
-        model.addAttribute("movieList", response.getMovieList());
+    public void presentMovieList(MovieListReply reply) {
+        model.addAttribute("movieList", reply.getMovieList());
     }
 
     @Override
-    public void presentCinemaList(CinemaListResponse response) {
-        model.addAttribute("cinemaList", response.getCinemaList());
+    public void presentCinemaList(CinemaListReply reply) {
+        model.addAttribute("cinemaList", reply.getCinemaList());
     }
 
     @Override
-    public void presentProjectionList(ProjectionListResponse response) {
-        model.addAttribute("projectionList", response.getProjectionDtoList());
+    public void presentProjectionList(ProjectionListReply reply) {
+        model.addAttribute("projectionList", reply.getProjectionDtoList());
     }
 
     @Override
-    public void presentSeatList(SeatListResponse response) {
-        model.addAttribute("seatList", response.getSeatDtoList());
+    public void presentSeatList(SeatListReply reply) {
+        var seatList = reply.getSeatDtoList().stream()
+                .sorted(Comparator.comparing(SeatDto::getPosition))
+                .collect(Collectors.toList());
+        model.addAttribute("seatList", seatList);
     }
 
     @Override
-    public void presentTicket(TicketResponse response) {
-        model.addAttribute("ticketDetail", response.getTicketDto());
+    public void presentTicket(TicketReply reply) {
+        model.addAttribute("ticketDetail", reply.getTicketDto());
     }
 
 
@@ -69,8 +76,8 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentSeatAlreadyBookedError(SeatErrorResponse response) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, response.getError());
+    public void presentSeatAlreadyBookedError(SeatErrorReply reply) {
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, reply.getError());
     }
 
     @Override

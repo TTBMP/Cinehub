@@ -1,0 +1,14 @@
+.buttonAssign {
+    flex-basis:50%;
+    padding:10px;
+}
+
+.buttonAssign button {
+    width: 100%;
+}
+
+.shiftDetail{
+    width:100%;
+    max-width:500px;
+    padding:15px;
+}

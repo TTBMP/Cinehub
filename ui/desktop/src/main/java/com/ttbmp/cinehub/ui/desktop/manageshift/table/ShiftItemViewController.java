@@ -7,12 +7,12 @@ import com.ttbmp.cinehub.ui.desktop.manageshift.detail.ShowShiftDetailView;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavController;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavDestination;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 /**
@@ -41,7 +41,9 @@ public class ShiftItemViewController extends ViewController {
     protected void onLoad() {
         ManageEmployeesShiftViewModel viewModel;
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
-        if (viewModel.getEmployee(shift) instanceof UsherDto) {
+        if (shift.getDate().isBefore(LocalDate.now().plusDays(1))) {
+            shiftHBox.setStyle("-fx-background-color: #ff0000;");
+        } else if (viewModel.getEmployee(shift) instanceof UsherDto) {
             shiftHBox.setStyle("-fx-background-color: #FFFF00;");
         }
 
@@ -51,7 +53,7 @@ public class ShiftItemViewController extends ViewController {
         shiftHBox.setOnMouseClicked(l -> {
             viewModel.selectedDaysProperty().setValue(shift.getDate());
             viewModel.selectedShiftProperty().setValue(shift);
-            navController.openInDialog(new NavDestination(new ShowShiftDetailView()), "Shift detail");
+            navController.openViewInDialog(ShowShiftDetailView.class, "Shift detail");
         });
     }
 

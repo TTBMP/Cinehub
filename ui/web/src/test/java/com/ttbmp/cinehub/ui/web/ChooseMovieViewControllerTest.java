@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -35,8 +34,6 @@ class ChooseMovieViewControllerTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         driver.get("http://localhost:8080/");
-        driver.manage().addCookie(new Cookie("session", "CUSTOMER"));
-        driver.findElement(By.linkText("Buy ticket")).click();
         datePicker = driver.findElement(By.id("date-picker"));
     }
 

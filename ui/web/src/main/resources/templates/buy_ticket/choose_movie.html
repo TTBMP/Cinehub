@@ -1,195 +1,78 @@
-<!DOCTYPE HTML>
-<html lang="english" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
-    <script crossorigin="anonymous"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script crossorigin="anonymous"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script crossorigin="anonymous"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <title>Getting Started: Serving Web Content</title>
-    <!-- JavaScript Bundle with Popper -->
-    <script crossorigin="anonymous"
-            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- CSS only -->
-    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" rel="stylesheet">
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
-    <link href="styleIvan.css" rel="stylesheet" type="text/css">
-    <style>
-
-
-        .flip-card {
-            position: relative;
-            width: auto;
-            height: auto;
-            display: inline-block;
-            border: 1px solid #000;
-            cursor: default;
-            -webkit-transition: all 0.5s ease-in-out;
-            -moz-transition: all 0.5s ease-in-out;
-            -o-transition: all 0.5s ease-in-out;
-            -ms-transition: all 0.5s ease-in-out;
-            transition: all 0.5s ease-in-out;
-            -webkit-transform-style: preserve-3d;
-            -moz-transform-style: preserve-3d;
-            -o-transform-style: preserve-3d;
-            -ms-transform-style: preserve-3d;
-            transform-style: preserve-3d;
-        }
-
-        .flip-card:hover {
-            -webkit-transform: rotate3d(0, 1, 0, -180deg);
-            -moz-transform: rotate3d(0, 1, 0, -180deg);
-            -o-transform: rotate3d(0, 1, 0, -180deg);
-            -ms-transform: rotate3d(0, 1, 0, -180deg);
-            transform: rotate3d(0, 1, 0, -180deg);
-        }
-
-        .flip-card-front {
-            position: absolute;
-            width: auto;
-            height: auto;
-        }
-
-
-        .flip-card-back {
-            background-color: black;
-            width: auto;
-            height: auto;
-            -webkit-transform: rotate3d(0, 1, 0, 180deg);
-            -moz-transform: rotate3d(0, 1, 0, 180deg);
-            -o-transform: rotate3d(0, 1, 0, 180deg);
-            -ms-transform: rotate3d(0, 1, 0, 180deg);
-            transform: rotate3d(0, 1, 0, 180deg);
-            -webkit-backface-visibility: hidden;
-            -moz-backface-visibility: hidden;
-            -o-backface-visibility: hidden;
-            -ms-backface-visibility: hidden;
-            backface-visibility: hidden;
-        }
-
-        .flip-card-back h3 {
-            color: #555;
-            margin: 0 15px;
-            padding: 40px 0 20px 0;
-            font-size: 14px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-shadow: 0 0 1px #fff, 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        .flip-card-back p {
-            color: #555;
-            margin: 0 10px;
-            padding: 10px 5px;
-
-            font-size: 12px;
-            font-style: italic;
-        }
-
-        .flip-card-back a {
-            display: block;
-            color: rgba(85, 85, 85, 0.8);
-            padding-top: 5px;
-            font-size: 12px;
-            font-style: normal;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .flip-card-back a:hover {
-            color: rgba(158, 8, 36, 0.7);
-        }
-
-        div.scroll {
-            background-color: black;
-            border: black;
-            width: auto;
-            height: 500px;
-            overflow: auto;
-
-        }
-
-        .slick-list:after {
-            content: '';
-            display: block;
-            background: red;
-            opacity: 0.5;
-        }
-
-    </style>
+    <meta th:replace="components::meta_content" content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta th:replace="components::meta_viewport" content="width=device-width, initial-scale=1.0" name="viewport">
+    <link th:replace="components::Bootstrap_CSS" crossorigin="anonymous"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" rel="stylesheet">
+    <link href="../../static/css/theme.css" rel="stylesheet" th:href="@{/css/theme.css}" type="text/css">
+    <link href="../../static/css/styleIvan.css" rel="stylesheet" th:href="@{/css/styleIvan.css}" type="text/css">
+    <script src="../../static/js/utilities.js" th:src="@{/js/utilities.js}" type="text/javascript"></script>
+    <title>Cinehub</title>
 </head>
-<body style="background: black">
-<div class="container mt-3" style="color: aliceblue">
-    <!--Top-->
-    <div class="row justify-content-center text-center mb-5">
-        <div class="col-12 text-center">
-            <div class="col-md-5 p-lg-5 mx-auto my-5">
-                <h1 class="display-4 font-weight-normal">Movies available </h1>
-                <p class="lead font-weight-normal">Select a movie you like, we will find the cinemas that will present
-                    it .</p>
-            </div>
-            <div class="product-device box-shadow d-none d-md-block"></div>
-            <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
-
-        </div>
-        <div class="col-12 text-center">
-            <h6 class="h6">Selected a date:</h6>
-            <input action="#" id="date-picker" method="post"
-                   onchange="window.location.href = '?date='+document.getElementById('date-picker').value;"
-                   th:action="@{/choose_movie}"
-                   th:value="${selected_date}"
-                   type="date">
-            <label for="date-picker"></label>
-            <a href="/choose_movie">
-                <button class=" btn btn-primary" type="button">Today</button>
-            </a>
-        </div>
+<body>
+<nav th:replace="components::navbar"></nav>
+<!--Top-->
+<header class="jumbotron banner position-relative mb-5">
+    <div class="container">
+        <h1 class="jumbotron-title display-2 mt-5">Movies available</h1>
+        <h4 class="jumbotron-subtitle mt-5">Select a movie you like, we will find the cinemas that will present it.</h4>
     </div>
-    <!--/Top-->
-    <div class="row justify-content-center ">
-        <!--List Movie-->
-        <tr th:each="_movie,inter : ${movieList}">
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="flip-card-container mb-4 ">
-                    <div class="flip-card">
-                        <div class="flip-card-front" id="flip-bob">
-                            <h3 class="h3 mt-2 text-center">
-                                <span th:text="${_movie.name}"></span>
-                            </h3>
-                            <img alt="" class="rounded mx-auto d-block"
-                                 style="width:100%;max-width:400px" th:id="${_movie.movieUrl}"
-                                 th:name="${_movie.movieUrl}"
-                                 th:src="${_movie.movieUrl}">
+    <div class="mt-5">
+        <label>Selected a date:</label>
+        <input action="#" id="date-picker" method="post"
+               onchange="window.location.href = '?date='+document.getElementById('date-picker').value;"
+               th:action="@{/choose_movie}"
+               th:value="${selected_date}"
+               type="date">
+        <label for="date-picker"></label>
+        <a href="/">
+            <button class="btn btn-primary" type="button">Today</button>
+        </a>
+    </div>
+</header>
+<main>
+    <div class="container mt-4 mb-5">
+        <!--/Top-->
+        <!--Down-->
+        <div class="row text-center justify-content-center mb-5">
+            <!--List Movie-->
+            <tr th:each="_movie,inter : ${movieList}">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" style="margin-bottom: 50px;">
+                    <!--Card-->
+                    <div class="card card-flip">
+                        <!--Front-->
+                        <div class="card-front">
+                            <div class="card-img-top">
+                                <img style="border-radius: 10px;box-shadow: 10px 10px 20px  #2c2c2c;"
+                                     th:id="${_movie.movieUrl}"
+                                     th:name="${_movie.movieUrl}"
+                                     th:src="${_movie.movieUrl}">
+                            </div>
                         </div>
-                        <div class="flip-card-back">
-                            <div class="scroll">
-                                <div class="row text-center">
-                                    <br>
-                                    <div class="col-12 text-center mt-4">
-                                        <h5 class="h5">Title:</h5>
-                                        <p style="color: white" th:text="${_movie.name}"></p>
-                                    </div>
+                        <!--\Front-->
+                        <!--Back-->
+                        <div class="card-back" style="
+                                  box-shadow: 10px 10px 20px  #2c2c2c;
+                                    border-radius: 10px;">
+                            <div class="card-body" >
+                                <div class="row text-center" style="height: min-content; ">
                                     <div class="col-12 text-center">
-                                        <h5 class="h5">Vote:</h5>
-                                        <p style="color: white" th:text="${_movie.vote}"></p>
+                                        <label class="lead">Title:</label>
+                                        <h6 style="font-size: small" th:text="${_movie.name}"></h6>
                                     </div>
-                                    <div class="col-12 text-center">
-                                        <h5 class="h5">Releases:</h5>
-                                        <p style="color: white" th:text="${_movie.releases}"></p>
+                                    <div class="col-12 text-center mt-2">
+                                        <label class="lead">Vote:</label>
+                                        <h6 style="font-size: small" th:text="${_movie.vote}"></h6>
                                     </div>
-                                    <div class="col-12 text-center">
-                                        <h5 class="h5">Overview:</h5>
-                                        <p style="color: white" th:text="${_movie.overview}"></p>
+                                    <div class="col-12 text-center mt-2">
+                                        <label class="lead">Releases:</label>
+                                        <h6 style="font-size: small" th:text="${_movie.releases}"></h6>
+                                    </div>
+                                    <div class="col-12 text-center mt-2">
+                                        <label class="lead">Overview:</label>
+                                        <h6 style="font-size: small" th:text="${_movie.overview}"></h6>
                                     </div>
                                     <form action="#" method="post" th:action="@{/choose_cinema}"
                                           th:object="${payment_form}">
@@ -200,20 +83,29 @@
                                         <input th:name="movie.vote" th:value="${_movie.vote}" type="hidden"/>
                                         <input th:name="movie.releases" th:value="${_movie.releases}" type="hidden"/>
                                         <input th:name="date" th:value="${selected_date}" type="hidden"/>
-                                        <button class="btn btn-primary mt-2 mb-5" type="submit">Continue
+                                        <button class="btn btn-primary mt-2" type="submit">Continue
                                         </button>
                                     </form>
                                 </div>
                             </div>
                         </div>
+                        <!--\Back-->
                     </div>
+                    <!--\Card-->
                 </div>
-            </div>
-        </tr>
+            </tr>
+        </div>
+        <!--/Down-->
+        <div th:if="${error != null}">
+            <h3 th:text="${error}"></h3>
+        </div>
     </div>
-    <div th:if="${error != null}">
-        <h3 th:text="${error}"></h3>
-    </div>
-</div>
+</main>
+<footer th:replace="components::footer"></footer>
+<script th:replace="components::Bootstrap_JS" crossorigin="anonymous"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+<script th:if="false">replace('nav', '../components.html')</script>
+<script th:if="false">replace('footer', '../components.html')</script>
 </body>
 </html>

@@ -11,6 +11,8 @@ import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftRepository;
 import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.service.security.SecurityService;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.request.ProjectionListRequest;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.request.ShiftListRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

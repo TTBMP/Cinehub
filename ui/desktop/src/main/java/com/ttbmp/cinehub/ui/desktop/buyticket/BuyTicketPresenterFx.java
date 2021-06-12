@@ -4,7 +4,7 @@ package com.ttbmp.cinehub.ui.desktop.buyticket;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketPresenter;
-import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
+import com.ttbmp.cinehub.app.usecase.buyticket.reply.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 
@@ -32,7 +32,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
         viewModel.errorMessageProperty().setValue(
                 request.getErrorList().stream()
                         .map(Request.Error::getMessage)
-                        .collect(Collectors.joining())
+                        .collect(Collectors.joining("\n"))
         );
     }
 
@@ -44,6 +44,7 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException exception) {
+        viewModel.loginRequestedProperty().setValue(true);
         viewModel.errorMessageProperty().setValue(exception.getMessage() + ", you must log in first");
 
     }
@@ -54,8 +55,8 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentSeatAlreadyBookedError(SeatErrorResponse response) {
-        viewModel.errorMessageProperty().setValue(response.getError());
+    public void presentSeatAlreadyBookedError(SeatErrorReply reply) {
+        viewModel.errorMessageProperty().setValue(reply.getError());
     }
 
     @Override
@@ -64,29 +65,29 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentTicket(TicketResponse response) {
-        viewModel.selectedTicketProperty().setValue(response.getTicketDto());
+    public void presentTicket(TicketReply reply) {
+        viewModel.selectedTicketProperty().setValue(reply.getTicketDto());
     }
 
     @Override
-    public void presentProjectionList(ProjectionListResponse response) {
-        viewModel.projectionTimeListProperty().setAll(response.getProjectionDtoList());
+    public void presentProjectionList(ProjectionListReply reply) {
+        viewModel.projectionTimeListProperty().setAll(reply.getProjectionDtoList());
     }
 
     @Override
-    public void presentMovieList(MovieListResponse response) {
+    public void presentMovieList(MovieListReply reply) {
         viewModel.movieListProperty().clear();
-        viewModel.movieListProperty().addAll(response.getMovieList());
+        viewModel.movieListProperty().addAll(reply.getMovieList());
     }
 
     @Override
-    public void presentCinemaList(CinemaListResponse response) {
-        viewModel.cinemaListProperty().setAll(response.getCinemaList());
+    public void presentCinemaList(CinemaListReply reply) {
+        viewModel.cinemaListProperty().setAll(reply.getCinemaList());
     }
 
     @Override
-    public void presentSeatList(SeatListResponse response) {
-        viewModel.seatListProperty().setAll(response.getSeatDtoList());
+    public void presentSeatList(SeatListReply reply) {
+        viewModel.seatListProperty().setAll(reply.getSeatDtoList());
     }
 
 

@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.master;
 
-import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ShiftListRequest;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalScheduleUseCase;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.request.ShiftListRequest;
 import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
@@ -60,7 +60,7 @@ public class ScheduleViewController extends ViewController {
         todayButton.setOnAction(a -> datePicker.setValue(LocalDate.now()));
         previousButton.setOnAction(a -> datePicker.setValue(datePicker.getValue().minusMonths(1)));
         nextButton.setOnAction(a -> datePicker.setValue(datePicker.getValue().plusMonths(1)));
-        calendarTableView.minHeightProperty().bind(calendarTableView.widthProperty());
+        calendarTableView.minHeightProperty().bind(calendarTableView.widthProperty().multiply(0.857).add(8));
         calendarTableView.addEventFilter(ScrollEvent.ANY, Event::consume);
         calendarTableView.getFocusModel().getFocusedCell();
         calendarTableView.setSelectionModel(null);
@@ -72,7 +72,7 @@ public class ScheduleViewController extends ViewController {
             dayTableColumn.setCellFactory(tableColumn -> new CalendarTableCell(tableColumn, activity, navController));
             dayTableColumn.setReorderable(false);
             dayTableColumn.setResizable(false);
-            dayTableColumn.prefWidthProperty().bind(calendarTableView.widthProperty().divide(calendarTableView.getColumns().size()));
+            dayTableColumn.prefWidthProperty().bind(calendarTableView.widthProperty().divide(calendarTableView.getColumns().size()).subtract(1));
         }
         getShiftList();
         viewModel.errorMessageProperty().addObserver(message -> navController.openErrorDialog(message, false));

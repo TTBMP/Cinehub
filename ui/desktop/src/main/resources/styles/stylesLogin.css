@@ -1,4 +1,12 @@
-.button {
-    -fx-text-fill: white;
-    -fx-background-color: #0069D9;
+VBox {
+    -fx-alignment: center;
+}
+
+.form-signin {
+    -fx-max-width: 330px;
+    -fx-padding: 15px;
+}
+
+Button {
+    -fx-min-width: 330px;
 }

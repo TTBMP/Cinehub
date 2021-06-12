@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift;
 
 import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 
@@ -10,19 +10,19 @@ import com.ttbmp.cinehub.app.utilities.request.Request;
  */
 public interface ManageEmployeesShiftPresenter {
 
-    void presentShiftList(GetShiftListResponse response);
+    void presentShiftList(GetShiftListReply reply);
 
-    void presentEmployeeList(GetEmployeeListResponse response);
+    void presentEmployeeList(GetEmployeeListReply reply);
 
-    void presentCinemaList(GetCinemaListResponse response);
+    void presentCinemaList(GetCinemaListReply reply);
 
     void presentSaveShift();
 
     void presentDeleteShift();
 
-    void presentRepeatShift(ShiftRepeatResponse response);
+    void presentRepeatShift(ShiftRepeatReply reply);
 
-    void presentCreateShift(CreateShiftResponse response);
+    void presentCreateShift(CreateShiftReply reply);
 
     void presentCreateShiftError(Throwable error);
 

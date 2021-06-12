@@ -16,7 +16,6 @@ import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.time.LocalTime;
@@ -30,9 +29,6 @@ public class AssignShiftViewController extends ViewController {
 
     @FXML
     private ComboBox<HallDto> hallComboBox;
-
-    @FXML
-    private HBox errorVBox;
 
     @FXML
     private Spinner<LocalTime> endSpinner;
@@ -69,10 +65,7 @@ public class AssignShiftViewController extends ViewController {
 
     @Override
     protected void onLoad() {
-
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
-
-
         if (viewModel.getSelectedDayWeek().getEmployee() instanceof UsherDto) {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
             hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
@@ -80,44 +73,32 @@ public class AssignShiftViewController extends ViewController {
             viewModel.getHallList().setAll(viewModel.getSelectedDayWeek().getEmployee().getCinema().getHalList());
             hallComboBox.setItems(viewModel.getHallList());
             hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
-
         }
         viewModel.setRepeatVisibility(false);
         viewModel.setErrorAssignVisibility(false);
-
-
         viewModel.setSelectedEndRepeatDay(null);
         hallComboBox.setButtonCell(new HallFactory(null));
         hallComboBox.setCellFactory(HallFactory::new);
         hallComboBox.getSelectionModel().selectFirst();
-
-
-        errorVBox.visibleProperty().bind(viewModel.errorAssignVisibilityProperty());
-
         optionVBox.visibleProperty().bind(viewModel.repeatVisibilityProperty());
-
         dateVBox.visibleProperty().bind(viewModel.repeatVisibilityProperty());
+        errorLabel.setVisible(false);
         viewModel.errorProperty().addObserver(s -> errorLabel.setText(s));
+        viewModel.errorProperty().addObserver(s -> errorLabel.setVisible(!s.isEmpty()));
         viewModel.setRepeatVisibility(viewModel.isRepeatVisibility());
-
         shiftRepeatCheckBox.selectedProperty().bindBidirectional(viewModel.repeatVisibilityProperty());
-
         viewModel.setStartSpinnerTime(LocalTime.NOON);
         viewModel.setEndSpinnerTime(LocalTime.NOON.plusHours(1));
-
         startSpinner.setValueFactory(new SpinnerStartValueFactory(viewModel.startSpinnerTimeProperty(), viewModel.endSpinnerTimeProperty()));
         endSpinner.setValueFactory(new SpinnerEndValueFactory(viewModel.startSpinnerTimeProperty(), viewModel.endSpinnerTimeProperty()));
-
         repeatDatePicker.setDayCellFactory(date -> new RepeatDateCell(viewModel.selectedDayWeekProperty()));
         repeatDatePicker.valueProperty().bindBidirectional(viewModel.selectedEndRepeatDayProperty());
-
         optionRepeatComboBox.getItems().setAll(ShiftRepeatingOption.values());
         optionRepeatComboBox.setButtonCell(new ComboBoxOptionValueFactory(null));
         optionRepeatComboBox.setCellFactory(ComboBoxOptionValueFactory::new);
         optionRepeatComboBox.valueProperty().bindBidirectional(viewModel.selectedOptionProperty());
         optionRepeatComboBox.getSelectionModel().selectFirst();
         confirmButton.setOnAction(this::confirmButtonOnAction);
-
         cancelButton.setOnAction(a -> {
             if (shiftRepeatCheckBox.isSelected()) {
                 viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());
@@ -132,7 +113,6 @@ public class AssignShiftViewController extends ViewController {
         if (viewModel.getSelectedHall() != null) {
             hallId = viewModel.getSelectedHall().getId();
         }
-
         if (!viewModel.isRepeatVisibility()) {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(
                     CinehubApplication.getSessionToken(),

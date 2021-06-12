@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation;
 
 import com.ttbmp.cinehub.ui.desktop.error.ErrorView;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
+import com.ttbmp.cinehub.ui.desktop.utilities.ui.View;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.stage.DialogStage;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -27,24 +28,38 @@ public class NavController {
         return currentDestination;
     }
 
-    public void open(NavActivityDestination destination) {
+    public void openActivity(Class<? extends Activity> activityClass) {
         try {
-            Objects.requireNonNull(destination);
-            navBackStack.clear();
-            currentDestination = destination;
-            destination.initialize(this);
-            navBackStack.push(destination);
-            stage.setScene(destination.scene);
+            Objects.requireNonNull(activityClass);
+            var activity = activityClass.getConstructor().newInstance();
+            var destination = new NavActivityDestination(activity);
+            openDestination(destination);
         } catch (Exception e) {
-            openErrorDialog(e.getMessage(), true);
+            openErrorDialog(e + ": " + e.getMessage(), true);
         }
     }
 
-    public void openInDialog(NavDestination destination, String title) {
-        Objects.requireNonNull(destination);
-        Objects.requireNonNull(title);
+    public void openActivityInDialog(Class<? extends Activity> activityClass, String title) {
         var dialogNavController = new NavController(new DialogStage(stage, title));
-        dialogNavController.navigate(new NavActivityDestination(currentDestination.activity, destination.view));
+        dialogNavController.openActivity(activityClass);
+        dialogNavController.stage.show();
+    }
+
+    public void openView(Class<? extends View> viewClass) {
+        try {
+            Objects.requireNonNull(viewClass);
+            var view = viewClass.getConstructor().newInstance();
+            var destination = new NavDestination(view, currentDestination.activity);
+            openDestination(destination);
+        } catch (Exception e) {
+            openErrorDialog(e + ": " + e.getMessage(), true);
+        }
+    }
+
+    public void openViewInDialog(Class<? extends View> viewClass, String title) {
+        var dialogNavController = new NavController(new DialogStage(stage, title));
+        dialogNavController.currentDestination = currentDestination;
+        dialogNavController.openView(viewClass);
         dialogNavController.stage.show();
     }
 
@@ -52,29 +67,25 @@ public class NavController {
         Objects.requireNonNull(errorMessage);
         NavFunction onCloseFunction = isFatal ? navController -> Platform.exit() : NavController::goBack;
         var errorView = new ErrorView(errorMessage, onCloseFunction);
-        openInDialog(new NavDestination(errorView), "Error");
-        var errorStage = ((Stage) errorView.getRoot().getScene().getWindow());
-        errorStage.setResizable(false);
-        errorStage.setAlwaysOnTop(true);
-        errorStage.setOnCloseRequest(w -> onCloseFunction.execute(errorView.getController().getNavController()));
+        var destination = new NavDestination(errorView, currentDestination.activity);
+        var dialogNavController = new NavController(new DialogStage(stage, "Error"));
+        dialogNavController.openDestination(destination);
+        dialogNavController.stage.show();
+        dialogNavController.stage.setResizable(false);
+        dialogNavController.stage.setAlwaysOnTop(true);
+        dialogNavController.stage.setOnCloseRequest(w -> onCloseFunction.execute(errorView.getController().getNavController()));
     }
 
-    public void navigate(NavDestination destination) {
-        try {
-            Objects.requireNonNull(destination);
-            if (destination instanceof NavActivityDestination) {
-                currentDestination = destination;
-            } else {
-                var activity = currentDestination.activity;
-                currentDestination = destination;
-                currentDestination.activity = activity;
-            }
-            destination.initialize(this);
-            navBackStack.push(destination);
-            stage.setScene(destination.scene);
-        } catch (Exception e) {
-            openErrorDialog(e.getMessage(), true);
+    public void replaceActivity(Class<? extends Activity> activityClass) {
+        navBackStack.clear();
+        openActivity(activityClass);
+    }
+
+    public void replaceWithPreviousActivity() {
+        while (navBackStack.peek() != null && navBackStack.peek().activity.equals(currentDestination.activity)) {
+            navBackStack.pop();
         }
+        replaceActivity(navBackStack.pop().activity.getClass());
     }
 
     public void goBack() {
@@ -83,26 +94,25 @@ public class NavController {
             if (navBackStack.isEmpty()) {
                 stage.close();
             } else {
-                var destination = navBackStack.pop();
-                navigate(destination);
+                openDestination(navBackStack.pop());
             }
         }
     }
 
-    public void openPreviousActivity() {
-        try {
-            Class<? extends Activity> prevActivityClass = null;
-            for (var destination : navBackStack) {
-                if (destination.activity != currentDestination.activity) {
-                    prevActivityClass = destination.activity.getClass();
-                    break;
-                }
-            }
-            var prevActivity = Objects.requireNonNull(prevActivityClass).getConstructor().newInstance();
-            open(new NavActivityDestination(prevActivity));
-        } catch (Exception e) {
-            openErrorDialog(e.getMessage(), true);
+    public void goBackToPreviousActivity() {
+        var lastPopped = currentDestination;
+        while (navBackStack.peek() != null && navBackStack.peek().activity.equals(currentDestination.activity)) {
+            lastPopped = navBackStack.pop();
         }
+        navBackStack.push(lastPopped);
+        goBack();
+    }
+
+    private void openDestination(NavDestination destination) {
+        currentDestination = destination;
+        destination.initialize(this);
+        navBackStack.push(destination);
+        stage.setScene(destination.scene);
     }
 
     public interface NavFunction {

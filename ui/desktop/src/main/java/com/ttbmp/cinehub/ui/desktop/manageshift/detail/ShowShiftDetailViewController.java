@@ -7,11 +7,9 @@ import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 import com.ttbmp.cinehub.ui.desktop.manageshift.ManageEmployeesShiftViewModel;
 import com.ttbmp.cinehub.ui.desktop.manageshift.modify.ModifyShiftView;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavDestination;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
 
@@ -19,12 +17,6 @@ import java.time.LocalDate;
  * @author Massimo Mazzetti
  */
 public class ShowShiftDetailViewController extends ViewController {
-
-    @FXML
-    private Label errorLabel;
-
-    @FXML
-    private VBox errorVBox;
 
     @FXML
     private Label nameLabel;
@@ -64,7 +56,6 @@ public class ShowShiftDetailViewController extends ViewController {
         ManageEmployeesShiftViewModel viewModel;
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
         new ManageEmployeesShiftViewModel();
-        errorLabel.textProperty().bind(viewModel.errorDaoProperty());
         if (viewModel.getEmployee(viewModel.getSelectedShift()) instanceof UsherDto) {
             hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
             hallLabelText.visibleProperty().bind(viewModel.hallVisibilityProperty());
@@ -92,7 +83,7 @@ public class ShowShiftDetailViewController extends ViewController {
                     viewModel.getSelectedShift().getId()));
             navController.goBack();
         });
-        modifyShiftButton.setOnAction(a -> navController.navigate(new NavDestination(new ModifyShiftView())));
+        modifyShiftButton.setOnAction(a -> navController.openView(ModifyShiftView.class));
 
 
     }

@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.detail;
 
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavDestination;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.ViewPersonalScheduleViewModel;
 import com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.detail.projectionist.ProjectionistShiftDetailView;
 import javafx.fxml.FXML;
@@ -50,7 +49,7 @@ public class ShiftDetailViewController extends ViewController {
         cityLabel.textProperty().bind(viewModel.selectedShiftCinemaCityProperty());
         addressLabel.textProperty().bind(viewModel.selectedShiftCinemaAddressProperty());
         detailButton.setVisible(viewModel.isIsProjectionsDetailButtonVisible());
-        detailButton.setOnAction(a -> navController.navigate(new NavDestination(new ProjectionistShiftDetailView())));
+        detailButton.setOnAction(a -> navController.openView(ProjectionistShiftDetailView.class));
         requestChangeButton.setVisible(false);
         requestSwapButton.setVisible(false);
     }

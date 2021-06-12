@@ -5,7 +5,7 @@ import com.ttbmp.cinehub.app.utilities.request.Request;
 
 public interface LoginPresenter {
 
-    void presentSessionToken(LoginResponse response);
+    void presentSessionToken(LoginReply reply);
 
     void presentInvalidRequest(Request request);
 

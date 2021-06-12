@@ -21,6 +21,11 @@ public class NavDestination {
         loaded = false;
     }
 
+    public NavDestination(View view, Activity activity) {
+        this(view);
+        this.activity = activity;
+    }
+
     public void initialize(NavController navController) {
         initialize(navController.getCurrentDestination().activity, navController);
     }

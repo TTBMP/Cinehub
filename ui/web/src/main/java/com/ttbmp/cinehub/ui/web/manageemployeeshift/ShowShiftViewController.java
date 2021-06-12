@@ -43,8 +43,9 @@ public class ShowShiftViewController {
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         model.addAttribute("cinemaSelected", false);
         var form = new GetCinemaForm();
+        form.setStart(LocalDate.now());
         model.addAttribute("getShiftListRequest", form);
-        return ErrorHelper.returnView(response, model, "manage_employee_shift");
+        return ErrorHelper.returnView(response, model, "manage_employee_shift/manage_employee_shift");
     }
 
     @PostMapping("/manage_employee_shift")
@@ -65,7 +66,7 @@ public class ShowShiftViewController {
         model.addAttribute("idCinema", form.getCinemaId());
         model.addAttribute("date", form.getStart());
         model.addAttribute("selectedShift", new NewShiftForm());
-        return ErrorHelper.returnView(response, model, "manage_employee_shift");
+        return ErrorHelper.returnView(response, model, "manage_employee_shift/manage_employee_shift");
     }
 
 }

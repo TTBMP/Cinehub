@@ -2,14 +2,15 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefWidth="600.0" xmlns="http://javafx.com/javafx/16"
       fx:controller="com.ttbmp.cinehub.ui.desktop.appbar.AppBarViewController">
-    <TabPane fx:id="tabPane" minHeight="30.0" nodeOrientation="RIGHT_TO_LEFT" tabClosingPolicy="UNAVAILABLE">
+    <TabPane fx:id="tabPane" minHeight="30.0" nodeOrientation="LEFT_TO_RIGHT" tabClosingPolicy="UNAVAILABLE">
         <Tab fx:id="aboutTab" text="About"/>
         <Tab fx:id="loginTab" text="Login"/>
         <Tab fx:id="logoutTab" text="Logout"/>
         <Tab fx:id="manageShiftTab" text="Manage Shift"/>
         <Tab fx:id="viewPersonalScheduleTab" text="View Personal Schedule"/>
         <Tab fx:id="buyTicketTab" text="Buy Ticket"/>
+        <Tab fx:id="logo" disable="true"/>
     </TabPane>
 </VBox>

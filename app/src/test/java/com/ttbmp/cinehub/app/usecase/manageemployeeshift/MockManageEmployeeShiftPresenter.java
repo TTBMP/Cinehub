@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.app.usecase.manageemployeeshift;
 
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
-import com.ttbmp.cinehub.app.usecase.manageemployeesshift.response.*;
+import com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 
@@ -17,18 +17,18 @@ public class MockManageEmployeeShiftPresenter implements ManageEmployeesShiftPre
     }
 
     @Override
-    public void presentShiftList(GetShiftListResponse response) {
-        viewModel.setShiftList(response.getShiftDtoList());
+    public void presentShiftList(GetShiftListReply reply) {
+        viewModel.setShiftList(reply.getShiftDtoList());
     }
 
     @Override
-    public void presentEmployeeList(GetEmployeeListResponse response) {
-        viewModel.setEmployeeList(response.getEmployeeDtoList());
+    public void presentEmployeeList(GetEmployeeListReply reply) {
+        viewModel.setEmployeeList(reply.getEmployeeDtoList());
     }
 
     @Override
-    public void presentCinemaList(GetCinemaListResponse response) {
-        viewModel.setCinemaList(response.getCinemaList());
+    public void presentCinemaList(GetCinemaListReply reply) {
+        viewModel.setCinemaList(reply.getCinemaList());
     }
 
     @Override
@@ -42,13 +42,13 @@ public class MockManageEmployeeShiftPresenter implements ManageEmployeesShiftPre
     }
 
     @Override
-    public void presentRepeatShift(ShiftRepeatResponse response) {
-        viewModel.setShiftList(response.getShiftDto());
+    public void presentRepeatShift(ShiftRepeatReply reply) {
+        viewModel.setShiftList(reply.getShiftDto());
     }
 
     @Override
-    public void presentCreateShift(CreateShiftResponse response) {
-        viewModel.setShift(response.getShiftDto());
+    public void presentCreateShift(CreateShiftReply reply) {
+        viewModel.setShift(reply.getShiftDto());
     }
 
 

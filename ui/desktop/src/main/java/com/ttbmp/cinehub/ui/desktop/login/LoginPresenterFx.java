@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.ui.desktop.login;
 
 import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.usecase.login.LoginPresenter;
-import com.ttbmp.cinehub.app.usecase.login.LoginResponse;
+import com.ttbmp.cinehub.app.usecase.login.LoginReply;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
 
@@ -17,8 +17,8 @@ public class LoginPresenterFx implements LoginPresenter {
     }
 
     @Override
-    public void presentSessionToken(LoginResponse response) {
-        CinehubApplication.setSessionToken(response.getSessionCookie());
+    public void presentSessionToken(LoginReply reply) {
+        CinehubApplication.setSessionToken(reply.getSessionCookie());
         viewModel.setIsLogged(true);
     }
 

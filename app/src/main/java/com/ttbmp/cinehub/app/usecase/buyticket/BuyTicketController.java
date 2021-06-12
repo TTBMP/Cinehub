@@ -15,8 +15,8 @@ import com.ttbmp.cinehub.app.service.payment.PayServiceRequest;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.service.security.SecurityService;
+import com.ttbmp.cinehub.app.usecase.buyticket.reply.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
-import com.ttbmp.cinehub.app.usecase.buyticket.response.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.domain.Customer;
@@ -67,7 +67,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             var movieList = movieRepository.getMovieList(localDate).stream()
                     .map(MovieDto::new)
                     .collect(Collectors.toList());
-            presenter.presentMovieList(new MovieListResponse(movieList));
+            presenter.presentMovieList(new MovieListReply(movieList));
         } catch (Request.NullRequestException e) {
             presenter.presentNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -91,7 +91,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             var cinemaList = cinemaRepository.getListCinema(movie, request.getDate()).stream()
                     .map(CinemaDto::new)
                     .collect(Collectors.toList());
-            presenter.presentCinemaList(new CinemaListResponse(cinemaList));
+            presenter.presentCinemaList(new CinemaListReply(cinemaList));
         } catch (Request.NullRequestException e) {
             presenter.presentNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -119,7 +119,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             var projectionList = projectionRepository.getProjectionList(cinema, movie, request.getLocalDate()).stream()
                     .map(ProjectionDto::new)
                     .collect(Collectors.toList());
-            presenter.presentProjectionList(new ProjectionListResponse(projectionList));
+            presenter.presentProjectionList(new ProjectionListReply(projectionList));
         } catch (Request.NullRequestException e) {
             presenter.presentNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -139,7 +139,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             var seatList = projection.getHall().getSeatList().stream()
                     .map(seat -> new SeatDto(seat, projection.isBooked(seat)))
                     .collect(Collectors.toList());
-            presenter.presentSeatList(new SeatListResponse(seatList));
+            presenter.presentSeatList(new SeatListReply(seatList));
         } catch (Request.NullRequestException e) {
             presenter.presentNullRequest();
         } catch (Request.InvalidRequestException e) {
@@ -173,7 +173,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             var seat = seatRepository.getSeat(request.getSeatId());
             semanticValidatePay(request, customer, projection, seat);
             if (projection.isBooked(seat)) {
-                presenter.presentSeatAlreadyBookedError(new SeatErrorResponse("The place has already been booked"));
+                presenter.presentSeatAlreadyBookedError(new SeatErrorReply("The place has already been booked"));
             } else {
                 //-DECORATOR-//
                 var ticket = new Ticket(0, projection.getBasePrice(), customer, seat, projection);
@@ -197,7 +197,7 @@ public class BuyTicketController implements BuyTicketUseCase {
                 ));
                 ticketRepository.saveTicket(ticket);
                 emailService.sendMail(new EmailServiceRequest(request.getEmail(), "Payment receipt"));
-                presenter.presentTicket(new TicketResponse(new TicketDto(ticket)));
+                presenter.presentTicket(new TicketReply(new TicketDto(ticket)));
             }
         } catch (Request.NullRequestException e) {
             presenter.presentNullRequest();

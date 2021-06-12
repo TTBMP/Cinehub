@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.ui.web.viewpersonalschedule;
 
-import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ProjectionListRequest;
-import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ShiftListRequest;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalScheduleHandler;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.request.ProjectionListRequest;
+import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.request.ShiftListRequest;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;

@@ -9,7 +9,6 @@ import com.ttbmp.cinehub.ui.desktop.buyticket.BuyTicketViewModel;
 import com.ttbmp.cinehub.ui.desktop.buyticket.CustomDateCell;
 import com.ttbmp.cinehub.ui.desktop.buyticket.choosecinema.ChooseCinemaView;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
-import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavDestination;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -76,7 +75,7 @@ public class ChooseMovieViewController extends ViewController {
                     viewModel.selectedMovieProperty().getValue().getId(),
                     viewModel.selectedDateProperty().getValue().toString()
             ));
-            navController.navigate(new NavDestination(new ChooseCinemaView()));
+            navController.openView(ChooseCinemaView.class);
         });
     }
 

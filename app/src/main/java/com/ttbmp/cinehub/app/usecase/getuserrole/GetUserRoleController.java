@@ -29,9 +29,9 @@ public class GetUserRoleController implements GetUserRoleUseCase {
             AuthenticatedRequest.validate(request, securityService, permissions);
             var user = userRepository.getUser(request.getUserId());
             var roleList = user.getRoleList().stream()
-                    .map(RoleResponse.Role::getRole)
+                    .map(RoleReply.Role::getRole)
                     .collect(Collectors.toList());
-            presenter.present(new RoleResponse(roleList));
+            presenter.present(new RoleReply(roleList));
         } catch (Request.NullRequestException e) {
             presenter.presentNullRequest();
         } catch (Request.InvalidRequestException e) {

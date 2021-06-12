@@ -26,7 +26,7 @@ public class ChooseProjectionItemViewController extends ViewController {
     @Override
     protected void onLoad() {
         Objects.requireNonNull(projectionDto);
-        hallNameLabel.setText(String.valueOf(projectionDto.getHallDto().getId()));
+        hallNameLabel.setText(String.valueOf(projectionDto.getHallDto().getName()));
         projectionTimeLabel.setText(projectionDto.getStartTime());
 
     }
