@@ -21,6 +21,7 @@ import com.ttbmp.cinehub.domain.Seat;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,8 +29,8 @@ import java.util.stream.Collectors;
 
 class BuyTicketBuyTicketControllerTest {
 
-    private  MockServiceLocator serviceLocator;
-    private  MockBuyTicketViewModel viewModel;
+    private MockServiceLocator serviceLocator;
+    private MockBuyTicketViewModel viewModel;
     private BuyTicketController controller;
 
     @BeforeEach
@@ -69,7 +70,7 @@ class BuyTicketBuyTicketControllerTest {
     void getListCinema_whitCorrectRequest_notGenerateErrors() throws RepositoryException {
         var movieRepository = serviceLocator.getService(MovieRepository.class);
         var movie = movieRepository.getMovie(getMovieListExpected().get(0).getId());
-        var requestCinema = new CinemaListRequest(movie.getId(),String.valueOf(LocalDate.now()));
+        var requestCinema = new CinemaListRequest(movie.getId(), String.valueOf(LocalDate.now()));
         controller.getCinemaList(requestCinema);
         var expected = getCinemaListExpected(movie);
         var actual = viewModel.getCinemaList();
@@ -81,7 +82,7 @@ class BuyTicketBuyTicketControllerTest {
 
 
     private List<CinemaDto> getCinemaListExpected(Movie movie) throws RepositoryException {
-        return serviceLocator.getService(CinemaRepository.class).getListCinema(movie,String.valueOf(LocalDate.now())).stream()
+        return serviceLocator.getService(CinemaRepository.class).getListCinema(movie, String.valueOf(LocalDate.now())).stream()
                 .map(CinemaDto::new)
                 .collect(Collectors.toList());
     }
@@ -92,9 +93,9 @@ class BuyTicketBuyTicketControllerTest {
         var movie = movieRepository.getMovie(getMovieListExpected().get(0).getId());
         var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
         var cinema = cinemaRepository.getCinema(getCinemaListExpected(movie).get(0).getId());
-        var request = new ProjectionListRequest(movie.getId(),cinema.getId(),LocalDate.now());
+        var request = new ProjectionListRequest(movie.getId(), cinema.getId(), LocalDate.now());
         controller.getProjectionList(request);
-        var expected = getProjectionListExpected(movie,cinema);
+        var expected = getProjectionListExpected(movie, cinema);
         var actual = viewModel.getProjectionList();
         Assertions.assertArrayEquals(
                 expected.stream().map(ProjectionDto::getId).toArray(),
@@ -104,7 +105,7 @@ class BuyTicketBuyTicketControllerTest {
 
 
     private List<ProjectionDto> getProjectionListExpected(Movie movie, Cinema cinema) throws RepositoryException {
-        return serviceLocator.getService(ProjectionRepository.class).getProjectionList(cinema,movie,String.valueOf(LocalDate.now())).stream()
+        return serviceLocator.getService(ProjectionRepository.class).getProjectionList(cinema, movie, String.valueOf(LocalDate.now())).stream()
                 .map(ProjectionDto::new)
                 .collect(Collectors.toList());
     }
@@ -119,8 +120,8 @@ class BuyTicketBuyTicketControllerTest {
         var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
         var cinema = cinemaRepository.getCinema(getCinemaListExpected(movie).get(0).getId());
         var projectionRepository = serviceLocator.getService(ProjectionRepository.class);
-        var projection = projectionRepository.getProjection(getProjectionListExpected(movie,cinema).get(0).getId());
-        var request = new SeatListRequest(sessionToken,projection.getId());
+        var projection = projectionRepository.getProjection(getProjectionListExpected(movie, cinema).get(0).getId());
+        var request = new SeatListRequest(sessionToken, projection.getId());
         controller.getSeatList(request);
         var expected = getSeatListExpected(projection);
         var actual = viewModel.getSeatList();
@@ -134,10 +135,9 @@ class BuyTicketBuyTicketControllerTest {
         var seatList = serviceLocator.getService(SeatRepository.class).
                 getSeatList(projection.getHall());
         return seatList.stream()
-                .map((Seat seat) -> new SeatDto(seat,false))
+                .map((Seat seat) -> new SeatDto(seat, false))
                 .collect(Collectors.toList());
     }
-
 
 
 }

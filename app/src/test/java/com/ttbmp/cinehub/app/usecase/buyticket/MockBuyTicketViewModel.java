@@ -18,6 +18,10 @@ public class MockBuyTicketViewModel {
         return ticket;
     }
 
+    public void setTicket(TicketDto ticket) {
+        this.ticket = ticket;
+    }
+
     public List<ProjectionDto> getProjectionList() {
         return projectionList;
     }
@@ -33,7 +37,6 @@ public class MockBuyTicketViewModel {
     public void setSeatList(List<SeatDto> seatList) {
         this.seatList = seatList;
     }
-
 
     public String getErrorMessage() {
         return errorMessage;
@@ -65,9 +68,5 @@ public class MockBuyTicketViewModel {
 
     public void setMovieList(List<MovieDto> movieList) {
         this.movieList = movieList;
-    }
-
-    public void setTicket(TicketDto ticket) {
-        this.ticket = ticket;
     }
 }

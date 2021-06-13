@@ -1,14 +1,11 @@
 package com.ttbmp.cinehub.app.usecase.buyticket;
 
-import com.ttbmp.cinehub.app.dto.MovieDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.repository.movie.MovieRepository;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.reply.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 
-import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 class MockBuyTicketPresenter implements BuyTicketPresenter {
@@ -66,9 +63,6 @@ class MockBuyTicketPresenter implements BuyTicketPresenter {
     public void presentPaymentServiceException(PaymentServiceException e) {
         viewModel.setErrorMessage(e.getMessage());
     }
-
-
-
 
 
     @Override
