@@ -16,20 +16,20 @@ public class ProjectionListRequest extends Request {
 
     private Integer movieId;
     private Integer cinemaId;
-    private String localDate;
+    private String date;
 
-    public ProjectionListRequest(Integer movieId, Integer cinemaId, LocalDate localDate) {
+    public ProjectionListRequest(Integer movieId, Integer cinemaId, LocalDate date) {
         this.movieId = movieId;
         this.cinemaId = cinemaId;
-        this.localDate = localDate.toString();
+        this.date = date.toString();
     }
 
-    public String getLocalDate() {
-        return localDate;
+    public String getDate() {
+        return date;
     }
 
-    public void setLocalDate(String localDate) {
-        this.localDate = localDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public Integer getMovieId() {
@@ -50,9 +50,16 @@ public class ProjectionListRequest extends Request {
 
     @Override
     public void onValidate() {
-        if (LocalDate.parse(localDate).isBefore(LocalDate.now())) {
+        if(date == null){
             addError(MISSING_DATE_ERROR);
         }
+        if(date != null){
+            var localDate = LocalDate.parse(this.date);
+            if (localDate.isBefore(LocalDate.now())) {
+                addError(MISSING_DATE_ERROR);
+            }
+        }
+
     }
 
 

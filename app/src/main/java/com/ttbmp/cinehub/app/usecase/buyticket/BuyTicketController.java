@@ -19,9 +19,7 @@ import com.ttbmp.cinehub.app.usecase.buyticket.reply.*;
 import com.ttbmp.cinehub.app.usecase.buyticket.request.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
-import com.ttbmp.cinehub.domain.Customer;
-import com.ttbmp.cinehub.domain.Projection;
-import com.ttbmp.cinehub.domain.Seat;
+import com.ttbmp.cinehub.domain.*;
 import com.ttbmp.cinehub.domain.security.Permission;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketMagicBox;
@@ -81,14 +79,10 @@ public class BuyTicketController implements BuyTicketUseCase {
     public void getCinemaList(CinemaListRequest request) {
         try {
             Request.validate(request);
+            var date = request.getDate();
             var movie = movieRepository.getMovie(request.getMovieId());
-            if (movie == null) {
-                request.addError(CinemaListRequest.INVALID_MOVIE);
-            }
-            if (!request.getErrorList().isEmpty()) {
-                throw new Request.InvalidRequestException();
-            }
-            var cinemaList = cinemaRepository.getListCinema(movie, request.getDate()).stream()
+            semanticValidateGetCinemaList(request,movie,date);
+            var cinemaList = cinemaRepository.getListCinema(movie, date).stream()
                     .map(CinemaDto::new)
                     .collect(Collectors.toList());
             presenter.presentCinemaList(new CinemaListReply(cinemaList));
@@ -101,22 +95,26 @@ public class BuyTicketController implements BuyTicketUseCase {
         }
     }
 
+    private void semanticValidateGetCinemaList(CinemaListRequest request, Movie movie, String date) throws Request.InvalidRequestException {
+        if (movie == null) {
+            request.addError(CinemaListRequest.INVALID_MOVIE);
+        }
+        if (date == null) {
+            request.addError(CinemaListRequest.MISSING_DATE_ERROR);
+        }
+        if (!request.getErrorList().isEmpty()) {
+            throw new Request.InvalidRequestException();
+        }
+    }
+
     @Override
     public void getProjectionList(ProjectionListRequest request) {
         try {
             Request.validate(request);
             var cinema = cinemaRepository.getCinema(request.getCinemaId());
             var movie = movieRepository.getMovie(request.getMovieId());
-            if (movie == null) {
-                request.addError(ProjectionListRequest.INVALID_MOVIE);
-            }
-            if (cinema == null) {
-                request.addError(ProjectionListRequest.INVALID_CINEMA);
-            }
-            if (!request.getErrorList().isEmpty()) {
-                throw new Request.InvalidRequestException();
-            }
-            var projectionList = projectionRepository.getProjectionList(cinema, movie, request.getLocalDate()).stream()
+            semanticValidateGetProjectionList(request,movie,cinema);
+            var projectionList = projectionRepository.getProjectionList(cinema, movie, request.getDate()).stream()
                     .map(ProjectionDto::new)
                     .collect(Collectors.toList());
             presenter.presentProjectionList(new ProjectionListReply(projectionList));
@@ -126,6 +124,18 @@ public class BuyTicketController implements BuyTicketUseCase {
             presenter.presentInvalidRequest(request);
         } catch (RepositoryException e) {
             presenter.presentRepositoryError(e);
+        }
+    }
+
+    private void semanticValidateGetProjectionList(ProjectionListRequest request, Movie movie, Cinema cinema) throws Request.InvalidRequestException {
+        if (movie == null) {
+            request.addError(ProjectionListRequest.INVALID_MOVIE);
+        }
+        if (cinema == null) {
+            request.addError(ProjectionListRequest.INVALID_CINEMA);
+        }
+        if (!request.getErrorList().isEmpty()) {
+            throw new Request.InvalidRequestException();
         }
     }
 
@@ -175,8 +185,8 @@ public class BuyTicketController implements BuyTicketUseCase {
             if (projection.isBooked(seat)) {
                 presenter.presentSeatAlreadyBookedError(new SeatErrorReply("The place has already been booked"));
             } else {
-                //-DECORATOR-//
                 var ticket = new Ticket(0, projection.getBasePrice(), customer, seat, projection);
+                //-DECORATOR-//
                 if (Boolean.TRUE.equals(request.getOpenBarOption())) {
                     ticket = new TicketOpenBar(ticket);
                 }
@@ -224,6 +234,7 @@ public class BuyTicketController implements BuyTicketUseCase {
         if (seat == null) {
             request.addError(PaymentRequest.MISSING_SEAT_ERROR);
         }
+
         if (!request.getErrorList().isEmpty()) {
             throw new Request.InvalidRequestException();
         }

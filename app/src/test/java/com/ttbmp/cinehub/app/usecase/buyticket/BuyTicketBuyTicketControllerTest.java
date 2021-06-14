@@ -49,9 +49,10 @@ class BuyTicketBuyTicketControllerTest {
 
     @Test
     void getListMovie_whitCorrectRequest_notGenerateErrors() throws RepositoryException {
-        var request = new MovieListRequest(LocalDate.now());
+        var date = LocalDate.now();
+        var request = new MovieListRequest(date);
         controller.getMovieList(request);
-        var expected = getMovieListExpected();
+        var expected = getMovieListExpected(date);
         var actual = viewModel.getMovieList();
         Assertions.assertArrayEquals(
                 expected.stream().map(MovieDto::getId).toArray(),
@@ -59,9 +60,14 @@ class BuyTicketBuyTicketControllerTest {
         );
     }
 
+    @Test
+    void getListMovie_whitNullDate_generateErrors(){
+        var request = new MovieListRequest(null);
+        Assertions.assertDoesNotThrow(() ->controller.getMovieList(request));
+    }
 
-    private List<MovieDto> getMovieListExpected() throws RepositoryException {
-        return serviceLocator.getService(MovieRepository.class).getMovieList(String.valueOf(LocalDate.now())).stream()
+    private List<MovieDto> getMovieListExpected(LocalDate date) throws RepositoryException {
+        return serviceLocator.getService(MovieRepository.class).getMovieList(String.valueOf(date)).stream()
                 .map(MovieDto::new)
                 .collect(Collectors.toList());
     }
@@ -69,43 +75,69 @@ class BuyTicketBuyTicketControllerTest {
     @Test
     void getListCinema_whitCorrectRequest_notGenerateErrors() throws RepositoryException {
         var movieRepository = serviceLocator.getService(MovieRepository.class);
-        var movie = movieRepository.getMovie(getMovieListExpected().get(0).getId());
-        var requestCinema = new CinemaListRequest(movie.getId(), String.valueOf(LocalDate.now()));
-        controller.getCinemaList(requestCinema);
-        var expected = getCinemaListExpected(movie);
-        var actual = viewModel.getCinemaList();
-        Assertions.assertArrayEquals(
-                expected.stream().map(CinemaDto::getId).toArray(),
-                actual.stream().map(CinemaDto::getId).toArray()
-        );
+        var date = LocalDate.now();
+        var movieList = getMovieListExpected(date);
+        if(movieList.size() != 0){
+            var movie = movieRepository.getMovie(movieList.get(0).getId());
+            var requestCinema = new CinemaListRequest(movie.getId(), String.valueOf(date));
+            controller.getCinemaList(requestCinema);
+            var expected = getCinemaListExpected(movie,String.valueOf(date));
+            var actual = viewModel.getCinemaList();
+            Assertions.assertArrayEquals(
+                    expected.stream().map(CinemaDto::getId).toArray(),
+                    actual.stream().map(CinemaDto::getId).toArray()
+            );
+        }
+
+    }
+
+    @Test
+    void getListCinema_whitNullDate_generateErrors() throws RepositoryException {
+        var movieRepository = serviceLocator.getService(MovieRepository.class);
+        var date = LocalDate.now();
+        var movieList = getMovieListExpected(date);
+        if(movieList.size() != 0){
+            var id = movieRepository.getMovie(movieList.get(0).getId()).getId();
+            var requestCinema = new CinemaListRequest(id, null);
+            Assertions.assertDoesNotThrow(() ->controller.getCinemaList(requestCinema));
+        }
+        else{
+            var requestCinema = new CinemaListRequest(null, null);
+            Assertions.assertDoesNotThrow(() ->controller.getCinemaList(requestCinema));
+        }
     }
 
 
-    private List<CinemaDto> getCinemaListExpected(Movie movie) throws RepositoryException {
-        return serviceLocator.getService(CinemaRepository.class).getListCinema(movie, String.valueOf(LocalDate.now())).stream()
+    private List<CinemaDto> getCinemaListExpected(Movie movie, String date) throws RepositoryException {
+        return serviceLocator.getService(CinemaRepository.class).getListCinema(movie, date).stream()
                 .map(CinemaDto::new)
                 .collect(Collectors.toList());
     }
 
     @Test
     void getListProjection_whitCorrectRequest_notGenerateErrors() throws RepositoryException {
+
         var movieRepository = serviceLocator.getService(MovieRepository.class);
-        var movie = movieRepository.getMovie(getMovieListExpected().get(0).getId());
-        var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
-        var cinema = cinemaRepository.getCinema(getCinemaListExpected(movie).get(0).getId());
-        var request = new ProjectionListRequest(movie.getId(), cinema.getId(), LocalDate.now());
-        controller.getProjectionList(request);
-        var expected = getProjectionListExpected(movie, cinema);
-        var actual = viewModel.getProjectionList();
-        Assertions.assertArrayEquals(
-                expected.stream().map(ProjectionDto::getId).toArray(),
-                actual.stream().map(ProjectionDto::getId).toArray()
-        );
+        var date = LocalDate.now();
+        var movieList = getMovieListExpected(date);
+        if(movieList.size() != 0){
+            var movie = movieRepository.getMovie(movieList.get(0).getId());
+            var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
+            var cinema = cinemaRepository.getCinema(getCinemaListExpected(movie, String.valueOf(date)).get(0).getId());
+            var request = new ProjectionListRequest(movie.getId(), cinema.getId(), date);
+            controller.getProjectionList(request);
+            var expected = getProjectionListExpected(movie, cinema,date);
+            var actual = viewModel.getProjectionList();
+            Assertions.assertArrayEquals(
+                    expected.stream().map(ProjectionDto::getId).toArray(),
+                    actual.stream().map(ProjectionDto::getId).toArray()
+            );
+        }
     }
 
 
-    private List<ProjectionDto> getProjectionListExpected(Movie movie, Cinema cinema) throws RepositoryException {
-        return serviceLocator.getService(ProjectionRepository.class).getProjectionList(cinema, movie, String.valueOf(LocalDate.now())).stream()
+    private List<ProjectionDto> getProjectionListExpected(Movie movie, Cinema cinema, LocalDate date) throws RepositoryException {
+        return serviceLocator.getService(ProjectionRepository.class).getProjectionList(cinema, movie, String.valueOf(date)).stream()
                 .map(ProjectionDto::new)
                 .collect(Collectors.toList());
     }
@@ -116,19 +148,25 @@ class BuyTicketBuyTicketControllerTest {
         logInAsCustomer();
         var sessionToken = viewModel.getSessionToken();
         var movieRepository = serviceLocator.getService(MovieRepository.class);
-        var movie = movieRepository.getMovie(getMovieListExpected().get(0).getId());
-        var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
-        var cinema = cinemaRepository.getCinema(getCinemaListExpected(movie).get(0).getId());
-        var projectionRepository = serviceLocator.getService(ProjectionRepository.class);
-        var projection = projectionRepository.getProjection(getProjectionListExpected(movie, cinema).get(0).getId());
-        var request = new SeatListRequest(sessionToken, projection.getId());
-        controller.getSeatList(request);
-        var expected = getSeatListExpected(projection);
-        var actual = viewModel.getSeatList();
-        Assertions.assertArrayEquals(
-                expected.stream().map(SeatDto::getId).toArray(),
-                actual.stream().map(SeatDto::getId).toArray()
-        );
+        var date = LocalDate.now();
+        var movieList = getMovieListExpected(date);
+        if(movieList.size() != 0){
+            var movie = movieRepository.getMovie(movieList.get(0).getId());
+            var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
+            var cinema = cinemaRepository.getCinema(getCinemaListExpected(movie, String.valueOf(date)).get(0).getId());
+            var projectionRepository = serviceLocator.getService(ProjectionRepository.class);
+            var projection = projectionRepository.getProjection(getProjectionListExpected(movie, cinema, date).get(0).getId());
+            var request = new SeatListRequest(sessionToken, projection.getId());
+            controller.getSeatList(request);
+            var expected = getSeatListExpected(projection);
+            var actual = viewModel.getSeatList();
+            Assertions.assertArrayEquals(
+                    expected.stream().map(SeatDto::getId).toArray(),
+                    actual.stream().map(SeatDto::getId).toArray()
+            );
+        }
+
+
     }
 
     private List<SeatDto> getSeatListExpected(Projection projection) throws RepositoryException {
