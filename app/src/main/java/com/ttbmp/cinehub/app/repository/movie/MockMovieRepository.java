@@ -2,86 +2,70 @@ package com.ttbmp.cinehub.app.repository.movie;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.projection.MockProjectionRepository;
+import com.ttbmp.cinehub.app.utilities.repository.MockRepository;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
  * @author Fabio Buracchi
  */
-public class MockMovieRepository implements MovieRepository {
+public class MockMovieRepository extends MockRepository implements MovieRepository {
 
-    private static final List<MovieData> MOVIE_DATA_LIST = new ArrayList<>();
+    public static final String ID = "id";
+
+    private static final List<Map<String, String>> mockDataList = getMockDataList(MockMovieRepository.class);
 
     static {
-        IntStream.range(15, 23).forEach(i -> MOVIE_DATA_LIST.add(new MovieData(i)));
+        IntStream.range(15, 23).forEach(i -> mockDataList.add(Map.of(ID, Integer.toString(i))));
     }
-
-    private final ServiceLocator serviceLocator;
 
     public MockMovieRepository(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
+        super(serviceLocator);
     }
 
-    public static List<MovieData> getMovieDataList() {
-        return MOVIE_DATA_LIST;
+    public static List<Map<String, String>> getMockDataList() {
+        return mockDataList;
     }
 
     @Override
     public Movie getMovie(Integer movieId) {
-        return MOVIE_DATA_LIST.stream()
-                .filter(d -> d.id == movieId)
+        return mockDataList.stream()
+                .filter(m -> m.get(ID).equals(Integer.toString(movieId)))
                 .findAny()
-                .map(d -> new MovieProxy(serviceLocator, d.id))
+                .map(m -> new MovieProxy(getServiceLocator(), Integer.parseInt(m.get(ID))))
                 .orElse(null);
     }
 
     @Override
     public Movie getMovie(Projection projection) {
-        return MockProjectionRepository.getProjectionDataList().stream()
-                .filter(d -> d.getId() == projection.getId())
+        return MockProjectionRepository.getMockDataList().stream()
+                .filter(m -> m.get(MockProjectionRepository.ID).equals(Integer.toString(projection.getId())))
                 .findAny()
-                .map(MockProjectionRepository.ProjectionData::getMovieId)
-                .flatMap(projectionMovieId -> MOVIE_DATA_LIST.stream()
-                        .filter(d -> d.getId() == projectionMovieId)
+                .map(m -> m.get(MockProjectionRepository.MOVIE_ID))
+                .flatMap(projectionMovieId -> mockDataList.stream()
+                        .filter(m -> m.get(ID).equals(projectionMovieId))
                         .findAny()
-                        .map(d -> new MovieProxy(serviceLocator, d.id)))
+                        .map(m -> new MovieProxy(getServiceLocator(), Integer.parseInt(m.get(ID))))
+                )
                 .orElse(null);
     }
 
     @Override
     public List<Movie> getMovieList(String localDate) {
-        var projectionMovieIdList = MockProjectionRepository.getProjectionDataList().stream()
-                .filter(d -> d.getDate().equals(localDate))
-                .map(MockProjectionRepository.ProjectionData::getMovieId)
+        var projectionMovieIdList = MockProjectionRepository.getMockDataList().stream()
+                .filter(m -> m.get(MockProjectionRepository.DATE).equals(localDate))
+                .map(m -> m.get(MockProjectionRepository.MOVIE_ID))
                 .distinct()
                 .collect(Collectors.toList());
-        return MOVIE_DATA_LIST.stream()
-                .filter(d -> projectionMovieIdList.contains(d.id))
-                .map(d -> new MovieProxy(serviceLocator, d.id))
+        return mockDataList.stream()
+                .filter(m -> projectionMovieIdList.contains(m.get(ID)))
+                .map(m -> new MovieProxy(getServiceLocator(), Integer.parseInt(m.get(ID))))
                 .collect(Collectors.toList());
-    }
-
-    public static class MovieData {
-
-        private int id;
-
-        public MovieData(int id) {
-            this.id = id;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
     }
 
 }

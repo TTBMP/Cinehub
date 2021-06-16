@@ -81,7 +81,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             Request.validate(request);
             var date = request.getDate();
             var movie = movieRepository.getMovie(request.getMovieId());
-            semanticValidateGetCinemaList(request,movie,date);
+            semanticValidateGetCinemaList(request, movie, date);
             var cinemaList = cinemaRepository.getListCinema(movie, date).stream()
                     .map(CinemaDto::new)
                     .collect(Collectors.toList());
@@ -113,7 +113,7 @@ public class BuyTicketController implements BuyTicketUseCase {
             Request.validate(request);
             var cinema = cinemaRepository.getCinema(request.getCinemaId());
             var movie = movieRepository.getMovie(request.getMovieId());
-            semanticValidateGetProjectionList(request,movie,cinema);
+            semanticValidateGetProjectionList(request, movie, cinema);
             var projectionList = projectionRepository.getProjectionList(cinema, movie, request.getDate()).stream()
                     .map(ProjectionDto::new)
                     .collect(Collectors.toList());

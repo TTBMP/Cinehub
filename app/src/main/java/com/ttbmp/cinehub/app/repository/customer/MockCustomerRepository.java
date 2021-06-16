@@ -10,76 +10,59 @@ import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Fabio Buracchi
  */
-public class MockCustomerRepository implements CustomerRepository {
+public class MockCustomerRepository extends MockUserRepository implements CustomerRepository {
 
-    private static final List<CustomerData> CUSTOMER_DATA_LIST = new ArrayList<>();
+    public static final String ID = "id";
+
+    private static final List<Map<String, String>> mockDataList = getMockDataList(MockCustomerRepository.class);
 
     static {
-        MockUserRepository.getUserDataList().stream()
-                .map(MockUserRepository.UserData::getId)
-                .filter(userId -> MockUserRepository.getUserDataList().stream()
-                        .filter(d -> d.getId().equals(userId))
+        MockUserRepository.getMockDataList().stream()
+                .map(m -> m.get(MockUserRepository.ID))
+                .filter(userId -> MockUserRepository.getMockDataList().stream()
+                        .filter(m -> m.get(MockUserRepository.ID).equals(userId))
                         .findAny()
-                        .map(MockUserRepository.UserData::getRoleList)
+                        .map(m -> MockUserRepository.getRoleList(userId))
                         .orElse(new ArrayList<>())
                         .contains(Role.CUSTOMER_ROLE)
                 )
-                .forEach(userId -> CUSTOMER_DATA_LIST.add(new CustomerData(userId)));
+                .forEach(userId -> mockDataList.add(Map.of(ID, userId)));
     }
-
-    private final ServiceLocator serviceLocator;
 
     public MockCustomerRepository(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
+        super(serviceLocator);
     }
 
-    public static List<CustomerData> getUserDataList() {
-        return CUSTOMER_DATA_LIST;
+    public static List<Map<String, String>> getMockDataList() {
+        return mockDataList;
     }
 
     @Override
     public Customer getCustomer(String customerId) throws RepositoryException {
-        return MockUserRepository.getUserDataList().stream()
-                .filter(d -> d.getId().equals(customerId))
+        return mockDataList.stream()
+                .filter(m -> m.get(ID).equals(customerId))
                 .findAny()
-                .map(d -> new CustomerProxy(serviceLocator, d.getId()))
+                .map(m -> new CustomerProxy(getServiceLocator(), m.get(ID)))
                 .orElse(null);
     }
 
     @Override
     public Customer getCustomer(Ticket ticket) throws RepositoryException {
-        return MockTicketRepository.getTicketDataList().stream()
-                .filter(d -> d.getId() == ticket.getId())
-                .map(MockTicketRepository.TicketData::getUserId)
+        return MockTicketRepository.getMockDataList().stream()
+                .filter(m -> m.get(MockTicketRepository.ID).equals(Integer.toString(ticket.getId())))
+                .map(m -> m.get(MockTicketRepository.USER_ID))
                 .findAny()
-                .flatMap(ticketUserId -> MockUserRepository.getUserDataList().stream()
-                        .filter(d -> d.getId().equals(ticketUserId))
+                .flatMap(ticketUserId -> mockDataList.stream()
+                        .filter(m -> m.get(ID).equals(ticketUserId))
                         .findAny()
-                        .map(d -> new CustomerProxy(serviceLocator, d.getId()))
+                        .map(m -> new CustomerProxy(getServiceLocator(), m.get(ID)))
                 )
                 .orElse(null);
-    }
-
-    public static class CustomerData {
-
-        private String userId;
-
-        public CustomerData(String userId) {
-            this.userId = userId;
-        }
-
-        public String getUserId() {
-            return userId;
-        }
-
-        public void setUserId(String userId) {
-            this.userId = userId;
-        }
-
     }
 
 }

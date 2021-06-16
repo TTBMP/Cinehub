@@ -4,6 +4,7 @@ import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
 import com.ttbmp.cinehub.app.repository.user.UserRepository;
+import com.ttbmp.cinehub.app.utilities.repository.MockRepository;
 import com.ttbmp.cinehub.domain.User;
 
 import java.util.Objects;
@@ -21,9 +22,9 @@ public class MockSecurityService implements SecurityService {
 
     @Override
     public String authenticate(String email, String password) throws SecurityException {
-        return MockUserRepository.getUserDataList().stream()
-                .filter(userData -> userData.getEmail().equals(email))
-                .map(MockUserRepository.UserData::getId)
+        return MockRepository.getMockDataList(MockUserRepository.class).stream()
+                .filter(userData -> userData.get(MockUserRepository.EMAIL).equals(email))
+                .map(userData -> userData.get(MockUserRepository.ID))
                 .findAny()
                 .orElseThrow(() -> new SecurityException("Wrong username or password."));
     }

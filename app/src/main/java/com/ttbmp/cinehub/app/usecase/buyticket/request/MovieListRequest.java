@@ -24,10 +24,10 @@ public class MovieListRequest extends Request {
 
     @Override
     public void onValidate() {
-        if(date == null){
+        if (date == null) {
             addError(MISSING_DATE_ERROR);
         }
-        if(date != null){
+        if (date != null) {
             var condition = date.isBefore(LocalDate.now());
             if (condition) {
                 addError(MISSING_DATE_ERROR);

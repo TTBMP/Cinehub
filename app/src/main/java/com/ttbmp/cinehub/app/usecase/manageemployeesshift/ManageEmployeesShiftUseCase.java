@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift;
 
 
-import com.ttbmp.cinehub.app.usecase.UseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.*;
+import com.ttbmp.cinehub.app.utilities.usecase.UseCase;
 
 /**
  * @author Massimo Mazzetti

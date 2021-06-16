@@ -38,15 +38,15 @@ public class CinemaListRequest extends Request {
 
     @Override
     public void onValidate() {
-        if(date == null){
+        if (date == null) {
             addError(MISSING_DATE_ERROR);
         }
-       if(date!=null){
-           var localDate = LocalDate.parse(date);
-           if (localDate.isBefore(LocalDate.now())) {
-               addError(MISSING_DATE_ERROR);
-           }
-       }
+        if (date != null) {
+            var localDate = LocalDate.parse(date);
+            if (localDate.isBefore(LocalDate.now())) {
+                addError(MISSING_DATE_ERROR);
+            }
+        }
     }
 
 

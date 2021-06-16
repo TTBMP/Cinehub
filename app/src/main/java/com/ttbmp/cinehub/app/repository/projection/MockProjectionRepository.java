@@ -5,6 +5,7 @@ import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.hall.MockHallRepository;
 import com.ttbmp.cinehub.app.repository.movie.MockMovieRepository;
 import com.ttbmp.cinehub.app.repository.ticket.MockTicketRepository;
+import com.ttbmp.cinehub.app.utilities.repository.MockRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Movie;
@@ -15,23 +16,30 @@ import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
  * @author Fabio Buracchi, Ivan Palmieri
  */
-public class MockProjectionRepository implements ProjectionRepository {
+public class MockProjectionRepository extends MockRepository implements ProjectionRepository {
 
-    private static final List<ProjectionData> PROJECTION_DATA_LIST = new ArrayList<>();
+    public static final String ID = "id";
+    public static final String DATE = "date";
+    public static final String START_TIME = "startTime";
+    public static final String MOVIE_ID = "movieId";
+    public static final String HALL_ID = "hallId";
+    public static final String BASE_PRICE = "basePrice";
+
+    private static final List<Map<String, String>> mockDataList = getMockDataList(MockProjectionRepository.class);
     private static int projectionIdCounter = 1;
 
     static {
-        var hallNumber = MockHallRepository.getHallDataList().size();
-        var movieNumber = MockMovieRepository.getMovieDataList().size();
-        var firstMovieId = MockMovieRepository.getMovieDataList().stream()
-                .map(MockMovieRepository.MovieData::getId)
+        var hallNumber = MockHallRepository.getMockDataList().size();
+        var movieNumber = MockMovieRepository.getMockDataList().size();
+        var firstMovieId = MockMovieRepository.getMockDataList().stream()
+                .map(m -> Integer.parseInt(m.get(MockMovieRepository.ID)))
                 .sorted()
                 .findFirst()
                 .orElse(15);
@@ -50,13 +58,13 @@ public class MockProjectionRepository implements ProjectionRepository {
                                 movieId = firstMovieId + movieNumber / 2;
                             }
                         }
-                        PROJECTION_DATA_LIST.add(new ProjectionData(
-                                projectionIdCounter++,
-                                date.toString(),
-                                time.toString(),
-                                movieId++,
-                                hallId,
-                                5L
+                        mockDataList.add(Map.of(
+                                ID, Integer.toString(projectionIdCounter++),
+                                DATE, date.toString(),
+                                START_TIME, time.toString(),
+                                MOVIE_ID, Integer.toString(movieId++),
+                                HALL_ID, Integer.toString(hallId),
+                                BASE_PRICE, Long.toString(5L)
                         ));
                     }
                 }
@@ -64,140 +72,103 @@ public class MockProjectionRepository implements ProjectionRepository {
         }
     }
 
-    private final ServiceLocator serviceLocator;
-
     public MockProjectionRepository(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
+        super(serviceLocator);
     }
 
-    public static List<ProjectionData> getProjectionDataList() {
-        return PROJECTION_DATA_LIST;
+    public static List<Map<String, String>> getMockDataList() {
+        return mockDataList;
     }
 
     @Override
     public Projection getProjection(int id) {
-        return PROJECTION_DATA_LIST.stream()
-                .filter(d -> d.id == id)
+        return mockDataList.stream()
+                .filter(m -> m.get(ID).equals(Integer.toString(id)))
                 .findAny()
-                .map(d -> new ProjectionProxy(serviceLocator, d.id, d.date, d.startTime, d.basePrice))
+                .map(m -> new ProjectionProxy(
+                        getServiceLocator(),
+                        Integer.parseInt(m.get(ID)),
+                        m.get(DATE),
+                        m.get(START_TIME),
+                        Long.parseLong(m.get(BASE_PRICE)))
+                )
                 .orElse(null);
     }
 
     @Override
     public Projection getProjection(String date, String time, Hall hall) {
-        return PROJECTION_DATA_LIST.stream()
-                .filter(d -> d.date.equals(date) && d.startTime.equals(time) && d.hallId == hall.getId())
+        return mockDataList.stream()
+                .filter(m -> m.get(DATE).equals(date)
+                        && m.get(START_TIME).equals(time)
+                        && m.get(HALL_ID).equals(Integer.toString(hall.getId()))
+                )
                 .findAny()
-                .map(d -> new ProjectionProxy(serviceLocator, d.id, d.date, d.startTime, d.basePrice))
+                .map(m -> new ProjectionProxy(
+                        getServiceLocator(),
+                        Integer.parseInt(m.get(ID)),
+                        m.get(DATE),
+                        m.get(START_TIME),
+                        Long.parseLong(m.get(BASE_PRICE)))
+                )
                 .orElse(null);
     }
 
     @Override
     public Projection getProjection(Ticket ticket) throws RepositoryException {
-        return MockTicketRepository.getTicketDataList().stream()
-                .filter(d -> d.getId() == ticket.getId())
+        return MockTicketRepository.getMockDataList().stream()
+                .filter(m -> m.get(MockTicketRepository.ID).equals(Integer.toString(ticket.getId())))
+                .map(m -> m.get(MockTicketRepository.PROJECTION_ID))
                 .findAny()
-                .flatMap(ticketData -> PROJECTION_DATA_LIST.stream()
-                        .filter(d -> ticketData.getProjectionId() == d.id)
+                .flatMap(projectionId -> mockDataList.stream()
+                        .filter(m -> m.get(ID).equals(projectionId))
                         .findAny()
-                        .map(d -> new ProjectionProxy(serviceLocator, d.id, d.date, d.startTime, d.basePrice))
+                        .map(m -> new ProjectionProxy(
+                                getServiceLocator(),
+                                Integer.parseInt(m.get(ID)),
+                                m.get(DATE),
+                                m.get(START_TIME),
+                                Long.parseLong(m.get(BASE_PRICE)))
+                        )
                 )
                 .orElse(null);
     }
 
     @Override
     public List<Projection> getProjectionList(ProjectionistShift shift) {
-        return PROJECTION_DATA_LIST.stream()
-                .filter(d -> d.date.equals(shift.getDate())
-                        && LocalTime.parse(d.startTime).isAfter(LocalTime.parse(shift.getStart()))
-                        && LocalTime.parse(d.startTime).isBefore(LocalTime.parse(shift.getEnd()))
-                        && d.hallId == shift.getHall().getId()
+        return mockDataList.stream()
+                .filter(m -> m.get(DATE).equals(shift.getDate())
+                        && LocalTime.parse(m.get(START_TIME)).isAfter(LocalTime.parse(shift.getStart()))
+                        && LocalTime.parse(m.get(START_TIME)).isBefore(LocalTime.parse(shift.getEnd()))
+                        && m.get(HALL_ID).equals(Integer.toString(shift.getHall().getId()))
                 )
-                .map(d -> new ProjectionProxy(serviceLocator, d.id, d.date, d.startTime, d.basePrice))
+                .map(m -> new ProjectionProxy(
+                        getServiceLocator(),
+                        Integer.parseInt(m.get(ID)),
+                        m.get(DATE),
+                        m.get(START_TIME),
+                        Long.parseLong(m.get(BASE_PRICE)))
+                )
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date) {
-        var hallList = MockHallRepository.getHallDataList().stream()
-                .filter(d -> d.getCinemaId() == cinema.getId())
-                .map(MockHallRepository.HallData::getId)
+        var hallList = MockHallRepository.getMockDataList().stream()
+                .filter(m -> m.get(MockHallRepository.CINEMA_ID).equals(Integer.toString(cinema.getId())))
+                .map(m -> m.get(HALL_ID))
                 .collect(Collectors.toList());
-        return PROJECTION_DATA_LIST.stream()
-                .filter(d -> d.movieId == movie.getId())
-                .filter(d -> d.date.equals(date))
-                .filter(d -> hallList.contains(d.hallId))
-                .map(d -> new ProjectionProxy(serviceLocator, d.id, d.date, d.startTime, d.basePrice))
+        return mockDataList.stream()
+                .filter(m -> m.get(MOVIE_ID).equals(Integer.toString(movie.getId())))
+                .filter(m -> m.get(DATE).equals(date))
+                .filter(m -> hallList.contains(m.get(HALL_ID)))
+                .map(m -> new ProjectionProxy(
+                        getServiceLocator(),
+                        Integer.parseInt(m.get(ID)),
+                        m.get(DATE),
+                        m.get(START_TIME),
+                        Long.parseLong(m.get(BASE_PRICE)))
+                )
                 .collect(Collectors.toList());
-    }
-
-
-    public static class ProjectionData {
-
-        private int id;
-        private String date;
-        private String startTime;
-        private int movieId;
-        private int hallId;
-        private long basePrice;
-
-        public ProjectionData(int id, String date, String startTime, int movieId, int hallId, long basePrice) {
-            this.id = id;
-            this.date = date;
-            this.startTime = startTime;
-            this.movieId = movieId;
-            this.hallId = hallId;
-            this.basePrice = basePrice;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getDate() {
-            return date;
-        }
-
-        public void setDate(String date) {
-            this.date = date;
-        }
-
-        public String getStartTime() {
-            return startTime;
-        }
-
-        public void setStartTime(String startTime) {
-            this.startTime = startTime;
-        }
-
-        public int getMovieId() {
-            return movieId;
-        }
-
-        public void setMovieId(int movieId) {
-            this.movieId = movieId;
-        }
-
-        public int getHallId() {
-            return hallId;
-        }
-
-        public void setHallId(int hallId) {
-            this.hallId = hallId;
-        }
-
-        public long getBasePrice() {
-            return basePrice;
-        }
-
-        public void setBasePrice(long basePrice) {
-            this.basePrice = basePrice;
-        }
-
     }
 
 }
