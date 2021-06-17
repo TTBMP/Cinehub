@@ -35,5 +35,5 @@ public class EmailServiceRequest extends Request {
     protected void onValidate() {
 
     }
-    
+
 }

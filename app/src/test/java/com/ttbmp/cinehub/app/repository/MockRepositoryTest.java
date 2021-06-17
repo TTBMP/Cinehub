@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-//@Disabled
+@Disabled
 class MockRepositoryTest {
 
     private final MockServiceLocator mockServiceLocator = new MockServiceLocator();

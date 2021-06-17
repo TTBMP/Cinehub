@@ -57,9 +57,9 @@ class BuyTicketBuyTicketControllerTest {
     }
 
     @Test
-    void getListMovie_whitNullDate_generateErrors(){
+    void getListMovie_whitNullDate_generateErrors() {
         var request = new MovieListRequest(null);
-        Assertions.assertDoesNotThrow(() ->controller.getMovieList(request));
+        Assertions.assertDoesNotThrow(() -> controller.getMovieList(request));
     }
 
     @Test
@@ -67,11 +67,11 @@ class BuyTicketBuyTicketControllerTest {
         var movieRepository = serviceLocator.getService(MovieRepository.class);
         var date = LocalDate.now();
         var movieList = getMovieListExpected(date);
-        if(movieList.size() != 0){
+        if (movieList.size() != 0) {
             var movie = movieRepository.getMovie(movieList.get(0).getId());
             var requestCinema = new CinemaListRequest(movie.getId(), String.valueOf(date));
             controller.getCinemaList(requestCinema);
-            var expected = getCinemaListExpected(movie,String.valueOf(date));
+            var expected = getCinemaListExpected(movie, String.valueOf(date));
             var actual = viewModel.getCinemaList();
             Assertions.assertArrayEquals(
                     expected.stream().map(CinemaDto::getId).toArray(),
@@ -85,14 +85,13 @@ class BuyTicketBuyTicketControllerTest {
         var movieRepository = serviceLocator.getService(MovieRepository.class);
         var date = LocalDate.now();
         var movieList = getMovieListExpected(date);
-        if(movieList.size() != 0){
+        if (movieList.size() != 0) {
             var id = movieRepository.getMovie(movieList.get(0).getId()).getId();
             var requestCinema = new CinemaListRequest(id, null);
-            Assertions.assertDoesNotThrow(() ->controller.getCinemaList(requestCinema));
-        }
-        else{
+            Assertions.assertDoesNotThrow(() -> controller.getCinemaList(requestCinema));
+        } else {
             var requestCinema = new CinemaListRequest(null, null);
-            Assertions.assertDoesNotThrow(() ->controller.getCinemaList(requestCinema));
+            Assertions.assertDoesNotThrow(() -> controller.getCinemaList(requestCinema));
         }
     }
 
@@ -102,13 +101,13 @@ class BuyTicketBuyTicketControllerTest {
         var movieRepository = serviceLocator.getService(MovieRepository.class);
         var date = LocalDate.now();
         var movieList = getMovieListExpected(date);
-        if(movieList.size() != 0){
+        if (movieList.size() != 0) {
             var movie = movieRepository.getMovie(movieList.get(0).getId());
             var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
             var cinema = cinemaRepository.getCinema(getCinemaListExpected(movie, String.valueOf(date)).get(0).getId());
             var request = new ProjectionListRequest(movie.getId(), cinema.getId(), date);
             controller.getProjectionList(request);
-            var expected = getProjectionListExpected(movie, cinema,date);
+            var expected = getProjectionListExpected(movie, cinema, date);
             var actual = viewModel.getProjectionList();
             Assertions.assertArrayEquals(
                     expected.stream().map(ProjectionDto::getId).toArray(),
@@ -124,7 +123,7 @@ class BuyTicketBuyTicketControllerTest {
         var movieRepository = serviceLocator.getService(MovieRepository.class);
         var date = LocalDate.now();
         var movieList = getMovieListExpected(date);
-        if(movieList.size() != 0){
+        if (movieList.size() != 0) {
             var movie = movieRepository.getMovie(movieList.get(0).getId());
             var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
             var cinema = cinemaRepository.getCinema(getCinemaListExpected(movie, String.valueOf(date)).get(0).getId());
