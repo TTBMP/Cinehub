@@ -43,6 +43,20 @@ public class JdbcEmployeeRepository extends JdbcRepository implements EmployeeRe
     }
 
     @Override
+    public List<Employee> getAllEmployee() throws RepositoryException {
+        try {
+            var employeeList = getDao(EmployeeDao.class).getAllEmployee();
+            List<Employee> employeeProxyList = new ArrayList<>();
+            for (var employee : employeeList) {
+                employeeProxyList.add(getEmployee(employee.getIdUser()));
+            }
+            return employeeProxyList;
+        } catch (DaoMethodException e) {
+            throw new RepositoryException(e.getMessage());
+        }
+    }
+
+    @Override
     public List<Employee> getEmployeeList(Cinema cinema) throws RepositoryException {
         try {
             var employeeList = getDao(EmployeeDao.class).getEmployeeList(cinema.getId());

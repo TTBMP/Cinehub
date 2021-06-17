@@ -88,6 +88,23 @@ public class JdbcProjectionRepository extends JdbcRepository implements Projecti
     }
 
     @Override
+    public List<Projection> getAllProjection() throws RepositoryException {
+        try {
+            var projectionList = getDao(ProjectionDao.class).getAllProjection();
+            return projectionList.stream()
+                    .map(projection -> new ProjectionProxy(
+                            getServiceLocator(),
+                            projection.getId(),
+                            projection.getDate(),
+                            projection.getStartTime(),
+                            (long) projection.getBasePrice()
+                    )).collect(Collectors.toList());
+        } catch (DaoMethodException e) {
+            throw new RepositoryException(e.getMessage());
+        }
+    }
+
+    @Override
     public List<Projection> getProjectionList(ProjectionistShift shift) throws RepositoryException {
         try {
             var projectionList = getDao(ProjectionDao.class).getProjectionListByProjectionistShift(shift.getId());

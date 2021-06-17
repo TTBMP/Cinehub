@@ -43,10 +43,6 @@ class BuyTicketBuyTicketControllerTest {
         );
     }
 
-    private void logInAsCustomer() {
-        viewModel.setSessionToken("5KClU7hbNgedJAwLuF9eFVl6Qzz2");
-    }
-
     @Test
     void getListMovie_whitCorrectRequest_notGenerateErrors() throws RepositoryException {
         var date = LocalDate.now();
@@ -66,12 +62,6 @@ class BuyTicketBuyTicketControllerTest {
         Assertions.assertDoesNotThrow(() ->controller.getMovieList(request));
     }
 
-    private List<MovieDto> getMovieListExpected(LocalDate date) throws RepositoryException {
-        return serviceLocator.getService(MovieRepository.class).getMovieList(String.valueOf(date)).stream()
-                .map(MovieDto::new)
-                .collect(Collectors.toList());
-    }
-
     @Test
     void getListCinema_whitCorrectRequest_notGenerateErrors() throws RepositoryException {
         var movieRepository = serviceLocator.getService(MovieRepository.class);
@@ -88,7 +78,6 @@ class BuyTicketBuyTicketControllerTest {
                     actual.stream().map(CinemaDto::getId).toArray()
             );
         }
-
     }
 
     @Test
@@ -105,13 +94,6 @@ class BuyTicketBuyTicketControllerTest {
             var requestCinema = new CinemaListRequest(null, null);
             Assertions.assertDoesNotThrow(() ->controller.getCinemaList(requestCinema));
         }
-    }
-
-
-    private List<CinemaDto> getCinemaListExpected(Movie movie, String date) throws RepositoryException {
-        return serviceLocator.getService(CinemaRepository.class).getListCinema(movie, date).stream()
-                .map(CinemaDto::new)
-                .collect(Collectors.toList());
     }
 
     @Test
@@ -135,14 +117,6 @@ class BuyTicketBuyTicketControllerTest {
         }
     }
 
-
-    private List<ProjectionDto> getProjectionListExpected(Movie movie, Cinema cinema, LocalDate date) throws RepositoryException {
-        return serviceLocator.getService(ProjectionRepository.class).getProjectionList(cinema, movie, String.valueOf(date)).stream()
-                .map(ProjectionDto::new)
-                .collect(Collectors.toList());
-    }
-
-
     @Test
     void getListSeat_whitCorrectRequest_notGenerateErrors() throws RepositoryException {
         logInAsCustomer();
@@ -165,8 +139,10 @@ class BuyTicketBuyTicketControllerTest {
                     actual.stream().map(SeatDto::getId).toArray()
             );
         }
+    }
 
-
+    private void logInAsCustomer() {
+        viewModel.setSessionToken("5KClU7hbNgedJAwLuF9eFVl6Qzz2");
     }
 
     private List<SeatDto> getSeatListExpected(Projection projection) throws RepositoryException {
@@ -177,5 +153,22 @@ class BuyTicketBuyTicketControllerTest {
                 .collect(Collectors.toList());
     }
 
+    private List<ProjectionDto> getProjectionListExpected(Movie movie, Cinema cinema, LocalDate date) throws RepositoryException {
+        return serviceLocator.getService(ProjectionRepository.class).getProjectionList(cinema, movie, String.valueOf(date)).stream()
+                .map(ProjectionDto::new)
+                .collect(Collectors.toList());
+    }
+
+    private List<CinemaDto> getCinemaListExpected(Movie movie, String date) throws RepositoryException {
+        return serviceLocator.getService(CinemaRepository.class).getListCinema(movie, date).stream()
+                .map(CinemaDto::new)
+                .collect(Collectors.toList());
+    }
+
+    private List<MovieDto> getMovieListExpected(LocalDate date) throws RepositoryException {
+        return serviceLocator.getService(MovieRepository.class).getMovieList(String.valueOf(date)).stream()
+                .map(MovieDto::new)
+                .collect(Collectors.toList());
+    }
 
 }

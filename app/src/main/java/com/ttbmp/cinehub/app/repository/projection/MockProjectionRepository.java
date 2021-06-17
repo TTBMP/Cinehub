@@ -16,6 +16,7 @@ import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -45,7 +46,7 @@ public class MockProjectionRepository extends MockRepository implements Projecti
                 .orElse(15);
         var lastMovieId = firstMovieId + movieNumber - 1;
         var movieId = firstMovieId;
-        for (var date = LocalDate.now().minusDays(15); date.isBefore(LocalDate.now().plusDays(46)); date = date.plusDays(1)) {
+        for (var date = LocalDate.now().minusDays(15); date.isBefore(LocalDate.now().plusDays(45)); date = date.plusDays(1)) {
             if (!date.getDayOfWeek().equals(DayOfWeek.MONDAY) && !date.getDayOfWeek().equals(DayOfWeek.TUESDAY)) {
                 for (var time = LocalTime.parse("15:00"); time.isBefore(LocalTime.parse("22:00")); time = time.plusHours(2)) {
                     for (var hallId = 1; hallId < hallNumber + 1; hallId++) {
@@ -58,14 +59,14 @@ public class MockProjectionRepository extends MockRepository implements Projecti
                                 movieId = firstMovieId + movieNumber / 2;
                             }
                         }
-                        mockDataList.add(Map.of(
+                        mockDataList.add(new HashMap<>(Map.of(
                                 ID, Integer.toString(projectionIdCounter++),
                                 DATE, date.toString(),
                                 START_TIME, time.toString(),
                                 MOVIE_ID, Integer.toString(movieId++),
                                 HALL_ID, Integer.toString(hallId),
                                 BASE_PRICE, Long.toString(5L)
-                        ));
+                        )));
                     }
                 }
             }
@@ -134,6 +135,19 @@ public class MockProjectionRepository extends MockRepository implements Projecti
     }
 
     @Override
+    public List<Projection> getAllProjection() throws RepositoryException {
+        return mockDataList.stream()
+                .map(m -> new ProjectionProxy(
+                        getServiceLocator(),
+                        Integer.parseInt(m.get(ID)),
+                        m.get(DATE),
+                        m.get(START_TIME),
+                        Long.parseLong(m.get(BASE_PRICE)))
+                )
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<Projection> getProjectionList(ProjectionistShift shift) {
         return mockDataList.stream()
                 .filter(m -> m.get(DATE).equals(shift.getDate())
@@ -155,7 +169,7 @@ public class MockProjectionRepository extends MockRepository implements Projecti
     public List<Projection> getProjectionList(Cinema cinema, Movie movie, String date) {
         var hallList = MockHallRepository.getMockDataList().stream()
                 .filter(m -> m.get(MockHallRepository.CINEMA_ID).equals(Integer.toString(cinema.getId())))
-                .map(m -> m.get(HALL_ID))
+                .map(m -> m.get(MockHallRepository.ID))
                 .collect(Collectors.toList());
         return mockDataList.stream()
                 .filter(m -> m.get(MOVIE_ID).equals(Integer.toString(movie.getId())))

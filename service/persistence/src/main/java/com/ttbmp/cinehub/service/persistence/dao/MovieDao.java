@@ -20,6 +20,9 @@ public interface MovieDao {
             "(SELECT proiezione.id_film FROM proiezione WHERE proiezione.id = :projectionId)")
     Movie getMovieByProjection(@Parameter(name = "projectionId") int projectionId) throws DaoMethodException;
 
+    @Query("SELECT * FROM film")
+    List<Movie> getAllMovie() throws DaoMethodException;
+
     @Query("SELECT * FROM film WHERE film.id IN " +
             "(SELECT proiezione.id_film FROM proiezione WHERE proiezione.data = :data)")
     List<Movie> getMovieByData(@Parameter(name = "data") @NotNull String name) throws DaoMethodException;

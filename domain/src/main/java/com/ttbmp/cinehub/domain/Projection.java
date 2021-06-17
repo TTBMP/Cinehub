@@ -3,6 +3,7 @@ package com.ttbmp.cinehub.domain;
 import com.ttbmp.cinehub.domain.employee.Projectionist;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -100,6 +101,27 @@ public class Projection {
 
     public boolean isBooked(Seat seat) {
         return getTicketList().stream().anyMatch(t -> t.getSeat().getId() == seat.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getId();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        var other = (Projection) obj;
+        return this.getId() == other.getId()
+                && this.getDate().equals(other.getDate())
+                && LocalTime.parse(this.getStartTime()).equals(LocalTime.parse(other.getStartTime()))
+                && this.getMovie().equals(other.getMovie())
+                && this.getHall().equals(other.getHall())
+                && this.getProjectionist().equals(other.getProjectionist())
+                && this.getTicketList().containsAll(other.getTicketList())
+                && this.getBasePrice() == other.getBasePrice();
     }
 
 }

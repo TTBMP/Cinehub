@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.repository.employee;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistProxy;
 import com.ttbmp.cinehub.app.repository.employee.usher.UsherProxy;
 import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
@@ -14,6 +15,7 @@ import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -50,23 +52,27 @@ public class MockEmployeeRepository extends MockRepository implements EmployeeRe
         MockUserRepository.getMockDataList().stream()
                 .map(m -> m.get(MockUserRepository.ID))
                 .filter(usherIdList::contains)
+                .sorted(String::compareToIgnoreCase)
                 .limit(usherIdList.size() / 2)
-                .forEach(userId -> mockDataList.add(Map.of(USER_ID, userId, CINEMA_ID, "1")));
+                .forEach(userId -> mockDataList.add(new HashMap<>(Map.of(USER_ID, userId, CINEMA_ID, "1"))));
         MockUserRepository.getMockDataList().stream()
                 .map(m -> m.get(MockUserRepository.ID))
                 .filter(usherIdList::contains)
+                .sorted(String::compareToIgnoreCase)
                 .skip(usherIdList.size() / 2)
-                .forEach(userId -> mockDataList.add(Map.of(USER_ID, userId, CINEMA_ID, "2")));
+                .forEach(userId -> mockDataList.add(new HashMap<>(Map.of(USER_ID, userId, CINEMA_ID, "2"))));
         MockUserRepository.getMockDataList().stream()
                 .map(m -> m.get(MockUserRepository.ID))
                 .filter(projectionistIdList::contains)
+                .sorted(String::compareToIgnoreCase)
                 .limit(projectionistIdList.size() / 2)
-                .forEach(userId -> mockDataList.add(Map.of(USER_ID, userId, CINEMA_ID, "1")));
+                .forEach(userId -> mockDataList.add(new HashMap<>(Map.of(USER_ID, userId, CINEMA_ID, "1"))));
         MockUserRepository.getMockDataList().stream()
                 .map(m -> m.get(MockUserRepository.ID))
                 .filter(projectionistIdList::contains)
+                .sorted(String::compareToIgnoreCase)
                 .skip(projectionistIdList.size() / 2)
-                .forEach(userId -> mockDataList.add(Map.of(USER_ID, userId, CINEMA_ID, "2")));
+                .forEach(userId -> mockDataList.add(new HashMap<>(Map.of(USER_ID, userId, CINEMA_ID, "2"))));
     }
 
     public MockEmployeeRepository(ServiceLocator serviceLocator) {
@@ -98,6 +104,13 @@ public class MockEmployeeRepository extends MockRepository implements EmployeeRe
                         .map(m -> new EmployeeFactory().createEmployee(m))
                 )
                 .orElse(null);
+    }
+
+    @Override
+    public List<Employee> getAllEmployee() throws RepositoryException {
+        return mockDataList.stream()
+                .map(m -> new EmployeeFactory().createEmployee(m))
+                .collect(Collectors.toList());
     }
 
     @Override

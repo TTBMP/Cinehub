@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,13 +36,13 @@ public class MockTicketRepository extends MockRepository implements TicketReposi
 
     @Override
     public synchronized void saveTicket(Ticket ticket) {
-        mockDataList.add(Map.of(
+        mockDataList.add(new HashMap<>(Map.of(
                 ID, Integer.toString(counterTicketId++),
                 PRICE, Long.toString(ticket.getPrice()),
                 USER_ID, ticket.getOwner().getId(),
                 PROJECTION_ID, Integer.toString(ticket.getProjection().getId()),
                 SEAT_ID, Integer.toString(ticket.getSeat().getId())
-        ));
+        )));
     }
 
     @Override

@@ -9,6 +9,8 @@ import com.ttbmp.cinehub.service.persistence.dao.RoleDao;
 import com.ttbmp.cinehub.service.persistence.dao.UserDao;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class JdbcUserRepository extends JdbcRepository implements UserRepository {
@@ -40,6 +42,20 @@ public class JdbcUserRepository extends JdbcRepository implements UserRepository
                     })
                     .collect(Collectors.toList());
             return new UserProxy(getServiceLocator(), user.getId(), user.getName(), user.getSurname(), user.getEmail(), roleList);
+        } catch (DaoMethodException e) {
+            throw new RepositoryException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<User> getAllUser() throws RepositoryException {
+        try {
+            var userList = getDao(UserDao.class).getAllUser();
+            List<User> userProxyList = new ArrayList<>();
+            for (var user : userList) {
+                userProxyList.add(getUser(user.getId()));
+            }
+            return userProxyList;
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }

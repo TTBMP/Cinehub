@@ -26,6 +26,9 @@ public interface ProjectionDao {
             @Parameter(name = "hallId") int hallId
     ) throws DaoMethodException;
 
+    @Query("SELECT * FROM proiezione")
+    List<Projection> getAllProjection() throws DaoMethodException;
+
     @Query("SELECT * FROM proiezione WHERE proiezione.data = :date")
     List<Projection> getProjectionListByDate(@Parameter(name = "date") @NotNull String date) throws DaoMethodException;
 

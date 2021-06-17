@@ -9,6 +9,7 @@ import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Seat;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,12 +32,12 @@ public class MockSeatRepository extends MockRepository implements SeatRepository
                 .collect(Collectors.toList());
         for (var hallId : hallIdList) {
             for (var i = 0; i < 7; i++) {
-                mockDataList.add(Map.of(ID, Integer.toString(seatIdCounter++), HALL_ID, hallId, POSITION, "A" + (Integer.parseInt(hallId) + i) % 7));
-                mockDataList.add(Map.of(ID, Integer.toString(seatIdCounter++), HALL_ID, hallId, POSITION, "B" + (Integer.parseInt(hallId) + i) % 7));
-                mockDataList.add(Map.of(ID, Integer.toString(seatIdCounter++), HALL_ID, hallId, POSITION, "C" + (Integer.parseInt(hallId) + i) % 7));
-                mockDataList.add(Map.of(ID, Integer.toString(seatIdCounter++), HALL_ID, hallId, POSITION, "D" + (Integer.parseInt(hallId) + i) % 7));
-                mockDataList.add(Map.of(ID, Integer.toString(seatIdCounter++), HALL_ID, hallId, POSITION, "E" + (Integer.parseInt(hallId) + i) % 7));
-                mockDataList.add(Map.of(ID, Integer.toString(seatIdCounter++), HALL_ID, hallId, POSITION, "F" + (Integer.parseInt(hallId) + i) % 7));
+                mockDataList.add(new HashMap<>(Map.of(ID, Integer.toString(seatIdCounter++), HALL_ID, hallId, POSITION, "A" + (Integer.parseInt(hallId) + i) % 7)));
+                mockDataList.add(new HashMap<>(Map.of(ID, Integer.toString(seatIdCounter++), HALL_ID, hallId, POSITION, "B" + (Integer.parseInt(hallId) + i) % 7)));
+                mockDataList.add(new HashMap<>(Map.of(ID, Integer.toString(seatIdCounter++), HALL_ID, hallId, POSITION, "C" + (Integer.parseInt(hallId) + i) % 7)));
+                mockDataList.add(new HashMap<>(Map.of(ID, Integer.toString(seatIdCounter++), HALL_ID, hallId, POSITION, "D" + (Integer.parseInt(hallId) + i) % 7)));
+                mockDataList.add(new HashMap<>(Map.of(ID, Integer.toString(seatIdCounter++), HALL_ID, hallId, POSITION, "E" + (Integer.parseInt(hallId) + i) % 7)));
+                mockDataList.add(new HashMap<>(Map.of(ID, Integer.toString(seatIdCounter++), HALL_ID, hallId, POSITION, "F" + (Integer.parseInt(hallId) + i) % 7)));
             }
         }
     }

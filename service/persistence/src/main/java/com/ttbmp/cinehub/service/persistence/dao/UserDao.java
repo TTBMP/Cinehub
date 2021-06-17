@@ -20,6 +20,9 @@ public interface UserDao {
             "(SELECT biglietto.id_utente FROM biglietto WHERE biglietto.id = :idTicket)")
     User getUserByTicket(@Parameter(name = "idTicket") int idTicket) throws DaoMethodException;
 
+    @Query("SELECT * FROM utente")
+    List<User> getAllUser() throws DaoMethodException;
+
     @Insert
     void insert(@NotNull User user) throws DaoMethodException;
 

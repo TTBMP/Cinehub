@@ -79,5 +79,25 @@ public class Movie {
         this.releaseDate = releaseDate;
     }
 
+    @Override
+    public int hashCode() {
+        return this.getId();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        var other = (Movie) obj;
+        return this.getId() == other.getId()
+                && this.getName().equals(other.getName())
+                && this.getImageUrl().equals(other.getImageUrl())
+                && this.getOverview().equals(other.getOverview())
+                && this.getRating().equals(other.getRating())
+                && this.getReleaseDate().equals(other.getReleaseDate())
+                && this.getDuration() == other.getDuration();
+    }
+
 }
 

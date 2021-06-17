@@ -53,13 +53,13 @@ public class MockShiftRepository extends MockRepository implements ShiftReposito
                                 .orElse(new ArrayList<>())
                                 .contains(Role.USHER_ROLE)
                         )
-                        .forEach(usherId -> mockDataList.add(Map.of(
+                        .forEach(usherId -> mockDataList.add(new HashMap<>(Map.of(
                                 ID, Integer.toString(shiftIdCounter++),
                                 DATE, finalDate,
                                 START, start,
                                 END, end,
                                 EMPLOYEE_ID, usherId
-                        )));
+                        ))));
                 MockEmployeeRepository.getMockDataList().stream()
                         .map(m -> m.get(MockEmployeeRepository.USER_ID))
                         .filter(userId -> MockUserRepository.getMockDataList().stream()
@@ -69,13 +69,13 @@ public class MockShiftRepository extends MockRepository implements ShiftReposito
                                 .orElse(new ArrayList<>())
                                 .contains(Role.PROJECTIONIST_ROLE)
                         )
-                        .forEach(usherId -> mockDataList.add(Map.of(
+                        .forEach(usherId -> mockDataList.add(new HashMap<>(Map.of(
                                 ID, Integer.toString(shiftIdCounter++),
                                 DATE, finalDate,
                                 START, start,
                                 END, end,
                                 EMPLOYEE_ID, usherId
-                        )));
+                        ))));
             }
         }
     }
@@ -149,20 +149,20 @@ public class MockShiftRepository extends MockRepository implements ShiftReposito
 
     @Override
     public synchronized void saveShift(Shift shift) {
-        var shiftData = Map.of(
+        var shiftData = new HashMap<>(Map.of(
                 ID, Integer.toString(shiftIdCounter++),
                 DATE, shift.getDate(),
                 START, shift.getStart(),
                 END, shift.getEnd(),
                 EMPLOYEE_ID, shift.getEmployee().getId()
-        );
+        ));
         mockDataList.add(shiftData);
         if (shift instanceof ProjectionistShift) {
             var hallId = ((ProjectionistShift) shift).getHall().getId();
-            MockProjectionistShiftRepository.getMockDataList().add(Map.of(
+            MockProjectionistShiftRepository.getMockDataList().add(new HashMap<>(Map.of(
                     MockProjectionistShiftRepository.SHIFT_ID, shiftData.get(ID),
                     MockProjectionistShiftRepository.HALL_ID, Integer.toString(hallId)
-            ));
+            )));
         }
     }
 

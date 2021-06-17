@@ -10,6 +10,8 @@ import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.employee.Employee;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,10 +29,10 @@ public class MockCinemaRepository extends MockRepository implements CinemaReposi
     private static final List<Map<String, String>> mockDataList = getMockDataList(MockCinemaRepository.class);
 
     static {
-        mockDataList.addAll(List.of(
-                Map.of(ID, "1", NAME, "Comunale", CITY, "Recanati", ADDRESS, "via recanati 3"),
-                Map.of(ID, "2", NAME, "MultiPlex", CITY, "Teramo", ADDRESS, "via garibaldi 1")
-        ));
+        mockDataList.addAll(new ArrayList<>(List.of(
+                new HashMap<>(Map.of(ID, "1", NAME, "Comunale", CITY, "Recanati", ADDRESS, "via recanati 3")),
+                new HashMap<>(Map.of(ID, "2", NAME, "MultiPlex", CITY, "Teramo", ADDRESS, "via garibaldi 1"))
+        )));
     }
 
     public MockCinemaRepository(ServiceLocator serviceLocator) {

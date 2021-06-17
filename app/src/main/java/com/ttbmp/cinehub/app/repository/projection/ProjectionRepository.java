@@ -21,6 +21,8 @@ public interface ProjectionRepository {
 
     Projection getProjection(Ticket ticket) throws RepositoryException;
 
+    List<Projection> getAllProjection() throws RepositoryException;
+
     List<Projection> getProjectionList(ProjectionistShift shift) throws RepositoryException;
 
     List<Projection> getProjectionList(Cinema cinema, Movie movie, String date) throws RepositoryException;

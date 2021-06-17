@@ -3,6 +3,8 @@ package com.ttbmp.cinehub.app.repository.user;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.utilities.repository.MockRepository;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,13 +16,13 @@ public class MockRoleRepository extends MockRepository {
     private static final List<Map<String, String>> mockDataList = getMockDataList(MockRoleRepository.class);
 
     static {
-        mockDataList.addAll(List.of(
-                Map.of(ID, "1", NAME, "customer"),
-                Map.of(ID, "2", NAME, "manager"),
-                Map.of(ID, "3", NAME, "employee"),
-                Map.of(ID, "4", NAME, "usher"),
-                Map.of(ID, "5", NAME, "projectionist")
-        ));
+        mockDataList.addAll(new ArrayList<>(List.of(
+                new HashMap<>(Map.of(ID, "1", NAME, "customer")),
+                new HashMap<>(Map.of(ID, "2", NAME, "manager")),
+                new HashMap<>(Map.of(ID, "3", NAME, "employee")),
+                new HashMap<>(Map.of(ID, "4", NAME, "usher")),
+                new HashMap<>(Map.of(ID, "5", NAME, "projectionist"))
+        )));
     }
 
     protected MockRoleRepository(ServiceLocator serviceLocator) {

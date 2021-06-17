@@ -8,6 +8,7 @@ import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.service.persistence.dao.MovieDao;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +28,20 @@ public class JdbcMovieRepository extends JdbcRepository implements MovieReposito
         try {
             var movie = getDao(MovieDao.class).getMovieByProjection(projection.getId());
             return new MovieProxy(getServiceLocator(), movie.getId());
+        } catch (DaoMethodException e) {
+            throw new RepositoryException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Movie> getAllMovie() throws RepositoryException {
+        try {
+            var movieList = getDao(MovieDao.class).getAllMovie();
+            List<Movie> movieProxyList = new ArrayList<>();
+            for (var movie : movieList) {
+                movieProxyList.add(getMovie(movie.getId()));
+            }
+            return movieProxyList;
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }

@@ -6,6 +6,7 @@ import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,13 +47,19 @@ public abstract class Employee extends User {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public int hashCode() {
+        return super.hashCode();
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
+    public boolean equals(Object obj) {
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        var other = (Employee) obj;
+        return super.equals(other)
+                && this.getCinema().equals(other.getCinema())
+                && this.getShiftList().containsAll(other.getShiftList());
     }
 
 }

@@ -9,6 +9,7 @@ import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.ticket.component.Ticket;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +32,7 @@ public class MockCustomerRepository extends MockUserRepository implements Custom
                         .orElse(new ArrayList<>())
                         .contains(Role.CUSTOMER_ROLE)
                 )
-                .forEach(userId -> mockDataList.add(Map.of(ID, userId)));
+                .forEach(userId -> mockDataList.add(new HashMap<>(Map.of(ID, userId))));
     }
 
     public MockCustomerRepository(ServiceLocator serviceLocator) {

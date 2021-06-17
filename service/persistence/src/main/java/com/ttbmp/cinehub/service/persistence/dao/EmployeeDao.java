@@ -20,6 +20,9 @@ public interface EmployeeDao {
             "(SELECT turno.id_dipendente FROM turno WHERE turno.id = :id)")
     Employee getEmployeeByShiftId(@Parameter(name = "id") int id) throws DaoMethodException;
 
+    @Query("SELECT * FROM dipendente")
+    List<Employee> getAllEmployee() throws DaoMethodException;
+
     @Query("SELECT * FROM dipendente WHERE dipendente.id_cinema = :idCinema")
     List<Employee> getEmployeeList(@Parameter(name = "idCinema") int cinemaId) throws DaoMethodException;
 

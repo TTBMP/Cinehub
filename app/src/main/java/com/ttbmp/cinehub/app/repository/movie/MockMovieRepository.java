@@ -1,11 +1,13 @@
 package com.ttbmp.cinehub.app.repository.movie;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.projection.MockProjectionRepository;
 import com.ttbmp.cinehub.app.utilities.repository.MockRepository;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,7 +23,7 @@ public class MockMovieRepository extends MockRepository implements MovieReposito
     private static final List<Map<String, String>> mockDataList = getMockDataList(MockMovieRepository.class);
 
     static {
-        IntStream.range(15, 23).forEach(i -> mockDataList.add(Map.of(ID, Integer.toString(i))));
+        IntStream.range(15, 23).forEach(i -> mockDataList.add(new HashMap<>(Map.of(ID, Integer.toString(i)))));
     }
 
     public MockMovieRepository(ServiceLocator serviceLocator) {
@@ -53,6 +55,13 @@ public class MockMovieRepository extends MockRepository implements MovieReposito
                         .map(m -> new MovieProxy(getServiceLocator(), Integer.parseInt(m.get(ID))))
                 )
                 .orElse(null);
+    }
+
+    @Override
+    public List<Movie> getAllMovie() throws RepositoryException {
+        return mockDataList.stream()
+                .map(m -> new MovieProxy(getServiceLocator(), Integer.parseInt(m.get(ID))))
+                .collect(Collectors.toList());
     }
 
     @Override

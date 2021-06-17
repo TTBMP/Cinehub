@@ -10,6 +10,7 @@ import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,8 +31,8 @@ public class MockHallRepository extends MockRepository implements HallRepository
         var cinemaNumber = MockCinemaRepository.getMockDataList().size();
         for (var cinemaId = 1; cinemaId < cinemaNumber + 1; cinemaId++) {
             for (var i = 1; i <= cinemaId; i++) {
-                mockDataList.add(Map.of(ID, Integer.toString(hallIdCounter++), CINEMA_ID, Integer.toString(cinemaId), NAME, "A" + i));
-                mockDataList.add(Map.of(ID, Integer.toString(hallIdCounter++), CINEMA_ID, Integer.toString(cinemaId), NAME, "B" + i));
+                mockDataList.add(new HashMap<>(Map.of(ID, Integer.toString(hallIdCounter++), CINEMA_ID, Integer.toString(cinemaId), NAME, "A" + i)));
+                mockDataList.add(new HashMap<>(Map.of(ID, Integer.toString(hallIdCounter++), CINEMA_ID, Integer.toString(cinemaId), NAME, "B" + i)));
             }
         }
     }

@@ -11,6 +11,7 @@ import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,7 +43,7 @@ public class MockProjectionistShiftRepository extends MockRepository implements 
                 .collect(Collectors.toList());
         var hallId = 1;
         for (var projectionistShiftId : projectionistShiftIdList) {
-            mockDataList.add(Map.of(SHIFT_ID, projectionistShiftId, HALL_ID, Integer.toString(hallId)));
+            mockDataList.add(new HashMap<>(Map.of(SHIFT_ID, projectionistShiftId, HALL_ID, Integer.toString(hallId))));
             hallId = (hallId % MockHallRepository.getMockDataList().size()) + 1;
         }
     }
@@ -72,10 +73,10 @@ public class MockProjectionistShiftRepository extends MockRepository implements 
 
     @Override
     public void saveShift(ProjectionistShift shift) {
-        mockDataList.add(Map.of(
+        mockDataList.add(new HashMap<>(Map.of(
                 SHIFT_ID, Integer.toString(shift.getId()),
                 HALL_ID, Integer.toString(shift.getHall().getId())
-        ));
+        )));
     }
 
     @Override
