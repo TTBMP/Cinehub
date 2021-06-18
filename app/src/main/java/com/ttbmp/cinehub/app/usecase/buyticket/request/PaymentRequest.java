@@ -10,11 +10,9 @@ import java.time.LocalDate;
  */
 public class PaymentRequest extends AuthenticatedRequest {
 
-    public static final Request.Error MISSING_EMAIL_ERROR = new Request.Error("Email can't be null");
-    public static final Request.Error MISSING_CREDIT_CARD_ERROR = new Request.Error("Credit card can't be null");
     public static final Request.Error LENGTH_CVV_CREDIT_CARD_ERROR = new Request.Error("The CVV must be three numbers in length");
     public static final Request.Error EXPIRATION_CREDIT_CARD_ERROR = new Request.Error("You cannot select a date in the past");
-    public static final Request.Error EMAIL_ERROR = new Request.Error("The email entered is syntactically incorrect");
+    public static final Request.Error EMAIL_ERROR = new Request.Error("The email is invalid");
     public static final Request.Error CREDIT_CARD_LENGTH_ERROR = new Request.Error("The credit card must have a length of 16 characters");
     public static final Request.Error CVV_LETTERS_ERROR = new Request.Error("The CVV cannot contain letters");
     public static final Request.Error NUMBER_OF_CARD_LETTERS_ERROR = new Request.Error("The number of card cannot contain letters");
