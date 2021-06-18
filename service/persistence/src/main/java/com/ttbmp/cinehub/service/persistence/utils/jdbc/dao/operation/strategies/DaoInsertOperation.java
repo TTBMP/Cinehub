@@ -25,7 +25,7 @@ public class DaoInsertOperation extends DaoOperation {
     public DaoInsertOperation(Method method, Connection connection, List<Class<?>> dataSourceEntityList) throws DaoMethodException {
         super(method, connection, dataSourceEntityList);
         if (!method.getReturnType().equals(Void.TYPE) || method.getParameterCount() != 1) {
-            throw new DaoMethodException();
+            throw new DaoMethodException("Invalid Dao method declaration.");
         }
         objectType = method.getParameterTypes()[0];
         dtoType = DaoOperationHelper.getDtoType(objectType, method.getGenericParameterTypes()[0], dataSourceEntityList);
@@ -63,8 +63,8 @@ public class DaoInsertOperation extends DaoOperation {
                 );
                 statement.executeUpdate();
             }
-        } catch (SQLException | InvocationTargetException | IllegalAccessException | NoSuchMethodException throwables) {
-            throw new DaoMethodException();
+        } catch (SQLException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            throw new DaoMethodException(e.getMessage());
         }
         return null;
     }
@@ -84,7 +84,7 @@ public class DaoInsertOperation extends DaoOperation {
                 expression = "INSERT IGNORE INTO ";
                 break;
             default:
-                throw new DaoMethodException();
+                throw new DaoMethodException("Invalid OnConflictStrategy.");
         }
         return String.format(
                 "%s%s (%s) VALUES (%s)",

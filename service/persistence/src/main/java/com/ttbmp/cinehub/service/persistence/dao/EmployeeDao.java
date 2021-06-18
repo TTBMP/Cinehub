@@ -1,7 +1,9 @@
 package com.ttbmp.cinehub.service.persistence.dao;
 
 import com.ttbmp.cinehub.service.persistence.entity.Employee;
-import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.*;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Dao;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Parameter;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Query;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
 import javax.validation.constraints.NotNull;
@@ -25,23 +27,5 @@ public interface EmployeeDao {
 
     @Query("SELECT * FROM dipendente WHERE dipendente.id_cinema = :idCinema")
     List<Employee> getEmployeeList(@Parameter(name = "idCinema") int cinemaId) throws DaoMethodException;
-
-    @Insert
-    void insert(@NotNull Employee employee) throws DaoMethodException;
-
-    @Insert
-    void insert(@NotNull List<Employee> employee) throws DaoMethodException;
-
-    @Update
-    void update(@NotNull Employee employee) throws DaoMethodException;
-
-    @Update
-    void update(@NotNull List<Employee> employee) throws DaoMethodException;
-
-    @Delete
-    void delete(@NotNull Employee employee) throws DaoMethodException;
-
-    @Delete
-    void delete(@NotNull List<Employee> employee) throws DaoMethodException;
 
 }

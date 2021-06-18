@@ -187,23 +187,23 @@ public class BuyTicketController implements BuyTicketUseCase {
             } else {
                 var ticket = new Ticket(0, projection.getBasePrice(), customer, seat, projection);
                 //-DECORATOR-//
-                if (Boolean.TRUE.equals(request.getOpenBarOption())) {
+                if (Boolean.TRUE.equals(request.getTicketOption().getOpenBarOption())) {
                     ticket = new TicketOpenBar(ticket);
                 }
-                if (Boolean.TRUE.equals(request.getMagicBoxOption())) {
+                if (Boolean.TRUE.equals(request.getTicketOption().getMagicBoxOption())) {
                     ticket = new TicketMagicBox(ticket);
                 }
-                if (Boolean.TRUE.equals(request.getSkipLineOption())) {
+                if (Boolean.TRUE.equals(request.getTicketOption().getSkipLineOption())) {
                     ticket = new TicketSkipLine(ticket);
                 }
                 //---------//
                 paymentService.pay(new PayServiceRequest(
                         customer.getEmail(),
                         customer.getName(),
-                        request.getCreditCardNumber(),
+                        request.getCreditCard().getCreditCardNumber(),
                         ticket.getPrice(),
-                        request.getCreditCardCvv(),
-                        request.getCreditCardExpirationDate()
+                        request.getCreditCard().getCreditCardCvv(),
+                        request.getCreditCard().getCreditCardExpirationDate()
                 ));
                 ticketRepository.saveTicket(ticket);
                 emailService.sendMail(new EmailServiceRequest(request.getEmail(), "Payment receipt"));

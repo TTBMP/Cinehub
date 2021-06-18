@@ -64,10 +64,10 @@ public class PaymentViewController extends ViewController {
 
     private void bind() {
         confirmButton.disableProperty().bind(
-                viewModel.emailUserProperty().isNull().
-                        or(viewModel.cvvProperty().isNull().
-                                or(viewModel.numberCardProperty().isNull().
-                                        or(viewModel.expirationDateProperty().isNull())
+                viewModel.emailUserProperty().isNull()
+                        .or(viewModel.cvvProperty().isNull()
+                                .or(viewModel.numberCardProperty().isNull()
+                                        .or(viewModel.expirationDateProperty().isNull())
                                 )
                         )
         );
@@ -88,12 +88,16 @@ public class PaymentViewController extends ViewController {
                 viewModel.selectedProjectionProperty().getValue().getId(),
                 viewModel.selectedSeatProperty().getValue().getId(),
                 viewModel.emailUserProperty().getValue(),
-                viewModel.numberCardProperty().getValue(),
-                viewModel.cvvProperty().getValue(),
-                String.valueOf(fieldExpirationDatePicker.getValue()),
-                viewModel.openBarOptionProperty().getValue(),
-                viewModel.magicBoxOptionProperty().getValue(),
-                viewModel.skipLineOptionProperty().getValue()
+                new PaymentRequest.CreditCard(
+                        viewModel.numberCardProperty().getValue(),
+                        viewModel.cvvProperty().getValue(),
+                        String.valueOf(fieldExpirationDatePicker.getValue())
+                ),
+                new PaymentRequest.TicketOption(
+                        viewModel.openBarOptionProperty().getValue(),
+                        viewModel.magicBoxOptionProperty().getValue(),
+                        viewModel.skipLineOptionProperty().getValue()
+                )
         ));
         if (viewModel.errorMessageProperty().getValue() == null) {
             navController.openView(ConfirmEmailView.class);

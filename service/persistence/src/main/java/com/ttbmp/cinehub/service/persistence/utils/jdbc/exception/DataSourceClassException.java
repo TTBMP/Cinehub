@@ -5,7 +5,8 @@ package com.ttbmp.cinehub.service.persistence.utils.jdbc.exception;
  */
 public class DataSourceClassException extends Exception {
 
-    public DataSourceClassException() {
-        super("Invalid DataSourceClass");
+    public DataSourceClassException(String message) {
+        super(message);
     }
+
 }

@@ -1,7 +1,9 @@
 package com.ttbmp.cinehub.service.persistence.dao;
 
 import com.ttbmp.cinehub.service.persistence.entity.Projection;
-import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.*;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Dao;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Parameter;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Query;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
 import javax.validation.constraints.NotNull;
@@ -57,23 +59,5 @@ public interface ProjectionDao {
             "proiezione.data = turno.data AND " +
             "proiezione.inizio BETWEEN turno.inizio AND turno.fine")
     List<Projection> getProjectionListByProjectionistShift(@Parameter(name = "id") int id) throws DaoMethodException;
-
-    @Insert
-    void insert(@NotNull Projection projection) throws DaoMethodException;
-
-    @Insert
-    void insert(@NotNull List<Projection> projection) throws DaoMethodException;
-
-    @Update
-    void update(@NotNull Projection projection) throws DaoMethodException;
-
-    @Update
-    void update(@NotNull List<Projection> projection) throws DaoMethodException;
-
-    @Delete
-    void delete(@NotNull Projection projection) throws DaoMethodException;
-
-    @Delete
-    void delete(@NotNull List<Projection> projection) throws DaoMethodException;
 
 }

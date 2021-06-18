@@ -1,7 +1,10 @@
 package com.ttbmp.cinehub.service.persistence.dao;
 
 import com.ttbmp.cinehub.service.persistence.entity.Ticket;
-import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.*;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Dao;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Insert;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Parameter;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Query;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
 import javax.validation.constraints.NotNull;
@@ -21,20 +24,5 @@ public interface TicketDao {
 
     @Insert
     void insert(@NotNull Ticket ticket) throws DaoMethodException;
-
-    @Insert
-    void insert(@NotNull List<Ticket> ticket) throws DaoMethodException;
-
-    @Update
-    void update(@NotNull Ticket ticket) throws DaoMethodException;
-
-    @Update
-    void update(@NotNull List<Ticket> ticket) throws DaoMethodException;
-
-    @Delete
-    void delete(@NotNull Ticket ticket) throws DaoMethodException;
-
-    @Delete
-    void delete(@NotNull List<Ticket> ticket) throws DaoMethodException;
 
 }

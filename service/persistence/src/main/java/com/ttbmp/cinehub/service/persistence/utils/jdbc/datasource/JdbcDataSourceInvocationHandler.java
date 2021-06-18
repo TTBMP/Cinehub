@@ -28,7 +28,7 @@ public class JdbcDataSourceInvocationHandler implements InvocationHandler {
         this.connection = getConnection();
         for (var entityClass : databaseAnnotation.entities()) {
             if (entityClass.getAnnotation(Entity.class) == null) {
-                throw new DataSourceClassException();
+                throw new DataSourceClassException(entityClass + " does not have Entity annotation.");
             }
         }
     }
@@ -37,7 +37,7 @@ public class JdbcDataSourceInvocationHandler implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws DataSourceMethodException {
         var daoClass = method.getReturnType();
         if (daoClass.getAnnotation(Dao.class) == null) {
-            throw new DataSourceMethodException();
+            throw new DataSourceMethodException(daoClass + " does not have Dao annotation.");
         }
         return Proxy.newProxyInstance(
                 daoClass.getClassLoader(),

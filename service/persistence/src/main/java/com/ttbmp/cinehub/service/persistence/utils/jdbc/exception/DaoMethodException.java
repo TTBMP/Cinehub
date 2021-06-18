@@ -5,8 +5,8 @@ package com.ttbmp.cinehub.service.persistence.utils.jdbc.exception;
  */
 public class DaoMethodException extends Exception {
 
-    public DaoMethodException() {
-        super("Invalid Dao method");
+    public DaoMethodException(String message) {
+        super(message);
     }
 
 }

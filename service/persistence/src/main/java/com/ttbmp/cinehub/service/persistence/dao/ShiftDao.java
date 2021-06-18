@@ -55,20 +55,13 @@ public interface ShiftDao {
     void insert(@NotNull Shift shift) throws DaoMethodException;
 
     @Insert
-    void insert(@NotNull List<Shift> shift) throws DaoMethodException;
+    void insert(@NotNull List<Shift> shiftList) throws DaoMethodException;
 
     @Update
     void update(@NotNull Shift shift) throws DaoMethodException;
 
-    @Update
-    void update(@NotNull List<Shift> shift) throws DaoMethodException;
-
     @Delete
     void delete(@NotNull Shift shift) throws DaoMethodException;
-
-    @Delete
-    void delete(@NotNull List<Shift> shift) throws DaoMethodException;
-
 
 }
 

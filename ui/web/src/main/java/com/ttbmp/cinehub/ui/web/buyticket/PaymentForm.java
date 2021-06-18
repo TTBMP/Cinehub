@@ -12,14 +12,13 @@ public class PaymentForm {
     private Cinema cinema;
     private Projection projection;
     private Seat seat;
-    private Boolean option1;
-    private Boolean option2;
-    private Boolean option3;
+    private Boolean skipLineOption;
+    private Boolean magicBoxOption;
+    private Boolean openBarOption;
     private String email;
     private String cvv;
     private String expirationDate;
     private String numberCard;
-
 
     public String getDate() {
         return date;
@@ -61,28 +60,28 @@ public class PaymentForm {
         this.seat = seat;
     }
 
-    public Boolean getOption1() {
-        return option1;
+    public Boolean getSkipLineOption() {
+        return skipLineOption;
     }
 
-    public void setOption1(Boolean option1) {
-        this.option1 = option1;
+    public void setSkipLineOption(Boolean skipLineOption) {
+        this.skipLineOption = skipLineOption;
     }
 
-    public Boolean getOption2() {
-        return option2;
+    public Boolean getMagicBoxOption() {
+        return magicBoxOption;
     }
 
-    public void setOption2(Boolean option2) {
-        this.option2 = option2;
+    public void setMagicBoxOption(Boolean magicBoxOption) {
+        this.magicBoxOption = magicBoxOption;
     }
 
-    public Boolean getOption3() {
-        return option3;
+    public Boolean getOpenBarOption() {
+        return openBarOption;
     }
 
-    public void setOption3(Boolean option3) {
-        this.option3 = option3;
+    public void setOpenBarOption(Boolean openBarOption) {
+        this.openBarOption = openBarOption;
     }
 
     public String getEmail() {

@@ -27,7 +27,7 @@ public class DaoUpdateOperation extends DaoOperation {
     public DaoUpdateOperation(Method method, Connection connection, List<Class<?>> dataSourceEntityList) throws DaoMethodException {
         super(method, connection, dataSourceEntityList);
         if (!method.getReturnType().equals(Void.TYPE) || method.getParameterCount() != 1) {
-            throw new DaoMethodException();
+            throw new DaoMethodException("Invalid Dao method declaration.");
         }
         var updateAnnotation = method.getAnnotation(Update.class);
         updateStrategy = updateAnnotation.onConflict();
@@ -79,8 +79,8 @@ public class DaoUpdateOperation extends DaoOperation {
                 );
                 statement.executeUpdate();
             }
-        } catch (SQLException | InvocationTargetException | IllegalAccessException | NoSuchMethodException throwables) {
-            throw new DaoMethodException();
+        } catch (SQLException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            throw new DaoMethodException(e.getMessage());
         }
         return null;
     }
@@ -114,7 +114,7 @@ public class DaoUpdateOperation extends DaoOperation {
                 );
                 break;
             default:
-                throw new DaoMethodException();
+                throw new DaoMethodException("Invalid OnConflictStrategy Dao update method.");
         }
         return query;
     }

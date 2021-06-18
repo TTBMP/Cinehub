@@ -1,10 +1,11 @@
 package com.ttbmp.cinehub.service.persistence.dao;
 
 import com.ttbmp.cinehub.service.persistence.entity.Hall;
-import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.*;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Dao;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Parameter;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Query;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -26,23 +27,5 @@ public interface HallDao {
     @Query("SELECT * FROM sala WHERE sala.id IN " +
             "(SELECT turno_proiezionista.id_sala FROM turno_proiezionista WHERE turno_proiezionista.id_turno = :id)")
     Hall getHallByProjectionistShift(@Parameter(name = "id") int projectionistShiftId) throws DaoMethodException;
-
-    @Insert
-    void insert(@NotNull Hall hall) throws DaoMethodException;
-
-    @Insert
-    void insert(@NotNull List<Hall> hall) throws DaoMethodException;
-
-    @Update
-    void update(@NotNull Hall hall) throws DaoMethodException;
-
-    @Update
-    void update(@NotNull List<Hall> hall) throws DaoMethodException;
-
-    @Delete
-    void delete(@NotNull Hall hall) throws DaoMethodException;
-
-    @Delete
-    void delete(@NotNull List<Hall> hall) throws DaoMethodException;
 
 }

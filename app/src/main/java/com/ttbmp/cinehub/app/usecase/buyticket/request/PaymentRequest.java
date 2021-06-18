@@ -26,58 +26,22 @@ public class PaymentRequest extends AuthenticatedRequest {
     private int projectionId;
     private int seatId;
     private String email;
-    private String creditCardNumber;
-    private String creditCardCvv;
-    private String creditCardExpirationDate;
-    private Boolean openBarOption;
-    private Boolean magicBoxOption;
-    private Boolean skipLineOption;
+    private CreditCard creditCard;
+    private TicketOption ticketOption;
 
     public PaymentRequest(
             String sessionToken,
             int projectionId,
             int seatId,
             String email,
-            String creditCardNumber,
-            String creditCardCvv,
-            String creditCardExpirationDate,
-            Boolean openBarOption,
-            Boolean magicBoxOption,
-            Boolean skipLineOption) {
+            CreditCard creditCard,
+            TicketOption ticketOption) {
         super(sessionToken);
         this.projectionId = projectionId;
         this.seatId = seatId;
         this.email = email;
-        this.creditCardNumber = creditCardNumber;
-        this.creditCardCvv = creditCardCvv;
-        this.creditCardExpirationDate = creditCardExpirationDate;
-        this.openBarOption = openBarOption;
-        this.magicBoxOption = magicBoxOption;
-        this.skipLineOption = skipLineOption;
-    }
-
-    public Boolean getOpenBarOption() {
-        return openBarOption;
-    }
-
-    public void setOpenBarOption(Boolean openBarOption) {
-        this.openBarOption = openBarOption;
-    }
-
-    public Boolean getMagicBoxOption() {
-        return magicBoxOption;
-    }
-
-    public void setMagicBoxOption(Boolean magicBoxOption) {
-        this.magicBoxOption = magicBoxOption;
-    }
-
-    public Boolean getSkipLineOption() {
-        return skipLineOption;
-    }
-
-    public void setSkipLineOption(Boolean skipLineOption) {
-        this.skipLineOption = skipLineOption;
+        this.creditCard = creditCard;
+        this.ticketOption = ticketOption;
     }
 
     public int getProjectionId() {
@@ -104,59 +68,126 @@ public class PaymentRequest extends AuthenticatedRequest {
         this.email = email;
     }
 
-    public String getCreditCardNumber() {
-        return creditCardNumber;
+    public CreditCard getCreditCard() {
+        return creditCard;
     }
 
-    public void setCreditCardNumber(String creditCardNumber) {
-        this.creditCardNumber = creditCardNumber;
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
     }
 
-    public String getCreditCardCvv() {
-        return creditCardCvv;
+    public TicketOption getTicketOption() {
+        return ticketOption;
     }
 
-    public void setCreditCardCvv(String creditCardCvv) {
-        this.creditCardCvv = creditCardCvv;
-    }
-
-    public String getCreditCardExpirationDate() {
-        return creditCardExpirationDate;
-    }
-
-    public void setCreditCardExpirationDate(String creditCardExpirationDate) {
-        this.creditCardExpirationDate = creditCardExpirationDate;
+    public void setTicketOption(TicketOption ticketOption) {
+        this.ticketOption = ticketOption;
     }
 
     @Override
     public void onValidate() {
-        if (creditCardCvv.length() != 3) {
+        if (creditCard.creditCardCvv.length() != 3) {
             addError(LENGTH_CVV_CREDIT_CARD_ERROR);
         }
-        if (LocalDate.parse(creditCardExpirationDate).isBefore(LocalDate.now())) {
+        if (LocalDate.parse(creditCard.creditCardExpirationDate).isBefore(LocalDate.now())) {
             addError(EXPIRATION_CREDIT_CARD_ERROR);
         }
-        if (!creditCardCvv.matches("[0-9]+")) {
+        if (!creditCard.creditCardCvv.matches("[0-9]+")) {
             addError(CVV_LETTERS_ERROR);
         }
-        if (!creditCardNumber.matches("[0-9]+")) {
+        if (!creditCard.creditCardNumber.matches("[0-9]+")) {
             addError(NUMBER_OF_CARD_LETTERS_ERROR);
         }
-        if (creditCardNumber.length() < 12 || creditCardNumber.length() > 16) {
+        if (creditCard.creditCardNumber.length() < 12 || creditCard.creditCardNumber.length() > 16) {
             addError(CREDIT_CARD_LENGTH_ERROR);
         }
         if (!email.contains("@")) {
             addError(EMAIL_ERROR);
         }
-        if (magicBoxOption == null) {
+        if (ticketOption.magicBoxOption == null) {
             addError(MISSING_OPTION_ONE_ERROR);
         }
-        if (openBarOption == null) {
+        if (ticketOption.openBarOption == null) {
             addError(MISSING_OPTION_TWO_ERROR);
         }
-        if (skipLineOption == null) {
+        if (ticketOption.skipLineOption == null) {
             addError(MISSING_OPTION_THREE_ERROR);
         }
+    }
+
+    public static class CreditCard {
+
+        private String creditCardNumber;
+        private String creditCardCvv;
+        private String creditCardExpirationDate;
+
+        public CreditCard(String creditCardNumber, String creditCardCvv, String creditCardExpirationDate) {
+            this.creditCardNumber = creditCardNumber;
+            this.creditCardCvv = creditCardCvv;
+            this.creditCardExpirationDate = creditCardExpirationDate;
+        }
+
+        public String getCreditCardNumber() {
+            return creditCardNumber;
+        }
+
+        public void setCreditCardNumber(String creditCardNumber) {
+            this.creditCardNumber = creditCardNumber;
+        }
+
+        public String getCreditCardCvv() {
+            return creditCardCvv;
+        }
+
+        public void setCreditCardCvv(String creditCardCvv) {
+            this.creditCardCvv = creditCardCvv;
+        }
+
+        public String getCreditCardExpirationDate() {
+            return creditCardExpirationDate;
+        }
+
+        public void setCreditCardExpirationDate(String creditCardExpirationDate) {
+            this.creditCardExpirationDate = creditCardExpirationDate;
+        }
+    }
+
+    public static class TicketOption {
+
+        private Boolean openBarOption;
+        private Boolean magicBoxOption;
+        private Boolean skipLineOption;
+
+        public TicketOption(Boolean openBarOption, Boolean magicBoxOption, Boolean skipLineOption) {
+            this.openBarOption = openBarOption;
+            this.magicBoxOption = magicBoxOption;
+            this.skipLineOption = skipLineOption;
+        }
+
+        public Boolean getOpenBarOption() {
+            return openBarOption;
+        }
+
+        public void setOpenBarOption(Boolean openBarOption) {
+            this.openBarOption = openBarOption;
+        }
+
+        public Boolean getMagicBoxOption() {
+            return magicBoxOption;
+        }
+
+        public void setMagicBoxOption(Boolean magicBoxOption) {
+            this.magicBoxOption = magicBoxOption;
+        }
+
+        public Boolean getSkipLineOption() {
+            return skipLineOption;
+        }
+
+        public void setSkipLineOption(Boolean skipLineOption) {
+            this.skipLineOption = skipLineOption;
+        }
+
     }
 
 }
