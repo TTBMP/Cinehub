@@ -57,7 +57,7 @@ public class CalendarShiftItemViewController extends ViewController {
             addButton.setVisible(false);
         }
         addButton.setOnAction(a -> {
-            viewModel.setSelectedDayWeek(day);
+            viewModel.selectedDayWeekProperty().set(day);
             viewModel.getHallList().setAll(day.getEmployee().getCinema().getHalList());
             navController.openViewInDialog(AssignShiftView.class, "Assign shift");
         });

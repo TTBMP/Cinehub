@@ -51,7 +51,7 @@ public class ShiftItemViewController extends ViewController {
         endLabel.setText(shift.getEnd().toString());
 
         shiftHBox.setOnMouseClicked(l -> {
-            viewModel.selectedDaysProperty().setValue(shift.getDate());
+            viewModel.selectedDayProperty().setValue(shift.getDate());
             viewModel.selectedShiftProperty().setValue(shift);
             navController.openViewInDialog(ShowShiftDetailView.class, "Shift detail");
         });

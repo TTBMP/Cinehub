@@ -10,21 +10,18 @@ import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewShiftForm;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletResponse;
-import java.beans.PropertyEditorSupport;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 
 @Controller
 public class ShowShiftViewController {
-
-
-
 
 
     @GetMapping("/manage_employee_shift")

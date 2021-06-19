@@ -87,44 +87,44 @@ public class ShowShiftViewController extends ViewController {
         activity.getUseCase((ManageEmployeesShiftUseCase.class)).getEmployeeList(
                 new GetEmployeeListRequest(
                         CinehubApplication.getSessionToken(),
-                        viewModel.getSelectedCinema().getId()
+                        viewModel.selectedCinemaProperty().get().getId()
                 ));
 
         activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
                 new GetShiftListRequest(
                         CinehubApplication.getSessionToken(),
-                        viewModel.getSelectedCinema().getId(),
-                        viewModel.getSelectedWeek().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
-                        viewModel.getSelectedWeek().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
+                        viewModel.selectedCinemaProperty().get().getId(),
+                        viewModel.selectedWeekProperty().get().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
+                        viewModel.selectedWeekProperty().get().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
                 )
         );
 
-        previousButton.setOnAction(a -> periodDatePicker.setValue(viewModel.getSelectedWeek().minusWeeks(1)));
-        nextButton.setOnAction(a -> periodDatePicker.setValue(viewModel.getSelectedWeek().plusWeeks(1)));
+        previousButton.setOnAction(a -> periodDatePicker.setValue(viewModel.selectedWeekProperty().get().minusWeeks(1)));
+        nextButton.setOnAction(a -> periodDatePicker.setValue(viewModel.selectedWeekProperty().get().plusWeeks(1)));
         todayButton.setOnAction(a -> periodDatePicker.setValue(LocalDate.now()));
 
 
         periodDatePicker.setOnAction(a -> activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
                 new GetShiftListRequest(
                         CinehubApplication.getSessionToken(),
-                        viewModel.getSelectedCinema().getId(),
-                        viewModel.getSelectedWeek().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
-                        viewModel.getSelectedWeek().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
+                        viewModel.selectedCinemaProperty().get().getId(),
+                        viewModel.selectedWeekProperty().get().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
+                        viewModel.selectedWeekProperty().get().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
                 )
         ));
         cinemaComboBox.setOnAction(a -> {
             activity.getUseCase((ManageEmployeesShiftUseCase.class)).getEmployeeList(
                     new GetEmployeeListRequest(
                             CinehubApplication.getSessionToken(),
-                            viewModel.getSelectedCinema().getId()
+                            viewModel.selectedCinemaProperty().get().getId()
                     ));
 
             activity.getUseCase(ManageEmployeesShiftUseCase.class).getShiftList(
                     new GetShiftListRequest(
                             CinehubApplication.getSessionToken(),
-                            viewModel.getSelectedCinema().getId(),
-                            viewModel.getSelectedWeek().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
-                            viewModel.getSelectedWeek().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
+                            viewModel.selectedCinemaProperty().get().getId(),
+                            viewModel.selectedWeekProperty().get().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
+                            viewModel.selectedWeekProperty().get().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
                     ));
 
         });
@@ -143,7 +143,7 @@ public class ShowShiftViewController extends ViewController {
         }
         shiftTableView.setItems(viewModel.getEmployeeShiftWeekList());
         viewModel.getEmployeeShiftWeekList().addListener((InvalidationListener) l -> shiftTableView.refresh());
-        viewModel.errorProperty().addObserver(s -> navController.openErrorDialog(s, false));
+        viewModel.errorMessageProperty().addObserver(s -> navController.openErrorDialog(s, false));
 
     }
 }

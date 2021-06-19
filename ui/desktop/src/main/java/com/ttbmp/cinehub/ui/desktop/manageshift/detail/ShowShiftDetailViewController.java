@@ -56,9 +56,9 @@ public class ShowShiftDetailViewController extends ViewController {
         ManageEmployeesShiftViewModel viewModel;
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
         new ManageEmployeesShiftViewModel();
-        if (viewModel.getEmployee(viewModel.getSelectedShift()) instanceof UsherDto) {
-            hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
-            hallLabelText.visibleProperty().bind(viewModel.hallVisibilityProperty());
+        if (viewModel.getEmployee(viewModel.selectedShiftProperty().get()) instanceof UsherDto) {
+            hallLabel.visibleProperty().bind(viewModel.hallVisibleProperty());
+            hallLabelText.visibleProperty().bind(viewModel.hallVisibleProperty());
         } else {
             hallLabel.textProperty().bind(viewModel.selectedShiftHallProperty());
         }
@@ -70,7 +70,7 @@ public class ShowShiftDetailViewController extends ViewController {
         roleLabel.textProperty().bind(viewModel.selectedShiftRoleProperty());
         cinemaLabel.textProperty().bind(viewModel.selectedShiftCinemaProperty());
 
-        if (viewModel.getSelectedShift().getDate().isBefore(LocalDate.now().plusDays(1))) {
+        if (viewModel.selectedShiftProperty().get().getDate().isBefore(LocalDate.now().plusDays(1))) {
             modifyShiftButton.setDisable(true);
             deleteShiftButton.setDisable(true);
             modifyShiftButton.setVisible(false);
@@ -80,7 +80,7 @@ public class ShowShiftDetailViewController extends ViewController {
         deleteShiftButton.setOnAction(a -> {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).deleteShift(new ShiftRequest(
                     CinehubApplication.getSessionToken(),
-                    viewModel.getSelectedShift().getId()));
+                    viewModel.selectedShiftProperty().get().getId()));
             navController.goBack();
         });
         modifyShiftButton.setOnAction(a -> navController.openView(ModifyShiftView.class));

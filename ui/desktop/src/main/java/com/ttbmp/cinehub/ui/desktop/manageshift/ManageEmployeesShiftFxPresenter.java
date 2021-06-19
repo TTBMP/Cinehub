@@ -48,8 +48,8 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         for (var shift : reply.getShiftDtoList()) {
             for (var employeeShiftWeek : viewModel.getEmployeeShiftWeekList()) {
                 if (employeeShiftWeek.getEmployeeDto().getId().equals(shift.getEmployeeId())
-                        && viewModel.getSelectedWeek().getYear() == shift.getDate().getYear()
-                        && viewModel.getSelectedWeek().get(temporalField) == shift.getDate().get(temporalField)) {
+                        && viewModel.selectedWeekProperty().get().getYear() == shift.getDate().getYear()
+                        && viewModel.selectedWeekProperty().get().get(temporalField) == shift.getDate().get(temporalField)) {
                     var index = viewModel.getEmployeeShiftWeekList().indexOf(employeeShiftWeek);
                     employeeShiftWeek.getWeekMap().get(shift.getDate().getDayOfWeek()).getShiftList().add(shift);
                     viewModel.getEmployeeShiftWeekList().set(index, employeeShiftWeek);
@@ -59,7 +59,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     }
 
     private void initializeWeekMap(Map<DayOfWeek, Day> weekMap, EmployeeDto employeeDto) {
-        var firstDayOfWeek = viewModel.getSelectedWeek().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        var firstDayOfWeek = viewModel.selectedWeekProperty().get().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         for (var dayOfWeek : DayOfWeek.values()) {
             var date = firstDayOfWeek.plusDays((long) dayOfWeek.getValue() - 1);
             weekMap.put(dayOfWeek, new Day(date, new ArrayList<>(), employeeDto));
@@ -73,13 +73,13 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
 
     @Override
     public void presentSaveShift() {
-        var savedShift = viewModel.getShiftCreated();
+        var savedShift = viewModel.shiftCreatedProperty().get();
         var temporalField = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
         var employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
         employeeShiftWeeks.forEach(e -> {
             if (e.getEmployeeDto().getId().equals(savedShift.getEmployeeId())
-                    && savedShift.getDate().get(temporalField) == viewModel.getSelectedWeek().get(temporalField)
-                    && savedShift.getDate().getYear() == viewModel.getSelectedWeek().getYear()) {
+                    && savedShift.getDate().get(temporalField) == viewModel.selectedWeekProperty().get().get(temporalField)
+                    && savedShift.getDate().getYear() == viewModel.selectedWeekProperty().get().getYear()) {
                 e.getWeekMap().get(savedShift.getDate().getDayOfWeek())
                         .getShiftList()
                         .add(savedShift);
@@ -90,7 +90,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
 
     @Override
     public void presentDeleteShift() {
-        var deleteShift = viewModel.getSelectedShift();
+        var deleteShift = viewModel.selectedShiftProperty().get();
         var employeeShiftWeeks = new ArrayList<>(viewModel.getEmployeeShiftWeekList());
         employeeShiftWeeks.forEach(e -> {
             if (e.getEmployeeDto().getId().equals(deleteShift.getEmployeeId())) {
@@ -110,8 +110,8 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         for (var savedShift : shiftList) {
             employeeShiftWeeks.forEach(employeeShiftWeek -> {
                 if (employeeShiftWeek.getEmployeeDto().getId().equals(savedShift.getEmployeeId()) &&
-                        savedShift.getDate().get(temporalField) == viewModel.getSelectedWeek().get(temporalField) &&
-                        savedShift.getDate().getYear() == viewModel.getSelectedWeek().getYear()) {
+                        savedShift.getDate().get(temporalField) == viewModel.selectedWeekProperty().get().get(temporalField) &&
+                        savedShift.getDate().getYear() == viewModel.selectedWeekProperty().get().getYear()) {
                     var dayOfWeek = savedShift.getDate().getDayOfWeek();
                     employeeShiftWeek
                             .getWeekMap()
@@ -126,30 +126,30 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
 
     @Override
     public void presentCreateShift(CreateShiftReply reply) {
-        viewModel.setErrorAssignVisibility(false);
-        viewModel.setShiftCreated(reply.getShiftDto());
+        viewModel.errorAssignVisibleProperty().set(false);
+        viewModel.shiftCreatedProperty().set(reply.getShiftDto());
     }
 
     @Override
     public void presentCreateShiftError(Throwable error) {
-        viewModel.errorProperty().setValue(error.getMessage());
-        viewModel.setErrorAssignVisibility(true);
+        viewModel.errorMessageProperty().setValue(error.getMessage());
+        viewModel.errorAssignVisibleProperty().set(true);
     }
 
     @Override
     public void presentModifyShiftError(Throwable error) {
-        viewModel.errorProperty().setValue("IMPOSSIBLE MODIFY SHIFT");
-        viewModel.setErrorAssignVisibility(true);
+        viewModel.errorMessageProperty().setValue("IMPOSSIBLE MODIFY SHIFT");
+        viewModel.errorAssignVisibleProperty().set(true);
     }
 
     @Override
     public void presentNullRequest() {
-        viewModel.setError("Request can't be null");
+        viewModel.errorMessageProperty().setValue("Request can't be null");
     }
 
     @Override
     public void presentInvalidRequest(Request request) {
-        viewModel.setError(request.getErrorList().stream()
+        viewModel.errorMessageProperty().setValue(request.getErrorList().stream()
                 .map(Request.Error::getMessage)
                 .collect(Collectors.joining())
         );

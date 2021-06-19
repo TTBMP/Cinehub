@@ -66,29 +66,29 @@ public class AssignShiftViewController extends ViewController {
     @Override
     protected void onLoad() {
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
-        if (viewModel.getSelectedDayWeek().getEmployee() instanceof UsherDto) {
-            hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
-            hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
+        if (viewModel.selectedDayWeekProperty().get().getEmployee() instanceof UsherDto) {
+            hallLabel.visibleProperty().bind(viewModel.hallVisibleProperty());
+            hallComboBox.visibleProperty().bind(viewModel.hallVisibleProperty());
         } else {
-            viewModel.getHallList().setAll(viewModel.getSelectedDayWeek().getEmployee().getCinema().getHalList());
+            viewModel.getHallList().setAll(viewModel.selectedDayWeekProperty().get().getEmployee().getCinema().getHalList());
             hallComboBox.setItems(viewModel.getHallList());
             hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
         }
-        viewModel.setRepeatVisibility(false);
-        viewModel.setErrorAssignVisibility(false);
-        viewModel.setSelectedEndRepeatDay(null);
+        viewModel.repeatVisibleProperty().set(false);
+        viewModel.errorAssignVisibleProperty().set(false);
+        viewModel.selectedEndRepeatDayProperty().set(null);
         hallComboBox.setButtonCell(new HallFactory(null));
         hallComboBox.setCellFactory(HallFactory::new);
         hallComboBox.getSelectionModel().selectFirst();
-        optionVBox.visibleProperty().bind(viewModel.repeatVisibilityProperty());
-        dateVBox.visibleProperty().bind(viewModel.repeatVisibilityProperty());
+        optionVBox.visibleProperty().bind(viewModel.repeatVisibleProperty());
+        dateVBox.visibleProperty().bind(viewModel.repeatVisibleProperty());
         errorLabel.setVisible(false);
-        viewModel.errorProperty().addObserver(s -> errorLabel.setText(s));
-        viewModel.errorProperty().addObserver(s -> errorLabel.setVisible(!s.isEmpty()));
-        viewModel.setRepeatVisibility(viewModel.isRepeatVisibility());
-        shiftRepeatCheckBox.selectedProperty().bindBidirectional(viewModel.repeatVisibilityProperty());
-        viewModel.setStartSpinnerTime(LocalTime.NOON);
-        viewModel.setEndSpinnerTime(LocalTime.NOON.plusHours(1));
+        viewModel.errorMessageProperty().addObserver(s -> errorLabel.setText(s));
+        viewModel.errorMessageProperty().addObserver(s -> errorLabel.setVisible(!s.isEmpty()));
+        viewModel.repeatVisibleProperty().set(viewModel.repeatVisibleProperty().get());
+        shiftRepeatCheckBox.selectedProperty().bindBidirectional(viewModel.repeatVisibleProperty());
+        viewModel.startSpinnerTimeProperty().set(LocalTime.NOON);
+        viewModel.endSpinnerTimeProperty().set(LocalTime.NOON.plusHours(1));
         startSpinner.setValueFactory(new SpinnerStartValueFactory(viewModel.startSpinnerTimeProperty(), viewModel.endSpinnerTimeProperty()));
         endSpinner.setValueFactory(new SpinnerEndValueFactory(viewModel.startSpinnerTimeProperty(), viewModel.endSpinnerTimeProperty()));
         repeatDatePicker.setDayCellFactory(date -> new RepeatDateCell(viewModel.selectedDayWeekProperty()));
@@ -101,43 +101,43 @@ public class AssignShiftViewController extends ViewController {
         confirmButton.setOnAction(this::confirmButtonOnAction);
         cancelButton.setOnAction(a -> {
             if (shiftRepeatCheckBox.isSelected()) {
-                viewModel.setRepeatVisibility(!viewModel.isRepeatVisibility());
+                viewModel.repeatVisibleProperty().set(!viewModel.repeatVisibleProperty().get());
             }
-            viewModel.setSelectedOption(null);
+            viewModel.selectedOptionProperty().set(null);
             navController.goBack();
         });
     }
 
     private void confirmButtonOnAction(ActionEvent action) {
         var hallId = -1;
-        if (viewModel.getSelectedHall() != null) {
-            hallId = viewModel.getSelectedHall().getId();
+        if (viewModel.selectedHallProperty().get() != null) {
+            hallId = viewModel.selectedHallProperty().get().getId();
         }
-        if (!viewModel.isRepeatVisibility()) {
+        if (!viewModel.repeatVisibleProperty().get()) {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).createShift(new CreateShiftRequest(
                     CinehubApplication.getSessionToken(),
-                    viewModel.getSelectedDayWeek().getEmployee().getId(),
-                    viewModel.getSelectedDayWeek().getDate(),
-                    viewModel.getStartSpinnerTime().withNano(0),
-                    viewModel.getEndSpinnerTime().withNano(0),
+                    viewModel.selectedDayWeekProperty().get().getEmployee().getId(),
+                    viewModel.selectedDayWeekProperty().get().getDate(),
+                    viewModel.startSpinnerTimeProperty().get().withNano(0),
+                    viewModel.endSpinnerTimeProperty().get().withNano(0),
                     hallId)
             );
         } else {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).createRepeatedShift(
                     new ShiftRepeatRequest(
                             CinehubApplication.getSessionToken(),
-                            viewModel.getSelectedDayWeek().getDate(),
-                            viewModel.getSelectedEndRepeatDay(),
-                            viewModel.getSelectedOption().toString(),
-                            viewModel.getSelectedDayWeek().getEmployee().getId(),
-                            viewModel.getStartSpinnerTime(),
-                            viewModel.getEndSpinnerTime(),
+                            viewModel.selectedDayWeekProperty().get().getDate(),
+                            viewModel.selectedEndRepeatDayProperty().get(),
+                            viewModel.selectedOptionProperty().get().toString(),
+                            viewModel.selectedDayWeekProperty().get().getEmployee().getId(),
+                            viewModel.startSpinnerTimeProperty().get(),
+                            viewModel.endSpinnerTimeProperty().get(),
                             hallId
                     )
             );
         }
-        if (!viewModel.isErrorAssignVisibility()) {
-            viewModel.setSelectedOption(null);
+        if (!viewModel.errorAssignVisibleProperty().get()) {
+            viewModel.selectedOptionProperty().set(null);
             navController.goBack();
         }
     }
