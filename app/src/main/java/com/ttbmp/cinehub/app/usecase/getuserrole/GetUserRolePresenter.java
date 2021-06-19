@@ -1,21 +1,9 @@
 package com.ttbmp.cinehub.app.usecase.getuserrole;
 
-import com.ttbmp.cinehub.app.repository.RepositoryException;
-import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
-import com.ttbmp.cinehub.app.utilities.request.Request;
+import com.ttbmp.cinehub.app.service.security.SecurePresenter;
 
-public interface GetUserRolePresenter {
+public interface GetUserRolePresenter extends SecurePresenter {
 
     void present(RoleReply reply);
-
-    void presentInvalidRequest(Request request);
-
-    void presentNullRequest();
-
-    void presentRepositoryError(RepositoryException e);
-
-    void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e);
-
-    void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e);
 
 }

@@ -14,14 +14,10 @@ public class LogoutController implements LogoutUseCase {
 
     @Override
     public void logout(LogoutRequest request) {
-        try {
+        execute(presenter, request, () -> {
             Request.validate(request);
             presenter.logout();
-        } catch (Request.NullRequestException e) {
-            presenter.presentNullRequest();
-        } catch (Request.InvalidRequestException e) {
-            presenter.presentInvalidRequest(request);
-        }
+        });
     }
 
 }
