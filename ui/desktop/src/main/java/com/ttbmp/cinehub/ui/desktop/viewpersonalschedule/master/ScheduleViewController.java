@@ -82,8 +82,8 @@ public class ScheduleViewController extends ViewController {
         activity.getUseCase(ViewPersonalScheduleUseCase.class).getShiftList(
                 new ShiftListRequest(
                         CinehubApplication.getSessionToken(),
-                        viewModel.getCalendarPageFirstDate(),
-                        viewModel.getCalendarPageLastDate())
+                        viewModel.calendarPageFirstDateProperty().get(),
+                        viewModel.calendarPageLastDateProperty().get())
         );
     }
 

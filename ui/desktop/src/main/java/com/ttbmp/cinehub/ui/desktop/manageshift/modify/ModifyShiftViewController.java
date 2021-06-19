@@ -71,15 +71,15 @@ public class ModifyShiftViewController extends ViewController {
 
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
 
-        viewModel.setErrorAssignVisibility(false);
-        errorLabel.visibleProperty().bind(viewModel.errorAssignVisibilityProperty());
-        viewModel.errorProperty().addObserver(s -> errorLabel.setText(s));
+        viewModel.errorAssignVisibleProperty().set(false);
+        errorLabel.visibleProperty().bind(viewModel.errorAssignVisibleProperty());
+        viewModel.errorMessageProperty().addObserver(s -> errorLabel.setText(s));
 
-        if (viewModel.getEmployee(viewModel.getSelectedShift()) instanceof UsherDto) {
-            hallLabel.visibleProperty().bind(viewModel.hallVisibilityProperty());
-            hallComboBox.visibleProperty().bind(viewModel.hallVisibilityProperty());
+        if (viewModel.getEmployee(viewModel.selectedShiftProperty().get()) instanceof UsherDto) {
+            hallLabel.visibleProperty().bind(viewModel.hallVisibleProperty());
+            hallComboBox.visibleProperty().bind(viewModel.hallVisibleProperty());
         } else {
-            viewModel.getHallList().setAll(viewModel.getEmployee(viewModel.getSelectedShift()).getCinema().getHalList());
+            viewModel.getHallList().setAll(viewModel.getEmployee(viewModel.selectedShiftProperty().get()).getCinema().getHalList());
             hallComboBox.setItems(viewModel.getHallList());
             hallComboBox.valueProperty().bindBidirectional(viewModel.selectedHallProperty());
 
@@ -94,11 +94,11 @@ public class ModifyShiftViewController extends ViewController {
         roleLabel.textProperty().bind(viewModel.selectedShiftRoleProperty());
 
         dateDatePicker.setDayCellFactory(ModifyDateCell::new);
-        dateDatePicker.valueProperty().bindBidirectional(viewModel.selectedDaysProperty());
+        dateDatePicker.valueProperty().bindBidirectional(viewModel.selectedDayProperty());
 
 
-        viewModel.setStartSpinnerModifyTime(LocalTime.parse(viewModel.getSelectedShiftStart()));
-        viewModel.setEndSpinnerModifyTime(LocalTime.parse(viewModel.getSelectedShiftEnd()));
+        viewModel.startSpinnerModifyTimeProperty().set(LocalTime.parse(viewModel.selectedShiftStartProperty().get()));
+        viewModel.endSpinnerModifyTimeProperty().set(LocalTime.parse(viewModel.selectedShiftEndProperty().get()));
 
         startSpinner.setValueFactory(new SpinnerStartValueFactory(viewModel.startSpinnerModifyTimeProperty(), viewModel.endSpinnerModifyTimeProperty()));
         endSpinner.setValueFactory(new SpinnerEndValueFactory(viewModel.startSpinnerModifyTimeProperty(), viewModel.endSpinnerModifyTimeProperty()));
@@ -108,24 +108,24 @@ public class ModifyShiftViewController extends ViewController {
     }
 
     private void submitButtonOnAction(ActionEvent action) {
-        viewModel.setErrorAssignVisibility(false);
+        viewModel.errorAssignVisibleProperty().set(false);
         var hallId = -1;
-        if (viewModel.getSelectedHall() != null) {
-            hallId = viewModel.getSelectedHall().getId();
+        if (viewModel.selectedHallProperty().get() != null) {
+            hallId = viewModel.selectedHallProperty().get().getId();
         }
         activity.getUseCase(ManageEmployeesShiftUseCase.class).modifyShift(
                 new ShiftModifyRequest(
                         CinehubApplication.getSessionToken(),
-                        viewModel.getSelectedShift().getEmployeeId(),
-                        viewModel.getSelectedShift().getId(),
-                        viewModel.getSelectedDays(),
-                        viewModel.getStartSpinnerModifyTime().withNano(0),
-                        viewModel.getEndSpinnerModifyTime().withNano(0),
+                        viewModel.selectedShiftProperty().get().getEmployeeId(),
+                        viewModel.selectedShiftProperty().get().getId(),
+                        viewModel.selectedDayProperty().get(),
+                        viewModel.startSpinnerModifyTimeProperty().get().withNano(0),
+                        viewModel.endSpinnerModifyTimeProperty().get().withNano(0),
                         hallId
                 ));
 
-        if (!viewModel.isErrorAssignVisibility()) {
-            viewModel.setSelectedShift(viewModel.getShiftCreated());
+        if (!viewModel.errorAssignVisibleProperty().get()) {
+            viewModel.selectedShiftProperty().set(viewModel.shiftCreatedProperty().get());
             navController.goBack();
         }
     }

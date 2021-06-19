@@ -4,17 +4,19 @@
     transition-timing-function: linear;
     width: 100%;
     margin: 0;
-    display:  block;
+    display: block;
 }
 
 .card-front {
     transform: rotateY(0deg);
 
 }
+
 .card-body {
     background-color: transparent;
 
 }
+
 .card {
     background-color: transparent;
     border-color: transparent;
@@ -22,7 +24,8 @@
     border-radius: 10px;
 
 }
-.h6{
+
+.h6 {
     font-size: small;
 }
 

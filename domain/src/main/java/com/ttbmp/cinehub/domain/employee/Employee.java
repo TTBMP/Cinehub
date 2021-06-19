@@ -4,6 +4,10 @@ import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.User;
 import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.shift.Shift;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,6 +16,10 @@ import java.util.stream.Collectors;
 /**
  * @author Fabio Buracchi, Massimo Mazzetti
  */
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(callSuper = true)
 public abstract class Employee extends User {
 
     private Cinema cinema;
@@ -22,37 +30,11 @@ public abstract class Employee extends User {
         this.cinema = cinema;
     }
 
-    public Cinema getCinema() {
-        return cinema;
-    }
-
-    public void setCinema(Cinema cinema) {
-        this.cinema = cinema;
-    }
-
-    public List<Shift> getShiftList() {
-        return shiftList;
-    }
-
-    public void setShiftList(List<Shift> shiftList) {
-        this.shiftList = shiftList;
-    }
-
     public List<Shift> getShiftListBetween(LocalDate start, LocalDate end) {
         return shiftList.stream()
                 .filter(shift -> LocalDate.parse(shift.getDate()).isAfter(start))
                 .filter(shift -> LocalDate.parse(shift.getEnd()).isBefore(end))
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 
 }

@@ -60,7 +60,7 @@ public class ChooseMovieViewController extends ViewController {
                 viewModel.selectedDateProperty().getValue()
         ));
         movieListView.itemsProperty().addListener(l -> movieListView.refresh());
-        movieListView.setItems(viewModel.movieListProperty());
+        movieListView.setItems(viewModel.getMovieList());
         movieListView.setCellFactory(movieList -> new ChooseMovieListCell(activity, navController));
         bind();
         dateOfProjectionDatePicker.setValue(LocalDate.now());

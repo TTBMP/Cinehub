@@ -15,6 +15,8 @@ public interface MovieRepository {
 
     Movie getMovie(Projection projection) throws RepositoryException;
 
+    List<Movie> getAllMovie() throws RepositoryException;
+
     List<Movie> getMovieList(String localDate) throws RepositoryException;
 
 }

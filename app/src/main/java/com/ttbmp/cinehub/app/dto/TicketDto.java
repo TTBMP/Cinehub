@@ -1,44 +1,22 @@
 package com.ttbmp.cinehub.app.dto;
 
-import com.ttbmp.cinehub.domain.ticket.component.Ticket;
+import com.ttbmp.cinehub.domain.ticket.Ticket;
+import lombok.Value;
 
 /**
  * @author Ivan Palmieri
  */
+@Value
 public class TicketDto {
 
-    private int id;
-    private long price;
-    private SeatDto seatDto;
+    int id;
+    long price;
+    SeatDto seatDto;
 
     public TicketDto(Ticket ticket) {
         this.id = ticket.getId();
         this.price = ticket.getPrice();
         this.seatDto = new SeatDto(ticket.getSeat(), true);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public long getPrice() {
-        return price;
-    }
-
-    public void setPrice(long price) {
-        this.price = price;
-    }
-
-    public SeatDto getSeatDto() {
-        return seatDto;
-    }
-
-    public void setSeatDto(SeatDto seatDto) {
-        this.seatDto = seatDto;
     }
 
 }

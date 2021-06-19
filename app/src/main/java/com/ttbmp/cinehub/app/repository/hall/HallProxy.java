@@ -42,13 +42,13 @@ public class HallProxy extends Hall {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public int hashCode() {
+        return super.hashCode();
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 
 }

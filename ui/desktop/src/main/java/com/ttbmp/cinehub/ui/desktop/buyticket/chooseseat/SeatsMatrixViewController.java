@@ -26,8 +26,8 @@ public class SeatsMatrixViewController extends ViewController {
     @Override
     protected void onLoad() {
         var viewModel = activity.getViewModel(BuyTicketViewModel.class);
-        var seatNumber = viewModel.seatListProperty().size();
-        var bookedNumber = viewModel.seatListProperty().stream().filter(SeatDto::isBooked).count();
+        var seatNumber = viewModel.getSeatList().size();
+        var bookedNumber = viewModel.getSeatList().stream().filter(SeatDto::isBooked).count();
         viewModel.totalSeatsProperty().setValue("Places available: " + seatNumber);
         viewModel.buysSeatsProperty().setValue("Occupied seats: " + bookedNumber);
         viewModel.freeSeatsProperty().setValue("Free seats: " + (seatNumber - bookedNumber));
@@ -36,7 +36,7 @@ public class SeatsMatrixViewController extends ViewController {
 
     private void createMatrix(BuyTicketViewModel viewModel) {
         var price = viewModel.selectedProjectionProperty().getValue().getBasePrice();
-        for (var seat : viewModel.seatListProperty()) {
+        for (var seat : viewModel.getSeatList()) {
             var radioButton = createRadioButton();
             radioButton.setUserData(seat);
             radioButton.setText(seat.getPosition() + "\n" + price + "\u20ac");

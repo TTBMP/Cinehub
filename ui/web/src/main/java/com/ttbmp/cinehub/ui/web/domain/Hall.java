@@ -1,24 +1,11 @@
 package com.ttbmp.cinehub.ui.web.domain;
 
+import lombok.Data;
+
+@Data
 public class Hall {
 
     private int id;
     private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
 }

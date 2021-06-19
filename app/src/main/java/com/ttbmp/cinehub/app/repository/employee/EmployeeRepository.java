@@ -16,6 +16,8 @@ public interface EmployeeRepository {
 
     Employee getEmployee(Shift shift) throws RepositoryException;
 
+    List<Employee> getAllEmployee() throws RepositoryException;
+
     List<Employee> getEmployeeList(Cinema cinema) throws RepositoryException;
 
 }

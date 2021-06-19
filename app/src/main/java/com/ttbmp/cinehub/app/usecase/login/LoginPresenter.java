@@ -1,15 +1,11 @@
 package com.ttbmp.cinehub.app.usecase.login;
 
 import com.ttbmp.cinehub.app.service.security.SecurityException;
-import com.ttbmp.cinehub.app.utilities.request.Request;
+import com.ttbmp.cinehub.app.utilities.presenter.Presenter;
 
-public interface LoginPresenter {
+public interface LoginPresenter extends Presenter {
 
     void presentSessionToken(LoginReply reply);
-
-    void presentInvalidRequest(Request request);
-
-    void presentNullRequest();
 
     void presentSecurityError(SecurityException e);
 

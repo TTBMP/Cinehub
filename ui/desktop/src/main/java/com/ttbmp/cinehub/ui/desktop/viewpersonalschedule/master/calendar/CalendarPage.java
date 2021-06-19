@@ -6,6 +6,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import lombok.Value;
+import lombok.experimental.Accessors;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -20,11 +22,14 @@ import static java.util.function.Function.identity;
 /**
  * @author Fabio Buracchi
  */
+@Value
 public class CalendarPage {
 
-    private final ObservableList<Map<DayOfWeek, CalendarDay>> shiftWeekList = FXCollections.observableArrayList();
-    private final ObjectProperty<LocalDate> pageFirstDate = new SimpleObjectProperty<>();
-    private final ObjectProperty<LocalDate> pageLastDate = new SimpleObjectProperty<>();
+    @Accessors(fluent = false)
+    ObservableList<Map<DayOfWeek, CalendarDay>> shiftWeekList = FXCollections.observableArrayList();
+
+    ObjectProperty<LocalDate> pageFirstDateProperty = new SimpleObjectProperty<>();
+    ObjectProperty<LocalDate> pageLastDateProperty = new SimpleObjectProperty<>();
 
     public CalendarPage(ObjectProperty<LocalDate> date, ObservableList<ShiftDto> shiftList) {
         List<ObjectProperty<LocalDate>> dateList = IntStream.range(0, 42)
@@ -42,28 +47,8 @@ public class CalendarPage {
                 shiftWeekList.get(i).put(dayOfWeek, new CalendarDay(dateIterator.next(), shiftList));
             }
         }
-        pageFirstDate.bind(ObjectBindings.map(dateList.get(0), identity()));
-        pageLastDate.bind(ObjectBindings.map(dateList.get(41), identity()));
-    }
-
-    public ObservableList<Map<DayOfWeek, CalendarDay>> getShiftWeekList() {
-        return shiftWeekList;
-    }
-
-    public LocalDate getPageFirstDate() {
-        return pageFirstDate.get();
-    }
-
-    public ObjectProperty<LocalDate> pageFirstDateProperty() {
-        return pageFirstDate;
-    }
-
-    public LocalDate getPageLastDate() {
-        return pageLastDate.get();
-    }
-
-    public ObjectProperty<LocalDate> pageLastDateProperty() {
-        return pageLastDate;
+        pageFirstDateProperty.bind(ObjectBindings.map(dateList.get(0), identity()));
+        pageLastDateProperty.bind(ObjectBindings.map(dateList.get(41), identity()));
     }
 
 }

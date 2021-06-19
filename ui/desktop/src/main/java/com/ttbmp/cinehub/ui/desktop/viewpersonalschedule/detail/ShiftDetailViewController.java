@@ -48,7 +48,7 @@ public class ShiftDetailViewController extends ViewController {
         roleLabel.textProperty().bind(viewModel.selectedShiftEmployeeRoleProperty());
         cityLabel.textProperty().bind(viewModel.selectedShiftCinemaCityProperty());
         addressLabel.textProperty().bind(viewModel.selectedShiftCinemaAddressProperty());
-        detailButton.setVisible(viewModel.isIsProjectionsDetailButtonVisible());
+        detailButton.setVisible(viewModel.projectionsDetailButtonVisibleProperty().getValue());
         detailButton.setOnAction(a -> navController.openView(ProjectionistShiftDetailView.class));
         requestChangeButton.setVisible(false);
         requestSwapButton.setVisible(false);

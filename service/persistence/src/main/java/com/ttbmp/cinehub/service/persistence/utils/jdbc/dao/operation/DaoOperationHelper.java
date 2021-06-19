@@ -27,7 +27,7 @@ public class DaoOperationHelper {
         if (List.class.isAssignableFrom(objectType)) {
             return getActualDtoType(genericInputType, dataSourceEntityList);
         }
-        throw new DaoMethodException();
+        throw new DaoMethodException(objectType + " is not contained into datasource entities.");
     }
 
     private static Class<?> getActualDtoType(@NotNull Type genericInputType, List<Class<?>> dataSourceEntityList) throws DaoMethodException {
@@ -38,7 +38,7 @@ public class DaoOperationHelper {
                 return genericType;
             }
         }
-        throw new DaoMethodException();
+        throw new DaoMethodException(genericInputType + " is not contained into datasource entities.");
     }
 
     public static List<Method> getDtoSetterList(@NotNull Class<?> dtoType, @NotNull List<String> columnNameList) throws NoSuchMethodException {

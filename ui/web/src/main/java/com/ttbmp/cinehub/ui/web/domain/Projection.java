@@ -1,8 +1,11 @@
 package com.ttbmp.cinehub.ui.web.domain;
 
+import lombok.Data;
+
 /**
  * @author Fabio Buracchi, Ivan Palmieri
  */
+@Data
 public class Projection {
 
     private int id;
@@ -11,65 +14,5 @@ public class Projection {
     private int hallId;
     private int movieId;
     private long basePrice;
-
-    public Projection() {
-    }
-
-    public Projection(int id, int hallId, String date, int movieId, String startTime, long basePrice) {
-        this.id = id;
-        this.hallId = hallId;
-        this.date = date;
-        this.movieId = movieId;
-        this.startTime = startTime;
-        this.basePrice = basePrice;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public int getHallId() {
-        return hallId;
-    }
-
-    public void setHallId(int hallId) {
-        this.hallId = hallId;
-    }
-
-    public int getMovieId() {
-        return movieId;
-    }
-
-    public void setMovieId(int movieId) {
-        this.movieId = movieId;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public long getBasePrice() {
-        return basePrice;
-    }
-
-    public void setBasePrice(long basePrice) {
-        this.basePrice = basePrice;
-    }
 
 }

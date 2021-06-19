@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.ui.web.login;
 
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.usecase.login.LoginPresenter;
 import com.ttbmp.cinehub.app.usecase.login.LoginReply;
@@ -33,6 +34,11 @@ public class LoginPresenterWeb implements LoginPresenter {
     @Override
     public void presentInvalidRequest(Request request) {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
+    }
+
+    @Override
+    public void presentRepositoryError(RepositoryException e) {
+
     }
 
 }

@@ -3,10 +3,16 @@ package com.ttbmp.cinehub.service.persistence.entity;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.ColumnInfo;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Entity;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.PrimaryKey;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Fabio Buracchi
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(tableName = "ruolo")
 public class Role {
 
@@ -16,29 +22,5 @@ public class Role {
 
     @ColumnInfo(name = "nome")
     private String name;
-
-    public Role() {
-    }
-
-    public Role(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
 }

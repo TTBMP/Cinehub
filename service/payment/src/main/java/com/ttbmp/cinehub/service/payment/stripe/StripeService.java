@@ -15,7 +15,6 @@ public class StripeService {
     private static final PaymentMethodHandler PAYMENT_METHOD_HANDLER = new PaymentMethodHandler();
     private static final BalanceHandler BALANCE_HANDLER = new BalanceHandler();
 
-
     static {
         Stripe.apiKey = API_KEY;
     }

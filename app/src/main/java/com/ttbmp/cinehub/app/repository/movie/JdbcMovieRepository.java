@@ -2,36 +2,46 @@ package com.ttbmp.cinehub.app.repository.movie;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.utilities.repository.JdbcRepository;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
-import com.ttbmp.cinehub.service.persistence.CinemaDatabase;
 import com.ttbmp.cinehub.service.persistence.dao.MovieDao;
-import com.ttbmp.cinehub.service.persistence.utils.jdbc.datasource.JdbcDataSourceProvider;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class JdbcMovieRepository implements MovieRepository {
-
-    private final ServiceLocator serviceLocator;
-
-    private MovieDao movieDao = null;
+public class JdbcMovieRepository extends JdbcRepository implements MovieRepository {
 
     public JdbcMovieRepository(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
+        super(serviceLocator);
     }
 
     @Override
     public Movie getMovie(Integer movieId) {
-        return new MovieProxy(serviceLocator, movieId);
+        return new MovieProxy(getServiceLocator(), movieId);
     }
 
     @Override
     public Movie getMovie(Projection projection) throws RepositoryException {
         try {
-            var movie = getMovieDao().getMovieByProjection(projection.getId());
-            return new MovieProxy(serviceLocator, movie.getId());
+            var movie = getDao(MovieDao.class).getMovieByProjection(projection.getId());
+            return new MovieProxy(getServiceLocator(), movie.getId());
+        } catch (DaoMethodException e) {
+            throw new RepositoryException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Movie> getAllMovie() throws RepositoryException {
+        try {
+            var movieList = getDao(MovieDao.class).getAllMovie();
+            List<Movie> movieProxyList = new ArrayList<>();
+            for (var movie : movieList) {
+                movieProxyList.add(getMovie(movie.getId()));
+            }
+            return movieProxyList;
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
@@ -40,24 +50,13 @@ public class JdbcMovieRepository implements MovieRepository {
     @Override
     public List<Movie> getMovieList(String localDate) throws RepositoryException {
         try {
-            var movieList = getMovieDao().getMovieByData(localDate);
+            var movieList = getDao(MovieDao.class).getMovieByData(localDate);
             return movieList.stream()
-                    .map(movie -> new MovieProxy(serviceLocator, movie.getId()))
+                    .map(movie -> new MovieProxy(getServiceLocator(), movie.getId()))
                     .collect(Collectors.toList());
         } catch (DaoMethodException e) {
             throw new RepositoryException(e.getMessage());
         }
-    }
-
-    private MovieDao getMovieDao() throws RepositoryException {
-        if (movieDao == null) {
-            try {
-                this.movieDao = JdbcDataSourceProvider.getDataSource(CinemaDatabase.class).getMovieDao();
-            } catch (Exception e) {
-                throw new RepositoryException(e.getMessage());
-            }
-        }
-        return movieDao;
     }
 
 }
