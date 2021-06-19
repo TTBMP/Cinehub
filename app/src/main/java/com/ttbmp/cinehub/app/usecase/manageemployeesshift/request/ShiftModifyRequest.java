@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class ShiftModifyRequest extends AuthenticatedRequest {
+
     public static final Request.Error MISSING_SHIFT = new Request.Error("Shift non esiste");
     public static final Request.Error INVALID_SHIFT = new Request.Error("Shift non valido");
     public static final Request.Error MISSING_DATE = new Request.Error("Data non inserita");

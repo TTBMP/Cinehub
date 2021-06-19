@@ -33,6 +33,19 @@ public abstract class Shift {
         this.end = end;
     }
 
-    public abstract void modifyShift(Shift shift, LocalDate date, LocalTime start, LocalTime end, Hall hall) throws ModifyShiftException;
+    public void modifyShift(Shift shift, LocalDate date, LocalTime start, LocalTime end, Hall hall) throws ModifyShiftException {
+        var shiftList = shift.getEmployee().getShiftListBetween(date.minusDays(1), date.plusDays(1));
+        for (var elem : shiftList) {
+            if (elem.getId() != shift.getId()
+                    && LocalDate.parse(elem.getDate()).equals(date)
+                    && (start.isBefore(LocalTime.parse(elem.getEnd()))
+                    && (end.isAfter(LocalTime.parse(elem.getStart()))))) {
+                throw new ModifyShiftException(ModifyShiftException.ALREADY_EXIST_ERROR);
+            }
+        }
+        shift.setDate(date.toString());
+        shift.setStart(start.toString());
+        shift.setEnd(end.toString());
+    }
 
 }

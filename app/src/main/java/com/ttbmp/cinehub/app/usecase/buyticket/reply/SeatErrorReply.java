@@ -1,18 +1,10 @@
 package com.ttbmp.cinehub.app.usecase.buyticket.reply;
 
+import lombok.Value;
+
+@Value
 public class SeatErrorReply {
 
-    private String error;
+    String error;
 
-    public SeatErrorReply(String error) {
-        this.error = error;
-    }
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
 }

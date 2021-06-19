@@ -82,7 +82,7 @@ public class ChooseCinemaViewController extends ViewController {
             activity.getUseCase(BuyTicketUseCase.class).getProjectionList(new ProjectionListRequest(
                             viewModel.selectedMovieProperty().getValue().getId(),
                             viewModel.selectedCinemaProperty().getValue().getId(),
-                            viewModel.selectedDateProperty().getValue()
+                            viewModel.selectedDateProperty().getValue().toString()
                     )
             );
             timeOfProjectionListView.setItems(viewModel.projectionTimeListProperty());
@@ -90,4 +90,3 @@ public class ChooseCinemaViewController extends ViewController {
     }
 
 }
-

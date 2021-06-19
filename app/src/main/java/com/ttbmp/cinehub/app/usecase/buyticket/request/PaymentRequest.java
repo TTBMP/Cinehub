@@ -2,12 +2,18 @@ package com.ttbmp.cinehub.app.usecase.buyticket.request;
 
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 
 /**
  * @author Ivan Palmieri
  */
+@Getter
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@ToString
+@EqualsAndHashCode(callSuper = false)
 public class PaymentRequest extends AuthenticatedRequest {
 
     public static final Request.Error LENGTH_CVV_CREDIT_CARD_ERROR = new Request.Error("The CVV must be three numbers in length");
@@ -23,64 +29,18 @@ public class PaymentRequest extends AuthenticatedRequest {
     public static final Request.Error MISSING_PROJECTION_ERROR = new Request.Error("Projection can't be null");
     public static final Request.Error MISSING_SEAT_ERROR = new Request.Error("Seat can't be null");
 
-    private int projectionId;
-    private int seatId;
-    private String email;
-    private CreditCard creditCard;
-    private TicketOption ticketOption;
+    int projectionId;
+    int seatId;
+    String email;
+    CreditCard creditCard;
+    TicketOption ticketOption;
 
-    public PaymentRequest(
-            String sessionToken,
-            int projectionId,
-            int seatId,
-            String email,
-            CreditCard creditCard,
-            TicketOption ticketOption) {
+    public PaymentRequest(String sessionToken, int projectionId, int seatId, String email, CreditCard creditCard, TicketOption ticketOption) {
         super(sessionToken);
         this.projectionId = projectionId;
         this.seatId = seatId;
         this.email = email;
         this.creditCard = creditCard;
-        this.ticketOption = ticketOption;
-    }
-
-    public int getProjectionId() {
-        return projectionId;
-    }
-
-    public void setProjectionId(int projectionId) {
-        this.projectionId = projectionId;
-    }
-
-    public int getSeatId() {
-        return seatId;
-    }
-
-    public void setSeatId(int seatId) {
-        this.seatId = seatId;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public CreditCard getCreditCard() {
-        return creditCard;
-    }
-
-    public void setCreditCard(CreditCard creditCard) {
-        this.creditCard = creditCard;
-    }
-
-    public TicketOption getTicketOption() {
-        return ticketOption;
-    }
-
-    public void setTicketOption(TicketOption ticketOption) {
         this.ticketOption = ticketOption;
     }
 
@@ -115,78 +75,21 @@ public class PaymentRequest extends AuthenticatedRequest {
         }
     }
 
+    @Value
     public static class CreditCard {
 
-        private String creditCardNumber;
-        private String creditCardCvv;
-        private String creditCardExpirationDate;
+        String creditCardNumber;
+        String creditCardCvv;
+        String creditCardExpirationDate;
 
-        public CreditCard(String creditCardNumber, String creditCardCvv, String creditCardExpirationDate) {
-            this.creditCardNumber = creditCardNumber;
-            this.creditCardCvv = creditCardCvv;
-            this.creditCardExpirationDate = creditCardExpirationDate;
-        }
-
-        public String getCreditCardNumber() {
-            return creditCardNumber;
-        }
-
-        public void setCreditCardNumber(String creditCardNumber) {
-            this.creditCardNumber = creditCardNumber;
-        }
-
-        public String getCreditCardCvv() {
-            return creditCardCvv;
-        }
-
-        public void setCreditCardCvv(String creditCardCvv) {
-            this.creditCardCvv = creditCardCvv;
-        }
-
-        public String getCreditCardExpirationDate() {
-            return creditCardExpirationDate;
-        }
-
-        public void setCreditCardExpirationDate(String creditCardExpirationDate) {
-            this.creditCardExpirationDate = creditCardExpirationDate;
-        }
     }
 
+    @Value
     public static class TicketOption {
 
-        private Boolean openBarOption;
-        private Boolean magicBoxOption;
-        private Boolean skipLineOption;
-
-        public TicketOption(Boolean openBarOption, Boolean magicBoxOption, Boolean skipLineOption) {
-            this.openBarOption = openBarOption;
-            this.magicBoxOption = magicBoxOption;
-            this.skipLineOption = skipLineOption;
-        }
-
-        public Boolean getOpenBarOption() {
-            return openBarOption;
-        }
-
-        public void setOpenBarOption(Boolean openBarOption) {
-            this.openBarOption = openBarOption;
-        }
-
-        public Boolean getMagicBoxOption() {
-            return magicBoxOption;
-        }
-
-        public void setMagicBoxOption(Boolean magicBoxOption) {
-            this.magicBoxOption = magicBoxOption;
-        }
-
-        public Boolean getSkipLineOption() {
-            return skipLineOption;
-        }
-
-        public void setSkipLineOption(Boolean skipLineOption) {
-            this.skipLineOption = skipLineOption;
-        }
+        Boolean openBarOption;
+        Boolean magicBoxOption;
+        Boolean skipLineOption;
 
     }
 
