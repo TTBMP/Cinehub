@@ -9,7 +9,7 @@ import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
 import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.Seat;
-import com.ttbmp.cinehub.domain.ticket.component.Ticket;
+import com.ttbmp.cinehub.domain.ticket.Ticket;
 
 /**
  * @author Fabio Buracchi

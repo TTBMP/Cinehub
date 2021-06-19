@@ -3,10 +3,16 @@ package com.ttbmp.cinehub.service.persistence.entity;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.ColumnInfo;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Entity;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.PrimaryKey;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Ivan Palmieri
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(tableName = "turno")
 public class Shift {
 
@@ -26,54 +32,4 @@ public class Shift {
     @ColumnInfo(name = "data")
     private String date;
 
-    public Shift() {
-    }
-
-    public Shift(int id, String start, String end, String userId, String date) {
-        this.id = id;
-        this.start = start;
-        this.end = end;
-        this.userId = userId;
-        this.date = date;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getStart() {
-        return start;
-    }
-
-    public void setStart(String start) {
-        this.start = start;
-    }
-
-    public String getEnd() {
-        return end;
-    }
-
-    public void setEnd(String end) {
-        this.end = end;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
 }

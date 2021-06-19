@@ -3,6 +3,10 @@ package com.ttbmp.cinehub.domain.shift;
 
 import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.employee.Employee;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -10,6 +14,10 @@ import java.time.LocalTime;
 /**
  * @author Massimo Mazzetti
  */
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(callSuper = true)
 public class UsherShift extends Shift {
 
     public UsherShift(int id, Employee employee, String date, String start, String end) {

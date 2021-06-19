@@ -3,10 +3,16 @@ package com.ttbmp.cinehub.service.persistence.entity;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.ColumnInfo;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Entity;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.PrimaryKey;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Ivan Palmieri
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(tableName = "biglietto")
 public class Ticket {
 
@@ -26,54 +32,4 @@ public class Ticket {
     @ColumnInfo(name = "prezzo")
     private long price;
 
-    public Ticket() {
-    }
-
-    public Ticket(int id, int seatId, int projectionId, String userId, long price) {
-        this.id = id;
-        this.seatId = seatId;
-        this.projectionId = projectionId;
-        this.userId = userId;
-        this.price = price;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getSeatId() {
-        return seatId;
-    }
-
-    public void setSeatId(int seatId) {
-        this.seatId = seatId;
-    }
-
-    public int getProjectionId() {
-        return projectionId;
-    }
-
-    public void setProjectionId(int projectionId) {
-        this.projectionId = projectionId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public long getPrice() {
-        return price;
-    }
-
-    public void setPrice(long price) {
-        this.price = price;
-    }
 }

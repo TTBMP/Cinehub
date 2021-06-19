@@ -11,7 +11,7 @@ import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Movie;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
-import com.ttbmp.cinehub.domain.ticket.component.Ticket;
+import com.ttbmp.cinehub.domain.ticket.Ticket;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

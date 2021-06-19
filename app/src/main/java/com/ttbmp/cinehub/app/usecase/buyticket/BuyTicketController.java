@@ -21,7 +21,7 @@ import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.domain.*;
 import com.ttbmp.cinehub.domain.security.Permission;
-import com.ttbmp.cinehub.domain.ticket.component.Ticket;
+import com.ttbmp.cinehub.domain.ticket.Ticket;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketMagicBox;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketOpenBar;
 import com.ttbmp.cinehub.domain.ticket.decorator.TicketSkipLine;

@@ -4,7 +4,7 @@ import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.utilities.repository.JdbcRepository;
 import com.ttbmp.cinehub.domain.Customer;
-import com.ttbmp.cinehub.domain.ticket.component.Ticket;
+import com.ttbmp.cinehub.domain.ticket.Ticket;
 import com.ttbmp.cinehub.service.persistence.dao.UserDao;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 

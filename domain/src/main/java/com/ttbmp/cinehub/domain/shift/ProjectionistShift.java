@@ -3,6 +3,10 @@ package com.ttbmp.cinehub.domain.shift;
 import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.employee.Employee;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -11,6 +15,10 @@ import java.util.List;
 /**
  * @author Massimo Mazzetti
  */
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(callSuper = true)
 public class ProjectionistShift extends Shift {
 
     private Hall hall;
@@ -19,22 +27,6 @@ public class ProjectionistShift extends Shift {
     public ProjectionistShift(int id, Employee employee, String date, String start, String end, Hall hall, List<Projection> projectionList) {
         super(id, employee, date, start, end);
         this.hall = hall;
-        this.projectionList = projectionList;
-    }
-
-    public Hall getHall() {
-        return hall;
-    }
-
-    public void setHall(Hall hall) {
-        this.hall = hall;
-    }
-
-    public List<Projection> getProjectionList() {
-        return projectionList;
-    }
-
-    public void setProjectionList(List<Projection> projectionList) {
         this.projectionList = projectionList;
     }
 
@@ -53,16 +45,6 @@ public class ProjectionistShift extends Shift {
         shift.setStart(start.toString());
         shift.setEnd(end.toString());
         ((ProjectionistShift) shift).setHall(hall);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 
 }

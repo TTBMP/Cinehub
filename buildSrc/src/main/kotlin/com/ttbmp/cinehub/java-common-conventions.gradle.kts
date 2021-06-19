@@ -3,6 +3,7 @@ package com.ttbmp.cinehub
 plugins {
     java
     jacoco
+    id("io.freefair.lombok")
 }
 
 java {

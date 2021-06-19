@@ -11,7 +11,7 @@ import java.util.Properties;
 /**
  * @author Ivan Palmieri
  */
-public class SendEmailService {
+public class SendEmailService { // TODO: fix this class FFS
 
     public void sendMail(String email) {
         final var username = "yourUsername@email.com";

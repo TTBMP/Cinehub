@@ -1,34 +1,20 @@
 package com.ttbmp.cinehub.app.dto;
 
 import com.ttbmp.cinehub.domain.Hall;
+import lombok.Value;
 
 /**
  * @author Ivan Palmieri
  */
+@Value
 public class HallDto {
 
-    private Integer id;
-    private String name;
+    Integer id;
+    String name;
 
     public HallDto(Hall hall) {
         this.id = hall.getId();
         this.name = hall.getName();
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
 }
