@@ -22,7 +22,7 @@ public class ViewPersonalScheduleFxPresenter implements ViewPersonalSchedulePres
 
     @Override
     public void presentGetShiftList(ShiftListReply result) {
-        viewModel.setCurrentEmployee(result.getEmployeeDto());
+        viewModel.currentEmployeeProperty().set(result.getEmployeeDto());
         viewModel.getShiftList().setAll(result.getShiftDtoList());
     }
 
@@ -33,12 +33,12 @@ public class ViewPersonalScheduleFxPresenter implements ViewPersonalSchedulePres
 
     @Override
     public void presentNullRequest() {
-        viewModel.setErrorMessage("Request can't be null");
+        viewModel.errorMessageProperty().setValue("Request can't be null");
     }
 
     @Override
     public void presentInvalidRequest(Request request) {
-        viewModel.setErrorMessage(request.getErrorList().stream()
+        viewModel.errorMessageProperty().setValue(request.getErrorList().stream()
                 .map(Request.Error::getMessage)
                 .collect(Collectors.joining())
         );
@@ -46,17 +46,17 @@ public class ViewPersonalScheduleFxPresenter implements ViewPersonalSchedulePres
 
     @Override
     public void presentRepositoryError(RepositoryException e) {
-        viewModel.setErrorMessage(e.getMessage());
+        viewModel.errorMessageProperty().setValue(e.getMessage());
     }
 
     @Override
     public void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e) {
-        viewModel.setErrorMessage(e.getMessage());
+        viewModel.errorMessageProperty().setValue(e.getMessage());
     }
 
     @Override
     public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e) {
-        viewModel.setErrorMessage(e.getMessage());
+        viewModel.errorMessageProperty().setValue(e.getMessage());
     }
 
 }

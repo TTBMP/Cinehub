@@ -34,7 +34,7 @@ public class JdbcDataSourceProvider {
 
         var databaseAnnotation = dataSourceClass.getAnnotation(Database.class);
         if (databaseAnnotation == null) {
-            throw new DataSourceClassException();
+            throw new DataSourceClassException(dataSourceClass + " does not have Database annotation.");
         }
         return dataSourceClass.cast(Proxy.newProxyInstance(
                 dataSourceClass.getClassLoader(),

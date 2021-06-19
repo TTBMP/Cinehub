@@ -1,232 +1,119 @@
 package com.ttbmp.cinehub.app.repository.user;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.utilities.repository.MockRepository;
 import com.ttbmp.cinehub.domain.User;
 import com.ttbmp.cinehub.domain.security.Role;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
  * @author Fabio Buracchi
  */
-public class MockUserRepository implements UserRepository {
+public class MockUserRepository extends MockRepository implements UserRepository {
 
-    private static final List<UserData> USER_DATA_LIST = new ArrayList<>();
-    private static final List<RoleData> ROLE_DATA_LIST = new ArrayList<>();
-    private static final List<UserRoleData> USER_ROLE_DATA_LIST = new ArrayList<>();
+    public static final String ID = "id";
+    public static final String NAME = "name";
+    public static final String SURNAME = "surname";
+    public static final String EMAIL = "email";
+
+    private static final List<Map<String, String>> mockDataList = getMockDataList(MockUserRepository.class);
 
     static {
-        USER_DATA_LIST.add(new UserData("T8SP2uHYdHZfBk6uh3fJ356Sji52", "Fabio", "Buracchi", "fb@cinehub.com"));
-        USER_DATA_LIST.add(new UserData("gVUYDMojhmeFkErlbF0WWLQWMPn1", "Massimo", "Mazzetti", "mm@cinehub.com"));
-        USER_DATA_LIST.add(new UserData("vLmLJCuTwZZap4t4ngUclwUzwZ62", "Ivan", "Palmieri", "ip@cinehub.com"));
-        USER_DATA_LIST.add(new UserData("bvMrqf60V8OwETW9aEjeYbM9I0b2", "Mario", "Rossi", "mr@cinehub.com"));
-        USER_DATA_LIST.add(new UserData("JFDW7zA7pVh53im1Sl7fSnvaxML2", "Luigi", "Bianchi", "lb@cinehub.com"));
-        USER_DATA_LIST.add(new UserData("mg9eBHkPumcssl9dvrotbZqDbk62", "Steve", "Jobs", "sj@cinehub.com"));
-        USER_DATA_LIST.add(new UserData("C9o3hGHcfZXEXAjtJtlUEckE9WC2", "Bill", "Gates", "bg@cinehub.com"));
-        USER_DATA_LIST.add(new UserData("Tf6NcK4d8feY2TpuJVsqS74pbLf1", "Elon", "Musk", "em@cinehub.com"));
-        USER_DATA_LIST.add(new UserData("ikBgUbCQYlevLnLj7SOUb1PvS0h2", "Alan", "Turing", "at@cinehub.com"));
-        USER_DATA_LIST.add(new UserData("7jYsjrrXeFSUpu33TsdYwV135mx1", "James", "Gosling", "jg@cinehub.com"));
-        USER_DATA_LIST.add(new UserData("L02YH8zWNJXzXcwRIJSDyx3GOqC3", "Dennis", "Ritchie", "dr@cinehub.com"));
-        USER_DATA_LIST.add(new UserData("qTNkqPTioQO3cv953AqC3NR5NDf2", "Larry", "Page", "lp@cinehub.com"));
-        USER_DATA_LIST.add(new UserData("5KClU7hbNgedJAwLuF9eFVl6Qzz2", "Mark", "Zuckerberg", "mz@cinehub.com"));
-        USER_DATA_LIST.add(new UserData("ppgJVL8wS9bdjWxCxs6bll2K0Xs1", "Jeff", "Bezos", "jb@cinehub.com"));
-        ROLE_DATA_LIST.add(new RoleData(1, "customer"));
-        ROLE_DATA_LIST.add(new RoleData(2, "manager"));
-        ROLE_DATA_LIST.add(new RoleData(3, "employee"));
-        ROLE_DATA_LIST.add(new RoleData(4, "usher"));
-        ROLE_DATA_LIST.add(new RoleData(5, "projectionist"));
-        USER_DATA_LIST.stream()
-                .sorted(Comparator.comparing(d -> d.id.toLowerCase()))
-                .limit(1)
-                .forEach(d -> {
-                    USER_ROLE_DATA_LIST.add(new UserRoleData(d.id, 1));
-                    USER_ROLE_DATA_LIST.add(new UserRoleData(d.id, 2));
-                });
-        USER_DATA_LIST.stream()
-                .sorted(Comparator.comparing(d -> d.id.toLowerCase()))
-                .skip(1)
-                .limit(3)
-                .forEach(d -> USER_ROLE_DATA_LIST.add(new UserRoleData(d.id, 1)));
-        USER_DATA_LIST.stream()
-                .sorted(Comparator.comparing(d -> d.id.toLowerCase()))
-                .skip(4)
-                .limit(4)
-                .forEach(d -> {
-                    USER_ROLE_DATA_LIST.add(new UserRoleData(d.id, 1));
-                    USER_ROLE_DATA_LIST.add(new UserRoleData(d.id, 3));
-                    USER_ROLE_DATA_LIST.add(new UserRoleData(d.id, 4));
-                });
-        USER_DATA_LIST.stream()
-                .sorted(Comparator.comparing(d -> d.id.toLowerCase()))
-                .skip(8)
-                .forEach(d -> {
-                    USER_ROLE_DATA_LIST.add(new UserRoleData(d.id, 1));
-                    USER_ROLE_DATA_LIST.add(new UserRoleData(d.id, 3));
-                    USER_ROLE_DATA_LIST.add(new UserRoleData(d.id, 5));
-                });
+        mockDataList.addAll(new ArrayList<>(List.of(
+                new HashMap<>(Map.of(ID, "T8SP2uHYdHZfBk6uh3fJ356Sji52", NAME, "Fabio", SURNAME, "Buracchi", EMAIL, "fb@cinehub.com")),
+                new HashMap<>(Map.of(ID, "gVUYDMojhmeFkErlbF0WWLQWMPn1", NAME, "Massimo", SURNAME, "Mazzetti", EMAIL, "mm@cinehub.com")),
+                new HashMap<>(Map.of(ID, "vLmLJCuTwZZap4t4ngUclwUzwZ62", NAME, "Ivan", SURNAME, "Palmieri", EMAIL, "ip@cinehub.com")),
+                new HashMap<>(Map.of(ID, "bvMrqf60V8OwETW9aEjeYbM9I0b2", NAME, "Mario", SURNAME, "Rossi", EMAIL, "mr@cinehub.com")),
+                new HashMap<>(Map.of(ID, "JFDW7zA7pVh53im1Sl7fSnvaxML2", NAME, "Luigi", SURNAME, "Bianchi", EMAIL, "lb@cinehub.com")),
+                new HashMap<>(Map.of(ID, "mg9eBHkPumcssl9dvrotbZqDbk62", NAME, "Steve", SURNAME, "Jobs", EMAIL, "sj@cinehub.com")),
+                new HashMap<>(Map.of(ID, "C9o3hGHcfZXEXAjtJtlUEckE9WC2", NAME, "Bill", SURNAME, "Gates", EMAIL, "bg@cinehub.com")),
+                new HashMap<>(Map.of(ID, "Tf6NcK4d8feY2TpuJVsqS74pbLf1", NAME, "Elon", SURNAME, "Musk", EMAIL, "em@cinehub.com")),
+                new HashMap<>(Map.of(ID, "ikBgUbCQYlevLnLj7SOUb1PvS0h2", NAME, "Alan", SURNAME, "Turing", EMAIL, "at@cinehub.com")),
+                new HashMap<>(Map.of(ID, "7jYsjrrXeFSUpu33TsdYwV135mx1", NAME, "James", SURNAME, "Gosling", EMAIL, "jg@cinehub.com")),
+                new HashMap<>(Map.of(ID, "L02YH8zWNJXzXcwRIJSDyx3GOqC3", NAME, "Dennis", SURNAME, "Ritchie", EMAIL, "dr@cinehub.com")),
+                new HashMap<>(Map.of(ID, "qTNkqPTioQO3cv953AqC3NR5NDf2", NAME, "Larry", SURNAME, "Page", EMAIL, "lp@cinehub.com")),
+                new HashMap<>(Map.of(ID, "5KClU7hbNgedJAwLuF9eFVl6Qzz2", NAME, "Mark", SURNAME, "Zuckerberg", EMAIL, "mz@cinehub.com")),
+                new HashMap<>(Map.of(ID, "ppgJVL8wS9bdjWxCxs6bll2K0Xs1", NAME, "Jeff", SURNAME, "Bezos", EMAIL, "jb@cinehub.com"))
+        )));
     }
-
-    private final ServiceLocator serviceLocator;
 
     public MockUserRepository(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
+        super(serviceLocator);
     }
 
-    public static List<UserData> getUserDataList() {
-        return USER_DATA_LIST;
+    public static List<Map<String, String>> getMockDataList() {
+        return mockDataList;
     }
 
-    public static List<RoleData> getRoleDataList() {
-        return ROLE_DATA_LIST;
+    public static List<Role> getRoleList(String id) {
+        return MockRoleRepository.getMockDataList().stream()
+                .map(m -> m.get(MockRoleRepository.ID))
+                .filter(idRole -> MockUserRoleRepository.getMockDataList().stream()
+                        .filter(m -> m.get(MockUserRoleRepository.ID_USER).equals(id))
+                        .map(m -> m.get(MockUserRoleRepository.ID_ROLE))
+                        .collect(Collectors.toList())
+                        .contains(idRole)
+                )
+                .map(MockUserRepository::getRole)
+                .collect(Collectors.toList());
     }
 
-    public static List<UserRoleData> getUserRoleDataList() {
-        return USER_ROLE_DATA_LIST;
+    private static Role getRole(String roleId) {
+        var roleName = MockRoleRepository.getMockDataList().stream()
+                .filter(m -> m.get(MockRoleRepository.ID).equals(roleId))
+                .map(m -> m.get(MockRoleRepository.NAME))
+                .findAny()
+                .orElse("Role not found.");
+        switch (roleName) {
+            case "customer":
+                return Role.CUSTOMER_ROLE;
+            case "manager":
+                return Role.MANAGER_ROLE;
+            case "employee":
+                return Role.EMPLOYEE_ROLE;
+            case "usher":
+                return Role.USHER_ROLE;
+            case "projectionist":
+                return Role.PROJECTIONIST_ROLE;
+            default:
+                throw new IllegalStateException("Unexpected value: " + roleName);
+        }
     }
 
     @Override
     public User getUser(String userId) {
-        return USER_DATA_LIST.stream()
-                .filter(d -> d.id.equals(userId))
-                .map(d -> new UserProxy(serviceLocator, d.id, d.name, d.surname, d.email, d.getRoleList()))
+        return mockDataList.stream()
+                .filter(m -> m.get(ID).equals(userId))
+                .map(m -> new UserProxy(
+                        getServiceLocator(),
+                        m.get(ID),
+                        m.get(NAME),
+                        m.get(SURNAME),
+                        m.get(EMAIL),
+                        getRoleList(m.get(ID))
+                ))
                 .findAny()
                 .orElse(null);
     }
 
-    public static class UserData {
-
-        private String id;
-        private String name;
-        private String surname;
-        private String email;
-
-        public UserData(String id, String name, String surname, String email) {
-            this.id = id;
-            this.name = name;
-            this.surname = surname;
-            this.email = email;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getSurname() {
-            return surname;
-        }
-
-        public void setSurname(String surname) {
-            this.surname = surname;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public List<Role> getRoleList() {
-            return ROLE_DATA_LIST.stream()
-                    .filter(roleData -> USER_ROLE_DATA_LIST.stream()
-                            .filter(userRoleData -> userRoleData.idUser.equals(this.id))
-                            .map(userRoleData -> userRoleData.idRole)
-                            .collect(Collectors.toList())
-                            .contains(roleData.id)
-                    )
-                    .map(this::getRole)
-                    .collect(Collectors.toList());
-        }
-
-        private Role getRole(RoleData roleData) {
-            switch (roleData.name) {
-                case "customer":
-                    return Role.CUSTOMER_ROLE;
-                case "manager":
-                    return Role.MANAGER_ROLE;
-                case "employee":
-                    return Role.EMPLOYEE_ROLE;
-                case "usher":
-                    return Role.USHER_ROLE;
-                case "projectionist":
-                    return Role.PROJECTIONIST_ROLE;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + roleData.name);
-            }
-        }
-
-    }
-
-    public static class RoleData {
-
-        private int id;
-        private String name;
-
-        public RoleData(int id, String name) {
-            this.id = id;
-            this.name = name;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-    }
-
-    public static class UserRoleData {
-
-        private String idUser;
-        private int idRole;
-
-        public UserRoleData(String idUser, int idRole) {
-            this.idUser = idUser;
-            this.idRole = idRole;
-        }
-
-        public String getIdUser() {
-            return idUser;
-        }
-
-        public void setIdUser(String idUser) {
-            this.idUser = idUser;
-        }
-
-        public int getIdRole() {
-            return idRole;
-        }
-
-        public void setIdRole(int idRole) {
-            this.idRole = idRole;
-        }
-
+    @Override
+    public List<User> getAllUser() throws RepositoryException {
+        return mockDataList.stream()
+                .map(m -> new UserProxy(
+                        getServiceLocator(),
+                        m.get(ID),
+                        m.get(NAME),
+                        m.get(SURNAME),
+                        m.get(EMAIL),
+                        getRoleList(m.get(ID))
+                ))
+                .collect(Collectors.toList());
     }
 
 }

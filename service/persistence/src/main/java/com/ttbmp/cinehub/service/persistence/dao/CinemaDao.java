@@ -1,7 +1,9 @@
 package com.ttbmp.cinehub.service.persistence.dao;
 
 import com.ttbmp.cinehub.service.persistence.entity.Cinema;
-import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.*;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Dao;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Parameter;
+import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Query;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.exception.DaoMethodException;
 
 import javax.validation.constraints.NotNull;
@@ -35,23 +37,5 @@ public interface CinemaDao {
             @Parameter(name = "movieId") int movieId,
             @Parameter(name = "data") @NotNull String data
     ) throws DaoMethodException;
-
-    @Insert
-    void insert(@NotNull Cinema cinema) throws DaoMethodException;
-
-    @Insert
-    void insert(@NotNull List<Cinema> cinema) throws DaoMethodException;
-
-    @Update
-    void update(@NotNull Cinema cinema) throws DaoMethodException;
-
-    @Update
-    void update(@NotNull List<Cinema> cinema) throws DaoMethodException;
-
-    @Delete
-    void delete(@NotNull Cinema cinema) throws DaoMethodException;
-
-    @Delete
-    void delete(@NotNull List<Cinema> cinema) throws DaoMethodException;
 
 }

@@ -2,24 +2,34 @@ package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Getter
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@ToString
+@EqualsAndHashCode(callSuper = false)
 public class CreateShiftRequest extends AuthenticatedRequest {
 
-    public static final Request.Error MISSING_EMPLOYEE = new Request.Error("dipendente non valido");
-    public static final Request.Error MISSING_DATE = new Request.Error("data non valida");
-    public static final Request.Error MISSING_START = new Request.Error("inizio non valido");
-    public static final Request.Error MISSING_END = new Request.Error("fine non valida");
-    public static final Request.Error MISSING_HALL = new Request.Error("Sala non valida");
-    public static final Request.Error DATE_ERROR = new Request.Error("ora non valida");
+    public static final Request.Error MISSING_EMPLOYEE = new Request.Error("Employee can't be null.");
+    public static final Request.Error MISSING_DATE = new Request.Error("Date can't be null.");
+    public static final Request.Error MISSING_START = new Request.Error("Start can't be null.");
+    public static final Request.Error MISSING_END = new Request.Error("End can't be null.");
+    public static final Request.Error MISSING_HALL = new Request.Error("Hall can't be null.");
+    public static final Request.Error DATE_ERROR = new Request.Error("Invalid date.");
+    public static final Request.Error TIME_ERROR = new Request.Error("Invalid time.");
 
-    private String employeeId;
-    private LocalDate date;
-    private LocalTime start;
-    private LocalTime end;
-    private int hallId;
+    String employeeId;
+    LocalDate date;
+    LocalTime start;
+    LocalTime end;
+    int hallId;
 
     public CreateShiftRequest(String sessionToken, String employeeId, LocalDate date, LocalTime start, LocalTime end) {
         super(sessionToken);
@@ -27,6 +37,7 @@ public class CreateShiftRequest extends AuthenticatedRequest {
         this.date = date;
         this.start = start;
         this.end = end;
+        this.hallId = -1;
     }
 
     public CreateShiftRequest(String sessionToken, String employeeId, LocalDate date, LocalTime start, LocalTime end, int hallId) {
@@ -38,46 +49,6 @@ public class CreateShiftRequest extends AuthenticatedRequest {
         this.hallId = hallId;
     }
 
-    public String getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public LocalTime getStart() {
-        return start;
-    }
-
-    public void setStart(LocalTime start) {
-        this.start = start;
-    }
-
-    public LocalTime getEnd() {
-        return end;
-    }
-
-    public void setEnd(LocalTime end) {
-        this.end = end;
-    }
-
-    public int getHallId() {
-        return hallId;
-    }
-
-    public void setHallId(int hallId) {
-        this.hallId = hallId;
-    }
-
     @Override
     protected void onValidate() {
         if (employeeId == null) {
@@ -85,18 +56,18 @@ public class CreateShiftRequest extends AuthenticatedRequest {
         }
         if (date == null) {
             addError(MISSING_DATE);
-        }
-        if (LocalDate.now().isAfter(date)) {
-            addError(MISSING_DATE);
-        }
-        if (start == null) {
-            addError(MISSING_START);
-        }
-        if (end == null) {
-            addError(MISSING_END);
-        }
-        if (start.isAfter(end)) {
+        } else if (LocalDate.now().isAfter(date)) {
             addError(DATE_ERROR);
+        }
+        if (start == null || end == null) {
+            if (start == null) {
+                addError(MISSING_START);
+            }
+            if (end == null) {
+                addError(MISSING_END);
+            }
+        } else if (start.isAfter(end)) {
+            addError(TIME_ERROR);
         }
     }
 

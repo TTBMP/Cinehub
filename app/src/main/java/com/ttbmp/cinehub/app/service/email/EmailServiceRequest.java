@@ -7,6 +7,8 @@ import com.ttbmp.cinehub.app.utilities.request.Request;
  */
 public class EmailServiceRequest extends Request {
 
+    public static final Request.Error EMAIL_ERROR = new Request.Error("The email is invalid");
+
     private String email;
     private String object;
 
@@ -33,6 +35,9 @@ public class EmailServiceRequest extends Request {
 
     @Override
     protected void onValidate() {
-
+        if (!email.contains("@")) {
+            addError(EMAIL_ERROR);
+        }
     }
+
 }

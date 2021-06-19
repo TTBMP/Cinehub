@@ -1,20 +1,15 @@
 package com.ttbmp.cinehub.app.usecase.getuserrole;
 
+import lombok.Value;
+
 import java.util.List;
 
 import static com.ttbmp.cinehub.domain.security.Role.*;
 
+@Value
 public class RoleReply {
 
-    private final List<Role> roleList;
-
-    public RoleReply(List<Role> roleList) {
-        this.roleList = roleList;
-    }
-
-    public List<Role> getRoleList() {
-        return roleList;
-    }
+    List<Role> roleList;
 
     public enum Role {
         CUSTOMER,

@@ -3,6 +3,10 @@ package com.ttbmp.cinehub.domain.shift;
 import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.employee.Employee;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -11,6 +15,10 @@ import java.util.List;
 /**
  * @author Massimo Mazzetti
  */
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(callSuper = true)
 public class ProjectionistShift extends Shift {
 
     private Hall hall;
@@ -22,47 +30,10 @@ public class ProjectionistShift extends Shift {
         this.projectionList = projectionList;
     }
 
-    public Hall getHall() {
-        return hall;
-    }
-
-    public void setHall(Hall hall) {
-        this.hall = hall;
-    }
-
-    public List<Projection> getProjectionList() {
-        return projectionList;
-    }
-
-    public void setProjectionList(List<Projection> projectionList) {
-        this.projectionList = projectionList;
-    }
-
     @Override
     public void modifyShift(Shift shift, LocalDate date, LocalTime start, LocalTime end, Hall hall) throws ModifyShiftException {
-        var shiftList = shift.getEmployee().getShiftListBetween(date.minusDays(1), date.plusDays(1));
-        for (var elem : shiftList) {
-            if (elem.getId() != shift.getId()
-                    && LocalDate.parse(elem.getDate()).equals(date)
-                    && (start.isBefore(LocalTime.parse(elem.getEnd()))
-                    && (end.isAfter(LocalTime.parse(elem.getStart()))))) {
-                throw new ModifyShiftException(ModifyShiftException.ALREADY_EXIST_ERROR);
-            }
-        }
-        shift.setDate(date.toString());
-        shift.setStart(start.toString());
-        shift.setEnd(end.toString());
+        super.modifyShift(shift, date, start, end, hall);
         ((ProjectionistShift) shift).setHall(hall);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 
 }

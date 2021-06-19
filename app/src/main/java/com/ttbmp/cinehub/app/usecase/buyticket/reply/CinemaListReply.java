@@ -1,23 +1,16 @@
 package com.ttbmp.cinehub.app.usecase.buyticket.reply;
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
+import lombok.Value;
 
 import java.util.List;
 
 /**
  * @author Ivan Palmieri
  */
+@Value
 public class CinemaListReply {
 
-    private final List<CinemaDto> cinemaList;
-
-    public CinemaListReply(List<CinemaDto> cinemaList) {
-        this.cinemaList = cinemaList;
-
-    }
-
-    public List<CinemaDto> getCinemaList() {
-        return cinemaList;
-    }
+    List<CinemaDto> cinemaList;
 
 }

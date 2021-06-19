@@ -1,147 +1,139 @@
 package com.ttbmp.cinehub.app.repository.employee;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.projectionist.ProjectionistProxy;
 import com.ttbmp.cinehub.app.repository.employee.usher.UsherProxy;
 import com.ttbmp.cinehub.app.repository.shift.MockShiftRepository;
+import com.ttbmp.cinehub.app.repository.user.MockRoleRepository;
 import com.ttbmp.cinehub.app.repository.user.MockUserRepository;
+import com.ttbmp.cinehub.app.repository.user.MockUserRoleRepository;
+import com.ttbmp.cinehub.app.utilities.repository.MockRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.shift.Shift;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
  * @author Fabio Buracchi
  */
-public class MockEmployeeRepository implements EmployeeRepository {
+public class MockEmployeeRepository extends MockRepository implements EmployeeRepository {
 
-    private static final List<EmployeeData> EMPLOYEE_DATA_LIST = new ArrayList<>();
+    public static final String USER_ID = "userId";
+    public static final String CINEMA_ID = "cinemaId";
+
+    private static final List<Map<String, String>> mockDataList = getMockDataList(MockEmployeeRepository.class);
 
     static {
-        var usherIdList = MockUserRepository.getRoleDataList().stream()
-                .filter(roleData -> roleData.getName().equals("usher"))
+        var usherRoleId = MockRoleRepository.getMockDataList().stream()
+                .filter(m -> m.get(MockRoleRepository.NAME).equals("usher"))
+                .map(m -> m.get(MockRoleRepository.ID))
                 .findAny()
-                .map(roleData -> MockUserRepository.getUserRoleDataList().stream()
-                        .filter(userRoleData -> userRoleData.getIdRole() == roleData.getId())
-                        .map(MockUserRepository.UserRoleData::getIdUser)
-                        .collect(Collectors.toList()))
-                .orElse(new ArrayList<>());
-        var projectionistIdList = MockUserRepository.getRoleDataList().stream()
-                .filter(roleData -> roleData.getName().equals("projectionist"))
+                .orElse(null);
+        var projectionistRoleId = MockRoleRepository.getMockDataList().stream()
+                .filter(m -> m.get(MockRoleRepository.NAME).equals("projectionist"))
+                .map(m -> m.get(MockRoleRepository.ID))
                 .findAny()
-                .map(roleData -> MockUserRepository.getUserRoleDataList().stream()
-                        .filter(userRoleData -> userRoleData.getIdRole() == roleData.getId())
-                        .map(MockUserRepository.UserRoleData::getIdUser)
-                        .collect(Collectors.toList()))
-                .orElse(new ArrayList<>());
-        MockUserRepository.getUserDataList().stream()
-                .map(MockUserRepository.UserData::getId)
+                .orElse(null);
+        var usherIdList = MockUserRoleRepository.getMockDataList().stream()
+                .filter(m -> m.get(MockUserRoleRepository.ID_ROLE).equals(usherRoleId))
+                .map(m -> m.get(MockUserRoleRepository.ID_USER))
+                .collect(Collectors.toList());
+        var projectionistIdList = MockUserRoleRepository.getMockDataList().stream()
+                .filter(m -> m.get(MockUserRoleRepository.ID_ROLE).equals(projectionistRoleId))
+                .map(m -> m.get(MockUserRoleRepository.ID_USER))
+                .collect(Collectors.toList());
+        MockUserRepository.getMockDataList().stream()
+                .map(m -> m.get(MockUserRepository.ID))
                 .filter(usherIdList::contains)
+                .sorted(String::compareToIgnoreCase)
                 .limit(usherIdList.size() / 2)
-                .forEach(userId -> EMPLOYEE_DATA_LIST.add(new EmployeeData(userId, 1)));
-        MockUserRepository.getUserDataList().stream()
-                .map(MockUserRepository.UserData::getId)
+                .forEach(userId -> mockDataList.add(new HashMap<>(Map.of(USER_ID, userId, CINEMA_ID, "1"))));
+        MockUserRepository.getMockDataList().stream()
+                .map(m -> m.get(MockUserRepository.ID))
                 .filter(usherIdList::contains)
+                .sorted(String::compareToIgnoreCase)
                 .skip(usherIdList.size() / 2)
-                .forEach(userId -> EMPLOYEE_DATA_LIST.add(new EmployeeData(userId, 2)));
-        MockUserRepository.getUserDataList().stream()
-                .map(MockUserRepository.UserData::getId)
+                .forEach(userId -> mockDataList.add(new HashMap<>(Map.of(USER_ID, userId, CINEMA_ID, "2"))));
+        MockUserRepository.getMockDataList().stream()
+                .map(m -> m.get(MockUserRepository.ID))
                 .filter(projectionistIdList::contains)
-                .limit(usherIdList.size() / 2)
-                .forEach(userId -> EMPLOYEE_DATA_LIST.add(new EmployeeData(userId, 1)));
-        MockUserRepository.getUserDataList().stream()
-                .map(MockUserRepository.UserData::getId)
+                .sorted(String::compareToIgnoreCase)
+                .limit(projectionistIdList.size() / 2)
+                .forEach(userId -> mockDataList.add(new HashMap<>(Map.of(USER_ID, userId, CINEMA_ID, "1"))));
+        MockUserRepository.getMockDataList().stream()
+                .map(m -> m.get(MockUserRepository.ID))
                 .filter(projectionistIdList::contains)
-                .skip(usherIdList.size() / 2)
-                .forEach(userId -> EMPLOYEE_DATA_LIST.add(new EmployeeData(userId, 2)));
+                .sorted(String::compareToIgnoreCase)
+                .skip(projectionistIdList.size() / 2)
+                .forEach(userId -> mockDataList.add(new HashMap<>(Map.of(USER_ID, userId, CINEMA_ID, "2"))));
     }
-
-    private final ServiceLocator serviceLocator;
 
     public MockEmployeeRepository(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
+        super(serviceLocator);
     }
 
-    public static List<EmployeeData> getEmployeeDataList() {
-        return EMPLOYEE_DATA_LIST;
+    public static List<Map<String, String>> getMockDataList() {
+        return mockDataList;
     }
 
     @Override
     public Employee getEmployee(String userId) {
-        return EMPLOYEE_DATA_LIST.stream()
-                .filter(d -> d.getUserId().equals(userId))
+        return mockDataList.stream()
+                .filter(m -> m.get(USER_ID).equals(userId))
                 .findAny()
-                .map(d -> new EmployeeFactory().createEmployee(d))
+                .map(m -> new EmployeeFactory().createEmployee(m))
                 .orElse(null);
     }
 
     @Override
     public Employee getEmployee(Shift shift) {
-        return MockShiftRepository.getShiftDataList().stream()
-                .filter(d -> d.getId() == shift.getId())
+        return MockShiftRepository.getMockDataList().stream()
+                .filter(m -> m.get(MockShiftRepository.ID).equals(Integer.toString(shift.getId())))
                 .findAny()
-                .map(MockShiftRepository.ShiftData::getEmployeeId)
-                .flatMap(shiftEmployeeId -> EMPLOYEE_DATA_LIST.stream()
-                        .filter(d -> d.userId.equals(shiftEmployeeId))
+                .map(m -> m.get(MockShiftRepository.EMPLOYEE_ID))
+                .flatMap(shiftEmployeeId -> mockDataList.stream()
+                        .filter(m -> m.get(USER_ID).equals(shiftEmployeeId))
                         .findAny()
-                        .map(d -> new EmployeeFactory().createEmployee(d))
+                        .map(m -> new EmployeeFactory().createEmployee(m))
                 )
                 .orElse(null);
     }
 
     @Override
-    public List<Employee> getEmployeeList(Cinema cinema) {
-        return EMPLOYEE_DATA_LIST.stream()
-                .filter(d -> d.getCinemaId() == cinema.getId())
-                .map(d -> new EmployeeFactory().createEmployee(d))
+    public List<Employee> getAllEmployee() throws RepositoryException {
+        return mockDataList.stream()
+                .map(m -> new EmployeeFactory().createEmployee(m))
                 .collect(Collectors.toList());
     }
 
-    public static class EmployeeData {
-
-        private String userId;
-        private int cinemaId;
-
-        public EmployeeData(String userId, int cinemaId) {
-            this.userId = userId;
-            this.cinemaId = cinemaId;
-        }
-
-        public String getUserId() {
-            return userId;
-        }
-
-        public void setUserId(String userId) {
-            this.userId = userId;
-        }
-
-        public int getCinemaId() {
-            return cinemaId;
-        }
-
-        public void setCinemaId(int cinemaId) {
-            this.cinemaId = cinemaId;
-        }
-
+    @Override
+    public List<Employee> getEmployeeList(Cinema cinema) {
+        return mockDataList.stream()
+                .filter(m -> m.get(CINEMA_ID).equals(Integer.toString(cinema.getId())))
+                .map(m -> new EmployeeFactory().createEmployee(m))
+                .collect(Collectors.toList());
     }
 
     class EmployeeFactory {
-        Employee createEmployee(EmployeeData employeeData) {
-            var roleList = MockUserRepository.getUserDataList().stream()
-                    .filter(d -> d.getId().equals(employeeData.userId))
+        Employee createEmployee(Map<String, String> employeeDataMap) {
+            var roleList = MockUserRepository.getMockDataList().stream()
+                    .filter(m -> m.get(MockUserRepository.ID).equals(employeeDataMap.get(USER_ID)))
                     .findAny()
-                    .map(MockUserRepository.UserData::getRoleList)
+                    .map(m -> MockUserRepository.getRoleList(m.get(MockUserRepository.ID)))
                     .orElse(new ArrayList<>());
             if (roleList.contains(Role.PROJECTIONIST_ROLE)) {
-                return new ProjectionistProxy(serviceLocator, employeeData.userId);
+                return new ProjectionistProxy(getServiceLocator(), employeeDataMap.get(USER_ID));
             } else if (roleList.contains(Role.USHER_ROLE)) {
-                return new UsherProxy(serviceLocator, employeeData.userId);
+                return new UsherProxy(getServiceLocator(), employeeDataMap.get(USER_ID));
             } else {
-                throw new IllegalStateException("Unexpected user: " + employeeData.userId);
+                throw new IllegalStateException("Unexpected user: " + employeeDataMap.get(USER_ID));
             }
         }
     }

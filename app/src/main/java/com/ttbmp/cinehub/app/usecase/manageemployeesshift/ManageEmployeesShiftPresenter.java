@@ -1,14 +1,12 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift;
 
-import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.service.security.SecurePresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply.*;
-import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
-import com.ttbmp.cinehub.app.utilities.request.Request;
 
 /**
  * @author Massimo Mazzetti
  */
-public interface ManageEmployeesShiftPresenter {
+public interface ManageEmployeesShiftPresenter extends SecurePresenter {
 
     void presentShiftList(GetShiftListReply reply);
 
@@ -27,15 +25,5 @@ public interface ManageEmployeesShiftPresenter {
     void presentCreateShiftError(Throwable error);
 
     void presentModifyShiftError(Throwable error);
-
-    void presentInvalidRequest(Request request);
-
-    void presentNullRequest();
-
-    void presentRepositoryError(RepositoryException e);
-
-    void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e);
-
-    void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e);
 
 }

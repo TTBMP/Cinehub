@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.login;
 
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.usecase.login.LoginPresenter;
 import com.ttbmp.cinehub.app.usecase.login.LoginReply;
@@ -19,7 +20,7 @@ public class LoginPresenterFx implements LoginPresenter {
     @Override
     public void presentSessionToken(LoginReply reply) {
         CinehubApplication.setSessionToken(reply.getSessionCookie());
-        viewModel.setIsLogged(true);
+        viewModel.loggedProperty().set(true);
     }
 
     @Override
@@ -29,15 +30,20 @@ public class LoginPresenterFx implements LoginPresenter {
 
     @Override
     public void presentNullRequest() {
-        viewModel.setErrorMessage("Request can't be null");
+        viewModel.errorMessageProperty().setValue("Request can't be null");
     }
 
     @Override
     public void presentInvalidRequest(Request request) {
-        viewModel.setErrorMessage(request.getErrorList().stream()
+        viewModel.errorMessageProperty().setValue(request.getErrorList().stream()
                 .map(Request.Error::getMessage)
                 .collect(Collectors.joining())
         );
+    }
+
+    @Override
+    public void presentRepositoryError(RepositoryException e) {
+
     }
 
 }

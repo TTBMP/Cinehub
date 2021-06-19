@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.ui.web.logout;
 
+import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.logout.LogoutPresenter;
 import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
@@ -21,6 +22,11 @@ public class LogoutPresenterWeb implements LogoutPresenter {
     @Override
     public void presentInvalidRequest(Request request) {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
+    }
+
+    @Override
+    public void presentRepositoryError(RepositoryException e) {
+
     }
 
     @Override

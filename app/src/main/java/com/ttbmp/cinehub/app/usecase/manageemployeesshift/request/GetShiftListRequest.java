@@ -2,13 +2,23 @@ package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 
 /**
  * @author Massimo Mazzetti
  */
+@Getter
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@ToString
+@EqualsAndHashCode(callSuper = false)
 public class GetShiftListRequest extends AuthenticatedRequest {
+
     public static final Request.Error INVALID_CINEMA = new Request.Error("Cinema non valido");
     public static final Request.Error MISSING_START = new Request.Error("Inizio non valido");
     public static final Request.Error MISSING_END = new Request.Error("Fine non valido");
@@ -22,30 +32,6 @@ public class GetShiftListRequest extends AuthenticatedRequest {
         this.cinemaId = cinemaId;
         this.start = start;
         this.end = end;
-    }
-
-    public LocalDate getEnd() {
-        return end;
-    }
-
-    public void setEnd(LocalDate end) {
-        this.end = end;
-    }
-
-    public int getCinemaId() {
-        return cinemaId;
-    }
-
-    public void setCinemaId(int cinemaId) {
-        this.cinemaId = cinemaId;
-    }
-
-    public LocalDate getStart() {
-        return start;
-    }
-
-    public void setStart(LocalDate start) {
-        this.start = start;
     }
 
     @Override

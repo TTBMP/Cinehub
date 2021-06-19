@@ -1,15 +1,13 @@
 package com.ttbmp.cinehub.app.usecase.buyticket;
 
-import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
+import com.ttbmp.cinehub.app.service.security.SecurePresenter;
 import com.ttbmp.cinehub.app.usecase.buyticket.reply.*;
-import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
-import com.ttbmp.cinehub.app.utilities.request.Request;
 
 /**
  * @author Ivan Palmieri
  */
-public interface BuyTicketPresenter {
+public interface BuyTicketPresenter extends SecurePresenter {
 
     void presentMovieList(MovieListReply reply);
 
@@ -20,16 +18,6 @@ public interface BuyTicketPresenter {
     void presentSeatList(SeatListReply reply);
 
     void presentTicket(TicketReply reply);
-
-    void presentInvalidRequest(Request request);
-
-    void presentNullRequest();
-
-    void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException requestException);
-
-    void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException requestException);
-
-    void presentRepositoryError(RepositoryException exception);
 
     void presentSeatAlreadyBookedError(SeatErrorReply reply);
 

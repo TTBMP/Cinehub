@@ -65,7 +65,7 @@ public class ChooseProjectionViewController {
         useCase.getProjectionList(new ProjectionListRequest(
                 paymentForm.getMovie().getId(),
                 paymentForm.getCinema().getId(),
-                LocalDate.parse(paymentForm.getDate())
+                paymentForm.getDate()
         ));
         return ErrorHelper.returnView(response, model, "buy_ticket/choose_cinema");
     }

@@ -20,17 +20,15 @@ public class LoginController implements LoginUseCase {
 
     @Override
     public void login(LoginRequest request) {
-        try {
-            Request.validate(request);
-            var sessionToken = securityService.authenticate(request.getUsername(), request.getPassword());
-            presenter.presentSessionToken(new LoginReply(sessionToken));
-        } catch (Request.NullRequestException e) {
-            presenter.presentNullRequest();
-        } catch (Request.InvalidRequestException e) {
-            presenter.presentInvalidRequest(request);
-        } catch (SecurityException e) {
-            presenter.presentSecurityError(e);
-        }
+        execute(presenter, request, () -> {
+            try {
+                Request.validate(request);
+                var sessionToken = securityService.authenticate(request.getUsername(), request.getPassword());
+                presenter.presentSessionToken(new LoginReply(sessionToken));
+            } catch (SecurityException e) {
+                presenter.presentSecurityError(e);
+            }
+        });
     }
 
 }

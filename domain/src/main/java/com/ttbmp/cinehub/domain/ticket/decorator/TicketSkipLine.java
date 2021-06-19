@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.domain.ticket.decorator;
 
-import com.ttbmp.cinehub.domain.ticket.component.Ticket;
+import com.ttbmp.cinehub.domain.ticket.Ticket;
 
 /**
  * @author Ivan Palmieri

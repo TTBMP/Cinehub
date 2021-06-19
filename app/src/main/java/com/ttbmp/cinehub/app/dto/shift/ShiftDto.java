@@ -1,6 +1,11 @@
 package com.ttbmp.cinehub.app.dto.shift;
 
 import com.ttbmp.cinehub.domain.shift.Shift;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -8,13 +13,18 @@ import java.time.LocalTime;
 /**
  * @author Fabio Buracchi, Massimo Mazzetti
  */
+
+@Getter
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@ToString
+@EqualsAndHashCode
 public abstract class ShiftDto {
 
-    private int id;
-    private String employeeId;
-    private LocalDate date;
-    private LocalTime start;
-    private LocalTime end;
+    int id;
+    String employeeId;
+    LocalDate date;
+    LocalTime start;
+    LocalTime end;
 
     protected ShiftDto(Shift shift) {
         this.id = shift.getId();
@@ -22,63 +32,6 @@ public abstract class ShiftDto {
         this.date = LocalDate.parse(shift.getDate());
         this.start = LocalTime.parse(shift.getStart());
         this.end = LocalTime.parse(shift.getEnd());
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public LocalTime getStart() {
-        return start;
-    }
-
-    public void setStart(LocalTime start) {
-        this.start = start;
-    }
-
-    public LocalTime getEnd() {
-        return end;
-    }
-
-    public void setEnd(LocalTime end) {
-        this.end = end;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null || this.getClass() != obj.getClass()) {
-            return false;
-        }
-        var other = (ShiftDto) obj;
-        return employeeId.equals(other.employeeId)
-                && date.equals(other.date)
-                && start.equals(other.start)
-                && end.equals(other.end);
-    }
-
-    @Override
-    public int hashCode() {
-        return employeeId.hashCode() + date.hashCode() + start.hashCode() + end.hashCode();
     }
 
 }

@@ -55,8 +55,6 @@ public interface CinemaDatabase extends JdbcDataSource {
 
     ProjectionistDao getProjectionistDao() throws DataSourceMethodException;
 
-    UsherDao getUsherDao() throws DataSourceMethodException;
-
     ProjectionistShiftDao getProjectionistShiftDao() throws DataSourceMethodException;
 
 }

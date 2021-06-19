@@ -1,22 +1,16 @@
 package com.ttbmp.cinehub.app.usecase.buyticket.reply;
 
 import com.ttbmp.cinehub.app.dto.SeatDto;
+import lombok.Value;
 
 import java.util.List;
 
 /**
  * @author Ivan Palmieri
  */
+@Value
 public class SeatListReply {
 
-    private final List<SeatDto> seatDtoList;
-
-    public SeatListReply(List<SeatDto> seatDtoList) {
-        this.seatDtoList = seatDtoList;
-    }
-
-    public List<SeatDto> getSeatDtoList() {
-        return seatDtoList;
-    }
+    List<SeatDto> seatDtoList;
 
 }

@@ -2,10 +2,16 @@ package com.ttbmp.cinehub.service.persistence.entity;
 
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.ColumnInfo;
 import com.ttbmp.cinehub.service.persistence.utils.jdbc.annotation.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Ivan Palmieri, Massimo Mazzetti
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(tableName = "sala")
 public class Hall {
 
@@ -17,38 +23,5 @@ public class Hall {
 
     @ColumnInfo(name = "numero")
     private String number;
-
-    public Hall() {
-    }
-
-    public Hall(int id, int cinemaId, String number) {
-        this.id = id;
-        this.cinemaId = cinemaId;
-        this.number = number;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public int getCinemaId() {
-        return cinemaId;
-    }
-
-    public void setCinemaId(int cinemaId) {
-        this.cinemaId = cinemaId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
 }

@@ -2,12 +2,21 @@ package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-
+@Getter
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@ToString
+@EqualsAndHashCode(callSuper = false)
 public class ShiftRepeatRequest extends AuthenticatedRequest {
+
     public static final Request.Error MISSING_EMPLOYEE = new Request.Error("Dipendente non valido");
     public static final Request.Error MISSING_START = new Request.Error("Data inizio non valido");
     public static final Request.Error MISSING_END = new Request.Error("Data fine non valida");
@@ -16,14 +25,13 @@ public class ShiftRepeatRequest extends AuthenticatedRequest {
     public static final Request.Error MISSING_END_SHIFT = new Request.Error("Ora fine non valida");
     public static final Request.Error PERIOD_ERROR = new Request.Error("Periodo non valido");
 
-
-    private LocalDate start;
-    private LocalDate end;
-    private String option;
-    private String employeeId;
-    private LocalTime startShift;
-    private LocalTime endShift;
-    private int hallId;
+    LocalDate start;
+    LocalDate end;
+    String option;
+    String employeeId;
+    LocalTime startShift;
+    LocalTime endShift;
+    int hallId;
 
     public ShiftRepeatRequest(String sessionToken, LocalDate start, LocalDate end, String option, String employeeId, LocalTime startShift, LocalTime endShift, int hallId) {
         super(sessionToken);
@@ -33,62 +41,6 @@ public class ShiftRepeatRequest extends AuthenticatedRequest {
         this.employeeId = employeeId;
         this.startShift = startShift;
         this.endShift = endShift;
-        this.hallId = hallId;
-    }
-
-    public LocalDate getStart() {
-        return start;
-    }
-
-    public void setStart(LocalDate start) {
-        this.start = start;
-    }
-
-    public LocalDate getEnd() {
-        return end;
-    }
-
-    public void setEnd(LocalDate end) {
-        this.end = end;
-    }
-
-    public String getOption() {
-        return option;
-    }
-
-    public void setOption(String option) {
-        this.option = option;
-    }
-
-    public String getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public LocalTime getStartShift() {
-        return startShift;
-    }
-
-    public void setStartShift(LocalTime startShift) {
-        this.startShift = startShift;
-    }
-
-    public LocalTime getEndShift() {
-        return endShift;
-    }
-
-    public void setEndShift(LocalTime endShift) {
-        this.endShift = endShift;
-    }
-
-    public int getHallId() {
-        return hallId;
-    }
-
-    public void setHallId(int hallId) {
         this.hallId = hallId;
     }
 

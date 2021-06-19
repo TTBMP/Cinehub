@@ -40,7 +40,7 @@ public class DaoOperationProvider {
             operationInstanceMap.putIfAbsent(method, createDaoOperation(method, connection, dataSourceEntityList));
             return operationInstanceMap.get(method);
         } catch (NoSuchMethodException e) {
-            throw new DaoMethodException();
+            throw new DaoMethodException(e.getMessage());
         }
     }
 
@@ -56,7 +56,7 @@ public class DaoOperationProvider {
         } else if (type == Delete.class) {
             return new DaoDeleteOperation(method, connection, dataSourceEntityList);
         } else {
-            throw new DaoMethodException(); // Unreachable
+            throw new DaoMethodException("DaoOperationProvider::createDaoOperation failed unexpectedly."); // Unreachable
         }
     }
 
@@ -66,7 +66,7 @@ public class DaoOperationProvider {
                 .filter(requiredTypeList::contains)
                 .collect(Collectors.toList());
         if (filteredAnnotationTypeList.size() != 1) {
-            throw new DaoMethodException();
+            throw new DaoMethodException("Invalid Dao operation.");
         }
         return filteredAnnotationTypeList.iterator().next();
     }

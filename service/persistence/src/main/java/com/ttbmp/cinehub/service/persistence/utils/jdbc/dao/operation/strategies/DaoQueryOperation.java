@@ -55,7 +55,7 @@ public class DaoQueryOperation extends DaoOperation {
             );
             return getResult(statement.executeQuery());
         } catch (SQLException | InvocationTargetException | IllegalAccessException | NoSuchMethodException | InstantiationException e) {
-            throw new DaoMethodException();
+            throw new DaoMethodException(e.getMessage());
         }
     }
 
@@ -72,7 +72,7 @@ public class DaoQueryOperation extends DaoOperation {
                     }
                 }
                 if (parameterInstanceCounter != 1) {
-                    throw new DaoMethodException();
+                    throw new DaoMethodException("Invalid Dao method declaration: invalid parameters.");
                 }
             }
         }

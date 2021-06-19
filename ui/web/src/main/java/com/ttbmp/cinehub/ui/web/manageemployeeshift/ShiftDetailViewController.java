@@ -9,30 +9,16 @@ import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewShiftForm;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletResponse;
-import java.beans.PropertyEditorSupport;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Controller
 public class ShiftDetailViewController {
 
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String text) {
-                if (text != null)
-                    setValue(LocalDate.parse(text, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            }
-        });
-    }
 
     @PostMapping("/shift_detail")
     public String shiftDetail(

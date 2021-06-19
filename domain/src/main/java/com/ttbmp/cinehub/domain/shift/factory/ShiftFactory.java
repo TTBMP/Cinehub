@@ -23,18 +23,16 @@ public class ShiftFactory {
     }
 
     private Shift createShiftProjectionist(Employee employee, String date, String start, String end, Hall hall) throws CreateShiftException {
-        var shiftList = employee.getShiftList();
-        for (var shift : shiftList) {
-            if (shift.getDate().equals(date)
-                    && LocalTime.parse(start).isBefore(LocalTime.parse(shift.getEnd()))
-                    && LocalTime.parse(end).isAfter(LocalTime.parse(shift.getStart()))) {
-                throw new CreateShiftException(CreateShiftException.ALREADY_EXIST_ERROR);
-            }
-        }
+        validateShift(employee, date, start, end);
         return new ProjectionistShift(0, employee, date, start, end, hall, null);
     }
 
     private Shift createShiftUsher(Employee employee, String date, String start, String end) throws CreateShiftException {
+        validateShift(employee, date, start, end);
+        return new UsherShift(0, employee, date, start, end);
+    }
+
+    private void validateShift(Employee employee, String date, String start, String end) throws CreateShiftException {
         var shiftList = employee.getShiftList();
         for (var shift : shiftList) {
             if (shift.getDate().equals(date)
@@ -43,7 +41,6 @@ public class ShiftFactory {
                 throw new CreateShiftException(CreateShiftException.ALREADY_EXIST_ERROR);
             }
         }
-        return new UsherShift(0, employee, date, start, end);
     }
 
 }

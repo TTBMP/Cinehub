@@ -10,29 +10,19 @@ import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewShiftForm;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletResponse;
-import java.beans.PropertyEditorSupport;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 
 @Controller
 public class ShowShiftViewController {
 
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String text) {
-                if (text != null)
-                    setValue(LocalDate.parse(text, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            }
-        });
-    }
 
     @GetMapping("/manage_employee_shift")
     public String populateCinema(
@@ -43,7 +33,7 @@ public class ShowShiftViewController {
         useCase.getCinemaList(new GetCinemaListRequest(sessionToken));
         model.addAttribute("cinemaSelected", false);
         var form = new GetCinemaForm();
-        form.setStart(LocalDate.now());
+        form.setStart(LocalDate.now().toString());
         model.addAttribute("getShiftListRequest", form);
         return ErrorHelper.returnView(response, model, "manage_employee_shift/manage_employee_shift");
     }
@@ -60,8 +50,8 @@ public class ShowShiftViewController {
         useCase.getShiftList(new GetShiftListRequest(
                 sessionToken,
                 form.getCinemaId(),
-                form.getStart().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
-                form.getStart().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
+                LocalDate.parse(form.getStart()).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)),
+                LocalDate.parse(form.getStart()).with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
         ));
         model.addAttribute("idCinema", form.getCinemaId());
         model.addAttribute("date", form.getStart());

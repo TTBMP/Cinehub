@@ -1,6 +1,8 @@
 package com.ttbmp.cinehub.app.usecase.getuserrole;
 
-public interface GetUserRoleUseCase {
+import com.ttbmp.cinehub.app.utilities.usecase.UseCase;
+
+public interface GetUserRoleUseCase extends UseCase {
 
     void getUserRoles(RoleRequest roleRequest);
 }

@@ -7,3 +7,7 @@ repositories {
     // Use the plugin portal to apply community plugins in convention plugins.
     gradlePluginPortal()
 }
+
+dependencies {
+    implementation("io.freefair.gradle","lombok-plugin","6.0.0-m2")
+}

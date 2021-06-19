@@ -1,21 +1,13 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply;
 
 import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
+import lombok.Value;
 
 import java.util.List;
 
+@Value
 public class ShiftRepeatReply {
-    private List<ShiftDto> shiftDto;
 
-    public ShiftRepeatReply(List<ShiftDto> shiftDto) {
-        this.shiftDto = shiftDto;
-    }
+    List<ShiftDto> shiftDto;
 
-    public List<ShiftDto> getShiftDto() {
-        return shiftDto;
-    }
-
-    public void setShiftDto(List<ShiftDto> shiftDto) {
-        this.shiftDto = shiftDto;
-    }
 }

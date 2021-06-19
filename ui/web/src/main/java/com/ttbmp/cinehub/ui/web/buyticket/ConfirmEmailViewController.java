@@ -31,12 +31,16 @@ public class ConfirmEmailViewController {
                 paymentForm.getProjection().getId(),
                 paymentForm.getSeat().getId(),
                 paymentForm.getEmail(),
-                paymentForm.getNumberCard(),
-                paymentForm.getCvv(),
-                paymentForm.getExpirationDate(),
-                paymentForm.getOption2(),//magicBox
-                paymentForm.getOption3(),//openBar
-                paymentForm.getOption1()//skipLine
+                new PaymentRequest.CreditCard(
+                        paymentForm.getNumberCard(),
+                        paymentForm.getCvv(),
+                        paymentForm.getExpirationDate()
+                ),
+                new PaymentRequest.TicketOption(
+                        paymentForm.getMagicBoxOption(),
+                        paymentForm.getOpenBarOption(),
+                        paymentForm.getSkipLineOption()
+                )
         ));
         return ErrorHelper.returnView(response, model, "buy_ticket/confirm_email");
     }
