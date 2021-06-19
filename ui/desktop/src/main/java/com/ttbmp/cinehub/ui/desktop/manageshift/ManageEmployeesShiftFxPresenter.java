@@ -121,6 +121,7 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
                 }
             });
         }
+        viewModel.errorAssignVisibleProperty().set(false);
         viewModel.getEmployeeShiftWeekList().setAll(employeeShiftWeeks);
     }
 
