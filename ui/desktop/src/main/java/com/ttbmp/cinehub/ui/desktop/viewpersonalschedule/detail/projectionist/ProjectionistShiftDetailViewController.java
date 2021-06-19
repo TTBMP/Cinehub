@@ -56,7 +56,7 @@ public class ProjectionistShiftDetailViewController extends ViewController {
         activity.getUseCase(ViewPersonalScheduleUseCase.class).getShiftProjectionList(
                 new ProjectionListRequest(
                         CinehubApplication.getSessionToken(),
-                        viewModel.getSelectedShift().getId()
+                        viewModel.selectedShiftProperty().get().getId()
                 )
         );
     }

@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.ui.desktop.utilities.ui;
 
-import com.ttbmp.cinehub.app.utilities.usecase.UseCase;
 import com.ttbmp.cinehub.app.utilities.FactoryMap;
 import com.ttbmp.cinehub.app.utilities.InstanceMap;
+import com.ttbmp.cinehub.app.utilities.usecase.UseCase;
 
 /**
  * @author Fabio Buracchi

@@ -38,7 +38,7 @@ public class CalendarShiftItemViewController extends ViewController {
         });
         startLabel.setText(shiftDto.getStart().toString());
         endLabel.setText(shiftDto.getEnd().toString());
-        locationLabel.setText(viewModel.getCurrentEmployee().getCinema().getAddress());
+        locationLabel.setText(viewModel.currentEmployeeProperty().get().getCinema().getAddress());
     }
 
     public void load(Activity activity, NavController navController, ShiftDto shiftDto) {
