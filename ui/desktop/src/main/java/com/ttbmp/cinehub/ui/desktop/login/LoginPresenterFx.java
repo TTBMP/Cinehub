@@ -19,7 +19,7 @@ public class LoginPresenterFx implements LoginPresenter {
     @Override
     public void presentSessionToken(LoginReply reply) {
         CinehubApplication.setSessionToken(reply.getSessionCookie());
-        viewModel.setIsLogged(true);
+        viewModel.loggedProperty().set(true);
     }
 
     @Override
@@ -29,12 +29,12 @@ public class LoginPresenterFx implements LoginPresenter {
 
     @Override
     public void presentNullRequest() {
-        viewModel.setErrorMessage("Request can't be null");
+        viewModel.errorMessageProperty().setValue("Request can't be null");
     }
 
     @Override
     public void presentInvalidRequest(Request request) {
-        viewModel.setErrorMessage(request.getErrorList().stream()
+        viewModel.errorMessageProperty().setValue(request.getErrorList().stream()
                 .map(Request.Error::getMessage)
                 .collect(Collectors.joining())
         );

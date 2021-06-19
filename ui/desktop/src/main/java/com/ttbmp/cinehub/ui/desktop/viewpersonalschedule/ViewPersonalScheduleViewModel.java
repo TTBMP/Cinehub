@@ -47,7 +47,7 @@ public class ViewPersonalScheduleViewModel implements ViewModel {
     StringProperty selectedShiftEndProperty = new SimpleStringProperty();
 
     StringProperty selectedProjectionistShiftHallProperty = new SimpleStringProperty();
-    BooleanProperty isProjectionsDetailButtonVisibleProperty = new SimpleBooleanProperty();
+    BooleanProperty projectionsDetailButtonVisibleProperty = new SimpleBooleanProperty();
     @Accessors(fluent = false)
     ObservableList<ProjectionDto> projectionList = FXCollections.observableArrayList();
 
@@ -64,7 +64,7 @@ public class ViewPersonalScheduleViewModel implements ViewModel {
         selectedShiftStartProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto -> shiftDto.getStart().toString()));
         selectedShiftEndProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto -> shiftDto.getEnd().toString()));
         selectedProjectionistShiftHallProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto -> ((ShiftProjectionistDto) shiftDto).getHallDto().getName()));
-        isProjectionsDetailButtonVisibleProperty.bind(ObjectBindings.map(selectedShiftEmployeeRoleProperty, e -> e.equals("projectionist")));   // TODO: refactor
+        projectionsDetailButtonVisibleProperty.bind(ObjectBindings.map(selectedShiftEmployeeRoleProperty, e -> e.equals("projectionist")));   // TODO: refactor
     }
 
 }
