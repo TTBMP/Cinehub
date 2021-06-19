@@ -105,7 +105,7 @@ class BuyTicketBuyTicketControllerTest {
             var movie = movieRepository.getMovie(movieList.get(0).getId());
             var cinemaRepository = serviceLocator.getService(CinemaRepository.class);
             var cinema = cinemaRepository.getCinema(getCinemaListExpected(movie, String.valueOf(date)).get(0).getId());
-            var request = new ProjectionListRequest(movie.getId(), cinema.getId(), date);
+            var request = new ProjectionListRequest(movie.getId(), cinema.getId(), date.toString());
             controller.getProjectionList(request);
             var expected = getProjectionListExpected(movie, cinema, date);
             var actual = viewModel.getProjectionList();

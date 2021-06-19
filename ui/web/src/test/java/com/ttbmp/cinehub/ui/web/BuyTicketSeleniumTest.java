@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class ChooseMovieViewControllerTest {
+class BuyTicketSeleniumTest {
 
     public WebElement datePicker;
     private WebDriver driver;
