@@ -9,7 +9,6 @@ import javafx.beans.property.StringProperty;
 import lombok.Value;
 import lombok.experimental.Accessors;
 
-@Accessors(fluent = true)
 @Value
 public class LoginViewModel implements ViewModel {
 

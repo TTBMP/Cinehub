@@ -22,7 +22,6 @@ import java.util.Map;
 /**
  * @author Fabio Buracchi
  */
-@Accessors(fluent = true)
 @Value
 public class ViewPersonalScheduleViewModel implements ViewModel {
 
