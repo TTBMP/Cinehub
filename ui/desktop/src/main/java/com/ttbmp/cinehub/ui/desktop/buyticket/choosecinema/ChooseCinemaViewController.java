@@ -53,7 +53,7 @@ public class ChooseCinemaViewController extends ViewController {
         timeOfProjectionListView.getSelectionModel().selectedItemProperty().addListener(l -> onTimeSelected());
         errorLabel.textProperty().bind(viewModel.errorMessageProperty());
         viewModel.selectedCinemaProperty().bind(cinemaListView.getSelectionModel().selectedItemProperty());
-        cinemaListView.setItems(viewModel.cinemaListProperty());
+        cinemaListView.setItems(viewModel.getCinemaList());
         cinemaListView.setCellFactory(listCinemaDto -> new ChooseCinemaListCell(activity, navController));//Cell Factory
         timeOfProjectionListView.setCellFactory(l -> new ChooseProjectionListCell(activity, navController));
         cinemaListView.getSelectionModel().selectedItemProperty().addListener(l -> onCinemaItemClick());
@@ -78,14 +78,14 @@ public class ChooseCinemaViewController extends ViewController {
 
     private void onCinemaItemClick() {
         if (viewModel.selectedCinemaProperty().getValue() != null) {
-            viewModel.timeOfProjectionListProperty().clear();
+            viewModel.getTimeOfProjectionList().clear();
             activity.getUseCase(BuyTicketUseCase.class).getProjectionList(new ProjectionListRequest(
                             viewModel.selectedMovieProperty().getValue().getId(),
                             viewModel.selectedCinemaProperty().getValue().getId(),
                             viewModel.selectedDateProperty().getValue().toString()
                     )
             );
-            timeOfProjectionListView.setItems(viewModel.projectionTimeListProperty());
+            timeOfProjectionListView.setItems(viewModel.getProjectionList());
         }
     }
 

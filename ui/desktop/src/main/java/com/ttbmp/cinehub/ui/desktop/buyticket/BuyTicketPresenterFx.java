@@ -71,23 +71,23 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
 
     @Override
     public void presentProjectionList(ProjectionListReply reply) {
-        viewModel.projectionTimeListProperty().setAll(reply.getProjectionDtoList());
+        viewModel.getProjectionList().setAll(reply.getProjectionDtoList());
     }
 
     @Override
     public void presentMovieList(MovieListReply reply) {
-        viewModel.movieListProperty().clear();
-        viewModel.movieListProperty().addAll(reply.getMovieList());
+        viewModel.getMovieList().clear();
+        viewModel.getMovieList().addAll(reply.getMovieList());
     }
 
     @Override
     public void presentCinemaList(CinemaListReply reply) {
-        viewModel.cinemaListProperty().setAll(reply.getCinemaList());
+        viewModel.getCinemaList().setAll(reply.getCinemaList());
     }
 
     @Override
     public void presentSeatList(SeatListReply reply) {
-        viewModel.seatListProperty().setAll(reply.getSeatDtoList());
+        viewModel.getSeatList().setAll(reply.getSeatDtoList());
     }
 
 

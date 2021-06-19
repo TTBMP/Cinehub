@@ -7,7 +7,6 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lombok.Value;
-import lombok.experimental.Accessors;
 
 @Value
 public class LoginViewModel implements ViewModel {
