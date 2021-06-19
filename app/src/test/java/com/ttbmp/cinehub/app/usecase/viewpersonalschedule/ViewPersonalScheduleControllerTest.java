@@ -45,7 +45,7 @@ class ViewPersonalScheduleControllerTest {
         logInAsProjectionist();
         var request = new ShiftListRequest(viewModel.getSessionToken(), LocalDate.now(), LocalDate.now().plusDays(7));
         controller.getShiftList(request);
-        var expected = getActualShiftList(request);
+        var expected = getExpectedShiftList(request);
         var actual = viewModel.getShiftList();
         Assertions.assertEquals(expected, actual);
     }
@@ -96,10 +96,10 @@ class ViewPersonalScheduleControllerTest {
     void getShiftProjectionList() throws RepositoryException, SecurityException {
         logInAsProjectionist();
         var shiftListRequest = new ShiftListRequest(viewModel.getSessionToken(), LocalDate.now(), LocalDate.now().plusDays(7));
-        var shiftId = getActualShiftList(shiftListRequest).get(0).getId();
+        var shiftId = getExpectedShiftList(shiftListRequest).get(0).getId();
         var request = new ProjectionListRequest(viewModel.getSessionToken(), shiftId);
         controller.getShiftProjectionList(request);
-        var expected = getActualShiftProjectionList(request);
+        var expected = getExpectedShiftProjectionList(request);
         var actual = viewModel.getProjectionList();
         Assertions.assertArrayEquals(
                 expected.stream().map(ProjectionDto::getId).toArray(),
@@ -111,7 +111,7 @@ class ViewPersonalScheduleControllerTest {
         viewModel.setSessionToken("T8SP2uHYdHZfBk6uh3fJ356Sji52");
     }
 
-    private List<ShiftDto> getActualShiftList(ShiftListRequest request) throws RepositoryException, SecurityException {
+    private List<ShiftDto> getExpectedShiftList(ShiftListRequest request) throws RepositoryException, SecurityException {
         var userId = serviceLocator.getService(SecurityService.class).authenticate(request.getSessionToken()).getId();
         var employee = serviceLocator.getService(EmployeeRepository.class).getEmployee(userId);
         var shiftList = serviceLocator.getService(ShiftRepository.class).getAllEmployeeShiftBetweenDate(
@@ -124,7 +124,7 @@ class ViewPersonalScheduleControllerTest {
                 .collect(Collectors.toList());
     }
 
-    private List<ProjectionDto> getActualShiftProjectionList(ProjectionListRequest request) throws RepositoryException {
+    private List<ProjectionDto> getExpectedShiftProjectionList(ProjectionListRequest request) throws RepositoryException {
         var projectionistShift = serviceLocator.getService(ProjectionistShiftRepository.class)
                 .getProjectionistShift(request.getProjectionistShiftId());
         var projectionList = serviceLocator.getService(ProjectionRepository.class)

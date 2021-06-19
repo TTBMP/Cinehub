@@ -30,6 +30,7 @@ public class ProjectionistShift extends Shift {
         this.projectionList = projectionList;
     }
 
+    @Override
     public void modifyShift(Shift shift, LocalDate date, LocalTime start, LocalTime end, Hall hall) throws ModifyShiftException {
         super.modifyShift(shift, date, start, end, hall);
         ((ProjectionistShift) shift).setHall(hall);

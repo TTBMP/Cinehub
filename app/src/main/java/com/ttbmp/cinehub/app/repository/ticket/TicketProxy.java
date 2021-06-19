@@ -10,10 +10,12 @@ import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.Seat;
 import com.ttbmp.cinehub.domain.ticket.Ticket;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author Fabio Buracchi
  */
+@EqualsAndHashCode(callSuper = true)
 public class TicketProxy extends Ticket {
 
     private final CustomerRepository customerRepository;

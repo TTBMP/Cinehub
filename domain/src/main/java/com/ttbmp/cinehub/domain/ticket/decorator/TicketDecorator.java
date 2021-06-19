@@ -1,10 +1,12 @@
 package com.ttbmp.cinehub.domain.ticket.decorator;
 
 import com.ttbmp.cinehub.domain.ticket.Ticket;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author Ivan Palmieri
  */
+@EqualsAndHashCode(callSuper = true)
 public abstract class TicketDecorator extends Ticket {
 
     protected final Ticket ticket;
