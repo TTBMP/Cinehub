@@ -8,6 +8,6 @@ import java.time.LocalDate;
 public class GetCinemaForm {
 
     private int cinemaId;
-    private LocalDate start;
+    private String start;
 
 }

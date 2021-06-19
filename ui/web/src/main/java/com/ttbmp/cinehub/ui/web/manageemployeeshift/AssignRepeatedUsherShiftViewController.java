@@ -24,17 +24,6 @@ public class AssignRepeatedUsherShiftViewController {
     private static final String ASSIGN_REQUEST = "assignRequest";
     private static final String PREFERENCE_LIST = "preferenceList";
 
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String text) {
-                if (text != null)
-                    setValue(LocalDate.parse(text, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            }
-        });
-    }
-
     @GetMapping("/assign_repeated_usher_shift")
     public String assignRepeatedUsherShift(
             HttpServletResponse response,
@@ -65,8 +54,8 @@ public class AssignRepeatedUsherShiftViewController {
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
         useCase.createRepeatedShift(new ShiftRepeatRequest(
                 sessionToken,
-                request.getDate(),
-                request.getDateRepeated(),
+                LocalDate.parse(request.getDate()),
+                LocalDate.parse(request.getDateRepeated()),
                 request.getPreference(),
                 request.getEmployeeId(),
                 request.getStart(),

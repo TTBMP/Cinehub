@@ -20,17 +20,6 @@ import java.time.format.DateTimeFormatter;
 @Controller
 public class DeleteShiftViewController {
 
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String text) {
-                if (text != null)
-                    setValue(LocalDate.parse(text, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            }
-        });
-    }
-
     @GetMapping("/delete_shift")
     public String deleteShift(
             HttpServletResponse response,

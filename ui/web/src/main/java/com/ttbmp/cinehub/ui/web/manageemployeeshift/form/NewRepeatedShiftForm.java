@@ -9,11 +9,11 @@ import java.time.LocalTime;
 public class NewRepeatedShiftForm {
 
     private String employeeId;
-    private LocalDate date;
+    private String date;
     private LocalTime start;
     private LocalTime end;
     private int hallId;
     private String preference;
-    private LocalDate dateRepeated;
+    private String dateRepeated;
 
 }

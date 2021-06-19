@@ -21,17 +21,6 @@ public class AssignUsherShiftViewController {
 
     private static final String ASSIGN_REQUEST = "assignRequest";
 
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String text) {
-                if (text != null)
-                    setValue(LocalDate.parse(text, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            }
-        });
-    }
-
     @GetMapping("/assign_usher_shift")
     public String assignUsherShift(
             HttpServletResponse response,

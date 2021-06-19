@@ -23,16 +23,7 @@ import java.time.format.DateTimeFormatter;
 @Controller
 public class ShiftDetailViewController {
 
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String text) {
-                if (text != null)
-                    setValue(LocalDate.parse(text, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            }
-        });
-    }
+
 
     @PostMapping("/shift_detail")
     public String shiftDetail(

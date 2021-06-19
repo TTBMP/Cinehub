@@ -7,6 +7,7 @@ import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetCinemaListR
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.GetEmployeeListRequest;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.NewShiftForm;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -22,17 +23,6 @@ public class AssignProjectionistShiftViewController {
 
     private static final String ASSIGN_REQUEST = "assignRequest";
 
-
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String text) {
-                if (text != null)
-                    setValue(LocalDate.parse(text, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            }
-        });
-    }
 
     @GetMapping("/assign_projectionist_shift")
     public String assignProjectionistShift(

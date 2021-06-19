@@ -24,17 +24,6 @@ public class AssignRepeatedProjectionistShiftViewController {
     private static final String ASSIGN_REQUEST = "assignRequest";
     private static final String PREFERENCE_LIST = "preferenceList";
 
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String text) {
-                if (text != null)
-                    setValue(LocalDate.parse(text, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            }
-        });
-    }
-
     @GetMapping("/assign_repeated_projectionist_shift")
     public String assignRepeatedProjectionistShift(
             HttpServletResponse response,
@@ -66,8 +55,8 @@ public class AssignRepeatedProjectionistShiftViewController {
         model.addAttribute("now", LocalDate.now().plusDays(1));
         useCase.createRepeatedShift(new ShiftRepeatRequest(
                 sessionToken,
-                request.getDate(),
-                request.getDateRepeated(),
+                LocalDate.parse(request.getDate()),
+                LocalDate.parse(request.getDateRepeated()),
                 request.getPreference(),
                 request.getEmployeeId(),
                 request.getStart(),
