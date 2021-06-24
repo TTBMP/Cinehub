@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.app.usecase.buyticket;
 
+import com.ttbmp.cinehub.app.service.email.EmailServiceException;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.service.security.SecurePresenter;
 import com.ttbmp.cinehub.app.usecase.buyticket.reply.*;
@@ -23,4 +24,5 @@ public interface BuyTicketPresenter extends SecurePresenter {
 
     void presentPaymentServiceException(PaymentServiceException exception);
 
+    void presentSendEmailServiceException(EmailServiceException e);
 }

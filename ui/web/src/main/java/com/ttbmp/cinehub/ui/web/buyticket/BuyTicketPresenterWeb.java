@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.ui.web.buyticket;
 
 import com.ttbmp.cinehub.app.dto.SeatDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.service.email.EmailServiceException;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketPresenter;
 import com.ttbmp.cinehub.app.usecase.buyticket.reply.*;
@@ -87,6 +88,11 @@ public class BuyTicketPresenterWeb implements BuyTicketPresenter {
 
     @Override
     public void presentPaymentServiceException(PaymentServiceException e) {
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
+    }
+
+    @Override
+    public void presentSendEmailServiceException(EmailServiceException e) {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
     }
 

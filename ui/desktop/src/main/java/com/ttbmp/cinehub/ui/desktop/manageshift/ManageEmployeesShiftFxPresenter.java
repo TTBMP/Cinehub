@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.ui.desktop.manageshift;
 
 import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.service.email.EmailServiceException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
@@ -141,6 +142,11 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     public void presentModifyShiftError(Throwable error) {
         viewModel.errorMessageProperty().setValue("IMPOSSIBLE MODIFY SHIFT");
         viewModel.errorAssignVisibleProperty().set(true);
+    }
+
+    @Override
+    public void presentSendEmailServiceException(EmailServiceException error) {
+        viewModel.errorMessageProperty().setValue(error.getMessage());
     }
 
     @Override

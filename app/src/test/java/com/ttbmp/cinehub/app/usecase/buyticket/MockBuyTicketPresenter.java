@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.usecase.buyticket;
 
 import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.service.email.EmailServiceException;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.reply.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
@@ -62,6 +63,12 @@ class MockBuyTicketPresenter implements BuyTicketPresenter {
     @Override
     public void presentPaymentServiceException(PaymentServiceException e) {
         viewModel.setErrorMessage(e.getMessage());
+    }
+
+    @Override
+    public void presentSendEmailServiceException(EmailServiceException e) {
+        viewModel.setErrorMessage(e.getMessage());
+
     }
 
 

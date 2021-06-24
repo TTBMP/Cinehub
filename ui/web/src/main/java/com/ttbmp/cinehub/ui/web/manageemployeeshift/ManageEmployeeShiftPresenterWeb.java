@@ -5,6 +5,7 @@ import com.ttbmp.cinehub.app.dto.employee.ProjectionistDto;
 import com.ttbmp.cinehub.app.dto.employee.UsherDto;
 import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.service.email.EmailServiceException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
@@ -105,6 +106,11 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
 
     @Override
     public void presentModifyShiftError(Throwable error) {
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, error.getMessage());
+    }
+
+    @Override
+    public void presentSendEmailServiceException(EmailServiceException error) {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, error.getMessage());
     }
 

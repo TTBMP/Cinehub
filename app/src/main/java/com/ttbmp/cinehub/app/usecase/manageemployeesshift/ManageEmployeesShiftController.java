@@ -12,6 +12,7 @@ import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftRepository;
 import com.ttbmp.cinehub.app.service.email.EmailService;
+import com.ttbmp.cinehub.app.service.email.EmailServiceException;
 import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.app.service.security.SecurityService;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply.*;
@@ -134,6 +135,8 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                 presenter.presentSaveShift();
             } catch (ModifyShiftException e) {
                 presenter.presentModifyShiftError(e);
+            } catch (EmailServiceException e) {
+                presenter.presentSendEmailServiceException(e);
             }
         });
     }
@@ -165,7 +168,11 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             var email = shift.getEmployee().getEmail();
             shiftRepository.deletedShift(shift);
             presenter.presentDeleteShift();
-            emailService.sendMail(new EmailServiceRequest(email, "Shift: " + shift + " delete"));
+            try {
+                emailService.sendMail(new EmailServiceRequest(email, "Shift: " + shift + " delete"));
+            } catch (EmailServiceException e) {
+                presenter.presentSendEmailServiceException(e);
+            }
         });
     }
 
@@ -228,6 +235,8 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                 presenter.presentRepeatShift(new ShiftRepeatReply(shiftDtoList));
             } catch (CreateShiftException e) {
                 presenter.presentCreateShiftError(e);
+            } catch (EmailServiceException e) {
+                presenter.presentSendEmailServiceException(e);
             }
         });
     }
@@ -254,6 +263,8 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                 emailService.sendMail(new EmailServiceRequest(employee.getEmail(), "Shift assigned"));
             } catch (CreateShiftException e) {
                 presenter.presentCreateShiftError(e);
+            } catch (EmailServiceException e) {
+                presenter.presentSendEmailServiceException(e);
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeeshift;
 
 import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.service.email.EmailServiceException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
@@ -61,6 +62,12 @@ public class MockManageEmployeeShiftPresenter implements ManageEmployeesShiftPre
     @Override
     public void presentModifyShiftError(Throwable error) {
         viewModel.setErrorMessage(error.getMessage());
+    }
+
+    @Override
+    public void presentSendEmailServiceException(EmailServiceException error) {
+        viewModel.setErrorMessage(error.getMessage());
+
     }
 
     @Override

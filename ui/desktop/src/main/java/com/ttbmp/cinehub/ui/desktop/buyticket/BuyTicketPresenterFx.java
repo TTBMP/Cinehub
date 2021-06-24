@@ -2,6 +2,7 @@ package com.ttbmp.cinehub.ui.desktop.buyticket;
 
 
 import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.service.email.EmailServiceException;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketPresenter;
 import com.ttbmp.cinehub.app.usecase.buyticket.reply.*;
@@ -39,6 +40,12 @@ public class BuyTicketPresenterFx implements BuyTicketPresenter {
     @Override
     public void presentPaymentServiceException(PaymentServiceException exception) {
         viewModel.errorMessageProperty().setValue(exception.getMessage());
+    }
+
+    @Override
+    public void presentSendEmailServiceException(EmailServiceException exception) {
+        viewModel.errorMessageProperty().setValue(exception.getMessage());
+
     }
 
 
