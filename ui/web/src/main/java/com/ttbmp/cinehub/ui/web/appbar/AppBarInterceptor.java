@@ -3,6 +3,8 @@ package com.ttbmp.cinehub.ui.web.appbar;
 import com.ttbmp.cinehub.app.usecase.getuserrole.GetUserRoleHandler;
 import com.ttbmp.cinehub.app.usecase.getuserrole.RoleRequest;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
+import com.ttbmp.cinehub.ui.web.utilities.ModelMapWrapper;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,9 +18,13 @@ import java.util.Arrays;
 public class AppBarInterceptor implements HandlerInterceptor {
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
+    public void postHandle(
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull Object handler,
+            ModelAndView modelAndView) {
         if (modelAndView != null) {
-            var useCase = new GetUserRoleHandler(new AppBarPresenterWeb(modelAndView.getModel()));
+            var useCase = new GetUserRoleHandler(new AppBarPresenterWeb(new ModelMapWrapper(modelAndView.getModelMap())));
             var cookies = request.getCookies() == null ? new Cookie[]{} : request.getCookies();
             useCase.getUserRoles(new RoleRequest(
                     Arrays.stream(cookies)
