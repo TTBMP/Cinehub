@@ -126,9 +126,11 @@ public class AssignShiftViewController extends ViewController {
             activity.getUseCase(ManageEmployeesShiftUseCase.class).createRepeatedShift(
                     new ShiftRepeatRequest(
                             CinehubApplication.getSessionToken(),
-                            viewModel.selectedDayWeekProperty().get().getDate(),
-                            viewModel.selectedEndRepeatDayProperty().get(),
-                            viewModel.selectedOptionProperty().get().toString(),
+                            new ShiftRepeatRequest.RepeatOption(
+                                    viewModel.selectedDayWeekProperty().get().getDate(),
+                                    viewModel.selectedEndRepeatDayProperty().get(),
+                                    viewModel.selectedOptionProperty().get().toString()
+                            ),
                             viewModel.selectedDayWeekProperty().get().getEmployee().getId(),
                             viewModel.startSpinnerTimeProperty().get(),
                             viewModel.endSpinnerTimeProperty().get(),

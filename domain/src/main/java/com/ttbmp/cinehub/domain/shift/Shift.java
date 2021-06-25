@@ -33,7 +33,7 @@ public abstract class Shift {
         this.end = end;
     }
 
-    public void modifyShift(Shift shift, LocalDate date, LocalTime start, LocalTime end, Hall hall) throws ModifyShiftException {
+    public void modifyShift(Shift shift, LocalDate date, LocalTime start, LocalTime end) throws ModifyShiftException {
         var shiftList = shift.getEmployee().getShiftListBetween(date.minusDays(1), date.plusDays(1));
         for (var elem : shiftList) {
             if (elem.getId() != shift.getId()

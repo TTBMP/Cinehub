@@ -120,9 +120,11 @@ class ManageEmployeesShiftControllerTest {
         );
         var request = new ShiftRepeatRequest(
                 viewModel.getSessionToken(),
-                LocalDate.now().plusYears(2),
-                LocalDate.now().plusDays(7).plusYears(2),
-                "EVERY_DAY",
+                new ShiftRepeatRequest.RepeatOption(
+                        LocalDate.now().plusYears(2),
+                        LocalDate.now().plusDays(7).plusYears(2),
+                        "EVERY_DAY"
+                ),
                 employee.getId(),
                 LocalTime.parse("07:00"),
                 LocalTime.parse("13:00"),

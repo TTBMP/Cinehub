@@ -17,8 +17,8 @@ import lombok.experimental.FieldDefaults;
 @EqualsAndHashCode(callSuper = false)
 public class ShiftRequest extends AuthenticatedRequest {
 
-    public static final Request.Error MISSING_SHIFT = new Request.Error("Shift non esiste");
-    public static final Request.Error INVALID_SHIFT = new Request.Error("Shift non valido");
+    public static final Request.Error MISSING_SHIFT = new Request.Error("Shift not existing.");
+    public static final Request.Error INVALID_SHIFT = new Request.Error("Invalid Shift.");
 
     int shiftId;
 

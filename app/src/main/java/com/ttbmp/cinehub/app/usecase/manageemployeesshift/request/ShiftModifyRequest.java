@@ -8,15 +8,15 @@ import java.time.LocalTime;
 
 public class ShiftModifyRequest extends AuthenticatedRequest {
 
-    public static final Request.Error MISSING_SHIFT = new Request.Error("Shift non esiste");
-    public static final Request.Error INVALID_SHIFT = new Request.Error("Shift non valido");
-    public static final Request.Error MISSING_DATE = new Request.Error("Data non inserita");
-    public static final Request.Error INVALID_DATE = new Request.Error("Data non valido");
-    public static final Request.Error MISSING_START = new Request.Error("Inizio non valido");
-    public static final Request.Error MISSING_END = new Request.Error("Fine non valida");
-    public static final Request.Error MISSING_HALL = new Request.Error("Hall non valida");
-    public static final Request.Error MISSING_EMPLOYEE = new Request.Error("Dipendente non valido");
-    public static final Request.Error ERROR_TIME = new Request.Error("Orario non Valido");
+    public static final Request.Error MISSING_SHIFT = new Request.Error("Shift not existing.");
+    public static final Request.Error INVALID_SHIFT = new Request.Error("Invalid Shift.");
+    public static final Request.Error MISSING_DATE = new Request.Error("Insert date.");
+    public static final Request.Error INVALID_DATE = new Request.Error("Invalid date.");
+    public static final Request.Error MISSING_START = new Request.Error("Invalid start.");
+    public static final Request.Error MISSING_END = new Request.Error("Invalid end.");
+    public static final Request.Error MISSING_HALL = new Request.Error("Invalid hall.");
+    public static final Request.Error MISSING_EMPLOYEE = new Request.Error("Invalid Employee.");
+    public static final Request.Error ERROR_TIME = new Request.Error("Invalid Schedule.");
 
     private String employeeId;
     private int shiftId;

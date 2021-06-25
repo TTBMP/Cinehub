@@ -19,9 +19,9 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = false)
 public class GetShiftListRequest extends AuthenticatedRequest {
 
-    public static final Request.Error INVALID_CINEMA = new Request.Error("Cinema non valido");
-    public static final Request.Error MISSING_START = new Request.Error("Inizio non valido");
-    public static final Request.Error MISSING_END = new Request.Error("Fine non valido");
+    public static final Request.Error INVALID_CINEMA = new Request.Error("Invalid Cinema.");
+    public static final Request.Error MISSING_START = new Request.Error("Invalid start.");
+    public static final Request.Error MISSING_END = new Request.Error("Invalid end.");
 
     private int cinemaId;
     private LocalDate start;
