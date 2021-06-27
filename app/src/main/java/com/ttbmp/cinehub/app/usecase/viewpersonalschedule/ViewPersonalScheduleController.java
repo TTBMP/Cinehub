@@ -1,8 +1,8 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
+import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.dto.employee.EmployeeDtoFactory;
 import com.ttbmp.cinehub.app.dto.shift.ShiftDtoFactory;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftRepository;
@@ -41,7 +41,7 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
             var employee = employeeRepository.getEmployee(request.getUserId());
             var shiftList = employee.getShiftListBetween(request.getStart(), request.getEnd());
             presenter.presentGetShiftList(new ShiftListReply(
-                    EmployeeDtoFactory.getEmployeeDto(employee),
+                    new EmployeeDto(employee),
                     shiftList.stream()
                             .map(ShiftDtoFactory::getShiftDto)
                             .collect(Collectors.toList())

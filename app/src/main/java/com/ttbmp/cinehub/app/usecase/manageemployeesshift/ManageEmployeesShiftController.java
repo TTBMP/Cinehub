@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.app.usecase.manageemployeesshift;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.dto.employee.EmployeeDtoFactory;
+import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 import com.ttbmp.cinehub.app.dto.shift.ShiftDtoFactory;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
@@ -85,7 +85,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                 throw new Request.InvalidRequestException();
             }
             var employeeList = employeeRepository.getEmployeeList(cinema).stream()
-                    .map(EmployeeDtoFactory::getEmployeeDto)
+                    .map(EmployeeDto::new)
                     .collect(Collectors.toList());
             presenter.presentEmployeeList(new GetEmployeeListReply(employeeList));
         });
@@ -224,8 +224,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                 }
                 for (var date = request.getRepeatOption().getStart(); date.isBefore(request.getRepeatOption().getEnd().plusDays(1)); date = increaseDateFunction.apply(date)) {
                     var shiftFactory = new ShiftFactory();
-                    Shift shift = null;
-                    shift = shiftFactory.createConcreteShift(
+                    var shift = shiftFactory.createConcreteShift(
                             employee,
                             date.toString(),
                             request.getStartShift().toString(),

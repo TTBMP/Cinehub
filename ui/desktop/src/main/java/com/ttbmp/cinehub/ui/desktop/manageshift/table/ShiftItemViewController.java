@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift.table;
 
-import com.ttbmp.cinehub.app.dto.employee.UsherDto;
+import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 import com.ttbmp.cinehub.ui.desktop.manageshift.ManageEmployeesShiftViewModel;
 import com.ttbmp.cinehub.ui.desktop.manageshift.detail.ShowShiftDetailView;
@@ -43,7 +43,7 @@ public class ShiftItemViewController extends ViewController {
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
         if (shift.getDate().isBefore(LocalDate.now().plusDays(1))) {
             shiftHBox.setStyle("-fx-background-color: #ff0000;");
-        } else if (viewModel.getEmployee(shift) instanceof UsherDto) {
+        } else if (viewModel.getEmployee(shift).getRole().equals(EmployeeDto.EmployeeRole.USHER)) {
             shiftHBox.setStyle("-fx-background-color: #FFFF00;");
         }
 

@@ -1,8 +1,6 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
-import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
-import com.ttbmp.cinehub.app.dto.employee.ProjectionistDto;
-import com.ttbmp.cinehub.app.dto.employee.UsherDto;
+import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 import com.ttbmp.cinehub.app.service.email.EmailServiceException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
@@ -30,14 +28,11 @@ public class ManageEmployeeShiftPresenterWeb extends PresenterWeb implements Man
         var employeeList = new EmployeeListDto(reply.getEmployeeDtoList());
         model.addAttribute("employeeList", employeeList.getEmployeeList());
         model.addAttribute("projectionistList", employeeList.getEmployeeList().stream()
-                .filter(employeeDto -> employeeDto.getClass()
-                        .equals(ProjectionistDto.class))
+                .filter(employeeDto -> employeeDto.getRole().equals(EmployeeDto.EmployeeRole.PROJECTIONIST))
                 .collect(Collectors.toList()));
         model.addAttribute("usherList", employeeList.getEmployeeList().stream()
-                .filter(employeeDto -> employeeDto.getClass()
-                        .equals(UsherDto.class))
+                .filter(employeeDto -> employeeDto.getRole().equals(EmployeeDto.EmployeeRole.USHER))
                 .collect(Collectors.toList()));
-
         findEmployee(reply.getEmployeeDtoList());
     }
 
@@ -120,6 +115,5 @@ public class ManageEmployeeShiftPresenterWeb extends PresenterWeb implements Man
             }
         }
     }
-
 
 }

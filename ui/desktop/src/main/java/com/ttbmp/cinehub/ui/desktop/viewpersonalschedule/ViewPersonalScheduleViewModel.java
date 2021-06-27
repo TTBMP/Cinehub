@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.viewpersonalschedule;
 
+import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 import com.ttbmp.cinehub.app.dto.shift.ShiftProjectionistDto;
 import com.ttbmp.cinehub.app.utilities.observer.Observable;
@@ -56,14 +56,14 @@ public class ViewPersonalScheduleViewModel implements ViewModel {
         calendarPageFirstDateProperty.bind(calendarPageProperty().get().pageFirstDateProperty());
         calendarPageLastDateProperty.bind(calendarPageProperty().get().pageLastDateProperty());
         selectedShiftEmployeeNameProperty.bind(ObjectBindings.map(currentEmployeeProperty, EmployeeDto::getName));
-        selectedShiftEmployeeRoleProperty.bind(ObjectBindings.map(currentEmployeeProperty, Object::toString));
+        selectedShiftEmployeeRoleProperty.bind(ObjectBindings.map(currentEmployeeProperty, employeeDto -> employeeDto.getRole().toString()));
         selectedShiftCinemaCityProperty.bind(ObjectBindings.map(currentEmployeeProperty, employeeDto -> employeeDto.getCinema().getCity()));
         selectedShiftCinemaAddressProperty.bind(ObjectBindings.map(currentEmployeeProperty, employeeDto -> employeeDto.getCinema().getAddress()));
         selectedShiftDateProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto -> shiftDto.getDate().toString()));
         selectedShiftStartProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto -> shiftDto.getStart().toString()));
         selectedShiftEndProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto -> shiftDto.getEnd().toString()));
         selectedProjectionistShiftHallProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto -> ((ShiftProjectionistDto) shiftDto).getHallDto().getName()));
-        projectionsDetailButtonVisibleProperty.bind(ObjectBindings.map(selectedShiftEmployeeRoleProperty, e -> e.equals("projectionist")));   // TODO: refactor
+        projectionsDetailButtonVisibleProperty.bind(ObjectBindings.map(selectedShiftEmployeeRoleProperty, e -> e.equals(EmployeeDto.EmployeeRole.PROJECTIONIST.toString())));
     }
 
 }

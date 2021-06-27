@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift.table;
 
-import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewController;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.navigation.NavController;
@@ -41,7 +41,7 @@ public class CalendarEmployeeItemViewController extends ViewController {
         employeeImageView.setImage(new Image("drawables/employee.png"));
         nameLabel.setText(employee.getName());
         surnameLabel.setText(employee.getSurname());
-        roleLabel.setText(employee.toString());
+        roleLabel.setText(employee.getRole().toString());
     }
 
 

@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift.assign;
 
+import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.HallDto;
-import com.ttbmp.cinehub.app.dto.employee.UsherDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ShiftRepeatingOption;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.CreateShiftRequest;
@@ -66,7 +66,7 @@ public class AssignShiftViewController extends ViewController {
     @Override
     protected void onLoad() {
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
-        if (viewModel.selectedDayWeekProperty().get().getEmployee() instanceof UsherDto) {
+        if (viewModel.selectedDayWeekProperty().get().getEmployee().getRole().equals(EmployeeDto.EmployeeRole.USHER)) {
             hallLabel.visibleProperty().bind(viewModel.hallVisibleProperty());
             hallComboBox.visibleProperty().bind(viewModel.hallVisibleProperty());
         } else {

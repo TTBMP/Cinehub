@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift.form;
 
-import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
+import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import lombok.Data;
 
 import java.util.List;

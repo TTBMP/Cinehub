@@ -2,8 +2,7 @@ package com.ttbmp.cinehub.app.usecase.manageemployeeshift;
 
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
 import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
-import com.ttbmp.cinehub.app.dto.employee.EmployeeDtoFactory;
+import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 import com.ttbmp.cinehub.app.dto.shift.ShiftDtoFactory;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
@@ -115,7 +114,7 @@ class ManageEmployeesShiftControllerTest {
     @Test
     void saveRepeatedShift() throws RepositoryException {
         logInAsManager();
-        var employee = EmployeeDtoFactory.getEmployeeDto(serviceLocator.getService(EmployeeRepository.class)
+        var employee = new EmployeeDto(serviceLocator.getService(EmployeeRepository.class)
                 .getEmployee("gVUYDMojhmeFkErlbF0WWLQWMPn1")
         );
         var request = new ShiftRepeatRequest(
@@ -176,7 +175,7 @@ class ManageEmployeesShiftControllerTest {
         var cinema = serviceLocator.getService(CinemaRepository.class).getCinema(request.getCinemaId());
         var employeeList = serviceLocator.getService(EmployeeRepository.class).getEmployeeList(cinema);
         return employeeList.stream()
-                .map(EmployeeDtoFactory::getEmployeeDto)
+                .map(EmployeeDto::new)
                 .collect(Collectors.toList());
     }
 
