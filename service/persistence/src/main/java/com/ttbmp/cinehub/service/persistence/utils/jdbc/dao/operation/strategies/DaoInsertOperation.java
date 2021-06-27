@@ -20,16 +20,20 @@ import java.util.stream.Collectors;
  */
 public class DaoInsertOperation extends DaoOperation {
 
-    private final List<String> dtoColumnNameList;
+    private final List<String> entityColumnNameList;
 
-    public DaoInsertOperation(Method method, Connection connection, List<Class<?>> dataSourceEntityList) throws DaoMethodException {
-        super(method, connection, dataSourceEntityList);
+    public DaoInsertOperation(Method method, Connection connection, List<Class<?>> entityTypeList) throws DaoMethodException {
+        super(method, connection, entityTypeList);
         if (!method.getReturnType().equals(Void.TYPE) || method.getParameterCount() != 1) {
             throw new DaoMethodException("Invalid Dao method declaration.");
         }
-        objectType = method.getParameterTypes()[0];
-        dtoType = DaoOperationHelper.getDtoType(objectType, method.getGenericParameterTypes()[0], dataSourceEntityList);
-        dtoColumnNameList = Arrays.stream(dtoType.getDeclaredFields())
+        requireCollection = List.class.isAssignableFrom(method.getParameterTypes()[0]);
+        if (requireCollection) {
+            entityType = DaoOperationHelper.getEntityType(method.getGenericParameterTypes()[0], entityTypeList);
+        } else {
+            entityType = DaoOperationHelper.getEntityType(method.getParameterTypes()[0], entityTypeList);
+        }
+        entityColumnNameList = Arrays.stream(entityType.getDeclaredFields())
                 .filter(f -> !(f.getAnnotation(PrimaryKey.class) != null && f.getAnnotation(PrimaryKey.class).autoGenerate()))
                 .filter(f -> f.getAnnotation(Ignore.class) == null)
                 .map(f -> f.getAnnotation(ColumnInfo.class).name())
@@ -44,22 +48,22 @@ public class DaoInsertOperation extends DaoOperation {
                 ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE
         )) {
-            if (List.class.isAssignableFrom(objectType)) {
-                for (Object dto : (List<?>) args[0]) {
+            if (requireCollection) {
+                for (Object entity : (List<?>) args[0]) {
                     DaoOperationHelper.bindPreparedStatement(
                             statement,
-                            DaoOperationHelper.getParameterMap(dto, dtoColumnNameList),
-                            dtoColumnNameList
+                            DaoOperationHelper.getStatementParameterMap(entity, entityColumnNameList),
+                            entityColumnNameList
                     );
                     statement.addBatch();
                 }
                 statement.executeBatch();
             } else {
-                var dto = args[0];
+                var entity = args[0];
                 DaoOperationHelper.bindPreparedStatement(
                         statement,
-                        DaoOperationHelper.getParameterMap(dto, dtoColumnNameList),
-                        dtoColumnNameList
+                        DaoOperationHelper.getStatementParameterMap(entity, entityColumnNameList),
+                        entityColumnNameList
                 );
                 statement.executeUpdate();
             }
@@ -70,7 +74,7 @@ public class DaoInsertOperation extends DaoOperation {
     }
 
     private String getQueryTemplate() throws DaoMethodException {
-        var dtoTableName = dtoType.getAnnotation(Entity.class).tableName();
+        var entityTableName = entityType.getAnnotation(Entity.class).tableName();
         var insertStrategy = method.getAnnotation(Insert.class).onConflict();
         String expression;
         switch (insertStrategy) {
@@ -89,9 +93,9 @@ public class DaoInsertOperation extends DaoOperation {
         return String.format(
                 "%s%s (%s) VALUES (%s)",
                 expression,
-                dtoTableName,
-                String.join(", ", dtoColumnNameList),
-                String.join(", ", Collections.nCopies(dtoColumnNameList.size(), "?"))
+                entityTableName,
+                String.join(", ", entityColumnNameList),
+                String.join(", ", Collections.nCopies(entityColumnNameList.size(), "?"))
         );
     }
 

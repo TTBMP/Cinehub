@@ -20,25 +20,31 @@ import java.util.stream.Collectors;
  */
 public class DaoUpdateOperation extends DaoOperation {
 
-    private final int updateStrategy;
-    private final List<String> dtoColumnNameList;
-    private final List<String> dtoPrimaryKeyColumnNameList;
+    private static final String PREPARED_STATEMENT_DELIMITER = " = ?, ";
 
-    public DaoUpdateOperation(Method method, Connection connection, List<Class<?>> dataSourceEntityList) throws DaoMethodException {
-        super(method, connection, dataSourceEntityList);
+    private final int updateStrategy;
+    private final List<String> entityColumnNameList;
+    private final List<String> entityPrimaryKeyColumnNameList;
+
+    public DaoUpdateOperation(Method method, Connection connection, List<Class<?>> entityTypeList) throws DaoMethodException {
+        super(method, connection, entityTypeList);
         if (!method.getReturnType().equals(Void.TYPE) || method.getParameterCount() != 1) {
             throw new DaoMethodException("Invalid Dao method declaration.");
         }
         var updateAnnotation = method.getAnnotation(Update.class);
         updateStrategy = updateAnnotation.onConflict();
-        objectType = method.getParameterTypes()[0];
-        dtoType = DaoOperationHelper.getDtoType(objectType, method.getGenericParameterTypes()[0], dataSourceEntityList);
-        dtoColumnNameList = Arrays.stream(dtoType.getDeclaredFields())
+        requireCollection = List.class.isAssignableFrom(method.getParameterTypes()[0]);
+        if (requireCollection) {
+            entityType = DaoOperationHelper.getEntityType(method.getGenericParameterTypes()[0], entityTypeList);
+        } else {
+            entityType = DaoOperationHelper.getEntityType(method.getParameterTypes()[0], entityTypeList);
+        }
+        entityColumnNameList = Arrays.stream(entityType.getDeclaredFields())
                 .filter(f -> !(f.getAnnotation(PrimaryKey.class) != null && f.getAnnotation(PrimaryKey.class).autoGenerate()))
                 .filter(f -> f.getAnnotation(Ignore.class) == null)
                 .map(f -> f.getAnnotation(ColumnInfo.class).name())
                 .collect(Collectors.toList());
-        dtoPrimaryKeyColumnNameList = Arrays.stream(dtoType.getDeclaredFields())
+        entityPrimaryKeyColumnNameList = Arrays.stream(entityType.getDeclaredFields())
                 .filter(f -> f.getAnnotation(PrimaryKey.class) != null)
                 .map(f -> f.getAnnotation(ColumnInfo.class).name())
                 .collect(Collectors.toList());
@@ -52,30 +58,30 @@ public class DaoUpdateOperation extends DaoOperation {
                 ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE
         )) {
-            if (List.class.isAssignableFrom(objectType)) {
-                for (Object dto : (List<?>) args[0]) {
+            if (requireCollection) {
+                for (Object entity : (List<?>) args[0]) {
                     if (updateStrategy == OnConflictStrategy.ABORT || updateStrategy == OnConflictStrategy.IGNORE) {
-                        dtoColumnNameList.addAll(dtoPrimaryKeyColumnNameList.stream()
-                                .filter(t -> dtoColumnNameList.stream().noneMatch(t::equals))
+                        entityColumnNameList.addAll(entityPrimaryKeyColumnNameList.stream()
+                                .filter(t -> entityColumnNameList.stream().noneMatch(t::equals))
                                 .collect(Collectors.toList()));
                     }
                     DaoOperationHelper.bindPreparedStatement(
                             statement,
-                            DaoOperationHelper.getParameterMap(dto, dtoColumnNameList),
-                            dtoColumnNameList
+                            DaoOperationHelper.getStatementParameterMap(entity, entityColumnNameList),
+                            entityColumnNameList
                     );
                     statement.addBatch();
                 }
                 statement.executeBatch();
             } else {
-                var dto = args[0];
+                var entity = args[0];
                 if (updateStrategy == OnConflictStrategy.ABORT || updateStrategy == OnConflictStrategy.IGNORE) {
-                    dtoColumnNameList.addAll(dtoPrimaryKeyColumnNameList);
+                    entityColumnNameList.addAll(entityPrimaryKeyColumnNameList);
                 }
                 DaoOperationHelper.bindPreparedStatement(
                         statement,
-                        DaoOperationHelper.getParameterMap(dto, dtoColumnNameList),
-                        dtoColumnNameList
+                        DaoOperationHelper.getStatementParameterMap(entity, entityColumnNameList),
+                        entityColumnNameList
                 );
                 statement.executeUpdate();
             }
@@ -86,31 +92,31 @@ public class DaoUpdateOperation extends DaoOperation {
     }
 
     private String getQueryTemplate() throws DaoMethodException {
-        var dtoTableName = dtoType.getAnnotation(Entity.class).tableName();
+        var entityTableName = entityType.getAnnotation(Entity.class).tableName();
         String query;
         switch (updateStrategy) {
             case OnConflictStrategy.ABORT:
                 query = String.format(
                         "UPDATE %s SET %s = ? WHERE %s = ?",
-                        dtoTableName,
-                        String.join(" = ?, ", dtoColumnNameList),
-                        String.join(" = ?, ", dtoPrimaryKeyColumnNameList)
+                        entityTableName,
+                        String.join(PREPARED_STATEMENT_DELIMITER, entityColumnNameList),
+                        String.join(PREPARED_STATEMENT_DELIMITER, entityPrimaryKeyColumnNameList)
                 );
                 break;
             case OnConflictStrategy.IGNORE:
                 query = String.format(
                         "UPDATE IGNORE %s SET %s = ? WHERE %s = ?",
-                        dtoTableName,
-                        String.join(" = ?, ", dtoColumnNameList),
-                        String.join(" = ?, ", dtoPrimaryKeyColumnNameList)
+                        entityTableName,
+                        String.join(PREPARED_STATEMENT_DELIMITER, entityColumnNameList),
+                        String.join(PREPARED_STATEMENT_DELIMITER, entityPrimaryKeyColumnNameList)
                 );
                 break;
             case OnConflictStrategy.REPLACE:
                 query = String.format(
                         "REPLACE INTO %s (%s) VALUES (%s)",
-                        dtoTableName,
-                        String.join(", ", dtoColumnNameList),
-                        String.join(", ", Collections.nCopies(dtoColumnNameList.size(), "?"))
+                        entityTableName,
+                        String.join(", ", entityColumnNameList),
+                        String.join(", ", Collections.nCopies(entityColumnNameList.size(), "?"))
                 );
                 break;
             default:

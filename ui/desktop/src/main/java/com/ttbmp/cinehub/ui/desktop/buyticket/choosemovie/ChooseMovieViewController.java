@@ -32,6 +32,9 @@ public class ChooseMovieViewController extends ViewController {
     private AppBarViewController appBarController;
 
     @FXML
+    private Label errorLabel;
+
+    @FXML
     private Button todayButton;
 
     @FXML
@@ -39,9 +42,6 @@ public class ChooseMovieViewController extends ViewController {
 
     @FXML
     private Button nextButton;
-
-    @FXML
-    private Label errorLabel;
 
     @FXML
     private ListView<MovieDto> movieListView;

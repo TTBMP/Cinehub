@@ -34,41 +34,49 @@ public class DaoOperationProvider {
     );
     private final Map<Method, DaoOperation> operationInstanceMap = new HashMap<>();
 
-    public DaoOperation getDaoOperation(@NotNull Method method, @NotNull Connection connection,
-                                        List<Class<?>> dataSourceEntityList) throws DaoMethodException {
+    public DaoOperation getOperation(
+            @NotNull Method method,
+            @NotNull Connection connection,
+            List<Class<?>> entityTypeList) throws DaoMethodException {
         try {
-            operationInstanceMap.putIfAbsent(method, createDaoOperation(method, connection, dataSourceEntityList));
-            return operationInstanceMap.get(method);
+            var result = operationInstanceMap.get(method);
+            if (result == null) {
+                result = createOperation(method, connection, entityTypeList);
+                operationInstanceMap.put(method, result);
+            }
+            return result;
         } catch (NoSuchMethodException e) {
             throw new DaoMethodException(e.getMessage());
         }
     }
 
-    private DaoOperation createDaoOperation(@NotNull Method method, @NotNull Connection connection,
-                                            List<Class<?>> dataSourceEntityList) throws DaoMethodException, NoSuchMethodException {
-        Type type = getDaoOperationType(method.getAnnotations());
+    private DaoOperation createOperation(
+            @NotNull Method method,
+            @NotNull Connection connection,
+            List<Class<?>> entityTypeList) throws DaoMethodException, NoSuchMethodException {
+        Type type = getOperationType(method);
         if (type == Query.class) {
-            return new DaoQueryOperation(method, connection, dataSourceEntityList);
+            return new DaoQueryOperation(method, connection, entityTypeList);
         } else if (type == Insert.class) {
-            return new DaoInsertOperation(method, connection, dataSourceEntityList);
+            return new DaoInsertOperation(method, connection, entityTypeList);
         } else if (type == Update.class) {
-            return new DaoUpdateOperation(method, connection, dataSourceEntityList);
+            return new DaoUpdateOperation(method, connection, entityTypeList);
         } else if (type == Delete.class) {
-            return new DaoDeleteOperation(method, connection, dataSourceEntityList);
+            return new DaoDeleteOperation(method, connection, entityTypeList);
         } else {
             throw new DaoMethodException("DaoOperationProvider::createDaoOperation failed unexpectedly."); // Unreachable
         }
     }
 
-    private Class<?> getDaoOperationType(Annotation[] annotations) throws DaoMethodException {
-        List<Class<?>> filteredAnnotationTypeList = Arrays.stream(annotations)
+    private Class<?> getOperationType(Method method) throws DaoMethodException {
+        List<Class<?>> operationTypeList = Arrays.stream(method.getAnnotations())
                 .map(Annotation::annotationType)
                 .filter(requiredTypeList::contains)
                 .collect(Collectors.toList());
-        if (filteredAnnotationTypeList.size() != 1) {
-            throw new DaoMethodException("Invalid Dao operation.");
+        if (operationTypeList.size() != 1) {
+            throw new DaoMethodException("Invalid Dao operation annotations: " + operationTypeList);
         }
-        return filteredAnnotationTypeList.iterator().next();
+        return operationTypeList.get(0);
     }
 
 }

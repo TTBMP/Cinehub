@@ -43,7 +43,7 @@ public class LoginPresenterFx implements LoginPresenter {
 
     @Override
     public void presentRepositoryError(RepositoryException e) {
-
+        viewModel.errorMessageProperty().setValue(e.getMessage());
     }
 
 }

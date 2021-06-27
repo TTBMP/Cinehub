@@ -21,24 +21,28 @@ import java.util.stream.Collectors;
 public class DaoQueryOperation extends DaoOperation {
 
     private final List<String> queryTemplateParameterNameList;
-    private final List<String> dtoColumnNameList;
-    private final List<Method> dtoSetterList;
+    private final List<String> entityColumnNameList;
+    private final List<Method> entitySetterList;
 
-    public DaoQueryOperation(Method method, Connection connection, List<Class<?>> dataSourceEntityList) throws DaoMethodException, NoSuchMethodException {
-        super(method, connection, dataSourceEntityList);
+    public DaoQueryOperation(Method method, Connection connection, List<Class<?>> entityTypeList) throws DaoMethodException, NoSuchMethodException {
+        super(method, connection, entityTypeList);
         var queryAnnotation = method.getAnnotation(Query.class);
-        objectType = method.getReturnType();
-        dtoType = DaoOperationHelper.getDtoType(objectType, method.getGenericReturnType(), dataSourceEntityList);
+        requireCollection = List.class.isAssignableFrom(method.getReturnType());
+        if (requireCollection) {
+            entityType = DaoOperationHelper.getEntityType(method.getGenericReturnType(), entityTypeList);
+        } else {
+            entityType = DaoOperationHelper.getEntityType(method.getReturnType(), entityTypeList);
+        }
         queryTemplate = queryAnnotation.value().replaceAll(":[a-zA-Z_$][a-zA-Z_$0-9]*", "?");
         queryTemplateParameterNameList = Pattern.compile("(?=(:[a-zA-Z_$][a-zA-Z_$0-9]*))")
                 .matcher(queryAnnotation.value())
                 .results()
                 .map(matchResult -> matchResult.group(1).substring(1))
                 .collect(Collectors.toList());
-        dtoColumnNameList = Arrays.stream(dtoType.getDeclaredFields())
+        entityColumnNameList = Arrays.stream(entityType.getDeclaredFields())
                 .map(DaoOperationHelper::getFieldColumnName)
                 .collect(Collectors.toList());
-        dtoSetterList = DaoOperationHelper.getDtoSetterList(dtoType, dtoColumnNameList);
+        entitySetterList = DaoOperationHelper.getEntitySetterList(entityType);
     }
 
     @Override
@@ -48,11 +52,7 @@ public class DaoQueryOperation extends DaoOperation {
                 ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE
         )) {
-            DaoOperationHelper.bindPreparedStatement(
-                    statement,
-                    getStatementParameterNameValueMap(args),
-                    queryTemplateParameterNameList
-            );
+            DaoOperationHelper.bindPreparedStatement(statement, getStatementParameterNameValueMap(args), queryTemplateParameterNameList);
             return getResult(statement.executeQuery());
         } catch (SQLException | InvocationTargetException | IllegalAccessException | NoSuchMethodException | InstantiationException e) {
             throw new DaoMethodException(e.getMessage());
@@ -81,9 +81,9 @@ public class DaoQueryOperation extends DaoOperation {
 
     private Object getResult(ResultSet resultSet) throws NoSuchMethodException, SQLException, InvocationTargetException, InstantiationException, IllegalAccessException {
         Object result;
-        var resultSetGetterList = DaoOperationHelper.getResultSetGetterList(dtoType, dtoColumnNameList);
-        dtoColumnNameList.removeIf(Objects::isNull);
-        if (List.class.isAssignableFrom(objectType)) {
+        var resultSetGetterList = DaoOperationHelper.getResultSetGetterList(entityType, entityColumnNameList);
+        entityColumnNameList.removeIf(Objects::isNull);
+        if (requireCollection) {
             result = getResultList(resultSet, resultSetGetterList);
         } else {
             result = getResultObject(resultSet, resultSetGetterList);
@@ -103,10 +103,10 @@ public class DaoQueryOperation extends DaoOperation {
     private Object getResultObject(ResultSet resultSet, List<Method> resultSetGetterList) throws SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         Object result = null;
         if (resultSet.next()) {
-            result = dtoType.getConstructor().newInstance();
-            for (var i = 0; i < dtoSetterList.size(); i++) {
-                var value = resultSetGetterList.get(i).invoke(resultSet, dtoColumnNameList.get(i));
-                var setter = dtoSetterList.get(i);
+            result = entityType.getConstructor().newInstance();
+            for (var i = 0; i < entitySetterList.size(); i++) {
+                var value = resultSetGetterList.get(i).invoke(resultSet, entityColumnNameList.get(i));
+                var setter = entitySetterList.get(i);
                 setter.invoke(result, value);
             }
         }
