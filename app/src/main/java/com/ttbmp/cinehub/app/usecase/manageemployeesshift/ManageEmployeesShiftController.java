@@ -127,11 +127,11 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                 semanticValidationModifyShift(request, shift, employee, hall);
 
                 //TODO: Trovare qualcosa di meglio sarebbe meglio
-                if(shift instanceof ProjectionistShift) {
-                    ((ProjectionistShift)shift).modifyShift(shift, request.getDate(), request.getStart(), request.getEnd(), hall);
+                if (shift instanceof ProjectionistShift) {
+                    ((ProjectionistShift) shift).modifyShift(shift, request.getDate(), request.getStart(), request.getEnd(), hall);
                     projectionistShiftRepository.modifyShift((ProjectionistShift) shift);
 
-                }else if(shift instanceof UsherShift){
+                } else if (shift instanceof UsherShift) {
                     shift.modifyShift(shift, request.getDate(), request.getStart(), request.getEnd());
                 }
 

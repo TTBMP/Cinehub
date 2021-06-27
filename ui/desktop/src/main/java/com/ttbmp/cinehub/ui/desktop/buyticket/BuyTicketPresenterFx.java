@@ -2,7 +2,6 @@ package com.ttbmp.cinehub.ui.desktop.buyticket;
 
 
 import com.ttbmp.cinehub.app.CinehubException;
-import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.service.email.EmailServiceException;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.BuyTicketPresenter;

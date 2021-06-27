@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.login;
 
 import com.ttbmp.cinehub.app.CinehubException;
-import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.usecase.login.LoginPresenter;
 import com.ttbmp.cinehub.app.usecase.login.LoginReply;

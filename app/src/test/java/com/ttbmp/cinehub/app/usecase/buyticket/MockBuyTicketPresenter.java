@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.app.usecase.buyticket;
 
-import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.CinehubException;
 import com.ttbmp.cinehub.app.service.email.EmailServiceException;
 import com.ttbmp.cinehub.app.service.payment.PaymentServiceException;
 import com.ttbmp.cinehub.app.usecase.buyticket.reply.*;
@@ -20,7 +20,6 @@ class MockBuyTicketPresenter implements BuyTicketPresenter {
     @Override
     public void presentMovieList(MovieListReply reply) {
         viewModel.setMovieList(reply.getMovieList());
-
     }
 
     @Override
@@ -68,20 +67,16 @@ class MockBuyTicketPresenter implements BuyTicketPresenter {
     @Override
     public void presentSendEmailServiceException(EmailServiceException e) {
         viewModel.setErrorMessage(e.getMessage());
-
     }
-
 
     @Override
     public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e) {
         viewModel.setErrorMessage(e.getMessage());
-
     }
 
     @Override
     public void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e) {
         viewModel.setErrorMessage(e.getMessage());
-
     }
 
     @Override
@@ -90,9 +85,8 @@ class MockBuyTicketPresenter implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentApplicationError(RepositoryException e) {
+    public void presentApplicationError(CinehubException e) {
         viewModel.setErrorMessage(e.getMessage());
-
     }
 
 }

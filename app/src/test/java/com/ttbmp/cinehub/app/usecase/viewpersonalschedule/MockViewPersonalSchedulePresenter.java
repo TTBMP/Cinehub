@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
-import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.CinehubException;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.reply.ProjectionListReply;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.reply.ShiftListReply;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
@@ -43,7 +43,7 @@ public class MockViewPersonalSchedulePresenter implements ViewPersonalSchedulePr
     }
 
     @Override
-    public void presentApplicationError(RepositoryException e) {
+    public void presentApplicationError(CinehubException e) {
         viewModel.setErrorMessage(e.getMessage());
     }
 

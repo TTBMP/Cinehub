@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.domain.shift;
 
-import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

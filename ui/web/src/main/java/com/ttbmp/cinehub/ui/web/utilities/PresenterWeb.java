@@ -1,7 +1,6 @@
 package com.ttbmp.cinehub.ui.web.utilities;
 
 import com.ttbmp.cinehub.app.CinehubException;
-import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.service.security.SecurePresenter;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
