@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift;
 
+import com.ttbmp.cinehub.app.CinehubException;
 import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.service.email.EmailServiceException;
@@ -162,9 +163,8 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         );
     }
 
-
     @Override
-    public void presentRepositoryError(RepositoryException e) {
+    public void presentApplicationError(CinehubException e) {
         viewModel.errorDaoProperty().setValue(e.getMessage());
     }
 

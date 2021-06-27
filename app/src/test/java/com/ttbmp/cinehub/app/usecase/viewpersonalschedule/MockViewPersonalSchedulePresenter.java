@@ -43,7 +43,7 @@ public class MockViewPersonalSchedulePresenter implements ViewPersonalSchedulePr
     }
 
     @Override
-    public void presentRepositoryError(RepositoryException e) {
+    public void presentApplicationError(RepositoryException e) {
         viewModel.setErrorMessage(e.getMessage());
     }
 

@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.login;
 
+import com.ttbmp.cinehub.app.CinehubException;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.service.security.SecurityException;
 import com.ttbmp.cinehub.app.usecase.login.LoginPresenter;
@@ -42,7 +43,7 @@ public class LoginPresenterFx implements LoginPresenter {
     }
 
     @Override
-    public void presentRepositoryError(RepositoryException e) {
+    public void presentApplicationError(CinehubException e) {
         viewModel.errorMessageProperty().setValue(e.getMessage());
     }
 

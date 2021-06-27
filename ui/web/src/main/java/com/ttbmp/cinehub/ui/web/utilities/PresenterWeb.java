@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.ui.web.utilities;
 
+import com.ttbmp.cinehub.app.CinehubException;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.service.security.SecurePresenter;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
@@ -25,7 +26,7 @@ public class PresenterWeb implements SecurePresenter {
     }
 
     @Override
-    public void presentRepositoryError(RepositoryException e) {
+    public void presentApplicationError(CinehubException e) {
         model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
     }
 
