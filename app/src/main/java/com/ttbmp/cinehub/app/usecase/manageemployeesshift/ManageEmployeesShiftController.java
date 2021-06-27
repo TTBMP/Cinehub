@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.app.usecase.manageemployeesshift;
 
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.dto.CinemaDto;
-import com.ttbmp.cinehub.app.dto.employee.EmployeeDtoFactory;
+import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 import com.ttbmp.cinehub.app.dto.shift.ShiftDtoFactory;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
@@ -12,6 +12,7 @@ import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.app.repository.shift.ShiftRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftRepository;
 import com.ttbmp.cinehub.app.service.email.EmailService;
+import com.ttbmp.cinehub.app.service.email.EmailServiceException;
 import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.app.service.security.SecurityService;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply.*;
@@ -25,6 +26,7 @@ import com.ttbmp.cinehub.domain.security.Permission;
 import com.ttbmp.cinehub.domain.shift.ModifyShiftException;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 import com.ttbmp.cinehub.domain.shift.Shift;
+import com.ttbmp.cinehub.domain.shift.UsherShift;
 import com.ttbmp.cinehub.domain.shift.factory.CreateShiftException;
 import com.ttbmp.cinehub.domain.shift.factory.ShiftFactory;
 
@@ -83,7 +85,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                 throw new Request.InvalidRequestException();
             }
             var employeeList = employeeRepository.getEmployeeList(cinema).stream()
-                    .map(EmployeeDtoFactory::getEmployeeDto)
+                    .map(EmployeeDto::new)
                     .collect(Collectors.toList());
             presenter.presentEmployeeList(new GetEmployeeListReply(employeeList));
         });
@@ -123,10 +125,16 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                     hall = hallRepository.getHall(request.getHallId());
                 }
                 semanticValidationModifyShift(request, shift, employee, hall);
-                shift.modifyShift(shift, request.getDate(), request.getStart(), request.getEnd(), hall);
-                if (employee instanceof Projectionist) {
+
+                //TODO: Trovare qualcosa di meglio sarebbe meglio
+                if (shift instanceof ProjectionistShift) {
+                    ((ProjectionistShift) shift).modifyShift(shift, request.getDate(), request.getStart(), request.getEnd(), hall);
                     projectionistShiftRepository.modifyShift((ProjectionistShift) shift);
+
+                } else if (shift instanceof UsherShift) {
+                    shift.modifyShift(shift, request.getDate(), request.getStart(), request.getEnd());
                 }
+
                 shiftRepository.modifyShift(shift);
                 emailService.sendMail(new EmailServiceRequest(employee.getEmail(), "Shift: " + shift + " modified."));
                 presenter.presentCreateShift(new CreateShiftReply(ShiftDtoFactory.getShiftDto(shift)));
@@ -134,6 +142,8 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                 presenter.presentSaveShift();
             } catch (ModifyShiftException e) {
                 presenter.presentModifyShiftError(e);
+            } catch (EmailServiceException e) {
+                presenter.presentSendEmailServiceException(e);
             }
         });
     }
@@ -163,9 +173,14 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             var shift = shiftRepository.getShift(request.getShiftId());
             semanticValidationDeleteShift(request, shift);
             var email = shift.getEmployee().getEmail();
+            var shiftDetail = shift.toString();
             shiftRepository.deletedShift(shift);
             presenter.presentDeleteShift();
-            emailService.sendMail(new EmailServiceRequest(email, "Shift: " + shift + " delete"));
+            try {
+                emailService.sendMail(new EmailServiceRequest(email, "Shift: " + shiftDetail + " delete"));
+            } catch (EmailServiceException e) {
+                presenter.presentSendEmailServiceException(e);
+            }
         });
     }
 
@@ -194,7 +209,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                     hall = hallRepository.getHall(request.getHallId());
                 }
                 semanticValidationCreateShift(request, employee, hall);
-                switch (request.getOption()) {
+                switch (request.getRepeatOption().getOption()) {
                     case "EVERY_DAY":
                         increaseDateFunction = date -> date.plusDays(1);
                         break;
@@ -205,12 +220,11 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                         increaseDateFunction = date -> date.plusMonths(1);
                         break;
                     default:
-                        throw new IllegalStateException("Unexpected value: " + request.getOption());
+                        throw new IllegalStateException("Unexpected value: " + request.getRepeatOption().getOption());
                 }
-                for (var date = request.getStart(); date.isBefore(request.getEnd().plusDays(1)); date = increaseDateFunction.apply(date)) {
+                for (var date = request.getRepeatOption().getStart(); date.isBefore(request.getRepeatOption().getEnd().plusDays(1)); date = increaseDateFunction.apply(date)) {
                     var shiftFactory = new ShiftFactory();
-                    Shift shift = null;
-                    shift = shiftFactory.createConcreteShift(
+                    var shift = shiftFactory.createConcreteShift(
                             employee,
                             date.toString(),
                             request.getStartShift().toString(),
@@ -228,6 +242,8 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                 presenter.presentRepeatShift(new ShiftRepeatReply(shiftDtoList));
             } catch (CreateShiftException e) {
                 presenter.presentCreateShiftError(e);
+            } catch (EmailServiceException e) {
+                presenter.presentSendEmailServiceException(e);
             }
         });
     }
@@ -254,6 +270,8 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                 emailService.sendMail(new EmailServiceRequest(employee.getEmail(), "Shift assigned"));
             } catch (CreateShiftException e) {
                 presenter.presentCreateShiftError(e);
+            } catch (EmailServiceException e) {
+                presenter.presentSendEmailServiceException(e);
             }
         });
     }

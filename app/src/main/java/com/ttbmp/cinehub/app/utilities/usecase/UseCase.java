@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.app.utilities.usecase;
 
+import com.ttbmp.cinehub.app.CinehubException;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.service.security.SecurePresenter;
 import com.ttbmp.cinehub.app.utilities.presenter.Presenter;
@@ -22,8 +23,8 @@ public interface UseCase {
             presenter.presentUnauthorizedError(e);
         } catch (AuthenticatedRequest.UnauthenticatedRequestException e) {
             presenter.presentUnauthenticatedError(e);
-        } catch (RepositoryException e) {
-            presenter.presentRepositoryError(e);
+        } catch (Exception e) {
+            presenter.presentApplicationError(new CinehubException(e.getMessage()));
         }
     }
 
@@ -34,8 +35,8 @@ public interface UseCase {
             presenter.presentNullRequest();
         } catch (Request.InvalidRequestException e) {
             presenter.presentInvalidRequest(request);
-        } catch (RepositoryException e) {
-            presenter.presentRepositoryError(e);
+        } catch (Exception e) {
+            presenter.presentApplicationError(new CinehubException(e.getMessage()));
         }
     }
 

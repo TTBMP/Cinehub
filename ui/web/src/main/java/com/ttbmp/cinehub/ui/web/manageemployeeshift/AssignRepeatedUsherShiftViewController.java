@@ -51,9 +51,11 @@ public class AssignRepeatedUsherShiftViewController {
         model.addAttribute(PREFERENCE_LIST, ShiftRepeatingOption.values());
         useCase.createRepeatedShift(new ShiftRepeatRequest(
                 sessionToken,
-                LocalDate.parse(request.getDate()),
-                LocalDate.parse(request.getDateRepeated()),
-                request.getPreference(),
+                new ShiftRepeatRequest.RepeatOption(
+                        LocalDate.parse(request.getDate()),
+                        LocalDate.parse(request.getDateRepeated()),
+                        request.getPreference()
+                ),
                 request.getEmployeeId(),
                 request.getStart(),
                 request.getEnd(),

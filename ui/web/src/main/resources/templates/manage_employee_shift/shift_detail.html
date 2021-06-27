@@ -30,9 +30,7 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-6 mt-2"> Role</div>
-            <div class="col-6 mt-2" th:if="${shiftDetail.employee.role == 'usher'}">Usher</div>
-            <!-- ELSE -->
-            <div class="col-6 mt-2" th:unless="${shiftDetail.employee.role == 'usher'}">Projectionist</div>
+            <div class="col-6 mt-2" th:text="${shiftDetail.employee.role}"> Role</div>
         </div>
         <div class="row justify-content-center">
             <div class="col-6 mt-2"> Date</div>
@@ -50,7 +48,7 @@
             <div class="col-6 mt-2"> Cinema</div>
             <div class="col-6 mt-2" th:text="${shiftDetail.employee.cinema.name}"></div>
         </div>
-        <div class="row justify-content-center" th:if="${shiftDetail.employee.role == 'projectionist'}">
+        <div class="row justify-content-center" th:if="${shiftDetail.employee.role.equals('Projectionist')}">
             <div class="col-6 mt-2"> Hall</div>
             <div class="col-6 mt-2" th:text="${shiftDetail.hall.name}"></div>
         </div>
@@ -113,10 +111,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm"> Role</div>
-                                <div class="col-sm" th:if="${shiftDetail.employee.role == 'usher'}">Usher</div>
-                                <div class="col-sm" th:unless="${shiftDetail.employee.role == 'usher'}">
-                                    Projectionist
-                                </div>
+                                <div class="col-sm" th:text="${shiftDetail.employee.role}">Role</div>
                             </div>
                             <div class=" row">
                                 <div class="col-sm"> Cinema</div>
@@ -146,7 +141,7 @@
                                        type="time">
                             </div>
                             <br/>
-                            <div class="row" th:if="${shiftDetail.employee.role == 'projectionist'}">
+                            <div class="row" th:if="${shiftDetail.employee.role.equals('Projectionist')}">
                                 <div class="col-sm"> Hall</div>
                                 <select class="form-select" id="modifyHallComboBox" th:name="hall.id">
                                     <option th:each="hall : ${hallList}"
@@ -160,7 +155,7 @@
                         </div>
                         <input th:name="shiftId" th:value="${shiftDetail.shiftId}" type="hidden"/>
                         <input th:name="employee.id" th:value="${shiftDetail.employee.id}" type="hidden"/>
-                        <input th:name="employee.role" th:value="${shiftDetail.employee.toString()}" type="hidden"/>
+                        <input th:name="employee.role" th:value="${shiftDetail.employee.role}" type="hidden"/>
                         <input th:name="employee.name" th:value="${shiftDetail.employee.name}" type="hidden"/>
                         <input th:name="employee.surname" th:value="${shiftDetail.employee.surname}" type="hidden"/>
                         <input th:name="employee.cinema.id" th:value="${shiftDetail.employee.cinema.id}"

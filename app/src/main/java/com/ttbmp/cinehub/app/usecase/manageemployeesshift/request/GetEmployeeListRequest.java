@@ -14,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 @EqualsAndHashCode(callSuper = false)
 public class GetEmployeeListRequest extends AuthenticatedRequest {
 
-    public static final Request.Error INVALID_CINEMA = new Request.Error("Cinema non valido");
+    public static final Request.Error INVALID_CINEMA = new Request.Error("Invalid Cinema.");
 
     int cinemaId;
 

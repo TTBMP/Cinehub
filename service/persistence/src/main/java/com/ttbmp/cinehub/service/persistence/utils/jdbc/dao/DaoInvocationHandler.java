@@ -15,18 +15,18 @@ import java.util.List;
 public class DaoInvocationHandler implements InvocationHandler {
 
     Connection connection;
-    List<Class<?>> dataSourceEntityList;
+    List<Class<?>> entityTypeList;
     DaoOperationProvider operationProvider;
 
     public DaoInvocationHandler(@NotNull Connection connection, Class<?>[] dataSourceEntities) {
         this.connection = connection;
-        dataSourceEntityList = Arrays.asList(dataSourceEntities);
+        entityTypeList = Arrays.asList(dataSourceEntities);
         operationProvider = new DaoOperationProvider();
     }
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        var operation = operationProvider.getDaoOperation(method, connection, dataSourceEntityList);
+        var operation = operationProvider.getOperation(method, connection, entityTypeList);
         return operation.execute(args);
     }
 

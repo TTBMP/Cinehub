@@ -1,16 +1,13 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift;
 
-import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
-import com.ttbmp.cinehub.app.dto.employee.ProjectionistDto;
-import com.ttbmp.cinehub.app.dto.employee.UsherDto;
+import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
-import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.service.email.EmailServiceException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply.*;
-import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
-import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.web.manageemployeeshift.form.EmployeeListDto;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
+import com.ttbmp.cinehub.ui.web.utilities.PresenterWeb;
 import org.springframework.ui.Model;
 
 import java.time.temporal.WeekFields;
@@ -20,12 +17,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPresenter {
-
-    private final Model model;
+public class ManageEmployeeShiftPresenterWeb extends PresenterWeb implements ManageEmployeesShiftPresenter {
 
     public ManageEmployeeShiftPresenterWeb(Model model) {
-        this.model = model;
+        super(model);
     }
 
     @Override
@@ -33,14 +28,11 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
         var employeeList = new EmployeeListDto(reply.getEmployeeDtoList());
         model.addAttribute("employeeList", employeeList.getEmployeeList());
         model.addAttribute("projectionistList", employeeList.getEmployeeList().stream()
-                .filter(employeeDto -> employeeDto.getClass()
-                        .equals(ProjectionistDto.class))
+                .filter(employeeDto -> employeeDto.getRole().equals(EmployeeDto.EmployeeRole.PROJECTIONIST))
                 .collect(Collectors.toList()));
         model.addAttribute("usherList", employeeList.getEmployeeList().stream()
-                .filter(employeeDto -> employeeDto.getClass()
-                        .equals(UsherDto.class))
+                .filter(employeeDto -> employeeDto.getRole().equals(EmployeeDto.EmployeeRole.USHER))
                 .collect(Collectors.toList()));
-
         findEmployee(reply.getEmployeeDtoList());
     }
 
@@ -109,28 +101,8 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
     }
 
     @Override
-    public void presentNullRequest() {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
-    }
-
-    @Override
-    public void presentInvalidRequest(Request request) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
-    }
-
-    @Override
-    public void presentRepositoryError(RepositoryException e) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
-    }
-
-    @Override
-    public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
-    }
-
-    @Override
-    public void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
+    public void presentSendEmailServiceException(EmailServiceException error) {
+        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, error.getMessage());
     }
 
     private void findEmployee(List<EmployeeDto> employeeList) {
@@ -143,6 +115,5 @@ public class ManageEmployeeShiftPresenterWeb implements ManageEmployeesShiftPres
             }
         }
     }
-
 
 }

@@ -140,7 +140,6 @@ public class ProjectionistProxy extends Projectionist {
         super.setCinema(cinema);
     }
 
-
     @Override
     public List<Shift> getShiftList() {
         if (!isShiftListLoaded) {

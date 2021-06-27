@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeesshift;
 
+import com.ttbmp.cinehub.app.service.email.EmailServiceException;
 import com.ttbmp.cinehub.app.service.security.SecurePresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply.*;
 
@@ -26,4 +27,5 @@ public interface ManageEmployeesShiftPresenter extends SecurePresenter {
 
     void presentModifyShiftError(Throwable error);
 
+    void presentSendEmailServiceException(EmailServiceException e);
 }

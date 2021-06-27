@@ -21,50 +21,54 @@ import java.util.stream.Collectors;
  */
 public class DaoDeleteOperation extends DaoOperation {
 
-    private final List<String> dtoPrimaryKeyColumnNameList;
+    private final List<String> entityPrimaryKeyColumnNameList;
 
-    public DaoDeleteOperation(Method method, Connection connection, List<Class<?>> dataSourceEntityList) throws DaoMethodException {
-        super(method, connection, dataSourceEntityList);
+    public DaoDeleteOperation(Method method, Connection connection, List<Class<?>> entityTypeList) throws DaoMethodException {
+        super(method, connection, entityTypeList);
         if (!method.getReturnType().equals(Void.TYPE) || method.getParameterCount() != 1) {
             throw new DaoMethodException("Invalid Dao method declaration.");
         }
-        objectType = method.getParameterTypes()[0];
-        dtoType = DaoOperationHelper.getDtoType(objectType, method.getGenericParameterTypes()[0], dataSourceEntityList);
-        dtoPrimaryKeyColumnNameList = Arrays.stream(dtoType.getDeclaredFields())
+        requireCollection = List.class.isAssignableFrom(method.getParameterTypes()[0]);
+        if (requireCollection) {
+            entityType = DaoOperationHelper.getEntityType(method.getGenericParameterTypes()[0], entityTypeList);
+        } else {
+            entityType = DaoOperationHelper.getEntityType(method.getParameterTypes()[0], entityTypeList);
+        }
+        entityPrimaryKeyColumnNameList = Arrays.stream(entityType.getDeclaredFields())
                 .filter(f -> f.getAnnotation(PrimaryKey.class) != null)
                 .map(f -> f.getAnnotation(ColumnInfo.class).name())
                 .collect(Collectors.toList());
         queryTemplate = String.format(
                 "DELETE FROM %s WHERE (%s = ?)",
-                dtoType.getAnnotation(Entity.class).tableName(),
-                String.join(" = ?, ", dtoPrimaryKeyColumnNameList)
+                entityType.getAnnotation(Entity.class).tableName(),
+                String.join(" = ?, ", entityPrimaryKeyColumnNameList)
         );
     }
 
     @Override
     public Object execute(Object[] args) throws DaoMethodException {
-        // TODO: Handle foreign key delete behaviour
+        // foreign key delete behaviour should be handled here
         try (var statement = connection.prepareStatement(
                 queryTemplate,
                 ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE
         )) {
-            if (List.class.isAssignableFrom(objectType)) {
-                for (Object dto : (List<?>) args[0]) {
+            if (requireCollection) {
+                for (Object entity : (List<?>) args[0]) {
                     DaoOperationHelper.bindPreparedStatement(
                             statement,
-                            DaoOperationHelper.getParameterMap(dto, dtoPrimaryKeyColumnNameList),
-                            dtoPrimaryKeyColumnNameList
+                            DaoOperationHelper.getStatementParameterMap(entity, entityPrimaryKeyColumnNameList),
+                            entityPrimaryKeyColumnNameList
                     );
                     statement.addBatch();
                 }
                 statement.executeBatch();
             } else {
-                var dto = args[0];
+                var entity = args[0];
                 DaoOperationHelper.bindPreparedStatement(
                         statement,
-                        DaoOperationHelper.getParameterMap(dto, dtoPrimaryKeyColumnNameList),
-                        dtoPrimaryKeyColumnNameList
+                        DaoOperationHelper.getStatementParameterMap(entity, entityPrimaryKeyColumnNameList),
+                        entityPrimaryKeyColumnNameList
                 );
                 statement.executeUpdate();
             }

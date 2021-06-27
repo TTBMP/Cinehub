@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift.detail;
 
-import com.ttbmp.cinehub.app.dto.employee.UsherDto;
+import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftUseCase;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.request.ShiftRequest;
 import com.ttbmp.cinehub.ui.desktop.CinehubApplication;
@@ -56,7 +56,7 @@ public class ShowShiftDetailViewController extends ViewController {
         ManageEmployeesShiftViewModel viewModel;
         viewModel = activity.getViewModel(ManageEmployeesShiftViewModel.class);
         new ManageEmployeesShiftViewModel();
-        if (viewModel.getEmployee(viewModel.selectedShiftProperty().get()) instanceof UsherDto) {
+        if (viewModel.getEmployee(viewModel.selectedShiftProperty().get()).getRole().equals(EmployeeDto.EmployeeRole.USHER)) {
             hallLabel.visibleProperty().bind(viewModel.hallVisibleProperty());
             hallLabelText.visibleProperty().bind(viewModel.hallVisibleProperty());
         } else {

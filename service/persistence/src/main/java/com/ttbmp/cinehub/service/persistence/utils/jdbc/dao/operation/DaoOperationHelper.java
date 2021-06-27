@@ -20,47 +20,46 @@ public class DaoOperationHelper {
 
     }
 
-    public static Class<?> getDtoType(@NotNull Class<?> objectType, @NotNull Type genericInputType, List<Class<?>> dataSourceEntityList) throws DaoMethodException {
-        if (dataSourceEntityList.contains(objectType)) {
-            return objectType;
+    public static Class<?> getEntityType(@NotNull Class<?> requiredType, @NotNull List<Class<?>> entityTypeList) throws DaoMethodException {
+        if (entityTypeList.contains(requiredType)) {
+            return requiredType;
         }
-        if (List.class.isAssignableFrom(objectType)) {
-            return getActualDtoType(genericInputType, dataSourceEntityList);
-        }
-        throw new DaoMethodException(objectType + " is not contained into datasource entities.");
+        throw new DaoMethodException(requiredType + " is not contained into datasource entities.");
     }
 
-    private static Class<?> getActualDtoType(@NotNull Type genericInputType, List<Class<?>> dataSourceEntityList) throws DaoMethodException {
-        var actualTypeArguments = ((ParameterizedType) genericInputType).getActualTypeArguments();
+    public static Class<?> getEntityType(@NotNull Type requiredGenericType, @NotNull List<Class<?>> entityTypeList) throws DaoMethodException {
+        var actualTypeArguments = ((ParameterizedType) requiredGenericType).getActualTypeArguments();
         if (actualTypeArguments.length == 1) {
-            var genericType = (Class<?>) actualTypeArguments[0];
-            if (dataSourceEntityList.contains(genericType)) {
-                return genericType;
+            var requiredType = (Class<?>) actualTypeArguments[0];
+            if (entityTypeList.contains(requiredType)) {
+                return requiredType;
             }
         }
-        throw new DaoMethodException(genericInputType + " is not contained into datasource entities.");
+        throw new DaoMethodException(Arrays.toString(actualTypeArguments) + " not contained into datasource entities.");
     }
 
-    public static List<Method> getDtoSetterList(@NotNull Class<?> dtoType, @NotNull List<String> columnNameList) throws NoSuchMethodException {
-        // TODO: columnNameList is probably useless
-        List<Method> dtoSetterList = new ArrayList<>();
-        var dtoFields = dtoType.getDeclaredFields();
-        for (var i = 0; i < dtoFields.length; i++) {
+    public static List<Method> getEntitySetterList(@NotNull Class<?> entityType) throws NoSuchMethodException {
+        var columnNameList = Arrays.stream(entityType.getDeclaredFields())
+                .map(DaoOperationHelper::getFieldColumnName)
+                .collect(Collectors.toList());
+        var entityFields = entityType.getDeclaredFields();
+        List<Method> entitySetterList = new ArrayList<>();
+        for (var i = 0; i < entityFields.length; i++) {
             if (columnNameList.get(i) != null) {
-                var fieldName = dtoFields[i].getName();
+                var fieldName = entityFields[i].getName();
                 var setterName = "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-                dtoSetterList.add(dtoType.getMethod(setterName, dtoFields[i].getType()));
+                entitySetterList.add(entityType.getMethod(setterName, entityFields[i].getType()));
             }
         }
-        return dtoSetterList;
+        return entitySetterList;
     }
 
-    public static List<Method> getResultSetGetterList(@NotNull Class<?> dtoType, @NotNull List<String> columnNameList) throws NoSuchMethodException {
+    public static List<Method> getResultSetGetterList(@NotNull Class<?> entityType, @NotNull List<String> columnNameList) throws NoSuchMethodException {
         List<Method> resultSetGetterList = new ArrayList<>();
-        var dtoFields = dtoType.getDeclaredFields();
-        for (var i = 0; i < dtoFields.length; i++) {
+        var entityFields = entityType.getDeclaredFields();
+        for (var i = 0; i < entityFields.length; i++) {
             if (columnNameList.get(i) != null) {
-                var fieldTypeName = dtoFields[i].getType().getSimpleName();
+                var fieldTypeName = entityFields[i].getType().getSimpleName();
                 var getterName = "get" + fieldTypeName.substring(0, 1).toUpperCase() + fieldTypeName.substring(1);
                 resultSetGetterList.add(ResultSet.class.getMethod(getterName, String.class));
             }
@@ -78,19 +77,18 @@ public class DaoOperationHelper {
         return fieldAnnotation.name();
     }
 
-    // TODO: find a better name
-    public static <T> Map<String, Object> getParameterMap(@NotNull T dto, @NotNull List<String> columnNameList) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    public static <T> Map<String, Object> getStatementParameterMap(@NotNull T entity, @NotNull List<String> columnNameList) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         Map<String, Object> result = new HashMap<>();
         if (!columnNameList.isEmpty()) {
-            var fieldMap = Arrays.stream(dto.getClass().getDeclaredFields())
+            var fieldMap = Arrays.stream(entity.getClass().getDeclaredFields())
                     .filter(f -> columnNameList.contains(f.getAnnotation(ColumnInfo.class).name()))
                     .collect(Collectors.toMap(f -> f.getAnnotation(ColumnInfo.class).name(), f -> f));
             for (var columnName : columnNameList) {
                 var field = fieldMap.get(columnName);
                 var fieldName = field.getName();
                 var methodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-                var fieldGetMethod = dto.getClass().getMethod(methodName);
-                result.put(columnName, fieldGetMethod.invoke(dto));
+                var fieldGetMethod = entity.getClass().getMethod(methodName);
+                result.put(columnName, fieldGetMethod.invoke(entity));
             }
         }
         return result;
@@ -140,4 +138,5 @@ public class DaoOperationHelper {
         resultSet.previous();
         return result;
     }
+
 }

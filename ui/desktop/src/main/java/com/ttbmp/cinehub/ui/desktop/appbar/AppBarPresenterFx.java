@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.appbar;
 
-import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.CinehubException;
 import com.ttbmp.cinehub.app.usecase.getuserrole.GetUserRolePresenter;
 import com.ttbmp.cinehub.app.usecase.getuserrole.RoleReply;
 import com.ttbmp.cinehub.app.usecase.logout.LogoutPresenter;
@@ -61,7 +61,7 @@ public class AppBarPresenterFx implements GetUserRolePresenter, LogoutPresenter 
     }
 
     @Override
-    public void presentRepositoryError(RepositoryException e) {
+    public void presentApplicationError(CinehubException e) {
         viewModel.setErrorMessage(e.getMessage());
     }
 

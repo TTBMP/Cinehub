@@ -52,9 +52,11 @@ public class AssignRepeatedProjectionistShiftViewController {
         model.addAttribute("now", LocalDate.now().plusDays(1));
         useCase.createRepeatedShift(new ShiftRepeatRequest(
                 sessionToken,
-                LocalDate.parse(request.getDate()),
-                LocalDate.parse(request.getDateRepeated()),
-                request.getPreference(),
+                new ShiftRepeatRequest.RepeatOption(
+                        LocalDate.parse(request.getDate()),
+                        LocalDate.parse(request.getDateRepeated()),
+                        request.getPreference()
+                ),
                 request.getEmployeeId(),
                 request.getStart(),
                 request.getEnd(),

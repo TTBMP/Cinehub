@@ -1,12 +1,10 @@
 package com.ttbmp.cinehub.ui.web.viewpersonalschedule;
 
-import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.ViewPersonalSchedulePresenter;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.reply.ProjectionListReply;
 import com.ttbmp.cinehub.app.usecase.viewpersonalschedule.reply.ShiftListReply;
-import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
-import com.ttbmp.cinehub.app.utilities.request.Request;
 import com.ttbmp.cinehub.ui.web.utilities.ErrorHelper;
+import com.ttbmp.cinehub.ui.web.utilities.PresenterWeb;
 import org.springframework.ui.Model;
 
 import java.time.LocalDate;
@@ -20,12 +18,10 @@ import java.util.stream.Collectors;
 /**
  * @author Fabio Buracchi
  */
-public class ViewPersonalSchedulePresenterWeb implements ViewPersonalSchedulePresenter {
-
-    private final Model model;
+public class ViewPersonalSchedulePresenterWeb extends PresenterWeb implements ViewPersonalSchedulePresenter {
 
     public ViewPersonalSchedulePresenterWeb(Model model) {
-        this.model = model;
+        super(model);
     }
 
     @Override
@@ -55,31 +51,6 @@ public class ViewPersonalSchedulePresenterWeb implements ViewPersonalSchedulePre
     @Override
     public void presentGetProjectionList(ProjectionListReply result) {
         model.addAttribute("projections", result.getProjectionDtoList());
-    }
-
-    @Override
-    public void presentNullRequest() {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.INVALID_ERROR_MESSAGE);
-    }
-
-    @Override
-    public void presentInvalidRequest(Request request) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, ErrorHelper.getRequestErrorMessage(request));
-    }
-
-    @Override
-    public void presentRepositoryError(RepositoryException e) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
-    }
-
-    @Override
-    public void presentUnauthorizedError(AuthenticatedRequest.UnauthorizedRequestException e) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
-    }
-
-    @Override
-    public void presentUnauthenticatedError(AuthenticatedRequest.UnauthenticatedRequestException e) {
-        model.addAttribute(ErrorHelper.ERROR_ATTRIBUTE_NAME, e.getMessage());
     }
 
 }

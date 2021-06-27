@@ -9,6 +9,7 @@ import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
 import com.ttbmp.cinehub.app.repository.seat.SeatRepository;
 import com.ttbmp.cinehub.app.repository.ticket.TicketRepository;
 import com.ttbmp.cinehub.app.service.email.EmailService;
+import com.ttbmp.cinehub.app.service.email.EmailServiceException;
 import com.ttbmp.cinehub.app.service.email.EmailServiceRequest;
 import com.ttbmp.cinehub.app.service.payment.PayServiceRequest;
 import com.ttbmp.cinehub.app.service.payment.PaymentService;
@@ -157,17 +158,7 @@ public class BuyTicketController implements BuyTicketUseCase {
                     presenter.presentSeatAlreadyBookedError(new SeatErrorReply("The place has already been booked"));
                 } else {
                     var ticket = new Ticket(0, projection.getBasePrice(), customer, seat, projection);
-                    //-DECORATOR-//
-                    if (Boolean.TRUE.equals(request.getTicketOption().getOpenBarOption())) {
-                        ticket = new TicketOpenBar(ticket);
-                    }
-                    if (Boolean.TRUE.equals(request.getTicketOption().getMagicBoxOption())) {
-                        ticket = new TicketMagicBox(ticket);
-                    }
-                    if (Boolean.TRUE.equals(request.getTicketOption().getSkipLineOption())) {
-                        ticket = new TicketSkipLine(ticket);
-                    }
-                    //---------//
+                    ticket = addFunctionality(ticket, request);
                     paymentService.pay(new PayServiceRequest(
                             customer.getEmail(),
                             customer.getName(),
@@ -177,14 +168,38 @@ public class BuyTicketController implements BuyTicketUseCase {
                             request.getCreditCard().getCreditCardExpirationDate()
                     ));
                     ticketRepository.saveTicket(ticket);
-                    emailService.sendMail(new EmailServiceRequest(request.getEmail(), "Payment receipt"));
+                    var message = "You bought the ticket at the price of "
+                            + ticket.getPrice() +
+                            "€ for the hours "
+                            + projection.getStartTime() +
+                            " in the hall " +
+                            projection.getHall().getName() +
+                            "\nSee you soon!";
+                    emailService.sendMail(new EmailServiceRequest(request.getEmail(), message));
                     presenter.presentTicket(new TicketReply(new TicketDto(ticket)));
                 }
             } catch (PaymentServiceException e) {
                 presenter.presentPaymentServiceException(e);
+            } catch (EmailServiceException e) {
+                presenter.presentSendEmailServiceException(e);
             }
         });
     }
+
+    private Ticket addFunctionality(Ticket ticket, PaymentRequest request) {
+        //-DECORATOR-//
+        if (Boolean.TRUE.equals(request.getTicketOption().getOpenBarOption())) {
+            ticket = new TicketOpenBar(ticket);
+        }
+        if (Boolean.TRUE.equals(request.getTicketOption().getMagicBoxOption())) {
+            ticket = new TicketMagicBox(ticket);
+        }
+        if (Boolean.TRUE.equals(request.getTicketOption().getSkipLineOption())) {
+            ticket = new TicketSkipLine(ticket);
+        }
+        return ticket;
+    }
+
 
     private void semanticValidatePay(PaymentRequest request, Customer customer, Projection projection, Seat seat) throws Request.InvalidRequestException {
         if (customer == null) {

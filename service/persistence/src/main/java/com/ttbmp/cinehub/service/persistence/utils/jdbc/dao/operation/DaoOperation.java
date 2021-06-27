@@ -13,15 +13,15 @@ public abstract class DaoOperation {
 
     protected final Method method;
     protected final Connection connection;
-    protected final List<Class<?>> dataSourceEntityList;
-    protected Class<?> objectType;
-    protected Class<?> dtoType;
+    protected final List<Class<?>> entityTypeList;
+    protected boolean requireCollection;
+    protected Class<?> entityType;
     protected String queryTemplate;
 
-    protected DaoOperation(Method method, Connection connection, List<Class<?>> dataSourceEntityList) {
+    protected DaoOperation(Method method, Connection connection, List<Class<?>> entityTypeList) {
         this.method = method;
         this.connection = connection;
-        this.dataSourceEntityList = dataSourceEntityList;
+        this.entityTypeList = entityTypeList;
     }
 
     public abstract Object execute(Object[] args) throws DaoMethodException;

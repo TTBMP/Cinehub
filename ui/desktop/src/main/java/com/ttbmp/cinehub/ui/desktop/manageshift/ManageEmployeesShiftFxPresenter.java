@@ -1,7 +1,8 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift;
 
-import com.ttbmp.cinehub.app.dto.employee.EmployeeDto;
-import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.CinehubException;
+import com.ttbmp.cinehub.app.dto.EmployeeDto;
+import com.ttbmp.cinehub.app.service.email.EmailServiceException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
@@ -144,6 +145,11 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
     }
 
     @Override
+    public void presentSendEmailServiceException(EmailServiceException error) {
+        viewModel.errorMessageProperty().setValue(error.getMessage());
+    }
+
+    @Override
     public void presentNullRequest() {
         viewModel.errorMessageProperty().setValue("Request can't be null");
     }
@@ -156,9 +162,8 @@ public class ManageEmployeesShiftFxPresenter implements ManageEmployeesShiftPres
         );
     }
 
-
     @Override
-    public void presentRepositoryError(RepositoryException e) {
+    public void presentApplicationError(CinehubException e) {
         viewModel.errorDaoProperty().setValue(e.getMessage());
     }
 

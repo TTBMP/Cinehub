@@ -2,10 +2,7 @@ package com.ttbmp.cinehub.app.usecase.manageemployeesshift.request;
 
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
 import com.ttbmp.cinehub.app.utilities.request.Request;
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
@@ -17,27 +14,23 @@ import java.time.LocalTime;
 @EqualsAndHashCode(callSuper = false)
 public class ShiftRepeatRequest extends AuthenticatedRequest {
 
-    public static final Request.Error MISSING_EMPLOYEE = new Request.Error("Dipendente non valido");
-    public static final Request.Error MISSING_START = new Request.Error("Data inizio non valido");
-    public static final Request.Error MISSING_END = new Request.Error("Data fine non valida");
-    public static final Request.Error MISSING_OPTION = new Request.Error("Opzione non valida");
-    public static final Request.Error MISSING_START_SHIFT = new Request.Error("Ora inizio non valido");
-    public static final Request.Error MISSING_END_SHIFT = new Request.Error("Ora fine non valida");
-    public static final Request.Error PERIOD_ERROR = new Request.Error("Periodo non valido");
+    public static final Request.Error MISSING_EMPLOYEE = new Request.Error("Invalid Employee.");
+    public static final Request.Error MISSING_START = new Request.Error("Invalid start date.");
+    public static final Request.Error MISSING_END = new Request.Error("Invalid end date.");
+    public static final Request.Error MISSING_OPTION = new Request.Error("Invalid option.");
+    public static final Request.Error MISSING_START_SHIFT = new Request.Error("Invalid start time.");
+    public static final Request.Error MISSING_END_SHIFT = new Request.Error("Invalid end time.");
+    public static final Request.Error PERIOD_ERROR = new Request.Error("Invalid Schedule.");
 
-    LocalDate start;
-    LocalDate end;
-    String option;
+    RepeatOption repeatOption;
     String employeeId;
     LocalTime startShift;
     LocalTime endShift;
     int hallId;
 
-    public ShiftRepeatRequest(String sessionToken, LocalDate start, LocalDate end, String option, String employeeId, LocalTime startShift, LocalTime endShift, int hallId) {
+    public ShiftRepeatRequest(String sessionToken, RepeatOption repeatOption, String employeeId, LocalTime startShift, LocalTime endShift, int hallId) {
         super(sessionToken);
-        this.start = start;
-        this.end = end;
-        this.option = option;
+        this.repeatOption = repeatOption;
         this.employeeId = employeeId;
         this.startShift = startShift;
         this.endShift = endShift;
@@ -49,16 +42,16 @@ public class ShiftRepeatRequest extends AuthenticatedRequest {
         if (employeeId == null) {
             addError(MISSING_EMPLOYEE);
         }
-        if (option == null) {
+        if (repeatOption.option == null) {
             addError(MISSING_OPTION);
         }
-        if (start == null) {
+        if (repeatOption.start == null) {
             addError(MISSING_START);
-        } else if (end == null) {
+        } else if (repeatOption.end == null) {
             addError(MISSING_END);
-        } else if (LocalDate.now().isAfter(start)) {
+        } else if (LocalDate.now().isAfter(repeatOption.start)) {
             addError(MISSING_START);
-        } else if (start.isAfter(end)) {
+        } else if (repeatOption.start.isAfter(repeatOption.end)) {
             addError(PERIOD_ERROR);
         }
         if (startShift == null) {
@@ -70,4 +63,12 @@ public class ShiftRepeatRequest extends AuthenticatedRequest {
         }
     }
 
+    @Value
+    public static class RepeatOption {
+        LocalDate start;
+        LocalDate end;
+        String option;
+    }
+
 }
+

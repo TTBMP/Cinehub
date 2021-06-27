@@ -5,6 +5,6 @@ package com.ttbmp.cinehub.app.service.email;
  */
 public interface EmailService {
 
-    void sendMail(EmailServiceRequest emailServiceRequest);
+    void sendMail(EmailServiceRequest emailServiceRequest) throws EmailServiceException;
 
 }

@@ -1,6 +1,7 @@
 package com.ttbmp.cinehub.app.usecase.manageemployeeshift;
 
-import com.ttbmp.cinehub.app.repository.RepositoryException;
+import com.ttbmp.cinehub.app.CinehubException;
+import com.ttbmp.cinehub.app.service.email.EmailServiceException;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ManageEmployeesShiftPresenter;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.reply.*;
 import com.ttbmp.cinehub.app.utilities.request.AuthenticatedRequest;
@@ -64,6 +65,12 @@ public class MockManageEmployeeShiftPresenter implements ManageEmployeesShiftPre
     }
 
     @Override
+    public void presentSendEmailServiceException(EmailServiceException error) {
+        viewModel.setErrorMessage(error.getMessage());
+
+    }
+
+    @Override
     public void presentNullRequest() {
         viewModel.setErrorMessage("Request can't be null");
     }
@@ -78,7 +85,7 @@ public class MockManageEmployeeShiftPresenter implements ManageEmployeesShiftPre
 
 
     @Override
-    public void presentRepositoryError(RepositoryException e) {
+    public void presentApplicationError(CinehubException e) {
         viewModel.setErrorMessage(e.getMessage());
     }
 

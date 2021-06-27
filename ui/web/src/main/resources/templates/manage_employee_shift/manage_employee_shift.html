@@ -65,20 +65,20 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="employee : ${employeeShiftListMap}">
+                    <tr th:each="entry : ${employeeShiftListMap}">
                         <td>
                             <div class="container d-flex flex-column">
                                 <div class="m-2">
-                                    <img src="../../static/images/employee.jpg" th:src="@{images/employee.jpg}">
+                                    <img src="../../static/images/employee.png" th:src="@{images/employee.png}" height="50">
                                 </div>
                                 <div >
-                                    <p th:text=" ${employee.key.name} + ' ' + ${employee.key.surname}"></p>
-                                    <p th:text="'Role : ' + ${employee.key.toString()}   "></p>
+                                    <p th:text=" ${entry.key.name} + ' ' + ${entry.key.surname}"></p>
+                                    <p th:text="'Role : ' + ${entry.key.role}   "></p>
                                 </div>
                             </div>
                         </td>
                         <td th:each="dayOfWeek: ${T(java.time.DayOfWeek).values()}">
-                            <div th:each="shift : ${employee.value}">
+                            <div th:each="shift : ${entry.value}">
                                 <div th:if=${shift.date.dayOfWeek.equals(dayOfWeek)}>
                                     <form action="shift_detail.html" method="POST" th:action="@{/shift_detail}"
                                           th:object="${selectedShift}">
@@ -86,22 +86,22 @@
                                         <input th:name="date" th:value="${shift.date}" type="hidden"/>
                                         <input th:name="start" th:value="${shift.start}" type="hidden"/>
                                         <input th:name="end" th:value="${shift.end}" type="hidden"/>
-                                        <input th:name="employee.id" th:value="${employee.key.id}" type="hidden"/>
-                                        <input th:name="employee.role" th:value="${employee.key.toString()}"
+                                        <input th:name="employee.id" th:value="${entry.key.id}" type="hidden"/>
+                                        <input th:name="employee.role" th:value="${entry.key.role}"
                                                type="hidden"/>
-                                        <input th:name="employee.name" th:value="${employee.key.name}" type="hidden"/>
-                                        <input th:name="employee.surname" th:value="${employee.key.surname}"
+                                        <input th:name="employee.name" th:value="${entry.key.name}" type="hidden"/>
+                                        <input th:name="employee.surname" th:value="${entry.key.surname}"
                                                type="hidden"/>
-                                        <input th:name="employee.cinema.id" th:value="${employee.key.cinema.id}"
+                                        <input th:name="employee.cinema.id" th:value="${entry.key.cinema.id}"
                                                type="hidden"/>
-                                        <input th:name="employee.cinema.name" th:value="${employee.key.cinema.name}"
+                                        <input th:name="employee.cinema.name" th:value="${entry.key.cinema.name}"
                                                type="hidden"/>
-                                        <div th:if="${employee.key.toString() == 'projectionist'}">
+                                        <div th:if="${entry.key.role.equals(T(com.ttbmp.cinehub.app.dto.EmployeeDto.EmployeeRole).PROJECTIONIST)}">
                                             <input th:name="hall.id" th:value="${shift.hallDto.id}" type="hidden"/>
                                             <input th:name="hall.name" th:value="${shift.hallDto.name}" type="hidden"/>
                                         </div>
                                         <input th:class="'btn' + ${shift.date.isAfter(T(java.time.LocalDate).now()) ?
-                                                            employee.key.toString().equals('projectionist') ?
+                                                            entry.key.role.equals(T(com.ttbmp.cinehub.app.dto.EmployeeDto.EmployeeRole).PROJECTIONIST) ?
                                                                 ' btn-info' :
                                                                 ' btn-warning' :
                                                             ' btn-danger'
