@@ -4,6 +4,9 @@ import com.ttbmp.cinehub.app.dto.*;
 
 import java.util.List;
 
+/**
+ * @author Ivan Palmieri
+ */
 public class MockBuyTicketViewModel {
 
     private String sessionToken;

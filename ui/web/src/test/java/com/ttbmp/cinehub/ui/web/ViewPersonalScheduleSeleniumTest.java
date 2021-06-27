@@ -22,6 +22,9 @@ import static com.ttbmp.cinehub.ui.web.SeleniumHelper.waitPageToLoad;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * @author Fabio Buracchi
+ */
 @SpringBootTest
 class ViewPersonalScheduleSeleniumTest {
 

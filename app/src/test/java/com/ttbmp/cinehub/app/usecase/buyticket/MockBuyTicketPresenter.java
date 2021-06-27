@@ -9,6 +9,9 @@ import com.ttbmp.cinehub.app.utilities.request.Request;
 
 import java.util.stream.Collectors;
 
+/**
+ * @author Ivan Palmieri
+ */
 class MockBuyTicketPresenter implements BuyTicketPresenter {
 
     private final MockBuyTicketViewModel viewModel;

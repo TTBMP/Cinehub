@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 /**
  * @author Massimo Mazzetti
  **/
-
 class ManageEmployeesShiftControllerTest {
 
     private MockServiceLocator serviceLocator;

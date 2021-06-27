@@ -6,6 +6,9 @@ import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
 
 import java.util.List;
 
+/**
+ * @author Massimo Mazzetti
+ **/
 public class MockManageEmployeeShiftViewModel {
 
     private String sessionToken;
