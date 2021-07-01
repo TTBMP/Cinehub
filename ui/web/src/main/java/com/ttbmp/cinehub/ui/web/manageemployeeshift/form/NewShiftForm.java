@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift.form;
 
-import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.ui.web.domain.Employee;
 import com.ttbmp.cinehub.ui.web.domain.Hall;
 import lombok.Data;

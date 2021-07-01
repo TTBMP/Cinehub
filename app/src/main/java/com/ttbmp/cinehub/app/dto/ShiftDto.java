@@ -1,6 +1,5 @@
 package com.ttbmp.cinehub.app.dto;
 
-import com.ttbmp.cinehub.app.dto.HallDto;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
 import com.ttbmp.cinehub.domain.shift.Shift;
 import com.ttbmp.cinehub.domain.shift.UsherShift;
