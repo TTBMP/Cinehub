@@ -3,7 +3,7 @@ package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 import com.ttbmp.cinehub.app.di.ServiceLocator;
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.dto.shift.ShiftDtoFactory;
+import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.shift.projectionist.ProjectionistShiftRepository;
 import com.ttbmp.cinehub.app.service.security.SecurityService;
@@ -43,7 +43,7 @@ public class ViewPersonalScheduleController implements ViewPersonalScheduleUseCa
             presenter.presentGetShiftList(new ShiftListReply(
                     new EmployeeDto(employee),
                     shiftList.stream()
-                            .map(ShiftDtoFactory::getShiftDto)
+                            .map(ShiftDto::new)
                             .collect(Collectors.toList())
             ));
         });

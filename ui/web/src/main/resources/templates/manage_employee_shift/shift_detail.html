@@ -147,13 +147,13 @@
                                     <option th:each="hall : ${hallList}"
                                             th:text="${hall.name}"
                                             th:value="${hall.id}"
-                                            th:selected="${shiftDetail.hall.name.equals(hall.name)}"
-                                    >
+                                            th:selected="${shiftDetail.hall.name.equals(hall.name)}">
                                     </option>
                                 </select>
                             </div>
                         </div>
                         <input th:name="shiftId" th:value="${shiftDetail.shiftId}" type="hidden"/>
+                        <input th:name="type" th:value="${shiftDetail.type}" type="hidden"/>
                         <input th:name="employee.id" th:value="${shiftDetail.employee.id}" type="hidden"/>
                         <input th:name="employee.role" th:value="${shiftDetail.employee.role}" type="hidden"/>
                         <input th:name="employee.name" th:value="${shiftDetail.employee.name}" type="hidden"/>

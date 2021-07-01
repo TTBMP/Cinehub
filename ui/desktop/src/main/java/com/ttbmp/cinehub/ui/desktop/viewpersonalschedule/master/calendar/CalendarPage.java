@@ -1,6 +1,6 @@
 package com.ttbmp.cinehub.ui.desktop.viewpersonalschedule.master.calendar;
 
-import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
+import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.ui.desktop.utilities.ObjectBindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

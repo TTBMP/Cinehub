@@ -1,5 +1,6 @@
 package com.ttbmp.cinehub.ui.web.manageemployeeshift.form;
 
+import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.ui.web.domain.Employee;
 import com.ttbmp.cinehub.ui.web.domain.Hall;
 import lombok.Data;
@@ -15,6 +16,7 @@ public class NewShiftForm {
     private String date;
     private LocalTime start;
     private LocalTime end;
+    private String type;
     private boolean change;
 
 }

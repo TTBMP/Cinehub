@@ -42,12 +42,12 @@ public class ShiftDetailViewController {
             useCase.getEmployeeList(new GetEmployeeListRequest(sessionToken, shift.getEmployee().getCinema().getId()));
             useCase.modifyShift(new ShiftModifyRequest(
                     sessionToken,
-                    shift.getEmployee().getId(),
                     shift.getShiftId(),
                     LocalDate.parse(shift.getDate()),
                     shift.getStart(),
                     shift.getEnd(),
-                    hallId
+                    hallId,
+                    shift.getType()
             ));
             model.addAttribute("scope", "Shift Modify Successful");
             return ErrorHelper.returnView(response, model, "manage_employee_shift/notification");

@@ -32,19 +32,22 @@ public abstract class Shift {
         this.end = end;
     }
 
-    public void modifyShift(Shift shift, LocalDate date, LocalTime start, LocalTime end) throws ModifyShiftException {
-        var shiftList = shift.getEmployee().getShiftListBetween(date.minusDays(1), date.plusDays(1));
+    public void modifyShift(LocalDate date, LocalTime start, LocalTime end) throws ModifyShiftException {
+        if (LocalDate.now().plusDays(1).isAfter(LocalDate.parse(this.getDate()))) {
+            throw new ModifyShiftException(ModifyShiftException.INVALID_DATE);
+        }
+        var shiftList = this.getEmployee().getShiftListBetween(date.minusDays(1), date.plusDays(1));
         for (var elem : shiftList) {
-            if (elem.getId() != shift.getId()
+            if (elem.getId() != this.getId()
                     && LocalDate.parse(elem.getDate()).equals(date)
                     && (start.isBefore(LocalTime.parse(elem.getEnd()))
                     && (end.isAfter(LocalTime.parse(elem.getStart()))))) {
                 throw new ModifyShiftException(ModifyShiftException.ALREADY_EXIST_ERROR);
             }
         }
-        shift.setDate(date.toString());
-        shift.setStart(start.toString());
-        shift.setEnd(end.toString());
-    }
+        this.setDate(date.toString());
+        this.setStart(start.toString());
+        this.setEnd(end.toString());
 
+    }
 }

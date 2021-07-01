@@ -4,8 +4,7 @@ package com.ttbmp.cinehub.ui.desktop.manageshift;
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.HallDto;
-import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
-import com.ttbmp.cinehub.app.dto.shift.ShiftProjectionistDto;
+import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.app.usecase.manageemployeesshift.ShiftRepeatingOption;
 import com.ttbmp.cinehub.app.utilities.observer.Observable;
 import com.ttbmp.cinehub.ui.desktop.manageshift.table.Day;
@@ -84,8 +83,8 @@ public class ManageEmployeesShiftViewModel implements ViewModel {
         selectedShiftEndProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto -> shiftDto.getEnd().toString()));
         selectedShiftRoleProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto -> getEmployee(shiftDto).getRole().toString()));
         selectedShiftHallProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto -> {
-            if (shiftDto instanceof ShiftProjectionistDto) {
-                return ((ShiftProjectionistDto) shiftDto).getHallDto().getName();
+            if (shiftDto.getType().equals(ShiftDto.ShiftType.PROJECTIONIST_SHIFT)) {
+                return shiftDto.getHall().getName();
             }
             return null;
         }));

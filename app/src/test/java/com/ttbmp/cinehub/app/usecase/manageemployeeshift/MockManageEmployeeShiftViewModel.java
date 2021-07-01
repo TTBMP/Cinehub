@@ -2,7 +2,7 @@ package com.ttbmp.cinehub.app.usecase.manageemployeeshift;
 
 import com.ttbmp.cinehub.app.dto.CinemaDto;
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
-import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
+import com.ttbmp.cinehub.app.dto.ShiftDto;
 
 import java.util.List;
 

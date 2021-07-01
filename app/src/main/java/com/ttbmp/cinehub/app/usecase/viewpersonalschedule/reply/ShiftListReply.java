@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.app.usecase.viewpersonalschedule.reply;
 
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
-import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
+import com.ttbmp.cinehub.app.dto.ShiftDto;
 import lombok.Value;
 
 import java.util.List;
