@@ -10,13 +10,13 @@ import com.ttbmp.cinehub.app.usecase.buyticket.reply.*;
  */
 public interface BuyTicketPresenter extends SecurePresenter {
 
-    void presentMovieList(MovieListReply reply);
+    void presentGetMovieList(MovieListReply reply);
 
-    void presentCinemaList(CinemaListReply reply);
+    void presentGetCinemaList(CinemaListReply reply);
 
-    void presentProjectionList(ProjectionListReply reply);
+    void presentGetProjectionList(ProjectionListReply reply);
 
-    void presentSeatList(SeatListReply reply);
+    void presentGetSeatList(SeatListReply reply);
 
     void presentTicket(TicketReply reply);
 
