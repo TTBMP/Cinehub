@@ -147,7 +147,14 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
             var permissions = new Permission[]{Permission.DELETE_SHIFT};
             AuthenticatedRequest.validate(request, securityService, permissions);
             var shift = shiftRepository.getShift(request.getShiftId());
-            semanticValidationDeleteShift(request, shift);
+            if (shift == null) {
+                request.addError(ShiftRequest.MISSING_SHIFT);
+            } else if (LocalDate.now().plusDays(1).isAfter(LocalDate.parse(shift.getDate()))) {
+                request.addError(ShiftRequest.INVALID_SHIFT);
+            }
+            if (!request.getErrorList().isEmpty()) {
+                throw new Request.InvalidRequestException();
+            }
             var email = shift.getEmployee().getEmail();
             var shiftDetail = shift.toString();
             shiftRepository.deletedShift(shift);
@@ -158,17 +165,6 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
                 presenter.presentSendEmailServiceException(e);
             }
         });
-    }
-
-    private void semanticValidationDeleteShift(ShiftRequest request, Shift shift) throws Request.InvalidRequestException {
-        if (shift == null) {
-            request.addError(ShiftRequest.MISSING_SHIFT);
-        } else if (LocalDate.now().plusDays(1).isAfter(LocalDate.parse(shift.getDate()))) {
-            request.addError(ShiftRequest.INVALID_SHIFT);
-        }
-        if (!request.getErrorList().isEmpty()) {
-            throw new Request.InvalidRequestException();
-        }
     }
 
     @Override

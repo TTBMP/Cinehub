@@ -101,7 +101,7 @@
                                             <input th:name="hall.id" th:value="${shift.hall.id}" type="hidden"/>
                                             <input th:name="hall.name" th:value="${shift.hall.name}" type="hidden"/>
                                         </div>
-                                        <input th:class="'btn' + ${shift.date.isAfter(T(java.time.LocalDate).now()) ?
+                                        <input th:id="${shift.id}" th:class="'btn' + ${shift.date.isAfter(T(java.time.LocalDate).now()) ?
                                                             entry.key.role.equals(T(com.ttbmp.cinehub.app.dto.EmployeeDto.EmployeeRole).PROJECTIONIST) ?
                                                                 ' btn-info' :
                                                                 ' btn-warning' :

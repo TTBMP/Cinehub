@@ -31,7 +31,7 @@
         <div class="row pb-3">
             <div class="col">
             <span class="h5"
-                  th:text="${'Working in the hall ' + projections[0].hallDto.name}">Working in the hall hall</span>
+                  th:text="${'Working in the hall ' + scheduleForm.shift.hall.name}">Working in the hall hall</span>
             </div>
         </div>
         <table class="table table-striped pt-4 pb-4">
@@ -70,6 +70,10 @@
                     <input th:name="shift.start" th:value="${scheduleForm.shift.start}" type="hidden"/>
                     <input th:name="shift.end" th:value="${scheduleForm.shift.end}" type="hidden"/>
                     <input th:name="shift.employeeId" th:value="${scheduleForm.shift.employeeId}" type="hidden"/>
+                    <div th:if="${scheduleForm.employee.role.equals('Projectionist')}">
+                        <input th:name="hall.id" th:value="${scheduleForm.shift.hall.id}" type="hidden"/>
+                        <input th:name="hall.name" th:value="${scheduleForm.shift.hall.name}" type="hidden"/>
+                    </div>
                     <input class="btn btn-primary" type="submit" value="BACK"/>
                 </form>
             </div>
