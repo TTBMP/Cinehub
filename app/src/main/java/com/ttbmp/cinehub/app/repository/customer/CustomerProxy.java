@@ -51,24 +51,6 @@ public class CustomerProxy extends Customer {
     }
 
     @Override
-    public String getSurname() {
-        if (!isSurnameLoaded) {
-            try {
-                setSurname(userRepository.getUser(getId()).getSurname());
-            } catch (RepositoryException e) {
-                throw new LazyLoadingException(e.getMessage());
-            }
-        }
-        return super.getSurname();
-    }
-
-    @Override
-    public void setSurname(String surname) {
-        isSurnameLoaded = true;
-        super.setSurname(surname);
-    }
-
-    @Override
     public String getEmail() {
         if (!isEmailLoaded) {
             try {
@@ -87,21 +69,21 @@ public class CustomerProxy extends Customer {
     }
 
     @Override
-    public List<Role> getRoleList() {
-        if (!isRoleListLoaded) {
+    public String getSurname() {
+        if (!isSurnameLoaded) {
             try {
-                setRoleList(userRepository.getUser(getId()).getRoleList());
+                setSurname(userRepository.getUser(getId()).getSurname());
             } catch (RepositoryException e) {
                 throw new LazyLoadingException(e.getMessage());
             }
         }
-        return super.getRoleList();
+        return super.getSurname();
     }
 
     @Override
-    public void setRoleList(List<Role> roleList) {
-        isRoleListLoaded = true;
-        super.setRoleList(roleList);
+    public void setSurname(String surname) {
+        isSurnameLoaded = true;
+        super.setSurname(surname);
     }
 
     @Override
@@ -132,6 +114,24 @@ public class CustomerProxy extends Customer {
     public void setOwnedTicketList(List<Ticket> ownedTicketList) {
         isTicketListLoaded = true;
         super.setOwnedTicketList(ownedTicketList);
+    }
+
+    @Override
+    public List<Role> getRoleList() {
+        if (!isRoleListLoaded) {
+            try {
+                setRoleList(userRepository.getUser(getId()).getRoleList());
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
+        }
+        return super.getRoleList();
+    }
+
+    @Override
+    public void setRoleList(List<Role> roleList) {
+        isRoleListLoaded = true;
+        super.setRoleList(roleList);
     }
 
     @Override
