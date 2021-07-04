@@ -61,7 +61,7 @@ public class ViewPersonalScheduleViewModel implements ViewModel {
         selectedShiftDateProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto -> shiftDto.getDate().toString()));
         selectedShiftStartProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto -> shiftDto.getStart().toString()));
         selectedShiftEndProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto -> shiftDto.getEnd().toString()));
-        selectedProjectionistShiftHallProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto ->  shiftDto.getHall().getName()));
+        selectedProjectionistShiftHallProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto -> shiftDto.getHall().getName()));
         projectionsDetailButtonVisibleProperty.bind(ObjectBindings.map(selectedShiftEmployeeRoleProperty, e -> e.equals(EmployeeDto.EmployeeRole.PROJECTIONIST.toString())));
     }
 
