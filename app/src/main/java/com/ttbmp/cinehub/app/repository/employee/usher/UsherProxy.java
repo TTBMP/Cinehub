@@ -24,12 +24,12 @@ public class UsherProxy extends Usher {
     private final CinemaRepository cinemaRepository;
     private final ShiftRepository shiftRepository;
 
-    private boolean isNameLoaded = false;
-    private boolean isSurnameLoaded = false;
-    private boolean isEmailLoaded = false;
-    private boolean isRoleListLoaded = false;
-    private boolean isCinemaLoaded = false;
-    private boolean isShiftListLoaded = false;
+    private boolean isUsherNameLoaded = false;
+    private boolean isUsherSurnameLoaded = false;
+    private boolean isUsherEmailLoaded = false;
+    private boolean isUsherRoleListLoaded = false;
+    private boolean isUsherCinemaLoaded = false;
+    private boolean isUsherShiftListLoaded = false;
 
     public UsherProxy(ServiceLocator serviceLocator, String id) {
         super(id, null, null, null, null, null);
@@ -40,7 +40,7 @@ public class UsherProxy extends Usher {
 
     @Override
     public String getName() {
-        if (!isNameLoaded) {
+        if (!isUsherNameLoaded) {
             try {
                 setName(userRepository.getUser(getId()).getName());
             } catch (RepositoryException e) {
@@ -52,13 +52,13 @@ public class UsherProxy extends Usher {
 
     @Override
     public void setName(String name) {
-        isNameLoaded = true;
+        isUsherNameLoaded = true;
         super.setName(name);
     }
 
     @Override
     public String getSurname() {
-        if (!isSurnameLoaded) {
+        if (!isUsherSurnameLoaded) {
             try {
                 setSurname(userRepository.getUser(getId()).getSurname());
             } catch (RepositoryException e) {
@@ -70,13 +70,13 @@ public class UsherProxy extends Usher {
 
     @Override
     public void setSurname(String surname) {
-        isSurnameLoaded = true;
+        isUsherSurnameLoaded = true;
         super.setSurname(surname);
     }
 
     @Override
     public String getEmail() {
-        if (!isEmailLoaded) {
+        if (!isUsherEmailLoaded) {
             try {
                 setEmail(userRepository.getUser(getId()).getEmail());
             } catch (RepositoryException e) {
@@ -88,13 +88,13 @@ public class UsherProxy extends Usher {
 
     @Override
     public void setEmail(String email) {
-        isEmailLoaded = true;
+        isUsherEmailLoaded = true;
         super.setEmail(email);
     }
 
     @Override
     public List<Role> getRoleList() {
-        if (!isRoleListLoaded) {
+        if (!isUsherRoleListLoaded) {
             try {
                 setRoleList(userRepository.getUser(getId()).getRoleList());
             } catch (RepositoryException e) {
@@ -106,13 +106,13 @@ public class UsherProxy extends Usher {
 
     @Override
     public void setRoleList(List<Role> roleList) {
-        isRoleListLoaded = true;
+        isUsherRoleListLoaded = true;
         super.setRoleList(roleList);
     }
 
     @Override
     public boolean hasPermission(Permission requiredPermission) {
-        if (!isRoleListLoaded) {
+        if (!isUsherRoleListLoaded) {
             try {
                 setRoleList(userRepository.getUser(getId()).getRoleList());
             } catch (RepositoryException e) {
@@ -126,7 +126,7 @@ public class UsherProxy extends Usher {
     public Cinema getCinema() {
 
         try {
-            if (!isCinemaLoaded) {
+            if (!isUsherCinemaLoaded) {
                 setCinema(cinemaRepository.getCinema(this));
             }
             return super.getCinema();
@@ -137,13 +137,13 @@ public class UsherProxy extends Usher {
 
     @Override
     public void setCinema(Cinema cinema) {
-        isCinemaLoaded = true;
+        isUsherCinemaLoaded = true;
         super.setCinema(cinema);
     }
 
     @Override
     public List<Shift> getShiftList() {
-        if (!isShiftListLoaded) {
+        if (!isUsherShiftListLoaded) {
             try {
                 setShiftList(shiftRepository.getShiftList(this));
             } catch (RepositoryException e) {
@@ -155,7 +155,7 @@ public class UsherProxy extends Usher {
 
     @Override
     public void setShiftList(List<Shift> shiftList) {
-        isShiftListLoaded = true;
+        isUsherShiftListLoaded = true;
         super.setShiftList(shiftList);
     }
 
