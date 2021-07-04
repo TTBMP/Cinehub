@@ -61,7 +61,7 @@ public class PaymentRequest extends AuthenticatedRequest {
         if (creditCard.creditCardNumber.length() < 12 || creditCard.creditCardNumber.length() > 16) {
             addError(CREDIT_CARD_LENGTH_ERROR);
         }
-        if (!email.contains("@")) {
+        if (!email.matches("\\w+@\\w+\\.\\w+")) {
             addError(EMAIL_ERROR);
         }
         if (ticketOption.magicBoxOption == null) {

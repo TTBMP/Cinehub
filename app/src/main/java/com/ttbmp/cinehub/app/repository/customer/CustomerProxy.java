@@ -9,12 +9,14 @@ import com.ttbmp.cinehub.domain.Customer;
 import com.ttbmp.cinehub.domain.security.Permission;
 import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.ticket.Ticket;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
 /**
  * @author Fabio Buracchi
  */
+@EqualsAndHashCode(callSuper = true)
 public class CustomerProxy extends Customer {
 
     private final TicketRepository ticketRepository;
@@ -132,16 +134,6 @@ public class CustomerProxy extends Customer {
     public void setOwnedTicketList(List<Ticket> ownedTicketList) {
         isCustomerTicketListLoaded = true;
         super.setOwnedTicketList(ownedTicketList);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 
 }

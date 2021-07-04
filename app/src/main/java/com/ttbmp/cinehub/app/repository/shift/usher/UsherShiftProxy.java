@@ -6,10 +6,12 @@ import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.usher.UsherRepository;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.shift.UsherShift;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author Fabio Buracchi
  */
+@EqualsAndHashCode(callSuper = true)
 public class UsherShiftProxy extends UsherShift {
 
     private final UsherRepository usherRepository;
@@ -38,16 +40,6 @@ public class UsherShiftProxy extends UsherShift {
     public void setEmployee(Employee employee) {
         isEmployeeLoaded = true;
         super.setEmployee(employee);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 
 }

@@ -277,7 +277,7 @@ public class ManageEmployeesShiftController implements ManageEmployeesShiftUseCa
     }
 
     private void modifyUsherShift(ShiftModifyRequest request, UsherShift shift) throws ModifyShiftException {
-        shift.modifyShift( request.getDate(), request.getStart(), request.getEnd());
+        shift.modifyShift(request.getDate(), request.getStart(), request.getEnd());
     }
 
 }

@@ -36,13 +36,13 @@ public class ShiftDto {
         this.date = LocalDate.parse(shift.getDate());
         this.start = LocalTime.parse(shift.getStart());
         this.end = LocalTime.parse(shift.getEnd());
-        if(shift instanceof ProjectionistShift){
-            this.type=ShiftType.PROJECTIONIST_SHIFT;
-            this.hall = new HallDto (((ProjectionistShift) shift).getHall());
-        }else if(shift instanceof UsherShift){
-            this.type=ShiftType.USHER_SHIFT;
+        if (shift instanceof ProjectionistShift) {
+            this.type = ShiftType.PROJECTIONIST_SHIFT;
+            this.hall = new HallDto(((ProjectionistShift) shift).getHall());
+        } else if (shift instanceof UsherShift) {
+            this.type = ShiftType.USHER_SHIFT;
             this.hall = null;
-        }else{
+        } else {
             throw new IllegalStateException("Unexpected value: " + shift);
         }
     }
