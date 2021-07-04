@@ -5,10 +5,12 @@ import com.ttbmp.cinehub.app.repository.LazyLoadingException;
 import com.ttbmp.cinehub.app.service.movieapi.MovieApiService;
 import com.ttbmp.cinehub.app.service.movieapi.MovieApiServiceException;
 import com.ttbmp.cinehub.domain.Movie;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author Fabio Buracchi
  */
+@EqualsAndHashCode(callSuper = true)
 public class MovieProxy extends Movie {
 
     private final MovieApiService movieApiService;
@@ -81,16 +83,6 @@ public class MovieProxy extends Movie {
         } catch (MovieApiServiceException e) {
             throw new LazyLoadingException(e.getMessage());
         }
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
     }
 
 }

@@ -10,12 +10,14 @@ import com.ttbmp.cinehub.domain.Hall;
 import com.ttbmp.cinehub.domain.Projection;
 import com.ttbmp.cinehub.domain.employee.Employee;
 import com.ttbmp.cinehub.domain.shift.ProjectionistShift;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
 /**
  * @author Fabio Buracchi
  */
+@EqualsAndHashCode(callSuper = true)
 public class ProjectionistShiftProxy extends ProjectionistShift {
 
     private final ProjectionistRepository projectionistRepository;
@@ -86,16 +88,6 @@ public class ProjectionistShiftProxy extends ProjectionistShift {
     public void setProjectionList(List<Projection> projectionList) {
         isProjectionistShiftProjectionListLoaded = true;
         super.setProjectionList(projectionList);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 
 }

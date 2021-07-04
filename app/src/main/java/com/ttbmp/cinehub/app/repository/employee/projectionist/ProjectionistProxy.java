@@ -11,6 +11,7 @@ import com.ttbmp.cinehub.domain.employee.Projectionist;
 import com.ttbmp.cinehub.domain.security.Permission;
 import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.shift.Shift;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
 /**
  * @author Fabio Buracchi
  */
+@EqualsAndHashCode(callSuper = true)
 public class ProjectionistProxy extends Projectionist {
 
     private final UserRepository userRepository;
@@ -165,16 +167,6 @@ public class ProjectionistProxy extends Projectionist {
         } catch (RepositoryException e) {
             throw new LazyLoadingException(e.getMessage());
         }
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 
 }
