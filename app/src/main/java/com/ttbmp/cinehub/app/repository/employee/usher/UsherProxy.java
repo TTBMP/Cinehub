@@ -11,6 +11,7 @@ import com.ttbmp.cinehub.domain.employee.Usher;
 import com.ttbmp.cinehub.domain.security.Permission;
 import com.ttbmp.cinehub.domain.security.Role;
 import com.ttbmp.cinehub.domain.shift.Shift;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
 /**
  * @author Fabio Buracchi
  */
+@EqualsAndHashCode(callSuper = true)
 public class UsherProxy extends Usher {
 
     private final UserRepository userRepository;
@@ -167,16 +169,6 @@ public class UsherProxy extends Usher {
             throw new LazyLoadingException(e.getMessage());
 
         }
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 
 }

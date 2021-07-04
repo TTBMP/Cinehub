@@ -6,12 +6,14 @@ import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.hall.HallRepository;
 import com.ttbmp.cinehub.domain.Cinema;
 import com.ttbmp.cinehub.domain.Hall;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
 /**
  * @author Fabio Buracchi
  */
+@EqualsAndHashCode(callSuper = true)
 public class CinemaProxy extends Cinema {
 
     private final HallRepository hallRepository;
@@ -39,16 +41,6 @@ public class CinemaProxy extends Cinema {
     public void setHallList(List<Hall> hallList) {
         isHallListLoaded = true;
         super.setHallList(hallList);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 
 }
