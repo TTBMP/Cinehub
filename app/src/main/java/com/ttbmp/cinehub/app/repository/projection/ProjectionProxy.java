@@ -51,12 +51,6 @@ public class ProjectionProxy extends Projection {
     }
 
     @Override
-    public void setMovie(Movie movie) {
-        isMovieLoaded = true;
-        super.setMovie(movie);
-    }
-
-    @Override
     public Hall getHall() {
         try {
             if (!isHallLoaded) {
@@ -66,6 +60,12 @@ public class ProjectionProxy extends Projection {
         } catch (RepositoryException e) {
             throw new LazyLoadingException(e.getMessage());
         }
+    }
+
+    @Override
+    public void setMovie(Movie movie) {
+        isMovieLoaded = true;
+        super.setMovie(movie);
     }
 
     @Override

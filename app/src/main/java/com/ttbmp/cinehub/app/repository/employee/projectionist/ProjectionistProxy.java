@@ -34,8 +34,8 @@ public class ProjectionistProxy extends Projectionist {
     public ProjectionistProxy(ServiceLocator serviceLocator, String id) {
         super(id, null, null, null, null, null);
         this.userRepository = serviceLocator.getService(UserRepository.class);
-        this.cinemaRepository = serviceLocator.getService(CinemaRepository.class);
         this.shiftRepository = serviceLocator.getService(ShiftRepository.class);
+        this.cinemaRepository = serviceLocator.getService(CinemaRepository.class);
     }
 
     @Override
@@ -57,24 +57,6 @@ public class ProjectionistProxy extends Projectionist {
     }
 
     @Override
-    public String getSurname() {
-        if (!isSurnameLoaded) {
-            try {
-                setSurname(userRepository.getUser(getId()).getSurname());
-            } catch (RepositoryException e) {
-                throw new LazyLoadingException(e.getMessage());
-            }
-        }
-        return super.getSurname();
-    }
-
-    @Override
-    public void setSurname(String surname) {
-        isSurnameLoaded = true;
-        super.setSurname(surname);
-    }
-
-    @Override
     public String getEmail() {
         if (!isEmailLoaded) {
             try {
@@ -93,21 +75,21 @@ public class ProjectionistProxy extends Projectionist {
     }
 
     @Override
-    public List<Role> getRoleList() {
-        if (!isRoleListLoaded) {
+    public String getSurname() {
+        if (!isSurnameLoaded) {
             try {
-                setRoleList(userRepository.getUser(getId()).getRoleList());
+                setSurname(userRepository.getUser(getId()).getSurname());
             } catch (RepositoryException e) {
                 throw new LazyLoadingException(e.getMessage());
             }
         }
-        return super.getRoleList();
+        return super.getSurname();
     }
 
     @Override
-    public void setRoleList(List<Role> roleList) {
-        isRoleListLoaded = true;
-        super.setRoleList(roleList);
+    public void setSurname(String surname) {
+        isSurnameLoaded = true;
+        super.setSurname(surname);
     }
 
     @Override
@@ -138,6 +120,24 @@ public class ProjectionistProxy extends Projectionist {
     public void setCinema(Cinema cinema) {
         isCinemaLoaded = true;
         super.setCinema(cinema);
+    }
+
+    @Override
+    public List<Role> getRoleList() {
+        if (!isRoleListLoaded) {
+            try {
+                setRoleList(userRepository.getUser(getId()).getRoleList());
+            } catch (RepositoryException e) {
+                throw new LazyLoadingException(e.getMessage());
+            }
+        }
+        return super.getRoleList();
+    }
+
+    @Override
+    public void setRoleList(List<Role> roleList) {
+        isRoleListLoaded = true;
+        super.setRoleList(roleList);
     }
 
     @Override
