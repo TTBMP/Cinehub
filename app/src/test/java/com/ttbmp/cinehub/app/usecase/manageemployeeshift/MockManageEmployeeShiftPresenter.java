@@ -9,6 +9,9 @@ import com.ttbmp.cinehub.app.utilities.request.Request;
 
 import java.util.stream.Collectors;
 
+/**
+ * @author Massimo Mazzetti
+ **/
 public class MockManageEmployeeShiftPresenter implements ManageEmployeesShiftPresenter {
 
     private final MockManageEmployeeShiftViewModel viewModel;

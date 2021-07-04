@@ -20,11 +20,11 @@ public class CustomerProxy extends Customer {
     private final TicketRepository ticketRepository;
     private final UserRepository userRepository;
 
-    private boolean isNameLoaded = false;
-    private boolean isSurnameLoaded = false;
-    private boolean isEmailLoaded = false;
-    private boolean isRoleListLoaded = false;
-    private boolean isTicketListLoaded = false;
+    private boolean isCustomerNameLoaded = false;
+    private boolean isCustomerSurnameLoaded = false;
+    private boolean isCustomerEmailLoaded = false;
+    private boolean isCustomerRoleListLoaded = false;
+    private boolean isCustomerTicketListLoaded = false;
 
     public CustomerProxy(ServiceLocator serviceLocator, String id) {
         super(id, null, null, null, null, null);
@@ -34,7 +34,7 @@ public class CustomerProxy extends Customer {
 
     @Override
     public String getName() {
-        if (!isNameLoaded) {
+        if (!isCustomerNameLoaded) {
             try {
                 setName(userRepository.getUser(getId()).getName());
             } catch (RepositoryException e) {
@@ -46,13 +46,13 @@ public class CustomerProxy extends Customer {
 
     @Override
     public void setName(String name) {
-        isNameLoaded = true;
+        isCustomerNameLoaded = true;
         super.setName(name);
     }
 
     @Override
     public String getSurname() {
-        if (!isSurnameLoaded) {
+        if (!isCustomerSurnameLoaded) {
             try {
                 setSurname(userRepository.getUser(getId()).getSurname());
             } catch (RepositoryException e) {
@@ -64,13 +64,13 @@ public class CustomerProxy extends Customer {
 
     @Override
     public void setSurname(String surname) {
-        isSurnameLoaded = true;
+        isCustomerSurnameLoaded = true;
         super.setSurname(surname);
     }
 
     @Override
     public String getEmail() {
-        if (!isEmailLoaded) {
+        if (!isCustomerEmailLoaded) {
             try {
                 setEmail(userRepository.getUser(getId()).getEmail());
             } catch (RepositoryException e) {
@@ -82,13 +82,13 @@ public class CustomerProxy extends Customer {
 
     @Override
     public void setEmail(String email) {
-        isEmailLoaded = true;
+        isCustomerEmailLoaded = true;
         super.setEmail(email);
     }
 
     @Override
     public List<Role> getRoleList() {
-        if (!isRoleListLoaded) {
+        if (!isCustomerRoleListLoaded) {
             try {
                 setRoleList(userRepository.getUser(getId()).getRoleList());
             } catch (RepositoryException e) {
@@ -100,13 +100,13 @@ public class CustomerProxy extends Customer {
 
     @Override
     public void setRoleList(List<Role> roleList) {
-        isRoleListLoaded = true;
+        isCustomerRoleListLoaded = true;
         super.setRoleList(roleList);
     }
 
     @Override
     public boolean hasPermission(Permission requiredPermission) {
-        if (!isRoleListLoaded) {
+        if (!isCustomerRoleListLoaded) {
             try {
                 setRoleList(userRepository.getUser(getId()).getRoleList());
             } catch (RepositoryException e) {
@@ -118,7 +118,7 @@ public class CustomerProxy extends Customer {
 
     @Override
     public List<Ticket> getOwnedTicketList() {
-        if (!isTicketListLoaded) {
+        if (!isCustomerTicketListLoaded) {
             try {
                 setOwnedTicketList(ticketRepository.getTicketList(this));
             } catch (RepositoryException e) {
@@ -130,7 +130,7 @@ public class CustomerProxy extends Customer {
 
     @Override
     public void setOwnedTicketList(List<Ticket> ownedTicketList) {
-        isTicketListLoaded = true;
+        isCustomerTicketListLoaded = true;
         super.setOwnedTicketList(ownedTicketList);
     }
 

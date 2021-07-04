@@ -25,10 +25,10 @@ public class ProjectionProxy extends Projection {
     private final ProjectionistRepository projectionistRepository;
     private final TicketRepository ticketRepository;
 
-    private boolean isMovieLoaded = false;
-    private boolean isHallLoaded = false;
-    private boolean isProjectionistLoaded = false;
-    private boolean isTicketListLoaded = false;
+    private boolean isProjectionMovieLoaded = false;
+    private boolean isProjectionHallLoaded = false;
+    private boolean isProjectionProjectionistLoaded = false;
+    private boolean isProjectionTicketListLoaded = false;
 
     public ProjectionProxy(ServiceLocator serviceLocator, int id, String date, String startTime, long basePrice) {
         super(id, date, startTime, null, null, null, null, basePrice);
@@ -41,7 +41,7 @@ public class ProjectionProxy extends Projection {
     @Override
     public Movie getMovie() {
         try {
-            if (!isMovieLoaded) {
+            if (!isProjectionMovieLoaded) {
                 setMovie(movieRepository.getMovie(this));
             }
             return super.getMovie();
@@ -52,14 +52,14 @@ public class ProjectionProxy extends Projection {
 
     @Override
     public void setMovie(Movie movie) {
-        isMovieLoaded = true;
+        isProjectionMovieLoaded = true;
         super.setMovie(movie);
     }
 
     @Override
     public Hall getHall() {
         try {
-            if (!isHallLoaded) {
+            if (!isProjectionHallLoaded) {
                 setHall(hallRepository.getHall(this));
             }
             return super.getHall();
@@ -70,13 +70,13 @@ public class ProjectionProxy extends Projection {
 
     @Override
     public void setHall(Hall hall) {
-        isHallLoaded = true;
+        isProjectionHallLoaded = true;
         super.setHall(hall);
     }
 
     @Override
     public Projectionist getProjectionist() {
-        if (!isProjectionistLoaded) {
+        if (!isProjectionProjectionistLoaded) {
             try {
                 setProjectionist(projectionistRepository.getProjectionist(this));
             } catch (RepositoryException e) {
@@ -88,14 +88,14 @@ public class ProjectionProxy extends Projection {
 
     @Override
     public void setProjectionist(Projectionist projectionist) {
-        isProjectionistLoaded = true;
+        isProjectionProjectionistLoaded = true;
         super.setProjectionist(projectionist);
     }
 
     @Override
     public List<Ticket> getTicketList() {
         try {
-            if (!isTicketListLoaded) {
+            if (!isProjectionTicketListLoaded) {
                 setTicketList(ticketRepository.getTicketList(this));
             }
             return super.getTicketList();
@@ -106,7 +106,7 @@ public class ProjectionProxy extends Projection {
 
     @Override
     public void setTicketList(List<Ticket> ticketList) {
-        isTicketListLoaded = true;
+        isProjectionTicketListLoaded = true;
         super.setTicketList(ticketList);
     }
 

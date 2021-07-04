@@ -66,6 +66,10 @@
                             <input th:name="shift.start" th:value="${shift.start}" type="hidden"/>
                             <input th:name="shift.end" th:value="${shift.end}" type="hidden"/>
                             <input th:name="shift.employeeId" th:value="${shift.employeeId}" type="hidden"/>
+                            <div th:if="${employee.role.equals(T(com.ttbmp.cinehub.app.dto.EmployeeDto.EmployeeRole).PROJECTIONIST)}">
+                                <input th:name="shift.hall.id" th:value="${shift.hall.id}" type="hidden"/>
+                                <input th:name="shift.hall.name" th:value="${shift.hall.name}" type="hidden"/>
+                            </div>
                             <input class="btn btn-outline-primary" th:value="${shift.start + ' - ' + shift.end}"
                                    type="submit"
                                    value="start - end"/>

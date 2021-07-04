@@ -20,6 +20,9 @@ import static com.ttbmp.cinehub.ui.web.SeleniumHelper.waitPageToLoad;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+/**
+ * @author Massimo Mazzetti
+ */
 @SpringBootTest
 class ManageEmployeeSeleniumTest {
 

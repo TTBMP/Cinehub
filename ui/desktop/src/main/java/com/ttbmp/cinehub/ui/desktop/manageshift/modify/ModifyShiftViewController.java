@@ -116,12 +116,12 @@ public class ModifyShiftViewController extends ViewController {
         activity.getUseCase(ManageEmployeesShiftUseCase.class).modifyShift(
                 new ShiftModifyRequest(
                         CinehubApplication.getSessionToken(),
-                        viewModel.selectedShiftProperty().get().getEmployeeId(),
                         viewModel.selectedShiftProperty().get().getId(),
                         viewModel.selectedDayProperty().get(),
                         viewModel.startSpinnerModifyTimeProperty().get().withNano(0),
                         viewModel.endSpinnerModifyTimeProperty().get().withNano(0),
-                        hallId
+                        hallId,
+                        viewModel.selectedShiftProperty().get().getType().toString()
                 ));
 
         if (!viewModel.errorAssignVisibleProperty().get()) {

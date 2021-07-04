@@ -17,6 +17,9 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * @author Ivan Palmieri
+ */
 @SpringBootTest
 class BuyTicketSeleniumTest {
 

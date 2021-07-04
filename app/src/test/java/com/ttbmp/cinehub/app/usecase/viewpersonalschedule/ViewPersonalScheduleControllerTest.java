@@ -2,8 +2,7 @@ package com.ttbmp.cinehub.app.usecase.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.di.MockServiceLocator;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
-import com.ttbmp.cinehub.app.dto.shift.ShiftDtoFactory;
+import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.app.repository.RepositoryException;
 import com.ttbmp.cinehub.app.repository.employee.EmployeeRepository;
 import com.ttbmp.cinehub.app.repository.projection.ProjectionRepository;
@@ -120,7 +119,7 @@ class ViewPersonalScheduleControllerTest {
                 request.getEnd()
         );
         return shiftList.stream()
-                .map(ShiftDtoFactory::getShiftDto)
+                .map(ShiftDto::new)
                 .collect(Collectors.toList());
     }
 

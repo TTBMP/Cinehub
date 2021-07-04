@@ -9,6 +9,9 @@ import com.ttbmp.cinehub.app.utilities.request.Request;
 
 import java.util.stream.Collectors;
 
+/**
+ * @author Ivan Palmieri
+ */
 class MockBuyTicketPresenter implements BuyTicketPresenter {
 
     private final MockBuyTicketViewModel viewModel;
@@ -18,22 +21,22 @@ class MockBuyTicketPresenter implements BuyTicketPresenter {
     }
 
     @Override
-    public void presentMovieList(MovieListReply reply) {
+    public void presentGetMovieList(MovieListReply reply) {
         viewModel.setMovieList(reply.getMovieList());
     }
 
     @Override
-    public void presentCinemaList(CinemaListReply reply) {
+    public void presentGetCinemaList(CinemaListReply reply) {
         viewModel.setCinemaList(reply.getCinemaList());
     }
 
     @Override
-    public void presentSeatList(SeatListReply reply) {
+    public void presentGetSeatList(SeatListReply reply) {
         viewModel.setSeatList(reply.getSeatDtoList());
     }
 
     @Override
-    public void presentProjectionList(ProjectionListReply reply) {
+    public void presentGetProjectionList(ProjectionListReply reply) {
         viewModel.setProjectionList(reply.getProjectionDtoList());
     }
 

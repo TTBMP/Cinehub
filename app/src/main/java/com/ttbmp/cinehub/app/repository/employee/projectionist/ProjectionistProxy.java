@@ -24,12 +24,12 @@ public class ProjectionistProxy extends Projectionist {
     private final CinemaRepository cinemaRepository;
     private final ShiftRepository shiftRepository;
 
-    private boolean isNameLoaded = false;
-    private boolean isSurnameLoaded = false;
-    private boolean isEmailLoaded = false;
-    private boolean isRoleListLoaded = false;
-    private boolean isCinemaLoaded = false;
-    private boolean isShiftListLoaded = false;
+    private boolean isProjectionistNameLoaded = false;
+    private boolean isProjectionistSurnameLoaded = false;
+    private boolean isProjectionistEmailLoaded = false;
+    private boolean isProjectionistRoleListLoaded = false;
+    private boolean isProjectionistCinemaLoaded = false;
+    private boolean isProjectionistShiftListLoaded = false;
 
     public ProjectionistProxy(ServiceLocator serviceLocator, String id) {
         super(id, null, null, null, null, null);
@@ -40,7 +40,7 @@ public class ProjectionistProxy extends Projectionist {
 
     @Override
     public String getName() {
-        if (!isNameLoaded) {
+        if (!isProjectionistNameLoaded) {
             try {
                 setName(userRepository.getUser(getId()).getName());
             } catch (RepositoryException e) {
@@ -52,13 +52,13 @@ public class ProjectionistProxy extends Projectionist {
 
     @Override
     public void setName(String name) {
-        isNameLoaded = true;
+        isProjectionistNameLoaded = true;
         super.setName(name);
     }
 
     @Override
     public String getSurname() {
-        if (!isSurnameLoaded) {
+        if (!isProjectionistSurnameLoaded) {
             try {
                 setSurname(userRepository.getUser(getId()).getSurname());
             } catch (RepositoryException e) {
@@ -70,13 +70,13 @@ public class ProjectionistProxy extends Projectionist {
 
     @Override
     public void setSurname(String surname) {
-        isSurnameLoaded = true;
+        isProjectionistSurnameLoaded = true;
         super.setSurname(surname);
     }
 
     @Override
     public String getEmail() {
-        if (!isEmailLoaded) {
+        if (!isProjectionistEmailLoaded) {
             try {
                 setEmail(userRepository.getUser(getId()).getEmail());
             } catch (RepositoryException e) {
@@ -88,13 +88,13 @@ public class ProjectionistProxy extends Projectionist {
 
     @Override
     public void setEmail(String email) {
-        isEmailLoaded = true;
+        isProjectionistEmailLoaded = true;
         super.setEmail(email);
     }
 
     @Override
     public List<Role> getRoleList() {
-        if (!isRoleListLoaded) {
+        if (!isProjectionistRoleListLoaded) {
             try {
                 setRoleList(userRepository.getUser(getId()).getRoleList());
             } catch (RepositoryException e) {
@@ -106,13 +106,13 @@ public class ProjectionistProxy extends Projectionist {
 
     @Override
     public void setRoleList(List<Role> roleList) {
-        isRoleListLoaded = true;
+        isProjectionistRoleListLoaded = true;
         super.setRoleList(roleList);
     }
 
     @Override
     public boolean hasPermission(Permission requiredPermission) {
-        if (!isRoleListLoaded) {
+        if (!isProjectionistRoleListLoaded) {
             try {
                 setRoleList(userRepository.getUser(getId()).getRoleList());
             } catch (RepositoryException e) {
@@ -125,7 +125,7 @@ public class ProjectionistProxy extends Projectionist {
     @Override
     public Cinema getCinema() {
         try {
-            if (!isCinemaLoaded) {
+            if (!isProjectionistCinemaLoaded) {
                 setCinema(cinemaRepository.getCinema(this));
             }
             return super.getCinema();
@@ -136,13 +136,13 @@ public class ProjectionistProxy extends Projectionist {
 
     @Override
     public void setCinema(Cinema cinema) {
-        isCinemaLoaded = true;
+        isProjectionistCinemaLoaded = true;
         super.setCinema(cinema);
     }
 
     @Override
     public List<Shift> getShiftList() {
-        if (!isShiftListLoaded) {
+        if (!isProjectionistShiftListLoaded) {
             try {
                 setShiftList(shiftRepository.getShiftList(this));
             } catch (RepositoryException e) {
@@ -154,7 +154,7 @@ public class ProjectionistProxy extends Projectionist {
 
     @Override
     public void setShiftList(List<Shift> shiftList) {
-        isShiftListLoaded = true;
+        isProjectionistShiftListLoaded = true;
         super.setShiftList(shiftList);
     }
 

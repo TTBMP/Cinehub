@@ -19,6 +19,9 @@ import static com.ttbmp.cinehub.ui.web.SeleniumHelper.clickAndWaitPageToLoad;
 import static com.ttbmp.cinehub.ui.web.SeleniumHelper.waitPageToLoad;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Fabio Buracchi
+ */
 @SpringBootTest
 class LogoutSeleniumTest {
 

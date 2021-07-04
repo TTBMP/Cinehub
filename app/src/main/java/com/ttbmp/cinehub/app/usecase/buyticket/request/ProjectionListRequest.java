@@ -14,8 +14,8 @@ import java.time.LocalDate;
 public class ProjectionListRequest extends Request {
 
     public static final Request.Error MISSING_DATE_ERROR = new Request.Error("The date cannot be earlier than today");
-    public static final Request.Error INVALID_MOVIE = new Request.Error("Movie can't be null");
-    public static final Request.Error INVALID_CINEMA = new Request.Error("Cinema can't be null");
+    public static final Request.Error MOVIE_ERROR = new Request.Error("Movie can't be null");
+    public static final Request.Error CINEMA_ERROR = new Request.Error("Cinema can't be null");
 
     Integer movieId;
     Integer cinemaId;

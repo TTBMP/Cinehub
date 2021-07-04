@@ -22,9 +22,9 @@ public class ProjectionistShiftProxy extends ProjectionistShift {
     private final HallRepository hallRepository;
     private final ProjectionRepository projectionRepository;
 
-    private boolean isEmployeeLoaded = false;
-    private boolean isHallLoaded = false;
-    private boolean isProjectionListLoaded = false;
+    private boolean isProjectionistShiftEmployeeLoaded = false;
+    private boolean isProjectionistShiftHallLoaded = false;
+    private boolean isProjectionistShiftProjectionListLoaded = false;
 
     public ProjectionistShiftProxy(ServiceLocator serviceLocator, int id, String date, String start, String end) {
         super(id, null, date, start, end, null, null);
@@ -35,7 +35,7 @@ public class ProjectionistShiftProxy extends ProjectionistShift {
 
     @Override
     public Employee getEmployee() {
-        if (!isEmployeeLoaded) {
+        if (!isProjectionistShiftEmployeeLoaded) {
             try {
                 setEmployee(projectionistRepository.getProjectionist(this));
             } catch (RepositoryException e) {
@@ -48,14 +48,14 @@ public class ProjectionistShiftProxy extends ProjectionistShift {
 
     @Override
     public void setEmployee(Employee employee) {
-        isEmployeeLoaded = true;
+        isProjectionistShiftEmployeeLoaded = true;
         super.setEmployee(employee);
     }
 
     @Override
     public Hall getHall() {
         try {
-            if (!isHallLoaded) {
+            if (!isProjectionistShiftHallLoaded) {
                 setHall(hallRepository.getHall(this));
             }
             return super.getHall();
@@ -66,14 +66,14 @@ public class ProjectionistShiftProxy extends ProjectionistShift {
 
     @Override
     public void setHall(Hall hall) {
-        isHallLoaded = true;
+        isProjectionistShiftHallLoaded = true;
         super.setHall(hall);
     }
 
     @Override
     public List<Projection> getProjectionList() {
         try {
-            if (!isProjectionListLoaded) {
+            if (!isProjectionistShiftProjectionListLoaded) {
                 setProjectionList(projectionRepository.getProjectionList(this));
             }
             return super.getProjectionList();
@@ -84,7 +84,7 @@ public class ProjectionistShiftProxy extends ProjectionistShift {
 
     @Override
     public void setProjectionList(List<Projection> projectionList) {
-        isProjectionListLoaded = true;
+        isProjectionistShiftProjectionListLoaded = true;
         super.setProjectionList(projectionList);
     }
 

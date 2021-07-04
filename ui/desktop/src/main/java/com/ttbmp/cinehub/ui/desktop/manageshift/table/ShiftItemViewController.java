@@ -1,7 +1,7 @@
 package com.ttbmp.cinehub.ui.desktop.manageshift.table;
 
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
-import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
+import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.ui.desktop.manageshift.ManageEmployeesShiftViewModel;
 import com.ttbmp.cinehub.ui.desktop.manageshift.detail.ShowShiftDetailView;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.Activity;

@@ -22,22 +22,22 @@ public class BuyTicketPresenterWeb extends PresenterWeb implements BuyTicketPres
     }
 
     @Override
-    public void presentMovieList(MovieListReply reply) {
+    public void presentGetMovieList(MovieListReply reply) {
         model.addAttribute("movieList", reply.getMovieList());
     }
 
     @Override
-    public void presentCinemaList(CinemaListReply reply) {
+    public void presentGetCinemaList(CinemaListReply reply) {
         model.addAttribute("cinemaList", reply.getCinemaList());
     }
 
     @Override
-    public void presentProjectionList(ProjectionListReply reply) {
+    public void presentGetProjectionList(ProjectionListReply reply) {
         model.addAttribute("projectionList", reply.getProjectionDtoList());
     }
 
     @Override
-    public void presentSeatList(SeatListReply reply) {
+    public void presentGetSeatList(SeatListReply reply) {
         var seatList = reply.getSeatDtoList().stream()
                 .sorted(Comparator.comparing(SeatDto::getPosition))
                 .collect(Collectors.toList());

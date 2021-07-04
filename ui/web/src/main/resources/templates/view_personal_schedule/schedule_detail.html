@@ -62,6 +62,10 @@
                     <input th:name="shift.start" th:value="${scheduleForm.shift.start}" type="hidden"/>
                     <input th:name="shift.end" th:value="${scheduleForm.shift.end}" type="hidden"/>
                     <input th:name="shift.employeeId" th:value="${scheduleForm.shift.employeeId}" type="hidden"/>
+                    <div th:if="${scheduleForm.employee.role.equals('Projectionist')}">
+                        <input th:name="shift.hall.id" th:value="${scheduleForm.shift.hall.id}" type="hidden"/>
+                        <input th:name="shift.hall.name" th:value="${scheduleForm.shift.hall.name}" type="hidden"/>
+                    </div>
                     <input class="btn btn-primary" th:if="${scheduleForm.employee.role.equals('Projectionist')}"
                            type="submit"
                            value="SHOW DETAIL"/>

@@ -86,6 +86,7 @@
                                         <input th:name="date" th:value="${shift.date}" type="hidden"/>
                                         <input th:name="start" th:value="${shift.start}" type="hidden"/>
                                         <input th:name="end" th:value="${shift.end}" type="hidden"/>
+                                        <input th:name="type" th:value="${shift.type.toString}" type="hidden"/>
                                         <input th:name="employee.id" th:value="${entry.key.id}" type="hidden"/>
                                         <input th:name="employee.role" th:value="${entry.key.role}"
                                                type="hidden"/>
@@ -97,10 +98,10 @@
                                         <input th:name="employee.cinema.name" th:value="${entry.key.cinema.name}"
                                                type="hidden"/>
                                         <div th:if="${entry.key.role.equals(T(com.ttbmp.cinehub.app.dto.EmployeeDto.EmployeeRole).PROJECTIONIST)}">
-                                            <input th:name="hall.id" th:value="${shift.hallDto.id}" type="hidden"/>
-                                            <input th:name="hall.name" th:value="${shift.hallDto.name}" type="hidden"/>
+                                            <input th:name="hall.id" th:value="${shift.hall.id}" type="hidden"/>
+                                            <input th:name="hall.name" th:value="${shift.hall.name}" type="hidden"/>
                                         </div>
-                                        <input th:class="'btn' + ${shift.date.isAfter(T(java.time.LocalDate).now()) ?
+                                        <input th:id="${shift.id}" th:class="'btn' + ${shift.date.isAfter(T(java.time.LocalDate).now()) ?
                                                             entry.key.role.equals(T(com.ttbmp.cinehub.app.dto.EmployeeDto.EmployeeRole).PROJECTIONIST) ?
                                                                 ' btn-info' :
                                                                 ' btn-warning' :

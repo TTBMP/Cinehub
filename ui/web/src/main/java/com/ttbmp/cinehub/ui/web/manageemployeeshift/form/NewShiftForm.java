@@ -15,6 +15,7 @@ public class NewShiftForm {
     private String date;
     private LocalTime start;
     private LocalTime end;
+    private String type;
     private boolean change;
 
 }

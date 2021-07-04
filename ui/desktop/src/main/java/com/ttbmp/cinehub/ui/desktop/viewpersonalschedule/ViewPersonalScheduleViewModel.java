@@ -2,8 +2,7 @@ package com.ttbmp.cinehub.ui.desktop.viewpersonalschedule;
 
 import com.ttbmp.cinehub.app.dto.EmployeeDto;
 import com.ttbmp.cinehub.app.dto.ProjectionDto;
-import com.ttbmp.cinehub.app.dto.shift.ShiftDto;
-import com.ttbmp.cinehub.app.dto.shift.ShiftProjectionistDto;
+import com.ttbmp.cinehub.app.dto.ShiftDto;
 import com.ttbmp.cinehub.app.utilities.observer.Observable;
 import com.ttbmp.cinehub.ui.desktop.utilities.ObjectBindings;
 import com.ttbmp.cinehub.ui.desktop.utilities.ui.ViewModel;
@@ -62,7 +61,7 @@ public class ViewPersonalScheduleViewModel implements ViewModel {
         selectedShiftDateProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto -> shiftDto.getDate().toString()));
         selectedShiftStartProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto -> shiftDto.getStart().toString()));
         selectedShiftEndProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto -> shiftDto.getEnd().toString()));
-        selectedProjectionistShiftHallProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto -> ((ShiftProjectionistDto) shiftDto).getHallDto().getName()));
+        selectedProjectionistShiftHallProperty.bind(ObjectBindings.map(selectedShiftProperty, shiftDto ->  shiftDto.getHall().getName()));
         projectionsDetailButtonVisibleProperty.bind(ObjectBindings.map(selectedShiftEmployeeRoleProperty, e -> e.equals(EmployeeDto.EmployeeRole.PROJECTIONIST.toString())));
     }
 
